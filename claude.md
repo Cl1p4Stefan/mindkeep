@@ -1,6 +1,6 @@
 # MINDKEEP — Context de Development
 *Atașează acest fișier la fiecare conversație nouă de development, împreună cu Pitch Document-ul (v1.0).*
-
+Design-ul complet e în docs/pitch-document.md. Citește-l când ai nevoie de detalii despre sisteme (formule, rarități, arhetipuri de inamici, economie).
 ---
 
 ## Ce sunt eu

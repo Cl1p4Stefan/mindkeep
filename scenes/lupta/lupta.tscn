@@ -1,0 +1,141 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scenes/lupta/lupta.gd" id="1_lupta"]
+
+[node name="Lupta" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_lupta")
+
+[node name="Fundal" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.09, 0.09, 0.12, 1)
+
+[node name="Margini" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 24
+
+[node name="Coloana" type="VBoxContainer" parent="Margini"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Runda" type="Label" parent="Margini/Coloana"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "RUNDA 1"
+horizontal_alignment = 1
+
+[node name="InamicDreptunghi" type="ColorRect" parent="Margini/Coloana"]
+custom_minimum_size = Vector2(0, 120)
+layout_mode = 2
+color = Color(0.65, 0.2, 0.22, 1)
+
+[node name="InamicPV" type="Label" parent="Margini/Coloana"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "INAMIC"
+horizontal_alignment = 1
+
+[node name="InamicBaraPV" type="ProgressBar" parent="Margini/Coloana"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 22)
+layout_mode = 2
+max_value = 12.0
+value = 12.0
+show_percentage = false
+
+[node name="InamicCeasEticheta" type="Label" parent="Margini/Coloana"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "CEAS"
+horizontal_alignment = 1
+
+[node name="InamicBaraCeas" type="ProgressBar" parent="Margini/Coloana"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 22)
+layout_mode = 2
+modulate = Color(1, 0.75, 0.3, 1)
+max_value = 3.0
+value = 0.0
+show_percentage = false
+
+[node name="Jurnal" type="Label" parent="Margini/Coloana"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+text = "..."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="JucatorPV" type="Label" parent="Margini/Coloana"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "REGELE (tu)"
+horizontal_alignment = 1
+
+[node name="JucatorBaraPV" type="ProgressBar" parent="Margini/Coloana"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 22)
+layout_mode = 2
+modulate = Color(0.45, 0.75, 1, 1)
+max_value = 30.0
+value = 30.0
+show_percentage = false
+
+[node name="PAEticheta" type="Label" parent="Margini/Coloana"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "PA: @@@"
+horizontal_alignment = 1
+
+[node name="RandObeliscuri" type="HBoxContainer" parent="Margini/Coloana"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Obelisc1" type="Button" parent="Margini/Coloana/RandObeliscuri"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 90)
+layout_mode = 2
+size_flags_horizontal = 3
+modulate = Color(0.6, 0.85, 1, 1)
+text = "Obelisc 1"
+
+[node name="Obelisc2" type="Button" parent="Margini/Coloana/RandObeliscuri"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 90)
+layout_mode = 2
+size_flags_horizontal = 3
+modulate = Color(0.7, 1, 0.6, 1)
+text = "Obelisc 2"
+
+[node name="Obelisc3" type="Button" parent="Margini/Coloana/RandObeliscuri"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 90)
+layout_mode = 2
+size_flags_horizontal = 3
+modulate = Color(1, 0.85, 0.55, 1)
+text = "Obelisc 3"
+
+[node name="IncheieTura" type="Button" parent="Margini/Coloana"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 56)
+layout_mode = 2
+text = "Incheie tura"
