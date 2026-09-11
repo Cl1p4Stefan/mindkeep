@@ -1,5 +1,5 @@
 # MINDKEEP — Pitch Document (Concept Inițial)
-*v1.4 — document de lucru, menit să evolueze pe măsură ce construim GDD-ul complet*
+*v1.5 — document de lucru, menit să evolueze pe măsură ce construim GDD-ul complet*
 
 **Elevator pitch:** Bookworm Adventures se întâlnește cu Slay the Spire și Darkest Dungeon — într-o cetate-bibliotecă, ultimul bastion al adevărului, într-o lume care își uită, literalmente, propria istorie.
 
@@ -73,7 +73,10 @@ Nimic nu se simte „lipit" — fiecare mecanică are un motiv narativ propriu s
 - **Obelisc** — o poziție fixă pe câmpul de luptă (de regulă 3-4 active simultan). Fiecare Obelisc are o **disciplină** (Memorie/Trivia, Ordine/Sudoku, Cuvântul Adevărat/Anagramă, Logică) și un **Nivel** (I, II, III) care determină dificultatea puzzle-ului și costul în PA.
 - **PA (Puncte de Acțiune)** — resursa cheltuită ca să activezi un Obelisc. Primești un număr fix de PA în fiecare rundă (ex: 3) — **PA nu se reportează** între runde, ca să țină regula simplă și ușor de implementat.
 - **Recărcare** — după ce activezi un Obelisc, acesta intră în Recărcare pentru 1 rundă și nu poate fi reactivat imediat. Te forțează să rotești disciplinele, nu să folosești mereu aceeași.
-- **Claritate (Combo)** — fiecare răspuns corect consecutiv adaugă un stack. La 2+ stack-uri, următoarea activare primește un bonus de daune. Un răspuns greșit sau un timeout resetează stack-urile.
+- **Combo (lanțul)** — o activare de Obelisc nu înseamnă o singură întrebare, ci un **lanț nelimitat** de întrebări din aceeași disciplină. Plătești PA o singură dată, la pornire; după aceea fiecare treaptă se **câștigă** răspunzând corect, nu se cumpără. Treptele 1-3 urcă dificultatea I → II → III, apoi rămân la III.
+  - **Daune pe treaptă:** **1** la treapta I, **2** la treapta II, **3** la treapta III, apoi **3 fix** la fiecare treaptă de la 4 în sus. Cresc scurt, apoi se așează: fără plafon, treapta 12 ar decide singură lupta. Răsplata pentru un lanț lung vine din LUNGIME (multe trepte × 3) și din critice, nu din inflația unei singure trepte.
+  - **Critic la fiecare a 5-a treaptă** (5, 10, 15…): daunele treptei se dublează — 6 în loc de 3. E un obiectiv intermediar vizibil: la treapta 4 știi deja că următoarea valorează dublu, deci ai un motiv concret să mai riști o întrebare.
+  - **Ruperea lanțului:** doar un răspuns greșit sau un timeout îl oprește — nu se termină de la sine. **Daunele acumulate rămân** (greșeala oprește creșterea, nu șterge munca), iar Obeliscul respectiv rămâne blocat până la finalul rundei. Pedeapsa cade pe unealtă, nu pe tură.
 - **Scut** — un strat de apărare temporar, obținut de obicei din discipline defensive (Sudoku/Ordine), care absoarbe daune primite din atacul inamicului.
 - **Cronometru per-puzzle** — fiecare Obelisc activat deschide o fereastră de timp (15-30 secunde, în funcție de Nivel) în care rezolvi puzzle-ul. Reușita la timp = efect complet; eșecul sau timeout-ul = PA-ul e oricum cheltuit, dar fără efect, iar Obeliscul respectiv devine vizibil „corupt" pentru o rundă (risc tactic real dacă activezi ceva ce nu știi sigur).
 
@@ -111,15 +114,21 @@ Termenii tehnici din acest document (Obelisc, Nivel, Recărcare) rămân limbaju
 
 **Important — piesele sunt un skin, nu o mecanică nouă.** Nu introducem mișcare sau capturare reală de șah: ar adăuga o a doua curbă de învățare (regulile șahului) peste cea deja existentă, pentru un beneficiu incert — jocul e despre cultură generală, nu despre skill de șah. Un Obelisc rămâne un Obelisc mecanic; doar se numește și arată ca o piesă.
 
-**Regele și Regina — rolurile finale.** Regele rămâne, așa cum a fost gândit, în afara rosterului de Obeliscuri activabile — reprezintă PV-ul jucătorului, nu o disciplină; adăugarea unei „sarcini a Regelui" ar dilua motivul narativ gata-făcut pentru condiția de înfrângere („Șah"/„Șah Mat"). **Regina nu ocupă un slot de loadout** — dar nici nu e disponibilă din start: se deblochează la 2 stack-uri de Claritate (două răspunsuri corecte consecutive), costă 2 PA, o singură utilizare per luptă, și trage un puzzle exact din disciplina pe care NU ai echipat-o. Nu are conținut propriu; e flexibilitate pură, câștigată prin performanță — exact ce e Regina în șah: piesa care ajunge oriunde.
+**Regele — rolul final.** Regele rămâne, așa cum a fost gândit, în afara rosterului de Obeliscuri activabile — reprezintă PV-ul jucătorului, nu o disciplină; adăugarea unei „sarcini a Regelui" ar dilua motivul narativ gata-făcut pentru condiția de înfrângere („Șah"/„Șah Mat").
 
-**Relicvă Legendară asociată:** *Coroana Uzurpatoare* — Regina se deblochează la 1 stack de Claritate în loc de 2, și costă 1 PA în loc de 2. Principiu general de urmat pentru toate Legendarele: **amplifică sisteme existente, nu deține singurul exemplar dintr-un sistem.** Altfel fiecare Legendar viitor devine obligatoriu, iar restul devin decor.
+**Regina — AMÂNATĂ, nu ștearsă.** Ideea originală: o piesă care nu ocupă slot de loadout, se deblochează prin performanță, costă 2 PA, se folosește o singură dată pe luptă și trage un puzzle exact din disciplina pe care NU ai echipat-o — flexibilitate pură, câștigată, fără conținut nou. Rămâne atrăgătoare pe hârtie, dar **e scoasă din schemă deocamdată, pentru că nu se leagă natural cu sistemul de combo.**
 
-**Loadout pre-expediție: alegi 3 din 4.** Rosterul de bază — Pion (Trivia), Turn (Sudoku), Cal (Logică), Nebun (Anagramă) — dă 4 combinații posibile de câte 3. Jucătorul alege o dată, la începutul unei expediții pe Hartă (nu înainte de fiecare luptă individuală), și rămâne cu ele pe tot parcursul acelei expediții. Un moment strategic la început, apoi lupte fluide fără meniuri suplimentare — și o tensiune reală de tip roguelite: dacă întâlnești un inamic „potrivit" pentru disciplina pe care n-ai luat-o, singurul tău răspuns e Regina — dar trebuie mai întâi s-o meriți, prin două răspunsuri corecte consecutive.
+**De ce nu se leagă cu comboul.** Orice condiție de deblocare bazată pe performanță în lanț — ultima variantă pusă pe hârtie era „treapta 4 dintr-un lanț" — sosește exact în momentul în care NU vrei să te oprești. Sub combo, costul real al Reginei nu e cel în PA: e **lanțul pe care îl abandonezi** ca s-o activezi, un lanț care în runda aceea nu se mai poate relua. O supapă pe care ești pedepsit că o folosești nu e o supapă. Iar dacă o faci gratuită ca să eviți asta, dispare tot ce o făcea interesantă — nu mai e câștigată, e doar un buton în plus.
 
-**De ce Regina funcționează așa.** Rezolvă vârful ascuțit creat de vulnerabilități și bariere: fără o supapă, o rută proastă de loadout ar putea transforma un fight într-un zid frustrant. Regina e supapa, dar una câștigată, nu garantată — presiune blândă, nu punitivă, în linie cu tonul restului jocului. Bonus pentru scopul personal al proiectului: fiind singura cale spre disciplina neechipată, te duce ocazional exact la disciplina pe care o eviți — ca alegere proprie, nu ca pedeapsă impusă.
+**Ce se întâmplă cu ea.** Se reevaluează **după ce există harta de expediție și un run complet jucat** — abia atunci se vede dacă loadout-ul de 3 din 4 produce cu adevărat ziduri care au nevoie de supapă. Dacă da, i se caută altă condiție de deblocare, una care să nu ceară ruperea unui lanț (de exemplu deblocare între lupte, sau o resursă acumulată la nivel de expediție). Până atunci nu se implementează, iar **loadout-ul rămâne 3 din 4, fără Regina.**
 
-*Cifrele (2 stack-uri, 2 PA) sunt presupuneri de echilibrare. Prea scumpă = n-o folosești niciodată; prea ieftină = loadout-ul nu mai contează. Se rezolvă la playtesting.*
+**Relicvă Legendară asociată (amânată împreună cu Regina):** *Coroana Uzurpatoare* — ieftinea condiția de deblocare și costul în PA. Principiul general rămâne valabil indiferent de soarta Reginei: **amplifică sisteme existente, nu deține singurul exemplar dintr-un sistem.** Altfel fiecare Legendar viitor devine obligatoriu, iar restul devin decor.
+
+**Loadout pre-expediție: alegi 3 din 4.** Rosterul de bază — Pion (Trivia), Turn (Sudoku), Cal (Logică), Nebun (Anagramă) — dă 4 combinații posibile de câte 3. Jucătorul alege o dată, la începutul unei expediții pe Hartă (nu înainte de fiecare luptă individuală), și rămâne cu ele pe tot parcursul acelei expediții. Un moment strategic la început, apoi lupte fluide fără meniuri suplimentare — și o tensiune reală de tip roguelite: dacă întâlnești un inamic „potrivit" pentru disciplina pe care n-ai luat-o, lupta devine mai lentă și mai scumpă. Cât timp Regina e amânată, **nu există supapă** — deci sarcina cade integral pe regulile de generare: vulnerabilitățile rămân bonusuri pozitive, iar barierele doar încetinesc, niciodată nu blochează complet.
+
+**Problema care rămâne deschisă.** Regina rezolva un vârf ascuțit real: fără supapă, o rută proastă de loadout poate transforma o luptă într-un zid frustrant. Problema nu dispare odată cu amânarea ei — doar rămâne în seama regulilor de generare (bariera încetinește, nu blochează; vulnerabilitatea e bonus, nu cerință). Se recitește imediat după primul run complet: dacă zidul apare în practică, atunci merită o supapă, și abia acolo se decide dacă acea supapă e Regina sau altceva.
+
+*Un al doilea beneficiu pierdut temporar, de notat: fiind singura cale spre disciplina neechipată, Regina te ducea ocazional exact la disciplina pe care o eviți — ca alegere proprie, nu ca pedeapsă impusă. Merită recuperat, într-o formă sau alta.*
 
 **De ce nu devine deckbuilder.** Nu alegi din zeci de carduri unice și nu tragi random dintr-un pool în luptă — alegi dintr-un set mic, fix, de discipline, iar cele 3 alese sunt mereu disponibile, fără RNG de tragere. Mai aproape de o trusă de unelte decât de un deck.
 
@@ -145,13 +154,15 @@ Termenii tehnici din acest document (Obelisc, Nivel, Recărcare) rămân limbaju
 Cronicarul are 3 PA pe rundă.
 
 **Runda 1 — Tura ta.** Pagina Goală anunță: *„Se pregătește să șteargă 4 PV din apărarea ta."*
-Activezi **Obeliscul Memoriei** (1 PA) → cronometru 15s: *„În ce secol a început, convențional, Renașterea italiană?"* Răspunzi corect → 3 daune (Pagina Goală: 9 PV) + 1 stack de Claritate.
-Mai ai 2 PA. Activezi **Obeliscul Logicii** (1 PA) → cronometru 15s: *„2, 4, 8, 16, ?"* Răspunzi corect (32) → 3 daune (6 PV) + al doilea stack de Claritate + 2 puncte de Scut.
+Activezi **Obeliscul Memoriei** (1 PA) → pornește un lanț. Treapta I, cronometru 15s: *„În ce secol a început, convențional, Renașterea italiană?"* Corect → **1 daună**. Treapta II, o întrebare mai grea: corect → **2 daune**. Treapta III: corect → **3 daune**. Treapta IV: greșești — lanțul se rupe, dar cele **6 daune acumulate rămân** (Pagina Goală: 6 PV), iar Obeliscul Memoriei rămâne blocat până la finalul rundei.
+Mai ai 2 PA. Activezi **Obeliscul Logicii** (1 PA) → treapta I: *„2, 4, 8, 16, ?"* Corect (32) → 1 daună + 2 puncte de Scut. Treapta II: corect → 2 daune. Treapta III: expiră cronometrul — lanțul se rupe. Total 3 daune (Pagina Goală: 3 PV), iar Obeliscul Logicii rămâne și el blocat până la finalul rundei.
 Îți rămâne 1 PA — insuficient pentru Obeliscul de Nivel II (costă 2). Rămâne nefolosit — regulă simplă, fără PA reportat.
 
 **Runda 1 — Tura inamicului.** Pagina Goală lovește: 4 daune, absorbite parțial de Scutul tău de 2 → 2 daune nete în apărarea ta.
 
-**Runda 2 — Tura ta.** PA se resetează la 3. Activezi **Obeliscul Cuvântului Adevărat** (2 PA) → cronometru 25s, literele **R-Ă-D-A-V-E**, indiciu: *„Opusul minciunii."* Răspunzi **ADEVĂR**, la timp — iar cu 2 stack-uri de Claritate active, lovitura primește bonus → 6 daune. Pagina Goală: 6 − 6 = 0 PV.
+**Runda 2 — Tura ta.** PA se resetează la 3, iar Obeliscurile blocate se deblochează. Activezi **Obeliscul Cuvântului Adevărat** (2 PA) → treapta I, cronometru 25s, literele **R-Ă-D-A-V-E**, indiciu: *„Opusul minciunii."* Răspunzi **ADEVĂR**, la timp → 1 daună (2 PV). Treapta II: corect → 2 daune. Pagina Goală: 0 PV.
+
+*De reținut din exemplu: două lanțuri rupte n-au fost o catastrofă — daunele au rămas pe tablă. Costul greșelii a fost pierderea ACCESULUI la două discipline pentru restul rundei, nu munca depusă până atunci.*
 
 **Victorie.** Recompense: Fragmente de Cunoaștere + o Pagină de Cronică nouă în Codex — *„Știai că...? Renașterea italiană e plasată convențional la începutul secolului XIV, în Florența."* Bucla se închide exact acolo unde ai vrut-o: joc, apoi un fapt real, mic, dar câștigat.
 
@@ -323,7 +334,7 @@ Din ~10 arhetipuri × ~10 modificatori ies sute de comportamente distincte, din 
 - **Când:** o dată, la generarea expediției — nu zilnic, nu la intrarea în luptă. Reintri în același nod, întâlnești același inamic. Predictibil în interiorul unui run, diferit între run-uri.
 - **Buget de dificultate** în funcție de adâncimea nodului și progresul jucătorului. Buget mic = arhetip simplu, fără modificatori. Buget mare = arhetip + 2 modificatori.
 - **Reguli de excludere**, ca să nu iasă combinații stupide sau nedrepte: fără barieră și vulnerabilitate pe aceeași disciplină, fără două arhetipuri care ambele accelerează ceasul.
-- **Conștient de loadout:** generatorul știe ce 3 discipline ai echipat. Poate garanta că cel puțin un nod cere disciplina lipsă (ca Regina să conteze) — dar niciodată toate, altfel devine pedeapsă, nu tensiune.
+- **Conștient de loadout:** generatorul știe ce 3 discipline ai echipat. Poate garanta că cel puțin un nod cere disciplina lipsă — dar niciodată toate, altfel devine pedeapsă, nu tensiune. (Cât timp Regina e amânată, regula asta e singura care ține alegerea loadout-ului relevantă fără s-o transforme în capcană.)
 - **Seed fixat per expediție** — permite reproducerea exactă a unui run la debugging, și deschide gratuit un mod „provocarea zilei" (toți jucătorii, aceeași hartă).
 
 ### Aspectul se decuplează de reguli
@@ -354,7 +365,8 @@ Cantitatea de conținut rezolvă doar repetiția, și numai pentru Trivia (celel
 - **PA (Puncte de Acțiune)** — resursa cheltuită pentru activarea Obeliscurilor.
 - **PV (Puncte de Viață)** — viața unei unități (jucător sau inamic).
 - **Recărcare** — perioada în care un Obelisc folosit nu poate fi reactivat.
-- **Claritate** — stack acumulat din răspunsuri corecte consecutive; oferă bonusuri crescânde.
+- **Lanț (Combo)** — șirul de întrebări declanșat de o singură activare de Obelisc: daune 1 / 2 / 3 pe primele trei trepte, apoi 3 fix, cu dublare la fiecare a 5-a treaptă. Se rupe la greșeală sau timeout; daunele acumulate rămân.
+- **Claritate** — statistica antrenată la Sanctuarul Ordinii (Sudoku): reduce Recărcarea și prelungește fereastra de timp a lanțului. *(Nu mai înseamnă „stack de răspunsuri corecte" — acel sens a fost înlocuit de sistemul de lanț.)*
 - **Scut** — strat temporar care absoarbe daune.
 - **Codex Viu** — jurnalul permanent de fapte reale, învățate în joc.
 - **Forță** — a cincea statistică; crește exclusiv din echipament, niciodată prin puzzle-uri; multiplică daunele finale.

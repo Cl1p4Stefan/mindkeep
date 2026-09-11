@@ -1,0 +1,20 @@
+[
+  { "singular": "cronicar", "plural": "cronicari", "articulat": "cronicarii", "gen": "m" },
+  { "singular": "calugar", "plural": "calugari", "articulat": "calugarii", "gen": "m" },
+  { "singular": "ostas", "plural": "ostasi", "articulat": "ostasii", "gen": "m" },
+  { "singular": "negustor", "plural": "negustori", "articulat": "negustorii", "gen": "m" },
+  { "singular": "cavaler", "plural": "cavaleri", "articulat": "cavalerii", "gen": "m" },
+  { "singular": "ucenic", "plural": "ucenici", "articulat": "ucenicii", "gen": "m" },
+  { "singular": "mester", "plural": "mesteri", "articulat": "mesterii", "gen": "m" },
+  { "singular": "calator", "plural": "calatori", "articulat": "calatorii", "gen": "m" },
+  { "singular": "corb", "plural": "corbi", "articulat": "corbii", "gen": "m" },
+  { "singular": "lup", "plural": "lupi", "articulat": "lupii", "gen": "m" },
+  { "singular": "soim", "plural": "soimi", "articulat": "soimii", "gen": "m" },
+  { "singular": "pisica", "plural": "pisici", "articulat": "pisicile", "gen": "f" },
+  { "singular": "vulpe", "plural": "vulpi", "articulat": "vulpile", "gen": "f" },
+  { "singular": "santinela", "plural": "santinele", "articulat": "santinelele", "gen": "f" },
+  { "singular": "calugarita", "plural": "calugarite", "articulat": "calugaritele", "gen": "f" },
+  { "singular": "corabie", "plural": "corabii", "articulat": "corabiile", "gen": "f" },
+  { "singular": "stea", "plural": "stele", "articulat": "stelele", "gen": "f" },
+  { "singular": "carte", "plural": "carti", "articulat": "cartile", "gen": "f" }
+]

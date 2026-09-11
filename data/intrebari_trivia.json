@@ -1,0 +1,319 @@
+[
+	{
+		"text": "În ce an a căzut Zidul Berlinului?",
+		"variante": ["1989", "1985", "1991", "1993"],
+		"corect": 0,
+		"nivel": 1,
+		"categorie": "istorie"
+	},
+	{
+		"text": "Cine a fost primul om care a pășit pe Lună?",
+		"variante": ["Buzz Aldrin", "Neil Armstrong", "Iuri Gagarin", "Michael Collins"],
+		"corect": 1,
+		"nivel": 1,
+		"categorie": "istorie"
+	},
+	{
+		"text": "Ce imperiu a construit Colosseumul din Roma?",
+		"variante": ["Imperiul Grec", "Imperiul Otoman", "Imperiul Roman", "Imperiul Bizantin"],
+		"corect": 2,
+		"nivel": 1,
+		"categorie": "istorie"
+	},
+	{
+		"text": "În ce an a început Primul Război Mondial?",
+		"variante": ["1912", "1918", "1939", "1914"],
+		"corect": 3,
+		"nivel": 1,
+		"categorie": "istorie"
+	},
+	{
+		"text": "Care planetă este cea mai apropiată de Soare?",
+		"variante": ["Venus", "Marte", "Mercur", "Pământ"],
+		"corect": 2,
+		"nivel": 1,
+		"categorie": "stiinta"
+	},
+	{
+		"text": "Care este simbolul chimic al aurului?",
+		"variante": ["Ag", "Fe", "Cu", "Au"],
+		"corect": 3,
+		"nivel": 1,
+		"categorie": "stiinta"
+	},
+	{
+		"text": "Câte oase are, aproximativ, scheletul unui om adult?",
+		"variante": ["106", "206", "306", "406"],
+		"corect": 1,
+		"nivel": 1,
+		"categorie": "stiinta"
+	},
+	{
+		"text": "Ce gaz absorb plantele din aer pentru fotosinteză?",
+		"variante": ["Oxigen", "Azot", "Dioxid de carbon", "Hidrogen"],
+		"corect": 2,
+		"nivel": 1,
+		"categorie": "stiinta"
+	},
+	{
+		"text": "Care este capitala Portugaliei?",
+		"variante": ["Lisabona", "Madrid", "Porto", "Barcelona"],
+		"corect": 0,
+		"nivel": 1,
+		"categorie": "geografie"
+	},
+	{
+		"text": "Care este cel mai mare ocean de pe Pământ?",
+		"variante": ["Oceanul Atlantic", "Oceanul Pacific", "Oceanul Indian", "Oceanul Arctic"],
+		"corect": 1,
+		"nivel": 1,
+		"categorie": "geografie"
+	},
+	{
+		"text": "Pe ce continent se află Egiptul?",
+		"variante": ["Asia", "Europa", "Africa", "America de Sud"],
+		"corect": 2,
+		"nivel": 1,
+		"categorie": "geografie"
+	},
+	{
+		"text": "Ce râu trece prin București?",
+		"variante": ["Dunărea", "Mureșul", "Oltul", "Dâmbovița"],
+		"corect": 3,
+		"nivel": 1,
+		"categorie": "geografie"
+	},
+	{
+		"text": "Cine a pictat „Mona Lisa”?",
+		"variante": ["Leonardo da Vinci", "Michelangelo", "Rafael", "Vincent van Gogh"],
+		"corect": 0,
+		"nivel": 1,
+		"categorie": "arta"
+	},
+	{
+		"text": "Cine a scris poemul „Luceafărul”?",
+		"variante": ["Ion Creangă", "Mihai Eminescu", "Tudor Arghezi", "George Coșbuc"],
+		"corect": 1,
+		"nivel": 1,
+		"categorie": "arta"
+	},
+	{
+		"text": "Ce instrument muzical are 88 de clape?",
+		"variante": ["Orga", "Acordeonul", "Pianul", "Clavecinul"],
+		"corect": 2,
+		"nivel": 1,
+		"categorie": "arta"
+	},
+
+	{
+		"text": "În ce secol a început, convențional, Renașterea italiană?",
+		"variante": ["Al XIII-lea", "Al XIV-lea", "Al XV-lea", "Al XVI-lea"],
+		"corect": 1,
+		"nivel": 2,
+		"categorie": "istorie"
+	},
+	{
+		"text": "Cine a fost primul domnitor al Principatelor Unite?",
+		"variante": ["Mihai Viteazul", "Carol I", "Tudor Vladimirescu", "Alexandru Ioan Cuza"],
+		"corect": 3,
+		"nivel": 2,
+		"categorie": "istorie"
+	},
+	{
+		"text": "Ce tratat de pace au semnat Aliații cu Germania, în 1919?",
+		"variante": ["Tratatul de la Versailles", "Tratatul de la Trianon", "Tratatul de la Saint-Germain", "Tratatul de la Neuilly"],
+		"corect": 0,
+		"nivel": 2,
+		"categorie": "istorie"
+	},
+	{
+		"text": "Cine a condus expediția care a realizat prima înconjurare a Pământului?",
+		"variante": ["Vasco da Gama", "Cristofor Columb", "Fernando Magellan", "Francis Drake"],
+		"corect": 2,
+		"nivel": 2,
+		"categorie": "istorie"
+	},
+	{
+		"text": "Cine a formulat teoria relativității?",
+		"variante": ["Niels Bohr", "Max Planck", "Werner Heisenberg", "Albert Einstein"],
+		"corect": 3,
+		"nivel": 2,
+		"categorie": "stiinta"
+	},
+	{
+		"text": "Care este formula chimică a apei?",
+		"variante": ["CO2", "O2", "NaCl", "H2O"],
+		"corect": 3,
+		"nivel": 2,
+		"categorie": "stiinta"
+	},
+	{
+		"text": "Ce organit produce energia în celulă?",
+		"variante": ["Nucleul", "Ribozomul", "Mitocondria", "Cloroplastul"],
+		"corect": 2,
+		"nivel": 2,
+		"categorie": "stiinta"
+	},
+	{
+		"text": "Ce lege spune că forța este egală cu masa înmulțită cu accelerația?",
+		"variante": ["Prima lege a lui Newton", "A doua lege a lui Newton", "Legea lui Ohm", "Legea lui Hooke"],
+		"corect": 1,
+		"nivel": 2,
+		"categorie": "stiinta"
+	},
+	{
+		"text": "Care este cel mai lung fluviu din Africa?",
+		"variante": ["Congo", "Nil", "Zambezi", "Niger"],
+		"corect": 1,
+		"nivel": 2,
+		"categorie": "geografie"
+	},
+	{
+		"text": "Ce fluviu trece prin Viena?",
+		"variante": ["Dunărea", "Rinul", "Sena", "Elba"],
+		"corect": 0,
+		"nivel": 2,
+		"categorie": "geografie"
+	},
+	{
+		"text": "Care este cel mai înalt vârf din România?",
+		"variante": ["Vârful Omu", "Vârful Negoiu", "Vârful Parângul Mare", "Vârful Moldoveanu"],
+		"corect": 3,
+		"nivel": 2,
+		"categorie": "geografie"
+	},
+	{
+		"text": "Care este capitala Australiei?",
+		"variante": ["Sydney", "Melbourne", "Canberra", "Perth"],
+		"corect": 2,
+		"nivel": 2,
+		"categorie": "geografie"
+	},
+	{
+		"text": "Cine a pictat „Cina cea de Taină”?",
+		"variante": ["Rafael", "Leonardo da Vinci", "Michelangelo", "Donatello"],
+		"corect": 1,
+		"nivel": 2,
+		"categorie": "arta"
+	},
+	{
+		"text": "Cine a compus Simfonia a IX-a, cea care include „Oda bucuriei”?",
+		"variante": ["Mozart", "Bach", "Beethoven", "Brahms"],
+		"corect": 2,
+		"nivel": 2,
+		"categorie": "arta"
+	},
+	{
+		"text": "Cine a scris romanul „Ion”?",
+		"variante": ["Liviu Rebreanu", "Marin Preda", "Camil Petrescu", "Mihail Sadoveanu"],
+		"corect": 0,
+		"nivel": 2,
+		"categorie": "arta"
+	},
+
+	{
+		"text": "Ce împărat roman a mutat capitala imperiului la Bizanț?",
+		"variante": ["Traian", "Constantin cel Mare", "Dioclețian", "Iustinian"],
+		"corect": 1,
+		"nivel": 3,
+		"categorie": "istorie"
+	},
+	{
+		"text": "În ce an s-a încheiat Războiul de Treizeci de Ani?",
+		"variante": ["1618", "1648", "1683", "1715"],
+		"corect": 1,
+		"nivel": 3,
+		"categorie": "istorie"
+	},
+	{
+		"text": "Ce dinastie a ridicat Marele Zid Chinezesc în forma lui de azi?",
+		"variante": ["Dinastia Han", "Dinastia Ming", "Dinastia Tang", "Dinastia Qing"],
+		"corect": 1,
+		"nivel": 3,
+		"categorie": "istorie"
+	},
+	{
+		"text": "Cine a fost ultimul împărat al Imperiului Bizantin?",
+		"variante": ["Constantin al XI-lea", "Ioan al VIII-lea", "Manuel al II-lea", "Mihail al VIII-lea"],
+		"corect": 0,
+		"nivel": 3,
+		"categorie": "istorie"
+	},
+	{
+		"text": "Ce particulă a fost confirmată experimental la CERN, în 2012?",
+		"variante": ["Neutrinul", "Quarcul top", "Gluonul", "Bosonul Higgs"],
+		"corect": 3,
+		"nivel": 3,
+		"categorie": "stiinta"
+	},
+	{
+		"text": "Cine a formulat principiul incertitudinii din mecanica cuantică?",
+		"variante": ["Erwin Schrödinger", "Paul Dirac", "Max Born", "Werner Heisenberg"],
+		"corect": 3,
+		"nivel": 3,
+		"categorie": "stiinta"
+	},
+	{
+		"text": "Ce element chimic are numărul atomic 79?",
+		"variante": ["Argintul", "Aurul", "Platina", "Cuprul"],
+		"corect": 1,
+		"nivel": 3,
+		"categorie": "stiinta"
+	},
+	{
+		"text": "Ce enzimă transcrie ARN-ul viral în ADN?",
+		"variante": ["ADN-polimeraza", "Ligaza", "Helicaza", "Reverstranscriptaza"],
+		"corect": 3,
+		"nivel": 3,
+		"categorie": "stiinta"
+	},
+	{
+		"text": "Care este cel mai adânc punct al oceanelor?",
+		"variante": ["Groapa Marianelor", "Groapa Tonga", "Groapa Filipinelor", "Groapa Kermadec"],
+		"corect": 0,
+		"nivel": 3,
+		"categorie": "geografie"
+	},
+	{
+		"text": "Care este cea mai întinsă țară din Africa?",
+		"variante": ["Sudan", "R.D. Congo", "Libia", "Algeria"],
+		"corect": 3,
+		"nivel": 3,
+		"categorie": "geografie"
+	},
+	{
+		"text": "Care este capitala Kazahstanului?",
+		"variante": ["Almatî", "Bișkek", "Astana", "Tașkent"],
+		"corect": 2,
+		"nivel": 3,
+		"categorie": "geografie"
+	},
+	{
+		"text": "Care este cel mai adânc lac din lume?",
+		"variante": ["Lacul Baikal", "Lacul Tanganyika", "Lacul Superior", "Marea Caspică"],
+		"corect": 0,
+		"nivel": 3,
+		"categorie": "geografie"
+	},
+	{
+		"text": "Cine a compus opera „Flautul fermecat”?",
+		"variante": ["Mozart", "Beethoven", "Haydn", "Schubert"],
+		"corect": 0,
+		"nivel": 3,
+		"categorie": "arta"
+	},
+	{
+		"text": "Ce curent artistic au fondat Tristan Tzara și Marcel Duchamp?",
+		"variante": ["Cubismul", "Suprarealismul", "Dadaismul", "Futurismul"],
+		"corect": 2,
+		"nivel": 3,
+		"categorie": "arta"
+	},
+	{
+		"text": "În ce oraș se află „Coloana fără sfârșit” a lui Brâncuși?",
+		"variante": ["Craiova", "Hobița", "Târgu Jiu", "Sibiu"],
+		"corect": 2,
+		"nivel": 3,
+		"categorie": "arta"
+	}
+]

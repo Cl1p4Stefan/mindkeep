@@ -1,0 +1,14 @@
+# Godot
+.godot/
+.import/
+*.import
+export_presets.cfg
+
+# Assets binare
+*.png
+*.jpg
+*.ogg
+*.wav
+
+# Sistem
+.DS_Store

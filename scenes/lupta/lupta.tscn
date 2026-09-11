@@ -1,8 +1,49 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene format=3 uid="uid://sfryvevow115"]
 
-[ext_resource type="Script" path="res://scenes/lupta/lupta.gd" id="1_lupta"]
+[ext_resource type="Script" uid="uid://c4s64fjctihh7" path="res://scenes/lupta/lupta.gd" id="1_lupta"]
+[ext_resource type="Script" uid="uid://kct2n64sddtu" path="res://scenes/lupta/iconita_sabie.gd" id="2_sabie"]
+[ext_resource type="Script" uid="uid://5cjg4b6vl1bm" path="res://scenes/lupta/silueta_rege.gd" id="3_rege"]
+[ext_resource type="Script" uid="uid://b6764844xjw87" path="res://scenes/lupta/silueta_cavaler.gd" id="4_cavaler"]
+[ext_resource type="Script" uid="uid://dqftvq1clv26c" path="res://scenes/lupta/impact.gd" id="5_impact"]
+[ext_resource type="Texture2D" uid="uid://cd0p0tg2xv8cq" path="res://assets/art/rege.png" id="6_rege"]
+[ext_resource type="Texture2D" uid="uid://dqkst7wja0gd1" path="res://assets/art/cavaler_sters.png" id="7_cavaler"]
 
-[node name="Lupta" type="Control"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_puzzle"]
+bg_color = Color(0.11, 0.11, 0.15, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.3, 0.3, 0.38, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_card"]
+bg_color = Color(0.13, 0.13, 0.17, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.32, 0.32, 0.4, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rama"]
+content_margin_left = 14.0
+content_margin_top = 12.0
+content_margin_right = 14.0
+content_margin_bottom = 12.0
+bg_color = Color(0.17, 0.17, 0.22, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[node name="Lupta" type="Control" unique_id=1499170396]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -11,7 +52,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_lupta")
 
-[node name="Fundal" type="ColorRect" parent="."]
+[node name="Fundal" type="ColorRect" parent="." unique_id=784915322]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -20,122 +61,458 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.09, 0.09, 0.12, 1)
 
-[node name="Margini" type="MarginContainer" parent="."]
+[node name="Margini" type="MarginContainer" parent="." unique_id=592927841]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 40
-theme_override_constants/margin_top = 24
-theme_override_constants/margin_right = 40
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 32
 theme_override_constants/margin_bottom = 24
 
-[node name="Coloana" type="VBoxContainer" parent="Margini"]
+[node name="Coloana" type="VBoxContainer" parent="Margini" unique_id=356318751]
 layout_mode = 2
-theme_override_constants/separation = 10
+theme_override_constants/separation = 14
 
-[node name="Runda" type="Label" parent="Margini/Coloana"]
+[node name="Runda" type="Label" parent="Margini/Coloana" unique_id=1507416769]
 unique_name_in_owner = true
 layout_mode = 2
 text = "RUNDA 1"
 horizontal_alignment = 1
 
-[node name="InamicDreptunghi" type="ColorRect" parent="Margini/Coloana"]
-custom_minimum_size = Vector2(0, 120)
-layout_mode = 2
-color = Color(0.65, 0.2, 0.22, 1)
-
-[node name="InamicPV" type="Label" parent="Margini/Coloana"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "INAMIC"
-horizontal_alignment = 1
-
-[node name="InamicBaraPV" type="ProgressBar" parent="Margini/Coloana"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 22)
-layout_mode = 2
-max_value = 12.0
-value = 12.0
-show_percentage = false
-
-[node name="InamicCeasEticheta" type="Label" parent="Margini/Coloana"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "CEAS"
-horizontal_alignment = 1
-
-[node name="InamicBaraCeas" type="ProgressBar" parent="Margini/Coloana"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 22)
-layout_mode = 2
-modulate = Color(1, 0.75, 0.3, 1)
-max_value = 3.0
-value = 0.0
-show_percentage = false
-
-[node name="Jurnal" type="Label" parent="Margini/Coloana"]
-unique_name_in_owner = true
+[node name="Arena" type="HBoxContainer" parent="Margini/Coloana" unique_id=1327117814]
 layout_mode = 2
 size_flags_vertical = 3
-text = "..."
-horizontal_alignment = 1
-vertical_alignment = 1
-autowrap_mode = 3
+theme_override_constants/separation = 16
 
-[node name="JucatorPV" type="Label" parent="Margini/Coloana"]
+[node name="JucatorBaraPV" type="ProgressBar" parent="Margini/Coloana/Arena" unique_id=198570358]
 unique_name_in_owner = true
+modulate = Color(0.35, 0.85, 0.45, 1)
+custom_minimum_size = Vector2(26, 0)
 layout_mode = 2
-text = "REGELE (tu)"
-horizontal_alignment = 1
-
-[node name="JucatorBaraPV" type="ProgressBar" parent="Margini/Coloana"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 22)
-layout_mode = 2
-modulate = Color(0.45, 0.75, 1, 1)
-max_value = 30.0
-value = 30.0
+size_flags_vertical = 3
+max_value = 15.0
+value = 15.0
+fill_mode = 3
 show_percentage = false
 
-[node name="PAEticheta" type="Label" parent="Margini/Coloana"]
+[node name="ZonaJucator" type="VBoxContainer" parent="Margini/Coloana/Arena" unique_id=2050712503]
+custom_minimum_size = Vector2(190, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="FiguraJucator" type="Control" parent="Margini/Coloana/Arena/ZonaJucator" unique_id=1730462313]
+layout_mode = 2
+size_flags_vertical = 3
+script = ExtResource("5_impact")
+
+[node name="JucatorSilueta" type="Control" parent="Margini/Coloana/Arena/ZonaJucator/FiguraJucator" unique_id=965609832]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_rege")
+
+[node name="JucatorImagine" type="TextureRect" parent="Margini/Coloana/Arena/ZonaJucator/FiguraJucator" unique_id=2076021233]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_rege")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="InfoJucator" type="VBoxContainer" parent="Margini/Coloana/Arena/ZonaJucator" unique_id=1826623890]
+custom_minimum_size = Vector2(0, 84)
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="JucatorPV" type="Label" parent="Margini/Coloana/Arena/ZonaJucator/InfoJucator" unique_id=855871665]
 unique_name_in_owner = true
 layout_mode = 2
-text = "PA: @@@"
+theme_override_font_sizes/font_size = 14
+text = "REGELE (tu)"
 horizontal_alignment = 1
+clip_text = true
 
-[node name="RandObeliscuri" type="HBoxContainer" parent="Margini/Coloana"]
+[node name="ZonaPuzzle" type="PanelContainer" parent="Margini/Coloana/Arena" unique_id=149564924]
+unique_name_in_owner = true
+visible = false
+clip_contents = true
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_puzzle")
+
+[node name="ZonaInamic" type="VBoxContainer" parent="Margini/Coloana/Arena" unique_id=422630560]
+custom_minimum_size = Vector2(190, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="FiguraInamic" type="Control" parent="Margini/Coloana/Arena/ZonaInamic" unique_id=1988581682]
+layout_mode = 2
+size_flags_vertical = 3
+script = ExtResource("5_impact")
+
+[node name="InamicSilueta" type="Control" parent="Margini/Coloana/Arena/ZonaInamic/FiguraInamic" unique_id=140556803]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("4_cavaler")
+durata_respiratie = 3.1
+decalaj = 1.3
+
+[node name="InamicImagine" type="TextureRect" parent="Margini/Coloana/Arena/ZonaInamic/FiguraInamic" unique_id=323946544]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("7_cavaler")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="InfoInamic" type="VBoxContainer" parent="Margini/Coloana/Arena/ZonaInamic" unique_id=751462097]
+custom_minimum_size = Vector2(0, 84)
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="InamicNume" type="Button" parent="Margini/Coloana/Arena/ZonaInamic/InfoInamic" unique_id=711671863]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "INAMIC"
+flat = true
+text_overrun_behavior = 3
+clip_text = true
+
+[node name="InamicBaraCeas" type="ProgressBar" parent="Margini/Coloana/Arena/ZonaInamic/InfoInamic" unique_id=2063890791]
+unique_name_in_owner = true
+modulate = Color(1, 0.75, 0.3, 1)
+custom_minimum_size = Vector2(0, 12)
+layout_mode = 2
+max_value = 3.0
+show_percentage = false
+
+[node name="RandIntentie" type="HBoxContainer" parent="Margini/Coloana/Arena/ZonaInamic/InfoInamic" unique_id=1765292483]
+layout_mode = 2
+theme_override_constants/separation = 6
+alignment = 1
+
+[node name="IconitaSabie" type="Control" parent="Margini/Coloana/Arena/ZonaInamic/InfoInamic/RandIntentie" unique_id=211350726]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(15, 24)
+layout_mode = 2
+size_flags_vertical = 4
+script = ExtResource("2_sabie")
+
+[node name="InamicIntentie" type="Label" parent="Margini/Coloana/Arena/ZonaInamic/InfoInamic/RandIntentie" unique_id=1531240686]
+unique_name_in_owner = true
+modulate = Color(0.96, 0.6, 0.5, 1)
+layout_mode = 2
+theme_override_font_sizes/font_size = 19
+text = "3"
+vertical_alignment = 1
+
+[node name="InamicBaraPV" type="ProgressBar" parent="Margini/Coloana/Arena" unique_id=540229722]
+unique_name_in_owner = true
+modulate = Color(0.88, 0.28, 0.3, 1)
+custom_minimum_size = Vector2(26, 0)
+layout_mode = 2
+size_flags_vertical = 3
+max_value = 30.0
+value = 30.0
+fill_mode = 3
+show_percentage = false
+
+[node name="PAPuncte" type="HBoxContainer" parent="Margini/Coloana" unique_id=1240059005]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 16)
+layout_mode = 2
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="RandObeliscuri" type="HBoxContainer" parent="Margini/Coloana" unique_id=2040098009]
 layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="Obelisc1" type="Button" parent="Margini/Coloana/RandObeliscuri"]
+[node name="Obelisc1" type="Button" parent="Margini/Coloana/RandObeliscuri" unique_id=970793659]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 90)
+modulate = Color(0.6, 0.85, 1, 1)
+custom_minimum_size = Vector2(0, 78)
 layout_mode = 2
 size_flags_horizontal = 3
-modulate = Color(0.6, 0.85, 1, 1)
 text = "Obelisc 1"
 
-[node name="Obelisc2" type="Button" parent="Margini/Coloana/RandObeliscuri"]
+[node name="Obelisc2" type="Button" parent="Margini/Coloana/RandObeliscuri" unique_id=1327067381]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 90)
+modulate = Color(0.7, 1, 0.6, 1)
+custom_minimum_size = Vector2(0, 78)
 layout_mode = 2
 size_flags_horizontal = 3
-modulate = Color(0.7, 1, 0.6, 1)
 text = "Obelisc 2"
 
-[node name="Obelisc3" type="Button" parent="Margini/Coloana/RandObeliscuri"]
+[node name="Obelisc3" type="Button" parent="Margini/Coloana/RandObeliscuri" unique_id=839194762]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 90)
+modulate = Color(1, 0.85, 0.55, 1)
+custom_minimum_size = Vector2(0, 78)
 layout_mode = 2
 size_flags_horizontal = 3
-modulate = Color(1, 0.85, 0.55, 1)
 text = "Obelisc 3"
 
-[node name="IncheieTura" type="Button" parent="Margini/Coloana"]
+[node name="IncheieTura" type="Button" parent="Margini/Coloana" unique_id=561223139]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 56)
+custom_minimum_size = Vector2(0, 52)
 layout_mode = 2
 text = "Incheie tura"
+
+[node name="ButonJurnal" type="Button" parent="." unique_id=548482663]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -92.0
+offset_top = 8.0
+offset_right = -12.0
+offset_bottom = 36.0
+grow_horizontal = 0
+theme_override_font_sizes/font_size = 12
+text = "JURNAL"
+
+[node name="JurnalPanou" type="Control" parent="." unique_id=2026529169]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Voal" type="ColorRect" parent="JurnalPanou" unique_id=1384662691]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.04, 0.04, 0.06, 1)
+
+[node name="Margini" type="MarginContainer" parent="JurnalPanou" unique_id=705389500]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 24
+
+[node name="Coloana" type="VBoxContainer" parent="JurnalPanou/Margini" unique_id=2129393093]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Titlu" type="Label" parent="JurnalPanou/Margini/Coloana" unique_id=927471986]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "JURNALUL LUPTEI"
+horizontal_alignment = 1
+
+[node name="Derulare" type="ScrollContainer" parent="JurnalPanou/Margini/Coloana" unique_id=1010036248]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="JurnalText" type="Label" parent="JurnalPanou/Margini/Coloana/Derulare" unique_id=13277588]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "..."
+autowrap_mode = 3
+
+[node name="ButonInchide" type="Button" parent="JurnalPanou/Margini/Coloana" unique_id=543567131]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 44)
+layout_mode = 2
+text = "Inapoi la lupta"
+
+[node name="CardInamic" type="Control" parent="." unique_id=111070502]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VoalCard" type="ColorRect" parent="CardInamic" unique_id=172996969]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.04, 0.04, 0.06, 0.72)
+
+[node name="Centru" type="CenterContainer" parent="CardInamic" unique_id=105195846]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Panou" type="PanelContainer" parent="CardInamic/Centru" unique_id=56916785]
+custom_minimum_size = Vector2(560, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_card")
+
+[node name="Margini" type="MarginContainer" parent="CardInamic/Centru/Panou" unique_id=1698472905]
+layout_mode = 2
+theme_override_constants/margin_left = 26
+theme_override_constants/margin_top = 18
+theme_override_constants/margin_right = 26
+theme_override_constants/margin_bottom = 18
+
+[node name="Coloana" type="VBoxContainer" parent="CardInamic/Centru/Panou/Margini" unique_id=883600182]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="CentruPortret" type="CenterContainer" parent="CardInamic/Centru/Panou/Margini/Coloana" unique_id=1253582833]
+layout_mode = 2
+
+[node name="RamaPortret" type="PanelContainer" parent="CardInamic/Centru/Panou/Margini/Coloana/CentruPortret" unique_id=1761890326]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_rama")
+
+[node name="PortretInamic" type="Control" parent="CardInamic/Centru/Panou/Margini/Coloana/CentruPortret/RamaPortret" unique_id=193176674]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(96, 167)
+layout_mode = 2
+script = ExtResource("4_cavaler")
+decalaj = 0.5
+
+[node name="PortretImagine" type="TextureRect" parent="CardInamic/Centru/Panou/Margini/Coloana/CentruPortret/RamaPortret" unique_id=1836028046]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(96, 167)
+layout_mode = 2
+texture = ExtResource("7_cavaler")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="CardTitlu" type="Label" parent="CardInamic/Centru/Panou/Margini/Coloana" unique_id=849627248]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "INAMIC"
+horizontal_alignment = 1
+
+[node name="CardDescriere" type="Label" parent="CardInamic/Centru/Panou/Margini/Coloana" unique_id=176069679]
+unique_name_in_owner = true
+modulate = Color(0.72, 0.72, 0.8, 1)
+layout_mode = 2
+theme_override_font_sizes/font_size = 15
+text = "..."
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="CardRanduri" type="VBoxContainer" parent="CardInamic/Centru/Panou/Margini/Coloana" unique_id=387698499]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="CardInchide" type="Button" parent="CardInamic/Centru/Panou/Margini/Coloana" unique_id=1491220876]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 44)
+layout_mode = 2
+text = "Inapoi la lupta"
+
+[node name="PanouVictorie" type="Control" parent="." unique_id=1779088395]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VoalVictorie" type="ColorRect" parent="PanouVictorie" unique_id=1094223868]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.04, 0.04, 0.06, 0.76)
+
+[node name="Centru" type="CenterContainer" parent="PanouVictorie" unique_id=895638574]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Panou" type="PanelContainer" parent="PanouVictorie/Centru" unique_id=1529920641]
+custom_minimum_size = Vector2(460, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_card")
+
+[node name="Margini" type="MarginContainer" parent="PanouVictorie/Centru/Panou" unique_id=538468025]
+layout_mode = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 26
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 26
+
+[node name="Coloana" type="VBoxContainer" parent="PanouVictorie/Centru/Panou/Margini" unique_id=1459615856]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="VictorieTitlu" type="Label" parent="PanouVictorie/Centru/Panou/Margini/Coloana" unique_id=1376913252]
+modulate = Color(1, 0.85, 0.45, 1)
+layout_mode = 2
+theme_override_font_sizes/font_size = 34
+text = "VICTORIE"
+horizontal_alignment = 1
+
+[node name="VictorieText" type="Label" parent="PanouVictorie/Centru/Panou/Margini/Coloana" unique_id=1512137478]
+unique_name_in_owner = true
+modulate = Color(0.78, 0.78, 0.86, 1)
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "..."
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="VictorieContinua" type="Button" parent="PanouVictorie/Centru/Panou/Margini/Coloana" unique_id=972778399]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+text = "Continua"
