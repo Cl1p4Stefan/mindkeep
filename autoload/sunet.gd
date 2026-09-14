@@ -41,6 +41,21 @@ const VOLUM_DB := -6.0
 ## priorități — dacă toate trei cântă, a patra cerere o fură pe cea mai veche.
 const VOCI := 3
 
+## Volumul TUNETULUI de critic, în decibeli. Al doilea reglaj de volum pentru
+## efectele din rotație — și singurul care iese din `VOLUM_DB` de mai sus.
+##
+## De ce nu împarte volumul cu „corect"/„greșit": alea sună la FIECARE răspuns,
+## iar tunetul o dată la cinci. Un sunet rar are voie să fie mai mare decât unul
+## des — asta e chiar diferența dintre „ai răspuns" și „ai făcut ceva special".
+## La același volum cu bipul, criticul ar fi doar încă un răspuns corect, cu alt
+## timbru.
+##
+## +2 dB peste restul efectelor, nu mai mult: tunetul e deja un sunet lat, care
+## ocupă mult spectru, deci pare mai tare decât arată numărul. Dacă te face să
+## tresari, ĂSTA e singurul număr de schimbat — nu `VOLUM_DB`, care ar trage și
+## verdictele după el.
+const VOLUM_CRITIC_DB := -4.0
+
 ## Volumul TICĂITULUI de ceas, în decibeli. Reglaj propriu, separat de
 ## `VOLUM_DB` de mai sus — și trebuie să rămână separat.
 ##
@@ -71,7 +86,7 @@ const VOLUM_TICAIT_DB := -16.0
 const CALE_TICAIT := "res://assets/audio/clock_tick.ogg"
 
 ## Volumul VERDICTELOR FINALE (victorie / înfrângere), în decibeli.
-## Al treilea reglaj de volum din fișier, și ultimul.
+## Al patrulea reglaj de volum din fișier, și ultimul.
 ##
 ## De ce nu împarte `VOLUM_DB` cu „corect"/„greșit": alea sunt bipuri de câteva
 ## zecimi de secundă, tăiate scurt și normalizate tare ca să treacă peste
@@ -105,11 +120,26 @@ const VOLUM_TACERE_DB := -60.0
 enum Efect {
 	CORECT,
 	GRESIT,
+	CRITIC,
 }
 
 const EFECTE := {
 	Efect.CORECT: "res://assets/audio/correct_answer.ogg",
 	Efect.GRESIT: "res://assets/audio/incorrect_answer.ogg",
+	Efect.CRITIC: "res://assets/audio/critical_thunder.ogg",
+}
+
+## EXCEPȚIILE DE VOLUM. Un efect care nu apare aici cântă la `VOLUM_DB`; unul
+## care apare își aduce propriul număr.
+##
+## De ce un tabel și nu încă un `AudioStreamPlayer` cu nume, ca la ticăit și la
+## verdicte: alea au nevoie de un difuzor al lor fiindcă trebuie să poată fi
+## OPRITE la comandă. Tunetul e „dă-i drumul și uită de el", exact ca bipurile —
+## îi trebuie doar alt volum, nu alt difuzor. Un tabel de excepții ține reglajul
+## aici, lângă celelalte, în loc să-l trimită ca argument din scena de luptă,
+## unde ar deveni un număr rătăcit prin cod de joc.
+const VOLUM_EFECT := {
+	Efect.CRITIC: VOLUM_CRITIC_DB,
 }
 
 ## VERDICTELE FINALE — sfârșitul unei lupte, într-un sunet.
@@ -234,8 +264,13 @@ func reda(efect: int) -> void:
 
 	player.stream = _incarcate[efect]
 	# Volumul se rescrie la fiecare redare, nu doar la pornire: așa poți schimba
-	# `VOLUM_DB` și îl auzi la reîncărcarea scenei, fără repornirea jocului.
-	player.volume_db = VOLUM_DB
+	# reglajul și îl auzi la reîncărcarea scenei, fără repornirea jocului.
+	#
+	# Și TREBUIE rescris, nu doar pus o dată în `_ready()`: vocile se rotesc, deci
+	# difuzorul ăsta a cântat data trecută alt efect, poate cu alt volum. Fără
+	# linia asta, un „corect" nimerit pe voce după un tunet ar moșteni volumul
+	# tunetului — un bip mai tare o dată la trei, fără nicio cauză vizibilă.
+	player.volume_db = VOLUM_EFECT.get(efect, VOLUM_DB)
 	player.play()
 
 

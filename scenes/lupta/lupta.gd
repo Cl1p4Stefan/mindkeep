@@ -517,6 +517,18 @@ func ruleaza_lant(index: int) -> void:
 		# lângă cifră, exact în cadrul în care bara inamicului scade dublu —
 		# așa cauza și efectul se văd în același moment.
 		puzzle.arata_combo(_text_combo(), TEXT_CRITIC if critica else "")
+		if critica:
+			# TUNETUL, în același cadru cu marcajul portocaliu de mai sus.
+			# Asta e toată sincronizarea: sunetul și flash-ul pleacă din
+			# aceeași linie de cod, deci din aceeași bătaie a jocului — n-ai
+			# ce potrivi cu mâna și nu se pot desincroniza mai târziu.
+			#
+			# DE CE AICI ȘI NU ÎN DISCIPLINĂ: „critic" e vocabular de luptă,
+			# exact ca `TEXT_CRITIC`. Trivia și Logica primesc un String pe
+			# care îl aprind, fără să afle vreodată ce înseamnă; dacă sunetul
+			# ar fi pornit de acolo, fiecare disciplină nouă ar trebui să-și
+			# amintească să-l pună. Așa, a treia disciplină îl are pe gratis.
+			Sunet.reda(Sunet.Efect.CRITIC)
 
 		# Daunele treptei se aplică IMEDIAT, nu la finalul lanțului.
 		var daune := daune_treapta(treapta)
