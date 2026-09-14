@@ -1,6 +1,6 @@
 # MINDKEEP — Jurnal de progres
 
-*Ultima actualizare: 10 septembrie 2026*
+*Ultima actualizare: 14 septembrie 2026*
 *Atașează acest fișier la începutul fiecărei sesiuni noi, împreună cu `CLAUDE.md` și `docs/pitch-document.md`.*
 
 ---
@@ -23,6 +23,409 @@
 Am sărit peste ordinea recomandată la pasul 12 (artă): imaginile pentru rege și
 cavaler au intrat mai devreme, dar restul rămâne placeholder. Bucla de luptă e
 în continuare cea validată, nu arta.
+
+---
+
+## Sesiunea de scalare (14 septembrie 2026) — de ce se vedea textul pixelat
+
+**Simptomul:** textul arăta moale și zimțat, iar jocul se deschidea într-o
+fereastră de 922×518 în loc de 1152×648.
+
+**Cauza, măsurată nu ghicită:** am fotografiat aceeași scenă la trei
+dimensiuni de fereastră și am mărit zona de text de 7 ori.
+
+| Fereastră | Factor de scalare | Cum arată textul |
+|---|---|---|
+| 922×518 | 0,80 | cuvintele se lipesc, liniile literelor au grosimi inegale |
+| 1152×648 | 1,00 | curat |
+| 1920×1080 | 1,67 | curat |
+
+Regula pe care o arată tabelul: **modul `canvas_items` redesenează literele
+când mărește, dar le micșorează ca pe o poză când scade sub 1,0.** Un „A"
+desenat la 14 pixeli și înghesuit în 11 pixeli nu mai are din ce să-și facă
+liniile. Nu e o setare greșită — e limita fizică a micșorării.
+
+De unde venea 922×518: din Godot 4.4 încoace, editorul **încorporează jocul
+într-un panou** (`Game`), iar panoul îi impune dimensiunea lui. Ecranul e
+1920×1080 la DPI 96, deci nu era vorba de scalare Windows.
+
+### Ce s-a schimbat
+
+- **`autoload/fereastra.gd`** (nou, al treilea autoload) — fixează
+  `min_size` la exact dimensiunea pânzei, citită din setările proiectului.
+  Fereastra reală nu mai poate coborî sub factorul 1,0. Are o plasă de
+  siguranță: pe un ecran mai mic decât pânza, minimul coboară la cât încape,
+  ca fereastra să rămână apucabilă.
+- **`project.godot`** — pânza de desen scrisă explicit (1152×648, cât era
+  implicit, ca să nu se schimbe nimic vizual), `scale_mode=fractional`,
+  filtrarea implicită a texturilor pe `Linear Mipmap`, MSAA 2D pe 2×.
+- **`assets/art/*.import`** — `mipmaps/generate=true`. Sursele sunt 379×658
+  dar portretul din cardul inamicului se afișează la 96×167 (micșorare de 4×);
+  fără mipmaps, placa video citea 1 pixel din 16. În Godot 4 filtrarea NU mai
+  e o opțiune de import ca în Godot 3 — s-a mutat pe nod, cu implicitul luat
+  din `rendering/textures/canvas_textures/default_texture_filter`.
+- `detect_3d/compress_to=0` pe ambele imagini, ca Godot să nu le reimporte
+  singur cu compresie VRAM (cu pierderi) dacă ajung vreodată lângă ceva 3D.
+
+### Ce a rămas deschis
+
+**Panoul `Game` din editor ignoră `min_size`.** Dacă textul arată prost când
+apeși Play dar bine în jocul rulat separat, ăla e panoul. Se dezactivează din
+Editor Settings → Run → Window Placement → **Game Embed Mode = Disabled**
+(e o setare a editorului, globală pe toate proiectele, de-aia n-a fost
+schimbată automat).
+
+**Arta finală să fie comandată la 2× față de cât se afișează** (~800 px lățime
+pentru figurile din arenă, nu 379). Azi, pe un monitor 4K, scalarea ajunge la
+2,2× și imaginile sunt afișate peste rezoluția lor nativă.
+
+---
+
+## Sesiunea atenuării (13 septembrie 2026) — muzica se dă la o parte
+
+**Ce s-a schimbat:** cât timp e o întrebare pe ecran, muzica de luptă coboară
+cu 9 dB și urcă la loc când panoul se închide. Fade de 0,3 s în ambele sensuri.
+Efectele sonore (`Sunet`) nu sunt atinse — verdictul „corect/greșit" se aude
+chiar mai clar, fiindcă muzica i-a făcut loc.
+
+Termenul din audio e **ducking**: fundalul se retrage când apare ceva mai
+important. La radio, vocea peste melodie; aici, întrebarea peste luptă.
+
+### Volumul, în două straturi
+
+Asta e schimbarea reală din `muzica.gd`. Difuzorul nu mai e scris direct
+nicăieri; volumul lui e mereu suma a două valori independente:
+
+```
+volume_db = _volum_baza + _atenuare_db
+```
+
+| Strat | Ce înseamnă | Cine trage de el | Cât durează |
+|---|---|---|---|
+| `_volum_baza` | „cât de tare e piesa asta" | `reda()`, `opreste()` | 2 s (`DURATA_FADE`) |
+| `_atenuare_db` | „cu cât o dăm mai încet ACUM" | `atenueaza()`, `restabileste()` | 0,3 s (`DURATA_ATENUARE`) |
+
+**De ce două valori și nu una.** Cu o singură proprietate animată, cele două
+fade-uri s-ar fi bătut pe ea. Cazul concret: intri în luptă, muzica urcă lin
+timp de 2 s, tu apeși un Obelisc la secunda 1 — atenuarea ar fi omorât
+intrarea la mijloc, iar la închiderea panoului muzica ar fi SĂRIT la volum
+plin, pentru că nimeni nu mai ținea minte că intrarea nu se terminase.
+Separate, nu se văd una pe alta. Verificat: fade de 2 s cu atenuare pornită la
+0,5 s ajunge la exact -21 dB, iar restabilirea îl duce înapoi la -12 dB.
+
+Suma se recalculează prin **setere** (`var x: set(valoare): ...`) — cod care
+rulează automat de fiecare dată când cineva scrie în variabilă, inclusiv un
+Tween care scrie de ~60 de ori pe secundă. Fără `_process` și fără să ne
+amintim noi. Tween-urile animă acum `self:_volum_baza`, nu `player:volume_db`.
+
+### Trei locuri în `lupta.gd`, și de ce exact acolo
+
+| Loc | Apel | De ce acolo |
+|---|---|---|
+| `deschide_panou()` | `Muzica.atenueaza()` | **Înainte de gardă**, intenționat: la o treaptă nouă din același lanț funcția iese imediat, dar muzica trebuie să rămână jos pe tot lanțul |
+| `inchide_panou()` | `Muzica.restabileste()` | La ÎNCEPUTUL animației, nu la final: muzica (0,3 s) urcă odată cu retragerea panoului (0,55 s), o singură mișcare |
+| `ascunde_panou_acum()` | `Muzica.restabileste()` | Plasa de siguranță — victoria și resetarea sar peste închiderea animată. Fără ea, un inamic ucis în mijlocul unui lanț lăsa muzica atenuată pentru tot restul partidei |
+
+**Cheia pentru lanțuri: ambele funcții sunt idempotente.** `atenueaza()` cheamă
+a doua oară nu mișcă nimic (flagul `_atenuata`). Fără asta, muzica ar fi urcat
+și coborât între fiecare două trepte — exact zgomotul pe care atenuarea trebuia
+să-l scoată. Verificat: a doua chemare dă o deviație de 0,0000 dB.
+
+**Reglajele**, dacă vrei alt echilibru: `ATENUARE_DB` (azi -9.0) și
+`DURATA_ATENUARE` (azi 0.3), amândouă sus în `autoload/muzica.gd`.
+
+**Ce NU știe `Muzica`:** ce e un puzzle, un panou sau un lanț de combo. Primește
+o comandă („mai încet acum") și atât — deci atenuarea e refolosibilă pentru o
+cinematică din Cetate sau un eveniment de pe hartă, fără nicio linie nouă.
+
+**De testat pe mână:** atenuarea a fost verificată prin rulare automată
+(valorile în dB sunt exacte), dar dacă -9 dB e alegerea bună se simte doar
+jucând. Intră într-o luptă, pornește un lanț lung și vezi dacă muzica se retrage
+suficient cât să te lase să gândești, fără să pară că s-a stricat ceva.
+
+---
+
+## Sesiunea sunetului (13 septembrie 2026) — verdictul se aude
+
+**Ce s-a schimbat:** răspunsul are acum și sunet, nu doar culoare. Două fișiere
+(`correct_answer.ogg`, `incorrect_answer.ogg`), un regizor nou, și exact două
+locuri din care se cheamă.
+
+| Situație | Ce se aude | Când, exact |
+|---|---|---|
+| Răspuns corect | `correct_answer.ogg` | TIMPUL 3, în același cadru cu verdele |
+| Răspuns greșit | `incorrect_answer.ogg` | TIMPUL 3, în același cadru cu roșul + verdele |
+| Timp expirat | `incorrect_answer.ogg` | TIMPUL 1, în același cadru cu fulgerul barei |
+
+### `Sunet` — al doilea autoload, frate cu `Muzica`
+
+`autoload/sunet.gd`, înregistrat în `project.godot` sub `Sunet`. Aceeași formă
+ca `Muzica`: enum + tabel de căi, `ResourceLoader.exists()` ca plasă de
+siguranță, difuzoare construite din cod. Un efect nou = un rând în enum, un
+rând în tabel.
+
+**De ce un al doilea regizor și nu o metodă în `Muzica`.** Muzica e UNA, cântă
+minute întregi și are nevoie de fade-uri; efectele sunt MULTE, durează sub o
+secundă și trebuie să pornească instant. Dacă ar împărți un
+`AudioStreamPlayer`, un „corect" ar tăia muzica de luptă în mijloc. Două
+regizoare înseamnă și două volume reglabile separat — `Sunet.VOLUM_DB` e
+azi -6 dB, deasupra celor -12 dB ai muzicii, fiindcă muzica e fundal și n-are
+voie să fie observată, iar verdictul e informație și trebuie să treacă peste ea
+fără efort. Astea sunt singurele două numere de reglat dacă mixul sună prost.
+
+**Trei voci, nu una.** Un singur `AudioStreamPlayer` ține o singură voce: la al
+doilea sunet îl taie pe primul. Azi n-ar deranja (între două verdicte trec
+secunde), dar primul sunet de daune pus peste „corect" s-ar tăia cu el, iar
+cauza s-ar căuta în fișierul .ogg, nu în cod. `VOCI := 3`, rotite în cerc —
+rotația e oarbă, dar garantează că două cereri din același cadru nimeresc
+difuzoare diferite. O căutare de „voce liberă" n-ar garanta asta: în același
+cadru niciuna n-a apucat încă să raporteze că e ocupată.
+
+**Încărcate o dată, la pornire**, nu la fiecare `reda()`. `load()` citește de
+pe disc, iar o citire de pe disc în mijlocul unei lupte e exact mica sacadare
+care ar strica sincronizarea cerută.
+
+### Sincronizarea: nu e o potrivire, e o poziție în cod
+
+Cerința era ca sunetul și flash-ul să se simtă un singur moment. Soluția n-are
+niciun număr în ea: `Sunet.reda()` stă **în interiorul funcțiilor care
+desenează**, nu lângă ele.
+
+- `_aprinde_raspunsul()` — prima linie, deasupra tween-ului de culoare;
+- `_fulgera_bara_expirata()` — prima linie, deasupra tween-ului barei.
+
+Culoarea și sunetul pleacă din aceeași funcție, deci din aceeași bătaie a
+jocului. Nu e nimic de potrivit cu mâna și, mai important, **nu se pot
+desincroniza mai târziu**: dacă muți vreodată momentul verdictului, muți
+funcția întreagă și sunetul vine cu ea. Un `await` sau un decalaj scris undeva
+ar fi fost o valoare de ținut sincronizată manual — adică al șaselea punct de
+contract din lista de datorie tehnică de mai jos.
+
+**În `_fulgera_bara_expirata()` sunetul e DEASUPRA plasei de siguranță**
+(`if stil_bara == null: return`). Bara poate rămâne fără fulger dacă tema dă
+altfel de stil, dar timpul tot ți-a expirat și tot trebuie să afli — un
+`return` pus înaintea sunetului ar fi legat tăcerea de o problemă de temă.
+
+### De ce NU s-a agățat de semnalul `verdict`
+
+Comentariul semnalului spunea, de trei sesiuni, că „de el se agață sunetul când
+va exista". Era greșit, și codul din `_termina` explica deja de ce, în avans:
+**un sunet care sună altfel la bine decât la rău ESTE un verdict.** Emis în
+cadrul clickului, ar fi dat rezultatul cu ~0,6 s înaintea butoanelor și ar fi
+golit de sens exact pauza de suspans construită în sesiunea de pe 11
+septembrie. Regula rămâne cea scrisă atunci: nimic din ce se schimbă între
+TIMPUL 1 și TIMPUL 3 n-are voie să depindă de `succes`.
+
+`verdict` a rămas declarat, dar comentariul lui s-a corectat: de el se poate
+agăța zguduirea ecranului sau un sunet NEUTRU de „am auzit clickul" — nu unul
+care judecă.
+
+### Timeout-ul: același sunet, alt moment
+
+Timp expirat primește `incorrect_answer.ogg`, nu un al treilea fișier: e
+același rezultat (ai pierdut treapta), iar un sunet propriu ar cere jucătorului
+să învețe încă un cuvânt fără să-i spună nimic nou.
+
+Momentul e însă altul — TIMPUL 1, nu 3. Motivul e cel din sesiunea trecută: la
+timeout nu există suspans de păstrat, fiindcă n-ai pariat nimic, și de-aia
+fulgerul barei era deja acolo. Sunetul cade peste el. Iar `_aprinde_raspunsul`
+tace la timeout (`if ales >= 0`), altfel aceeași pierdere s-ar anunța de două
+ori: verdele de la TIMPUL 3 doar ARATĂ răspunsul bun, nu mai judecă nimic.
+
+### Verificat
+
+Rulare fără ecran (Godot `--headless`), cu un mic script care instanțiază
+scena, cheamă `_termina()` în cele trei situații și citește ce difuzoare cântă
+în cadrul imediat următor, apoi după pauza de suspans:
+
+| Caz | La click / expirare | După suspans (TIMPUL 3) |
+|---|---|---|
+| Trivia, corect | tăcere | `correct_answer.ogg` ✅ |
+| Trivia, greșit | tăcere | `incorrect_answer.ogg` ✅ |
+| Trivia, timeout | `incorrect_answer.ogg` ✅ | niciun sunet nou ✅ |
+| Logica, corect | tăcere | `correct_answer.ogg` ✅ |
+| Logica, timeout | `incorrect_answer.ogg` ✅ | niciun sunet nou ✅ |
+
+Tăcerea de la click e la fel de importantă ca sunetul: e dovada că suspansul a
+rămas întreg. Cele două .ogg s-au importat curat (`--import`), amândouă cu
+`loop=false`, iar lupta pornește fără avertismente de la `Sunet`.
+
+**NU a fost ascultat pe mână.** Rularea fără ecran dovedește CÂND pornește
+fiecare sunet, nu cum sună: volumul relativ față de muzică și o eventuală
+liniște la începutul fișierelor (care ar întârzia atacul și ar strica exact
+senzația de „un singur moment") se aud doar jucând. Dacă atacul se simte
+întârziat, cauza e în .ogg, nu în cod.
+
+---
+
+## Sesiunea fulgerului mutat (11 septembrie 2026) — semnalul pe variante
+
+**Ce s-a schimbat:** panoul de întrebare nu mai tresare deloc. Semnalul de
+verdict s-a mutat pe VARIANTELE de răspuns, și arată așa:
+
+| Situație | Ce se întâmplă |
+|---|---|
+| Răspuns corect | varianta aleasă devine verde, instantaneu, și rămâne așa |
+| Răspuns greșit | varianta aleasă devine roșie, cea corectă verde — în același cadru, amândouă rămân |
+| Timp expirat | varianta corectă devine verde, iar ȘANȚUL barei de timp fulgeră roșu și se stinge |
+
+**Butoanele nu au NICIO animație.** Culoarea se scrie într-un cadru și stă până
+la întrebarea următoare. S-au încercat, pe rând, și rama de panou care tresărea,
+și un puls pe butoane (aprindere 0,10 s → vârf → așezare 0,75 s) — amândouă
+aveau aceeași hibă: o culoare care CREȘTE nu mai e reacția la clickul tău, e o
+mică poveste care începe după el. Pe un ecran unde ai deja un cronometru care
+curge și un lanț de ținut minte, orice animație în plus e încă un lucru care se
+mișcă. În plus, butonul verde e o informație de CITIT (care era răspunsul bun,
+mai ales când ai greșit), iar ce se citește trebuie să stea nemișcat.
+
+**Singurul lucru animat rămâne bara, la timeout** — 0,10 s aprinderea, 0,20 s
+în vârf, 0,75 s stingerea, pe TRANS_SINE + EASE_IN_OUT (duratele fostului
+fulger de panou). Regula care separă cele două cazuri: butoanele ARATĂ ceva de
+citit, deci stau; bara ANUNȚĂ un eveniment care a trecut, deci trece și ea.
+
+**De ce s-a mutat de pe panou:** motivul de ieri, dus până la capăt. Am scos
+cuvântul „CORECT" fiindcă în clipa răspunsului te uiți la butonul apăsat — dar
+apoi am pus semnalul pe ramă, adică pe cea mai mare și mai periferică suprafață
+din ecran. O suprafață mare care pulsează la marginea câmpului vizual nu se
+citește ca răspuns la gestul tău, ci ca un al doilea eveniment, în altă parte.
+Acum semnalul cade fix pe lucrul la care privirea era deja.
+
+**Cazul care a cerut o soluție proprie — timeout-ul.** Dacă n-ai apăsat nimic,
+niciun buton nu poate purta vina, iar verdele singur, apărut de nicăieri, arată
+ca un răspuns bun dat de altcineva: lipsește exact informația „ai pierdut prin
+timp". O dă bara — adică lucrul care s-a terminat.
+
+**Bara are nevoie de altă tehnică decât butoanele.** La timeout bara e goală,
+deci din ea se mai vede doar șanțul: în tema Godot, un gri aproape negru cu
+alfa 0,3. `modulate` ÎNMULȚEȘTE, iar aproape negru înmulțit cu roșu rămâne
+aproape negru. Deci culoarea trebuie PUSĂ peste, în stilul barei, nu înmulțită
+— de aici `_pregateste_bara()`, care face o COPIE a `StyleBoxFlat`-ului din
+temă (o resursă e partajată: animată direct, culoarea ar rămâne lipită de ea).
+Alfa 1 la fulger e intenționat: în repaus șanțul abia se ghicește, la fulger e
+o dungă plină, iar diferența asta e jumătate din semnal.
+
+**Capcană bună de ținut minte, găsită pe drum** (chiar dacă pulsul de buton
+care a dezgropat-o nu mai există): `Color * float` atinge toate cele PATRU
+canale, alfa inclusiv. `CULOARE_BUN * 1.8` dădea o transparență de 1,8, care
+n-are niciun sens.
+
+### Unde stă fiecare bucată acum
+
+| Bucată | Unde | De ce acolo |
+|---|---|---|
+| culorile puse pe butoane, în `_termina()` | `trivia.gd`, `logica.gd` | butoanele sunt ale disciplinei |
+| `_fulgera_bara_expirata()` | `trivia.gd`, `logica.gd` | bara e tot a disciplinei |
+| `_pregateste_bara()` | `trivia.gd`, `logica.gd`, din `_ready()` | copia stilului de bară |
+| ~~`fulgera_verdict()`, `pregateste_stilul_panoului()`~~ | șterse din `lupta.gd` | regula: cine deține nodul, îl animează |
+
+**`verdict(bun)` a rămas declarat, dar nu-l mai ascultă nimeni.** Reacția
+vizuală s-a mutat în puzzle, deci lupta nu mai conectează nimic. L-am păstrat
+fiindcă e singurul moment „chiar acum" pe care puzzle-ul îl poate oferi în
+afară — de el se va agăța sunetul sau zguduirea figurii lovite. Dacă până
+atunci nu se agață nimic, se șterge fără să atingi nimic altceva.
+
+**Datoria din `puzzle.gd` a crescut din nou:** `_pregateste_bara()` și
+`_fulgera_bara_expirata()` sunt identice în `trivia.gd` și `logica.gd`, plus
+constantele lor. Baza comună (pasul 3 din CLAUDE.md) trebuie făcută înainte de
+a treia disciplină — acum e și mai adevărat decât ieri.
+
+### Verificat
+
+Rulare fără ecran (Godot `--headless`), cu scena de Trivia instanțiată și cele
+trei situații declanșate din cod; citite `modulate`-urile butoanelor și
+`bg_color`-ul barei în cadrul imediat următor răspunsului, la 0,30 s și la 1,3 s:
+
+- corect — varianta corectă e `(0.45, 1, 0.55)` din primul cadru și NEschimbată la toate trei citirile; bara neatinsă;
+- greșit — corectă verde ȘI aleasă `(1, 0.4, 0.4)`, amândouă din primul cadru, amândouă neschimbate;
+- timeout — butoanele la fel de nemișcate, iar șanțul barei trece prin `(0.75, 0.18, 0.18, 1)` și se întoarce la `(0.1, 0.1, 0.1, 0.3)`.
+
+Ambele discipline compilează (`--check-only`), iar lupta pornește curat. **Nu a
+fost jucat pe mână** — ritmul real se simte doar jucând. Pasul 2 din lista
+rămasă e în continuare deschis.
+
+---
+
+## Sesiunea verdictului (11 septembrie 2026) — rama panoului în loc de cuvânt
+
+> **Parțial depășită de sesiunea de mai sus.** Fulgerul de ramă descris aici nu
+> mai există; a fost mutat pe variante. Ce rămâne valabil: dispariția
+> cuvintelor „CORECT" / „INCORECT" și motivul ei, plus semnalul `verdict`.
+
+**Ce s-a schimbat:** cuvintele „CORECT" / „INCORECT" / „TIMPUL A EXPIRAT" au
+dispărut. În locul lor, TOT panoul de întrebare tresare o clipă: rama devine
+verde la răspuns corect, roșie la greșit sau la timp expirat, și se stinge
+înapoi în ~0,5 s. Evidențierea variantelor a rămas neatinsă — verde pe
+răspunsul corect, roșu pe alegerea greșită.
+
+**De ce:** în clipa în care apeși, privirea ta e pe butonul apăsat, nu pe un
+rând de text de deasupra lui. Un cuvânt trebuie CITIT ca să însemne ceva; o
+margine colorată se vede cu coada ochiului, exact acolo unde te uitai deja.
+Bonus de așezare: eticheta ocupa un rând tot timpul întrebării (locul îi era
+păstrat ca să nu sară textul), iar acum rândul ăla a intrat înapoi în întrebare.
+
+### Un semnal nou în contract: `verdict(bun)`
+
+Problema de sincronizare: panoul e al LUPTEI, nu al disciplinei — deci lupta
+trebuie să aprindă rama. Dar singurul lucru pe care îl auzea de la puzzle era
+`rezolvat(succes)`, care sosește abia după pauza de feedback (1,8 s). O ramă
+care se aprinde la o secundă și jumătate după click nu mai e reacție la click,
+e un al doilea eveniment.
+
+Soluția: un al doilea semnal, `verdict(bun: bool)`, emis în `_termina()` în
+același cadru în care se colorează butoanele. Același adevăr ca `rezolvat`, dar
+în momentul potrivit pentru reacția vizuală; `rezolvat` rămâne cel care pune
+lupta în mișcare (daune, lanț) și are voie să aștepte.
+
+**Contractul a rămas la fel de neutru.** Puzzle-ul spune „bun" sau „greșit" —
+nu știe că există o ramă, un panou sau o luptă (la F6 nici nu există). Lupta
+decide cum arată asta. Când vine Anagrama, `fulgera_verdict()` merge deja:
+singurul lucru cerut de la scena nouă e să emită `verdict` la răspuns.
+
+Contractul disciplinelor are acum cinci capete: `porneste()`, `arata_stare()`,
+`arata_combo()`, `verdict(bun)`, `rezolvat(succes)`.
+
+### Unde stă fiecare bucată
+
+| Bucată | Unde | De ce acolo |
+|---|---|---|
+| `signal verdict(bun)` + `verdict.emit()` | `trivia.gd`, `logica.gd` | doar disciplina știe CÂND s-a răspuns |
+| `fulgera_verdict()` | `lupta.gd` | rama e a panoului, iar panoul e al luptei |
+| `pregateste_stilul_panoului()` | `lupta.gd`, chemat din `_ready()` | face o COPIE a stilului |
+
+**De ce copie (`duplicate()`):** o resursă în Godot e PARTAJATĂ. Dacă animam
+direct `StyleBoxFlat`-ul salvat în scenă, culoarea ar fi rămas lipită de
+resursă, iar a doua luptă ar fi pornit cu panoul deja colorat. Regula generală:
+dacă animezi o resursă, animezi o copie a ei.
+
+**Reglajele, toate în vârful lui `lupta.gd`:** `PAUZA_VERDICT` (0,12 s cât stă
+aprins), `DURATA_REVENIRE_VERDICT` (0,38 s stingerea), `AMESTEC_FOND_VERDICT`
+(0,12 — cât din culoare intră în fondul panoului). Aprinderea e instantanee,
+fără tween: un semnal care apare treptat nu mai e o tresărire. Doar stingerea
+e animată. Fondul e colorat puțin, intenționat — rama poartă semnalul, fondul doar
+îl duce peste toată suprafața; peste ~0,2 textul întrebării ar începe să-și
+piardă contrastul, iar el trebuie să rămână lizibil fiindcă răspunsul corect e
+încă pe ecran și e de învățat din el.
+
+### Ce a dispărut din cod
+
+- nodul `%VerdictEticheta` din `trivia.tscn` și `logica.tscn`;
+- `_scrie_verdict()`, `eticheta_verdict`, `tween_verdict`, `DURATA_VERDICT` din
+  ambele discipline (~25 de linii duplicate, în minus — prima sesiune care
+  SCADE datoria din `puzzle.gd`, nu o crește);
+- `CULOARE_VERDICT_BUN/RAU` s-au redenumit `CULOARE_BUN/RAU` în discipline (nu
+  mai colorează un verdict scris, ci butoanele) și au apărut, cu numele vechi,
+  în `lupta.gd`, unde colorează rama. Aceleași valori — aceeași informație nu
+  are voie să aibă două nuanțe.
+
+### Verificat
+
+Driver de rulare automată, șters după: capturi la 0,00 / 0,10 / 0,40 / 0,90 s
+după un răspuns corect și după unul greșit. Rama e verde, respectiv roșie, în
+cadrul imediat următor clickului, iar la 0,90 s panoul e înapoi la culorile de
+repaus. Butoanele își păstrează evidențierea în tot acest timp (la răspunsul
+greșit se văd simultan: rama roșie, varianta corectă verde, alegerea ta roșie).
+Verificat pe Memorie (Trivia); codul de flash e comun, deci Logica primește
+exact același comportament.
 
 ---
 
@@ -558,9 +961,18 @@ azi, marcajul de critic (`arata_combo`, `_scrie_context`, `_pulseaza_context`,
 în ambele fișiere). Merge acum, dar la a patra disciplină o schimbare de regulă
 de timp — sau de curbă de flash — trebuie făcută în patru locuri.
 
-Sesiunea de azi e dovada: semnalul de critic a fost o schimbare de UN concept,
-aplicată prin script în două fișiere deodată ca să nu diveargă. A doua oară n-o
-să mai am noroc. Ambele sesiuni de până acum au mărit datoria, nu au scăzut-o.
+Sesiunea de la 10 septembrie e dovada: semnalul de critic a fost o schimbare
+de UN concept, aplicată prin script în două fișiere deodată ca să nu diveargă.
+A doua oară n-o să mai am noroc. Sesiunea verdictului (11 septembrie) a mai
+tăiat ~25 de linii duplicate din fiecare fișier, dar și ea a trebuit aplicată
+în două locuri deodată — inclusiv semnalul nou `verdict`, care e acum al
+cincilea punct de contract de ținut sincron manual.
+
+Sesiunea sunetului (13 septembrie) a adăugat un al șaselea punct de contract
+duplicat: cele două chemări `Sunet.reda()` sunt copiate identic în ambele
+fișiere. Sunt scurte, dar poziția lor în cod E regula de sincronizare — dacă
+diverg, o disciplină o să sune la alt moment decât cealaltă, și n-o să se vadă
+în niciun test.
 
 Mutarea evidentă: un `puzzle.gd` cu `class_name Puzzle`, exact ca `Silueta` la
 siluete. Baza ține cronometrul, contractul ȘI antetul (categorie + marcaj de
@@ -594,7 +1006,19 @@ rescriere.
 
 ---
 
-## Fișiere adăugate în această sesiune
+## Fișiere adăugate pe 13 septembrie 2026
+
+```
+assets/audio/correct_answer.ogg, incorrect_answer.ogg   (+ .import)
+autoload/sunet.gd                  — regizorul de efecte (autoload `Sunet`)
+project.godot                      — un rând nou în [autoload]
+scenes/trivia/trivia.gd            — 2 chemări de sunet, 1 comentariu corectat
+scenes/logica/logica.gd            — aceleași, cuvânt cu cuvânt
+```
+
+---
+
+## Fișiere adăugate în sesiunea din 1 septembrie
 
 ```
 assets/art/rege.png, cavaler_sters.png

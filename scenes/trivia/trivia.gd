@@ -2,9 +2,10 @@ extends Control
 ## Puzzle de TRIVIA — scenă complet independentă.
 ##
 ## Nu știe absolut nimic despre luptă, PV, PA sau inamici. Contractul ei cu
-## restul jocului are exact două capete:
-##   1. `porneste(nivel)`        — CE PRIMEȘTE (dificultatea)
-##   2. semnalul `rezolvat(succes)` — CE RETURNEAZĂ (adevărat/fals)
+## restul jocului are exact trei capete:
+##   1. `porneste(nivel)`           — CE PRIMEȘTE (dificultatea)
+##   2. semnalul `verdict(bun)`     — „am răspuns", strigat pe loc
+##   3. semnalul `rezolvat(succes)` — CE RETURNEAZĂ (adevărat/fals), după pauză
 ##
 ## De ce contează izolarea asta: peste trei sesiuni o să faci Anagrama, iar
 ## ea va avea EXACT aceeași formă (porneste + rezolvat). Atunci Combat
@@ -12,7 +13,30 @@ extends Control
 ## Bonus: poți testa scena singură cu F6, fără să treci prin luptă.
 
 # Semnal = „strigătul" pe care nodul îl scoate când s-a întâmplat ceva.
-# Aici e singura noastră cale de ieșire: cine ne-a deschis ne ascultă.
+# Astea sunt căile noastre de ieșire: cine ne-a deschis ne ascultă. Sunt două,
+# și poartă ACELAȘI adevăr, dar în două momente diferite.
+#
+# `verdict` — strigat ÎN CLIPA răspunsului, nu după pauza de feedback.
+# ASTĂZI NU-L ASCULTĂ NIMENI: reacția vizuală s-a mutat ÎN scenă, pe variante
+# (vezi `_termina`), fiindcă butoanele sunt ale disciplinei, nu ale
+# luptei. Rămâne declarat fiindcă e singurul moment „chiar acum" pe care
+# puzzle-ul îl poate oferi în afară — de el se agață zguduirea ecranului sau
+# un sunet NEUTRU de „am auzit clickul", când vor exista. Dacă până atunci nu
+# se agață nimic de el, se poate șterge fără să atingi nimic altceva.
+#
+# SUNETUL DE VERDICT NU S-A AGĂȚAT AICI, deși aici părea locul lui: el sună
+# altfel la bine decât la rău, deci E un verdict, iar un verdict dat în cadrul
+# clickului ar strica pauza de suspans dinaintea culorilor. A plecat unde îi e
+# locul, lângă ce anunță — în `_aprinde_raspunsul` (răspuns dat) și în
+# `_fulgera_bara_expirata` (timp expirat).
+signal verdict(bun: bool)
+#
+# `rezolvat` — REZULTATUL, strigat abia după pauza de feedback. El pune lupta
+# în mișcare (daune, lanț), iar asta are voie să aștepte cât te uiți la
+# răspunsul corect.
+#
+# Niciunul nu spune cine ascultă sau ce desenează acela: amândouă spun doar
+# „bun" sau „greșit". Contractul rămâne la fel de subțire.
 signal rezolvat(succes: bool)
 
 # ─────────────────────────────────────────────────────────────
@@ -30,16 +54,130 @@ const TIMP_MINIM := 8.0
 
 const PRAG_URGENTA := 5.0     # sub atâtea secunde, bara devine roșie
 
-# VERDICTUL de după răspuns. Culorile sunt DELIBERAT aceleași cu ale butoanelor
-# de răspuns: verdele de pe varianta corectă și roșul de pe cea greșită. Două
-# nuanțe apropiate, dar diferite, ar fi arătat ca două informații; identice,
-# se citesc ca una singură.
-const CULOARE_VERDICT_BUN := Color(0.45, 1, 0.55)
-const CULOARE_VERDICT_RAU := Color(1, 0.4, 0.4)
+# Culorile de după răspuns: verdele care arată varianta corectă, roșul care
+# marchează alegerea greșită. Nu există și un cuvânt scris („CORECT"): în
+# clipa aia te uiți la butonul pe care ai apăsat, nu la un rând de text de
+# deasupra lui — și exact acolo cade acum și semnalul.
+# Rămân constante, nu numere scrise în mijlocul codului, fiindcă apar în două
+# locuri și trebuie să fie exact aceleași.
+const CULOARE_BUN := Color(0.45, 1, 0.55)
+const CULOARE_RAU := Color(1, 0.4, 0.4)
 
-# Fade-ul verdictului. SCURT, nu lent: e informația după care te uiți imediat
-# ce ai apăsat. Peste ~0.25 s ar începe să pară că jocul se gândește.
-const DURATA_VERDICT := 0.18
+# ── CUM APAR CULORILE ASTEA ───────────────────────────────────
+# ÎN TREI TIMPI, nu într-unul. Ordinea contează mai mult decât culorile:
+#
+#   1. CONFIRMAREA — instantaneu, la click. Butonul pe care ai apăsat se
+#      întunecă spre gri (CULOARE_ASTEPTARE). Spune doar „am auzit clickul",
+#      nu spune dacă e bine sau rău — e ACEEAȘI culoare și când ai nimerit, și
+#      când nu. Fără ea, butoanele s-ar bloca și ecranul ar îngheța o jumătate
+#      de secundă fără explicație — iar o jumătate de secundă de nimic se
+#      citește ca un bug, nu ca suspans.
+#
+#   2. SUSPANSUL — PAUZA_SUSPANS, în care nu se schimbă nimic pe ecran. Aici
+#      stă tot efectul: o clipă în care ții cu tine însuți. Trebuie să fie
+#      IDENTICĂ și la bine, și la rău — dacă greșeala ar fi arătată pe loc și
+#      doar verdele ar întârzia, atunci ÎNTÂRZIEREA ÎNSĂȘI ar deveni răspunsul:
+#      ai ști din primul cadru că ai nimerit, și n-ar mai rămâne niciun suspans.
+#
+#   3. VERDICTUL — verdele (și roșul, dacă e cazul) CRESC, nu se taie: fondul
+#      urcă spre culoare, iar în jurul variantei corecte se desenează o ramă.
+#      Când se termină creșterea, culoarea rămâne pusă până la întrebarea
+#      următoare — ce e de citit stă nemișcat cât îl citești.
+#
+# Unde e granița dintre „fluid" și „agitat", fiindcă aici s-a greșit o dată:
+# s-au încercat, pe rând, și o ramă de panou care tresărea, și un puls
+# repetat pe butoane — amândouă țineau ochiul ocupat DUPĂ ce informația
+# fusese deja transmisă. Regula rămasă din experiența aia: mișcarea are voie
+# să ADUCĂ răspunsul, n-are voie să-l ÎNSOȚEASCĂ. O singură creștere, într-o
+# singură direcție, care se termină clar — nu un puls, nu o pâlpâire.
+#
+# Regula scurtă: așteptarea e goală, culoarea CREȘTE o dată și apoi stă.
+# Singura altă mișcare e bara de timp la timeout, mai jos.
+
+# Culoarea de așteptare: butonul apăsat, cât ține suspansul. E o ÎNTUNECARE
+# (gri-albăstrui sub alb), nu o culoare nouă — nu seamănă nici cu verdele, nici
+# cu roșul, deci nu poate fi citită din greșeală ca un verdict pe jumătate dat.
+const CULOARE_ASTEPTARE := Color(0.62, 0.62, 0.7)
+
+# Cât ține AȘTEPTAREA GOALĂ, adică pauza dinainte să se miște ceva.
+# E mai scurtă decât pare: suspansul întreg nu e doar ea, ci ea PLUS urcarea
+# culorii de mai jos (0,35 + 0,28 ≈ 0,6 s până vezi limpede verdele). Când am
+# adăugat creșterea, pauza goală a trebuit scurtată cu exact atât — altfel
+# aceeași senzație ar fi durat de două ori mai mult. Dacă reglezi una, uită-te
+# la sumă, nu la număr.
+const PAUZA_SUSPANS := 0.35
+
+# ── APRINDEREA RĂSPUNSULUI (TIMPUL 3) ─────────────────────────
+# Fondul butonului nu sare în verde: urcă în două mișcări lipite.
+#   URCAREA  — de la gri spre un verde mai DESCHIS decât cel final (VARF).
+#   AȘEZAREA — din vârf înapoi în CULOARE_BUN, unde rămâne.
+# De ce vârful, și nu o urcare dreaptă până la culoarea finală: o culoare care
+# trece puțin peste țintă și se așază se citește ca o APRINDERE — ceva s-a
+# aprins acolo. Una care urcă drept se citește ca o decolorare lentă, adică a
+# unui lucru care se strică. Aceleași două culori, două înțelesuri diferite,
+# și toată diferența stă în ultimele 0,22 s.
+const DURATA_URCARE := 0.28
+const DURATA_ASEZARE := 0.22
+const CULOARE_BUN_VARF := Color(0.72, 1, 0.8)
+const CULOARE_RAU_VARF := Color(1, 0.62, 0.6)
+
+# CONTURUL: rama care se desenează în jurul variantei CORECTE, în același timp
+# cu verdele. Fondul spune o stare („asta e bună"), rama arată cu degetul
+# („aici"). De-aia o are doar varianta corectă — dacă ar avea-o și cea greșită,
+# n-ar mai arăta nimic, ar fi doar decor pe ambele.
+#
+# Grosimea se pune o dată și NU se animează. Bordura unui StyleBoxFlat se
+# desenează spre INTERIOR, așa că o ramă care se îngroașă cadru cu cadru împinge
+# textul dinăuntru — exact textul pe care îl ai de citit. Se animează doar ALFA
+# ei: de la invizibilă la plină. Rama apare din neant, dar nimic nu se mișcă.
+const GROSIME_CONTUR := 3
+
+# Culoarea ramei e aproape albă, nu verde, deși rama se vede verde: peste ea
+# cade `modulate` al butonului, care în clipa aia e chiar verdele. Alb × verde
+# = verde aprins; verde × verde = verde închis, adică o ramă care dispare în
+# fondul ei. Când o culoare stă peste alta, o alegi gândindu-te la produs.
+const CULOARE_CONTUR := Color(0.85, 1, 0.9)
+
+# Rama crește cât durează TOATĂ mișcarea fondului, ca să se termine odată cu
+# ea: două mișcări care se opresc în același moment se citesc ca una singură.
+const DURATA_CONTUR := DURATA_URCARE + DURATA_ASEZARE
+
+# ── FULGERUL BAREI DE TIMP (doar la timp expirat) ─────────────
+# Dacă n-ai apăsat nimic, niciun buton nu poate purta vina, iar verdele singur
+# arată ca un răspuns bun dat de altcineva: lipsește exact ce s-a întâmplat.
+# Semnalul îl dă bara — lucrul care s-a terminat.
+# Durata și curba sunt cele ale fostului fulger de panou; aici au rămas fiindcă
+# ăsta e un EVENIMENT care trece, nu o culoare de citit.
+const DURATA_APRINDERE_VERDICT := 0.10   # cât durează aprinderea
+const PAUZA_VERDICT := 0.20              # cât stă în vârf
+const DURATA_REVENIRE_VERDICT := 0.75    # cât durează stingerea
+
+# Culoarea în care se aprinde ȘANȚUL barei de timp.
+# De ce o culoare scrisă și nu `modulate`, ca la butoane: la timeout bara e
+# goală, deci din ea nu se mai vede decât șanțul — iar șanțul din tema Godot e
+# un gri aproape negru, și pe deasupra aproape transparent (alfa 0,3). Aproape
+# negru ÎNMULȚIT cu roșu rămâne aproape negru. Ca să se vadă ceva, culoarea
+# trebuie PUSĂ peste, nu înmulțită — și asta se face în stilul barei, nu în
+# `modulate` (vezi `_pregateste_bara`).
+# Alfa 1 e intenționat: în repaus șanțul abia se ghicește, iar la fulger devine
+# o dungă plină. Diferența dintre cele două stări e jumătate din semnal.
+#
+# De ce un roșu ÎNCHIS și nu unul aprins: fulgerul e o dungă lată cât toată
+# lățimea scenei, iar un roșu saturat pe o suprafață atât de mare țipă mai tare
+# decât merită evenimentul — ți-a expirat timpul la o întrebare, n-ai pierdut
+# lupta. E ACELAȘI roșu ca al barei în urgență (vezi CULOARE_URGENTA mai jos),
+# doar coborât în luminozitate: aceeași nuanță înseamnă „tot despre timp e
+# vorba", iar întunecarea îl ține în tonul gotic al jocului. Contrastul cu
+# șanțul de repaus (aproape negru, aproape transparent) rămâne oricum mare —
+# semnalul vine din alfa și din SCHIMBARE, nu din strident.
+const CULOARE_BARA_EXPIRATA := Color(0.45, 0.16, 0.14, 1.0)
+
+# Cele două stări NORMALE ale barei de timp, ca `modulate` (înmulțit peste
+# umplutura deschisă a temei): albastru rece cât ai timp, roșu cald sub prag.
+# Sunt constante ca să se vadă negru pe alb că roșul de expirare de mai sus e
+# aceeași nuanță, doar mai închisă.
+const CULOARE_URGENTA := Color(1, 0.35, 0.3)
+const CULOARE_CALM := Color(0.55, 0.85, 1)
 
 # Culorile liniei de context: aurie TOT TIMPUL. Portocaliul nu mai e o stare
 # în care poate sta linia, ci culoarea unui singur moment — cel marcat prin
@@ -68,6 +206,13 @@ const DURATA_APARITIE_MARCAJ := 0.1
 const DURATA_REVENIRE := 0.2
 
 const PAUZA_FEEDBACK := 1.8   # cât stai să vezi răspunsul corect, înainte de a te întoarce în luptă
+
+# Pauza de după răspuns rămâne 1,8 s în TOTAL — ritmul lanțului nu se schimbă
+# fiindcă am adăugat suspans. Ea doar se împarte acum în două: întâi aștepți
+# (PAUZA_SUSPANS), apoi citești răspunsul corect (PAUZA_CITIRE). Scris ca
+# scădere, nu ca număr nou: dacă mărești suspansul, timpul total nu crește pe
+# furiș — se scurtează cititul, și vezi imediat dacă ai mers prea departe.
+const PAUZA_CITIRE := PAUZA_FEEDBACK - PAUZA_SUSPANS
 
 # ─────────────────────────────────────────────────────────────
 # ÎNTREBĂRILE — acum într-un fișier JSON, nu în cod.
@@ -191,11 +336,26 @@ var tween_context: Tween = null
 # Același motiv pentru marcaj: două marcaje suprapuse s-ar bate pe alfa, iar
 # al doilea ar putea rămâne pe ecran după ce primul îl stinge.
 var tween_marcaj: Tween = null
-# Nu mai arată timpul — bara singură face asta. Rămâne doar pentru verdict.
-@onready var eticheta_verdict: Label = %VerdictEticheta
 
-# Fade-ul verdictului, ținut ca să-l putem omorî dacă se scrie altul peste el.
-var tween_verdict: Tween = null
+# Fulgerul barei de timp, ținut ca să-l putem OMORÎ la întrebarea următoare.
+var tween_bara: Tween = null
+
+# Aprinderea răspunsului (fond + contur), ținută din același motiv: dacă
+# întrebarea următoare începe înainte ca ea să termine, un tween rămas în viață
+# ar continua să scrie verde peste butonul deja resetat. Un singur tween pentru
+# toate bucățile mișcării, ca să existe o singură frână.
+var tween_raspuns: Tween = null
+
+# Rama variantei corecte, ca RESURSĂ, nu ca nod: alfa EI e ce animăm. Se naște
+# la fiecare răspuns, în `_stil_contur_pentru()`, și e aruncată la întrebarea
+# următoare. Vezi acolo de ce nu atingem niciodată stilul original al temei.
+var stil_contur: StyleBoxFlat = null
+# Stilul șanțului barei de timp, ca RESURSĂ, nu ca nod: culoarea LUI e ce
+# animăm la timp expirat. Copia proprie se face în `_pregateste_bara()` —
+# vezi acolo de ce nu atingem niciodată stilul original.
+var stil_bara: StyleBoxFlat = null
+var culoare_sant_repaus := Color.BLACK
+
 @onready var bara_timp: ProgressBar = %BaraTimp
 @onready var eticheta_intrebare: Label = %Intrebare
 @onready var butoane := [%Varianta1, %Varianta2, %Varianta3, %Varianta4]
@@ -208,6 +368,7 @@ func _ready() -> void:
 	# Ascunsă până când cineva chiar are ceva de arătat acolo (ex. la F6,
 	# când testezi scena singură, nu există niciun inamic).
 	incarca_intrebari()   # citește fișierul o singură dată pe rulare
+	_pregateste_bara()    # copia de stil pentru fulgerul de timp expirat
 	for index in range(butoane.size()):
 		var buton: Button = butoane[index]
 		buton.pressed.connect(_pe_varianta_aleasa.bind(index))
@@ -265,11 +426,22 @@ func porneste(nivel: int, context := "", scurtare := 0.0) -> void:
 	eticheta_intrebare.text = q["text"]
 
 	var variante: Array = q["variante"]
+	# Oprim întâi aprinderea rămasă de la răspunsul precedent. Dacă un tween ar
+	# mai rula, ar rescrie culorile după ce noi le punem la loc — și ai începe
+	# întrebarea nouă cu un buton care se face verde singur.
+	if tween_raspuns != null and tween_raspuns.is_valid():
+		tween_raspuns.kill()
+	stil_contur = null
+
 	for index in range(butoane.size()):
 		var buton: Button = butoane[index]
 		buton.text = variante[index]
 		buton.disabled = false
 		buton.modulate = Color.WHITE   # ștergem verdele/roșul de la runda trecută
+		# ...și rama: scoatem stilul propriu pus la răspunsul trecut, ca butonul
+		# să se întoarcă la cel al temei. `remove_theme_stylebox_override` nu se
+		# supără dacă nu era nimic de scos, deci nu trebuie întrebat înainte.
+		buton.remove_theme_stylebox_override("disabled")
 
 	# maxf() = maximul a două zecimale. Podeaua se aplică AICI, o singură dată,
 	# deci nimeni din afară nu poate cere din greșeală o întrebare de 2 secunde.
@@ -277,11 +449,12 @@ func porneste(nivel: int, context := "", scurtare := 0.0) -> void:
 	timp_ramas = timp_total
 	bara_timp.max_value = timp_total
 	bara_timp.modulate = Color.WHITE
-
-	# Verdictul de la întrebarea trecută se șterge, dar eticheta rămâne pe loc,
-	# goală. Un Label gol tot cere înălțimea unui rând de text — exact ce vrem:
-	# locul verdictului e păstrat, deci întrebarea nu sare în jos când apare el.
-	_scrie_verdict("", true)
+	# Bara: oprim întâi fulgerul rămas de la un timeout precedent. Dacă un tween
+	# ar mai rula, ar rescrie culoarea șanțului după ce noi o punem la loc.
+	if tween_bara != null and tween_bara.is_valid():
+		tween_bara.kill()
+	if stil_bara != null:
+		stil_bara.bg_color = culoare_sant_repaus
 
 	butoane[0].grab_focus()   # ca să meargă și cu tastatura (săgeți + Enter)
 	actualizeaza_cronometru()
@@ -441,29 +614,6 @@ func _ascunde_marcaj() -> void:
 	eticheta_marcaj.text = ""
 
 
-## Scrie verdictul și îl aduce pe ecran cu un fade scurt.
-##
-## De ce fade și nu apariție seacă: textul apare în același cadru în care
-## butonul tău se colorează. Două schimbări instantanee în același loc se
-## citesc ca o singură tresărire și nu știi la care să te uiți. Fade-ul le
-## desparte în timp cu o fracțiune de secundă, cât să înregistrezi întâi
-## butonul, apoi cuvântul.
-##
-## Text gol = doar ștergem (fără fade — n-ai ce vedea apărând).
-func _scrie_verdict(text: String, bun: bool) -> void:
-	if tween_verdict != null and tween_verdict.is_valid():
-		tween_verdict.kill()
-	eticheta_verdict.text = text
-	eticheta_verdict.modulate = CULOARE_VERDICT_BUN if bun else CULOARE_VERDICT_RAU
-	if text == "":
-		return
-	# `modulate:a` = doar canalul alfa (transparența) din culoare. Tragem de el
-	# de la 0 la 1, deci culoarea rămâne cea de mai sus și doar apare.
-	eticheta_verdict.modulate.a = 0.0
-	tween_verdict = create_tween()
-	tween_verdict.tween_property(eticheta_verdict, "modulate:a", 1.0, DURATA_VERDICT)
-
-
 ## Ieșirea de avarie: fișierul de întrebări lipsește sau e nefolosibil.
 ## Arătăm de ce pe ecran (nu doar în consolă) și raportăm eșec, ca lupta
 ## să continue în loc să aștepte la nesfârșit un semnal care nu mai vine.
@@ -473,7 +623,6 @@ func _fara_intrebari() -> void:
 	set_process(false)
 	_scrie_context("")
 	eticheta_categorie.text = "EROARE"
-	_scrie_verdict("", true)
 	bara_timp.visible = false
 	eticheta_intrebare.text = "Nu am putut incarca intrebarile.\n%s" % CALE_INTREBARI
 	for buton: Button in butoane:
@@ -503,9 +652,73 @@ func actualizeaza_cronometru() -> void:
 	# Bara spune același lucru — cât a mai rămas — dar o spune periferic, fără
 	# să-ți ceară să citești. Presiunea se simte, nu se numără.
 	if timp_ramas <= PRAG_URGENTA:
-		bara_timp.modulate = Color(1, 0.35, 0.3)
+		bara_timp.modulate = CULOARE_URGENTA
 	else:
-		bara_timp.modulate = Color(0.55, 0.85, 1)
+		bara_timp.modulate = CULOARE_CALM
+
+
+## ── FULGERUL DE VERDICT ────────────────────────────────────────
+## Pregătește șanțul barei de timp pentru fulgerul de timp expirat.
+## Chemată o dată, în `_ready()`.
+##
+## `duplicate()` face o COPIE a stilului, numai pentru scena asta. Fără ea am
+## anima chiar resursa din temă — iar o resursă în Godot e PARTAJATĂ: culoarea
+## ar rămâne lipită de ea, și la întrebarea următoare (sau în cealaltă
+## disciplină) bara ar porni deja roșie. Regula generală, bună de ținut minte:
+## dacă animezi o resursă, animezi o copie a ei.
+func _pregateste_bara() -> void:
+	var stil := bara_timp.get_theme_stylebox("background")
+	# Plasă de siguranță: dacă bara ajunge cândva să aibă alt fel de stil (o
+	# textură, de pildă), nu mai avem ce colora — dar puzzle-ul merge mai
+	# departe fără fulgerul de timp, în loc să crape.
+	if not (stil is StyleBoxFlat):
+		push_warning("Puzzle: santul barei de timp nu e StyleBoxFlat — fulgerul de timp expirat e dezactivat.")
+		return
+	stil_bara = stil.duplicate()
+	# „override" = stilul ăsta bate tema, dar doar pentru nodul ăsta.
+	bara_timp.add_theme_stylebox_override("background", stil_bara)
+	culoare_sant_repaus = stil_bara.bg_color
+
+
+## TIMP EXPIRAT: șanțul barei se aprinde roșu și se stinge înapoi.
+## SINGURUL lucru animat din tot feedbackul, și singurul care nu rămâne aprins.
+## Regula după care s-a păstrat: butoanele ARATĂ ceva de citit (care e răspunsul
+## corect), iar ce se citește stă nemișcat; bara doar ANUNȚĂ un eveniment care a
+## trecut („ți-a expirat timpul"), iar un eveniment are voie să treacă și el.
+##
+## Curba: TRANS_SINE + EASE_IN_OUT pentru tot drumul — pleacă încet, trece prin
+## mijloc, se așază încet. EASE_OUT (curba panoului care alunecă) ar arunca
+## aproape toată schimbarea în prima treime: potrivit pentru un obiect care
+## AJUNGE undeva, nepotrivit pentru o culoare care se TRANSFORMĂ.
+func _fulgera_bara_expirata() -> void:
+	# SUNETUL, prima linie din funcție — și anume DEASUPRA plasei de siguranță
+	# de mai jos. Dacă tema n-ar da vreodată un StyleBoxFlat, bara ar rămâne
+	# fără fulger, dar timpul tot ți-a expirat și tot trebuie să afli: un
+	# `return` pus înaintea lui ar lega tăcerea de o problemă de temă.
+	#
+	# E ACELAȘI sunet ca la răspunsul greșit, fiindcă e același rezultat — ai
+	# pierdut treapta. Un al treilea sunet, numai pentru timp expirat, ar cere
+	# jucătorului să învețe încă un cuvânt fără să-i spună nimic nou.
+	Sunet.reda(Sunet.Efect.GRESIT)
+
+	if stil_bara == null:
+		return
+	# `modulate` al barei e roșul de urgență de la ultimul cadru. Îl punem pe
+	# alb ca să vezi FIX culoarea pe care o animăm mai jos — altfel șanțul ar
+	# apărea înmulțit cu el, adică mai închis decât am cerut.
+	bara_timp.modulate = Color.WHITE
+
+	tween_bara = create_tween()
+	tween_bara.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	tween_bara.tween_property(
+		stil_bara, "bg_color", CULOARE_BARA_EXPIRATA, DURATA_APRINDERE_VERDICT
+	)
+	# Pauza e un pas separat, deci se așază între celelalte două:
+	# aprinde — stă — se stinge.
+	tween_bara.tween_interval(PAUZA_VERDICT)
+	tween_bara.tween_property(
+		stil_bara, "bg_color", culoare_sant_repaus, DURATA_REVENIRE_VERDICT
+	)
 
 
 ## Chemată de oricare dintre cele 4 butoane; `index` vine din .bind().
@@ -513,6 +726,107 @@ func _pe_varianta_aleasa(index: int) -> void:
 	if raspuns_dat:
 		return
 	_termina(index == indice_corect, index)
+
+
+## TIMPUL 3 — aprinderea răspunsului: fondul urcă, rama apare.
+## Singurul loc din scenă care spune cine a avut dreptate, și singurul care
+## atinge `tween_raspuns` / `stil_contur`. Dacă vrei alt efect de verdict, aici
+## îl schimbi — `_termina` nu știe decât să-l ceară.
+##
+## Ce e un tween: un mic robot care schimbă o proprietate în timp, singur, cadru
+## cu cadru, fără să blocheze jocul. Îi spui „du `modulate` până la verde în
+## 0,28 s" și se ocupă de restul.
+func _aprinde_raspunsul(ales: int, succes: bool) -> void:
+	# SUNETUL, în același cadru cu tween-ul de mai jos. Asta e TOATĂ
+	# sincronizarea: culoarea și sunetul pleacă din aceeași funcție, deci din
+	# aceeași bătaie a jocului — nu e nimic de potrivit cu mâna, și nici nu se
+	# poate desincroniza mai târziu. Regula de ținut minte: dacă muți vreodată
+	# momentul verdictului, muți funcția asta întreagă, iar sunetul vine cu ea.
+	#
+	# DE CE AICI ȘI NU LA `verdict.emit()`, în cadrul clickului: un sunet care
+	# sună altfel la bine decât la rău ESTE un verdict. Pus în clipa clickului,
+	# ți-ar spune rezultatul înaintea butoanelor și ar goli de sens exact pauza
+	# de suspans pe care `_termina` o construiește între cele două momente.
+	#
+	# EXCEPȚIA, `ales < 0` (timp expirat): verdictul a fost deja dat, cu tot cu
+	# sunet, de fulgerul barei — acolo nu e niciun suspans de păstrat, fiindcă
+	# n-ai pariat nimic. Verdele care se aprinde acum doar ARATĂ răspunsul bun;
+	# un al doilea „greșit" peste el ar anunța a doua oară aceeași pierdere.
+	if ales >= 0:
+		Sunet.reda(Sunet.Efect.CORECT if succes else Sunet.Efect.GRESIT)
+
+	if tween_raspuns != null and tween_raspuns.is_valid():
+		tween_raspuns.kill()
+	tween_raspuns = create_tween()
+	# `set_parallel` = tot ce cerem mai jos pornește ÎN ACELAȘI moment, nu la
+	# rând. Vrem o singură mișcare din mai multe bucăți; decalajul dintre urcare
+	# și așezare îl cerem explicit, cu `set_delay`, nu implicit prin ordine.
+	tween_raspuns.set_parallel(true)
+
+	var buton_corect: Button = butoane[indice_corect]
+
+	# 1. FONDUL variantei corecte: de unde e acum (gri, dacă tu l-ai apăsat; alb,
+	# dacă nu) spre verdele de vârf, apoi înapoi în verdele final.
+	# A doua bucată pleacă exact când se termină prima. Nu-i spunem de la ce
+	# culoare să plece: un tween citește valoarea în clipa în care PORNEȘTE el,
+	# deci va găsi acolo vârful, oricare ar fi fost punctul de plecare.
+	tween_raspuns.tween_property(
+		buton_corect, "modulate", CULOARE_BUN_VARF, DURATA_URCARE
+	).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	tween_raspuns.tween_property(
+		buton_corect, "modulate", CULOARE_BUN, DURATA_ASEZARE
+	).set_delay(DURATA_URCARE).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+
+	# 2. RAMA, pe același buton, crescând în același timp cu fondul.
+	# Dacă tema n-ar da un stil pe care să-l putem contura, funcția întoarce
+	# `null` și rămânem doar cu fondul — efectul e mai sărac, dar nimic nu crapă.
+	stil_contur = _stil_contur_pentru(buton_corect)
+	if stil_contur != null:
+		tween_raspuns.tween_property(
+			stil_contur, "border_color", CULOARE_CONTUR, DURATA_CONTUR
+		).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+
+	# 3. GREȘEALA, dacă e cazul: roșul urcă pe butonul tău exact cu aceleași
+	# durate ca verdele. Amândouă pornesc în același moment și se opresc în
+	# același moment, ca să se citească drept o singură propoziție („nu asta, ci
+	# asta"), nu ca două știri separate.
+	# Când ai NIMERIT nu e nimic de făcut aici: butonul apăsat și cel corect sunt
+	# același buton, deci verdele de mai sus a plecat chiar din griul de
+	# așteptare — tocmai de-aia nu-i spunem tween-ului de la ce culoare să plece.
+	if not succes and ales >= 0:
+		var buton_gresit: Button = butoane[ales]
+		tween_raspuns.tween_property(
+			buton_gresit, "modulate", CULOARE_RAU_VARF, DURATA_URCARE
+		).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+		tween_raspuns.tween_property(
+			buton_gresit, "modulate", CULOARE_RAU, DURATA_ASEZARE
+		).set_delay(DURATA_URCARE).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+
+
+## Pregătește rama unui buton și o întoarce, ca s-o putem anima.
+##
+## DE CE „disabled" și nu „normal": în clipa asta butoanele sunt deja blocate
+## (`_termina` le-a dezactivat), iar Godot desenează pentru un buton blocat
+## stilul lui „disabled". Dacă am contura „normal", n-ar apărea nimic pe ecran
+## și am căuta ore întregi de ce.
+##
+## DE CE `duplicate()`: stilurile temei sunt resurse PARTAJATE — același obiect
+## e folosit de toate butoanele din joc. Dacă am scrie direct în el, s-ar
+## contura toate patru variantele, ba chiar și butoanele din alte scene. Copia
+## e a butonului ăstuia, pentru întrebarea asta, și se aruncă la următoarea.
+func _stil_contur_pentru(buton: Button) -> StyleBoxFlat:
+	var sursa: StyleBox = buton.get_theme_stylebox("disabled")
+	if not (sursa is StyleBoxFlat):
+		return null   # altă temă, alt fel de stil: renunțăm la ramă, nu la efect
+
+	var stil: StyleBoxFlat = sursa.duplicate()
+	stil.set_border_width_all(GROSIME_CONTUR)
+	# Rama pleacă TRANSPARENTĂ: există de la primul cadru, dar nu se vede.
+	# `Color(CULOARE_CONTUR, 0.0)` = aceeași culoare, cu alfa 0. Tween-ul de
+	# afară nu face decât s-o aducă la alfa 1.
+	stil.border_color = Color(CULOARE_CONTUR, 0.0)
+	buton.add_theme_stylebox_override("disabled", stil)
+	return stil
 
 
 ## Singura ieșire din scenă. `ales` = ce a apăsat jucătorul (-1 la timeout).
@@ -523,29 +837,60 @@ func _termina(succes: bool, ales: int) -> void:
 	for buton: Button in butoane:
 		buton.disabled = true
 
-	# Feedback: arătăm mereu care era răspunsul bun.
-	# Ton sănătos — înveți ceva și când greșești, nu ești doar pedepsit.
-	butoane[indice_corect].modulate = Color(0.45, 1, 0.55)
-	if not succes and ales >= 0:
-		butoane[ales].modulate = Color(1, 0.4, 0.4)
+	# TIMPUL 1 — CONFIRMAREA, în cadrul clickului. Neutră: butonul apăsat se
+	# întunecă, atât. În clipa asta jocul ȘTIE deja dacă ai nimerit, dar nu
+	# spune — și tocmai tăcerea lui e efectul cerut.
+	if ales >= 0:
+		butoane[ales].modulate = CULOARE_ASTEPTARE
+	else:
+		# TIMP EXPIRAT. N-ai apăsat nimic, deci niciun buton nu poate purta
+		# vina — iar verdele singur, apărut de nicăieri, arată exact ca un
+		# răspuns bun dat de altcineva. Lipsește tocmai ce s-a întâmplat: ai
+		# pierdut prin timp. O spune bara, adică lucrul care s-a terminat.
+		# Fulgeră ACUM, nu după suspans: e reacția la un eveniment petrecut
+		# chiar acum (s-a scurs timpul), nu răspunsul la un gest de-al tău.
+		# La timeout nu e niciun suspans de construit — n-ai pariat nimic.
+		_fulgera_bara_expirata()
 
-	# Seria s-a rupt (răspuns greșit SAU timp expirat), deci marcajul ei nu mai
-	# are ce descrie: dispare pe loc, nu peste 1,8 secunde, când se închide
-	# panoul. Rămâne o regulă neutră — ștergem o linie care a devenit falsă,
-	# fără să știm ce e un combo.
+	# STRIGĂTUL DE VERDICT, chiar aici: în cadrul clickului, ÎNAINTE de pauza de
+	# suspans. Azi nu-l ascultă nimeni (vezi comentariul semnalului, sus), dar
+	# momentul lui trebuie să rămână ĂSTA — clipa răspunsului. Orice s-ar agăța
+	# cândva de el (un sunet, o zguduire) trebuie să cadă peste gestul tău.
+	# ATENȚIE când vei agăța ceva aici: un sunet care sună altfel la bine decât
+	# la rău ar da răspunsul mai devreme decât îl dau butoanele și ar goli
+	# suspansul de sens. Sunetul de „am auzit clickul" e același în ambele
+	# cazuri; cel care JUDECĂ se pune la TIMPUL 3, jos, lângă culori.
+	verdict.emit(succes)
+
+	# TIMPUL 2 — SUSPANSUL. `create_timer` face un cronometru de unică
+	# folosință; `await` pune funcția pe pauză până când el emite `timeout`.
+	# Pe ecran nu se schimbă nimic în timpul ăsta — ăsta E efectul.
+	#
+	# `await` nu blochează jocul: doar funcția asta se suspendă, restul jocului
+	# merge mai departe cadru cu cadru. Iar cronometrul întrebării e deja oprit
+	# (`set_process(false)`, sus), deci pauza nu-ți mănâncă din timpul de
+	# gândire al întrebării următoare.
+	await get_tree().create_timer(PAUZA_SUSPANS).timeout
+
+	# TIMPUL 3 — VERDICTUL. Arătăm mereu care era răspunsul bun.
+	# Ton sănătos — înveți ceva și când greșești, nu ești doar pedepsit.
+	_aprinde_raspunsul(ales, succes)
+
+	# Tot ACUM, nu mai devreme: seria s-a rupt (răspuns greșit SAU timp expirat),
+	# deci marcajul ei nu mai are ce descrie — ștergem o linie care a devenit
+	# falsă. Rămâne o regulă neutră: scena nu știe ce e un combo, șterge doar un
+	# text pe care lupta i l-a dat.
+	#
+	# DE CE AICI ȘI NU SUS, în cadrul clickului: linia care dispare e ea însăși
+	# un verdict. Dacă s-ar stinge pe loc, ai afla din ea că ai greșit înainte ca
+	# butoanele să-ți spună — iar suspansul de mai sus ar fi fost degeaba. Regula
+	# generală, dacă mai adaugi ceva pe ecran: NIMIC din ce se schimbă între
+	# TIMPUL 1 și TIMPUL 3 nu are voie să depindă de `succes`.
 	if not succes:
 		_scrie_context("")
 
-	if succes:
-		_scrie_verdict("CORECT", true)
-	elif ales < 0:
-		_scrie_verdict("TIMPUL A EXPIRAT", false)
-	else:
-		_scrie_verdict("INCORECT", false)
-
-	# `create_timer` face un cronometru de unică folosință; `await` pune funcția
-	# pe pauză până când el emite `timeout`. Scurtă pauză, ca să apuci să vezi.
-	await get_tree().create_timer(PAUZA_FEEDBACK).timeout
+	# ȘI ABIA ACUM începe pauza în care citești răspunsul corect.
+	await get_tree().create_timer(PAUZA_CITIRE).timeout
 
 	# ȘI ABIA ACUM strigăm rezultatul. Cine ne-a deschis primește `succes`.
 	rezolvat.emit(succes)

@@ -27,6 +27,17 @@ const DURATA_PANOU := 0.55      # cât ține alunecarea figurilor, în ambele se
 const DURATA_FADE_PANOU := 0.40 # fade-ul conținutului: puțin mai scurt decât mișcarea
 const LINII_JURNAL := 80        # câte linii de istoric ținem în panoul de jurnal
 
+# FULGERUL DE VERDICT NU MAI E AICI. A fost, o vreme: la fiecare răspuns,
+# rama și fondul panoului tresăreau verde sau roșu. Suna bine pe hârtie, dar în
+# joc semnalul cădea în locul greșit — panoul e mare și îți stă la marginea
+# privirii, iar ochiul tău e lipit de butonul pe care tocmai l-ai apăsat.
+# O suprafață mare care pulsează periferic nu se citește ca răspuns la gestul
+# tău, ci ca un al doilea eveniment, în altă parte a ecranului.
+# Acum se colorează VARIANTELE, iar asta e treaba puzzle-ului: butoanele sunt
+# ale disciplinei, nu ale luptei (vezi `_termina` în trivia.gd / logica.gd).
+# Lupta a rămas cu un panou care doar se deschide și se închide — și cu
+# regula generală: cine deține nodul, îl și animează.
+
 # Indicatorul de PA: cercuri care se sting, nu cifre.
 const MARIME_PUNCT_PA := Vector2(14, 14)
 const CULOARE_PA_PLIN := Color(0.95, 0.84, 0.5)
@@ -670,6 +681,12 @@ func creeaza_puzzle(scena: PackedScene, nivel: int, context := "", scurtare := 0
 	# containerul reîmparte singur lățimea: figurile se strâng spre margini fără
 	# ca noi să calculăm vreo poziție.
 	zona_puzzle.add_child(puzzle)
+	# Semnalul `verdict` al puzzle-ului (răspunsul, strigat pe loc) NU se mai
+	# leagă de nimic: reacția vizuală s-a mutat în puzzle, pe variante. Rămâne
+	# liber pentru prima nevoie reală a LUPTEI de a ști „chiar acum" — un sunet
+	# sau o zguduire a figurii lovite. Dacă îl legi cândva, leagă-l ÎNAINTE de
+	# `porneste()`: acolo pornește cronometrul, iar o întrebare cu timpul deja
+	# curgând ar putea expira în cadrul următor și ar striga în gol.
 	puzzle.porneste(nivel, context, scurtare)
 	return puzzle
 
@@ -710,6 +727,12 @@ func inchide_puzzle(puzzle: Control) -> void:
 ## Înainte, curgea deja în timpul deschiderii — pierdeai o jumătate de secundă
 ## dintr-o întrebare pe care încă n-o puteai citi.
 func deschide_panou() -> void:
+	# ÎNAINTE de gardă, intenționat. La o treaptă nouă din același lanț ieșim
+	# pe linia următoare, deci codul de mai jos nu se mai execută — dar muzica
+	# TREBUIE să rămână atenuată pe tot lanțul, nu doar la prima întrebare.
+	# `atenueaza()` e făcut să suporte chemări repetate: a doua oară nu mișcă
+	# nimic, deci muzica nu „respiră" între trepte.
+	Muzica.atenueaza()
 	if panou_deschis:
 		return   # deja deschis (o treaptă nouă în același lanț): nu reanimăm
 	panou_deschis = true
@@ -734,6 +757,10 @@ func deschide_panou() -> void:
 func inchide_panou() -> void:
 	if not zona_puzzle.visible:
 		return
+	# Muzica urcă ÎN ACELAȘI TIMP cu retragerea panoului, nu după ea. Fade-ul
+	# ei (0,3 s) e mai scurt decât mișcarea (0,55 s), deci sunetul e înapoi la
+	# normal cam când arena redevine vizibilă — o singură mișcare, nu două.
+	Muzica.restabileste()
 	panou_deschis = false
 	var tween := porneste_tween_panou()
 	tween.tween_property(zona_puzzle, "custom_minimum_size:x", 0.0, DURATA_PANOU)
@@ -746,6 +773,12 @@ func inchide_panou() -> void:
 ## Panoul dispare fără animație. Îl folosește resetarea luptei: acolo nu
 ## „închizi" ceva, ci pui totul la starea de start.
 func ascunde_panou_acum() -> void:
+	# Plasa de siguranță a atenuării. Pe drumul obișnuit `inchide_panou()` a
+	# ridicat deja muzica (și a doua chemare nu face nimic), dar există căi
+	# care sar peste el: victoria ascunde panoul instant, iar resetarea luptei
+	# îl ascunde din starea de start. Fără linia asta, un inamic ucis în
+	# mijlocul unui lanț ar lăsa muzica atenuată pentru tot restul partidei.
+	Muzica.restabileste()
 	if tween_panou != null and tween_panou.is_valid():
 		tween_panou.kill()
 	panou_deschis = false
