@@ -653,8 +653,27 @@ func actualizeaza_cronometru() -> void:
 	# să-ți ceară să citești. Presiunea se simte, nu se numără.
 	if timp_ramas <= PRAG_URGENTA:
 		bara_timp.modulate = CULOARE_URGENTA
+		# TICĂITUL, legat de ACELAȘI prag ca roșul barei — deliberat, nu din
+		# comoditate. Amândouă spun un singur lucru („mai ai puțin"), doar că
+		# unul o spune ochiului și celălalt urechii. Dacă ticăitul ar avea
+		# pragul lui, mâine ai muta unul și ai uita de celălalt, iar jucătorul
+		# ar primi două avertismente la momente diferite pentru același
+		# eveniment — adică ar învăța să nu se încreadă în niciunul.
+		#
+		# Chemat în FIECARE cadru, nu o singură dată la trecerea pragului, și
+		# e în regulă: `porneste_ticait()` e idempotentă (a doua chemare nu
+		# face nimic — vezi `sunet.gd`). Alternativa ar fi un flag „am pornit
+		# deja" ținut aici, în fiecare disciplină, care trebuie resetat corect
+		# în `porneste()` — adică exact genul de stare duplicată care se strică
+		# la a treia disciplină. Mai bine o gardă, într-un singur loc.
+		Sunet.porneste_ticait()
 	else:
 		bara_timp.modulate = CULOARE_CALM
+		# Simetric, și nu degeaba: `porneste()` cheamă funcția asta cu timpul
+		# plin, ÎNAINTE de a reporni cronometrul. Deci întrebarea următoare
+		# trece pe aici și stinge din oficiu un ticăit rămas în aer, fără ca
+		# cineva să-și amintească să-l stingă.
+		Sunet.opreste_ticait()
 
 
 ## ── FULGERUL DE VERDICT ────────────────────────────────────────
@@ -833,6 +852,12 @@ func _stil_contur_pentru(buton: Button) -> StyleBoxFlat:
 func _termina(succes: bool, ales: int) -> void:
 	raspuns_dat = true
 	set_process(false)   # oprim cronometrul IMEDIAT, înainte de orice așteptare
+	# Ticăitul moare în aceeași linie de gânduri: e sunetul timpului care
+	# curge, iar timpul tocmai s-a oprit. Aici, SUS, nu după pauza de suspans —
+	# altfel ceasul ar mai ticăi o jumătate de secundă peste un răspuns deja
+	# dat. Un singur loc acoperă amândouă ieșirile: și clickul, și timpul
+	# expirat trec pe aici (timeout-ul vine prin `_termina(false, -1)`).
+	Sunet.opreste_ticait()
 
 	for buton: Button in butoane:
 		buton.disabled = true
@@ -894,3 +919,19 @@ func _termina(succes: bool, ales: int) -> void:
 
 	# ȘI ABIA ACUM strigăm rezultatul. Cine ne-a deschis primește `succes`.
 	rezolvat.emit(succes)
+
+
+## Plasa de siguranță a ticăitului: panoul se închide, scena moare.
+##
+## Pe drumul obișnuit `_termina()` a oprit deja ceasul, deci de obicei funcția
+## asta nu are ce face — și e chiar ce vrei de la o plasă. Rostul ei sunt
+## drumurile NEOBIȘNUITE, pe care nu le poți enumera toate dinainte: lupta se
+## termină din alt motiv, scena e schimbată, panoul e ascuns instant la
+## victorie. Un `queue_free()` pe puzzle e ultimul lucru care se întâmplă în
+## toate cazurile, deci ăsta e singurul loc care le prinde pe toate.
+##
+## Fără ea, un ticăit rămas pornit n-ar mai avea pe nimeni care să-l oprească:
+## difuzorul trăiește în `Sunet`, adică într-un autoload care NU moare odată cu
+## scena. Ar ticăi peste ecranul de victorie, apoi peste Cetate, la nesfârșit.
+func _exit_tree() -> void:
+	Sunet.opreste_ticait()

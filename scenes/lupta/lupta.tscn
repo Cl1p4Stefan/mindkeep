@@ -451,7 +451,7 @@ custom_minimum_size = Vector2(0, 44)
 layout_mode = 2
 text = "Inapoi la lupta"
 
-[node name="PanouVictorie" type="Control" parent="." unique_id=1779088395]
+[node name="PanouVerdict" type="Control" parent="." unique_id=1779088395]
 unique_name_in_owner = true
 visible = false
 layout_mode = 1
@@ -461,7 +461,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VoalVictorie" type="ColorRect" parent="PanouVictorie" unique_id=1094223868]
+[node name="VoalVerdict" type="ColorRect" parent="PanouVerdict" unique_id=1094223868]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -470,7 +470,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.04, 0.04, 0.06, 0.76)
 
-[node name="Centru" type="CenterContainer" parent="PanouVictorie" unique_id=895638574]
+[node name="Centru" type="CenterContainer" parent="PanouVerdict" unique_id=895638574]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -479,30 +479,31 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="Panou" type="PanelContainer" parent="PanouVictorie/Centru" unique_id=1529920641]
+[node name="Panou" type="PanelContainer" parent="PanouVerdict/Centru" unique_id=1529920641]
 custom_minimum_size = Vector2(460, 0)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_card")
 
-[node name="Margini" type="MarginContainer" parent="PanouVictorie/Centru/Panou" unique_id=538468025]
+[node name="Margini" type="MarginContainer" parent="PanouVerdict/Centru/Panou" unique_id=538468025]
 layout_mode = 2
 theme_override_constants/margin_left = 30
 theme_override_constants/margin_top = 26
 theme_override_constants/margin_right = 30
 theme_override_constants/margin_bottom = 26
 
-[node name="Coloana" type="VBoxContainer" parent="PanouVictorie/Centru/Panou/Margini" unique_id=1459615856]
+[node name="Coloana" type="VBoxContainer" parent="PanouVerdict/Centru/Panou/Margini" unique_id=1459615856]
 layout_mode = 2
 theme_override_constants/separation = 16
 
-[node name="VictorieTitlu" type="Label" parent="PanouVictorie/Centru/Panou/Margini/Coloana" unique_id=1376913252]
+[node name="VerdictTitlu" type="Label" parent="PanouVerdict/Centru/Panou/Margini/Coloana" unique_id=1376913252]
+unique_name_in_owner = true
 modulate = Color(1, 0.85, 0.45, 1)
 layout_mode = 2
 theme_override_font_sizes/font_size = 34
 text = "VICTORIE"
 horizontal_alignment = 1
 
-[node name="VictorieText" type="Label" parent="PanouVictorie/Centru/Panou/Margini/Coloana" unique_id=1512137478]
+[node name="VerdictText" type="Label" parent="PanouVerdict/Centru/Panou/Margini/Coloana" unique_id=1512137478]
 unique_name_in_owner = true
 modulate = Color(0.78, 0.78, 0.86, 1)
 layout_mode = 2
@@ -511,7 +512,7 @@ text = "..."
 horizontal_alignment = 1
 autowrap_mode = 3
 
-[node name="VictorieContinua" type="Button" parent="PanouVictorie/Centru/Panou/Margini/Coloana" unique_id=972778399]
+[node name="VerdictButon" type="Button" parent="PanouVerdict/Centru/Panou/Margini/Coloana" unique_id=972778399]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 48)
 layout_mode = 2

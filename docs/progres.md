@@ -12,7 +12,7 @@
 | 1. Setup, Git | ✅ gata |
 | 2. Scena de luptă cu placeholdere | ✅ gata |
 | 3. Trivia, ca scenă independentă | ✅ gata |
-| 4. Bucla completă a unei lupte | 🟡 victorie ✅ · înfrângere și recompense ❌ |
+| 4. Bucla completă a unei lupte | 🟡 victorie ✅ · înfrângere ✅ · recompense ❌ |
 | 5. Trei inamici manuali | 🟡 doi arhetipi scriși, un singur inamic activ |
 | 6. Harta de expediție | ❌ |
 | 7. Cetatea | ❌ |
@@ -23,6 +23,254 @@
 Am sărit peste ordinea recomandată la pasul 12 (artă): imaginile pentru rege și
 cavaler au intrat mai devreme, dar restul rămâne placeholder. Bucla de luptă e
 în continuare cea validată, nu arta.
+
+---
+
+## Sesiunea panoului de verdict (14 septembrie 2026) — înfrângerea are și ea un ecran
+
+**Ce s-a schimbat:** înfrângerea nu mai se termină doar cu un sunet. Apare
+același panou ca la victorie, cu „SAH MAT" în roșu, cât de aproape ai fost
+(„Mai avea 12 / 30 PV") și un buton „Lupta din nou" care chiar repornește lupta.
+
+### Bugul: butonul „Lupta din nou" nu făcea nimic după înfrângere
+
+Nu era o problemă de semnal neconectat — era o **ordine greșită de verificări**.
+
+`_pe_incheie_tura_apasat()` avea gardienii în ordinea asta: „e puzzle deschis?",
+„se încheie deja tura?", „s-a terminat lupta?". Steagul `tura_se_incheie` se
+ridică în pauza scurtă dintre ultima ta acțiune și atacul inamicului, și se
+coboară în `incepe_runda()` — adică la începutul rundei URMĂTOARE.
+
+La victorie asta nu se vede niciodată: inamicul cade în timpul lanțului tău, cu
+steagul jos. La înfrângere, tu mori **chiar în tura inamicului**, care a pornit
+din acea pauză — deci `termina_lupta(false)` se apelează cu steagul sus, iar
+`incepe_runda()` nu mai vine niciodată să-l coboare. Butonul intra în al doilea
+gardian și se întorcea în tăcere.
+
+Două reparații, fiindcă erau două greșeli:
+- `termina_lupta()` coboară acum steagul explicit — o luptă terminată nu are
+  „tură în curs de încheiere".
+- `lupta_terminata` se verifică ÎNAINTEA lui `tura_se_incheie`. E starea mai
+  tare din cele două: ce era „în curs" într-o luptă încheiată nu mai are ce opri.
+
+Lecția generală: când un buton „nu face nimic", caută întâi un `return` dintr-un
+gardian, nu un semnal lipsă. Un `return` tăcut arată exact ca un buton mort.
+
+### Un singur panou pentru amândouă finalurile
+
+`PanouVictorie` s-a redenumit `PanouVerdict`; `_arata_verdictul(victorie: bool)`
+îi schimbă titlul, culoarea titlului, textul și eticheta butonului.
+
+De ce nu două panouri în scenă: victoria și înfrângerea au **aceeași formă** —
+titlu mare, o frază despre ce s-a întâmplat, un buton. Diferă doar cuvintele.
+Două copii ar însemna că orice schimbare de formă de mâine (o margine, un buton
+„Abandonează expediția", o animație de intrare) se face de două ori — și a doua
+oară se uită. Aceeași regulă ca la Obeliscuri: un contract, mai multe conținuturi.
+
+Textul de înfrângere e oglinda celui de victorie, intenționat. A doua frază spune
+cât de aproape ai fost: „mai avea 3 PV" e un motiv să reîncerci imediat, „mai
+avea 28" e informația că trebuie schimbat ceva, nu repetat.
+
+### Butonul de sub arenă a dispărut de tot
+
+Era ascuns în timpul luptei și reapărea la final ca buton de repornire. Acum
+repornirea e în panou, peste toată arena — iar butonul de jos rămânea vizibil
+sub voal, pe jumătate estompat. Două butoane „Lupta din nou" pe același ecran nu
+sunt două șanse, sunt o întrebare inutilă despre care e cel adevărat.
+
+Nodul și `_pe_incheie_tura_apasat()` rămân în scenă (e în continuare drumul prin
+care se încheie o tură din cod); doar `visible` e acum `false` permanent.
+
+### Ce rămâne deschis din pasul 4
+
+Recompensele după victorie. Panoul de verdict e locul lor evident — sub text,
+deasupra butonului — dar n-are ce afișa până nu există economia celor 4 resurse.
+
+---
+
+## Sesiunea verdictelor finale (14 septembrie 2026) — lupta nu se mai termină în tăcere
+
+**Ce s-a schimbat:** când lupta se încheie, se aude. Victoria are fanfară
+(`victory.ogg`), înfrângerea are „Șah Mat"-ul ei (`defeat.ogg`). Amândouă pornesc
+în același cadru în care se încheie lupta — la victorie, exact odată cu panoul.
+Muzica de luptă se stinge sub ele și se întoarce când lupta repornește.
+
+### Muzica se OPREȘTE, nu se atenuează — și de ce nu e același lucru
+
+La întrebări muzica se dă doar mai încet (`Muzica.atenueaza()`): lupta continuă
+sub panou, iar tăcerea ar suna a pană de curent. La final lupta NU mai continuă,
+iar muzica de luptă e o promisiune că mai ai ceva de făcut — ținută sub fanfară,
+ar contrazice fix mesajul verdictului.
+
+În plus, cele două se bat pe același spațiu: fanfara de victorie e tot muzică,
+cu tonalitate proprie. Două piese diferite în același timp nu sună a „mai multă
+muzică", sună a greșeală.
+
+Stingerea muzicii durează 2 s (`Muzica.DURATA_FADE`) și se suprapune peste
+primele secunde ale verdictului. Nu e o scăpare, e chiar ce vrei: un încrucișat,
+nu o tăietură.
+
+### Al doilea difuzor cu nume în `Sunet`
+
+Verdictele n-au intrat în rotația de 3 voci, din același motiv ca ticăitul:
+trebuie să poată fi **oprite la comandă**. Concret — apeși „Continuă" la două
+secunde de la fanfară, lupta repornește, iar fanfara ar mai cânta încă cinci
+secunde peste muzica luptei noi. Pe o voce din rotație n-ai avea de ce s-o apuci.
+
+Și n-au nevoie de rotație: nu poți câștiga și pierde în același timp.
+
+Trei lucruri le sunt proprii:
+
+- **Catalog și enum separate** (`Verdict`, `VERDICTE`), nu un rând în plus în
+  `EFECTE`. Ambele enum-uri încep de la 0, deci `Efect.CORECT` și
+  `Verdict.VICTORIE` sunt amândouă `0`; două cataloage separate sunt exact ce
+  împiedică un „0" rătăcit să cânte altceva decât crezi.
+- **Volum propriu** (`VOLUM_VERDICT_DB`, azi -8 dB). „Corect"/„greșit" sunt
+  bipuri de câteva zecimi de secundă, normalizate tare ca să treacă peste
+  muzică. Verdictele sunt bucăți de muzică: la același nivel de vârf se aud mult
+  mai tare, fiindcă stau tare tot timpul, nu doar o clipă.
+- **Stingere scurtă la oprire** (`FADE_VERDICT`, 0,4 s), spre deosebire de
+  ticăit, care se taie din cuțit. Ticăitul e făcut din pocnete — oriunde l-ai
+  tăia nu tai nimic. Verdictul e o notă ținută, iar o tăietură peste o coardă
+  care încă sună se aude ca un clic în difuzor.
+
+### `Sunet` tot nu știe nimic despre muzică
+
+Ar fi fost tentant: „dacă tot cânt fanfara, opresc eu și muzica". Dar atunci
+`Sunet` ar trebui să ghicească dacă muzica se oprește de tot sau doar se dă mai
+încet — și n-are de unde ști ce e pe ecran. Lupta decide, în `termina_lupta()`,
+exact ca la atenuarea de la întrebări. Cele două regizoare rămân surde una la
+alta, ca fanfara să poată fi folosită mâine și pe hartă, fără să oprească muzica
+hărții.
+
+### Două locuri în `lupta.gd`, și de ce exact acolo
+
+| Unde | Ce face |
+|---|---|
+| `termina_lupta()` | `Muzica.opreste()`, apoi verdictul potrivit. La victorie apelul stă lipit de `_arata_victoria()` — care e o funcție obișnuită, fără `await`, deci sunetul și panoul chiar apar în același cadru |
+| `reseteaza_lupta()` | `Sunet.opreste_verdict()` + `Muzica.reda(LUPTA)`. Un singur loc pentru toate drumurile înapoi: „Continuă", „Luptă din nou", și resetul de test |
+
+Amândouă apelurile din reset sunt sigure oricând: `opreste_verdict()` nu face
+nimic dacă nu cânta nicio fanfară, iar `Muzica.reda()` nu repornește piesa dacă
+ea cântă deja.
+
+### Înfrângerea încă n-are panou
+
+Sunetul de înfrângere pornește la `termina_lupta(false)`, unde e singurul lucru
+care marchează momentul. Panoul de „Șah Mat" rămâne pasul 1 din lista de
+construcție; când apare, apelul se mută lângă el, ca la victorie.
+
+### Verificat
+
+Rulare headless a unei lupte adevărate, nu doar a scriptului:
+
+- victorie → verdictul cântă, panoul e vizibil, `Muzica.piesa_curenta == -1`;
+- „Continuă" la 0,5 s → muzica de luptă a revenit (`piesa_curenta == 0`, cântă),
+  fanfara e încă în stingere; după `FADE_VERDICT` s-a oprit singură;
+- înfrângere → verdictul cântă, muzica s-a oprit;
+- două `reseteaza_lupta()` la rând, fără nimic în difuzoare → fără erori.
+
+Numărul de „ObjectDB instances leaked" la ieșire e identic cu cel dinainte de
+sesiune (verificat prin `git stash`) — difuzorul nou nu adaugă scurgeri.
+
+### Fișiere atinse
+
+```
+autoload/sunet.gd            — VOLUM_VERDICT_DB, FADE_VERDICT, VOLUM_TACERE_DB,
+                               enum Verdict + VERDICTE, _verdict, _tween_verdict,
+                               _pregateste_verdictele(), reda_verdict(),
+                               opreste_verdict(), curățenie în _exit_tree
+scenes/lupta/lupta.gd        — termina_lupta(), reseteaza_lupta()
+assets/audio/victory.ogg     — nou
+assets/audio/defeat.ogg      — nou
+(+ .import pentru amândouă, generate de editor)
+```
+
+**De curățat:** în `assets/audio/` au rămas `defeat_GOOD.ogg` și
+`defeat_short.ogg`, variante de probă pe care nu le folosește nimeni. Dacă
+`defeat.ogg` e alegerea finală, șterge-le — altfel peste o lună n-o să mai știi
+care e cea bună (numele `_GOOD` o să spună contrariul).
+
+---
+
+## Sesiunea ticăitului (14 septembrie 2026) — ultimele cinci secunde se aud
+
+**Ce s-a schimbat:** cât timp mai ai sub 5 secunde la o întrebare, un ceas
+ticăie sub tine. Pornește exact odată cu roșul barei, are ritm constant (nu
+accelerează), și tace în clipa în care timpul se oprește — la răspuns, la timp
+expirat, sau când se închide panoul.
+
+**De ce ticăit și nu altceva.** Bara roșie e informație periferică: o vezi doar
+dacă îți muți privirea de pe întrebare, adică fix când n-ai voie s-o muți.
+Sunetul ajunge fără să ceară nimic de la ochi — poți citi ultima variantă și
+să știi, în același timp, că mai ai trei secunde.
+
+### Difuzor propriu în `Sunet`, nu o voce din rotație
+
+`Sunet` avea 3 voci rotite în cerc pentru sunete de unică folosință. Ticăitul
+n-a intrat în rotația aia: e singurul sunet din joc care trebuie **oprit la
+comandă**, iar pe o voce rotativă a treia cerere de „corect" i-ar fi furat
+difuzorul și s-ar fi oprit singur, din senin. Are deci `_ticait`, un
+`AudioStreamPlayer` cu numele lui.
+
+| Ce | Valoare | De ce |
+|---|---|---|
+| `VOLUM_TICAIT_DB` | **-16 dB** | Sub muzica normală (-12), dar ~5 dB peste muzica atenuată (-21) — adică sub prag în restul timpului, audibil fix când contează |
+| Bucla | forțată pe `true` în cod | Importul pune `loop=false`. Fișierul are ~8 s, fereastra e de 5, deci azi nu se ajunge la capăt — dar dacă muți pragul la 10, ceasul n-are voie să amuțească la jumătate |
+| `process_mode` | `PAUSABLE` | Singura excepție de la `ALWAYS`-ul nodului `Sunet`. Cronometrul întrebării e un `_process`, deci pe pauză se oprește; un ceas care ticăie peste timp înghețat e o minciună |
+
+Volumul e **independent de atenuarea muzicii**: `Sunet` și `Muzica` sunt două
+autoload-uri cu difuzoare separate, deci ducking-ul din
+[sesiunea atenuării](#sesiunea-atenuării-13-septembrie-2026--muzica-se-dă-la-o-parte)
+nu-l atinge. Dacă ticăitul iese prea agresiv sau prea timid, `VOLUM_TICAIT_DB`
+e singurul număr de schimbat.
+
+### Cine îl pornește și cine îl oprește
+
+`Sunet` nu știe ce e o întrebare sau un prag. Puzzle-urile îl comandă, din
+cronometrul lor — deci ticăitul e deja refolosibil pentru un nod de hartă cu
+limită de timp, fără nicio linie nouă în `sunet.gd`.
+
+| Loc (identic în `trivia.gd` și `logica.gd`) | Chemare | De ce acolo |
+|---|---|---|
+| `actualizeaza_cronometru()`, ramura `<= PRAG_URGENTA` | `porneste_ticait()` | **Același prag ca roșul barei**, deliberat: două canale, un singur eveniment. Cu praguri separate, ai muta unul și ai uita de celălalt |
+| aceeași funcție, ramura `else` | `opreste_ticait()` | `porneste()` trece pe aici cu timpul plin, înainte de a reporni cronometrul — deci întrebarea următoare stinge din oficiu un ticăit rămas în aer |
+| `_termina()`, lângă `set_process(false)` | `opreste_ticait()` | Sus, nu după pauza de suspans. Un singur loc acoperă și clickul, și timpul expirat (timeout-ul vine prin `_termina(false, -1)`) |
+| `_exit_tree()` | `opreste_ticait()` | Plasa de siguranță pentru închiderea panoului, victorie, schimbare de scenă. Difuzorul trăiește în autoload, care NU moare cu scena — fără ea, un ticăit scăpat ar merge peste ecranul de victorie și mai departe |
+
+**Cheia care face totul să funcționeze:** `porneste_ticait()` e **idempotentă**
+— e chemată de ~60 de ori pe secundă și doar prima contează (gardă pe
+`playing`). Fără ea, fiecare cadru ar reporni sunetul de la capăt și ai auzi un
+bâzâit, nu un ceas. Alternativa — un flag „am pornit deja" ținut în fiecare
+disciplină, resetat corect în `porneste()` — e exact genul de stare duplicată
+care se strică la a treia disciplină. Aceeași lecție ca la `_atenuata` din
+`Muzica`: garda stă lângă difuzor, nu la apelant.
+
+**Verificat prin rulare automată,** în ambele discipline: pornire la 4,9 s,
+oprire la trecerea înapoi peste prag, oprire la timeout, oprire la distrugerea
+scenei fără răspuns, plus dubla chemare în ambele sensuri. Ce **nu** s-a
+verificat: dacă ritmul fișierului se potrivește cu senzația de presiune. Asta
+se aude doar jucând.
+
+**Notă de import:** `clock_tick.ogg` intrase în repo fără `.import` — Godot îl
+generează la prima deschidere a editorului. E generat acum și trebuie comis
+împreună cu fișierul audio.
+
+### Fișiere atinse
+
+```
+autoload/sunet.gd                  — VOLUM_TICAIT_DB, CALE_TICAIT, _ticait,
+                                     _pregateste_ticaitul(), porneste_ticait(),
+                                     opreste_ticait(), curățenie în _exit_tree
+scenes/trivia/trivia.gd            — 3 chemări + _exit_tree nou
+scenes/logica/logica.gd            — aceleași, cuvânt cu cuvânt
+assets/audio/clock_tick.ogg.import — generat de editor
+```
+
+**Datorie tehnică, tot mai scumpă:** astea sunt încă „aceleași, cuvânt cu
+cuvânt" în două fișiere. `puzzle.gd` (`class_name Puzzle`) era deja pasul 3 din
+lista de construcție; acum regula de timp e în **patru** locuri identice, nu
+două. De rezolvat înainte de a treia disciplină.
 
 ---
 

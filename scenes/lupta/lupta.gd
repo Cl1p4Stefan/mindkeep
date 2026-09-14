@@ -45,6 +45,13 @@ const CULOARE_PA_GOL := Color(0.2, 0.2, 0.24)
 # Culorile intenției: normală, și cea de alarmă pentru lovitura devastatoare.
 const CULOARE_INTENTIE := Color(0.96, 0.6, 0.5)
 const CULOARE_INTENTIE_GREA := Color(1, 0.42, 0.3)
+# Culorile titlului din panoul de verdict. Aurul e deja limbajul lucrurilor
+# câștigate în joc (PA plin, ramele de panou); roșul stins al înfrângerii nu e
+# roșul de alarmă al intenției inamicului — acela te avertizează că URMEAZĂ
+# ceva, ăsta constată ceva ce s-a întâmplat deja. De-aia e desaturat și mai
+# închis: un roșu aprins pe un titlu mare țipă, iar tonul jocului nu pedepsește.
+const CULOARE_VICTORIE := Color(1, 0.85, 0.45)
+const CULOARE_INFRANGERE := Color(0.72, 0.38, 0.38)
 
 # ─────────────────────────────────────────────────────────────
 # REGULA DE COST DE OPORTUNITATE
@@ -286,10 +293,15 @@ var panou_deschis := false
 @onready var figura_inamic: Control = $Margini/Coloana/Arena/ZonaInamic/FiguraInamic
 # Panoul in care se deschide intrebarea, intre cele doua figuri.
 @onready var zona_puzzle: PanelContainer = %ZonaPuzzle
-# Ecranul de victorie.
-@onready var panou_victorie: Control = %PanouVictorie
-@onready var victorie_text: Label = %VictorieText
-@onready var buton_continua: Button = %VictorieContinua
+# Ecranul de verdict. UNUL singur, pentru amandoua finalurile: victoria si
+# infrangerea nu se deosebesc prin structura, ci prin cuvinte si culoare.
+# Doua panouri identice in scena ar insemna ca orice schimbare de forma
+# (o margine, un buton nou, o animatie de intrare) se face de doua ori — si
+# a doua oara se uita.
+@onready var panou_verdict: Control = %PanouVerdict
+@onready var verdict_titlu: Label = %VerdictTitlu
+@onready var verdict_text: Label = %VerdictText
+@onready var buton_verdict: Button = %VerdictButon
 @onready var figuri_desenate: Array[Control] = [%JucatorSilueta, %InamicSilueta, %PortretInamic]
 @onready var figuri_imagini: Array[Control] = [%JucatorImagine, %InamicImagine, %PortretImagine]
 # Array simplu cu cele 3 butoane, ca să le putem trata în buclă.
@@ -321,10 +333,10 @@ func _ready() -> void:
 	# "gui_input" e semnalul brut de mouse/tastatura primit de un Control.
 	# Voalul nu e buton, deci nu are "pressed" — ascultam direct evenimentul.
 	voal_card.gui_input.connect(_pe_voal_card_apasat)
-	buton_continua.pressed.connect(_pe_continua_apasat)
+	buton_verdict.pressed.connect(_pe_verdict_apasat)
 	panou_jurnal.visible = false
 	card_inamic.visible = false
-	panou_victorie.visible = false
+	panou_verdict.visible = false
 	ascunde_panou_acum()
 
 	# Se vede un singur set; celălalt rămâne în scenă, ascuns.
@@ -802,11 +814,16 @@ func porneste_tween_panou() -> Tween:
 func _pe_incheie_tura_apasat() -> void:
 	if puzzle_activ:
 		return   # nu poți încheia tura cu un puzzle deschis
-	if tura_se_incheie:
-		return   # tura se încheie deja singură — fără două ture de inamic
 	if lupta_terminata:
+		# Verificarea asta stă ÎNAINTEA lui `tura_se_incheie`, nu după ea:
+		# „lupta s-a terminat" e starea mai tare dintre cele două. O tură
+		# care „se încheie" într-o luptă deja încheiată nu mai are ce opri —
+		# iar pusă la coadă, verificarea asta lăsa butonul mut exact în cazul
+		# în care aveai cea mai mare nevoie de el: după înfrângere.
 		reseteaza_lupta()
 		return
+	if tura_se_incheie:
+		return   # tura se încheie deja singură — fără două ture de inamic
 	tura_inamicului()
 
 
@@ -860,31 +877,98 @@ func loveste_jucatorul(daune: int) -> void:
 
 func termina_lupta(victorie: bool) -> void:
 	lupta_terminata = true
+
+	# MUZICA IESE DE TOT, nu se dă doar mai încet.
+	#
+	# La întrebări o atenuăm (`Muzica.atenueaza()`), pentru că lupta continuă
+	# sub panou și tăcerea ar suna a pană de curent. Aici lupta NU mai continuă,
+	# iar muzica de luptă e o promisiune că mai ai ceva de făcut. Ținută sub
+	# fanfară, ar contrazice exact mesajul verdictului.
+	#
+	# În plus, cele două se bat pe același spațiu: fanfara de victorie e tot
+	# muzică, cu tonalitate proprie. Două piese diferite în același timp nu sună
+	# a „mai multă muzică", sună a greșeală.
+	#
+	# Stingerea durează 2 s (`Muzica.DURATA_FADE`) și se suprapune peste primele
+	# secunde ale verdictului — asta nu e o scăpare, e chiar ce vrei: un
+	# încrucișat, nu o tăietură. Muzica se întoarce în `reseteaza_lupta()`.
+	Muzica.opreste()
+
+	# `tura_se_incheie` e steagul „sunt în pauza dintre ultima ta acțiune și
+	# atacul inamicului". Lupta s-a terminat, deci pauza aia nu mai există — iar
+	# dacă steagul rămâne ridicat, codul care îl verifică (`_pe_incheie_tura_apasat`)
+	# crede că inamicul e încă pe cale să lovească și refuză să facă orice.
+	# Exact ăsta era bugul „butonul «Lupta din nou» nu face nimic după înfrângere":
+	# la victorie lupta se încheie în timpul lanțului tău (steagul e jos), dar la
+	# înfrângere se încheie CHIAR în tura inamicului, pornită din pauză — deci
+	# steagul era sus și nu-l mai cobora nimeni.
+	tura_se_incheie = false
+
 	if victorie:
 		scrie_in_jurnal("VICTORIE! Inamicul a cazut in runda %d." % runda)
-		_arata_victoria()
+		Sunet.reda_verdict(Sunet.Verdict.VICTORIE)
 	else:
 		scrie_in_jurnal("SAH MAT. Ai pierdut in runda %d." % runda)
+		Sunet.reda_verdict(Sunet.Verdict.INFRANGERE)
+
+	# Sunetul și panoul, în același cadru. `_arata_verdictul()` e o funcție
+	# obișnuită, fără `await` — deci nu se așteaptă nimic între apelul de sunet
+	# de mai sus și linia asta: verdictul se aude și se vede împreună. Dacă
+	# vreodată pui aici o animație de intrare, ține apelul lipit de sunet, ca
+	# să nu se desprindă unul de altul.
+	_arata_verdictul(victorie)
+
 	buton_incheie_tura.text = "Lupta din nou"
 	actualizeaza_ui()
 
 
-## Ecranul de victorie. Până acum lupta se termina în tăcere: bara ajungea la
-## zero, butonul își schimba textul, și atât. Un moment câștigat merită să se
-## vadă că a fost câștigat.
-func _arata_victoria() -> void:
-	victorie_text.text = "%s a cazut in runda %d.\nAi incheiat lupta cu %d / %d PV." % [
-		DATE_ARHETIP[ARHETIP_INAMIC]["nume"], runda, pv_jucator, PV_MAX_JUCATOR
-	]
-	panou_victorie.visible = true
-	buton_continua.grab_focus()
+## Ecranul de verdict — ACELAȘI panou pentru amândouă finalurile.
+##
+## Înfrângerea se termina până acum doar cu un sunet și cu un buton care își
+## schimba textul jos, sub restul ecranului. Un final care nu se vede nu se
+## simte ca un final: bara ajunge la zero și pare mai degrabă că s-a blocat
+## jocul decât că ai pierdut.
+##
+## De ce UN singur panou, nu două: victoria și înfrângerea au exact aceeași
+## FORMĂ — titlu mare, o frază despre ce s-a întâmplat, un buton. Diferă doar
+## cuvintele și culoarea. Două panouri în scenă ar însemna că orice schimbare
+## de formă (o margine, un buton nou, o animație de intrare) se face de două
+## ori — și a doua oară se uită. E aceeași regulă ca la Obeliscuri: un
+## contract, mai multe conținuturi.
+func _arata_verdictul(victorie: bool) -> void:
+	var nume_inamic: String = DATE_ARHETIP[ARHETIP_INAMIC]["nume"]
+
+	if victorie:
+		verdict_titlu.text = "VICTORIE"
+		verdict_titlu.modulate = CULOARE_VICTORIE
+		verdict_text.text = "%s a cazut in runda %d.\nAi incheiat lupta cu %d / %d PV." % [
+			nume_inamic, runda, pv_jucator, PV_MAX_JUCATOR
+		]
+		# „Continua", nu „Lupta din nou": după victorie drumul merge înainte.
+		# Când apare harta de expediție, butonul te duce la nodul următor.
+		buton_verdict.text = "Continua"
+	else:
+		verdict_titlu.text = "INFRANGERE"
+		verdict_titlu.modulate = CULOARE_INFRANGERE
+		# Oglinda textului de victorie: aceeași structură, cealaltă direcție.
+		# A doua frază spune cât de aproape ai fost — „mai avea 3 PV" e un motiv
+		# să reîncerci, „mai avea 28" spune că trebuie schimbat ceva, nu repetat.
+		verdict_text.text = "%s te-a doborat in runda %d.\nMai avea %d / %d PV." % [
+			nume_inamic, runda, pv_inamic, PV_MAX_INAMIC
+		]
+		buton_verdict.text = "Lupta din nou"
+
+	panou_verdict.visible = true
+	# Focus pe buton: se poate apăsa și cu Enter/Space, fără să cauți mouse-ul.
+	buton_verdict.grab_focus()
 
 
-## „Continuă" — deocamdată reia lupta, fiindcă încă nu există unde să continui.
-## Aici se leagă harta de expediție, când ajungem la ea: în loc de reset,
-## închizi lupta și te întorci pe hartă, la nodul următor.
-func _pe_continua_apasat() -> void:
-	panou_victorie.visible = false
+## Butonul panoului de verdict — deocamdată reia lupta pe amândouă drumurile,
+## fiindcă încă nu există unde să continui. Aici se leagă harta de expediție,
+## când ajungem la ea: victoria te întoarce pe hartă, la nodul următor;
+## înfrângerea încheie expediția și te trimite în cetate.
+func _pe_verdict_apasat() -> void:
+	panou_verdict.visible = false
 	reseteaza_lupta()
 
 
@@ -901,8 +985,22 @@ func reseteaza_lupta() -> void:
 	lant_daune = 0
 	combo_corecte = 0
 	jurnal.clear()
-	panou_victorie.visible = false
+	panou_verdict.visible = false
 	ascunde_panou_acum()
+
+	# Sunetul luptei încheiate se retrage, muzica luptei noi intră în locul lui.
+	#
+	# Amândouă apelurile sunt sigure oricând, deci nu trebuie să ne întrebăm pe
+	# ce drum am ajuns aici: `opreste_verdict()` nu face nimic dacă nu cânta
+	# nicio fanfară (reset cerut din butonul de test, fără victorie), iar
+	# `Muzica.reda()` nu repornește piesa dacă ea cântă deja.
+	#
+	# Verdictul se stinge scurt, nu se taie: dacă apeși „Continuă" la o secundă
+	# de la victorie, fanfara nu dispare brusc — se retrage în 0,4 s, fix cât
+	# muzica de luptă are nevoie ca să se ridice de la tăcere.
+	Sunet.opreste_verdict()
+	Muzica.reda(Muzica.Piesa.LUPTA)
+
 	buton_incheie_tura.text = "Incheie tura"
 	scrie_in_jurnal("Lupta reincepe.")
 	incepe_runda()
@@ -1064,10 +1162,18 @@ func actualizeaza_ui() -> void:
 	for i in range(stiluri_pa.size()):
 		stiluri_pa[i].bg_color = CULOARE_PA_PLIN if i < pa else CULOARE_PA_GOL
 
-	# În timpul luptei butonul e ascuns: tura se încheie singură când nu mai
-	# ai ce face, deci n-are ce confirma. Reapare DOAR la finalul luptei,
-	# unde e butonul de repornire.
-	buton_incheie_tura.visible = lupta_terminata
+	# Butonul de sub arenă rămâne ascuns TOT timpul.
+	#
+	# În timpul luptei n-are ce confirma: tura se încheie singură când nu mai
+	# ai ce face. Iar la final nu mai e nici el butonul de repornire — acela
+	# e acum în panoul de verdict, peste toată arena. Două butoane „Lupta din
+	# nou" pe același ecran, unul dintre ele pe jumătate acoperit de voal,
+	# nu sunt două șanse; sunt o întrebare inutilă despre care e cel adevărat.
+	#
+	# Nodul și handler-ul rămân în scenă: `_pe_incheie_tura_apasat()` e în
+	# continuare drumul prin care se încheie o tură din cod, și e util să ai
+	# un buton de pornit înapoi când testezi. Doar nu se vede.
+	buton_incheie_tura.visible = false
 
 	for index in range(butoane_obelisc.size()):
 		var buton: Button = butoane_obelisc[index]
