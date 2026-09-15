@@ -17,12 +17,173 @@
 | 6. Harta de expediție | ❌ |
 | 7. Cetatea | ❌ |
 | 8. Save/Load | ❌ |
-| 9. Celelalte discipline | 🟡 Logica ✅ · Memorie și Cuvântul Adevărat ❌ |
+| 9. Celelalte discipline | 🟡 Cultură generală ✅ · Logica ✅ · Cuvinte ✅ · celelalte 5 ❌ |
 | 10–13. Generator de inamici, artă, web | ❌ (artă parțial: figurile principale și piesele de pe butoanele de Obelisc au imagini reale) · Regina: **amânată**, vezi CLAUDE.md |
 
 Am sărit peste ordinea recomandată la pasul 12 (artă): imaginile pentru rege,
 cavaler și pentru cele trei piese de șah de pe butoane au intrat mai devreme, dar
 restul rămâne placeholder. Bucla de luptă e în continuare cea validată, nu arta.
+
+---
+
+## Sesiunea bazei comune (15 septembrie 2026) — `puzzle.gd` și a treia disciplină
+
+**Ce s-a schimbat:** Trivia și Logica erau două scene independente cu același
+contract — și cu aproape 500 de linii identice fiecare (cronometru, bară de
+timp, cele patru butoane, cei trei timpi ai verdictului, linia de context,
+marcajul de critic, sunetele). A treia disciplină ar fi făcut datoria de trei
+ori. Acum toate trei moștenesc `scenes/puzzle/puzzle.gd`, iar fiecare fișier de
+disciplină răspunde la o singură întrebare: **de unde vine întrebarea**.
+
+| Fișier | Înainte | Acum |
+|---|---|---|
+| `scenes/puzzle/puzzle.gd` | — | 988, o singură copie |
+| `scenes/trivia/trivia.gd` | 937 | 127 |
+| `scenes/logica/logica.gd` | 1664 | 861 |
+| `scenes/cuvinte/cuvinte.gd` | — | 556 |
+| **total** | **2601** (2 discipline) | **2532** (3 discipline + baza) |
+
+Socoteala care contează nu e cea de sus, ci următoarea: a patra disciplină
+costa înainte ~500 de linii copiate înainte de a scrie primul ei generator.
+Acum costă zero.
+
+### Contractul dintre bază și o disciplină
+
+Lupta nu simte nicio diferență: `porneste()`, `arata_stare()`, `arata_combo()`,
+semnalele `verdict` și `rezolvat` sunt exact aceleași, doar că sunt definite o
+singură dată. Ce e nou e contractul dinăuntru — o disciplină scrie `extends
+Puzzle` și **două funcții**:
+
+| Funcție | Ce face |
+|---|---|
+| `_pregateste_datele()` | își citește fișierele; chemată de mai multe ori, face ceva o dată |
+| `_compune_intrebare(nivel)` | întoarce un Dictionary cu `categorie`, `text`, `variante`, `corect`, `explicatie` |
+| `_descriere_sursa()` | opțional: ce fișier să cauți dacă apare ecranul de eroare |
+
+`Dictionary` gol = „n-am putut". Baza arată atunci un ecran de eroare și
+raportează eșec ordonat, în loc să lase lupta să aștepte un semnal care nu mai
+vine. Tot în bază a intrat și o **vamă**: `_intrebare_buna()` verifică
+dicționarul înainte să apuce să strice ceva pe ecran — un generator care
+întoarce 3 variante în loc de 4 află pe loc, nu printr-un „index out of bounds"
+în mijlocul luptei.
+
+### Și scena, nu doar scriptul
+
+`trivia.tscn` și `logica.tscn` erau două copii ale aceluiași layout, identice
+în afară de textele-placeholder. Acum există `scenes/puzzle/puzzle.tscn`, iar
+cele trei discipline sunt **scene moștenite** din ea: fiecare fișier `.tscn` are
+șase rânduri și nu spune decât „sunt puzzle-ul de bază, cu scriptul ăsta".
+Un buton mutat cu 4px se mută acum o singură dată.
+
+### Disciplina a treia: Cuvinte
+
+Trei tipuri de provocare, cu șanse egale, alese **în două trepte** ca la Logică
+(întâi tipul, apoi tiparul — altfel un tip cu mai multe tipare ar apărea mai des
+fără să-ți dai seama de ce):
+
+| Tip | Tipare | Exemplu |
+|---|---|---|
+| SENS | sinonim, antonim | „Sinonimul lui «rapid»?" |
+| DEFINITIE | cuvânt → sens, sens → cuvânt | „Ce înseamnă «efemer»?" |
+| ANALOGIE | pe sinonime, pe antonime | „RAPID : IUTE :: VESEL : ?" |
+
+Tabelul `GENERATOARE` de aici **n-are câmpul `niveluri`**, spre deosebire de cel
+din Logică, și nu din uitare: acolo nivelul e o însușire a generatorului
+(Fibonacci e greu prin construcție), aici e o însușire a **cuvântului**.
+„Sinonimul lui «vesel»?" și „Sinonimul lui «caduc»?" sunt același tipar și două
+lumi diferite.
+
+Forma analogiei e împrumutată de la Logică, literă cu literă (`A : B` pe un
+rând, `C : ?` pe altul, majuscule). O analogie e o diagramă, nu o propoziție —
+iar o disciplină care inventează altă formă pentru același gest de gândire te
+pune s-o înveți a doua oară degeaba.
+
+### De unde vin variantele greșite — toată valoarea disciplinei
+
+`data/cuvinte.json`, 60 de cuvinte, câmpuri: `cuvant`, `clasa`, `nivel`,
+`domeniu`, `definitie`, `sinonime`, `antonime`. Câmpul `clasa` (substantiv /
+verb / adjectiv) **nu era în lista cerută, dar e cerut de regulă**: distractorii
+se aleg din aceeași clasă gramaticală ȘI de la același nivel, iar fără câmp nu
+există „aceeași clasă". 60 de cuvinte = 9 gălăți (3 clase × 3 niveluri), fiecare
+cu 6-7 cuvinte.
+
+Două decizii care nu se văd, dar fac diferența:
+
+1. **Distractorii vin din listele de SINONIME ale vecinilor, nu din câmpul
+   `cuvant` al lor.** Dacă răspunsul bun ar veni mereu dintr-o listă de sinonime
+   iar greșelile ar fi mereu cuvinte-intrare, ai învăța în zece minute că
+   răspunsul e „ăla care nu seamănă cu celelalte trei" — și ai răspunde corect
+   fără să știi cuvântul. Toate patru variantele trebuie să fie același FEL de
+   lucru.
+2. **Un singur cuvânt de la fiecare vecin.** Două variante din aceeași familie
+   ar arăta amândouă la fel de bune și ar reduce întrebarea la o alegere între
+   două, nu între patru.
+
+Încărcătorul verifică și o **regulă de aur**, ca cea de la Logică: în aceeași
+gălata, un cuvânt n-are voie să fie sinonimul a două intrări diferite (altfel
+apare ca distractor un al doilea răspuns corect, pe care jocul îl marchează
+roșu). Avertizează și pentru gălățile sub 4 cuvinte — ele n-ar apărea niciodată
+în joc, iar fără avertisment n-ai avea de unde ști de ce.
+
+### Bugul găsit rulând generatorul de 6000 de ori
+
+„SFIALĂ : OBRĂZNICIE :: ÎNDRĂZNEALĂ : ?" — răspunsul corect pentru
+„îndrăzneală" era chiar «sfială», scrisă deja cu majuscule în colțul din stânga
+sus. Sfiala și îndrăzneala sunt antonime una alteia, deci analogia se oglindea.
+Datele nu erau greșite; generatorul trebuia să știe să ocolească oglinda.
+Reparat: tot ce se vede în enunț (ambele cuvinte ale modelului **și** cuvântul
+țintă) e interzis printre variante, iar dacă după filtrare nu mai rămâne niciun
+răspuns, tiparul spune „n-am putut" și se încearcă altul.
+
+### Verificat
+
+Rulat cu Godot 4.7.2 headless:
+
+- cele trei scene de puzzle pornesc singure (F6) fără eroare, fiecare își
+  încarcă datele: `Cuvinte: 60 cuvinte in 9 galeti`, `Trivia: 45 intrebari`,
+  `Logica: 51 categorii in 7 domenii, 18 cuvinte`
+- scena de luptă pornește normal (scenele moștenite se încarcă corect, deci
+  `%BaraTimp` & co. se rezolvă prin moștenire)
+- **30.000 de întrebări de Cuvinte generate**, zero probleme: mereu 4 variante
+  distincte și nevide, `corect` în interval, nicio variantă care apare deja în
+  enunț. Distribuția pe cele șase tipare: 4898-5181 fiecare (așteptat 5000).
+  Pe niveluri: exact 10.000 / 10.000 / 10.000.
+
+### Ce rămâne deschis
+
+- **Nu am deschis proiectul în editor.** Scenele moștenite sunt scrise de mână;
+  headless zice că merg, dar merită o privire vizuală la Cuvinte (mai ales
+  definițiile lungi pe butoane de 36px — `autowrap` e pornit, dar dacă vreuna
+  iese din buton, scurteaz-o în JSON).
+- **Diacriticele** — verificat, nu e o problemă: `cuvinte.json` folosește
+  ă/â/î/ș/ț peste tot (la o disciplină de vocabular ortografia E conținutul),
+  iar `intrebari_trivia.json` conținea deja ș și ț („a pășit pe Lună",
+  „București"), deci fontul temei le are.
+- Obeliscul se numește în continuare **„Memorie"** în `OBELISCURI`, deși
+  disciplina e Cultură generală. Redenumirea e pasul 2 din rută și n-a intrat
+  în sesiunea asta.
+- Câmpul `explicatie` e completat de toate trei disciplinele, dar tot nu se
+  afișează nicăieri. La Cuvinte ar avea cel mai mult de spus („«efemer» = care
+  ține foarte puțin") — e prima candidată dacă apare vreodată un rând de
+  feedback sub butoane.
+- Câmpul `domeniu` din `cuvinte.json` nu e folosit de niciun generator azi.
+  Există pentru ce urmează: distractori aleși dinadins din alt domeniu, sau un
+  „antrenament liber" filtrat pe domenii (pasul 13).
+
+### Fișiere atinse
+
+```
+scenes/puzzle/puzzle.gd            — NOU, baza comună (class_name Puzzle)
+scenes/puzzle/puzzle.tscn          — NOU, layout-ul, o singură copie
+scenes/cuvinte/cuvinte.gd          — NOU, a treia disciplină
+scenes/cuvinte/cuvinte.tscn        — NOU, scenă moștenită
+data/cuvinte.json                  — NOU, 60 de cuvinte pe 3 niveluri
+scenes/trivia/trivia.gd            — 937 → 127 de linii
+scenes/trivia/trivia.tscn          — rescris ca scenă moștenită
+scenes/logica/logica.gd            — 1664 → 861 de linii
+scenes/logica/logica.tscn          — rescris ca scenă moștenită
+scenes/lupta/lupta.gd              — `SCENA_CUVINTE`, un rând în `OBELISCURI`
+```
 
 ---
 

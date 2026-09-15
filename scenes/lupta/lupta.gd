@@ -169,6 +169,7 @@ const FOLOSESTE_IMAGINI := true
 
 const SCENA_TRIVIA := preload("res://scenes/trivia/trivia.tscn")
 const SCENA_LOGICA := preload("res://scenes/logica/logica.tscn")
+const SCENA_CUVINTE := preload("res://scenes/cuvinte/cuvinte.tscn")
 
 # Datele celor 3 Obeliscuri, ca tabel.
 # Un Array de Dictionary = cea mai simplă „bază de date" din GDScript.
@@ -181,7 +182,10 @@ const SCENA_LOGICA := preload("res://scenes/logica/logica.tscn")
 # (`porneste`, `arata_stare`, semnalul `rezolvat`), deci lupta le tratează la
 # fel — nu știe și n-o interesează ce fel de puzzle e înăuntru. Ca să dai altă
 # disciplină unui Obelisc, schimbi scena de pe linia lui. Atât.
-# Memorie și Cuvinte folosesc deocamdată Trivia: n-au încă scena lor.
+# Din sesiunea în care a apărut `puzzle.gd`, toate trei au scena lor: fiecare
+# moștenește aceeași bază (`scenes/puzzle/puzzle.tscn`) și schimbă doar de unde
+# ia întrebările. De-aia a treia disciplină n-a costat nicio linie schimbată
+# aici, în afară de numele scenei de pe rândul ei.
 #
 # „piesa" și „culoare" sunt înfățișarea Obeliscului, și stau AICI, nu în scenă.
 # Înainte, culoarea trăia în `modulate`-ul butonului din editor și era citită de
@@ -219,7 +223,7 @@ const OBELISCURI := [
 	{
 		"disciplina": "Cuvinte", "piesa": GlifaSah.Piesa.NEBUN,
 		"imagine": "res://assets/art/nebun_sah.png",
-		"culoare": CULOARE_CUVINTE, "nivel": 1, "scena": SCENA_TRIVIA,
+		"culoare": CULOARE_CUVINTE, "nivel": 1, "scena": SCENA_CUVINTE,
 	},
 ]
 
