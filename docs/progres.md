@@ -1,6 +1,6 @@
 # MINDKEEP — Jurnal de progres
 
-*Ultima actualizare: 15 septembrie 2026*
+*Ultima actualizare: 16 septembrie 2026*
 *Atașează acest fișier la începutul fiecărei sesiuni noi, împreună cu `CLAUDE.md` și `docs/pitch-document.md`.*
 
 ---
@@ -12,17 +12,117 @@
 | 1. Setup, Git | ✅ gata |
 | 2. Scena de luptă cu placeholdere | ✅ gata |
 | 3. Trivia, ca scenă independentă | ✅ gata |
-| 4. Bucla completă a unei lupte | 🟡 victorie ✅ · înfrângere ✅ · recompense ❌ |
+| 4. Bucla completă a unei lupte | ✅ victorie · înfrângere · recompense (Fragmente) |
 | 5. Trei inamici manuali | 🟡 doi arhetipi scriși, un singur inamic activ |
 | 6. Harta de expediție | ❌ |
 | 7. Cetatea | ❌ |
-| 8. Save/Load | ❌ |
+| 8. Save/Load | 🟡 tezaurul știe deja să se serializeze (`spre_dictionar` / `din_dictionar`); scrierea pe disc, nu încă |
 | 9. Celelalte discipline | 🟡 Cultură generală ✅ · Logica ✅ · Cuvinte ✅ · celelalte 5 ❌ |
 | 10–13. Generator de inamici, artă, web | ❌ (artă parțial: figurile principale și piesele de pe butoanele de Obelisc au imagini reale) · Regina: **amânată**, vezi CLAUDE.md |
 
 Am sărit peste ordinea recomandată la pasul 12 (artă): imaginile pentru rege,
 cavaler și pentru cele trei piese de șah de pe butoane au intrat mai devreme, dar
 restul rămâne placeholder. Bucla de luptă e în continuare cea validată, nu arta.
+
+---
+
+## Sesiunea recompenselor (16 septembrie 2026) — victoria plătește, și se vede de ce
+
+**Ce s-a schimbat:** până acum victoria era un panou și o fanfară, apoi nimic.
+Acum lasă ceva în urmă: **Fragmente** (nume provizoriu), prima resursă a jocului.
+
+### Suma nu e fixă, e o defalcare
+
+Patru linii, toate vizibile în panoul de verdict, sub text:
+
+| Linia | Cât | De ce ea |
+|---|---|---|
+| Victorie | 10 | simplul fapt că ai învins |
+| PV rămas | până la 10, proporțional | „nu te-a lovit" e o pricepere: fiecare lanț lung e o tură în care inamicul n-a apucat să lovească |
+| Cel mai lung lanț | 1 / treaptă | cel MAI LUNG, nu suma tuturor — zece lanțuri de câte două trepte sunt un joc prudent, unul de douăzeci e un risc asumat |
+| Lovituri critice | 3 / critic | treapta 5, 10, 15 primește o răsplată și în afara luptei, nu doar daune înăuntru |
+
+Cifrele sunt o SCARĂ, nu un echilibru: încă n-avem pe ce cheltui Fragmente, deci
+n-au cum să fie „echilibrate" azi. Toate patru stau în constante lângă regulile de
+combo, în `lupta.gd` — reechilibrarea va fi un drum într-un singur loc.
+
+Liniile care ies **zero rămân pe ecran, dar stinse**. „Lovituri critice (×0) +0"
+e informație: îți arată ce ai lăsat pe masă. Un rând dispărut e doar o gaură pe
+care n-o observi.
+
+**La înfrângere secțiunea dispare cu totul.** Un „+0 Fragmente" după o înfrângere
+ar fi o palmă inutilă, iar jocul ăsta motivează prin curiozitate, nu prin pedeapsă.
+
+### `autoload/tezaur.gd` — al patrulea autoload
+
+Resursele NU aparțin unei lupte. Ținute în `lupta.gd`, ar fi dispărut la prima
+schimbare de scenă — adică fix când o să ai nevoie de ele (hartă, cetate, magazin).
+De-aia `Tezaur` stă lângă `Muzica`, `Sunet` și `Fereastra`.
+
+Înăuntru nu e `var fragmente := 0`, ci un dicționar „resursă → cantitate" și un
+tabel `DATE_RESURSA` cu fișa fiecărei resurse (cheie de salvare, nume afișat,
+descriere). A doua resursă e un RÂND în tabel: totalurile, panoul de verdict și
+salvarea merg pe orice număr de intrări. Aceeași regulă ca la Obeliscuri și la
+arhetipuri — datele într-un tabel, codul citește tabelul.
+
+API: `cat()`, `nume()`, `adauga()`, `plateste()` (scade doar dacă ai destul și
+spune dacă a reușit — încă nefolosită, e pentru cetate), `goleste()`, plus
+semnalul `s_a_schimbat`, cârligul pentru o viitoare bară de resurse.
+
+### Save-ul, decis acum cât e ieftin
+
+`spre_dictionar()` / `din_dictionar()` există de pe acum deși pasul 8 e departe:
+formatul e mai ușor de ales cât tezaurul are o resursă decât peste trei luni,
+când are șase. Singura decizie reală e că pe disc se scriu **chei text**
+(`"fragmente"`), nu numerele din `enum`: valoarea unui enum e doar poziția lui în
+listă, deci o resursă adăugată la mijloc ar muta numerele și un save vechi ar citi
+fragmentele ca fiind altceva. Un text nu se mută niciodată. La încărcare, o cheie
+necunoscută e ignorată și o resursă lipsă rămâne zero — un save vechi trebuie să
+se deschidă chiar și strâmb.
+
+### Cine socotește nu desenează
+
+Trei funcții în `lupta.gd`, cu trei treburi care nu se amestecă:
+
+| Funcție | Ce face |
+|---|---|
+| `calculeaza_recompensa()` | socotește și nu schimbă nimic — poți s-o chemi de zece ori (util pentru o viitoare previzualizare) |
+| `acorda_recompensa()` | plătește în tezaur și întoarce exact liniile plătite |
+| `_construieste_recompensa()` | doar DESENEAZĂ lista primită |
+
+Panoul nu recalculează nimic: primește lista pe care tezaurul a încasat-o. Așa
+cifra de pe ecran și cifra din tezaur nu POT ajunge diferite — e aceeași listă.
+
+Fiecare linie își spune Și resursa, deși azi toate patru zic „Fragmente". Coloana
+aia aparent degeaba e exact ce face ca a doua resursă să fie o linie în plus, nu o
+rescriere a panoului.
+
+### Două variabile noi de stare
+
+`cel_mai_lung_lant` și `critice_totale` se țin separat de `combo_corecte` și
+`lant_daune`, care se șterg la fiecare lanț nou: astea două trebuie să
+supraviețuiască întregii lupte. Se golesc doar în `reseteaza_lupta()`.
+
+### Fișiere atinse
+
+| Fișier | Ce |
+|---|---|
+| `autoload/tezaur.gd` | **nou** — 147 de linii |
+| `project.godot` | `Tezaur` înregistrat ca autoload |
+| `scenes/lupta/lupta.gd` | constante de recompensă, două statistici, cinci funcții noi |
+| `scenes/lupta/lupta.tscn` | `VerdictRecompense`, un VBoxContainer între textul de verdict și buton |
+
+### Ce a rămas deschis
+
+- **Numele „Fragmente" e provizoriu.** Se schimbă dintr-un singur loc
+  (`DATE_RESURSA`), așa că nu e grăbită decizia.
+- **Tezaurul se pierde la închiderea jocului.** Serializarea există, scrierea pe
+  disc nu — pasul 8.
+- **Nu se vede nicăieri în afara verdictului.** O bară de resurse are sens abia
+  când există cetatea sau harta; semnalul `s_a_schimbat` o așteaptă.
+- **Înfrângerea nu plătește nimic.** Dacă o expediție pierdută ajunge să pară timp
+  aruncat, aici se adaugă o recompensă de consolare — `calculeaza_recompensa()`
+  e deja destul de mobilată ca să primească o a doua variantă.
 
 ---
 

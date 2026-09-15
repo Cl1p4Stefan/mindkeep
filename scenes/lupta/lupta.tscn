@@ -504,6 +504,12 @@ text = "..."
 horizontal_alignment = 1
 autowrap_mode = 3
 
+[node name="VerdictRecompense" type="VBoxContainer" parent="PanouVerdict/Centru/Panou/Margini/Coloana" unique_id=1180634417]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 6
+
 [node name="VerdictButon" type="Button" parent="PanouVerdict/Centru/Panou/Margini/Coloana" unique_id=972778399]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 48)

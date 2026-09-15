@@ -101,6 +101,37 @@ const TEXT_CRITIC := "CRITIC!"
 const COMBO_MINIM_AFISAT := 2
 
 # ─────────────────────────────────────────────────────────────
+# RECOMPENSE
+# Plăți din PERFORMANȚĂ, nu o sumă fixă pe victorie. Trei dintre cele patru
+# linii de mai jos răsplătesc exact lucrurile pe care le vreau jucate:
+#
+#   PV rămas         → „nu te-a lovit" e o pricepere, nu noroc: fiecare lanț
+#                       lung e o tură în care inamicul n-a apucat să lovească.
+#   cel mai lung lanț → cel MAI LUNG, nu suma tuturor. Zece lanțuri de câte
+#                       două trepte sunt un joc prudent; unul de douăzeci e un
+#                       risc asumat, și doar al doilea merită plătit.
+#   criticele        → obiectivul intermediar (treapta 5, 10, 15) primește și o
+#                       răsplată în afara luptei, nu doar daune înăuntru.
+#
+# Cifrele sunt mici și rotunde intenționat: încă n-avem pe ce cheltui
+# Fragmente, deci nu au cum să fie „echilibrate" azi. Sunt o SCARĂ, nu un
+# echilibru — când apare cetatea, se reașază de aici, dintr-un singur loc.
+# ─────────────────────────────────────────────────────────────
+const FRAGMENTE_VICTORIE := 10        # simplul fapt că ai învins
+const FRAGMENTE_PV_INTREG := 10       # cât ia cineva care termină cu PV plin
+const FRAGMENTE_PE_TREAPTA_LANT := 1  # per treaptă din cel mai lung lanț
+const FRAGMENTE_PE_CRITIC := 3        # per lovitură critică din toată lupta
+
+# Culorile panoului de recompensă. Liniile obișnuite sunt gri-calme, totalul e
+# auriu (aurul e deja limbajul lucrurilor câștigate), iar o linie care a ieșit
+# ZERO rămâne pe ecran, dar stinsă: o cifră lipsă e informație („n-ai prins
+# niciun critic"), pe când un rând dispărut e doar o gaură pe care n-o observi.
+const CULOARE_RECOMPENSA_ETICHETA := Color(0.58, 0.58, 0.66)
+const CULOARE_RECOMPENSA_VALOARE := Color(0.82, 0.82, 0.9)
+const CULOARE_RECOMPENSA_ZERO := Color(0.42, 0.42, 0.48)
+const CULOARE_RECOMPENSA_TOTAL := Color(1, 0.85, 0.45)
+
+# ─────────────────────────────────────────────────────────────
 # ARHETIPURI DE INAMIC
 # `enum` = o listă de nume pentru niște numere. În loc să scrii prin cod
 # „if tip_inamic == 0", scrii „if tip_inamic == Arhetip.GRABNIC" — se citește
@@ -263,6 +294,13 @@ var lant_daune := 0
 # fiindcă e cea pe care o pierzi dacă greșești.
 var combo_corecte := 0
 
+# STATISTICILE LUPTEI, strânse pentru recompensa de la final.
+# Le ținem separat de `combo_corecte` și `lant_daune`, care se șterg la fiecare
+# lanț nou: astea două trebuie să supraviețuiască întregii lupte. Se golesc
+# doar în `reseteaza_lupta()`, alături de PV și rundă.
+var cel_mai_lung_lant := 0   # cel mai lung șir de răspunsuri corecte, dintr-un singur lanț
+var critice_totale := 0      # câte trepte critice ai atins în toată lupta
+
 # Punctele de PA, construite din cod în `_ready()`.
 # Ținem separat și stilurile: culoarea unui cerc se schimbă prin stil,
 # nu direct pe nod.
@@ -336,6 +374,7 @@ var panou_deschis := false
 @onready var panou_verdict: Control = %PanouVerdict
 @onready var verdict_titlu: Label = %VerdictTitlu
 @onready var verdict_text: Label = %VerdictText
+@onready var verdict_recompense: VBoxContainer = %VerdictRecompense
 @onready var buton_verdict: Button = %VerdictButon
 @onready var figuri_desenate: Array[Control] = [%JucatorSilueta, %InamicSilueta, %PortretInamic]
 @onready var figuri_imagini: Array[Control] = [%JucatorImagine, %InamicImagine, %PortretImagine]
@@ -553,6 +592,10 @@ func ruleaza_lant(index: int) -> void:
 		# Îl împingem în puzzle-ul care e ÎNCĂ pe ecran, ca să vezi cifra
 		# urcând peste răspunsul tău — nu la întrebarea următoare.
 		combo_corecte += 1
+		# Vârful lanțului, ținut minte pentru recompensa de la finalul luptei.
+		# `maxi` înseamnă că un lanț mai scurt de-acum înainte nu poate șterge
+		# recordul: e „cel mai lung din luptă", nu „ultimul".
+		cel_mai_lung_lant = maxi(cel_mai_lung_lant, combo_corecte)
 		# Al doilea argument e marcajul: text gol la o treaptă obișnuită,
 		# „CRITIC!" la a 5-a, a 10-a, a 15-a. Puzzle-ul îl aprinde o clipă
 		# lângă cifră, exact în cadrul în care bara inamicului scade dublu —
@@ -570,6 +613,8 @@ func ruleaza_lant(index: int) -> void:
 			# ar fi pornit de acolo, fiecare disciplină nouă ar trebui să-și
 			# amintească să-l pună. Așa, a treia disciplină îl are pe gratis.
 			Sunet.reda(Sunet.Efect.CRITIC)
+			# Și un semn în răbojul luptei: fiecare critic se plătește la final.
+			critice_totale += 1
 
 		# Daunele treptei se aplică IMEDIAT, nu la finalul lanțului.
 		var daune := daune_treapta(treapta)
@@ -960,8 +1005,18 @@ func termina_lupta(victorie: bool) -> void:
 	# steagul era sus și nu-l mai cobora nimeni.
 	tura_se_incheie = false
 
+	# Recompensa se calculează ȘI se plătește aici, înainte de panou: panoul doar
+	# CITEȘTE lista de linii pe care o primește. Dacă ar calcula-o el, cifra de pe
+	# ecran și cifra din tezaur ar fi două socoteli diferite, care pot ajunge să
+	# nu mai fie egale — exact felul de bug pe care nu-l vezi luni de zile.
+	#
+	# Lista rămâne goală la înfrângere, iar panoul își ascunde singur secțiunea.
+	var recompensa: Array[Dictionary] = []
+
 	if victorie:
+		recompensa = acorda_recompensa()
 		scrie_in_jurnal("VICTORIE! Inamicul a cazut in runda %d." % runda)
+		scrie_in_jurnal(text_recompensa_jurnal(recompensa))
 		Sunet.reda_verdict(Sunet.Verdict.VICTORIE)
 	else:
 		scrie_in_jurnal("SAH MAT. Ai pierdut in runda %d." % runda)
@@ -972,7 +1027,7 @@ func termina_lupta(victorie: bool) -> void:
 	# de mai sus și linia asta: verdictul se aude și se vede împreună. Dacă
 	# vreodată pui aici o animație de intrare, ține apelul lipit de sunet, ca
 	# să nu se desprindă unul de altul.
-	_arata_verdictul(victorie)
+	_arata_verdictul(victorie, recompensa)
 
 	buton_incheie_tura.text = "Lupta din nou"
 	actualizeaza_ui()
@@ -991,8 +1046,12 @@ func termina_lupta(victorie: bool) -> void:
 ## de formă (o margine, un buton nou, o animație de intrare) se face de două
 ## ori — și a doua oară se uită. E aceeași regulă ca la Obeliscuri: un
 ## contract, mai multe conținuturi.
-func _arata_verdictul(victorie: bool) -> void:
+func _arata_verdictul(victorie: bool, recompensa: Array[Dictionary] = []) -> void:
 	var nume_inamic: String = DATE_ARHETIP[ARHETIP_INAMIC]["nume"]
+
+	# Defalcarea, înainte de titlu și text: așa panoul e complet în clipa în care
+	# devine vizibil, fără un cadru în care rândurile s-ar așeza sub ochii tăi.
+	_construieste_recompensa(recompensa)
 
 	if victorie:
 		verdict_titlu.text = "VICTORIE"
@@ -1019,6 +1078,173 @@ func _arata_verdictul(victorie: bool) -> void:
 	buton_verdict.grab_focus()
 
 
+# ─────────────────────────────────────────────────────────────
+# RECOMPENSE
+#
+# Trei funcții, cu trei treburi care nu se amestecă:
+#   `calculeaza_recompensa()` socotește și nu schimbă nimic — poți s-o chemi de
+#       zece ori la rând fără nicio urmare (util când vei vrea să arăți o
+#       previzualizare, sau în teste).
+#   `acorda_recompensa()` chiar plătește în tezaur și întoarce ce-a plătit.
+#   `_construieste_recompensa()` doar DESENEAZĂ lista primită.
+#
+# Despărțirea asta e regula de aur a fișierului, aplicată încă o dată: cine
+# socotește nu desenează, cine desenează nu socotește. De-aia cifra din panou nu
+# poate ajunge niciodată alta decât cifra din tezaur — e aceeași listă.
+# ─────────────────────────────────────────────────────────────
+
+## Defalcarea recompensei, ca listă de linii „etichetă → cât și din ce resursă".
+##
+## E o LISTĂ și nu un total, din același motiv pentru care cardul de inamic e o
+## listă: vreau să văd DE CE am primit atât. Un număr singur nu învață pe nimeni
+## nimic; patru rânduri îmi arată ce s-a plătit și, mai ales, ce n-a fost plătit.
+##
+## Fiecare linie își spune ȘI resursa. Azi toate patru zic „Fragmente", deci pare
+## o coloană degeaba — dar exact ea face ca a doua resursă (o relicvă, o relație,
+## ce-o fi) să fie o linie în plus aici, nu o rescriere a panoului.
+func calculeaza_recompensa() -> Array[Dictionary]:
+	var linii: Array[Dictionary] = []
+
+	linii.append({
+		"eticheta": "Victorie",
+		"resursa": Tezaur.Resursa.FRAGMENTE,
+		"cantitate": FRAGMENTE_VICTORIE,
+	})
+
+	# PROCENT, nu PV brut. Dacă am plăti PV-ul direct, valoarea liniei ar depinde
+	# de cât de mare e regele în lupta asta — iar când PV_MAX_JUCATOR va crește
+	# din upgrade-uri de cetate, recompensele ar crește singure, pe furiș.
+	# Așa, „am terminat cu jumătate din viață" plătește la fel în orice luptă.
+	var procent_pv := float(pv_jucator) / float(PV_MAX_JUCATOR)
+	linii.append({
+		"eticheta": "PV ramas (%d / %d)" % [pv_jucator, PV_MAX_JUCATOR],
+		"resursa": Tezaur.Resursa.FRAGMENTE,
+		# `roundi` = rotunjește și întoarce un întreg. Fără el am avea 6.67
+		# Fragmente, iar resursele în virgulă nu se pot număra din priviri.
+		"cantitate": roundi(procent_pv * FRAGMENTE_PV_INTREG),
+	})
+
+	linii.append({
+		"eticheta": "Cel mai lung lant (×%d)" % cel_mai_lung_lant,
+		"resursa": Tezaur.Resursa.FRAGMENTE,
+		"cantitate": cel_mai_lung_lant * FRAGMENTE_PE_TREAPTA_LANT,
+	})
+
+	linii.append({
+		"eticheta": "Lovituri critice (×%d)" % critice_totale,
+		"resursa": Tezaur.Resursa.FRAGMENTE,
+		"cantitate": critice_totale * FRAGMENTE_PE_CRITIC,
+	})
+
+	return linii
+
+
+## Calculează ȘI plătește. Întoarce exact liniile plătite, ca panoul să arate
+## fix ce a intrat în tezaur — nu o a doua socoteală care ar putea să difere.
+func acorda_recompensa() -> Array[Dictionary]:
+	var linii := calculeaza_recompensa()
+	for linie in linii:
+		Tezaur.adauga(linie["resursa"], linie["cantitate"])
+	return linii
+
+
+## Adună liniile pe resurse: { Resursa.FRAGMENTE: 28 }.
+## Folosită și de panou, și de jurnal — un singur loc în care se face suma.
+func _totaluri(linii: Array[Dictionary]) -> Dictionary:
+	var totaluri := {}
+	for linie in linii:
+		var resursa: int = linie["resursa"]
+		totaluri[resursa] = totaluri.get(resursa, 0) + int(linie["cantitate"])
+	return totaluri
+
+
+## Un singur rând de jurnal, ca să poți reciti cât ai luat după ce închizi panoul.
+func text_recompensa_jurnal(linii: Array[Dictionary]) -> String:
+	var totaluri := _totaluri(linii)
+	var bucati: Array[String] = []
+	for resursa in totaluri:
+		bucati.append("+%d %s (total: %d)" % [
+			totaluri[resursa], Tezaur.nume(resursa), Tezaur.cat(resursa)
+		])
+	return "Rasplata: " + ", ".join(bucati) + "."
+
+
+## DESENEAZĂ defalcarea în panoul de verdict. Nu socotește nimic: primește
+## liniile gata făcute și le pune pe ecran, exact ca `construieste_card()`.
+##
+## Listă goală (adică înfrângere) = secțiunea dispare cu totul. Un „+0 Fragmente"
+## după o înfrângere ar fi o palmă inutilă; jocul ăsta motivează prin curiozitate,
+## nu prin pedeapsă.
+func _construieste_recompensa(linii: Array[Dictionary]) -> void:
+	# Ștergem rândurile luptei precedente. `remove_child` le scoate din socoteala
+	# containerului IMEDIAT; `queue_free()` singur le-ar mai lăsa un cadru înăuntru,
+	# iar panoul s-ar deschide o clipă cu două recompense una sub alta.
+	for copil in verdict_recompense.get_children():
+		verdict_recompense.remove_child(copil)
+		copil.queue_free()
+
+	verdict_recompense.visible = not linii.is_empty()
+	if linii.is_empty():
+		return
+
+	var titlu := Label.new()
+	titlu.text = "RASPLATA"
+	titlu.modulate = CULOARE_RECOMPENSA_ETICHETA
+	titlu.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	verdict_recompense.add_child(titlu)
+
+	for linie in linii:
+		var cantitate: int = linie["cantitate"]
+		verdict_recompense.add_child(_rand_recompensa(
+			linie["eticheta"],
+			"+%d" % cantitate,
+			CULOARE_RECOMPENSA_VALOARE if cantitate > 0 else CULOARE_RECOMPENSA_ZERO,
+			CULOARE_RECOMPENSA_ETICHETA if cantitate > 0 else CULOARE_RECOMPENSA_ZERO
+		))
+
+	# Linia de despărțire dinaintea totalului. `HSeparator` e un nod de interfață
+	# gata făcut — o dungă orizontală care își ia singură culoarea din temă.
+	verdict_recompense.add_child(HSeparator.new())
+
+	# Câte un total per resursă, și cât ai în tezaur după lupta asta. Pe două
+	# resurse vor fi două rânduri, fără nicio linie de cod în plus.
+	var totaluri := _totaluri(linii)
+	for resursa in totaluri:
+		verdict_recompense.add_child(_rand_recompensa(
+			Tezaur.nume(resursa),
+			"+%d   (ai %d)" % [totaluri[resursa], Tezaur.cat(resursa)],
+			CULOARE_RECOMPENSA_TOTAL,
+			CULOARE_RECOMPENSA_TOTAL
+		))
+
+
+## Un rând de recompensă: eticheta la stânga, cifra la dreapta.
+##
+## Seamănă cu `_construieste_rand()` de la cardul de inamic, dar nu e același:
+## acolo valoarea e un text lung care se înfășoară pe mai multe rânduri, aici e
+## o cifră scurtă care are nevoie de culoare. Le-am fi putut uni printr-o funcție
+## cu cinci argumente și două „dacă" — dar două funcții scurte, fiecare cu un
+## singur scop, se citesc mai ușor decât una lungă care le face pe amândouă.
+func _rand_recompensa(
+	eticheta: String, valoare: String, culoare_valoare: Color, culoare_eticheta: Color
+) -> HBoxContainer:
+	var rand := HBoxContainer.new()
+
+	var stanga := Label.new()
+	stanga.text = eticheta
+	stanga.modulate = culoare_eticheta
+	stanga.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+
+	var dreapta := Label.new()
+	dreapta.text = valoare
+	dreapta.modulate = culoare_valoare
+	dreapta.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+
+	rand.add_child(stanga)
+	rand.add_child(dreapta)
+	return rand
+
+
 ## Butonul panoului de verdict — deocamdată reia lupta pe amândouă drumurile,
 ## fiindcă încă nu există unde să continui. Aici se leagă harta de expediție,
 ## când ajungem la ea: victoria te întoarce pe hartă, la nodul următor;
@@ -1040,6 +1266,8 @@ func reseteaza_lupta() -> void:
 	disponibil_din.fill(0)   # toate Obeliscurile, libere din nou
 	lant_daune = 0
 	combo_corecte = 0
+	cel_mai_lung_lant = 0
+	critice_totale = 0
 	jurnal.clear()
 	panou_verdict.visible = false
 	ascunde_panou_acum()
