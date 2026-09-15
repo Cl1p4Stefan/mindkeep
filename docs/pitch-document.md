@@ -1,5 +1,6 @@
 # MINDKEEP — Pitch Document (Concept Inițial)
-*v1.5 — document de lucru, menit să evolueze pe măsură ce construim GDD-ul complet*
+
+_v3.0 — document de lucru, menit să evolueze pe măsură ce construim GDD-ul complet_
 
 **Elevator pitch:** Bookworm Adventures se întâlnește cu Slay the Spire și Darkest Dungeon — într-o cetate-bibliotecă, ultimul bastion al adevărului, într-o lume care își uită, literalmente, propria istorie.
 
@@ -11,47 +12,58 @@ Referințe de gen (comps): **Puzzle Quest** (puzzle-uri ca sursă de daune RPG),
 
 ## 1. Titlul de Lucru — 3 Variante
 
-### A. MINDKEEP *(recomandarea mea)*
-Joc de cuvinte: *keep* e turnul central al unei fortărețe medievale — se potrivește perfect cu structura de Town-Hub — dar înseamnă și *a păstra / a ține minte*. Scurt, internațional, sună ca un RPG serios de pe Steam, nu ca un app educațional care se preface a fi joc.
+### A. MINDKEEP _(recomandarea mea)_
 
-### B. ULTIMA ARHIVĂ *(The Last Archive)*
+Joc de cuvinte: _keep_ e turnul central al unei fortărețe medievale — se potrivește perfect cu structura de Town-Hub — dar înseamnă și _a păstra / a ține minte_. Scurt, internațional, sună ca un RPG serios de pe Steam, nu ca un app educațional care se preface a fi joc.
+
+### B. ULTIMA ARHIVĂ _(The Last Archive)_
+
 Titlu mai epic și narativ, care pune miza poveștii chiar în nume — bun pentru trailer și pagina de Steam, dar spune mai puțin despre gameplay decât Mindkeep.
 
-### C. OBELISCURILE MEMORIEI *(Obelisks of Memory)*
+### C. OBELISCURILE MEMORIEI _(Obelisks of Memory)_
+
 Titlu care vinde direct mecanica ta centrală de luptă. Util dacă vrei ca marketingul să pună accent pe sistemul tactic unic (nu pe „încă-un-roguelike-cu-carduri"), și diferențiază clar produsul din prima secundă.
 
-*În restul documentului folosesc **Mindkeep** ca nume de lucru, strict din motive de claritate — decizia finală rămâne complet deschisă.*
+_În restul documentului folosesc **Mindkeep** ca nume de lucru, strict din motive de claritate — decizia finală rămâne complet deschisă._
 
 ---
 
-## 2. Tematică și Poveste (Logline)
+## 2. Tematică — DE REDEFINIT
 
-> Lumea uită. Nu metaforic — literal. O eroziune numită **Ștergerea** mănâncă, bucată cu bucată, numele, faptele și istoriile din realitate, lăsând în urmă ceață albă și creaturi fără chip, țesute din pagini goale. Tu ești un **Cronicar**, ultimul discipol al unui Ordin care a descoperit un adevăr simplu și teribil: golul nu poate fi tăiat cu sabia — dar poate fi respins de un adevăr rostit corect, la timpul potrivit.
+> **Starea acestei secțiuni:** povestea anterioară (Ștergerea, jucătorul, Cetatea) a fost scoasă. Rama narativă nouă nu e încă decisă. Restul documentului e scris ca să funcționeze independent de ea — sistemele de luptă, progresie și conținut nu depind de nicio poveste anume.
 
-**Rolul jucătorului.** Cronicarii nu sunt magi în sensul clasic — sunt cărturari-luptători dintr-o **Cetate-Arhivă**, ultimul bastion neatins de Ștergere. Puterea lor nu vine din vrăji învățate pe de rost, ci din capacitatea de a *recupera* fragmente de adevăr chiar în mijlocul luptei, sub presiune. De aceea cronometrul contează narativ, nu doar mecanic: fiecare secundă de ezitare e teren câștigat de uitare.
+**Ce rămâne ferm, indiferent de temă:**
 
-*(Notă mică, dar nu întâmplătoare: termenul „Cronicar" rezonează direct cu cronicarii moldoveni reali — Ureche, Costin, Neculce — care au scris istoria tocmai ca s-o salveze de uitare. Identitatea jucătorului capătă astfel un ecou cultural autentic, nu doar o etichetă fantasy generică.)*
+- **Wrapper de RPG tactic, nu aplicație educațională.** Regula originală a proiectului: jocul trebuie să arate și să se simtă ca un joc de strategie, nu ca un quiz cu puncte.
+- **Cunoașterea jucătorului e arma.** Răspunsurile corecte se traduc în daune, apărare, efecte. Asta nu e o metaforă de decor — e mecanica centrală.
+- **Ton gotic-medieval**, deja stabilit vizual: piatră, cerneală, lumânări, paletă desaturată. Arta existentă (regele, cavalerul) se încadrează aici.
+- **Presiunea timpului e parte din fantezie**, nu doar o constrângere de joc: trebuie să existe un motiv în lume pentru care gândești sub cronometru.
 
-**De ce justifică toate cele 4 tipuri de puzzle, nu doar trivia.** Dacă antagonistul e Ștergerea, atunci fiecare formă de gândire clară devine, narativ, o armă diferită:
-- **Trivia** = amintirea directă a unui fapt pierdut → atac direct (Biblioteca).
-- **Sudoku rapid** = restaurarea *ordinii* într-un colț haotic de realitate → apărare/claritate (Sanctuarul Ordinii).
-- **Anagrame** = reconstrucția unui *cuvânt adevărat* dintr-unul stricat de Ștergere → daune magice/rune (Atelierul de Alchimie).
-- **Logică** = calcularea precisă a unui sigiliu/atac → precizie/critic (Fierăria).
+**Ce trebuie redenumit când se decide tema:**
 
-Nimic nu se simte „lipit" — fiecare mecanică are un motiv narativ propriu să existe, ceea ce înseamnă și că poți extinde jocul mai târziu cu o a cincea disciplină fără să rupi lumea.
+| Element           | Nume vechi (scos)    | Stare                     |
+| ----------------- | -------------------- | ------------------------- |
+| Jucătorul         | jucătorul            | de redefinit              |
+| Baza / hub-ul     | Cetatea              | de redefinit              |
+| Antagonistul      | Ștergerea            | de redefinit              |
+| Moneda principală | Fragmente            | de redefinit              |
+| Jurnalul de fapte | Jurnal               | de redefinit              |
+| Facțiuni inamice  | Cei Șterși, Ecourile | de redefinit              |
+| Locația de RNG    | Fântâna              | de redefinit              |
+| Primul inamic     | Cavalerul Șters      | **există în cod și artă** |
 
-**Ton și direcție vizuală.** Gotic-medieval, cetăți de piatră, biblioteci pe mai multe etaje, cerneală, lumânări, pergamente care se albesc pe margini acolo unde Ștergerea a atins deja lumea. E o paletă foarte prietenoasă cu 2D/2.5D stilizat — cea mai mare parte a „luptei" se întâmplă prin UI, simboluri și rune, nu prin coregrafii de atac animate, ceea ce ține scope-ul de artă exact acolo unde ai nevoie: mic.
+**Notă practică:** Cavalerul Șters e deja construit — imagine, descriere, arhetip. Merită păstrat ca formă vizuală (cavaler în armură, fără chip, ochi luminoși) chiar dacă justificarea narativă se schimbă. Un adversar fără chip funcționează în aproape orice ramă medieval-fantasy.
 
 ---
 
 ## 3. Core Gameplay Loop — O Sesiune de 15 Minute
 
-| Fază | Durată | Ce se întâmplă |
-|---|---|---|
-| **1. Cetatea-Arhivă** | ~2 min | Colectezi ce s-a „copt" peste noapte (cercetare finalizată în Bibliotecă), verifici Decretul Zilnic, cheltui resurse pe un upgrade rapid dacă ai destule. |
-| **2. Harta Expediției** | ~1 min | Alegi nodul de azi: Luptă, Eveniment sau Elită. |
-| **3. Lupta** | ~8-10 min | 1-2 încleștări tactice folosind Obeliscuri, sub presiunea timpului. |
-| **4. Recompense & Întoarcere** | ~2 min | Loot, Codexul se actualizează cu un fapt nou, pornești o cercetare nouă pentru mâine. |
+| Fază                           | Durată    | Ce se întâmplă                                                                                                                                            |
+| ------------------------------ | --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **1. Cetatea**                 | ~2 min    | Colectezi ce s-a „copt" peste noapte (cercetare finalizată în Bibliotecă), verifici Decretul Zilnic, cheltui resurse pe un upgrade rapid dacă ai destule. |
+| **2. Harta Expediției**        | ~1 min    | Alegi nodul de azi: Luptă, Eveniment sau Elită.                                                                                                           |
+| **3. Lupta**                   | ~8-10 min | 1-2 încleștări tactice folosind Obeliscuri, sub presiunea timpului.                                                                                       |
+| **4. Recompense & Întoarcere** | ~2 min    | Loot, Jurnalul se actualizează cu un fapt nou, pornești o cercetare nouă pentru mâine.                                                                    |
 
 **Pas cu pas:**
 
@@ -59,7 +71,7 @@ Nimic nu se simte „lipit" — fiecare mecanică are un motiv narativ propriu s
 2. **Cheltui, opțional, resursele de ieri.** Dacă ai destul Minereu Runic, faci un upgrade la Fierărie rezolvând un singur puzzle logic — cost mic de timp, beneficiu permanent.
 3. **Treci pe Harta Expediției.** O hartă cu noduri, în stilul Slay the Spire, dar dimensionată pentru o sesiune scurtă — nu un maraton de o oră, ci 3-5 noduri active pe zi. Alegi calea de azi.
 4. **Intri în Luptă.** Aici se consumă majoritatea celor 15 minute — vezi Secțiunea 4 pentru mecanica exactă.
-5. **Colectezi recompensele** — Fragmente de Cunoaștere, poate un Relic random, și o intrare nouă în Codex cu faptul pe care tocmai l-ai „recuperat" în luptă.
+5. **Colectezi recompensele** — Fragmente, poate un Relic random, și o intrare nouă în Jurnal cu faptul pe care tocmai l-ai „recuperat" în luptă.
 6. **Te întorci în Cetate**, pornești o Cercetare nouă la Bibliotecă (timer de câteva ore, ca să ai ceva gata mâine) și închizi jocul.
 
 **Flexibilitate reală.** Structura suportă atât o sesiune de 7-8 minute (o singură luptă, într-o zi aglomerată) cât și una de 20+ minute (două lupte plus un nod Elită, într-o zi liberă) — important pentru un obicei zilnic pe termen lung: jocul trebuie să se plieze pe viața ta, nu invers.
@@ -99,72 +111,100 @@ Fără constrângeri, „ce Obelisc activez" nu e o alegere reală — dacă am 
 - **Ruta pe hartă e o decizie.** Nodurile își arată tipul dinainte (Elită = loot bun, risc mare; Eveniment = necunoscut; Odihnă = PV recuperate). Cu PV limitate și un loadout fix de 3 discipline, alegerea drumului devine strategie, nu plimbare.
 - **Loadout-ul de 3 din 4** e prima decizie strategică a fiecărei expediții și influențează tot ce urmează pe hartă.
 
-### Notă de direcție vizuală: piesele de șah
+### Cele 8 Discipline
 
-Termenii tehnici din acest document (Obelisc, Nivel, Recărcare) rămân limbajul de design — dar, vizual, fiecare Obelisc „se îmbracă" într-o piesă de șah, nu într-un monolit de piatră generic. Șahul semnalează instant „gândire, strategie", iar fiecare tip de piesă vine deja cu o personalitate pe care jucătorii o recunosc, deci mai puțin UI de explicat:
+Fiecare Obelisc primește un **simbol propriu**, ales să sugereze tipul de gândire pe care îl cere. Simbolurile de mai jos sunt propuneri de lucru, nu decizii finale: ce contează e ca fiecare să fie distinct de celelalte la prima vedere, chiar și la 40px.
 
-| Disciplină | Piesă | De ce |
-|---|---|---|
-| Trivia (Memorie) | Pion | Cea mai comună piesă, pentru cea mai comună acțiune |
-| Sudoku (Ordine) | Turn | Se mișcă doar în linii perfect drepte — literalmente Ordinea; „Turn" înseamnă turn de piatră, aproape un Obelisc deja |
-| Logică | Cal | Mișcarea în L, imprevizibilă — piesa „vicleană", gândire laterală |
-| Anagramă (Cuvântul Adevărat) | Nebun | Numele popular sugerează o gândire puțin „nebună", laterală — exact ce cere o anagramă |
+| #   | Disciplină           | Simbol propus  | Ce faci în 10-15s                                        | Rol tactic în luptă                             |
+| --- | -------------------- | -------------- | -------------------------------------------------------- | ----------------------------------------------- |
+| 1   | **Cultură generală** | Carte deschisă | Fapte: istorie, geografie, artă, știință, mitologie      | Gamble: daune aleatorii, varianță mare          |
+| 2   | **Logică**           | Cheie / lacăt  | Deducție scurtă, cine minte, condiții                    | Daune mari, dar cost de timp mare               |
+| 3   | **Cuvinte**          | Pană de scris  | Anagrame, intrus, sinonim, cuvânt lipsă                  | Constant, fără surprize                         |
+| 4   | **Numere**           | Balanță        | Calcul rapid, procente, estimare                         | Multi-hit: 3 provocări mici într-un tur         |
+| 5   | **Reținere**         | Clepsidră      | Vezi o secvență 3s, apoi o reproduci / „ce s-a schimbat" | Încărcare: rundă fără daune, apoi lovitură mare |
+| 6   | **Tipare**           | Spirală / nod  | Serii de numere/simboluri, ce urmează                    | Crit: ori nimerești, ori pierzi turul           |
+| 7   | **Spațial**          | Busolă / cub   | Rotații mentale, plieri, potrivire de forme              | Ignoră „armura" inamicului                      |
+| 8   | **Reflex**           | Fulger         | Stroop, găsește intrusul, tap corect sub 3s              | Daune mici, dar poți ataca de două ori          |
 
-**Regele** nu e o piesă activabilă — reprezintă propriile PV ale jucătorului. „Șah" pe Rege = apărarea ta e amenințată; „Șah Mat" = înfrângere. Un motiv narativ gata făcut pentru condiția de pierdere.
+**Criteriile pentru un simbol bun**, când le finalizezi:
 
-**Important — piesele sunt un skin, nu o mecanică nouă.** Nu introducem mișcare sau capturare reală de șah: ar adăuga o a doua curbă de învățare (regulile șahului) peste cea deja existentă, pentru un beneficiu incert — jocul e despre cultură generală, nu despre skill de șah. Un Obelisc rămâne un Obelisc mecanic; doar se numește și arată ca o piesă.
+- **Distinct ca siluetă**, nu doar ca detaliu — trebuie recunoscut periferic, în mijlocul unei ture cronometrate.
+- **Lizibil la dimensiune mică.** Un simbol cu detalii fine devine o pată pe un buton de 40px.
+- **Consistent ca stil** între toate 8. Un amestec de iconițe realiste și plate arată dezordonat.
+- **Fără suprapunere conceptuală.** Carte și pană se pot confunda ca sens (ambele „scris") — merită verificat că fiecare pereche e clar diferită.
 
-**Regele — rolul final.** Regele rămâne, așa cum a fost gândit, în afara rosterului de Obeliscuri activabile — reprezintă PV-ul jucătorului, nu o disciplină; adăugarea unei „sarcini a Regelui" ar dilua motivul narativ gata-făcut pentru condiția de înfrângere („Șah"/„Șah Mat").
+**De ce rolurile tactice contează mai mult decât simbolurile.** Fără ele, cele 8 sunt opt seturi de întrebări care se joacă identic — apeși, răspunzi, faci daune. Cu ele, alegerea unei discipline e o decizie tactică: iei Numere pentru multi-hit chiar dacă nu ești grozav la calcul, iei Spațial ca să treci de un inamic blindat. Disciplina devine o unealtă, nu doar un subiect.
 
-**Regina — AMÂNATĂ, nu ștearsă.** Ideea originală: o piesă care nu ocupă slot de loadout, se deblochează prin performanță, costă 2 PA, se folosește o singură dată pe luptă și trage un puzzle exact din disciplina pe care NU ai echipat-o — flexibilitate pură, câștigată, fără conținut nou. Rămâne atrăgătoare pe hârtie, dar **e scoasă din schemă deocamdată, pentru că nu se leagă natural cu sistemul de combo.**
+**Condiția de înfrângere:** PV-ul jucătorului ajunge la 0.
 
-**De ce nu se leagă cu comboul.** Orice condiție de deblocare bazată pe performanță în lanț — ultima variantă pusă pe hârtie era „treapta 4 dintr-un lanț" — sosește exact în momentul în care NU vrei să te oprești. Sub combo, costul real al Reginei nu e cel în PA: e **lanțul pe care îl abandonezi** ca s-o activezi, un lanț care în runda aceea nu se mai poate relua. O supapă pe care ești pedepsit că o folosești nu e o supapă. Iar dacă o faci gratuită ca să eviți asta, dispare tot ce o făcea interesantă — nu mai e câștigată, e doar un buton în plus.
+### Loadout: 3 din 8
 
-**Ce se întâmplă cu ea.** Se reevaluează **după ce există harta de expediție și un run complet jucat** — abia atunci se vede dacă loadout-ul de 3 din 4 produce cu adevărat ziduri care au nevoie de supapă. Dacă da, i se caută altă condiție de deblocare, una care să nu ceară ruperea unui lanț (de exemplu deblocare între lupte, sau o resursă acumulată la nivel de expediție). Până atunci nu se implementează, iar **loadout-ul rămâne 3 din 4, fără Regina.**
+Jucătorul alege 3 discipline o dată, la începutul unei expediții (nu înainte de fiecare luptă) — **56 de combinații posibile**. Un moment strategic la început, apoi lupte fluide fără meniuri.
 
-**Relicvă Legendară asociată (amânată împreună cu Regina):** *Coroana Uzurpatoare* — ieftinea condiția de deblocare și costul în PA. Principiul general rămâne valabil indiferent de soarta Reginei: **amplifică sisteme existente, nu deține singurul exemplar dintr-un sistem.** Altfel fiecare Legendar viitor devine obligatoriu, iar restul devin decor.
+Diferența față de „3 din 4": alegerea nu mai e „la ce renunț?", ci „ce build îmi construiesc?". Mai aproape de un RPG, mai puțin de o constrângere roguelite — și face vulnerabilitățile și barierele mult mai grele, fiindcă 5 din 8 discipline lipsesc mereu din trusă.
 
-**Loadout pre-expediție: alegi 3 din 4.** Rosterul de bază — Pion (Trivia), Turn (Sudoku), Cal (Logică), Nebun (Anagramă) — dă 4 combinații posibile de câte 3. Jucătorul alege o dată, la începutul unei expediții pe Hartă (nu înainte de fiecare luptă individuală), și rămâne cu ele pe tot parcursul acelei expediții. Un moment strategic la început, apoi lupte fluide fără meniuri suplimentare — și o tensiune reală de tip roguelite: dacă întâlnești un inamic „potrivit" pentru disciplina pe care n-ai luat-o, lupta devine mai lentă și mai scumpă. Cât timp Regina e amânată, **nu există supapă** — deci sarcina cade integral pe regulile de generare: vulnerabilitățile rămân bonusuri pozitive, iar barierele doar încetinesc, niciodată nu blochează complet.
+_Numărul 3 e o presupunere de echilibrare. Dacă la testare se dovedește prea restrictiv, 4 din 8 e alternativa. Ține numărul ca variabilă în cod, nu ca o constantă presupusă._
 
-**Problema care rămâne deschisă.** Regina rezolva un vârf ascuțit real: fără supapă, o rută proastă de loadout poate transforma o luptă într-un zid frustrant. Problema nu dispare odată cu amânarea ei — doar rămâne în seama regulilor de generare (bariera încetinește, nu blochează; vulnerabilitatea e bonus, nu cerință). Se recitește imediat după primul run complet: dacă zidul apare în practică, atunci merită o supapă, și abia acolo se decide dacă acea supapă e Regina sau altceva.
+**De ce nu devine deckbuilder.** Nu alegi din zeci de carduri unice și nu tragi random în luptă — alegi dintr-un set fix de discipline, iar cele 3 alese sunt mereu disponibile. Mai aproape de o trusă de unelte decât de un deck.
 
-*Un al doilea beneficiu pierdut temporar, de notat: fiind singura cale spre disciplina neechipată, Regina te ducea ocazional exact la disciplina pe care o eviți — ca alegere proprie, nu ca pedeapsă impusă. Merită recuperat, într-o formă sau alta.*
+**Supapa pentru disciplina lipsă — AMÂNATĂ.** Exista o mecanică (fosta „Regina") care dădea acces, contra cost, la o disciplină neechipată. A fost amânată: condiția de deblocare venea exact în momentul în care nu vrei să-ți rupi lanțul de combo ca s-o folosești. Cu 8 discipline și 5 mereu lipsă din trusă, o supapă de acest fel devine mai importantă, nu mai puțin — merită regândită după ce există harta și un run complet.
 
-**De ce nu devine deckbuilder.** Nu alegi din zeci de carduri unice și nu tragi random dintr-un pool în luptă — alegi dintr-un set mic, fix, de discipline, iar cele 3 alese sunt mereu disponibile, fără RNG de tragere. Mai aproape de o trusă de unelte decât de un deck.
+### Risc de design: min-maxing
 
-**Risc de design, de urmărit.** Dacă jucătorul alege mereu aceleași 3 discipline „forte", riscă să nu-și mai exerseze punctul slab — opusul scopului declarat al jocului. O soluție simplă: unii inamici „cer" vizibil o disciplină anume (o vulnerabilitate arătată dinainte), ca să existe un motiv să iei uneori și disciplina la care ești mai slab.
+Cu 8 discipline și doar 3 alese, riscul crește: dacă ești bun la Cuvinte, Numere și Cultură generală, de ce ai lua vreodată Spațialul? Rezultatul ar fi 5 discipline neatinse — opusul scopului declarat al jocului.
 
-**Trei pârghii pentru variație, la intensități diferite:**
-- **Vulnerabilități** (frecvente, bonus pozitiv) — un inamic primește daune duble de la o disciplină anume, afișată vizibil înainte de luptă. Motorul principal: recompensează adaptarea, nu pedepsește lipsa ei.
-- **Bariere** (rare, doar pentru inamici speciali/boși) — o disciplină e „blocată" de un scut care trebuie spart cu alta, mai întâi. Regulă de siguranță: bariera încetinește, nu blochează complet — lupta rămâne câștigabilă și fără disciplina „corectă", doar mai lent, ca să nu creeze un soft-lock.
-- **Lovitura de grație** — bonus de resurse rare dacă închei o luptă cu disciplina la care ai statistica cea mai mică dintre cele 4. Rulează în fundal, la orice luptă, fără date noi despre inamici.
+**Trei pârghii, la intensități diferite:**
 
-### Exemplu de Luptă: Cronicarul vs. Pagina Goală
+- **Vulnerabilități** (frecvente, bonus pozitiv) — inamicul primește daune duble de la o disciplină anume, afișată înainte de luptă. Motorul principal: recompensează adaptarea.
+- **Bariere** (rare, inamici speciali/boși) — o disciplină e blocată de un scut care trebuie spart cu alta. Regulă de siguranță: bariera încetinește, nu blochează complet — fără soft-lock.
+- **Lovitura de grație** — bonus de resurse rare dacă închei lupta cu disciplina la care ai statistica cea mai mică. Rulează în fundal, fără date noi despre inamici.
 
-*Pagina Goală — 12 PV. Inamic timpuriu: un fragment de hârtie animată, fără apărări speciale, care atacă o singură dată pe rundă și își anunță mereu intenția.*
+**Supapă de rezervă**, dacă min-maxing-ul persistă: interzicerea a 3 discipline din aceeași familie (ex. nu poți lua simultan Numere + Tipare + Logică). Nu e nevoie s-o decizi acum.
 
-**Câmpul de luptă:**
+### Construcție etapizată: proiectează pentru 8, construiește 4
 
-| Obelisc | Disciplină | Nivel | Cost |
-|---|---|---|---|
-| Obelisc al Memoriei | Trivia | I | 1 PA |
-| Obelisc al Logicii | Puzzle logic | I | 1 PA |
-| Obelisc al Cuvântului Adevărat | Anagramă | II | 2 PA |
+8 discipline înseamnă 8 generatoare, 8 interfețe, 8 clădiri în Cetate, 8 statistici. E o creștere de 4× peste tot ce s-a construit până acum — nerealist de livrat deodată, înainte ca harta, Cetatea și save-ul să existe.
 
-Cronicarul are 3 PA pe rundă.
+**Soluția:** numărul de discipline e o listă, nu o constantă. Loadout-ul e „alege N din M". Vulnerabilitățile referă o disciplină prin ID, nu printr-un enum fix. Cetatea își generează clădirile dintr-un tabel de date.
 
-**Runda 1 — Tura ta.** Pagina Goală anunță: *„Se pregătește să șteargă 4 PV din apărarea ta."*
-Activezi **Obeliscul Memoriei** (1 PA) → pornește un lanț. Treapta I, cronometru 15s: *„În ce secol a început, convențional, Renașterea italiană?"* Corect → **1 daună**. Treapta II, o întrebare mai grea: corect → **2 daune**. Treapta III: corect → **3 daune**. Treapta IV: greșești — lanțul se rupe, dar cele **6 daune acumulate rămân** (Pagina Goală: 6 PV), iar Obeliscul Memoriei rămâne blocat până la finalul rundei.
-Mai ai 2 PA. Activezi **Obeliscul Logicii** (1 PA) → treapta I: *„2, 4, 8, 16, ?"* Corect (32) → 1 daună + 2 puncte de Scut. Treapta II: corect → 2 daune. Treapta III: expiră cronometrul — lanțul se rupe. Total 3 daune (Pagina Goală: 3 PV), iar Obeliscul Logicii rămâne și el blocat până la finalul rundei.
-Îți rămâne 1 PA — insuficient pentru Obeliscul de Nivel II (costă 2). Rămâne nefolosit — regulă simplă, fără PA reportat.
+Atunci disciplinele 5-8 sunt update-uri de conținut, nu rescrieri.
 
-**Runda 1 — Tura inamicului.** Pagina Goală lovește: 4 daune, absorbite parțial de Scutul tău de 2 → 2 daune nete în apărarea ta.
+**Ordinea de construcție:** 1-4 fundația (Cultură generală, Logică, Cuvinte, Numere) → 5-6 cele mai vizuale și distincte (Reținere, Tipare) → 7-8 ultimele (Spațial, Reflex).
 
-**Runda 2 — Tura ta.** PA se resetează la 3, iar Obeliscurile blocate se deblochează. Activezi **Obeliscul Cuvântului Adevărat** (2 PA) → treapta I, cronometru 25s, literele **R-Ă-D-A-V-E**, indiciu: *„Opusul minciunii."* Răspunzi **ADEVĂR**, la timp → 1 daună (2 PV). Treapta II: corect → 2 daune. Pagina Goală: 0 PV.
+**Notă de verificat la balansare:** rolul Reținerii („rundă fără daune, apoi lovitură mare") e riscant într-o luptă de 3-4 runde — s-ar putea să nu apuci niciodată beneficiul, mai ales dacă greșești și Obeliscul se blochează.
 
-*De reținut din exemplu: două lanțuri rupte n-au fost o catastrofă — daunele au rămas pe tablă. Costul greșelii a fost pierderea ACCESULUI la două discipline pentru restul rundei, nu munca depusă până atunci.*
+### Conflicte de rezolvat în cod
 
-**Victorie.** Recompense: Fragmente de Cunoaștere + o Pagină de Cronică nouă în Codex — *„Știai că...? Renașterea italiană e plasată convențional la începutul secolului XIV, în Florența."* Bucla se închide exact acolo unde ai vrut-o: joc, apoi un fapt real, mic, dar câștigat.
+- **Seriile numerice** sunt acum la Tipare (#6), nu la Logică (#2) — trebuie mutate din generatorul actual de Logică, altfel același conținut apare în două Obeliscuri.
+- **„Memorie"** își schimbă sensul: în cod și UI e acum trivia, dar în structura nouă Cultură generală (#1) preia trivia, iar Reținere (#5) e memoria de lucru. Redenumire necesară ca să nu se încurce.
+- **Mecanica „intrus"** apare la mai multe discipline — corect, dar cu conținut diferit (cuvinte la #3, forme la #7, simboluri la #8). Confirmă separarea axei _mecanică_ de axa _domeniu_.
+
+### Exemplu de Luptă: vs. Cavalerul Șters
+
+_Cavalerul Șters — 30 PV. Inamic timpuriu, arhetip „Atac constant": lovește 3 daune în fiecare tură, din runda 1, fără încărcare și fără tură sărită. Își anunță mereu intenția._
+
+**Câmpul de luptă (loadout ales pentru expediție):**
+
+| Obelisc        | Disciplină       | Rol tactic                  | Cost |
+| -------------- | ---------------- | --------------------------- | ---- |
+| Carte deschisă | Cultură generală | Gamble: daune variabile     | 1 PA |
+| Cheie          | Logică           | Daune mari, timp mai scurt  | 1 PA |
+| Balanță        | Numere           | Multi-hit: 3 provocări mici | 1 PA |
+
+Jucătorul are 3 PA pe rundă și 15 PV.
+
+**Runda 1 — Tura ta.** Cavalerul anunță: _⚔ 3_.
+Activezi **Cultură generală** (1 PA) → cronometru 12s: _„În ce secol a început, convențional, Renașterea italiană?"_ Corect → 1 daună (Cavalerul: 29 PV). **Lanțul continuă automat:** întrebare de Nivel II, tot Cultură generală, 11s. Corect → +2 daune (27 PV). Nivel III, 10s: greșit. Lanțul se rupe, păstrezi cele 3 daune date, iar Obeliscul se blochează până la finalul rundei.
+
+Mai ai 2 PA. Activezi **Logica** → lanț de 4 trepte reușite: 1+2+3+3 = 9 daune (18 PV). La treapta 5 greșești — se blochează și el.
+
+Ultimul PA pe **Numere** → 2 trepte: 3 daune (15 PV). Nu mai ai PA, tura se încheie automat.
+
+**Runda 1 — Tura inamicului.** Cavalerul lovește: 3 daune. Tu: 12/15 PV.
+
+**Runda 2.** Toate Obeliscurile deblocate, 3 PA din nou. Un lanț bun pe Logică ajunge la treapta 5 — **CRITIC**, daune dublate. Cavalerul cade.
+
+**Victorie.** Recompense: Fragmente + o intrare nouă în Jurnal — _„Renașterea italiană e plasată convențional la începutul secolului XIV, în Florența."_ Bucla se închide exact acolo unde trebuie: joc, apoi un fapt real, mic, dar câștigat.
 
 ---
 
@@ -174,22 +214,23 @@ Principiul central: **nimic din ce ai nevoie ca să progresezi în Cetate nu poa
 
 ### Harta de interconectare
 
-| Clădire (Cetate) | Disciplină | Statistică | Efect în luptă | Resursă necesară (de pe Hartă) |
-|---|---|---|---|---|
-| **Biblioteca** | Trivia | Intelect | +daune, Obeliscul Memoriei | Fragmente de Cunoaștere, Pagini de Cronică |
-| **Sanctuarul Ordinii** | Sudoku rapid | Claritate | −Recărcare, +durată Combo | Praf Astral |
-| **Atelierul de Alchimie** | Anagrame | Reziliență | +PV maxime, +valoare Scut | Ierburi & Reactivi |
-| **Fierăria** | Puzzle logic | Precizie | +critic, +eficiență PA | Minereu Runic |
+| Clădire (Cetate)          | Disciplină   | Statistică | Efect în luptă             | Resursă necesară (de pe Hartă) |
+| ------------------------- | ------------ | ---------- | -------------------------- | ------------------------------ |
+| **Biblioteca**            | Trivia       | Intelect   | +daune, Obeliscul Memoriei | Fragmente, Însemnări           |
+| **Sanctuarul Ordinii**    | Sudoku rapid | Claritate  | −Recărcare, +durată Combo  | Praf Astral                    |
+| **Atelierul de Alchimie** | Anagrame     | Reziliență | +PV maxime, +valoare Scut  | Ierburi & Reactivi             |
+| **Fierăria**              | Puzzle logic | Precizie   | +critic, +eficiență PA     | Minereu Runic                  |
 
-*Toate cele 4 discipline dau daune de bază identice, pe același Nivel — coloana „Efect în luptă" arată doar bonusul SECUNDAR pe care fiecare statistică îl adaugă peste acea bază, nu o înlocuire a daunelor. Așa nicio disciplină nu se simte „inutilă" în luptă, oricât de mult ai investit în celelalte trei.*
+_Toate cele 4 discipline dau daune de bază identice, pe același Nivel — coloana „Efect în luptă" arată doar bonusul SECUNDAR pe care fiecare statistică îl adaugă peste acea bază, nu o înlocuire a daunelor. Așa nicio disciplină nu se simte „inutilă" în luptă, oricât de mult ai investit în celelalte trei._
 
 Fiecare rând e o buclă completă: clădirea îți dă un motiv să lupți (ai nevoie de resursa X), lupta îți dă resursa, resursa îmbunătățește exact disciplina cu care ai luptat ca s-o obții. Nu e o economie centrală unde totul se cumpără cu o singură monedă — e patru economii mici, paralele, fiecare legată de o abilitate mentală diferită.
 
-### A cincea locație: Fântâna Uitării
+### A cincea locație: Fântâna
 
 Rezolvă o problemă reală: fără un sink, resursele în exces — după ce ai maximizat un upgrade — rămân moarte în inventar. O locație dedicată e soluția corectă. O singură ajustare, ca să rămână legată de Pilonul central (mintea, nu norocul pur): o poartă printr-un puzzle rapid, nu doar cheltuială directă.
 
 **Cum funcționează:**
+
 1. O dată pe zi (la fel ca Decretul Zilnic), vizitezi Fântâna și cheltui orice combinație de resurse în exces.
 2. Primești un puzzle rapid, mixt — orice disciplină, miză mică, cronometru generos. Rezolvat corect → șansele pentru Rar/Epic/Legendar cresc vizibil. Greșit → tot primești o tragere, dar la șansele de bază — niciodată mână goală.
 3. Șansele exacte sunt afișate înainte să te decizi.
@@ -198,15 +239,15 @@ Rezolvă o problemă reală: fără un sink, resursele în exces — după ce ai
 
 Fără puzzle-ul de la pasul 2, Fântâna devine singurul loc din tot jocul unde nu ceri nimic de la mintea jucătorului — exact bucla de recompensă-aleatorie-fără-efort pe care ai vrut s-o eviți încă din primul mesaj, când ai spus clar că scopul e antrenament mental sănătos, nu o buclă de dopamină goală. Cu puzzle-ul și cu o singură vizită pe zi, rămâne senzația de „poate azi", nu de „încă o tragere".
 
-Numele — Fântâna Uitării — e perfect tematic și îl păstrez întocmai: riști ceva de valoare direct în forța care mănâncă lumea, sperând să scoți ceva rar înainte să dispară pentru totdeauna.
+Numele — Fântâna — e perfect tematic și îl păstrez întocmai: riști ceva de valoare direct în forța care mănâncă lumea, sperând să scoți ceva rar înainte să dispară pentru totdeauna.
 
 ### Motoare de reîntoarcere zilnică
 
 1. **Decretul Zilnic** — un singur puzzle special, rotativ la 24h (gen Wordle), cu scor personal și o recompensă unică. Motiv să deschizi jocul chiar și într-o zi fără timp pentru o expediție completă.
 2. **Cercetarea din Bibliotecă** — un timer de tip „idle" (12-24h) care deblochează categorii noi de întrebări. Trebuie pornit manual după ce se termină cel curent — te aduce înapoi periodic doar ca să apeși „start" pe tema următoare.
 3. **Harta rotativă** — nodurile de tip Eveniment se schimbă la câteva zile. Ratarea unui nod înseamnă ratarea unui fragment unic de poveste sau a unui Relic rar — presiune blândă, nu punitivă.
-4. **Codex Viu** — fiecare fapt la care ai răspuns corect rămâne permanent într-un jurnal ilustrat, vizibil în Cetate. Practic, un jurnal real al lucrurilor pe care le-ai învățat — cu propriul lui hook de „completare a colecției".
-5. **Fântâna Uitării** — o dată pe zi, riști resursele în exces + un puzzle rapid pentru o șansă la echipament Rar/Epic/Legendar. Rezolvă și problema resurselor „moarte" după ce ai maximizat un upgrade.
+4. **Jurnal** — fiecare fapt la care ai răspuns corect rămâne permanent într-un jurnal ilustrat, vizibil în Cetate. Practic, un jurnal real al lucrurilor pe care le-ai învățat — cu propriul lui hook de „completare a colecției".
+5. **Fântâna** — o dată pe zi, riști resursele în exces + un puzzle rapid pentru o șansă la echipament Rar/Epic/Legendar. Rezolvă și problema resurselor „moarte" după ce ai maximizat un upgrade.
 
 ### O notă despre ritm
 
@@ -215,18 +256,19 @@ Scopul declarat e antrenament mental zilnic, susținut pe termen lung. O sesiune
 ---
 
 ## 6. Sistem RPG — Stats & Echipament
-*Adăugat după runda de feedback — extinde Secțiunile 4-5 cu o a doua axă de progresie*
+
+_Adăugat după runda de feedback — extinde Secțiunile 4-5 cu o a doua axă de progresie_
 
 ### A. Ce ai deja, fără să știi că e un „stat system"
 
 Cele 4 statistici din Secțiunea 5 — Intelect, Precizie, Reziliență, Claritate — sunt deja un sistem clasic de RPG, doar reflectat tematic în loc de etichetat generic:
 
-| Stat-ul tău | Echivalent clasic | Sursă |
-|---|---|---|
-| Intelect | INT | Bibliotecă / Trivia |
-| Precizie | DEX | Fierărie / Logică |
-| Reziliență | CON / VIT | Atelier Alchimie / Anagrame |
-| Claritate | WIS / FOC | Sanctuarul Ordinii / Sudoku |
+| Stat-ul tău | Echivalent clasic | Sursă                       |
+| ----------- | ----------------- | --------------------------- |
+| Intelect    | INT               | Bibliotecă / Trivia         |
+| Precizie    | DEX               | Fierărie / Logică           |
+| Reziliență  | CON / VIT         | Atelier Alchimie / Anagrame |
+| Claritate   | WIS / FOC         | Sanctuarul Ordinii / Sudoku |
 
 Diferența față de STR/DEX/INT clasic: fiecare stat al tău explică DE CE există (Intelect vine din Trivia, pentru că ai memorat un fapt real) — un DEX generic dintr-un RPG clasic nu-ți spune nimic despre lume. Aș păstra numele tematice, dar decizia rămâne a ta — pot să le „traduc" 1:1 la STR/DEX/INT/CON/WIS dacă preferi convenția clasică, pentru familiaritate.
 
@@ -238,37 +280,38 @@ Ce nu aveai era o statistică și o progresie legate strict de ce GĂSEȘTI, nu 
 
 **3 sloturi de echipament**, găsite ca loot pe Hartă (fluxul deja descris în Secțiunea 5) sau forjate la **Fierărie** — care, la o recitire, chiar ar trebui să facă și asta: e un blacksmith, numele o cere.
 
-| Slot | Rol | Exemplu |
-|---|---|---|
-| **Armă** | +Forță, uneori un efect ofensiv secundar | *Condeiul de Rezonanță* — +3 Forță; 10% șansă ca un răspuns corect la Trivia să slăbească și atacul următor al inamicului |
-| **Armură** | +Reziliență, apărare | *Mantia Arhivarului* — +3 Reziliență, +1 Scut la începutul fiecărei lupte |
-| **Relicvă** | Efect unic, „build-defining" | *Clepsidra Neclintită* — +3 secunde la toate cronometrele de puzzle |
+| Slot        | Rol                                      | Exemplu                                                                                                                   |
+| ----------- | ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| **Armă**    | +Forță, uneori un efect ofensiv secundar | _Condeiul de Rezonanță_ — +3 Forță; 10% șansă ca un răspuns corect la Trivia să slăbească și atacul următor al inamicului |
+| **Armură**  | +Reziliență, apărare                     | _Mantia Arhivarului_ — +3 Reziliență, +1 Scut la începutul fiecărei lupte                                                 |
+| **Relicvă** | Efect unic, „build-defining"             | _Clepsidra Neclintită_ — +3 secunde la toate cronometrele de puzzle                                                       |
 
 Fiecare piesă poate avea 2-3 nivele de upgrade la Fierărie (+1/+2/+3), consumând Minereu Runic suplimentar — un al doilea sink pentru resursa aia, în plus față de Precizie.
 
 ### C. O avertizare de scope
 
-Aș evita un sistem complet D&D cu 6 statistici (STR/DEX/CON/INT/WIS/CHA) și formule derivate complexe (daune = STR × 1.5 + nivel etc.) — e complexitate care nu-ți servește jocul, doar îl încarcă la balansare, pentru un dev solo. 5 statistici (4 antrenate + Forță din echipament) și 3 sloturi dau deja senzația completă de „RPG cu progresie", fără un content pipeline mare: 12-15 piese de echipament bine gândite, combinate în 3 sloturi, dau destulă varietate de build-uri. Vizual, fiecare piesă e o singură iconiță într-un ecran de inventar — Cronicarul nu trebuie să-și schimbe sprite-ul când echipează ceva, cel puțin nu de la început.
+Aș evita un sistem complet D&D cu 6 statistici (STR/DEX/CON/INT/WIS/CHA) și formule derivate complexe (daune = STR × 1.5 + nivel etc.) — e complexitate care nu-ți servește jocul, doar îl încarcă la balansare, pentru un dev solo. 5 statistici (4 antrenate + Forță din echipament) și 3 sloturi dau deja senzația completă de „RPG cu progresie", fără un content pipeline mare: 12-15 piese de echipament bine gândite, combinate în 3 sloturi, dau destulă varietate de build-uri. Vizual, fiecare piesă e o singură iconiță într-un ecran de inventar — jucătorul nu trebuie să-și schimbe sprite-ul când echipează ceva, cel puțin nu de la început.
 
 ### D. Rarități — De la Comun la Legendar
 
 Gruparea pe 3 nivele de complexitate — Comun/Neobișnuit = bonus static; Rar/Epic = mecanică secundară ușoară; Legendar = build-defining — e exact ce aș fi recomandat: 5 nume de raritate, pentru satisfacția de colecție, dar doar 3 șabloane de efect de construit efectiv, pentru un dev solo.
 
-| Raritate | Tip de efect | Exemplu (Condei) |
-|---|---|---|
-| Comun | Bonus static simplu | +1 Forță |
-| Neobișnuit | Bonus static, mai mare | +2 Forță |
-| Rar | Bonus + mecanică secundară ușoară | +3 Forță, +5% critic |
-| Epic | Bonus mare + mecanică secundară mai puternică | +5 Forță, +10% critic, −1s Recărcare |
-| Legendar | Efect unic, „build-defining" | +8 Forță, +15% critic, „Primul răspuns corect din fiecare luptă e automat critic" |
+| Raritate   | Tip de efect                                  | Exemplu (Condei)                                                                  |
+| ---------- | --------------------------------------------- | --------------------------------------------------------------------------------- |
+| Comun      | Bonus static simplu                           | +1 Forță                                                                          |
+| Neobișnuit | Bonus static, mai mare                        | +2 Forță                                                                          |
+| Rar        | Bonus + mecanică secundară ușoară             | +3 Forță, +5% critic                                                              |
+| Epic       | Bonus mare + mecanică secundară mai puternică | +5 Forță, +10% critic, −1s Recărcare                                              |
+| Legendar   | Efect unic, „build-defining"                  | +8 Forță, +15% critic, „Primul răspuns corect din fiecare luptă e automat critic" |
 
 Clepsidra Neclintită (Secțiunea 6B) rămâne reperul pentru ce înseamnă Legendar aici: nu „mai multe cifre", ci ceva care schimbă cum abordezi o luptă întreagă.
 
 ### E. Cum funcționează, exact — primele cifre de lucru
 
-*(Cifrele de mai jos sunt un punct de plecare rezonabil, nu rezultat de playtesting — se rafinează la pasul „Balans & Progresie".)*
+_(Cifrele de mai jos sunt un punct de plecare rezonabil, nu rezultat de playtesting — se rafinează la pasul „Balans & Progresie".)_
 
 **Reguli de slot:**
+
 - Exact 3 piese echipate simultan: 1 Armă + 1 Armură + 1 Relicvă. Nu poți purta 2 arme deodată.
 - Restul găsit rămâne în inventar — schimbi loadout-ul doar din Cetate sau înainte de a intra pe un nod, niciodată în mijlocul unei lupte, ca să nu complice UI-ul de combat.
 - Un duplicat găsit devine automat **Praf de Reforjare** — folosit ca discount la upgrade-uri la Fierărie, în loc să stea degeaba în inventar.
@@ -281,27 +324,27 @@ Fiecare punct de Forță = +2% daune finale, aplicat ultimul, după orice alt bo
 
 **Arma (Forță) pe raritate** — cifrele din 6D, cu regula de upgrade adăugată:
 
-| Raritate | Forță de bază | Upgrade la Fierărie |
-|---|---|---|
-| Comun | +1 | +1 Forță / nivel (max 3 nivele) |
-| Neobișnuit | +2 | +1 Forță / nivel |
-| Rar | +3 | +1 Forță / nivel |
-| Epic | +5 | +1 Forță / nivel |
-| Legendar | +8 | +1 Forță / nivel |
+| Raritate   | Forță de bază | Upgrade la Fierărie             |
+| ---------- | ------------- | ------------------------------- |
+| Comun      | +1            | +1 Forță / nivel (max 3 nivele) |
+| Neobișnuit | +2            | +1 Forță / nivel                |
+| Rar        | +3            | +1 Forță / nivel                |
+| Epic       | +5            | +1 Forță / nivel                |
+| Legendar   | +8            | +1 Forță / nivel                |
 
 **Armura (Reziliență) pe raritate** — 1 punct de Reziliență = +2 PV maxime:
 
-| Raritate | Reziliență | Efect secundar |
-|---|---|---|
-| Comun | +1 | — |
-| Neobișnuit | +2 | — |
-| Rar | +3 | +1 Scut la începutul luptei |
-| Epic | +5 | +2 Scut la începutul luptei |
-| Legendar | +8 | „Primul atac primit în fiecare luptă e complet blocat" |
+| Raritate   | Reziliență | Efect secundar                                         |
+| ---------- | ---------- | ------------------------------------------------------ |
+| Comun      | +1         | —                                                      |
+| Neobișnuit | +2         | —                                                      |
+| Rar        | +3         | +1 Scut la începutul luptei                            |
+| Epic       | +5         | +2 Scut la începutul luptei                            |
+| Legendar   | +8         | „Primul atac primit în fiecare luptă e complet blocat" |
 
 **Relicva** rămâne intenționat în afara acestui tipar — n-are un stat fix de scalat, exact pentru că rolul ei e să fie diferită de fiecare dată, nu previzibilă.
 
-**Exemplu complet:** Cronicar cu 6 Intelect, poartă un Condei Epic (+5 Forță, neupgradat). Activează un Obelisc de Nivel II (bază 5 daune): 5 (bază) + 6 (Intelect) = 11 daune înainte de Forță → 11 × 1,10 (10% din +5 Forță) = 12,1 → **12 daune finale**.
+**Exemplu complet:** Jucător cu 6 Intelect, poartă un Condei Epic (+5 Forță, neupgradat). Activează un Obelisc de Nivel II (bază 5 daune): 5 (bază) + 6 (Intelect) = 11 daune înainte de Forță → 11 × 1,10 (10% din +5 Forță) = 12,1 → **12 daune finale**.
 
 ---
 
@@ -313,13 +356,13 @@ Problema pe care o rezolvă: un joc jucat zilnic, ani de zile, ar cere sute de i
 
 Un arhetip e **regula centrală după care se poartă inamicul** — ce te forțează să joci altfel. Nu specia, nu aspectul, nu povestea.
 
-| Arhetip | Regulă | Te forțează să... |
-|---|---|---|
-| **Barieră** | O disciplină nu face daune până nu spargi scutul cu alta | ...nu începi cu piesa preferată |
-| **Grabnic** | Ceas scurt, atac devastator la capăt | ...lovești tare și repede, fără combo lung |
-| **Oglindă** | Pedepsește activarea aceleiași discipline de două ori la rând | ...rotești disciplinele |
-| **Sifon** | Se vindecă la fiecare greșeală sau timeout | ...activezi doar ce știi sigur |
-| **Corupt** | Își schimbă vulnerabilitatea în fiecare rundă | ...reevaluezi constant, nu planifici înainte |
+| Arhetip     | Regulă                                                        | Te forțează să...                            |
+| ----------- | ------------------------------------------------------------- | -------------------------------------------- |
+| **Barieră** | O disciplină nu face daune până nu spargi scutul cu alta      | ...nu începi cu piesa preferată              |
+| **Grabnic** | Ceas scurt, atac devastator la capăt                          | ...lovești tare și repede, fără combo lung   |
+| **Oglindă** | Pedepsește activarea aceleiași discipline de două ori la rând | ...rotești disciplinele                      |
+| **Sifon**   | Se vindecă la fiecare greșeală sau timeout                    | ...activezi doar ce știi sigur               |
+| **Corupt**  | Își schimbă vulnerabilitatea în fiecare rundă                 | ...reevaluezi constant, nu planifici înainte |
 
 **Testul pentru un arhetip valid:** dacă îl scot, dispare vreo decizie? Un inamic cu mai multe PV nu trece — joci la fel, doar mai mult. Sifonul trece.
 
@@ -334,7 +377,7 @@ Din ~10 arhetipuri × ~10 modificatori ies sute de comportamente distincte, din 
 - **Când:** o dată, la generarea expediției — nu zilnic, nu la intrarea în luptă. Reintri în același nod, întâlnești același inamic. Predictibil în interiorul unui run, diferit între run-uri.
 - **Buget de dificultate** în funcție de adâncimea nodului și progresul jucătorului. Buget mic = arhetip simplu, fără modificatori. Buget mare = arhetip + 2 modificatori.
 - **Reguli de excludere**, ca să nu iasă combinații stupide sau nedrepte: fără barieră și vulnerabilitate pe aceeași disciplină, fără două arhetipuri care ambele accelerează ceasul.
-- **Conștient de loadout:** generatorul știe ce 3 discipline ai echipat. Poate garanta că cel puțin un nod cere disciplina lipsă — dar niciodată toate, altfel devine pedeapsă, nu tensiune. (Cât timp Regina e amânată, regula asta e singura care ține alegerea loadout-ului relevantă fără s-o transforme în capcană.)
+- **Conștient de loadout:** generatorul știe ce 3 discipline ai echipat. Poate garanta că cel puțin un nod cere disciplina lipsă (ca supapa pentru disciplina lipsă să conteze, când va exista) — dar niciodată toate, altfel devine pedeapsă, nu tensiune.
 - **Seed fixat per expediție** — permite reproducerea exactă a unui run la debugging, și deschide gratuit un mod „provocarea zilei" (toți jucătorii, aceeași hartă).
 
 ### Aspectul se decuplează de reguli
@@ -355,27 +398,87 @@ Cantitatea de conținut rezolvă doar repetiția, și numai pentru Trivia (celel
 
 ---
 
+## 8. Cele Două Moduri de Joc
+
+_Adăugat după revizuirea taxonomiei de brain training_
+
+Cronometrul de 12-15 secunde e coloana vertebrală a campaniei — dar exclude o categorie întreagă de provocări valoroase: Sudoku, puzzle-uri de traversare, probleme de resurse, planificare în mai mulți pași. Nu încap în 15 secunde, și nu e o problemă de design: sunt pur și simplu un alt tip de gândire.
+
+Soluția: două moduri, cu reguli de timp diferite.
+
+|                | **Campanie**                        | **Turnul Perseverenței**                                  |
+| -------------- | ----------------------------------- | --------------------------------------------------------- |
+| Timp           | Cronometru strict, 12-15s           | Fără limită de timp                                       |
+| Testează       | Recuperare rapidă sub presiune      | Gândire susținută, planificare                            |
+| Conținut       | Cele 8 discipline, provocări scurte | Sudoku, probleme de resurse, puzzle-uri în mai mulți pași |
+| Structură      | Expediții pe hartă, Obeliscuri, PA  | Etaje succesive, dificultate crescătoare                  |
+| Sesiune tipică | 15 minute, zi aglomerată            | O seară liberă, afundare                                  |
+
+**De ce ambele.** Cognitiv, acoperă lucruri diferite: campania antrenează viteza de recuperare, Turnul antrenează răbdarea și urmărirea mai multor constrângeri deodată. Pentru un joc gândit ca antrenament zilnic, acoperirea devine completă. Practic, se pliază pe ritmul real al vieții — 15 minute când n-ai timp, o oră când ai.
+
+**Economie comună.** Turnul dă aceleași resurse ca expedițiile, nu o monedă proprie. Altfel devin două jocuri care nu se ating; cu economie comună, fiecare mod e un motiv să-l joci pe celălalt.
+
+**Nu construi Turnul acum.** E un mod întreg, cu propriile reguli de progresie și propriul UI. Campania nu e completă — lipsesc harta, Cetatea, save-ul, 6 din 8 discipline. Turnul vine după.
+
+**Ce trebuie făcut ACUM, însă:** fiecare provocare are nevoie de un câmp care spune unde poate apărea (`campanie`, `turn`, sau `ambele`). Sudoku e `turn`, trivia e `ambele`. Costă o linie acum, evită reetichetarea a mii de intrări mai târziu.
+
+---
+
+## 9. Formatul Bazei de Date
+
+_Principiul central: Domeniu × Mecanică × Dificultate_
+
+Același principiu care face inamicii ieftini (arhetip × modificator) se aplică și conținutului: varietatea vine din combinații, nu din enumerare. Aceeași mecanică („găsește intrusul") funcționează cu cuvinte, forme sau simboluri — trei provocări distincte dintr-un singur generator.
+
+Câmpurile pe care le merită fiecare provocare, de la început:
+
+```
+id
+disciplina          # una din cele 8 (Obeliscul de care aparține)
+domeniu             # istorie, geografie, fizică, vocabular...
+mecanica            # quiz, pattern, match, sort, memory, visual, logic_puzzle, rapid_calc
+dificultate         # 1-3 (nivelul din lanțul de combo)
+mod                 # campanie | turn | ambele
+intrebare
+optiuni
+raspuns_corect
+timp_limita
+explicatie
+abilitate_cognitiva
+asset_vizual        # opțional
+```
+
+**De ce toate acum, chiar dacă nu le folosești.** `mecanica` și `abilitate_cognitiva` nu fac nimic azi, dar fac posibile mai târziu modul de antrenament liber (filtrare fină) și statisticile din Cetate (Intelect, Precizie, Reziliență, Claritate se calculează din ele). Adăugarea unui câmp acum costă o linie; reetichetarea a 2000 de întrebări costă o săptămână.
+
+**Antrenament liber** — mod secundar, fără luptă, unde alegi exact ce exersezi (doar geografie, doar procente, doar memorie vizuală). Nu cere conținut nou sau generatoare noi: e un filtru peste aceeași bază de date, plus un ecran de selecție. Servește direct scopul declarat al proiectului — dacă profilul tău arată slab la Spațial, îl lucrezi fără presiunea unui run.
+
+**Ce NU adoptăm: dashboard-ul de profil cognitiv.** Un ecran cu procente pe opt abilități e exact aspectul de aplicație educațională pe care wrapper-ul trebuie să-l ascundă. Ideea de sub el există deja în joc, în forma corectă: cele patru statistici din Cetate SUNT un profil cognitiv, exprimat ca stat-uri de RPG.
+
+---
+
 ## Glosar Rapid
 
-- **Ștergerea** — forța antagonistă a lumii; o eroziune care șterge istoria, numele și amintirile din realitate.
-- **Cronicar** — clasa jucătorului; membru al Ordinului care luptă cu adevăruri, nu cu săbii.
-- **Cetatea-Arhivă** — baza/Town-Hub a jucătorului.
-- **Fragmente de Cunoaștere** — moneda principală a jocului.
+- **Cetatea** — baza / Town-Hub a jucătorului. _(nume provizoriu, până se decide tema)_
+- **Fragmente** — moneda principală a jocului. _(nume provizoriu)_
 - **Obelisc** — poziție fixă pe câmpul de luptă care, activată, declanșează un puzzle dintr-o disciplină specifică.
 - **PA (Puncte de Acțiune)** — resursa cheltuită pentru activarea Obeliscurilor.
 - **PV (Puncte de Viață)** — viața unei unități (jucător sau inamic).
 - **Recărcare** — perioada în care un Obelisc folosit nu poate fi reactivat.
-- **Lanț (Combo)** — șirul de întrebări declanșat de o singură activare de Obelisc: daune 1 / 2 / 3 pe primele trei trepte, apoi 3 fix, cu dublare la fiecare a 5-a treaptă. Se rupe la greșeală sau timeout; daunele acumulate rămân.
-- **Claritate** — statistica antrenată la Sanctuarul Ordinii (Sudoku): reduce Recărcarea și prelungește fereastra de timp a lanțului. *(Nu mai înseamnă „stack de răspunsuri corecte" — acel sens a fost înlocuit de sistemul de lanț.)*
+- **Claritate** — stack acumulat din răspunsuri corecte consecutive; oferă bonusuri crescânde.
 - **Scut** — strat temporar care absoarbe daune.
-- **Codex Viu** — jurnalul permanent de fapte reale, învățate în joc.
+- **Jurnal** — registrul permanent de fapte reale, învățate în joc. _(nume provizoriu)_
 - **Forță** — a cincea statistică; crește exclusiv din echipament, niciodată prin puzzle-uri; multiplică daunele finale.
 - **Echipament (Armă / Armură / Relicvă)** — cele 3 sloturi de gear, găsite ca loot pe Hartă sau forjate la Fierărie.
 - **Raritate** — nivelul de putere al unei piese de echipament: Comun, Neobișnuit, Rar, Epic, Legendar.
-- **Fântâna Uitării** — a cincea locație din Cetate; o dată pe zi, riști resurse în exces + un puzzle rapid pentru șanse mai mari la echipament Rar/Epic/Legendar.
+- **Fântâna** — a cincea locație din Cetate; o dată pe zi, riști resurse în exces + un puzzle rapid pentru șanse mai mari la echipament Rar/Epic/Legendar. _(nume provizoriu)_
 - **Praf de Reforjare** — obținut din piese de echipament duplicate; reduce costul upgrade-urilor la Fierărie.
 - **Arhetip** — regula centrală după care se poartă un inamic în luptă (Barieră, Grabnic, Oglindă, Sifon, Corupt).
 - **Modificator** — ajustare mai mică, lipită peste un arhetip (+PV, vulnerabilitate, PA redus în prima rundă).
+- **Cele 8 discipline** — Cultură generală, Logică, Cuvinte, Numere, Reținere, Tipare, Spațial, Reflex. Fiecare cu simbol propriu și rol tactic distinct.
+- **Rol tactic** — ce face o disciplină în luptă dincolo de daune (multi-hit, crit, ignoră armura, încărcare). Motivul pentru care alegi o disciplină chiar dacă nu e punctul tău forte.
+- **Campanie** — modul principal: expediții pe hartă, cronometru strict de 12-15s.
+- **Turnul Perseverenței** — mod secundar, fără limită de timp: Sudoku, probleme, puzzle-uri în mai mulți pași. Economie comună cu campania.
+- **Antrenament liber** — mod fără luptă, unde alegi exact ce categorie exersezi. Filtru peste baza de date existentă.
 
 ---
 

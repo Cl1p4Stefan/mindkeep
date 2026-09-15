@@ -1,5 +1,6 @@
 # MINDKEEP — Context de Development
-*Citește acest fișier la fiecare conversație nouă de development.*
+
+_Citește acest fișier la fiecare conversație nouă de development._
 
 **Design-ul complet e în `docs/pitch-document.md` (v1.5).** Nu se atașează — e în
 repo; deschide-l când ai nevoie de detalii despre sisteme (formule, rarități,
@@ -25,88 +26,91 @@ Sesiunea de bază e proiectată să funcționeze în ~15 min (o zi aglomerată s
 Rezolvi puzzle-uri sub presiunea timpului (Trivia, Sudoku, Anagrame, Logică);
 răspunsurile corecte devin atacuri. Hub tip cetate + hartă de expediție tip Slay the Spire.
 
+Detaliile complete sunt în **Mindkeep-Pitch-Document.md** — atașează-l alături de acesta.
+
 ---
 
 ## Decizii deja luate — nu le redeschide fără motiv
 
 Fiecare din astea a fost dezbătută și decisă conștient. Dacă propui altceva, spune de ce.
 
-### Structură și tehnologie
-
-| Decizie | Motiv |
-|---|---|
-| **Godot 4 + GDScript** | 2D nativ, curbă blândă, export web din același proiect |
-| **2D / 2.5D — NU 3D** | 3D = pipeline de producție separat (modelare, rigging, animații); cel mai comun mod în care mor proiectele solo |
-| **4 discipline, nu mai multe** | A 5-a = UI nou + generare nouă + probabil clădire și stat noi |
-| **Desktop = „casa" progresului** | Build-ul web e demo; save-urile nu se sincronizează automat |
-
-### Piese și roluri
-
-| Decizie | Motiv |
-|---|---|
-| **Piesele de șah = skin, nu mecanică** | Fără mișcare/capturare reală de șah — a doua curbă de învățare, fără beneficiu |
-| **Regele = PV-ul jucătorului** | Nu e activabil; „Șah Mat" = condiția de înfrângere |
-| **Regina — AMÂNATĂ (nu ștearsă)** | Ideea rămâne bună pe hârtie (acces la disciplina neechipată, fără să ocupe slot), dar nu se leagă natural cu comboul: orice condiție de deblocare bazată pe lanț (treapta 4) sosește exact în momentul în care NU vrei să-ți rupi lanțul ca s-o folosești. Costul real nu e cel în PA, ci lanțul pierdut — deci n-o folosești niciodată. Se reevaluează după ce există harta și un run complet jucat; până atunci nu se implementează. **Loadout-ul rămâne 3 din 4.** |
-| **Loadout: 3 din 4, per expediție** | Nu per luptă — evită un meniu înainte de fiecare inamic, păstrează lupta fluidă |
-| **Toate disciplinele dau daune de bază** | Altfel una devine „cea inutilă"; diferă doar efectul secundar |
-| **Legendarele amplifică, nu dețin** | O relicvă nu trebuie să fie singura sursă a unui sistem — altfel devine obligatorie și restul devin decor |
+| Decizie                                  | Motiv                                                                                                                                                           |
+| ---------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Godot 4 + GDScript**                   | 2D nativ, curbă blândă, export web din același proiect                                                                                                          |
+| **2D / 2.5D — NU 3D**                    | 3D = pipeline de producție separat (modelare, rigging, animații); cel mai comun mod în care mor proiectele solo                                                 |
+| **8 discipline**                         | Cultură generală, Logică, Cuvinte, Numere, Reținere, Tipare, Spațial, Reflex. Fiecare cu rol tactic distinct. Codul tratează numărul ca variabilă, nu constantă |
+| **Loadout: 3 din 8**                     | 56 de combinații. Numărul 3 e variabilă de reglat, nu presupunere                                                                                               |
+| **Rolurile tactice > temele**            | Fără ele, 8 discipline se joacă identic. Multi-hit, crit, ignoră armura = decizii tactice                                                                       |
+| **Două moduri de joc**                   | Campanie (cronometru strict) + Turnul Perseverenței (fără timp: Sudoku, probleme). Economie comună                                                              |
+| **Piesele de șah = skin, nu mecanică**   | Fără mișcare/capturare reală de șah — a doua curbă de învățare, fără beneficiu                                                                                  |
+| **Regele = PV-ul jucătorului**           | PV = zero este condiția de înfrângere                                                                                                                           |
+| **Regina — AMÂNATĂ**                     | Condiția de deblocare venea exact când nu vrei să rupi lanțul de combo. Se reevaluează după hartă + run complet                                                 |
+| **Inamici generați, nu scriși de mână**  | ~10 arhetipuri × ~10 modificatori = sute de comportamente din zeci de reguli. Fără live-service, fără pattern-uri de memorat                                    |
+| **Boșii rămân manuali**                  | 5-6 lupte scrise, ca momente memorabile                                                                                                                         |
+| **Legendarele amplifică, nu dețin**      | O relicvă nu trebuie să fie singura sursă a unui sistem — altfel devine obligatorie și restul devin decor                                                       |
+| **Loadout per expediție, nu per luptă**  | Evită un meniu înainte de fiecare inamic, păstrează lupta fluidă                                                                                                |
+| **Toate disciplinele dau daune de bază** | Altfel una devine „cea inutilă"; diferă doar efectul secundar                                                                                                   |
+| **Greșeală = pierzi 1 PA, NU tura**      | Pierderea turii pedepsește ignoranța în loc s-o corecteze                                                                                                       |
+| **Desktop = „casa" progresului**         | Build-ul web e demo; save-urile nu se sincronizează automat                                                                                                     |
 
 ### Bucla de luptă
 
-| Decizie | Motiv |
-|---|---|
-| **Combo: o activare = un lanț nelimitat de întrebări** | Plătești 1 PA o singură dată, apoi treptele se CÂȘTIGĂ, nu se cumpără. Lanțul nu se mai termină de la sine — se rupe doar când greșești sau expiră cronometrul |
-| **Daune pe treaptă: 1 / 2 / 3, apoi 3 fix de la treapta 4 în sus** | Cresc scurt, apoi se așează la valoarea treptei III. Fără plafon, treapta 12 ar decide singură lupta. Răsplata pentru un lanț lung vine din LUNGIME (multe trepte × 3) și din critice, nu din inflația unei singure trepte |
-| **Critic la fiecare a 5-a treaptă (5, 10, 15…)** | Daunele treptei se dublează (deci 6 în loc de 3). E un obiectiv intermediar vizibil: la treapta 4 știi deja că următoarea valorează dublu, deci ai un motiv concret să mai riști o întrebare |
-| **Daunele acumulate rămân când lanțul se rupe** | Greșeala oprește creșterea, nu șterge munca. Altfel un lanț lung ar fi prea riscant ca să merite pornit |
-| **Greșeală = Obeliscul rămâne blocat până la finalul rundei** | Înlocuiește vechea regulă „pierzi 1 PA". Cu lanțuri nelimitate, un PA nu mai e o pedeapsă reală; pierderea unei unelte pentru restul rundei te obligă să reorganizezi tura, nu doar să reîncerci imediat. Pedeapsa rămâne pe unealtă, nu pe tură — nu pierzi runda pentru că n-ai știut un răspuns |
-| **Tura se încheie automat când nu mai ai Obeliscuri utilizabile** | Fără PA, sau cu tot ce ai blocat, butonul „Încheie tura" e un click ceremonial. Jocul nu trebuie să-mi ceară să confirm că n-am ce face |
-| **Facțiuni de inamic, separate de arhetip** | Facțiunea (Cei Șterși, Ecourile) e apartenența tematică: zero efect mecanic azi, dar e cârligul pentru zone de hartă și pentru echipament anti-facțiune. Arhetipul rămâne strict regula de comportament — două câmpuri, două scopuri |
-| **Inamici generați, nu scriși de mână** | ~10 arhetipuri × ~10 modificatori = sute de comportamente din zeci de reguli. Fără live-service, fără pattern-uri de memorat |
-| **Boșii rămân manuali** | 5-6 lupte scrise, ca momente memorabile |
+| Decizie                                                            | Motiv                                                                                                                                                                                                                                                                                              |
+| ------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Combo: o activare = un lanț nelimitat de întrebări**             | Plătești 1 PA o singură dată, apoi treptele se CÂȘTIGĂ, nu se cumpără. Lanțul nu se mai termină de la sine — se rupe doar când greșești sau expiră cronometrul                                                                                                                                     |
+| **Daune pe treaptă: 1 / 2 / 3, apoi 3 fix de la treapta 4 în sus** | Cresc scurt, apoi se așează la valoarea treptei III. Fără plafon, treapta 12 ar decide singură lupta. Răsplata pentru un lanț lung vine din LUNGIME (multe trepte × 3) și din critice, nu din inflația unei singure trepte                                                                         |
+| **Critic la fiecare a 5-a treaptă (5, 10, 15…)**                   | Daunele treptei se dublează (deci 6 în loc de 3). E un obiectiv intermediar vizibil: la treapta 4 știi deja că următoarea valorează dublu, deci ai un motiv concret să mai riști o întrebare                                                                                                       |
+| **Daunele acumulate rămân când lanțul se rupe**                    | Greșeala oprește creșterea, nu șterge munca. Altfel un lanț lung ar fi prea riscant ca să merite pornit                                                                                                                                                                                            |
+| **Greșeală = Obeliscul rămâne blocat până la finalul rundei**      | Înlocuiește vechea regulă „pierzi 1 PA". Cu lanțuri nelimitate, un PA nu mai e o pedeapsă reală; pierderea unei unelte pentru restul rundei te obligă să reorganizezi tura, nu doar să reîncerci imediat. Pedeapsa rămâne pe unealtă, nu pe tură — nu pierzi runda pentru că n-ai știut un răspuns |
+| **Tura se încheie automat când nu mai ai Obeliscuri utilizabile**  | Fără PA, sau cu tot ce ai blocat, butonul „Încheie tura" e un click ceremonial. Jocul nu trebuie să-mi ceară să confirm că n-am ce face                                                                                                                                                            |
+| **Facțiuni de inamic, separate de arhetip**                        | Facțiunea (Cei Șterși, Ecourile) e apartenența tematică: zero efect mecanic azi, dar e cârligul pentru zone de hartă și pentru echipament anti-facțiune. Arhetipul rămâne strict regula de comportament — două câmpuri, două scopuri                                                               |
 
 ## Principii pe care vreau să le aperi
 
 - **Scope-ul mic e o funcționalitate, nu o limitare.** Dacă o idee de-a mea umflă scope-ul, spune-mi direct.
 - **Prototip întâi, artă după.** Placeholder-e până când bucla de luptă e validată ca distractivă.
 - **Contract identic între discipline.** Fiecare Obelisc e o scenă independentă cu aceeași interfață către luptă (`porneste()`, `arata_stare()`, semnalul `rezolvat(succes)`). O disciplină nouă trebuie să fie un rând în tabel, nu o ramură nouă în cod.
+- **Proiectează pentru 8, construiește 4.** Disciplinele sunt o listă în date, nu un enum fix. A 5-a trebuie să fie un update de conținut, nu o rescriere.
 - **Save serializabil de la început.** Toată starea într-o structură clară, ușor de transformat în JSON — face orice migrare viitoare simplă.
 - **Ton sănătos.** Jocul motivează prin curiozitate, nu prin FOMO sau pedeapsă.
 - **Sesiuni scalabile, fără plafon artificial.** O sesiune trebuie să fie completă și satisfăcătoare în 15 minute, dar jocul nu mă blochează dacă vreau să continui ore în șir. Fără energie de tip mobile care mă dă afară. Dacă apare vreun cap (ex. „antrenamentul de azi e complet"), e un semnal pozitiv și un bonus, nu o ușă închisă.
 
 ---
 
-## Ce a rămas de construit
+## Ordinea de construcție (ruta recomandată)
 
-*Ordinea recomandată pentru ce urmează. Ce e deja funcțional — scena de luptă,
-comboul, Memoria (Trivia), Logica, ecranul de victorie — e descris în
-`docs/progres.md`; aici stau doar pașii deschiși.*
+**Făcut deja:** setup + Git, scena de luptă, sistemul de combo, Trivia + Logică integrate, arhetipuri de inamici (Atac constant / Grabnic), card de inamic, artă pentru rege și cavaler, audio (muzică, feedback, ticăit, victorie/înfrângere), UI lustruit.
 
-1. **Închiderea buclei de luptă** — ecran de înfrângere („Șah Mat") și recompense după victorie. Victoria are panou; înfrângerea se termină încă în tăcere.
-2. **Jucat pe mână o luptă întreagă.** Totul a fost verificat prin rulare automată și capturi de ecran. Ritmul lanțului, cronometrul și dificultatea reală se simt doar jucând.
-3. **Baza comună de puzzle** (`puzzle.gd`, `class_name Puzzle`) — `trivia.gd` și `logica.gd` au ~80 de linii identice. De rezolvat ÎNAINTE de a treia disciplină, altfel o regulă de timp se schimbă în patru locuri.
-4. **Trei inamici manuali** — unul simplu, unul Barieră, unul Grabnic. Verifică dacă arhetipurile chiar se simt diferit.
-5. **Harta de expediție** — noduri, alegerea drumului, loadout-ul de 3 din 4.
-6. **Cetatea** — clădiri, upgrade-uri, economia celor 4 resurse.
-7. **Save/Load.**
-8. **Ultimele două discipline** — Cuvântul Adevărat (Anagrame) și Ordinea (Sudoku), pe rând.
-9. ~~**Regina**~~ — **amânată.** Nu se implementează acum (vezi tabelul de decizii). Se reevaluează după harta de expediție și un run complet: dacă loadout-ul de 3 din 4 chiar creează ziduri frustrante, îi găsim altă condiție de deblocare — una care să nu ceară ruperea lanțului.
+**Ce urmează:**
+
+1. **Refactor de structură** — disciplinele devin date, nu enum fix. Câmpurile noi în baza de date (`mecanica`, `mod`, `abilitate_cognitiva`). Fără asta, fiecare disciplină nouă e o rescriere.
+2. **Separarea conținutului** — seriile numerice se mută din Logică în Tipare; „Memorie" se redenumește (trivia → Cultură generală).
+3. **Disciplinele 3 și 4** — Cuvinte, Numere
+4. **Bucla completă a unei lupte** — recompense (victoria/înfrângerea există deja)
+5. **3 inamici manuali** — unul simplu, unul Barieră, unul cu vulnerabilitate
+6. **Harta de expediție** — noduri, alegerea drumului, loadout-ul de 3 din N
+7. **Cetatea** — clădiri, upgrade-uri, economia resurselor
+8. **Save/Load**
+9. **Disciplinele 5-8** — Reținere, Tipare, Spațial, Reflex
 10. **Generatorul de inamici** — arhetipuri + modificatori + buget, după ce știi că piesele merită combinate. Aici se separă identitatea inamicului (nume, descriere, facțiune) de `DATE_ARHETIP`.
 11. **Artă, VFX, „juice"** — parțial început (figurile principale au imagini reale); restul e placeholder.
-12. **Export web pentru feedback.**
+12. **Turnul Perseverenței** — al doilea mod de joc
+13. **Antrenament liber** — filtru peste baza de date
+14. **Export web pentru feedback**
 
 ---
 
 ## Șablon de prompt pentru fiecare sesiune
 
-> Lucrez la Mindkeep — context în `CLAUDE.md` și `docs/progres.md`.
-> **Unde sunt:** [ex. „am terminat comboul și Obeliscul Logicii"]
+> Lucrez la Mindkeep — context în fișierele atașate.
+> **Unde sunt:** [ex. „am terminat scena de luptă cu placeholder-e"]
 > **Ce vreau azi:** [un singur obiectiv concret]
 > **Problema:** [eroarea exactă / ce nu înțeleg, dacă e cazul]
 >
 > Explică-mi ca cuiva la primul joc — de ce, nu doar cum.
 
 **Sfaturi pentru sesiuni bune:**
+
 - Un singur obiectiv per sesiune. „Fă-mi jocul" nu funcționează; „fă bara de PA să scadă la click" funcționează.
 - Lipește erorile complet, cu tot cu mesajul din consolă.
 - Spune-mi când nu înțelegi ceva — nu presupune că e evident.
