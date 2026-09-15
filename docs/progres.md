@@ -1,6 +1,6 @@
 # MINDKEEP — Jurnal de progres
 
-*Ultima actualizare: 14 septembrie 2026*
+*Ultima actualizare: 15 septembrie 2026*
 *Atașează acest fișier la începutul fiecărei sesiuni noi, împreună cu `CLAUDE.md` și `docs/pitch-document.md`.*
 
 ---
@@ -18,11 +18,214 @@
 | 7. Cetatea | ❌ |
 | 8. Save/Load | ❌ |
 | 9. Celelalte discipline | 🟡 Logica ✅ · Memorie și Cuvântul Adevărat ❌ |
-| 10–13. Generator de inamici, artă, web | ❌ (artă parțial: figurile principale au imagini reale) · Regina: **amânată**, vezi CLAUDE.md |
+| 10–13. Generator de inamici, artă, web | ❌ (artă parțial: figurile principale și piesele de pe butoanele de Obelisc au imagini reale) · Regina: **amânată**, vezi CLAUDE.md |
 
-Am sărit peste ordinea recomandată la pasul 12 (artă): imaginile pentru rege și
-cavaler au intrat mai devreme, dar restul rămâne placeholder. Bucla de luptă e
-în continuare cea validată, nu arta.
+Am sărit peste ordinea recomandată la pasul 12 (artă): imaginile pentru rege,
+cavaler și pentru cele trei piese de șah de pe butoane au intrat mai devreme, dar
+restul rămâne placeholder. Bucla de luptă e în continuare cea validată, nu arta.
+
+---
+
+## Sesiunea butoanelor de Obelisc (15 septembrie 2026) — piese de șah în locul dreptunghiurilor
+
+**Ce s-a schimbat:** cele trei butoane erau dreptunghiuri plate cu text colorat.
+Acum fiecare are o piesă de șah deasupra numelui, bordură în culoarea
+disciplinei, colțuri rotunjite și un degrade vertical discret; la hover se
+aprinde și se ridică 3px, la apăsare pare scobit, iar blocat își stinge piesa și
+arată un lacăt mic. Al treilea Obelisc se numește acum **Cuvinte**, nu
+„Cuvantul Adevarat" (se vede și în jurnal — e același câmp `disciplina`).
+
+### Un Obelisc e acum o scenă, nu trei butoane copiate
+
+`scenes/lupta/obelisc.tscn`, cu patru scripturi mici în spate:
+
+| Fișier | Ce face |
+|---|---|
+| `obelisc.gd` | stările și animațiile (hover, apăsare, blocat, indisponibil) |
+| `fata_obelisc.gd` | fondul cu degrade, colțurile, bordura |
+| `glifa_sah.gd` | piesele desenate în cod |
+| `lacat.gd` | semnul de blocat |
+
+Aceeași regulă ca la panoul de verdict: un contract, mai multe conținuturi.
+Cele trei butoane au formă identică și diferă prin trei valori (nume, piesă,
+culoare). Scrise de trei ori în scena de luptă, orice schimbare de formă de
+mâine s-ar fi făcut de trei ori — și a treia oară s-ar fi uitat.
+
+Rădăcina a rămas un `Button`, doar cu hainele implicite stinse
+(`StyleBoxEmpty` pe toate stările). Așa primim gratis zona de click, `disabled`,
+`pressed` și navigarea cu tastatura, iar `lupta.gd` nu observă nicio diferență.
+
+**`StyleBoxFlat` nu știe degradeuri** — are o singură `bg_color`, plată, și fix
+fondul plat făcea butoanele să pară desenate cu chenarul din Paint. Soluția n-a
+fost un shader și nici un `TextureRect` tăiat cu `clip_children`, ci
+`draw_polygon()`: primește **o culoare per vârf** și le amestecă între ele, deci
+un dreptunghi rotunjit cu vârfurile de sus deschise și cele de jos închise *e*
+degradeul, într-o singură desenare, cu colțurile deja rotunde.
+
+Halo-ul din spate a rămas totuși un `Panel` cu `StyleBoxFlat`: la umbre moi,
+stilul chiar e mai bun decât desenul nostru. Fiecare unealtă face ce știe.
+
+### Glifele ♟ ♞ ♝ nu există în fontul implicit
+
+Verificat, nu presupus: `ThemeDB.fallback_font.has_char()` întoarce `false`
+pentru toate trei, și la fel pentru 🔒. Pe ecran ar fi ieșit patru pătrate goale.
+Un `SystemFont` (Segoe UI Symbol) ar fi mers pe Windows, dar fonturile de sistem
+nu există în export web — iar web-ul e pe listă. Deci piesele și lacătul sunt
+**desenate în `_draw()`**, ca siluetele din arenă; `glifa_sah.gd` moștenește
+chiar `Silueta`, ca să refolosească caseta cu proporții și traducerea din
+fracțiuni în pixeli.
+
+Desenele rămân în cod ca plasă de siguranță, chiar dacă azi toate trei
+Obeliscurile au artă adevărată: ștergi un PNG și butonul merge mai departe.
+
+### Arta: trei PNG-uri cu tabla de șah desenată în pixeli
+
+Imaginile generate aveau „fundal transparent" doar aparent — tabla gri era
+scrisă în pixeli, fișierele fiind RGB curat, fără canal alfa. Puse direct pe
+buton, ar fi ieșit trei timbre gri.
+
+Decuparea a cerut trei întrebări, toate trei trebuind să spună „tablă":
+
+1. **e aproape de una din cele două culori ale tablei?** (deduse din rama imaginii)
+2. **e plat?** — tabla n-are textură, piatra are. Ăsta a fost testul decisiv:
+   fără el, bila pionului, gri și netedă, era mâncată de umplere.
+3. **în vecinătate apar amândouă griurile, cam jumate-jumate?** — semnătura pe
+   care doar o tablă o are. O suprafață de piatră închisă seamănă la culoare cu
+   pătratul închis, dar în jurul ei nu există și pătrate deschise. Fără asta,
+   nebunul (piesă închisă) se golea pe dinăuntru.
+
+Peste ele, două lucruri geometrice: umplerea pornește **din marginea imaginii**,
+deci griurile din interiorul piesei rămân piesă fiindcă nu sunt legate de
+exterior; iar la final se retează de jos rândurile mai înguste de 12% din cel
+mai lat rând — o piesă de șah stă pe o talpă lată, deci **ce atârnă firav sub ea
+nu e piesă** (așa a plecat o tijă de 4px rămasă sub cal, lipită solid de talpă,
+pe care niciun filtru de cioburi n-o vedea).
+
+Rezultatele sunt `pion_sah.png`, `cal_sah.png`, `nebun_sah.png` (256×256, alfa
+adevărat). Sursele au rămas în repo, ca originale.
+
+### Arta e GRI; culoarea se pune în joc
+
+```gdscript
+const CULOARE_MEMORIE := Color(0.60, 0.85, 1.00)   # albastru
+const CULOARE_LOGICA := Color(0.70, 1.00, 0.60)    # verde
+const CULOARE_CUVINTE := Color(1.00, 0.85, 0.55)   # auriu
+```
+
+Nu sunt constante doar pentru iconiță: sunt aceleași valori pe care le foloseau
+deja bordura, numele și halo-ul, scoase din tabel și botezate. „Aceeași nuanță
+ca textul" nu mai e o potrivire de ținut minte — e literalmente același număr.
+
+Colorarea e o linie în `obelisc.gd`: `imagine.modulate = culoare`. `modulate`
+înmulțește fiecare pixel cu culoarea dată, deci pe o piesă gri griul deschis
+devine albastru deschis și griul închis albastru închis — **volumul și umbrele
+rămân**, se schimbă doar nuanța. Pe o imagine deja colorată ar fi ieșit noroi;
+de-aia arta viitoare merită generată tot gri.
+
+Fișierele de pe disc rămân neatinse, deci aceeași imagine poate servi mâine
+altei discipline, cu altă culoare.
+
+**Proporțiile:** pionul e la 80% din înălțimea nebunului, toate trei pe aceeași
+linie de talpă. Raportul e copt în PNG (cât din pânza de 256px ocupă piesa), nu
+e un număr în cod.
+
+### Bugul: butonul blocat se albea în loc să se stingă
+
+`ALFA_INDISPONIBIL` face TOT conținutul semi-transparent, fața inclusiv. Iar
+sub față stătea halo-ul, un `Panel` al cărui trup avea culoarea disciplinei —
+complet acoperit în mod normal, deci „nu contează ce culoare are". Contează
+exact în clipa în care fața devine translucidă: prin ea se vedea albastrul
+aprins de dedesubt, și butonul blocat ieșea mai luminos decât unul liber.
+
+Reparat punând trupul aurei în culoarea **fondului**. Lecția: „e acoperit, deci
+nu contează" ține doar cât timp nimic nu devine transparent.
+
+### Textul „(blocat)" a dispărut
+
+Ocupa un rând întreg sub nume și **muta tot ce era pe buton** de fiecare dată
+când se aprindea sau se stingea. Lacătul din colț spune același lucru fără să
+miște nimic. Lupta nici nu știe că există un lacăt: trimite două adevăruri prin
+`seteaza_stare(blocat, indisponibil)`, iar cum arată fiecare decide butonul.
+
+### Verificat
+
+Rulare headless după fiecare pas (fără erori, fără avertismente) și capturi de
+ecran pentru fiecare stare: repaus, hover, apăsat, blocat, și cu o întrebare
+deschisă. Piesele desenate au fost judecate mărite la 300px, nu la 46 — la
+mărimea de pe buton vezi doar *că* o formă e greșită, nu *de ce*.
+
+### Ce rămâne deschis
+
+- **Mărimea iconiței**: 46px acum, cu butonul de 86. La 60/100 piesele se citesc
+  clar mai bine, dar iau 14px din înălțimea arenei. Nedecis.
+- **Unealta de decupare** trăiește în afara repo-ului. Dacă mai apar piese (turn,
+  rege, regină), merită pusă la `tools/decupeaza_piesa.py`, cu proporțiile
+  într-un dicționar.
+- **Sursele cântăresc 6,4 MB** din cei 6,7 ai artei și ajung și în export, deși
+  jocul nu le folosește. Înainte de build-ul web: ori mutate în afara
+  proiectului, ori excluse din Project → Export → Resources.
+- Cât timp e o întrebare pe ecran, butoanele rămân **aprinse** sub panou, deși
+  clickul pe ele nu face nimic (`_pe_obelisc_apasat` are gardă).
+  `actualizeaza_ui()` se cheamă abia după ce se termină lanțul. Se repară cu o
+  linie, dar aceeași linie face și bulina de PA să dispară la deschiderea
+  întrebării, nu la final — o schimbare de feedback, nu doar de aspect.
+
+### Fișiere atinse
+
+```
+scenes/lupta/obelisc.tscn      — nou: scena butonului
+scenes/lupta/obelisc.gd        — nou: stări, animații, seteaza_stare()
+scenes/lupta/fata_obelisc.gd   — nou: degrade + bordură + colțuri, în _draw()
+scenes/lupta/glifa_sah.gd      — nou: pion / cal / nebun desenate
+scenes/lupta/lacat.gd          — nou: semnul de blocat
+scenes/lupta/lupta.gd          — CULOARE_*, tabelul OBELISCURI (piesă, culoare,
+                                 imagine), configureaza() în _ready(),
+                                 seteaza_stare() în actualizeaza_ui(),
+                                 culori_obelisc șters
+scenes/lupta/lupta.tscn        — cele 3 butoane devin instanțe ale scenei
+assets/art/pion_sah.png, cal_sah.png, nebun_sah.png   — noi (gri, cu alfa)
+assets/art/pawn.png, knight.png, bishop.png           — surse
+```
+
+---
+
+## Sesiunea sunetului de critic (14 septembrie 2026) — treapta a 5-a se aude
+
+**Ce s-a schimbat:** la fiecare treaptă multiplu de 5, un tunet
+(`critical_thunder.ogg`) sună în același cadru în care fulgeră marcajul
+portocaliu „CRITIC!". Până acum lovitura dublă se vedea doar în bara inamicului.
+
+**Sincronizarea e gratuită:** apelul stă lipit de `puzzle.arata_combo()`, în
+`ruleaza_lant()`. Sunetul și flash-ul pleacă din aceeași linie de cod, deci din
+aceeași bătaie a jocului — n-ai ce potrivi cu mâna și nu se pot desincroniza.
+
+**De ce în luptă și nu în disciplină:** „critic" e vocabular de luptă, exact ca
+`TEXT_CRITIC`. Trivia și Logica primesc un String pe care îl aprind, fără să
+afle ce înseamnă. Dacă sunetul ar porni de acolo, fiecare disciplină nouă ar
+trebui să-și amintească să-l pună; așa, Anagramele îl au pe gratis.
+
+**Volum propriu** (`VOLUM_CRITIC_DB`, -4 dB, adică +2 față de restul efectelor).
+„Corect"/„greșit" sună la fiecare răspuns, tunetul o dată la cinci — iar un
+sunet rar are voie să fie mai mare decât unul des. La același volum cu bipul,
+criticul ar fi fost doar încă un răspuns corect, cu alt timbru.
+
+Ca să nu fie nevoie de un al treilea difuzor cu nume (ca la ticăit și verdicte),
+excepția stă într-un tabel mic, `VOLUM_EFECT`. Tunetul e „dă-i drumul și uită de
+el", ca bipurile: îi trebuie alt volum, nu alt difuzor.
+
+**Efect secundar de reținut:** `reda()` scrie acum volumul din tabel la fiecare
+redare. Era deja obligatoriu, dar acum chiar contează — vocile se rotesc, iar un
+„corect" nimerit pe difuzorul folosit de tunet ar fi moștenit volumul lui: un
+bip mai tare o dată la trei, fără nicio cauză vizibilă.
+
+### Fișiere atinse
+
+```
+autoload/sunet.gd                  — VOLUM_CRITIC_DB, Efect.CRITIC, VOLUM_EFECT,
+                                     reda() ia volumul din tabel
+scenes/lupta/lupta.gd              — un if în ruleaza_lant()
+assets/audio/critical_thunder.ogg  — nou
+```
 
 ---
 
