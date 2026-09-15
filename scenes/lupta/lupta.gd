@@ -576,7 +576,10 @@ func ruleaza_lant(index: int) -> void:
 		lant_daune += daune
 		# maxi() = maximul a două int-uri. Îl folosim ca PV să nu scadă sub 0.
 		pv_inamic = maxi(pv_inamic - daune, 0)
-		figura_inamic.loveste()
+		# Daunele merg mai departe la efectul de impact: o lovitură de 1 abia
+		# tremură, una critică zguduie vizibil. Așa mărimea loviturii se vede,
+		# nu doar se citește în jurnal.
+		figura_inamic.loveste(daune)
 
 		if critica:
 			scrie_in_jurnal("%s, treapta %d: CRITIC! +%d daune (lant: %d)." % [
@@ -925,7 +928,7 @@ func _tura_grabnic() -> void:
 func loveste_jucatorul(daune: int) -> void:
 	# maxi() = maximul a două int-uri. Îl folosim ca PV să nu scadă sub 0.
 	pv_jucator = maxi(pv_jucator - daune, 0)
-	figura_jucator.loveste()
+	figura_jucator.loveste(daune)
 
 
 func termina_lupta(victorie: bool) -> void:
