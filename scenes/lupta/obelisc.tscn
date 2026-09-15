@@ -1,0 +1,102 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scenes/lupta/obelisc.gd" id="1_obelisc"]
+[ext_resource type="Script" path="res://scenes/lupta/fata_obelisc.gd" id="2_fata"]
+[ext_resource type="Script" path="res://scenes/lupta/glifa_sah.gd" id="3_glifa"]
+[ext_resource type="Script" path="res://scenes/lupta/lacat.gd" id="4_lacat"]
+
+[node name="Obelisc" type="Button"]
+custom_minimum_size = Vector2(0, 86)
+offset_right = 300.0
+offset_bottom = 86.0
+script = ExtResource("1_obelisc")
+
+[node name="Continut" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Aura" type="Panel" parent="Continut"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 3.0
+offset_top = 3.0
+offset_right = -3.0
+offset_bottom = -3.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Fata" type="Control" parent="Continut"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("2_fata")
+
+[node name="Coloana" type="VBoxContainer" parent="Continut"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 8.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 2
+alignment = 1
+
+[node name="Glifa" type="Control" parent="Continut/Coloana"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 46)
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("3_glifa")
+
+[node name="Imagine" type="TextureRect" parent="Continut/Coloana/Glifa"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Nume" type="Label" parent="Continut/Coloana"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_override_font_sizes/font_size = 15
+text = "Obelisc"
+horizontal_alignment = 1
+
+[node name="Lacat" type="Control" parent="Continut"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -27.0
+offset_top = 9.0
+offset_right = -12.0
+offset_bottom = 28.0
+grow_horizontal = 0
+mouse_filter = 2
+script = ExtResource("4_lacat")

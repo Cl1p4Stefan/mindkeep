@@ -181,11 +181,46 @@ const SCENA_LOGICA := preload("res://scenes/logica/logica.tscn")
 # (`porneste`, `arata_stare`, semnalul `rezolvat`), deci lupta le tratează la
 # fel — nu știe și n-o interesează ce fel de puzzle e înăuntru. Ca să dai altă
 # disciplină unui Obelisc, schimbi scena de pe linia lui. Atât.
-# Memorie și Cuvantul Adevarat folosesc deocamdată Trivia: n-au încă scena lor.
+# Memorie și Cuvinte folosesc deocamdată Trivia: n-au încă scena lor.
+#
+# „piesa" și „culoare" sunt înfățișarea Obeliscului, și stau AICI, nu în scenă.
+# Înainte, culoarea trăia în `modulate`-ul butonului din editor și era citită de
+# cod la pornire — adică identitatea unei discipline era împărțită între un tabel
+# și un câmp dintr-un panou de Inspector. Un Obelisc nou însemna două locuri de
+# atins și unul de uitat. Acum toată disciplina încape pe un rând.
+#
+# „imagine" e portofița de artă: gol = folosește piesa desenată (`piesa`), o cale
+# = arată PNG-ul. Fișierul lipsă NU e o eroare — butonul se întoarce la desen și
+# scrie un avertisment. Așa calea poate sta scrisă aici dinainte să existe arta,
+# iar „piesa" rămâne plasa de siguranță: ștergi PNG-ul, jocul merge mai departe.
+# CULORILE DISCIPLINELOR. Fiecare e folosită în patru locuri de pe butonul ei —
+# bordura, numele, halo-ul și acum și piesa de șah — iar de aici se schimbă toate
+# patru deodată. De-aia sunt constante cu nume și nu numere scrise în tabel: o
+# nuanță ajustată într-un singur loc nu poate ieși pe jumătate.
+#
+# Imaginile de pe disc rămân GRI — culoarea se pune la desenare, cu `modulate`
+# (vezi `obelisc.gd`). Așa o schimbare de nuanță e o cifră aici, nu un drum înapoi
+# prin generatorul de imagini.
+const CULOARE_MEMORIE := Color(0.60, 0.85, 1.00)   # albastru
+const CULOARE_LOGICA := Color(0.70, 1.00, 0.60)    # verde
+const CULOARE_CUVINTE := Color(1.00, 0.85, 0.55)   # auriu
+
 const OBELISCURI := [
-	{"disciplina": "Memorie", "nivel": 1, "scena": SCENA_TRIVIA},
-	{"disciplina": "Logica", "nivel": 1, "scena": SCENA_LOGICA},
-	{"disciplina": "Cuvantul Adevarat", "nivel": 1, "scena": SCENA_TRIVIA},
+	{
+		"disciplina": "Memorie", "piesa": GlifaSah.Piesa.PION,
+		"imagine": "res://assets/art/pion_sah.png",
+		"culoare": CULOARE_MEMORIE, "nivel": 1, "scena": SCENA_TRIVIA,
+	},
+	{
+		"disciplina": "Logica", "piesa": GlifaSah.Piesa.CAL,
+		"imagine": "res://assets/art/cal_sah.png",
+		"culoare": CULOARE_LOGICA, "nivel": 1, "scena": SCENA_LOGICA,
+	},
+	{
+		"disciplina": "Cuvinte", "piesa": GlifaSah.Piesa.NEBUN,
+		"imagine": "res://assets/art/nebun_sah.png",
+		"culoare": CULOARE_CUVINTE, "nivel": 1, "scena": SCENA_TRIVIA,
+	},
 ]
 
 # ─────────────────────────────────────────────────────────────
@@ -223,10 +258,6 @@ var lant_daune := 0
 # treia, treapta e 3 dar combo-ul e 2 — și 2 e cifra corectă de arătat,
 # fiindcă e cea pe care o pierzi dacă greșești.
 var combo_corecte := 0
-
-# Culorile din editor, citite o dată, ca să le putem închide/deschide la loc
-# fără să pierdem culoarea disciplinei.
-var culori_obelisc: Array[Color] = []
 
 # Punctele de PA, construite din cod în `_ready()`.
 # Ținem separat și stilurile: culoarea unui cerc se schimbă prin stil,
@@ -314,11 +345,17 @@ func _ready() -> void:
 	# Configurăm butoanele DIN COD, pe baza tabelului OBELISCURI de sus.
 	# `range(...)` ne dă indicii 0, 1, 2 — avem nevoie de index, nu doar de buton,
 	# ca să știm mai târziu CARE Obelisc a fost apăsat.
-	# Textul butoanelor NU se mai setează aici: acum se schimbă în timpul luptei
-	# („recărcare"), deci treaba lui e în actualizeaza_ui(), locul unic de desenat.
+	#
+	# Ce ține de IDENTITATEA Obeliscului (nume, piesă, culoare) se pune o singură
+	# dată, aici: nu se schimbă niciodată în timpul luptei. Ce ține de STAREA lui
+	# (blocat, fără PA) merge prin `seteaza_stare()`, din `actualizeaza_ui()`, care
+	# rulează de zeci de ori pe rundă.
 	for index in range(butoane_obelisc.size()):
-		var buton: Button = butoane_obelisc[index]
-		culori_obelisc.append(buton.modulate)   # culoarea disciplinei, din editor
+		var buton: Obelisc = butoane_obelisc[index]
+		var date: Dictionary = OBELISCURI[index]
+		buton.configureaza(
+			date["disciplina"], date["piesa"], date["culoare"], date["imagine"]
+		)
 		# SEMNALE: „pressed" e semnalul emis de Button la click.
 		# .connect(functie) = „când se emite, cheamă funcția asta".
 		# .bind(index) = „și trimite-i index-ul ca argument".
@@ -1188,24 +1225,21 @@ func actualizeaza_ui() -> void:
 	buton_incheie_tura.visible = false
 
 	for index in range(butoane_obelisc.size()):
-		var buton: Button = butoane_obelisc[index]
-		var disciplina: String = OBELISCURI[index]["disciplina"]
+		var buton: Obelisc = butoane_obelisc[index]
 		var blocat := e_blocat(index)
-		var culoare := culori_obelisc[index]
 
-		# Doar numele disciplinei. Cifrele (daune, cost, trepte, critice) trăiesc
-		# acum în jurnal — pe butoane erau o listă de prețuri pe care oricum
-		# n-o mai citeai după primele două lupte.
-		buton.text = disciplina
-
-		if blocat:
-			# Singura excepție: un buton gri nu spune DE CE e gri. Un cuvânt,
-			# plus stingerea cromatică — restul explicației e în jurnal.
-			buton.text += "\n(blocat)"
-			culoare = culoare.darkened(0.55)
-
-		buton.modulate = culoare
-		buton.disabled = lupta_terminata or puzzle_activ or blocat or pa < COST_OBELISC
+		# Un singur apel, două adevăruri: „e blocat runda asta" și „nu-l poți
+		# apăsa acum". CUM se vede fiecare — lacătul, piesa stinsă, halo-ul —
+		# decide butonul (vezi `obelisc.gd`). Lupta nu știe că există un lacăt:
+		# dacă mâine blocarea se arată altfel, aici nu se schimbă nimic.
+		#
+		# Textul „(blocat)" a dispărut odată cu el. Ocupa un rând întreg sub nume
+		# și muta tot ce era pe buton de fiecare dată când se aprindea sau se
+		# stingea; lacătul din colț spune același lucru fără să miște nimic.
+		buton.seteaza_stare(
+			blocat,
+			lupta_terminata or puzzle_activ or blocat or pa < COST_OBELISC
+		)
 
 
 ## Scrie o linie în jurnal. Nu se mai vede pe ecranul de luptă — ajunge în

@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://dqftvq1clv26c" path="res://scenes/lupta/impact.gd" id="5_impact"]
 [ext_resource type="Texture2D" uid="uid://cd0p0tg2xv8cq" path="res://assets/art/rege.png" id="6_rege"]
 [ext_resource type="Texture2D" uid="uid://dqkst7wja0gd1" path="res://assets/art/cavaler_sters.png" id="7_cavaler"]
+[ext_resource type="PackedScene" path="res://scenes/lupta/obelisc.tscn" id="8_obelisc"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_puzzle"]
 bg_color = Color(0.11, 0.11, 0.15, 1)
@@ -253,29 +254,20 @@ alignment = 1
 layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="Obelisc1" type="Button" parent="Margini/Coloana/RandObeliscuri" unique_id=970793659]
+[node name="Obelisc1" parent="Margini/Coloana/RandObeliscuri" unique_id=970793659 instance=ExtResource("8_obelisc")]
 unique_name_in_owner = true
-modulate = Color(0.6, 0.85, 1, 1)
-custom_minimum_size = Vector2(0, 78)
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Obelisc 1"
 
-[node name="Obelisc2" type="Button" parent="Margini/Coloana/RandObeliscuri" unique_id=1327067381]
+[node name="Obelisc2" parent="Margini/Coloana/RandObeliscuri" unique_id=1327067381 instance=ExtResource("8_obelisc")]
 unique_name_in_owner = true
-modulate = Color(0.7, 1, 0.6, 1)
-custom_minimum_size = Vector2(0, 78)
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Obelisc 2"
 
-[node name="Obelisc3" type="Button" parent="Margini/Coloana/RandObeliscuri" unique_id=839194762]
+[node name="Obelisc3" parent="Margini/Coloana/RandObeliscuri" unique_id=839194762 instance=ExtResource("8_obelisc")]
 unique_name_in_owner = true
-modulate = Color(1, 0.85, 0.55, 1)
-custom_minimum_size = Vector2(0, 78)
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Obelisc 3"
 
 [node name="IncheieTura" type="Button" parent="Margini/Coloana" unique_id=561223139]
 unique_name_in_owner = true
