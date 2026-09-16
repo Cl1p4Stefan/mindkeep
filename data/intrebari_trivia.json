@@ -28,33 +28,34 @@
 		"categorie": "istorie"
 	},
 	{
-		"text": "Care planetă este cea mai apropiată de Soare?",
-		"variante": ["Venus", "Marte", "Mercur", "Pământ"],
+		"text": "Cine a fost primul președinte al Statelor Unite?",
+		"variante": ["Abraham Lincoln", "Thomas Jefferson", "George Washington", "Benjamin Franklin"],
 		"corect": 2,
 		"nivel": 1,
-		"categorie": "stiinta"
+		"categorie": "istorie"
 	},
 	{
-		"text": "Care este simbolul chimic al aurului?",
-		"variante": ["Ag", "Fe", "Cu", "Au"],
-		"corect": 3,
-		"nivel": 1,
-		"categorie": "stiinta"
-	},
-	{
-		"text": "Câte oase are, aproximativ, scheletul unui om adult?",
-		"variante": ["106", "206", "306", "406"],
+		"text": "Ce civilizație antică a construit piramidele de la Giza?",
+		"variante": ["Grecii antici", "Egiptenii antici", "Romanii", "Perșii"],
 		"corect": 1,
 		"nivel": 1,
-		"categorie": "stiinta"
+		"categorie": "istorie"
 	},
 	{
-		"text": "Ce gaz absorb plantele din aer pentru fotosinteză?",
-		"variante": ["Oxigen", "Azot", "Dioxid de carbon", "Hidrogen"],
-		"corect": 2,
+		"text": "În ce an a avut loc Revoluția Română care a răsturnat regimul comunist?",
+		"variante": ["1989", "1990", "1968", "1977"],
+		"corect": 0,
 		"nivel": 1,
-		"categorie": "stiinta"
+		"categorie": "istorie"
 	},
+	{
+		"text": "Cine a condus expediția care a ajuns în America în 1492?",
+		"variante": ["Vasco da Gama", "Cristofor Columb", "Fernando Magellan", "Amerigo Vespucci"],
+		"corect": 1,
+		"nivel": 1,
+		"categorie": "istorie"
+	},
+
 	{
 		"text": "Care este capitala Portugaliei?",
 		"variante": ["Lisabona", "Madrid", "Porto", "Barcelona"],
@@ -84,16 +85,95 @@
 		"categorie": "geografie"
 	},
 	{
+		"text": "Care este cel mai mare deșert cald de pe Pământ?",
+		"variante": ["Gobi", "Sahara", "Kalahari", "Atacama"],
+		"corect": 1,
+		"nivel": 1,
+		"categorie": "geografie"
+	},
+	{
+		"text": "În ce țară se află Turnul Eiffel?",
+		"variante": ["Italia", "Spania", "Franța", "Belgia"],
+		"corect": 2,
+		"nivel": 1,
+		"categorie": "geografie"
+	},
+	{
+		"text": "Care este cel mai mare oraș al României?",
+		"variante": ["Cluj-Napoca", "Iași", "Timișoara", "București"],
+		"corect": 3,
+		"nivel": 1,
+		"categorie": "geografie"
+	},
+	{
+		"text": "Ce mare scaldă litoralul românesc?",
+		"variante": ["Marea Neagră", "Marea Mediterană", "Marea Baltică", "Marea Adriatică"],
+		"corect": 0,
+		"nivel": 1,
+		"categorie": "geografie"
+	},
+
+	{
+		"text": "Care planetă este cea mai apropiată de Soare?",
+		"variante": ["Venus", "Marte", "Mercur", "Pământ"],
+		"corect": 2,
+		"nivel": 1,
+		"categorie": "stiinta"
+	},
+	{
+		"text": "Care este simbolul chimic al aurului?",
+		"variante": ["Ag", "Fe", "Cu", "Au"],
+		"corect": 3,
+		"nivel": 1,
+		"categorie": "stiinta"
+	},
+	{
+		"text": "Câte oase are, aproximativ, scheletul unui om adult?",
+		"variante": ["106", "206", "306", "406"],
+		"corect": 1,
+		"nivel": 1,
+		"categorie": "stiinta"
+	},
+	{
+		"text": "Ce gaz absorb plantele din aer pentru fotosinteză?",
+		"variante": ["Oxigen", "Azot", "Dioxid de carbon", "Hidrogen"],
+		"corect": 2,
+		"nivel": 1,
+		"categorie": "stiinta"
+	},
+	{
+		"text": "Câte picioare are un păianjen?",
+		"variante": ["Șase", "Opt", "Zece", "Doisprezece"],
+		"corect": 1,
+		"nivel": 1,
+		"categorie": "stiinta"
+	},
+	{
+		"text": "Ce planetă este cunoscută drept „Planeta Roșie”?",
+		"variante": ["Venus", "Jupiter", "Saturn", "Marte"],
+		"corect": 3,
+		"nivel": 1,
+		"categorie": "stiinta"
+	},
+	{
+		"text": "Ce organ pompează sângele prin corp?",
+		"variante": ["Ficatul", "Inima", "Plămânii", "Rinichii"],
+		"corect": 1,
+		"nivel": 1,
+		"categorie": "stiinta"
+	},
+	{
+		"text": "La ce temperatură fierbe apa, la nivelul mării?",
+		"variante": ["50 °C", "75 °C", "100 °C", "150 °C"],
+		"corect": 2,
+		"nivel": 1,
+		"categorie": "stiinta"
+	},
+
+	{
 		"text": "Cine a pictat „Mona Lisa”?",
 		"variante": ["Leonardo da Vinci", "Michelangelo", "Rafael", "Vincent van Gogh"],
 		"corect": 0,
-		"nivel": 1,
-		"categorie": "arta"
-	},
-	{
-		"text": "Cine a scris poemul „Luceafărul”?",
-		"variante": ["Ion Creangă", "Mihai Eminescu", "Tudor Arghezi", "George Coșbuc"],
-		"corect": 1,
 		"nivel": 1,
 		"categorie": "arta"
 	},
@@ -103,6 +183,141 @@
 		"corect": 2,
 		"nivel": 1,
 		"categorie": "arta"
+	},
+	{
+		"text": "Cine a pictat tavanul Capelei Sixtine?",
+		"variante": ["Leonardo da Vinci", "Michelangelo", "Rafael", "Donatello"],
+		"corect": 1,
+		"nivel": 1,
+		"categorie": "arta"
+	},
+	{
+		"text": "Câte corzi are o vioară?",
+		"variante": ["Trei", "Patru", "Cinci", "Șase"],
+		"corect": 1,
+		"nivel": 1,
+		"categorie": "arta"
+	},
+	{
+		"text": "Ce culoare obții dacă amesteci albastru cu galben?",
+		"variante": ["Verde", "Portocaliu", "Violet", "Maro"],
+		"corect": 0,
+		"nivel": 1,
+		"categorie": "arta"
+	},
+	{
+		"text": "Din ce material este sculptată statuia „David” a lui Michelangelo?",
+		"variante": ["Bronz", "Marmură", "Lemn", "Granit"],
+		"corect": 1,
+		"nivel": 1,
+		"categorie": "arta"
+	},
+	{
+		"text": "Ce instrument cu coarde sună cel mai grav într-o orchestră?",
+		"variante": ["Vioara", "Violoncelul", "Contrabasul", "Viola"],
+		"corect": 2,
+		"nivel": 1,
+		"categorie": "arta"
+	},
+
+	{
+		"text": "Cine era regele zeilor în mitologia greacă?",
+		"variante": ["Apollo", "Poseidon", "Zeus", "Hades"],
+		"corect": 2,
+		"nivel": 1,
+		"categorie": "mitologie"
+	},
+	{
+		"text": "Ce zeu roman al războiului a dat numele unei planete?",
+		"variante": ["Marte", "Mercur", "Jupiter", "Saturn"],
+		"corect": 0,
+		"nivel": 1,
+		"categorie": "mitologie"
+	},
+	{
+		"text": "Ce creatură din mitologia greacă avea trup de om și cap de taur?",
+		"variante": ["Centaurul", "Minotaurul", "Satirul", "Ciclopul"],
+		"corect": 1,
+		"nivel": 1,
+		"categorie": "mitologie"
+	},
+	{
+		"text": "Cine era zeul tunetului în mitologia nordică?",
+		"variante": ["Odin", "Loki", "Thor", "Balder"],
+		"corect": 2,
+		"nivel": 1,
+		"categorie": "mitologie"
+	},
+	{
+		"text": "Ce pasăre legendară renaște din propria cenușă?",
+		"variante": ["Grifonul", "Harpia", "Pasărea Phoenix", "Sirena"],
+		"corect": 2,
+		"nivel": 1,
+		"categorie": "mitologie"
+	},
+	{
+		"text": "Cum se numea zeița greacă a înțelepciunii?",
+		"variante": ["Hera", "Atena", "Afrodita", "Artemis"],
+		"corect": 1,
+		"nivel": 1,
+		"categorie": "mitologie"
+	},
+	{
+		"text": "Ce erou grec era invulnerabil peste tot, în afară de călcâi?",
+		"variante": ["Ulise", "Hercule", "Ahile", "Perseu"],
+		"corect": 2,
+		"nivel": 1,
+		"categorie": "mitologie"
+	},
+
+	{
+		"text": "Cine a scris poemul „Luceafărul”?",
+		"variante": ["Ion Creangă", "Mihai Eminescu", "Tudor Arghezi", "George Coșbuc"],
+		"corect": 1,
+		"nivel": 1,
+		"categorie": "literatura"
+	},
+	{
+		"text": "Cine a scris „Amintiri din copilărie”?",
+		"variante": ["Mihai Eminescu", "Ion Creangă", "Ioan Slavici", "Barbu Delavrancea"],
+		"corect": 1,
+		"nivel": 1,
+		"categorie": "literatura"
+	},
+	{
+		"text": "Cine a scris piesele „Romeo și Julieta” și „Hamlet”?",
+		"variante": ["Molière", "William Shakespeare", "Dante Alighieri", "Lord Byron"],
+		"corect": 1,
+		"nivel": 1,
+		"categorie": "literatura"
+	},
+	{
+		"text": "Cine a scris romanul „Robinson Crusoe”?",
+		"variante": ["Jonathan Swift", "Jules Verne", "Daniel Defoe", "Robert Louis Stevenson"],
+		"corect": 2,
+		"nivel": 1,
+		"categorie": "literatura"
+	},
+	{
+		"text": "Ce scriitor român a scris schița „D-l Goe...”?",
+		"variante": ["I. L. Caragiale", "Ion Creangă", "Mihail Sadoveanu", "Emil Gârleanu"],
+		"corect": 0,
+		"nivel": 1,
+		"categorie": "literatura"
+	},
+	{
+		"text": "Cine a scris „Micul Prinț”?",
+		"variante": ["Jules Verne", "Antoine de Saint-Exupéry", "Hector Malot", "Alphonse Daudet"],
+		"corect": 1,
+		"nivel": 1,
+		"categorie": "literatura"
+	},
+	{
+		"text": "Ce fel de operă literară este „Iliada”?",
+		"variante": ["Roman", "Epopee", "Piesă de teatru", "Nuvelă"],
+		"corect": 1,
+		"nivel": 1,
+		"categorie": "literatura"
 	},
 
 	{
@@ -134,33 +349,34 @@
 		"categorie": "istorie"
 	},
 	{
-		"text": "Cine a formulat teoria relativității?",
-		"variante": ["Niels Bohr", "Max Planck", "Werner Heisenberg", "Albert Einstein"],
-		"corect": 3,
+		"text": "Ce popor a fost învins de romani în războaiele conduse de Traian?",
+		"variante": ["Dacii", "Galii", "Cartaginezii", "Parții"],
+		"corect": 0,
 		"nivel": 2,
-		"categorie": "stiinta"
+		"categorie": "istorie"
 	},
 	{
-		"text": "Care este formula chimică a apei?",
-		"variante": ["CO2", "O2", "NaCl", "H2O"],
-		"corect": 3,
-		"nivel": 2,
-		"categorie": "stiinta"
-	},
-	{
-		"text": "Ce organit produce energia în celulă?",
-		"variante": ["Nucleul", "Ribozomul", "Mitocondria", "Cloroplastul"],
+		"text": "În ce an a căzut Constantinopolul sub stăpânire otomană?",
+		"variante": ["1204", "1389", "1453", "1492"],
 		"corect": 2,
 		"nivel": 2,
-		"categorie": "stiinta"
+		"categorie": "istorie"
 	},
 	{
-		"text": "Ce lege spune că forța este egală cu masa înmulțită cu accelerația?",
-		"variante": ["Prima lege a lui Newton", "A doua lege a lui Newton", "Legea lui Ohm", "Legea lui Hooke"],
+		"text": "Cine a condus Franța ca împărat între 1804 și 1814?",
+		"variante": ["Ludovic al XVI-lea", "Napoleon Bonaparte", "Carol al X-lea", "Maximilien Robespierre"],
 		"corect": 1,
 		"nivel": 2,
-		"categorie": "stiinta"
+		"categorie": "istorie"
 	},
+	{
+		"text": "Ce domnitor a câștigat lupta de la Vaslui, împotriva otomanilor, în 1475?",
+		"variante": ["Mihai Viteazul", "Vlad Țepeș", "Ștefan cel Mare", "Mircea cel Bătrân"],
+		"corect": 2,
+		"nivel": 2,
+		"categorie": "istorie"
+	},
+
 	{
 		"text": "Care este cel mai lung fluviu din Africa?",
 		"variante": ["Congo", "Nil", "Zambezi", "Niger"],
@@ -190,6 +406,92 @@
 		"categorie": "geografie"
 	},
 	{
+		"text": "Ce strâmtoare desparte Europa de Africa, la vest?",
+		"variante": ["Bosfor", "Gibraltar", "Dardanele", "Messina"],
+		"corect": 1,
+		"nivel": 2,
+		"categorie": "geografie"
+	},
+	{
+		"text": "Care este cel mai mic stat din lume, ca suprafață?",
+		"variante": ["Monaco", "San Marino", "Vatican", "Liechtenstein"],
+		"corect": 2,
+		"nivel": 2,
+		"categorie": "geografie"
+	},
+	{
+		"text": "Ce lanț muntos e considerat granița dintre Europa și Asia?",
+		"variante": ["Munții Caucaz", "Munții Urali", "Munții Altai", "Munții Carpați"],
+		"corect": 1,
+		"nivel": 2,
+		"categorie": "geografie"
+	},
+	{
+		"text": "În ce țară se află orașul Marrakech?",
+		"variante": ["Egipt", "Tunisia", "Maroc", "Algeria"],
+		"corect": 2,
+		"nivel": 2,
+		"categorie": "geografie"
+	},
+
+	{
+		"text": "Cine a formulat teoria relativității?",
+		"variante": ["Niels Bohr", "Max Planck", "Werner Heisenberg", "Albert Einstein"],
+		"corect": 3,
+		"nivel": 2,
+		"categorie": "stiinta"
+	},
+	{
+		"text": "Care este formula chimică a apei?",
+		"variante": ["CO2", "O2", "NaCl", "H2O"],
+		"corect": 3,
+		"nivel": 2,
+		"categorie": "stiinta"
+	},
+	{
+		"text": "Ce organit produce energia în celulă?",
+		"variante": ["Nucleul", "Ribozomul", "Mitocondria", "Cloroplastul"],
+		"corect": 2,
+		"nivel": 2,
+		"categorie": "stiinta"
+	},
+	{
+		"text": "Ce lege spune că forța este egală cu masa înmulțită cu accelerația?",
+		"variante": ["Prima lege a lui Newton", "A doua lege a lui Newton", "Legea lui Ohm", "Legea lui Hooke"],
+		"corect": 1,
+		"nivel": 2,
+		"categorie": "stiinta"
+	},
+	{
+		"text": "Câți cromozomi are, în mod normal, o celulă umană?",
+		"variante": ["23", "46", "48", "64"],
+		"corect": 1,
+		"nivel": 2,
+		"categorie": "stiinta"
+	},
+	{
+		"text": "Ce tip de rocă se formează din lavă răcită?",
+		"variante": ["Sedimentară", "Metamorfică", "Magmatică", "Calcaroasă"],
+		"corect": 2,
+		"nivel": 2,
+		"categorie": "stiinta"
+	},
+	{
+		"text": "Cine a propus tabelul periodic al elementelor?",
+		"variante": ["Antoine Lavoisier", "Dmitri Mendeleev", "John Dalton", "Niels Bohr"],
+		"corect": 1,
+		"nivel": 2,
+		"categorie": "stiinta"
+	},
+	{
+		"text": "Ce forță ține planetele pe orbită în jurul Soarelui?",
+		"variante": ["Forța electromagnetică", "Gravitația", "Forța centrifugă", "Presiunea radiației"],
+		"corect": 1,
+		"nivel": 2,
+		"categorie": "stiinta"
+	},
+
+	{
 		"text": "Cine a pictat „Cina cea de Taină”?",
 		"variante": ["Rafael", "Leonardo da Vinci", "Michelangelo", "Donatello"],
 		"corect": 1,
@@ -204,11 +506,139 @@
 		"categorie": "arta"
 	},
 	{
+		"text": "Cine a pictat „Noapte înstelată”?",
+		"variante": ["Claude Monet", "Vincent van Gogh", "Paul Cézanne", "Edvard Munch"],
+		"corect": 1,
+		"nivel": 2,
+		"categorie": "arta"
+	},
+	{
+		"text": "Ce curent artistic și-a luat numele de la tabloul „Impresie, răsărit de soare”?",
+		"variante": ["Cubismul", "Impresionismul", "Romantismul", "Expresionismul"],
+		"corect": 1,
+		"nivel": 2,
+		"categorie": "arta"
+	},
+	{
+		"text": "Cine a sculptat „Gânditorul”?",
+		"variante": ["Auguste Rodin", "Constantin Brâncuși", "Antonio Canova", "Donatello"],
+		"corect": 0,
+		"nivel": 2,
+		"categorie": "arta"
+	},
+	{
+		"text": "Câte părți are, de regulă, o simfonie clasică?",
+		"variante": ["Două", "Trei", "Patru", "Cinci"],
+		"corect": 2,
+		"nivel": 2,
+		"categorie": "arta"
+	},
+	{
+		"text": "Ce pictor spaniol a realizat „Guernica”?",
+		"variante": ["Salvador Dalí", "Francisco Goya", "Pablo Picasso", "Joan Miró"],
+		"corect": 2,
+		"nivel": 2,
+		"categorie": "arta"
+	},
+
+	{
+		"text": "Cine a fost condamnat să împingă la nesfârșit un bolovan pe deal?",
+		"variante": ["Tantal", "Sisif", "Prometeu", "Icar"],
+		"corect": 1,
+		"nivel": 2,
+		"categorie": "mitologie"
+	},
+	{
+		"text": "Ce erou grec a ucis-o pe Meduza?",
+		"variante": ["Tezeu", "Iason", "Perseu", "Hercule"],
+		"corect": 2,
+		"nivel": 2,
+		"categorie": "mitologie"
+	},
+	{
+		"text": "Cine a dat oamenilor focul și a fost pedepsit de Zeus pentru asta?",
+		"variante": ["Hefaistos", "Prometeu", "Hermes", "Dionysos"],
+		"corect": 1,
+		"nivel": 2,
+		"categorie": "mitologie"
+	},
+	{
+		"text": "Ce câine cu trei capete păzea intrarea în Infern?",
+		"variante": ["Cerber", "Hidra", "Chimera", "Argus"],
+		"corect": 0,
+		"nivel": 2,
+		"categorie": "mitologie"
+	},
+	{
+		"text": "Care este echivalentul roman al zeiței grecești Afrodita?",
+		"variante": ["Junona", "Minerva", "Venus", "Diana"],
+		"corect": 2,
+		"nivel": 2,
+		"categorie": "mitologie"
+	},
+	{
+		"text": "Cum se numea corabia cu care Iason a plecat după Lâna de Aur?",
+		"variante": ["Argo", "Nautilus", "Pegas", "Hesperida"],
+		"corect": 0,
+		"nivel": 2,
+		"categorie": "mitologie"
+	},
+	{
+		"text": "Cum se numește sfârșitul lumii în mitologia nordică?",
+		"variante": ["Valhalla", "Ragnarök", "Yggdrasil", "Midgard"],
+		"corect": 1,
+		"nivel": 2,
+		"categorie": "mitologie"
+	},
+
+	{
 		"text": "Cine a scris romanul „Ion”?",
 		"variante": ["Liviu Rebreanu", "Marin Preda", "Camil Petrescu", "Mihail Sadoveanu"],
 		"corect": 0,
 		"nivel": 2,
-		"categorie": "arta"
+		"categorie": "literatura"
+	},
+	{
+		"text": "Cine a scris romanul „Crimă și pedeapsă”?",
+		"variante": ["Lev Tolstoi", "Feodor Dostoievski", "Anton Cehov", "Nikolai Gogol"],
+		"corect": 1,
+		"nivel": 2,
+		"categorie": "literatura"
+	},
+	{
+		"text": "Cine a scris „Baltagul”?",
+		"variante": ["Liviu Rebreanu", "Mihail Sadoveanu", "Camil Petrescu", "Marin Preda"],
+		"corect": 1,
+		"nivel": 2,
+		"categorie": "literatura"
+	},
+	{
+		"text": "Ce poet italian a scris „Divina Comedie”?",
+		"variante": ["Francesco Petrarca", "Dante Alighieri", "Giovanni Boccaccio", "Vergiliu"],
+		"corect": 1,
+		"nivel": 2,
+		"categorie": "literatura"
+	},
+	{
+		"text": "Câte versuri are un sonet?",
+		"variante": ["Douăsprezece", "Paisprezece", "Șaisprezece", "Optsprezece"],
+		"corect": 1,
+		"nivel": 2,
+		"categorie": "literatura"
+	},
+	{
+		"text": "Cine este autorul romanului „Moromeții”?",
+		"variante": ["Marin Preda", "Zaharia Stancu", "Augustin Buzura", "Nicolae Breban"],
+		"corect": 0,
+		"nivel": 2,
+		"categorie": "literatura"
+	},
+	{
+		"text": "Ce roman al lui Jules Verne pornește de la un pariu al lui Phileas Fogg?",
+		"variante": ["Insula misterioasă", "Ocolul Pământului în 80 de zile", "Cinci săptămâni în balon", "Copiii căpitanului Grant"],
+		"corect": 1,
+		"nivel": 2,
+		"categorie": "literatura"
 	},
 
 	{
@@ -240,33 +670,34 @@
 		"categorie": "istorie"
 	},
 	{
-		"text": "Ce particulă a fost confirmată experimental la CERN, în 2012?",
-		"variante": ["Neutrinul", "Quarcul top", "Gluonul", "Bosonul Higgs"],
-		"corect": 3,
+		"text": "Ce tratat a împărțit lumea nou descoperită între Spania și Portugalia, în 1494?",
+		"variante": ["Tratatul de la Tordesillas", "Pacea de la Westfalia", "Tratatul de la Utrecht", "Bula de Aur"],
+		"corect": 0,
 		"nivel": 3,
-		"categorie": "stiinta"
+		"categorie": "istorie"
 	},
 	{
-		"text": "Cine a formulat principiul incertitudinii din mecanica cuantică?",
-		"variante": ["Erwin Schrödinger", "Paul Dirac", "Max Born", "Werner Heisenberg"],
-		"corect": 3,
+		"text": "Cine a fost primul împărat al Chinei unificate?",
+		"variante": ["Qin Shi Huang", "Kublai Han", "Wu Zetian", "Sun Yat-sen"],
+		"corect": 0,
 		"nivel": 3,
-		"categorie": "stiinta"
+		"categorie": "istorie"
 	},
 	{
-		"text": "Ce element chimic are numărul atomic 79?",
-		"variante": ["Argintul", "Aurul", "Platina", "Cuprul"],
+		"text": "Ce bătălie din 1815 a pus capăt definitiv domniei lui Napoleon?",
+		"variante": ["Austerlitz", "Leipzig", "Waterloo", "Borodino"],
+		"corect": 2,
+		"nivel": 3,
+		"categorie": "istorie"
+	},
+	{
+		"text": "În ce an a fost adoptată Magna Carta, în Anglia?",
+		"variante": ["1066", "1215", "1348", "1415"],
 		"corect": 1,
 		"nivel": 3,
-		"categorie": "stiinta"
+		"categorie": "istorie"
 	},
-	{
-		"text": "Ce enzimă transcrie ARN-ul viral în ADN?",
-		"variante": ["ADN-polimeraza", "Ligaza", "Helicaza", "Reverstranscriptaza"],
-		"corect": 3,
-		"nivel": 3,
-		"categorie": "stiinta"
-	},
+
 	{
 		"text": "Care este cel mai adânc punct al oceanelor?",
 		"variante": ["Groapa Marianelor", "Groapa Tonga", "Groapa Filipinelor", "Groapa Kermadec"],
@@ -296,6 +727,92 @@
 		"categorie": "geografie"
 	},
 	{
+		"text": "Ce curent oceanic cald încălzește vestul Europei?",
+		"variante": ["Curentul Humboldt", "Curentul Golfului", "Curentul Kuroshio", "Curentul Labradorului"],
+		"corect": 1,
+		"nivel": 3,
+		"categorie": "geografie"
+	},
+	{
+		"text": "Care este singurul fluviu care traversează Ecuatorul de două ori?",
+		"variante": ["Amazon", "Congo", "Nil", "Zambezi"],
+		"corect": 1,
+		"nivel": 3,
+		"categorie": "geografie"
+	},
+	{
+		"text": "Care este cel mai întins lac de apă dulce din lume?",
+		"variante": ["Lacul Victoria", "Lacul Superior", "Lacul Baikal", "Lacul Huron"],
+		"corect": 1,
+		"nivel": 3,
+		"categorie": "geografie"
+	},
+	{
+		"text": "Ce strâmtoare leagă Marea Neagră de Marea Marmara?",
+		"variante": ["Dardanele", "Bosfor", "Kerci", "Otranto"],
+		"corect": 1,
+		"nivel": 3,
+		"categorie": "geografie"
+	},
+
+	{
+		"text": "Ce particulă a fost confirmată experimental la CERN, în 2012?",
+		"variante": ["Neutrinul", "Quarcul top", "Gluonul", "Bosonul Higgs"],
+		"corect": 3,
+		"nivel": 3,
+		"categorie": "stiinta"
+	},
+	{
+		"text": "Cine a formulat principiul incertitudinii din mecanica cuantică?",
+		"variante": ["Erwin Schrödinger", "Paul Dirac", "Max Born", "Werner Heisenberg"],
+		"corect": 3,
+		"nivel": 3,
+		"categorie": "stiinta"
+	},
+	{
+		"text": "Ce element chimic are numărul atomic 79?",
+		"variante": ["Argintul", "Aurul", "Platina", "Cuprul"],
+		"corect": 1,
+		"nivel": 3,
+		"categorie": "stiinta"
+	},
+	{
+		"text": "Ce enzimă transcrie ARN-ul viral în ADN?",
+		"variante": ["ADN-polimeraza", "Ligaza", "Helicaza", "Reverstranscriptaza"],
+		"corect": 3,
+		"nivel": 3,
+		"categorie": "stiinta"
+	},
+	{
+		"text": "Ce mărime fizică se măsoară în ohmi?",
+		"variante": ["Rezistența electrică", "Capacitatea electrică", "Inductanța", "Fluxul magnetic"],
+		"corect": 0,
+		"nivel": 3,
+		"categorie": "stiinta"
+	},
+	{
+		"text": "Ce proces transformă azotul din aer în compuși pe care plantele îi pot folosi?",
+		"variante": ["Nitrificarea", "Fixarea azotului", "Denitrificarea", "Amonificarea"],
+		"corect": 1,
+		"nivel": 3,
+		"categorie": "stiinta"
+	},
+	{
+		"text": "Cum se numește limita dincolo de care nimic nu mai poate ieși dintr-o gaură neagră?",
+		"variante": ["Limita Roche", "Orizontul evenimentelor", "Discul de acreție", "Limita Chandrasekhar"],
+		"corect": 1,
+		"nivel": 3,
+		"categorie": "stiinta"
+	},
+	{
+		"text": "Ce constantă leagă energia unui foton de frecvența lui?",
+		"variante": ["Constanta lui Planck", "Constanta lui Boltzmann", "Numărul lui Avogadro", "Constanta gravitațională"],
+		"corect": 0,
+		"nivel": 3,
+		"categorie": "stiinta"
+	},
+
+	{
 		"text": "Cine a compus opera „Flautul fermecat”?",
 		"variante": ["Mozart", "Beethoven", "Haydn", "Schubert"],
 		"corect": 0,
@@ -315,5 +832,133 @@
 		"corect": 2,
 		"nivel": 3,
 		"categorie": "arta"
+	},
+	{
+		"text": "Cum se numește tehnica picturii pe tencuială încă udă?",
+		"variante": ["Tempera", "Fresca", "Gravura", "Encaustica"],
+		"corect": 1,
+		"nivel": 3,
+		"categorie": "arta"
+	},
+	{
+		"text": "Ce arhitect a proiectat bazilica Sagrada Família?",
+		"variante": ["Antoni Gaudí", "Le Corbusier", "Santiago Calatrava", "Frank Lloyd Wright"],
+		"corect": 0,
+		"nivel": 3,
+		"categorie": "arta"
+	},
+	{
+		"text": "Ce compozitor a scris ciclul de opere „Inelul Nibelungului”?",
+		"variante": ["Giuseppe Verdi", "Richard Wagner", "Richard Strauss", "Gustav Mahler"],
+		"corect": 1,
+		"nivel": 3,
+		"categorie": "arta"
+	},
+	{
+		"text": "Cine a pictat „Rondul de noapte”?",
+		"variante": ["Jan Vermeer", "Rembrandt", "Peter Paul Rubens", "Frans Hals"],
+		"corect": 1,
+		"nivel": 3,
+		"categorie": "arta"
+	},
+
+	{
+		"text": "Ce zeu egiptean cu cap de șacal veghea îmbălsămarea morților?",
+		"variante": ["Horus", "Anubis", "Seth", "Thoth"],
+		"corect": 1,
+		"nivel": 3,
+		"categorie": "mitologie"
+	},
+	{
+		"text": "Ce a dat Odin în schimbul unei sorbituri din fântâna înțelepciunii?",
+		"variante": ["Un ochi", "O mână", "Suliță Gungnir", "Corbii lui"],
+		"corect": 0,
+		"nivel": 3,
+		"categorie": "mitologie"
+	},
+	{
+		"text": "Ce erou al epopeii mesopotamiene pleacă în căutarea nemuririi?",
+		"variante": ["Enkidu", "Ghilgameș", "Utnapiștim", "Ur-Nammu"],
+		"corect": 1,
+		"nivel": 3,
+		"categorie": "mitologie"
+	},
+	{
+		"text": "Ce muzician a coborât în Infern ca s-o aducă înapoi pe Euridice?",
+		"variante": ["Orfeu", "Amfion", "Linos", "Marsyas"],
+		"corect": 0,
+		"nivel": 3,
+		"categorie": "mitologie"
+	},
+	{
+		"text": "Ce zeiță japoneză a Soarelui e considerată strămoașa împăraților?",
+		"variante": ["Izanami", "Amaterasu", "Inari", "Tsukuyomi"],
+		"corect": 1,
+		"nivel": 3,
+		"categorie": "mitologie"
+	},
+	{
+		"text": "Cum se numesc cele trei zeițe grecești ale destinului?",
+		"variante": ["Eriniile", "Moirele", "Harpiile", "Grațiile"],
+		"corect": 1,
+		"nivel": 3,
+		"categorie": "mitologie"
+	},
+	{
+		"text": "Ce șarpe uriaș din mitologia nordică înconjoară lumea, mușcându-și coada?",
+		"variante": ["Fenrir", "Jörmungandr", "Nidhogg", "Sleipnir"],
+		"corect": 1,
+		"nivel": 3,
+		"categorie": "mitologie"
+	},
+
+	{
+		"text": "Cine a scris romanul „Ulise”, apărut în 1922?",
+		"variante": ["Virginia Woolf", "James Joyce", "Marcel Proust", "Franz Kafka"],
+		"corect": 1,
+		"nivel": 3,
+		"categorie": "literatura"
+	},
+	{
+		"text": "Ce scriitor român a scris „Ultima noapte de dragoste, întâia noapte de război”?",
+		"variante": ["Camil Petrescu", "Liviu Rebreanu", "Anton Holban", "Gib Mihăescu"],
+		"corect": 0,
+		"nivel": 3,
+		"categorie": "literatura"
+	},
+	{
+		"text": "Cine a scris „Un veac de singurătate”?",
+		"variante": ["Mario Vargas Llosa", "Jorge Luis Borges", "Gabriel García Márquez", "Julio Cortázar"],
+		"corect": 2,
+		"nivel": 3,
+		"categorie": "literatura"
+	},
+	{
+		"text": "Ce critic literar a condus cenaclul și revista „Sburătorul”?",
+		"variante": ["Eugen Lovinescu", "Titu Maiorescu", "Garabet Ibrăileanu", "George Călinescu"],
+		"corect": 0,
+		"nivel": 3,
+		"categorie": "literatura"
+	},
+	{
+		"text": "Cine a scris „Procesul” și „Metamorfoza”?",
+		"variante": ["Thomas Mann", "Hermann Hesse", "Franz Kafka", "Robert Musil"],
+		"corect": 2,
+		"nivel": 3,
+		"categorie": "literatura"
+	},
+	{
+		"text": "Ce dramaturg a scris „Așteptându-l pe Godot”?",
+		"variante": ["Eugen Ionescu", "Samuel Beckett", "Harold Pinter", "Sean O'Casey"],
+		"corect": 1,
+		"nivel": 3,
+		"categorie": "literatura"
+	},
+	{
+		"text": "Cine este autorul ciclului „În căutarea timpului pierdut”?",
+		"variante": ["Marcel Proust", "André Gide", "Albert Camus", "Louis-Ferdinand Céline"],
+		"corect": 0,
+		"nivel": 3,
+		"categorie": "literatura"
 	}
 ]

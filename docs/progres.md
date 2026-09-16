@@ -16,8 +16,8 @@
 | 5. Trei inamici manuali | ✅ Soldatul · Lăncierul (ceas) · Spadasinul (vulnerabilitate), aleși din joc |
 | 6. Harta de expediție | ❌ |
 | 7. Cetatea | ❌ |
-| 8. Save/Load | 🟡 tezaurul știe deja să se serializeze (`spre_dictionar` / `din_dictionar`); scrierea pe disc, nu încă |
-| 9. Celelalte discipline | 🟡 Cultură generală ✅ · Logica ✅ · Cuvinte ✅ · celelalte 5 ❌ |
+| 8. Save/Load | 🟡 tezaurul și sacul de întrebări știu deja să se serializeze (`spre_dictionar` / `din_dictionar`); scrierea pe disc, nu încă |
+| 9. Celelalte discipline | 🟡 Cultură generală ✅ (135 de întrebări, fără repetiții) · Logica ✅ · Cuvinte ✅ · celelalte 5 ❌ |
 | 10–13. Generator de inamici, artă, web | ❌ (artă parțial: figurile principale și piesele de pe butoanele de Obelisc au imagini reale) · Regina: **amânată**, vezi CLAUDE.md |
 
 Din pasul 10 (generatorul de inamici) s-a făcut deja partea care nu costa nimic
@@ -27,6 +27,142 @@ buget, generare) rămâne acolo unde era.
 Am sărit peste ordinea recomandată la pasul 12 (artă): imaginile pentru rege,
 cavaler și pentru cele trei piese de șah de pe butoane au intrat mai devreme, dar
 restul rămâne placeholder. Bucla de luptă e în continuare cea validată, nu arta.
+
+---
+
+## Sesiunea sacului (16 septembrie 2026) — 135 de întrebări, și niciuna de două ori
+
+**Ce s-a schimbat:** baza de la Obeliscul Memoriei a crescut de la 45 la **135
+de întrebări** (45 pe nivel), a căpătat două domenii noi, iar alegerea lor nu mai
+e o aruncare de zar: e un sac din care biletele ies o singură dată.
+
+### De ce 45 pe nivel, și nu „cât mai multe"
+
+45 nu e o cifră rotundă din întâmplare. E cam de trei ori mai mult decât poate
+consuma o expediție lungă, deci ai marjă să nu vezi sacul golindu-se. Sub atât,
+extinderea ar fi fost o amânare; peste atât, aș fi scris conținut înainte să
+știu dacă restul buclei merită conținut.
+
+Împărțirea pe nivel a rămas cea de dinainte, și e singura măsură a dificultății:
+
+| Nivel | Ce înseamnă |
+|---|---|
+| 1 | o știe orice adult, fără să fi studiat ceva anume |
+| 2 | s-a predat la școală; îți amintești dacă ai fost atent |
+| 3 | o știi doar dacă domeniul te-a interesat dincolo de școală |
+
+Definițiile astea sunt scrise acum în antetul lui `trivia.gd`. Fără ele,
+„nivelul 2" devine, după două luni, „cât de greu mi s-a părut în seara aia".
+
+### Șase domenii, ținute în echilibru dinadins
+
+**8 / 8 / 8 / 7 / 7 / 7 pe fiecare nivel** — istorie, geografie, știință, artă,
+mitologie, literatură. Ultimele două sunt noi: **mitologia** n-avea nicio
+întrebare, iar **literatura** stătea îndesată în „artă".
+
+Despărțirea n-a fost estetică. La 45 de întrebări, cărțile încăpeau lângă
+pictură și muzică. La 135, cine vrea să adauge o întrebare nu mai știe unde să
+caute, și — mai rău — nu mai poți citi dintr-o privire dacă baza e echilibrată.
+
+Iar echilibrul chiar contează, fiindcă **întrebarea nu-și alege domeniul: se
+trage din tot nivelul**. Dacă istoria ar avea 20 de intrări și mitologia 3,
+„Cultură generală" ar deveni în practică „Istorie, cu accidente" — și ai antrena
+un singur colț de minte, deși Obeliscul promite altceva.
+
+### `autoload/sac.gd` — al cincilea autoload
+
+**Problema:** `pick_random()` n-are memorie. Cu 45 de întrebări pe nivel, șansa
+ca a doua întrebare s-o repete pe prima e 1 din 45. Dar nu tragi două întrebări
+pe expediție, tragi zeci — iar șansa ca în 20 de trageri să apară măcar o
+repetare e de aproape 99%. (E „paradoxul zilelor de naștere": 23 de oameni
+într-o cameră și e deja mai probabil decât nu ca doi să aibă aceeași zi.)
+
+Și o repetare nu e doar plictisitoare: e o **întrebare gratis**. Un joc de
+antrenament mental care-ți dă un punct fiindcă ții minte ce-ai apăsat acum două
+minute se sabotează singur.
+
+**Soluția, pe scurt:** toate întrebările sunt bilete într-un sac. Tragi unul, îl
+citești, îl pui deoparte — nu înapoi. Următoarea tragere alege dintre cele
+rămase, deci nu poate repeta. Când sacul se golește, biletele se întorc toate
+înăuntru și începe un ciclu nou. Tiparul se cheamă „shuffle bag"; îl folosesc
+jocurile pentru exact problema asta (piesele din Tetris vin la fel).
+
+Singura subtilitate e la **răscrucea dintre cicluri**: dacă ultimul bilet al
+ciclului vechi ar putea fi primul din cel nou, ai vedea aceeași întrebare de
+două ori la rând — fix cazul care se simte cel mai prost. Sacul ține minte
+ultima extragere și o exclude din prima tragere a ciclului nou.
+
+**De ce e un autoload, și nu un `static var` în `trivia.gd`:** o expediție
+înseamnă mai multe lupte, iar între două lupte scena se schimbă. Același motiv
+pentru care `Tezaur` e autoload. Stă lângă `Muzica`, `Sunet`, `Fereastra`,
+`Tezaur`.
+
+**De ce e generic:** nimic din el nu știe ce e o întrebare. Primește o listă,
+întoarce un element. A doua disciplină care are nevoie de „fără repetiții"
+(Cuvinte are un fișier finit, la fel Logica pentru categorii) nu adaugă cod
+acolo — adaugă o **cheie**. Cheia trebuie să cuprindă tot ce face lista să fie
+alta, deci include și nivelul: `"cultura_generala:2"` e alt sac decât
+`"cultura_generala:3"`.
+
+**Identitatea unui bilet e textul întrebării, nu poziția în listă.** Poziția e
+legată de ordinea din fișier: adaugi mâine o întrebare la mijloc și tot ce vine
+după se mută cu unu, iar un save vechi ar crede că a văzut alte întrebări.
+Aceeași decizie ca la `Tezaur`, unde resursele se salvează pe chei text.
+
+`spre_dictionar()` / `din_dictionar()` există de pe acum, din același motiv ca
+la tezaur. Ce salvează ele e memoria unei **expediții**, nu progres permanent.
+
+**`expeditie_noua()` încă n-o cheamă nimeni, și e în regulă.** Harta (pasul 6) e
+locul ei firesc — acolo se naște noțiunea de „expediție nouă". Până atunci o
+expediție ține cât o rulare a jocului, fiindcă autoload-ul pornește gol; ceea ce
+înseamnă că întrebările nu se repetă nici măcar între două lupte consecutive.
+
+### Variantele se amestecă la fiecare apariție
+
+Descoperire făcută în timpul lucrului, și mai importantă decât pare: în baza
+scrisă de mână, **poziția a doua era răspunsul corect de patru ori mai des decât
+ultima** (59 față de 13, din 135). Nimeni n-a vrut asta — așa scrie omul
+întrebări.
+
+Nu e un amănunt de statistică, e o **scurtătură**. Sub cronometru, un jucător
+care nu știe răspunsul ghicește; dacă ghicitul are un favorit, îl găsește fără
+să-l caute și marchează puncte fără să fi gândit. Într-un joc de antrenament
+mental ăsta e cel mai rău lucru care se poate întâmpla.
+
+Se putea rezolva rescriind fișierul până ies 25% pe fiecare poziție. Ar fi ținut
+exact până la a 136-a întrebare scrisă noaptea. Amestecarea la rulare
+(`_amesteca`, în `trivia.gd`) rezolvă problema o dată, pentru toate întrebările
+care vor mai fi scrise vreodată. Măsurat pe 4000 de trageri: 1015 / 993 / 1033 /
+959 — uniform.
+
+Bonus: aceeași întrebare, revăzută peste două expediții, nu-ți mai poate fi
+ghicită din poziția butonului. Ții minte **răspunsul** sau nimic.
+
+`_amesteca` reține textul răspunsului bun, nu indicele — indicele e exact ce se
+schimbă — apoi îl regăsește cu `find()`. Asta e corect doar fiindcă
+încărcătorul refuză acum întrebările cu **două variante identice** (verificare
+nouă): altfel „prima potrivire" ar putea fi cealaltă, iar răspunsul bun ar fi
+marcat greșit. Verificarea aia nu e curățenie — ea e ce face `find()` sigur.
+
+### Verificat, nu presupus
+
+Rulat headless, pe toate trei nivelurile:
+
+- 135 din 135 de întrebări trec validatorul (niciun câmp lipsă, nicio categorie
+  scrisă greșit, nicio variantă dublată);
+- în primul ciclu de 45 de trageri: **45 de întrebări distincte** — zero repetări;
+- în 200 de trageri: **zero repetări consecutive**, inclusiv peste granițele
+  dintre cicluri;
+- `_amesteca` nu pierde niciodată răspunsul corect.
+
+### Ce a rămas de făcut aici
+
+- `Sac.expeditie_noua()` se cheamă când apare harta.
+- Când se face save/load pe disc, `Sac.spre_dictionar()` intră în save-ul
+  expediției în desfășurare, nu în progresul permanent.
+- Disciplinele care citesc din fișiere finite (Cuvinte, Logica) ar trebui să
+  treacă și ele prin sac. E o linie fiecare, dar merită făcută când le atingi
+  oricum, nu într-o sesiune separată.
 
 ---
 

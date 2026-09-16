@@ -21,6 +21,7 @@ Muzica="*res://autoload/muzica.gd"
 Sunet="*res://autoload/sunet.gd"
 Fereastra="*res://autoload/fereastra.gd"
 Tezaur="*res://autoload/tezaur.gd"
+Sac="*res://autoload/sac.gd"
 
 [display]
 
