@@ -50,9 +50,9 @@ _În restul documentului folosesc **Mindkeep** ca nume de lucru, strict din moti
 | Jurnalul de fapte | Jurnal               | de redefinit              |
 | Facțiuni inamice  | Cei Șterși, Ecourile | de redefinit              |
 | Locația de RNG    | Fântâna              | de redefinit              |
-| Primul inamic     | Cavalerul Șters      | **există în cod și artă** |
+| Primii inamici    | Cavalerul Șters      | **înlocuiți în cod: Soldatul, Lăncierul, Spadasinul** |
 
-**Notă practică:** Cavalerul Șters e deja construit — imagine, descriere, arhetip. Merită păstrat ca formă vizuală (cavaler în armură, fără chip, ochi luminoși) chiar dacă justificarea narativă se schimbă. Un adversar fără chip funcționează în aproape orice ramă medieval-fantasy.
+**Notă practică:** numele vechi a fost deja scos din cod. Silueta a rămas — cavaler în armură, fără chip, ochi luminoși — fiindcă un adversar fără chip funcționează în aproape orice ramă medieval-fantasy; pe ea sunt construiți cei trei inamici manuali existenți (Soldatul, Lăncierul, Spadasinul), deosebiți prin colorare, nu prin desene separate. Facțiunea lor provizorie e „Garnizoana": un nume de lucru, fără efect mecanic, ales ca să nu depindă de rama narativă nedecisă.
 
 ---
 
@@ -179,9 +179,9 @@ Atunci disciplinele 5-8 sunt update-uri de conținut, nu rescrieri.
 - **„Memorie"** își schimbă sensul: în cod și UI e acum trivia, dar în structura nouă Cultură generală (#1) preia trivia, iar Reținere (#5) e memoria de lucru. Redenumire necesară ca să nu se încurce.
 - **Mecanica „intrus"** apare la mai multe discipline — corect, dar cu conținut diferit (cuvinte la #3, forme la #7, simboluri la #8). Confirmă separarea axei _mecanică_ de axa _domeniu_.
 
-### Exemplu de Luptă: vs. Cavalerul Șters
+### Exemplu de Luptă: vs. Soldatul
 
-_Cavalerul Șters — 30 PV. Inamic timpuriu, arhetip „Atac constant": lovește 3 daune în fiecare tură, din runda 1, fără încărcare și fără tură sărită. Își anunță mereu intenția._
+_Soldatul — 30 PV. Inamic timpuriu, arhetip „Atac constant": lovește 3 daune în fiecare tură, din runda 1, fără încărcare și fără tură sărită. Își anunță mereu intenția._
 
 **Câmpul de luptă (loadout ales pentru expediție):**
 
@@ -193,16 +193,16 @@ _Cavalerul Șters — 30 PV. Inamic timpuriu, arhetip „Atac constant": loveșt
 
 Jucătorul are 3 PA pe rundă și 15 PV.
 
-**Runda 1 — Tura ta.** Cavalerul anunță: _⚔ 3_.
-Activezi **Cultură generală** (1 PA) → cronometru 12s: _„În ce secol a început, convențional, Renașterea italiană?"_ Corect → 1 daună (Cavalerul: 29 PV). **Lanțul continuă automat:** întrebare de Nivel II, tot Cultură generală, 11s. Corect → +2 daune (27 PV). Nivel III, 10s: greșit. Lanțul se rupe, păstrezi cele 3 daune date, iar Obeliscul se blochează până la finalul rundei.
+**Runda 1 — Tura ta.** Soldatul anunță: _⚔ 3_.
+Activezi **Cultură generală** (1 PA) → cronometru 12s: _„În ce secol a început, convențional, Renașterea italiană?"_ Corect → 1 daună (Soldatul: 29 PV). **Lanțul continuă automat:** întrebare de Nivel II, tot Cultură generală, 11s. Corect → +2 daune (27 PV). Nivel III, 10s: greșit. Lanțul se rupe, păstrezi cele 3 daune date, iar Obeliscul se blochează până la finalul rundei.
 
 Mai ai 2 PA. Activezi **Logica** → lanț de 4 trepte reușite: 1+2+3+3 = 9 daune (18 PV). La treapta 5 greșești — se blochează și el.
 
 Ultimul PA pe **Numere** → 2 trepte: 3 daune (15 PV). Nu mai ai PA, tura se încheie automat.
 
-**Runda 1 — Tura inamicului.** Cavalerul lovește: 3 daune. Tu: 12/15 PV.
+**Runda 1 — Tura inamicului.** Soldatul lovește: 3 daune. Tu: 12/15 PV.
 
-**Runda 2.** Toate Obeliscurile deblocate, 3 PA din nou. Un lanț bun pe Logică ajunge la treapta 5 — **CRITIC**, daune dublate. Cavalerul cade.
+**Runda 2.** Toate Obeliscurile deblocate, 3 PA din nou. Un lanț bun pe Logică ajunge la treapta 5 — **CRITIC**, daune dublate. Soldatul cade.
 
 **Victorie.** Recompense: Fragmente + o intrare nouă în Jurnal — _„Renașterea italiană e plasată convențional la începutul secolului XIV, în Florența."_ Bucla se închide exact acolo unde trebuie: joc, apoi un fapt real, mic, dar câștigat.
 

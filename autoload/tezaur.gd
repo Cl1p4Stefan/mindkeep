@@ -51,7 +51,7 @@ const DATE_RESURSA := {
 	Resursa.FRAGMENTE: {
 		"cheie": "fragmente",
 		"nume": "Fragmente",
-		"descriere": "Cioburi de gand limpede, ramase dupa ce un Sters se destrama.",
+		"descriere": "Cioburi de gand limpede, ramase pe campul de lupta dupa ce un adversar se destrama.",
 	},
 }
 

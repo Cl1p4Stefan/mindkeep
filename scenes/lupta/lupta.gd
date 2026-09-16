@@ -13,7 +13,9 @@ extends Control
 const PA_PE_RUNDA := 3          # PA primite la începutul fiecărei runde (nu se reportează)
 const COST_OBELISC := 1         # o activare = 1 PA, indiferent câte trepte urmează
 const PV_MAX_JUCATOR := 15      # Regele = PV-ul tău
-const PV_MAX_INAMIC := 30
+# PV-ul inamicului NU mai e o constantă: fiecare rând din tabelul `INAMICI`
+# și-l aduce pe al lui. Valoarea de acum trăiește în `pv_max_inamic`, jos, în
+# starea luptei — o constantă ar fi însemnat un singur inamic pentru totdeauna.
 const PAUZA_FINAL_TURA := 0.5   # secunde de respiro înainte să atace inamicul
 const PAUZA_IMPACT := 0.95      # cât ține lovitura pe ecran, între două trepte de lanț
 const DURATA_ANIMATIE_BARA := 0.35   # cât durează o bară să alunece la noua valoare
@@ -145,46 +147,121 @@ enum Arhetip {
 	GRABNIC,         ## încarcă un ceas câteva runde, apoi lovește devastator
 }
 
-## COMUTATORUL. Schimbă linia asta ca să testezi celălalt comportament.
-const ARHETIP_INAMIC := Arhetip.ATAC_CONSTANT
+# NU mai există un „COMUTATOR" de arhetip aici. Era o constantă pe care o
+# schimbai în cod și reporneai jocul; acum inamicul se alege din joc, la
+# pornirea luptei (vezi `arata_alegerea()`). Diferența nu e de comoditate: o
+# constantă poate ține UN inamic, un tabel plus o variabilă țin oricâți — iar
+# harta de expediție va avea nevoie exact de al doilea lucru.
 
-# FIȘA fiecărui arhetip. E deliberat un tabel, nu niște constante separate:
-# cardul de inamic se construiește CITIND de aici, deci un câmp nou (ex. „citat",
-# „recompensa", „slabiciune") înseamnă o cheie în plus aici și un rând în
-# `date_card_inamic()` — niciun cod nou de afișare.
+# NUMELE fiecărui arhetip, atât cât apare pe card. Doar atât — restul fișei
+# s-a mutat în tabelul `INAMICI` de mai jos.
 #
-# „factiune" și „arhetip" sunt DELIBERAT câmpuri separate, deși acum arată la
-# fel de inerte. Arhetipul e regula de comportament — el va fi ales de
-# generatorul de inamici (pasul 11) și el decide ce face inamicul în tură.
-# Facțiunea e apartenența tematică: nu are niciun efect mecanic azi, dar e
-# cârligul pentru zone de hartă și pentru echipament anti-facțiune. Dacă le-am
-# fi ținut într-un singur câmp, despărțirea lor mai târziu ar fi însemnat
-# rescris fiecare inamic.
-const DATE_ARHETIP := {
-	Arhetip.ATAC_CONSTANT: {
-		"nume": "CAVALERUL STERS",
-		"factiune": "Cei Stersi",
-		"arhetip": "Atac constant",
-		"descriere": "A avut un nume, un blazon si un juramant; Stergerea i le-a luat pe toate trei si a lasat armura sa mearga mai departe. Nu te uraste si nu te vede — a ramas cu un singur gest, si ti-l da tie.",
-	},
-	Arhetip.GRABNIC: {
-		"nume": "GRABNICUL",
-		"factiune": "Ecourile",
-		"arhetip": "Grabnic",
-		"descriere": "Nu se grabeste sa loveasca — se grabeste sa termine. Isi incarca lovitura cateva runde la vedere, apoi o descarca dintr-o data.",
-	},
+# Până acum, numele inamicului, facțiunea și descrierea lui stăteau CHIAR AICI,
+# în tabelul arhetipurilor. Mergea, fiindcă exista un singur inamic per arhetip,
+# deci „arhetip" și „inamic" păreau același lucru. Cu trei inamici și două
+# arhetipuri, presupunerea cade: Soldatul și Spadasinul folosesc amândoi „Atac
+# constant", dar sunt doi adversari diferiți, cu alte cifre și altă descriere.
+#
+# Un arhetip e o REGULĂ DE COMPORTAMENT, refolosibilă de oricâți inamici. E
+# despărțirea anunțată la pasul 11 din ruta de construcție (generatorul de
+# inamici), făcută acum fiindcă azi costă zece rânduri — iar după generator ar
+# fi costat rescrierea lui.
+const NUME_ARHETIP := {
+	Arhetip.ATAC_CONSTANT: "Atac constant",
+	Arhetip.GRABNIC: "Grabnic",
 }
 
-# Listele astea sunt goale intentionat. Sunt cârligele pentru pasul 11
-# (generatorul de inamici): cand un inamic va primi „+50% PV" sau
-# „vulnerabil la Ordine", modificatorii ajung aici si apar automat in card.
-const MODIFICATORI_INAMIC: Array[String] = []
-const VULNERABILITATI_INAMIC: Array[String] = []
-const REZISTENTE_INAMIC: Array[String] = []
+# ─────────────────────────────────────────────────────────────
+# INAMICII, ca tabel
+#
+# Aceeași formă ca `OBELISCURI`: un Array de Dictionary. Un inamic nou e un RÂND
+# aici, nu cod nou — lupta citește tabelul și nu știe câți sunt și nici care e
+# „primul". La fel ca la discipline: proiectăm pentru mulți, scriem trei.
+#
+# CÂMPURILE
+#   nume, factiune, descriere — IDENTITATEA. Facțiunea n-are efect mecanic azi;
+#       e cârligul pentru zone de hartă și echipament anti-facțiune (CLAUDE.md).
+#       Toți trei sunt din aceeași facțiune și au trei comportamente diferite —
+#       exact de-aia facțiunea și arhetipul sunt două câmpuri, nu unul.
+#   arhetip          — CE FACE în tura lui. O trimitere către o ramură din
+#                      `tura_inamicului()`, nu un text.
+#   pv               — cât ține. Aici, nu într-o constantă: doi inamici cu
+#                      același PV ar fi o coincidență, nu o regulă.
+#   daune            — cât lovește o lovitură a lui (la GRABNIC: descărcarea)
+#   ceas             — DOAR la GRABNIC: în câte runde se umple. Lipsește la
+#                      ceilalți, fiindcă n-au ce încărca (vezi `ceas_max()`).
+#   vulnerabilitate  — numele unei discipline din `OBELISCURI`, sau "" dacă n-are
+#   colorare         — aceeași siluetă, altă lumină pe ea (`aplica_infatisarea()`)
+#
+# CIFRELE, pe scurt: Soldatul e etalonul — cel pe care l-ai jucat până acum.
+# Lăncierul are mai mult PV, dar te lasă în pace două runde din trei: lupta lui
+# e o cursă contra ceasului, nu un schimb de lovituri. Spadasinul are cel mai
+# mult PV și lovește cel mai des — fără să-i exploatezi slăbiciunea e o luptă
+# lungă pe care o pierzi, cu ea e cea mai scurtă din trei. Ăsta e și testul
+# vulnerabilității ca mecanică: dacă nu se simte diferența, cifra e greșită.
+# ─────────────────────────────────────────────────────────────
+const INAMICI := [
+	{
+		"nume": "SOLDATUL",
+		"factiune": "Garnizoana",
+		"arhetip": Arhetip.ATAC_CONSTANT,
+		"descriere": "Nu e nimeni anume si nu vrea nimic de la tine. A primit un ordin vechi, pe care nu l-a mai anulat nimeni, si il duce la capat cu aceeasi lovitura, in fiecare tura, pana cade unul din voi.",
+		"pv": 30,
+		"daune": 3,
+		"vulnerabilitate": "",
+		"colorare": Color(1.00, 1.00, 1.00),
+	},
+	{
+		"nume": "LANCIERUL",
+		"factiune": "Garnizoana",
+		"arhetip": Arhetip.GRABNIC,
+		"descriere": "Loveste o singura data, dar isi pregateste lovitura la vedere: numara rundele cu varful lancei coborat spre tine. Ai doua runde in care nu te atinge si una in care te costa jumatate din rege — deci intrebarea nu e daca ataca, ci daca apuci sa-l dobori inainte.",
+		"pv": 34,
+		"daune": 8,
+		"ceas": 3,
+		"vulnerabilitate": "",
+		"colorare": Color(0.74, 0.86, 1.00),
+	},
+	{
+		"nume": "SPADASINUL",
+		"factiune": "Garnizoana",
+		"arhetip": Arhetip.ATAC_CONSTANT,
+		"descriere": "Rapid, si prea increzator in asta. A invatat sa citeasca arme, nu cuvinte: o intrebare de Cuvinte il prinde descoperit si intra de doua ori mai adanc. Pe restul disciplinelor te taie marunt, tura de tura, si asteapta sa obosesti.",
+		"pv": 40,
+		"daune": 4,
+		"vulnerabilitate": "Cuvinte",
+		"colorare": Color(1.00, 0.82, 0.66),
+	},
+]
 
-const DAUNE_ATAC_CONSTANT := 3   # cât lovește ATAC_CONSTANT, în fiecare tură
-const CEAS_MAX := 3              # în câte runde se umple ceasul lui GRABNIC
-const DAUNE_ATAC_GRABNIC := 8    # cât lovește GRABNIC când ceasul e plin
+## Cât doare disciplina la care un inamic e vulnerabil. ×2, adică exact cât un
+## critic — și se ÎNMULȚEȘTE cu el, nu îl înlocuiește: un critic dat pe
+## disciplina slabă e ×2 din treaptă și încă ×2 de aici.
+##
+## De ce ×2 și nu „+2 daune": un bonus fix ar fi contat enorm la treapta 1 (unde
+## dublează 1 în 3) și aproape deloc la treapta 10. Înmulțirea păstrează aceeași
+## promisiune pe toată lungimea lanțului — „disciplina asta e de două ori mai
+## bună aici" — și rămâne adevărată și când daunele de bază se vor schimba.
+const MULTIPLICATOR_VULNERABILITATE := 2
+
+## Cerneala secundară din panoul de alegere: ce face inamicul, scris sub numele
+## lui. Mai stinsă decât textul obișnuit — e o notă de subsol, nu titlul.
+const CULOARE_ALEGERE_DETALIU := Color(0.62, 0.62, 0.72)
+
+## Culoarea slăbiciunii: chihlimbar, nu roșu. Roșul e deja al inamicului în
+## interfața asta (bara lui de PV, intenția lui de atac) — o etichetă roșie ar
+## fi citită ca „pericol", când ea spune exact pe dos: „aici e deschis".
+const CULOARE_VULNERABIL := Color(1.00, 0.72, 0.35)
+
+# Listele astea sunt goale intentionat. Sunt cârligele pentru pasul 11
+# (generatorul de inamici): cand un inamic va primi „+50% PV", modificatorii
+# ajung aici si apar automat in card.
+#
+# Vulnerabilitatea a plecat dintre ele: nu mai e o listă de etichete decorative,
+# ci un câmp din `INAMICI` care CHIAR schimbă daunele. Rezistențele rămân aici
+# până când vor face și ele ceva.
+const MODIFICATORI_INAMIC: Array[String] = []
+const REZISTENTE_INAMIC: Array[String] = []
 
 # `preload` încarcă scena o dată, la compilare, și o ține în memorie.
 # Pentru ceva ce deschizi de zeci de ori pe luptă e exact ce vrei —
@@ -266,7 +343,18 @@ const OBELISCURI := [
 var runda := 1
 var pa := 0
 var pv_jucator := PV_MAX_JUCATOR
-var pv_inamic := PV_MAX_INAMIC
+
+# CINE e inamicul: un index în tabelul `INAMICI`, nu o copie a rândului lui.
+# Un index nu poate ajunge niciodată să difere de tabel; o copie, da — ai
+# schimba o cifră în tabel și lupta ar juca mai departe cu cea veche.
+# Se alege la pornirea luptei (`arata_alegerea()`) și nu se schimbă în timpul ei.
+var inamic_curent := 0
+
+# PV-ul lui, și maximul LUI. Al doilea e o variabilă, nu o constantă, fiindcă
+# fiecare inamic vine cu al lui — se copiază din tabel o singură dată, în
+# `reseteaza_lupta()`, și de acolo îl citește toată interfața.
+var pv_inamic := 0
+var pv_max_inamic := 0
 var ceas_inamic := 0
 var lupta_terminata := false
 var puzzle_activ := false   # cât timp e deschis un puzzle, lupta e „înghețată"
@@ -335,6 +423,7 @@ var panou_deschis := false
 @onready var eticheta_runda: Label = %Runda
 @onready var buton_inamic: Button = %InamicNume
 @onready var bara_pv_inamic: ProgressBar = %InamicBaraPV
+@onready var eticheta_vulnerabil: Label = %InamicVulnerabil
 @onready var eticheta_intentie: Label = %InamicIntentie
 @onready var iconita_sabie: Control = %IconitaSabie
 @onready var bara_ceas: ProgressBar = %InamicBaraCeas
@@ -376,6 +465,16 @@ var panou_deschis := false
 @onready var verdict_text: Label = %VerdictText
 @onready var verdict_recompense: VBoxContainer = %VerdictRecompense
 @onready var buton_verdict: Button = %VerdictButon
+# Panoul de alegere a inamicului: lista lui se umple din cod, din `INAMICI`.
+@onready var panou_alegere: Control = %PanouAlegere
+@onready var lista_alegere: VBoxContainer = %AlegereLista
+# Toate înfățișările inamicului, la un loc: silueta desenată și imaginea din
+# arenă, plus perechea lor din portretul cardului. Colorarea se pune pe toate
+# patru deodată (`aplica_infatisarea()`) — altfel ai avea un Spadasin arămiu în
+# arenă și unul alb în card, adică doi inamici.
+@onready var figuri_inamic: Array[Control] = [
+	%InamicSilueta, %InamicImagine, %PortretInamic, %PortretImagine
+]
 @onready var figuri_desenate: Array[Control] = [%JucatorSilueta, %InamicSilueta, %PortretInamic]
 @onready var figuri_imagini: Array[Control] = [%JucatorImagine, %InamicImagine, %PortretImagine]
 # Array simplu cu cele 3 butoane, ca să le putem trata în buclă.
@@ -417,6 +516,7 @@ func _ready() -> void:
 	panou_jurnal.visible = false
 	card_inamic.visible = false
 	panou_verdict.visible = false
+	panou_alegere.visible = false
 	ascunde_panou_acum()
 
 	# Se vede un singur set; celălalt rămâne în scenă, ascuns.
@@ -427,9 +527,10 @@ func _ready() -> void:
 
 	# Pregătim barele o singură dată, din constante — ca să nu existe
 	# două surse de adevăr: una în editor, alta în cod.
-	bara_pv_inamic.max_value = PV_MAX_INAMIC
+	# Doar bara JUCĂTORULUI se pregătește aici: maximul lui e o constantă, deci
+	# adevărat în orice luptă. Barele inamicului (PV și ceas) depind de CARE
+	# inamic e în față, deci se pun în `reseteaza_lupta()`, după ce s-a ales.
 	bara_pv_jucator.max_value = PV_MAX_JUCATOR
-	bara_ceas.max_value = CEAS_MAX
 
 	# Punctele de PA le construim DIN COD, câte unul per PA disponibil.
 	# Dacă mâine PA_PE_RUNDA devine 4, apar patru puncte fără să atingi scena.
@@ -468,8 +569,12 @@ func _ready() -> void:
 	# apelul nu face nimic, deci nu repornește melodia de la zero.
 	Muzica.reda(Muzica.Piesa.LUPTA)
 
-	scrie_in_jurnal("Lupta incepe.")
-	incepe_runda()
+	# Pregătim primul inamic din tabel ÎNAINTE să cerem alegerea: așa arena de
+	# sub voal e o luptă adevărată, cu nume, bare și PV, nu o scenă goală. Dacă
+	# alegi tot primul inamic, `reseteaza_lupta()` rulează a doua oară și nu se
+	# schimbă nimic — e ieftin, și scapă de un caz special.
+	reseteaza_lupta()
+	arata_alegerea()
 
 
 # ─────────────────────────────────────────────────────────────
@@ -617,7 +722,17 @@ func ruleaza_lant(index: int) -> void:
 			critice_totale += 1
 
 		# Daunele treptei se aplică IMEDIAT, nu la finalul lanțului.
+		#
+		# Vulnerabilitatea se înmulțește PESTE treaptă și peste critic, nu în
+		# locul lor: un critic dat pe disciplina slabă e ×2 din treaptă și încă
+		# ×2 de aici. Ordinea nu contează matematic, dar contează pentru citit —
+		# `daune_treapta()` răspunde la „cât valorează treapta asta", iar linia
+		# de mai jos la „cât de tare o simte inamicul ăsta". Două întrebări
+		# diferite, două locuri.
+		var slabiciune := e_vulnerabil(disciplina)
 		var daune := daune_treapta(treapta)
+		if slabiciune:
+			daune *= MULTIPLICATOR_VULNERABILITATE
 		lant_daune += daune
 		# maxi() = maximul a două int-uri. Îl folosim ca PV să nu scadă sub 0.
 		pv_inamic = maxi(pv_inamic - daune, 0)
@@ -626,13 +741,22 @@ func ruleaza_lant(index: int) -> void:
 		# nu doar se citește în jurnal.
 		figura_inamic.loveste(daune)
 
+		# Marcajul de vulnerabilitate NU se aprinde pe ecranul de puzzle, ca
+		# „CRITIC!". Criticul e un EVENIMENT — a cincea treaptă, o dată la cinci
+		# întrebări — deci merită un fulger. Vulnerabilitatea e o STARE: dublează
+		# fiecare treaptă din lanț, la nesfârșit. Un marcaj la fiecare întrebare
+		# n-ar mai fi un accent, ar fi tapet. Ea se anunță o dată, înainte de
+		# luptă (panoul de alegere) și stă scrisă tot timpul sub numele
+		# inamicului — iar în lanț se vede acolo unde contează: în bara lui,
+		# care scade de două ori mai repede.
+		var nota := " VULNERABIL!" if slabiciune else ""
 		if critica:
-			scrie_in_jurnal("%s, treapta %d: CRITIC! +%d daune (lant: %d)." % [
-				disciplina, treapta, daune, lant_daune
+			scrie_in_jurnal("%s, treapta %d: CRITIC!%s +%d daune (lant: %d)." % [
+				disciplina, treapta, nota, daune, lant_daune
 			])
 		else:
-			scrie_in_jurnal("%s, treapta %d (Nivel %s): corect, +%d daune (lant: %d)." % [
-				disciplina, treapta, CIFRE_ROMANE[nivel - 1], daune, lant_daune
+			scrie_in_jurnal("%s, treapta %d (Nivel %s): corect.%s +%d daune (lant: %d)." % [
+				disciplina, treapta, CIFRE_ROMANE[nivel - 1], nota, daune, lant_daune
 			])
 
 		# AICI se vede lovitura. Puzzle-ul e încă pe ecran, iar barele din
@@ -921,7 +1045,7 @@ func _pe_incheie_tura_apasat() -> void:
 		# care „se încheie" într-o luptă deja încheiată nu mai are ce opri —
 		# iar pusă la coadă, verificarea asta lăsa butonul mut exact în cazul
 		# în care aveai cea mai mare nevoie de el: după înfrângere.
-		reseteaza_lupta()
+		arata_alegerea()
 		return
 	if tura_se_incheie:
 		return   # tura se încheie deja singură — fără două ture de inamic
@@ -932,7 +1056,7 @@ func _pe_incheie_tura_apasat() -> void:
 ## întreabă arhetipul. `match` = un lanț de if-uri, dar citibil: pentru
 ## fiecare arhetip nou adaugi o ramură, fără să atingi restul buclei.
 func tura_inamicului() -> void:
-	match ARHETIP_INAMIC:
+	match arhetip():
 		Arhetip.ATAC_CONSTANT:
 			_tura_atac_constant()
 		Arhetip.GRABNIC:
@@ -951,21 +1075,27 @@ func tura_inamicului() -> void:
 ## Arhetipul de bază: lovește puțin, dar în fiecare tură. Fără surprize —
 ## presiunea vine din cronometrul puzzle-ului, nu din inamic.
 func _tura_atac_constant() -> void:
-	loveste_jucatorul(DAUNE_ATAC_CONSTANT)
-	scrie_in_jurnal("Inamicul ataca pentru %d." % DAUNE_ATAC_CONSTANT)
+	var daune: int = inamic()["daune"]
+	loveste_jucatorul(daune)
+	scrie_in_jurnal("%s ataca pentru %d." % [nume_inamic(), daune])
 
 
-## Arhetipul „Grabnic" — PĂSTRAT, dar inactiv. Ceasul urcă cu 1 pe tură;
-## când se umple, lovește tare și o ia de la capăt. Lupta devine o cursă:
+## Arhetipul „Grabnic", acum CHIAR folosit: e Lăncierul. Ceasul urcă cu 1 pe
+## tură; când se umple, lovește tare și o ia de la capăt. Lupta devine o cursă:
 ## îl dobori la timp, sau încasezi?
+##
+## Cifrele nu mai sunt constante de fișier, ci coloane în `INAMICI`: un al
+## doilea Grabnic, cu alt ceas și altă lovitură, e un rând în tabel. Codul de
+## aici rămâne exact cum e.
 func _tura_grabnic() -> void:
 	ceas_inamic += 1
-	if ceas_inamic >= CEAS_MAX:
+	if ceas_inamic >= ceas_max():
 		ceas_inamic = 0
-		loveste_jucatorul(DAUNE_ATAC_GRABNIC)
-		scrie_in_jurnal("CEASUL S-A UMPLUT! Inamicul loveste pentru %d." % DAUNE_ATAC_GRABNIC)
+		var daune: int = inamic()["daune"]
+		loveste_jucatorul(daune)
+		scrie_in_jurnal("CEASUL S-A UMPLUT! %s loveste pentru %d." % [nume_inamic(), daune])
 	else:
-		scrie_in_jurnal("Inamicul se incarca (%d/%d)." % [ceas_inamic, CEAS_MAX])
+		scrie_in_jurnal("%s se incarca (%d/%d)." % [nume_inamic(), ceas_inamic, ceas_max()])
 
 
 ## O singură funcție prin care trec TOATE daunele către jucător.
@@ -1047,8 +1177,6 @@ func termina_lupta(victorie: bool) -> void:
 ## ori — și a doua oară se uită. E aceeași regulă ca la Obeliscuri: un
 ## contract, mai multe conținuturi.
 func _arata_verdictul(victorie: bool, recompensa: Array[Dictionary] = []) -> void:
-	var nume_inamic: String = DATE_ARHETIP[ARHETIP_INAMIC]["nume"]
-
 	# Defalcarea, înainte de titlu și text: așa panoul e complet în clipa în care
 	# devine vizibil, fără un cadru în care rândurile s-ar așeza sub ochii tăi.
 	_construieste_recompensa(recompensa)
@@ -1057,7 +1185,7 @@ func _arata_verdictul(victorie: bool, recompensa: Array[Dictionary] = []) -> voi
 		verdict_titlu.text = "VICTORIE"
 		verdict_titlu.modulate = CULOARE_VICTORIE
 		verdict_text.text = "%s a cazut in runda %d.\nAi incheiat lupta cu %d / %d PV." % [
-			nume_inamic, runda, pv_jucator, PV_MAX_JUCATOR
+			nume_inamic(), runda, pv_jucator, PV_MAX_JUCATOR
 		]
 		# „Continua", nu „Lupta din nou": după victorie drumul merge înainte.
 		# Când apare harta de expediție, butonul te duce la nodul următor.
@@ -1069,7 +1197,7 @@ func _arata_verdictul(victorie: bool, recompensa: Array[Dictionary] = []) -> voi
 		# A doua frază spune cât de aproape ai fost — „mai avea 3 PV" e un motiv
 		# să reîncerci, „mai avea 28" spune că trebuie schimbat ceva, nu repetat.
 		verdict_text.text = "%s te-a doborat in runda %d.\nMai avea %d / %d PV." % [
-			nume_inamic, runda, pv_inamic, PV_MAX_INAMIC
+			nume_inamic(), runda, pv_inamic, pv_max_inamic
 		]
 		buton_verdict.text = "Lupta din nou"
 
@@ -1245,20 +1373,30 @@ func _rand_recompensa(
 	return rand
 
 
-## Butonul panoului de verdict — deocamdată reia lupta pe amândouă drumurile,
-## fiindcă încă nu există unde să continui. Aici se leagă harta de expediție,
-## când ajungem la ea: victoria te întoarce pe hartă, la nodul următor;
-## înfrângerea încheie expediția și te trimite în cetate.
+## Butonul panoului de verdict — deocamdată duce înapoi la alegerea inamicului,
+## pe amândouă drumurile, fiindcă încă nu există unde să continui. Aici se leagă
+## harta de expediție, când ajungem la ea: victoria te întoarce pe hartă, la
+## nodul următor; înfrângerea încheie expediția și te trimite în cetate.
 func _pe_verdict_apasat() -> void:
 	panou_verdict.visible = false
-	reseteaza_lupta()
+	arata_alegerea()
 
 
 ## Readuce starea la valorile de start. Ca să testezi rapid, fără să dai F5.
 func reseteaza_lupta() -> void:
 	runda = 1
 	pv_jucator = PV_MAX_JUCATOR
-	pv_inamic = PV_MAX_INAMIC
+	# Inamicul ales își aduce cifrele ACUM, o singură dată. De aici încolo lupta
+	# citește variabilele, nu tabelul — deci nimic din ce se întâmplă în luptă
+	# nu poate ajunge la datele de bază și nu le poate strica.
+	pv_max_inamic = inamic()["pv"]
+	pv_inamic = pv_max_inamic
+	bara_pv_inamic.max_value = pv_max_inamic
+	# Ceasul are maxim doar la arhetipurile care au ceas. La celelalte punem 1,
+	# nu 0: o bară cu maximul 0 e o împărțire la zero pentru Godot. Oricum stă
+	# ascunsă (vezi `actualizeaza_ui()`), dar nu vrem un avertisment în consolă
+	# pentru un nod invizibil.
+	bara_ceas.max_value = maxi(ceas_max(), 1)
 	ceas_inamic = 0
 	lupta_terminata = false
 	puzzle_activ = false
@@ -1285,46 +1423,142 @@ func reseteaza_lupta() -> void:
 	Sunet.opreste_verdict()
 	Muzica.reda(Muzica.Piesa.LUPTA)
 
+	# Colorarea inamicului ales, pusă pe toate înfățișările lui deodată.
+	aplica_infatisarea()
+
 	buton_incheie_tura.text = "Incheie tura"
-	scrie_in_jurnal("Lupta reincepe.")
+	scrie_in_jurnal("%s intra in arena (%d PV)." % [nume_inamic(), pv_max_inamic])
 	incepe_runda()
+
+
+# ─────────────────────────────────────────────────────────────
+# INAMICUL CURENT
+#
+# Șase funcții scurte, și toate răspund la aceeași întrebare pusă altfel:
+# „ce scrie pe rândul lui din tabel?". Restul fișierului nu mai scrie niciodată
+# `INAMICI[inamic_curent]["ceva"]` — cheamă una de aici.
+#
+# De ce contează: ziua în care un inamic va primi cifre modificate în timpul
+# luptei (un bos care se înfurie, un modificator de generator), ele se schimbă
+# ÎNTR-UN loc, aici. Cu tabelul citit direct din douăzeci de locuri, ar fi
+# însemnat douăzeci de locuri de găsit — și al douăzeci și unulea, uitat.
+# ─────────────────────────────────────────────────────────────
+
+## Rândul din tabel al inamicului cu care lupți acum.
+func inamic() -> Dictionary:
+	return INAMICI[inamic_curent]
+
+
+func nume_inamic() -> String:
+	return inamic()["nume"]
+
+
+## CE FACE în tura lui. Numai `tura_inamicului()` are voie să se uite la asta
+## ca să aleagă o ramură — restul codului întreabă lucruri concrete
+## (`are_ceas()`, „câte daune"), nu arhetipul.
+func arhetip() -> Arhetip:
+	return inamic()["arhetip"]
+
+
+## Are inamicul ăsta un ceas de încărcat?
+##
+## Întrebarea asta, și nu „e Grabnic?". Diferența pare de formă, dar nu e: bara
+## de ceas și indicatorul de intenție au nevoie să știe dacă există o încărcare,
+## nu CINE o face. Când va apărea al doilea arhetip cu ceas (un bos care își
+## adună o descărcare, să zicem), interfața merge neatinsă — cu `== Arhetip.GRABNIC`
+## scris prin patru locuri, ar fi trebuit corectată în toate patru.
+func are_ceas() -> bool:
+	return inamic().has("ceas")
+
+
+## În câte runde se umple ceasul. 0 la inamicii fără ceas — cheia lipsește din
+## rândul lor, iar `get` întoarce a doua valoare în loc să crape. Așa, un inamic
+## fără ceas nu trebuie să scrie „ceas: 0" doar ca să tacă.
+func ceas_max() -> int:
+	return inamic().get("ceas", 0)
+
+
+## Lovitura asta cade pe slăbiciunea lui?
+##
+## Comparăm numele disciplinei ca TEXT, cu cel din `OBELISCURI`. E o legătură
+## slabă — o scrii greșit și nu se întâmplă nimic, fără nicio eroare — dar e
+## aceeași monedă cu care sunt scrise deja disciplinele peste tot în fișierul
+## ăsta. Când disciplinele vor deveni date (pasul 1 din ruta de construcție),
+## aici va fi un identificator, nu un șir de litere, și legătura se strânge
+## singură. Până atunci: un singur loc de comparat, ăsta.
+func e_vulnerabil(disciplina: String) -> bool:
+	return inamic()["vulnerabilitate"] == disciplina
+
+
+## Aceeași siluetă, altă lumină pe ea.
+##
+## `modulate` ÎNMULȚEȘTE culoarea peste pixelii existenți, deci nu e artă nouă:
+## armura rămâne aceeași, dar una albăstrită citește „oțel rece", una arămie
+## citește „cald, uzat". Pentru trei inamici timpurii e exact cât trebuie —
+## principiul „prototip întâi, artă după" spune să nu desenez trei armuri până
+## nu știu că cele trei comportamente merită desenate.
+##
+## Se pune pe FIGURILE inamicului, nu pe învelișul lor. Învelișul (`impact.gd`)
+## își scrie singur `modulate` la fiecare lovitură și îl pune înapoi pe alb la
+## final — colorarea pusă acolo ar fi ștearsă la prima lovitură încasată. Așa,
+## cele două se înmulțesc cum trebuie: fulgerul aprinde figura colorată.
+func aplica_infatisarea() -> void:
+	var colorare: Color = inamic()["colorare"]
+	for figura in figuri_inamic:
+		figura.modulate = colorare
 
 
 ## Lovește inamicul în tura care urmează?
 func inamicul_loveste_acum() -> bool:
-	if ARHETIP_INAMIC == Arhetip.GRABNIC:
-		return ceas_inamic + 1 >= CEAS_MAX
+	if are_ceas():
+		return ceas_inamic + 1 >= ceas_max()
 	return true
 
 
 ## E o lovitură din aia care doare? (deocamdată: doar descărcarea Grabnicului)
 func lovitura_grea() -> bool:
-	return ARHETIP_INAMIC == Arhetip.GRABNIC and inamicul_loveste_acum()
+	return are_ceas() and inamicul_loveste_acum()
 
 
 ## Numărul de lângă sabie. Simbolul nu mai e text — e desenat, vezi
 ## `iconita_sabie.gd`. Cât timp Grabnicul se încarcă, arătăm doar contorul.
 func text_intentie() -> String:
-	if ARHETIP_INAMIC == Arhetip.GRABNIC and not inamicul_loveste_acum():
-		return "%d/%d" % [ceas_inamic, CEAS_MAX]
-	if ARHETIP_INAMIC == Arhetip.GRABNIC:
-		return str(DAUNE_ATAC_GRABNIC)
-	return str(DAUNE_ATAC_CONSTANT)
+	if are_ceas() and not inamicul_loveste_acum():
+		return "%d/%d" % [ceas_inamic, ceas_max()]
+	# Un singur „daune" pentru amândouă arhetipurile: la ATAC_CONSTANT e
+	# lovitura de fiecare tură, la GRABNIC descărcarea. Ce se schimbă e CÂND
+	# lovește, nu de unde citim cifra.
+	return str(inamic()["daune"])
 
 
 ## Ce face inamicul, într-o frază. Folosită doar în card.
 ## Rândul „Comportament" din card. Regula generală o spune deja „Arhetip";
 ## aici scriem doar ce arhetipul NU-ți spune: cifrele exacte și condițiile.
 ## Dacă textul de aici ajunge să sune ca numele arhetipului, rândul e degeaba.
-func text_comportament() -> String:
-	match ARHETIP_INAMIC:
+## Primește un INDEX, nu citește inamicul curent. Motivul: panoul de alegere îl
+## cheamă pentru toți trei deodată, înainte să existe un „curent". O funcție
+## care întreabă „cum se poartă inamicul ăsta?" merge pe orice rând din tabel;
+## una care întreabă „cum se poartă inamicul MEU?" ar fi cerut o a doua funcție,
+## aproape identică, pentru panou.
+func text_comportament(index: int) -> String:
+	var date: Dictionary = INAMICI[index]
+	match date["arhetip"]:
 		Arhetip.ATAC_CONSTANT:
-			return "%d daune in fiecare tura" % DAUNE_ATAC_CONSTANT
+			return "%d daune in fiecare tura" % date["daune"]
 		Arhetip.GRABNIC:
-			return "Ceasul se umple in %d runde; la %d/%d loveste %d, apoi se reseteaza." % [
-				CEAS_MAX, CEAS_MAX, CEAS_MAX, DAUNE_ATAC_GRABNIC
+			return "Ceasul se umple in %d runde; la %d/%d loveste %d, apoi o ia de la capat" % [
+				date["ceas"], date["ceas"], date["ceas"], date["daune"]
 			]
 	return "—"
+
+
+## Slăbiciunea inamicului, scrisă pentru ochi. Liniuță dacă n-are — la fel ca
+## modificatorii și rezistențele, ca rândurile cardului să arate la fel.
+func text_vulnerabilitate(index: int) -> String:
+	var disciplina: String = INAMICI[index]["vulnerabilitate"]
+	if disciplina == "":
+		return "—"
+	return "%s (daune x%d)" % [disciplina, MULTIPLICATOR_VULNERABILITATE]
 
 
 ## O listă de etichete, sau o liniuță dacă e goală.
@@ -1336,14 +1570,15 @@ func _lista_sau_liniuta(valori: Array[String]) -> String:
 ## Aici adaugi câmpuri noi: o linie în listă, și cardul le desenează singur.
 ## Nu atinge nimic din afișare — de asta e o listă de date, nu cod de UI.
 func date_card_inamic() -> Array:
+	var date := inamic()
 	return [
-		{"eticheta": "Factiune", "valoare": DATE_ARHETIP[ARHETIP_INAMIC]["factiune"]},
-		{"eticheta": "Arhetip", "valoare": DATE_ARHETIP[ARHETIP_INAMIC]["arhetip"]},
-		{"eticheta": "Comportament", "valoare": text_comportament()},
-		{"eticheta": "Puncte de viata", "valoare": "%d / %d" % [pv_inamic, PV_MAX_INAMIC]},
+		{"eticheta": "Factiune", "valoare": date["factiune"]},
+		{"eticheta": "Arhetip", "valoare": NUME_ARHETIP[date["arhetip"]]},
+		{"eticheta": "Comportament", "valoare": text_comportament(inamic_curent)},
+		{"eticheta": "Puncte de viata", "valoare": "%d / %d" % [pv_inamic, pv_max_inamic]},
 		#{"eticheta": "Intentia acestei runde", "valoare": text_intentie()},
 		{"eticheta": "Modificatori", "valoare": _lista_sau_liniuta(MODIFICATORI_INAMIC)},
-		{"eticheta": "Vulnerabilitati", "valoare": _lista_sau_liniuta(VULNERABILITATI_INAMIC)},
+		{"eticheta": "Vulnerabilitati", "valoare": text_vulnerabilitate(inamic_curent)},
 		{"eticheta": "Rezistente", "valoare": _lista_sau_liniuta(REZISTENTE_INAMIC)},
 	]
 
@@ -1368,8 +1603,8 @@ func _pe_voal_card_apasat(eveniment: InputEvent) -> void:
 ## Reconstruiește cardul de fiecare dată când se deschide, ca PV-ul și
 ## intenția să fie cele de acum, nu cele de la începutul luptei.
 func construieste_card() -> void:
-	card_titlu.text = DATE_ARHETIP[ARHETIP_INAMIC]["nume"]
-	card_descriere.text = DATE_ARHETIP[ARHETIP_INAMIC]["descriere"]
+	card_titlu.text = nume_inamic()
+	card_descriere.text = inamic()["descriere"]
 
 	# Ștergem rândurile vechi înainte să le desenăm pe cele noi.
 	# `queue_free()` le scoate la finalul cadrului, dar containerul le-ar mai
@@ -1403,6 +1638,97 @@ func _construieste_rand(eticheta: String, valoare: String) -> HBoxContainer:
 
 
 # ─────────────────────────────────────────────────────────────
+# ALEGEREA INAMICULUI
+#
+# E o UNEALTĂ DE TEST, și merită spus pe față: în jocul terminat nu-ți alegi
+# adversarul — ți-l dă nodul de pe harta de expediție (pasul 6). Până atunci,
+# singurul mod de a juca al doilea inamic era să schimb o constantă în cod și să
+# repornesc, ceea ce înseamnă că al treilea inamic n-ar fi fost niciodată jucat
+# de două ori la rând.
+#
+# Nu e cod de aruncat, însă. Panoul citește tabelul `INAMICI` și cheamă
+# `reseteaza_lupta()` cu un index — exact interfața de care va avea nevoie harta
+# („pornește lupta cu inamicul N"). Când vine harta, dispare panoul, rămâne
+# funcția.
+# ─────────────────────────────────────────────────────────────
+
+## Deschide alegerea. Nu atinge starea luptei: câtă vreme panoul e sus, arena de
+## dedesubt e cea de dinainte — încă n-ai ales, deci încă nu s-a schimbat nimic.
+func arata_alegerea() -> void:
+	_construieste_alegerea()
+	panou_alegere.visible = true
+	# Primul buton primește focus: se poate porni o luptă și din tastatură.
+	if lista_alegere.get_child_count() > 0:
+		var primul := lista_alegere.get_child(0).get_child(0) as Button
+		if primul != null:
+			primul.grab_focus()
+
+
+## Reconstruiește lista la fiecare deschidere, ca rândurile cardului și cele de
+## recompensă. Un inamic nou în tabel apare aici fără nicio linie de cod — ăsta
+## e testul că tabelul chiar e o bază de date, nu trei variabile îmbrăcate în
+## paranteze pătrate.
+func _construieste_alegerea() -> void:
+	for copil in lista_alegere.get_children():
+		lista_alegere.remove_child(copil)
+		copil.queue_free()
+
+	for index in range(INAMICI.size()):
+		lista_alegere.add_child(_rand_alegere(index))
+
+
+## Un inamic pe listă: butonul cu titlul, sub el ce face, iar dedesubt
+## slăbiciunea — dacă are.
+##
+## De ce trei noduri și nu un buton cu text pe trei rânduri: slăbiciunea are
+## nevoie de CULOAREA ei (chihlimbar), altfel s-ar pierde în aceeași cerneală cu
+## restul. Iar ce trebuie să-ți sară în ochi înainte de luptă e exact ea.
+func _rand_alegere(index: int) -> Control:
+	var date: Dictionary = INAMICI[index]
+
+	var coloana := VBoxContainer.new()
+	coloana.add_theme_constant_override("separation", 2)
+
+	var buton := Button.new()
+	# Titlul spune cele trei lucruri după care alegi: cine, cât ține, cum se
+	# poartă. PV-ul e cifra care se schimbă cel mai des când reechilibrez, deci
+	# merită văzută dinainte, nu descoperită după trei runde.
+	buton.text = "%s   —   %d PV   ·   %s" % [
+		date["nume"], date["pv"], NUME_ARHETIP[date["arhetip"]]
+	]
+	buton.custom_minimum_size = Vector2(0, 42)
+	buton.pressed.connect(_pe_inamic_ales.bind(index))
+	coloana.add_child(buton)
+
+	var detaliu := Label.new()
+	detaliu.text = text_comportament(index) + "."
+	detaliu.modulate = CULOARE_ALEGERE_DETALIU
+	detaliu.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	detaliu.add_theme_font_size_override("font_size", 13)
+	coloana.add_child(detaliu)
+
+	if date["vulnerabilitate"] != "":
+		var slabiciune := Label.new()
+		slabiciune.text = "Vulnerabil la %s: daune x%d." % [
+			date["vulnerabilitate"], MULTIPLICATOR_VULNERABILITATE
+		]
+		slabiciune.modulate = CULOARE_VULNERABIL
+		slabiciune.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		slabiciune.add_theme_font_size_override("font_size", 13)
+		coloana.add_child(slabiciune)
+
+	return coloana
+
+
+## Ai ales. Asta e toată legătura dintre panou și luptă: un index, și o
+## resetare. Harta de expediție va chema exact aceleași două linii.
+func _pe_inamic_ales(index: int) -> void:
+	panou_alegere.visible = false
+	inamic_curent = index
+	reseteaza_lupta()
+
+
+# ─────────────────────────────────────────────────────────────
 # AFIȘARE
 # Regulă de aur: logica de sus NU atinge niciodată direct un Label.
 # Ea schimbă doar variabilele de stare, apoi cheamă actualizeaza_ui().
@@ -1415,9 +1741,26 @@ func actualizeaza_ui() -> void:
 	# „[i]" e singurul indiciu că se poate apăsa — un buton plat, fără fundal,
 	# nu se anunță singur.
 	buton_inamic.text = "%s — %d/%d PV  [i]" % [
-		DATE_ARHETIP[ARHETIP_INAMIC]["nume"], pv_inamic, PV_MAX_INAMIC
+		nume_inamic(), pv_inamic, pv_max_inamic
 	]
 	anima_bara(bara_pv_inamic, pv_inamic)
+
+	# SLĂBICIUNEA, scrisă sub nume și lăsată acolo toată lupta.
+	#
+	# Nu e un secret de descoperit prin încercări: cerința de design e „afișată
+	# vizibil ÎNAINTE de luptă". O vezi în panoul de alegere, o recitești în
+	# card, și îți stă sub ochi cât joci — fiindcă e informația din care iese
+	# decizia „pe ce Obelisc apăs acum", iar o decizie tactică luată din
+	# memorie e doar o pedeapsă pentru cine a clipit.
+	#
+	# La inamicii fără slăbiciune eticheta DISPARE, nu scrie „niciuna": un rând
+	# gol care spune „nu se aplică" e zgomot pe care ochiul îl citește oricum.
+	var slabiciune: String = inamic()["vulnerabilitate"]
+	eticheta_vulnerabil.visible = slabiciune != ""
+	if eticheta_vulnerabil.visible:
+		eticheta_vulnerabil.text = "VULNERABIL: %s  x%d" % [
+			slabiciune, MULTIPLICATOR_VULNERABILITATE
+		]
 
 	# Intenția, anunțată dinainte (ca în Slay the Spire): decizi cu informație
 	# completă, nu la noroc. Rămâne pe ecran permanent, dar minusculă:
@@ -1431,7 +1774,7 @@ func actualizeaza_ui() -> void:
 	eticheta_intentie.modulate = culoare_intentie
 	# Bara de ceas apare doar la arhetipurile care CHIAR au ceas —
 	# altfel ar fi un element de UI care nu înseamnă nimic.
-	bara_ceas.visible = ARHETIP_INAMIC == Arhetip.GRABNIC
+	bara_ceas.visible = are_ceas()
 	if bara_ceas.visible:
 		anima_bara(bara_ceas, ceas_inamic)
 

@@ -1,11 +1,17 @@
 extends Silueta
-## Silueta inamicului: CAVALERUL ȘTERS. Armură, cască cu vizor, sabie ridicată —
-## iar în locul chipului, un gol din care privesc doi ochi.
+## Silueta inamicului cu armă: armură, cască cu vizor, sabie ridicată — iar în
+## locul chipului, un gol din care privesc doi ochi.
 ##
-## Ideea vizuală: a fost un om. Ștergerea i-a luat chipul și numele, dar nu și
-## postura — armura încă știe să lovească. De asta silueta e clar de adversar
-## (umeri, armă ridicată), nu de obiect, dar se destramă la poale și poartă pe
-## piept rânduri șterse, ca un blazon din care a fost radiat textul.
+## Ideea vizuală: a fost un om. A rămas postura — armura încă știe să lovească.
+## De asta silueta e clar de adversar (umeri, armă ridicată), nu de obiect, dar
+## se destramă la poale și poartă pe piept un blazon din care a fost radiat
+## textul: e cineva care luptă mai departe fără să mai știe pentru cine.
+##
+## E o singură siluetă pentru toți adversarii în armură — Soldatul, Lăncierul,
+## Spadasinul. Îi deosebește colorarea, pusă din `lupta.gd`
+## (`aplica_infatisarea()`), nu o formă proprie. Trei desene diferite ar fi artă
+## făcută înainte ca cele trei comportamente să fi fost validate ca distractive,
+## adică exact ordinea pe care o evităm.
 ##
 ## Formele sunt scrise în fracțiuni din caseta de desen (0 = stânga/sus,
 ## 1 = dreapta/jos). Ce trebuie să pară neregulat — poalele destrămate, golul
@@ -75,7 +81,7 @@ func _deseneaza_silueta() -> void:
 	_deseneaza_umerii()
 	_deseneaza_bratul()
 
-	# Rândurile șterse de pe piept — legătura cu Ștergerea, în două tonuri de gri.
+	# Rândurile radiate de pe piept: un blazon din care a fost șters textul.
 	for linie in _linii_sterse:
 		_poligon(linie, umbra)
 

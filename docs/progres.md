@@ -13,16 +13,128 @@
 | 2. Scena de luptă cu placeholdere | ✅ gata |
 | 3. Trivia, ca scenă independentă | ✅ gata |
 | 4. Bucla completă a unei lupte | ✅ victorie · înfrângere · recompense (Fragmente) |
-| 5. Trei inamici manuali | 🟡 doi arhetipi scriși, un singur inamic activ |
+| 5. Trei inamici manuali | ✅ Soldatul · Lăncierul (ceas) · Spadasinul (vulnerabilitate), aleși din joc |
 | 6. Harta de expediție | ❌ |
 | 7. Cetatea | ❌ |
 | 8. Save/Load | 🟡 tezaurul știe deja să se serializeze (`spre_dictionar` / `din_dictionar`); scrierea pe disc, nu încă |
 | 9. Celelalte discipline | 🟡 Cultură generală ✅ · Logica ✅ · Cuvinte ✅ · celelalte 5 ❌ |
 | 10–13. Generator de inamici, artă, web | ❌ (artă parțial: figurile principale și piesele de pe butoanele de Obelisc au imagini reale) · Regina: **amânată**, vezi CLAUDE.md |
 
+Din pasul 10 (generatorul de inamici) s-a făcut deja partea care nu costa nimic
+azi: **identitatea inamicului e separată de arhetip**. Restul (modificatori,
+buget, generare) rămâne acolo unde era.
+
 Am sărit peste ordinea recomandată la pasul 12 (artă): imaginile pentru rege,
 cavaler și pentru cele trei piese de șah de pe butoane au intrat mai devreme, dar
 restul rămâne placeholder. Bucla de luptă e în continuare cea validată, nu arta.
+
+---
+
+## Sesiunea celor trei inamici (16 septembrie 2026) — arhetipul nu mai e inamicul
+
+**Ce s-a schimbat:** până acum exista UN inamic, ales dintr-o constantă din cod
+(`ARHETIP_INAMIC`) pe care o schimbai și reporneai jocul. Acum sunt trei, aleși
+dintr-un panou la pornirea luptei.
+
+### Problema reală nu era „mai vreau doi inamici"
+
+Numele, facțiunea și descrierea inamicului stăteau în `DATE_ARHETIP` — tabelul
+**arhetipurilor**. Mergea perfect atâta timp cât era un singur inamic per
+arhetip, fiindcă atunci „arhetip" și „inamic" păreau același lucru.
+
+Al treilea inamic a spart presupunerea: **Soldatul și Spadasinul folosesc
+amândoi „Atac constant"**, dar sunt doi adversari diferiți, cu alte cifre și
+altă descriere. Un arhetip e o *regulă de comportament*, refolosibilă de
+oricâți inamici — nu o fișă de personaj.
+
+Așa că tabelul s-a rupt în două:
+
+| Ce | Unde | Ce ține |
+|---|---|---|
+| `NUME_ARHETIP` | un dicționar de patru rânduri | doar numele afișat al regulii |
+| `INAMICI` | un Array de Dictionary, ca `OBELISCURI` | nume, facțiune, descriere, PV, daune, ceas, vulnerabilitate, colorare |
+
+E despărțirea anunțată la **pasul 11** din ruta de construcție, făcută mai
+devreme fiindcă azi a costat zece rânduri. După generatorul de inamici ar fi
+costat rescrierea lui.
+
+### Cei trei
+
+| Inamic | Arhetip | PV | Lovitură | Cârligul lui |
+|---|---|---|---|---|
+| **Soldatul** | Atac constant | 30 | 3 / tură | etalonul — e inamicul de până acum, redenumit |
+| **Lăncierul** | Grabnic | 34 | 8 la ceas plin (3 runde) | cursa contra ceasului: te lasă în pace două runde din trei |
+| **Spadasinul** | Atac constant | 40 | 4 / tură | vulnerabil la **Cuvinte**: daune ×2 |
+
+Ceasul Grabnicului exista deja în cod, scris și nefolosit. N-a trebuit activat —
+a trebuit doar ca cineva să-l aibă: `are_ceas()` întreabă dacă rândul din tabel
+are cheia `ceas`, nu dacă inamicul e de un anume arhetip. Când va apărea al
+doilea arhetip cu ceas (un boss care își adună o descărcare), interfața merge
+neatinsă.
+
+### Vulnerabilitatea: o stare, nu un eveniment
+
+Daunele se **înmulțesc** cu 2, nu primesc un bonus fix. Un „+2 daune" ar fi
+dublat treapta 1 și n-ar fi contat la treapta 10; înmulțirea păstrează aceeași
+promisiune pe toată lungimea lanțului. Se aplică **peste** critic, nu în locul
+lui — o treaptă critică pe disciplina slabă e ×2 din treaptă și încă ×2 de aici
+(treapta 5 pe Cuvinte, contra Spadasinului: **12 daune**).
+
+**Nu se aprinde un marcaj pe ecranul de puzzle,** cum face „CRITIC!". Criticul e
+un *eveniment* — o dată la cinci întrebări — deci merită un fulger.
+Vulnerabilitatea e o *stare*: dublează fiecare treaptă, la nesfârșit. Un marcaj
+la fiecare întrebare n-ar mai fi un accent, ar fi tapet. Ea se anunță o dată,
+înainte de luptă, și stă scrisă tot timpul sub numele inamicului — iar în lanț
+se vede unde contează: în bara lui, care scade de două ori mai repede.
+
+Eticheta e **chihlimbar, nu roșie**: roșul e deja al inamicului în interfața asta
+(bara lui de PV, intenția lui de atac), iar o etichetă roșie s-ar fi citit
+„pericol", când ea spune exact pe dos — *aici e deschis*.
+
+### Alegerea inamicului e o unealtă de test, și scrie asta pe ea
+
+Panoul de la pornirea luptei nu e o mecanică de joc: în jocul terminat
+adversarul vine de la nodul de pe hartă (pasul 6). Dar nu e nici cod de aruncat
+— citește tabelul `INAMICI` și cheamă `reseteaza_lupta()` cu un index, adică fix
+interfața de care va avea nevoie harta („pornește lupta cu inamicul N"). Când
+vine harta, dispare panoul și rămâne funcția.
+
+Butonul de verdict duce acum înapoi în panou, pe amândouă drumurile, ca să se
+poată juca trei lupte la rând fără repornire.
+
+### Artă: zero fișiere noi
+
+Toți trei folosesc aceeași siluetă, cu altă **colorare** (`modulate`, adică o
+înmulțire de culoare peste pixelii existenți): Soldatul neutru, Lăncierul
+albăstrit („oțel rece"), Spadasinul arămiu. Trei armuri desenate ar fi fost artă
+făcută înainte ca cele trei comportamente să fi fost validate ca distractive —
+adică exact ordinea pe care o evităm.
+
+Colorarea se pune pe **figurile** inamicului, nu pe învelișul lor: `impact.gd`
+își scrie singur `modulate` la fiecare lovitură și îl pune înapoi pe alb la
+final, deci o culoare pusă acolo ar fi fost ștearsă la prima lovitură încasată.
+Așa cele două se înmulțesc cum trebuie — fulgerul aprinde figura colorată.
+
+### Ștergerea a ieșit din texte
+
+Numele și descrierile nu mai trimit la rama narativă abandonată: „Cavalerul
+Șters" → **Soldatul**, facțiunea „Cei Șterși" → **Garnizoana** (nume de lucru,
+fără efect mecanic), iar descrierea Fragmentelor și comentariile siluetei s-au
+rescris fără ea. Silueta desenată a rămas neschimbată ca formă — un adversar
+fără chip funcționează în aproape orice ramă medieval-fantasy.
+
+### Ce a rămas de făcut
+
+- **Facțiunea e încă inertă.** Toți trei sunt „Garnizoana" și nu schimbă nimic
+  mecanic. E cârligul pentru zone de hartă și echipament anti-facțiune.
+- **Rezistențele** sunt tot o listă goală, spre deosebire de vulnerabilitate,
+  care acum chiar face ceva.
+- **Vulnerabilitatea se compară ca text** cu numele disciplinei din
+  `OBELISCURI`. O scrii greșit și nu se întâmplă nimic, fără nicio eroare. Se
+  strânge singură la pasul 1 (disciplinele devin date, cu identificatori).
+- **Cifrele n-au fost jucate destul.** PV-urile (30/34/40) și daunele sunt o
+  scară, nu un echilibru — Spadasinul mai ales: dacă lupta cu el nu se simte
+  vizibil mai scurtă când ataci pe Cuvinte, cifra e greșită, nu ideea.
 
 ---
 
