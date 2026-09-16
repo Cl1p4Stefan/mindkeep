@@ -122,6 +122,19 @@ func _descriere_sursa() -> String:
 	return CALE_INTREBARI
 
 
+## Trivia ÎȘI POARTĂ SINGURĂ de grijă la repetiții, deci întoarce șir gol și
+## oprește reîncercarea din `puzzle.gd`.
+##
+## Nu e o scutire, e o unealtă mai bună. Baza nu poate decât să ceară din nou
+## și să spere, fiindcă o disciplină generativă nu-și poate enumera
+## întrebările. Trivia ȘI LE POATE: sunt 45 pe nivel, într-un fișier. De aceea
+## trage din sac (`Sac.extrage`), care nu repetă niciuna cât timp mai există
+## una nevăzută — o garanție, nu o probabilitate. Două mecanisme peste
+## aceleași întrebări ar fi șters exact garanția asta.
+func _identitate_intrebare(_q: Dictionary) -> String:
+	return ""
+
+
 # ─────────────────────────────────────────────────────────────
 # AMESTECAREA VARIANTELOR
 # ─────────────────────────────────────────────────────────────

@@ -17,7 +17,7 @@
 | 6. Harta de expediție | ❌ |
 | 7. Cetatea | ❌ |
 | 8. Save/Load | 🟡 tezaurul și sacul de întrebări știu deja să se serializeze (`spre_dictionar` / `din_dictionar`); scrierea pe disc, nu încă |
-| 9. Celelalte discipline | 🟡 Cultură generală ✅ (135 de întrebări, fără repetiții) · Logica ✅ · Cuvinte ✅ · celelalte 5 ❌ |
+| 9. Celelalte discipline | 🟡 Cultură generală ✅ (135 de întrebări) · Logica ✅ (80 de categorii) · Cuvinte ✅ · toate trei fără repetiții pe expediție · celelalte 5 ❌ |
 | 10–13. Generator de inamici, artă, web | ❌ (artă parțial: figurile principale și piesele de pe butoanele de Obelisc au imagini reale) · Regina: **amânată**, vezi CLAUDE.md |
 
 Din pasul 10 (generatorul de inamici) s-a făcut deja partea care nu costa nimic
@@ -27,6 +27,154 @@ buget, generare) rămâne acolo unde era.
 Am sărit peste ordinea recomandată la pasul 12 (artă): imaginile pentru rege,
 cavaler și pentru cele trei piese de șah de pe butoane au intrat mai devreme, dar
 restul rămâne placeholder. Bucla de luptă e în continuare cea validată, nu arta.
+
+---
+
+## Sesiunea măsurătorii (16 septembrie 2026) — Logica era dreaptă, ochiul nu
+
+**Ce s-a schimbat:** bănuiala că Obeliscul Logicii dă prea des un anumit tip de
+întrebare s-a dovedit **falsă, măsurat**. În schimb, măsurătoarea a scos la
+iveală altceva: identitatea unei întrebări era greșit definită, iar
+anti-repetiția de la Cultură generală nu acoperea celelalte două discipline.
+Ambele sunt reparate. Baza de categorii a Logicii a crescut de la 51 la 80.
+
+### Întâi măsurat, apoi reparat
+
+Regulă pe care merită s-o țin: **nu repara o distribuție pe care n-ai
+măsurat-o.** O întrebare de tipul „parcă vin prea multe șiruri numerice" se
+simte adevărată și e imposibil de verificat din memorie — creierul ține minte
+aglomerările, nu golurile dintre ele.
+
+Măsurat prin scena reală (`_alege_reteta`, cu nivelul venind din treaptă exact
+ca în `lupta.gd: nivel_treapta`):
+
+| Trageri | ANALOGIE | DEDUCȚIE | INTRUS | SILOGISM | ȘIR |
+|---|---|---|---|---|---|
+| 200 | 27% | 21% | 16% | 16% | 21% |
+| 2 000 | 19% | 22% | 20% | 19% | 20% |
+| 20 000 | 19% | 20% | 20% | 20% | 20% |
+
+**Mecanismul e perfect uniform.** Alegerea în două trepte din `_alege_reteta` —
+întâi tipul, apoi tiparul — face exact ce promite: cele 9 tipare de șiruri
+numerice nu trag ȘIR la 9/17, ci la 1/5, ca toate celelalte.
+
+**Și totuși percepția nu minte.** Uită-te la primul rând: la 200 de trageri —
+adică o sesiune lungă, cât un joc de seară — un tip poate ieși 27% și altul
+16%. Aia e o diferență pe care ochiul o simte, și e pur noroc. Cifra care
+liniștește (20%) se vede abia la 20 000 de trageri, adică la o sută de seri.
+Deci răspunsul cinstit e: **distribuția e corectă, iar aglomerările dintr-o
+sesiune sunt reale, nu imaginate — doar că nu sunt un bug.** Dacă vreodată
+chiar deranjează, soluția nu e să umblu la probabilități, ci să trec și
+alegerea tipului printr-un sac. Nu e cazul azi.
+
+### Ce a găsit măsurătoarea în schimb: „Care nu se potrivește?"
+
+Prima variantă a măsurătorii număra întrebări distincte după ENUNȚ. Rezultatul
+pentru Intrusul, la toate nivelurile:
+
+```
+INTRUSUL: 1 distincte / 45 trageri (cea mai repetata: 45x)
+```
+
+Nu era un bug al generatorului — era unul al măsurătorii, și exact el m-a dus
+la bugul real. Enunțul fiecărei întrebări de tip Intrusul este „Care nu se
+potrivește?". **Tot ce face o astfel de întrebare să fie ea stă în variante.**
+
+De aici, regula: **identitatea unei întrebări e enunțul PLUS variantele.**
+Amândouă jumătățile, și fiecare pentru alt motiv:
+
+- numai enunțul nu ajunge — vezi Intrusul, unde 45 de întrebări diferite arătau
+  ca una repetată de 45 de ori;
+- variantele trebuie **sortate**, fiindcă se amestecă la fiecare apariție
+  (`_amesteca`). Nesortate, aceeași întrebare ar primi de fiecare dată altă
+  identitate — adică nicio repetare n-ar fi detectată vreodată.
+
+### Anti-repetiția s-a mutat în `puzzle.gd`, pentru toate disciplinele
+
+Sesiunea trecută, sacul acoperea doar Cultura generală. Acum regula stă în baza
+comună și se aplică oricărei discipline, **inclusiv celor care nu există încă**.
+E același motiv pentru care există `puzzle.gd`: altfel ar fi trei copii ale
+aceleiași reguli, cu trei șanse să se despartă pe furiș — iar la a opta
+disciplină, opt.
+
+`porneste()` nu mai cheamă `_compune_intrebare()` direct, ci
+`_compune_nerepetata()`, care cere o întrebare până iese una nevăzută.
+
+### Două mecanisme, fiindcă sunt două feluri de disciplină
+
+Asta e decizia de proiectare a sesiunii, și merită ținută minte:
+
+| Fel | Cine | Mecanism | Ce oferă |
+|---|---|---|---|
+| **alege** dintr-o listă finită | Cultură generală (135 de întrebări în fișier) | `Sac.extrage()` | **garanție**: nicio repetare cât mai există o întrebare nevăzută |
+| **fabrică** întrebări | Logica, Cuvinte | `Sac.retine()` + reîncercare | **probabilitate**: se cere alta când iese una văzută |
+
+Logica nu poate folosi sacul, oricât mi-aș dori: „șirul care adună 4, pornind de
+la 7" nu e o intrare într-un tabel, e un rezultat care nu există până nu-l ceri.
+Mulțimea întrebărilor ei posibile e uriașă și nu se poate scrie pe bilete. Ce se
+poate face e un registru și o reîncercare — iar cu zeci de mii de întrebări
+posibile și câteva zeci văzute, prima reîncercare reușește aproape întotdeauna.
+
+Trivia își spune „mă ocup singură" întorcând șir gol din `_identitate_intrebare`.
+Nu e o scutire, e unealta mai bună: două mecanisme peste aceleași întrebări ar fi
+șters exact garanția pe care o dă sacul.
+
+**Și nu eșuează niciodată.** Dacă după 12 încercări tot iese ceva văzut, se
+acceptă repetarea și se deschide un ciclu nou. O repetare rară e un preț mult
+mai mic decât un Obelisc care refuză să se deschidă în mijlocul unui lanț.
+
+Eticheta sacului se deduce din numele fișierului (`logica.gd` → `"logica"`), ca
+o disciplină nouă să nu poată uita să-și dea un nume — și nici să-l scrie din
+greșeală pe al altcuiva, ceea ce le-ar amesteca registrele fără niciun semn
+vizibil.
+
+### Măsurat, înainte și după
+
+120 de trageri pe disciplină și nivel — o expediție lungă:
+
+| | înainte | după |
+|---|---|---|
+| Logica | până la 6% repetate (ȘIR NUMERIC) | **0 din 120** |
+| Cuvinte | până la 19% repetate (DEFINIȚIE, nivel III) | **0 din 120** |
+| Cultură generală | deja pe sac | 45 distincte, apoi ciclu nou |
+
+Zero repetări consecutive peste tot, inclusiv la granițele dintre cicluri.
+
+Cultura generală arată „45 distincte din 120" fiindcă poolul ei chiar are 45 de
+întrebări pe nivel: la a 46-a tragere sacul se golește și începe un ciclu nou.
+Nu e o scăpare, e limita de conținut — și se vede exact unde e.
+
+### 51 → 80 de categorii la Logică
+
+Regulile din antetul lui `logica.gd` sunt respectate și verificate automat la
+scriere: minimum 4 membri per categorie, minimum 2 categorii per domeniu,
+**categorii disjuncte** (niciun membru în două categorii — altfel „intrusul" ar
+avea două răspunsuri bune).
+
+| Domeniu | Înainte | Acum |
+|---|---|---|
+| natura | 12 | 16 |
+| stiinta | 9 | 13 |
+| geografie | 8 | 13 |
+| obiecte | 7 | 11 |
+| istorie | 5 | 10 |
+| arta | 5 | 9 |
+| abstract | 5 | 8 |
+| **total** | **51** | **80** — 479 de membri unici |
+
+Am adăugat dinadins **perechi în același domeniu**: „vicii" lângă „virtuți",
+„piese de armură" lângă „arme medievale", „rozătoare" lângă „canide". Ele sunt
+combustibil pentru generatoarele GRELE — `_intrus_din_acelasi_domeniu` și
+`_analogie_stransa` —, cele care fac diferența dintre „leu, tigru, ghepard,
+ciment" și o întrebare care chiar te pune să te uiți.
+
+### Ce a rămas de făcut aici
+
+- `Sac.expeditie_noua()` tot așteaptă harta (pasul 6).
+- Cuvintele au 60 de cuvinte în 9 găleți; DEFINIȚIE la nivelul III era cel mai
+  aglomerat colț înainte de reparație. Când extind vocabularul, acolo e nevoia.
+- Dacă vreodată aglomerările dintr-o sesiune chiar deranjează, alegerea TIPULUI
+  din `_alege_reteta` poate trece și ea prin sac. Măsurat, azi nu e nevoie.
 
 ---
 

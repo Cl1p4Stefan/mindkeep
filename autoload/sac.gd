@@ -45,11 +45,26 @@ extends Node
 ## ─────────────────────────────────────────────────────────────
 ## DE CE E GENERIC, ȘI NU „sacul de trivia"
 ##
-## Nimic de mai jos nu știe ce e o întrebare. Primește o listă și întoarce
-## un element din ea. Asta înseamnă că a doua disciplină care are nevoie de
-## „fără repetiții" (Cuvinte are un fișier finit, la fel Logica pentru
-## categorii) nu adaugă cod aici — adaugă o CHEIE. Aceeași regulă ca la
-## Obeliscuri și la resurse: datele într-un tabel, codul citește tabelul.
+## Nimic de mai jos nu știe ce e o întrebare. Primește o listă (sau un text)
+## și întoarce un răspuns. O disciplină nouă nu adaugă cod aici — adaugă o
+## CHEIE. Aceeași regulă ca la Obeliscuri și la resurse: datele într-un
+## tabel, codul citește tabelul.
+##
+## ────────────────────────────────────────────────────────────
+## DOUĂ FORME, FIINDCĂ SUNT DOUĂ FELURI DE DISCIPLINĂ
+##
+##   `extrage()` — pentru cine ALEGE dintr-o listă finită (Trivia, cu cele
+##                 135 de întrebări din fișier). E o GARANȚIE: nu poți vedea
+##                 de două ori aceeași întrebare cât timp mai există una
+##                 nevăzută.
+##
+##   `retine()`  — pentru cine FABRICĂ întrebări (Logica, Cuvinte). Nu se
+##                 poate garanta nimic, fiindcă lista nu există ca să fie
+##                 golită; se ține un registru și se cere altă întrebare când
+##                 iese una văzută. Vezi nota dinaintea funcției.
+##
+## Amândouă scriu în aceleași sertare, deci `expeditie_noua()` și save-ul
+## nu trebuie să știe care disciplină folosește care formă.
 
 
 ## Ce s-a tras deja, în ciclul curent: „cheia sacului" → listă de identități.
@@ -63,7 +78,8 @@ var _ultima := {}
 
 
 # ─────────────────────────────────────────────────────────────
-# SINGURA FUNCȚIE PE CARE O CHEAMĂ O DISCIPLINĂ
+# PRIMA FORMĂ: SACUL PROPRIU-ZIS
+# Pentru disciplinele care ALEG dintr-o listă finită, scrisă într-un fișier.
 # ─────────────────────────────────────────────────────────────
 
 ## Trage un element din `elemente` care n-a mai ieșit în ciclul curent.
@@ -118,6 +134,52 @@ func extrage(cheie: String, elemente: Array, camp_id := "") -> Variant:
 	_extrase[cheie] = vazute
 	_ultima[cheie] = id
 	return ales
+
+
+# ────────────────────────────────────────────────────────────
+# CEALALTĂ FORMĂ: REGISTRUL
+#
+# `extrage()` de mai sus cere un lucru pe care nu orice disciplină îl poate
+# da: LISTA ÎNTREAGĂ din care alege. Trivia o are — 135 de întrebări scrise
+# într-un fișier. Logica și Cuvintele nu: ele nu ALEG întrebări, ele le
+# FABRICĂ. „Șirul care adună 4, pornind de la 7" nu e o intrare într-un
+# tabel, e un rezultat care nu există până nu-l ceri. Mulțimea tuturor
+# întrebărilor posibile e uriașă și nu se poate scrie pe bilete.
+#
+# Deci sacul nu se aplică, și rămâne singurul lucru care se poate face: le
+# lași să fabrice, iar dacă iese ceva ce s-a mai văzut, ceri alta. Nu mai e
+# o garanție, e o reîncercare — dar cu zeci de mii de întrebări posibile și
+# câteva zeci văzute, prima reîncercare reușește aproape întotdeauna.
+#
+# Registrul folosește ACELEAȘI sertare ca sacul (`_extrase`), deci „expediție
+# nouă" golește și una, și alta, iar save-ul le ia pe amândouă dintr-un foc.
+# ────────────────────────────────────────────────────────────
+
+## „Am mai văzut asta?" Și, dacă nu, o trece în registru.
+##
+## Întoarce `true` dacă identitatea e NOUĂ (și atunci o reține), `false` dacă
+## a mai apărut în expediția curentă. Cele două treburi stau într-o singură
+## funcție dinadins: despărțite în „verifică" și „reține", ar exista un loc
+## în care se poate uita a doua, iar bug-ul ăla nu se vede decât ca „parcă
+## se repetă ceva, uneori".
+func retine(cheie: String, identitate: String) -> bool:
+	var vazute: Array = _extrase.get(cheie, [])
+	if vazute.has(identitate):
+		return false
+	vazute.append(identitate)
+	_extrase[cheie] = vazute
+	_ultima[cheie] = identitate
+	return true
+
+
+## Ciclu nou pentru UN singur sac: tot ce s-a văzut se uită.
+##
+## Chemată când reîncercările nu mai găsesc nimic nou — semn că fântâna a
+## secat pentru combinația asta de disciplină și nivel. Alternativa ar fi să
+## refuzi întrebarea, iar asta ar opri lupta. O repetare e un preț mult mai
+## mic decât un Obelisc care nu mai răspunde.
+func recicleaza(cheie: String) -> void:
+	_extrase[cheie] = []
 
 
 ## Golește toate sacurile: expediție nouă, toate întrebările redevin noi.

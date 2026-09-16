@@ -89,6 +89,12 @@ const TIMP_MINIM := 8.0
 
 const PRAG_URGENTA := 5.0     # sub atâtea secunde, bara devine roșie
 
+# De câte ori cerem o întrebare nouă înainte să acceptăm una deja văzută.
+# 12 fiindcă o încercare costă microsecunde, iar la disciplinele generative
+# prima reușește aproape întotdeauna: cifra contează doar la capătul rău,
+# când o combinație de disciplină și nivel are puține întrebări posibile.
+const INCERCARI_FARA_REPETITIE := 12
+
 # Culorile de după răspuns: verdele care arată varianta corectă, roșul care
 # marchează alegerea greșită. Nu există și un cuvânt scris („CORECT"): în
 # clipa aia te uiți la butonul pe care ai apăsat, nu la un rând de text de
@@ -344,6 +350,82 @@ func _descriere_sursa() -> String:
 	return ""
 
 
+# ────────────────────────────────────────────────────────────
+# FĂRĂ REPETIȚII, PENTRU TOATE DISCIPLINELE DEODATĂ
+#
+# Stă în bază, nu în fiecare disciplină, din exact motivul pentru care există
+# fișierul ăsta: altfel ar fi trei copii ale aceleiași reguli, cu trei șanse
+# să se despartă pe furiș — iar la a opta disciplină, opt. Așa, o disciplină
+# nouă primește „fără repetiții" fără să scrie o linie.
+# ────────────────────────────────────────────────────────────
+
+## Numele disciplinei pentru sac, dedus din numele fișierului: `logica.gd` →
+## „logica". Dedus, nu scris de mână, ca o disciplină nouă să nu poată uita
+## să-și dea un nume — și nici să-l scrie din greșeală pe al altcuiva, ceea ce
+## le-ar amesteca registrele fără niciun semn vizibil.
+func _eticheta_sac() -> String:
+	return get_script().resource_path.get_file().get_basename()
+
+
+## CE ANUME face două întrebări „aceeași întrebare".
+##
+## Implicit: enunțul PLUS variantele, sortate. Amândouă jumătățile sunt
+## necesare, și fiecare dintr-un motiv diferit:
+##
+##   • numai enunțul nu ajunge. „Care nu se potrivește?" e enunțul FIECĂREI
+##     întrebări de tip Intrusul — tot ce o face să fie ea stă în variante.
+##     Măsurat înainte de schimbarea asta: 45 de întrebări diferite arătau ca
+##     o singură întrebare repetată de 45 de ori.
+##   • sortarea e ce face identitatea stabilă. Variantele se amestecă la
+##     fiecare apariție (vezi `_amesteca` din Trivia), deci nesortate ar da
+##     de fiecare dată altă identitate — adică niciodată o repetare.
+##
+## ȘIR GOL = „mă ocup singură de repetiții". Trivia întoarce gol fiindcă ea
+## trage direct din sac (`Sac.extrage`), care e o GARANȚIE, nu o reîncercare.
+func _identitate_intrebare(q: Dictionary) -> String:
+	var variante: Array = (q.get("variante", []) as Array).duplicate()
+	variante.sort()
+	return "%s|%s" % [q.get("text", ""), "|".join(variante)]
+
+
+## Cere o întrebare care n-a mai apărut în expediția curentă.
+##
+## Nu poate garanta nimic — disciplinele generative nu-și pot enumera
+## întrebările posibile, deci nu se poate face un sac din ele (vezi
+## `autoload/sac.gd`). Ce poate face e să ceară din nou.
+##
+## ȘI NU EȘUEAZĂ NICIODATĂ. Dacă după toate încercările tot iese ceva văzut,
+## întoarce ultima întrebare și deschide un ciclu nou. O repetare rară e un
+## preț mult mai mic decât un Obelisc care refuză să se deschidă în mijlocul
+## unui lanț — și ăsta e genul de compromis care trebuie decis aici, o dată,
+## nu redescoperit în fiecare disciplină.
+func _compune_nerepetata(nivel: int) -> Dictionary:
+	var cheie := "%s:%d" % [_eticheta_sac(), nivel]
+	var ultima := {}
+
+	for incercare in range(INCERCARI_FARA_REPETITIE):
+		var intrebare := _compune_intrebare(nivel)
+		# Dicționar gol = „n-am putut". Nu reîncercăm: dacă fișierul lipsește,
+		# a doua cerere va lipsi la fel, doar mai târziu.
+		if intrebare.is_empty():
+			return intrebare
+
+		var identitate := _identitate_intrebare(intrebare)
+		if identitate == "":
+			return intrebare   # disciplina se ocupă singură (Trivia)
+		if Sac.retine(cheie, identitate):
+			return intrebare   # nouă: gata
+
+		ultima = intrebare
+
+	# Fântâna a secat pentru disciplina și nivelul ăsta. Ciclu nou, iar
+	# întrebarea pe care tocmai o servăm intră în el — ca să nu iasă din nou
+	# imediat, chiar ea.
+	Sac.recicleaza(cheie)
+	Sac.retine(cheie, _identitate_intrebare(ultima))
+	return ultima
+
+
 # ─────────────────────────────────────────────────────────────
 # CITITORUL DE JSON, comun
 #
@@ -416,7 +498,7 @@ func porneste(nivel: int, context := "", scurtare := 0.0) -> void:
 	# AICI se termină tot ce știe baza despre conținut. Ce urmează mai jos e
 	# identic pentru orice disciplină, fiindcă lucrează pe un dicționar, nu pe
 	# o întrebare de trivia sau pe un șir numeric.
-	var intrebare := _compune_intrebare(nivel)
+	var intrebare := _compune_nerepetata(nivel)
 	if not _intrebare_buna(intrebare):
 		_fara_intrebari()
 		return
