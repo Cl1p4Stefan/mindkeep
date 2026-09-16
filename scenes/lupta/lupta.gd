@@ -12,7 +12,10 @@ extends Control
 # ─────────────────────────────────────────────────────────────
 const PA_PE_RUNDA := 3          # PA primite la începutul fiecărei runde (nu se reportează)
 const COST_OBELISC := 1         # o activare = 1 PA, indiferent câte trepte urmează
-const PV_MAX_JUCATOR := 15      # Regele = PV-ul tău
+# PV-ul MAXIM nu mai e o constantă aici: e al expediției (`Expeditie.PV_MAX`).
+# Regula „PV-ul nu se reface între lupte" înseamnă exact asta — lupta îl
+# împrumută la început și îl dă înapoi la sfârșit, dar nu îl deține.
+# `pv_max_jucator` de mai jos e copia lui de lucru, pusă în `reseteaza_lupta()`.
 # PV-ul inamicului NU mai e o constantă: fiecare rând din tabelul `INAMICI`
 # și-l aduce pe al lui. Valoarea de acum trăiește în `pv_max_inamic`, jos, în
 # starea luptei — o constantă ar fi însemnat un singur inamic pentru totdeauna.
@@ -123,6 +126,7 @@ const FRAGMENTE_VICTORIE := 10        # simplul fapt că ai învins
 const FRAGMENTE_PV_INTREG := 10       # cât ia cineva care termină cu PV plin
 const FRAGMENTE_PE_TREAPTA_LANT := 1  # per treaptă din cel mai lung lanț
 const FRAGMENTE_PE_CRITIC := 3        # per lovitură critică din toată lupta
+const FRAGMENTE_ELITA := 12           # bonus fix, peste tot restul, la un nod de Elită
 
 # Culorile panoului de recompensă. Liniile obișnuite sunt gri-calme, totalul e
 # auriu (aurul e deja limbajul lucrurilor câștigate), iar o linie care a ieșit
@@ -149,7 +153,7 @@ enum Arhetip {
 
 # NU mai există un „COMUTATOR" de arhetip aici. Era o constantă pe care o
 # schimbai în cod și reporneai jocul; acum inamicul se alege din joc, la
-# pornirea luptei (vezi `arata_alegerea()`). Diferența nu e de comoditate: o
+# pornirea luptei (vezi `_alege_inamicul()`). Diferența nu e de comoditate: o
 # constantă poate ține UN inamic, un tabel plus o variabilă țin oricâți — iar
 # harta de expediție va avea nevoie exact de al doilea lucru.
 
@@ -185,6 +189,10 @@ const NUME_ARHETIP := {
 #       exact de-aia facțiunea și arhetipul sunt două câmpuri, nu unul.
 #   arhetip          — CE FACE în tura lui. O trimitere către o ramură din
 #                      `tura_inamicului()`, nu un text.
+#   cost             — DE LA CE BUGET are voie să apară. Nodurile de la
+#                      începutul hărții au buget mic, cele de la final, mare
+#                      (`Expeditie.BUGET_*`). Fără câmpul ăsta, primul nod al
+#                      unei expediții ar putea fi cel mai greu adversar din joc.
 #   pv               — cât ține. Aici, nu într-o constantă: doi inamici cu
 #                      același PV ar fi o coincidență, nu o regulă.
 #   daune            — cât lovește o lovitură a lui (la GRABNIC: descărcarea)
@@ -203,6 +211,7 @@ const NUME_ARHETIP := {
 const INAMICI := [
 	{
 		"nume": "SOLDATUL",
+		"cost": 1.0,   # bugetul de la care are voie sa apara: de la primul nod
 		"factiune": "Garnizoana",
 		"arhetip": Arhetip.ATAC_CONSTANT,
 		"descriere": "Nu e nimeni anume si nu vrea nimic de la tine. A primit un ordin vechi, pe care nu l-a mai anulat nimeni, si il duce la capat cu aceeasi lovitura, in fiecare tura, pana cade unul din voi.",
@@ -213,6 +222,7 @@ const INAMICI := [
 	},
 	{
 		"nume": "LANCIERUL",
+		"cost": 1.6,   # bugetul de la care are voie sa apara: dupa un nod-doua
 		"factiune": "Garnizoana",
 		"arhetip": Arhetip.GRABNIC,
 		"descriere": "Loveste o singura data, dar isi pregateste lovitura la vedere: numara rundele cu varful lancei coborat spre tine. Ai doua runde in care nu te atinge si una in care te costa jumatate din rege — deci intrebarea nu e daca ataca, ci daca apuci sa-l dobori inainte.",
@@ -224,12 +234,13 @@ const INAMICI := [
 	},
 	{
 		"nume": "SPADASINUL",
+		"cost": 2.2,   # bugetul de la care are voie sa apara: spre mijlocul expeditiei
 		"factiune": "Garnizoana",
 		"arhetip": Arhetip.ATAC_CONSTANT,
 		"descriere": "Rapid, si prea increzator in asta. A invatat sa citeasca arme, nu cuvinte: o intrebare de Cuvinte il prinde descoperit si intra de doua ori mai adanc. Pe restul disciplinelor te taie marunt, tura de tura, si asteapta sa obosesti.",
 		"pv": 40,
 		"daune": 4,
-		"vulnerabilitate": "Cuvinte",
+		"vulnerabilitate": "cuvinte",
 		"colorare": Color(1.00, 0.82, 0.66),
 	},
 ]
@@ -275,65 +286,43 @@ const REZISTENTE_INAMIC: Array[String] = []
 ## Când te-ai hotărât, ștergi nodurile „...Silueta" și scripturile lor.
 const FOLOSESTE_IMAGINI := true
 
-const SCENA_TRIVIA := preload("res://scenes/trivia/trivia.tscn")
-const SCENA_LOGICA := preload("res://scenes/logica/logica.tscn")
-const SCENA_CUVINTE := preload("res://scenes/cuvinte/cuvinte.tscn")
+## Scena unui buton de Obelisc. Se instanțiază de N ori în `_ready()`.
+const SCENA_OBELISC := preload("res://scenes/lupta/obelisc.tscn")
 
-# Datele celor 3 Obeliscuri, ca tabel.
-# Un Array de Dictionary = cea mai simplă „bază de date" din GDScript.
-# Avantajul: ca să adaugi al 4-lea Obelisc, adaugi o linie aici —
-# nu scrii cod nou. Logica de mai jos merge pe orice număr de intrări.
-# Sub COMBO, nivelul nu mai vine de aici: fiecare lanț pornește de la treapta 1
-# și urcă singur. Câmpul „nivel" rămâne folosit doar de regula RECARCARE.
-#
-# „scena" e disciplina propriu-zisă. Toate scenele de puzzle au același contract
-# (`porneste`, `arata_stare`, semnalul `rezolvat`), deci lupta le tratează la
-# fel — nu știe și n-o interesează ce fel de puzzle e înăuntru. Ca să dai altă
-# disciplină unui Obelisc, schimbi scena de pe linia lui. Atât.
-# Din sesiunea în care a apărut `puzzle.gd`, toate trei au scena lor: fiecare
-# moștenește aceeași bază (`scenes/puzzle/puzzle.tscn`) și schimbă doar de unde
-# ia întrebările. De-aia a treia disciplină n-a costat nicio linie schimbată
-# aici, în afară de numele scenei de pe rândul ei.
-#
-# „piesa" și „culoare" sunt înfățișarea Obeliscului, și stau AICI, nu în scenă.
-# Înainte, culoarea trăia în `modulate`-ul butonului din editor și era citită de
-# cod la pornire — adică identitatea unei discipline era împărțită între un tabel
-# și un câmp dintr-un panou de Inspector. Un Obelisc nou însemna două locuri de
-# atins și unul de uitat. Acum toată disciplina încape pe un rând.
-#
-# „imagine" e portofița de artă: gol = folosește piesa desenată (`piesa`), o cale
-# = arată PNG-ul. Fișierul lipsă NU e o eroare — butonul se întoarce la desen și
-# scrie un avertisment. Așa calea poate sta scrisă aici dinainte să existe arta,
-# iar „piesa" rămâne plasa de siguranță: ștergi PNG-ul, jocul merge mai departe.
-# CULORILE DISCIPLINELOR. Fiecare e folosită în patru locuri de pe butonul ei —
-# bordura, numele, halo-ul și acum și piesa de șah — iar de aici se schimbă toate
-# patru deodată. De-aia sunt constante cu nume și nu numere scrise în tabel: o
-# nuanță ajustată într-un singur loc nu poate ieși pe jumătate.
-#
-# Imaginile de pe disc rămân GRI — culoarea se pune la desenare, cu `modulate`
-# (vezi `obelisc.gd`). Așa o schimbare de nuanță e o cifră aici, nu un drum înapoi
-# prin generatorul de imagini.
-const CULOARE_MEMORIE := Color(0.60, 0.85, 1.00)   # albastru
-const CULOARE_LOGICA := Color(0.70, 1.00, 0.60)    # verde
-const CULOARE_CUVINTE := Color(1.00, 0.85, 0.55)   # auriu
+## Unde se întoarce lupta când se termină. Text, nu `preload`: harta preload-ează
+## lupta, iar lupta ar preload-a harta — două scene care se încarcă una pe alta,
+## la infinit. `change_scene_to_file` citește calea abia când e nevoie.
+const SCENA_HARTA := "res://scenes/harta/harta.tscn"
 
-const OBELISCURI := [
-	{
-		"disciplina": "Memorie", "piesa": GlifaSah.Piesa.PION,
-		"imagine": "res://assets/art/pion_sah.png",
-		"culoare": CULOARE_MEMORIE, "nivel": 1, "scena": SCENA_TRIVIA,
-	},
-	{
-		"disciplina": "Logica", "piesa": GlifaSah.Piesa.CAL,
-		"imagine": "res://assets/art/cal_sah.png",
-		"culoare": CULOARE_LOGICA, "nivel": 1, "scena": SCENA_LOGICA,
-	},
-	{
-		"disciplina": "Cuvinte", "piesa": GlifaSah.Piesa.NEBUN,
-		"imagine": "res://assets/art/nebun_sah.png",
-		"culoare": CULOARE_CUVINTE, "nivel": 1, "scena": SCENA_CUVINTE,
-	},
-]
+## Cât de tare e un inamic de Elită față de același inamic obișnuit: PV,
+## daune și răsplată, toate înmulțite cu atât. O singură cifră, fiindcă azi
+## Elita e „același adversar, mai tare". Când va fi altceva (altă purtare, nu
+## alte cifre), locul ei e un câmp în tabelul nodurilor, nu constanta asta.
+const MULTIPLICATOR_ELITA := 1.6
+
+## Câți candidați rămân după ce se taie cei prea slabi pentru buget. Vezi
+## `_alege_inamicul()`. Doi = destulă varietate ca două noduri alăturate să nu
+## dea același adversar, destulă strâmtoare ca dificultatea să urce vizibil.
+const FEREASTRA_INAMICI := 2
+
+# ────────────────────────────────────────────────────────────
+# OBELISCURILE — NU MAI SUNT UN TABEL AICI
+#
+# Erau. Tabelul `OBELISCURI` s-a mutat în `autoload/discipline.gd`, și mutarea
+# n-a fost o curățenie: ecranul de loadout are nevoie de aceeași listă, iar el
+# nu e o luptă. Un tabel de care au nevoie două scene nu mai poate sta în
+# niciuna dintre ele.
+#
+# Ce rămâne aici e LOADOUT-UL: fișele celor N discipline cu care ai intrat în
+# expediția asta, citite o dată în `_ready()` din `Expeditie.loadout`.
+#
+# Lupta nu mai știe câte discipline există în joc — știe doar cu ce a venit
+# jucătorul. De-aia scena nu mai are trei noduri Obelisc scrise de mână:
+# butoanele se construiesc, exact atâtea câte cere loadout-ul. Cu N variabilă,
+# trei noduri fixe în scenă ar fi fost o minciună așteptată să se întâmple.
+# ────────────────────────────────────────────────────────────
+var loadout: Array[Dictionary] = []
+
 
 # ─────────────────────────────────────────────────────────────
 # STAREA LUPTEI (variabile)
@@ -342,13 +331,18 @@ const OBELISCURI := [
 # ─────────────────────────────────────────────────────────────
 var runda := 1
 var pa := 0
-var pv_jucator := PV_MAX_JUCATOR
+var pv_jucator := 0
+var pv_max_jucator := 0
 
 # CINE e inamicul: un index în tabelul `INAMICI`, nu o copie a rândului lui.
 # Un index nu poate ajunge niciodată să difere de tabel; o copie, da — ai
 # schimba o cifră în tabel și lupta ar juca mai departe cu cea veche.
-# Se alege la pornirea luptei (`arata_alegerea()`) și nu se schimbă în timpul ei.
+# Se alege la pornirea luptei (`_alege_inamicul()`) și nu se schimbă în timpul ei.
 var inamic_curent := 0
+
+## E nodul ăsta o Elită? Citit o dată, în `_alege_inamicul()`, și folosit în
+## trei locuri: cifrele inamicului, titlul cardului și răsplata.
+var e_elita := false
 
 # PV-ul lui, și maximul LUI. Al doilea e o variabilă, nu o constantă, fiindcă
 # fiecare inamic vine cu al lui — se copiază din tabel o singură dată, în
@@ -466,8 +460,6 @@ var panou_deschis := false
 @onready var verdict_recompense: VBoxContainer = %VerdictRecompense
 @onready var buton_verdict: Button = %VerdictButon
 # Panoul de alegere a inamicului: lista lui se umple din cod, din `INAMICI`.
-@onready var panou_alegere: Control = %PanouAlegere
-@onready var lista_alegere: VBoxContainer = %AlegereLista
 # Toate înfățișările inamicului, la un loc: silueta desenată și imaginea din
 # arenă, plus perechea lor din portretul cardului. Colorarea se pune pe toate
 # patru deodată (`aplica_infatisarea()`) — altfel ai avea un Spadasin arămiu în
@@ -477,32 +469,20 @@ var panou_deschis := false
 ]
 @onready var figuri_desenate: Array[Control] = [%JucatorSilueta, %InamicSilueta, %PortretInamic]
 @onready var figuri_imagini: Array[Control] = [%JucatorImagine, %InamicImagine, %PortretImagine]
-# Array simplu cu cele 3 butoane, ca să le putem trata în buclă.
-@onready var butoane_obelisc := [%Obelisc1, %Obelisc2, %Obelisc3]
+## Rândul în care se nasc butoanele de Obelisc. Gol în scenă: câte butoane
+## are lupta e o întrebare la care răspunde loadout-ul, nu editorul.
+@onready var rand_obeliscuri: HBoxContainer = %RandObeliscuri
+
+## Butoanele construite, în aceeași ordine ca `loadout`. Indicele dintr-o
+## listă e indicele din cealaltă — tot codul de mai jos se bazează pe asta.
+var butoane_obelisc: Array[Obelisc] = []
 
 
 # `_ready()` e chemată automat de Godot o singură dată, când scena a intrat
 # în joc și toate nodurile există. Aici punem tot ce se face o dată.
 func _ready() -> void:
-	# Configurăm butoanele DIN COD, pe baza tabelului OBELISCURI de sus.
-	# `range(...)` ne dă indicii 0, 1, 2 — avem nevoie de index, nu doar de buton,
-	# ca să știm mai târziu CARE Obelisc a fost apăsat.
-	#
-	# Ce ține de IDENTITATEA Obeliscului (nume, piesă, culoare) se pune o singură
-	# dată, aici: nu se schimbă niciodată în timpul luptei. Ce ține de STAREA lui
-	# (blocat, fără PA) merge prin `seteaza_stare()`, din `actualizeaza_ui()`, care
-	# rulează de zeci de ori pe rundă.
-	for index in range(butoane_obelisc.size()):
-		var buton: Obelisc = butoane_obelisc[index]
-		var date: Dictionary = OBELISCURI[index]
-		buton.configureaza(
-			date["disciplina"], date["piesa"], date["culoare"], date["imagine"]
-		)
-		# SEMNALE: „pressed" e semnalul emis de Button la click.
-		# .connect(functie) = „când se emite, cheamă funcția asta".
-		# .bind(index) = „și trimite-i index-ul ca argument".
-		# Așa scriem O SINGURĂ funcție pentru toate cele 3 butoane.
-		buton.pressed.connect(_pe_obelisc_apasat.bind(index))
+	_pregateste_loadout()
+	_construieste_obeliscurile()
 
 	buton_incheie_tura.pressed.connect(_pe_incheie_tura_apasat)
 	buton_jurnal.pressed.connect(_pe_jurnal_apasat)
@@ -516,7 +496,6 @@ func _ready() -> void:
 	panou_jurnal.visible = false
 	card_inamic.visible = false
 	panou_verdict.visible = false
-	panou_alegere.visible = false
 	ascunde_panou_acum()
 
 	# Se vede un singur set; celălalt rămâne în scenă, ascuns.
@@ -530,7 +509,7 @@ func _ready() -> void:
 	# Doar bara JUCĂTORULUI se pregătește aici: maximul lui e o constantă, deci
 	# adevărat în orice luptă. Barele inamicului (PV și ceas) depind de CARE
 	# inamic e în față, deci se pun în `reseteaza_lupta()`, după ce s-a ales.
-	bara_pv_jucator.max_value = PV_MAX_JUCATOR
+	bara_pv_jucator.max_value = pv_max_jucator
 
 	# Punctele de PA le construim DIN COD, câte unul per PA disponibil.
 	# Dacă mâine PA_PE_RUNDA devine 4, apar patru puncte fără să atingi scena.
@@ -560,21 +539,166 @@ func _ready() -> void:
 		stiluri_pa.append(stil)
 
 	# `resize` face lista exact cât trebuie și o umple cu 0 (= liber).
-	# O derivăm din tabelul OBELISCURI, deci un al 4-lea Obelisc primește
-	# automat propria recărcare, fără să ne amintim să adăugăm un zero aici.
-	disponibil_din.resize(OBELISCURI.size())
+	# O derivăm din LOADOUT, deci merge la fel cu trei Obeliscuri sau cu cinci.
+	disponibil_din.resize(loadout.size())
 
 	# `Muzica` e autoload-ul din autoload/muzica.gd — există global, nu trebuie
 	# creat sau căutat. Dacă piesa cântă deja (ai revenit din altă scenă),
 	# apelul nu face nimic, deci nu repornește melodia de la zero.
 	Muzica.reda(Muzica.Piesa.LUPTA)
 
-	# Pregătim primul inamic din tabel ÎNAINTE să cerem alegerea: așa arena de
-	# sub voal e o luptă adevărată, cu nume, bare și PV, nu o scenă goală. Dacă
-	# alegi tot primul inamic, `reseteaza_lupta()` rulează a doua oară și nu se
-	# schimbă nimic — e ieftin, și scapă de un caz special.
+	# Nodul de expediție e deja ales când ajungem aici (harta l-a pus în
+	# `Expeditie`), deci lupta poate porni pe loc, fără niciun panou între.
 	reseteaza_lupta()
-	arata_alegerea()
+
+
+# ─────────────────────────────────────────────────────────────
+# LEGĂTURA CU EXPEDIȚIA
+#
+# Lupta nu mai e un ecran de sine stătător. Ea împrumută trei lucruri de la
+# `Expeditie` și dă înapoi două:
+#
+#   împrumută   loadout-ul (cu ce lupți), PV-ul (cât ți-a rămas), nodul (pe
+#               cine întâlnești și cât de greu e)
+#   dă înapoi   PV-ul rămas și raportul luptei (lanț, critice, daune)
+#
+# Nimic nu se transmite ca parametru între scene. Tot ce trebuie știut se
+# citește din autoload — fiindcă un parametru pasat între scene e exact lucrul
+# care se pierde la un save, iar o expediție trebuie să se poată relua.
+# ─────────────────────────────────────────────────────────────
+
+## Fișele disciplinelor cu care s-a intrat în expediție.
+##
+## Cheile necunoscute se sar, cu un avertisment: un save vechi poate cere o
+## disciplină ștearsă între timp, și atunci e mai bine să lupți cu două
+## Obeliscuri decât să nu poți porni lupta deloc.
+##
+## Plasa de siguranță de la final e pentru un singur caz, dar unul real: ai
+## deschis `lupta.tscn` direct cu F6, ca să testezi ceva, și nu există nicio
+## expediție. Atunci lupta își face singură un loadout și merge mai departe.
+## O scenă care nu se mai poate porni singură e o scenă pe care n-o mai testezi.
+func _pregateste_loadout() -> void:
+	loadout.clear()
+	for cheie in Expeditie.loadout:
+		var date := Discipline.dupa_cheie(cheie)
+		if date.is_empty():
+			push_warning("Lupta: disciplina necunoscuta '%s' in loadout." % cheie)
+			continue
+		loadout.append(date)
+
+	if loadout.is_empty():
+		push_warning("Lupta: loadout gol — pornita in afara unei expeditii? Iau din catalog.")
+		for i in range(mini(Expeditie.DISCIPLINE_IN_LOADOUT, Discipline.cate())):
+			loadout.append(Discipline.CATALOG[i])
+
+
+## Naște câte un buton pentru fiecare disciplină din loadout.
+##
+## Ce ține de IDENTITATEA Obeliscului (nume, piesă, culoare) se pune o singură
+## dată, aici: nu se schimbă niciodată în timpul luptei. Ce ține de STAREA lui
+## (blocat, fără PA) merge prin `seteaza_stare()`, din `actualizeaza_ui()`.
+func _construieste_obeliscurile() -> void:
+	for copil in rand_obeliscuri.get_children():
+		rand_obeliscuri.remove_child(copil)
+		copil.queue_free()
+	butoane_obelisc.clear()
+
+	for index in range(loadout.size()):
+		var date: Dictionary = loadout[index]
+		var buton: Obelisc = SCENA_OBELISC.instantiate()
+		# EXPAND|FILL — cele N butoane își împart lățimea în părți egale,
+		# oricâte ar fi. Cu trei noduri scrise de mână în scenă, al patrulea
+		# Obelisc ar fi cerut o vizită în editor.
+		buton.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		rand_obeliscuri.add_child(buton)
+		buton.configureaza(
+			date["nume"], date["piesa"], date["culoare"], date["imagine"]
+		)
+		# `.bind(index)` trimite indicele funcției: o singură funcție pentru
+		# toate butoanele, oricâte ar fi.
+		buton.pressed.connect(_pe_obelisc_apasat.bind(index))
+		butoane_obelisc.append(buton)
+
+
+## PE CINE ÎNTÂLNEȘTI LA NODUL ĂSTA.
+##
+## Aici se vede granița trasă dinadins între hartă și luptă: **expediția știe
+## cât de GREU e un nod, lupta știe CINE poate fi inamicul.** `Expeditie` n-are
+## niciun nume de inamic în ea și nici nu vrea să aibă — ea produce un buget și
+## o sămânță; tabelul `INAMICI` rămâne treaba luptei.
+##
+## De ce contează: la pasul 10 (generatorul de inamici) tot ce se schimbă e
+## funcția asta. Harta nu află niciodată că s-a întâmplat ceva.
+##
+## Sămânța e A NODULUI, nu a hărții: același nod dă același inamic de fiecare
+## dată când reiei expediția, dar două noduri alăturate dau inamici diferiți.
+## Asta e tot ce înseamnă „reproductibil".
+func _alege_inamicul() -> void:
+	var nod := Expeditie.nod_curent()
+	if nod.is_empty():
+		inamic_curent = 0     # F6 direct pe scena de luptă, fără expediție
+		e_elita = false
+		return
+
+	e_elita = int(nod["tip"]) == Expeditie.Nod.ELITA
+	var buget := float(nod["buget"])
+
+	var rng := RandomNumberGenerator.new()
+	rng.seed = int(nod["samanta"])
+
+	# ── CINE ÎNCAPE ÎN BUGET ──────────────────────────────────
+	# „cost" e cifra prin care un inamic spune cât de devreme are voie să
+	# apară: Soldatul de la primul nod, Spadasinul mai târziu. Fără ea, primul
+	# nod al unei expediții ar putea fi cel mai greu adversar din joc, și un run
+	# s-ar termina în treizeci de secunde din pur ghinion.
+	var candidati: Array[int] = []
+	for i in range(INAMICI.size()):
+		if float(INAMICI[i]["cost"]) <= buget:
+			candidati.append(i)
+	if candidati.is_empty():
+		candidati.append(_cel_mai_ieftin())   # buget sub oricine: primul nod
+
+	# ── ȘI CINE E DEJA SUB NIVEL ──────────────────────────────
+	# „încape în buget" singur nu ajunge, și asta s-a văzut la prima rulare:
+	# Soldatul încape în ORICE buget, deci putea ieși și la nodul de Elită de
+	# la capătul hărții. O expediție care se termină cu același adversar cu
+	# care a început n-are cum să se simtă ca un drum.
+	#
+	# Deci din cei care încap păstrăm doar pe cei mai SCUMPI, o fereastră de
+	# `FEREASTRA_INAMICI`. Efectul secundar e chiar cel căutat: cu doi candidați
+	# în loc de trei, două noduri alăturate au șanse mari să dea adversari
+	# diferiți — alternanță, fără să fie nevoie de o listă de rotație.
+	#
+	# Nu se folosește `Sac` aici, deși ar da alternanță perfectă: sacul trage cu
+	# generatorul GLOBAL, iar atunci același nod n-ar mai da același inamic la o
+	# reluare. Reproductibilitatea e mai valoroasă decât ultimul pic de varietate.
+	candidati.sort_custom(
+		func(a, b): return float(INAMICI[a]["cost"]) > float(INAMICI[b]["cost"])
+	)
+	candidati = candidati.slice(0, maxi(FEREASTRA_INAMICI, 1))
+
+	inamic_curent = candidati[rng.randi_range(0, candidati.size() - 1)]
+
+
+## Indicele celui mai ieftin inamic din tabel. Căutat, nu presupus „0": ordinea
+## rândurilor din `INAMICI` e o chestiune de citit, nu o promisiune.
+func _cel_mai_ieftin() -> int:
+	var ales := 0
+	for i in range(INAMICI.size()):
+		if float(INAMICI[i]["cost"]) < float(INAMICI[ales]["cost"]):
+			ales = i
+	return ales
+
+
+## Cât de tare e inamicul de la nodul ăsta, ca înmulțitor peste cifrele lui din
+## tabel. 1.0 la o luptă obișnuită, mai mult la Elită.
+##
+## Înmulțire, nu adunare, din același motiv ca la vulnerabilitate: un „+10 PV"
+## ar fi însemnat enorm pentru Soldat și puțin pentru Spadasin, deci ar fi
+## schimbat ECHILIBRUL dintre ei, nu doar dificultatea nodului.
+func _multiplicator_nod() -> float:
+	return MULTIPLICATOR_ELITA if e_elita else 1.0
+
 
 
 # ─────────────────────────────────────────────────────────────
@@ -637,8 +761,9 @@ func _pe_obelisc_apasat(index: int) -> void:
 ## regula RECARCARE), iar cronometrul care se scurtează garantează că, mai
 ## devreme sau mai târziu, una dintre ele se întâmplă.
 func ruleaza_lant(index: int) -> void:
-	var date: Dictionary = OBELISCURI[index]
-	var disciplina: String = date["disciplina"]
+	var date: Dictionary = loadout[index]
+	var disciplina: String = date["nume"]     # ce se scrie în jurnal
+	var cheie: String = date["cheie"]         # ce se compară cu vulnerabilitatea
 
 	lant_daune = 0
 	# Lanț nou = combo de la zero. Indicatorul rămâne ascuns până la al
@@ -729,7 +854,7 @@ func ruleaza_lant(index: int) -> void:
 		# `daune_treapta()` răspunde la „cât valorează treapta asta", iar linia
 		# de mai jos la „cât de tare o simte inamicul ăsta". Două întrebări
 		# diferite, două locuri.
-		var slabiciune := e_vulnerabil(disciplina)
+		var slabiciune := e_vulnerabil(cheie)
 		var daune := daune_treapta(treapta)
 		if slabiciune:
 			daune *= MULTIPLICATOR_VULNERABILITATE
@@ -862,7 +987,7 @@ func anima_bara(bara: ProgressBar, valoare: float) -> void:
 func mai_ai_ce_face() -> bool:
 	if pa < COST_OBELISC:
 		return false
-	for index in range(OBELISCURI.size()):
+	for index in range(loadout.size()):
 		if not e_blocat(index):
 			return true
 	return false
@@ -908,7 +1033,7 @@ func verifica_final_de_tura() -> void:
 ## vizibil și după răspuns, cât alunecă bara de PV.
 ## (`await puzzle.rezolvat` și `puzzle.queue_free()` sunt acum în ruleaza_lant.)
 ##
-## `scena` vine din tabelul OBELISCURI. Lupta nu știe CE fel de puzzle e —
+## `scena` vine din fișa disciplinei (`discipline.gd`). Lupta nu știe CE fel de puzzle e —
 ## doar că primește un bool înapoi. De-asta, când adaugi Anagrama, aici nu se
 ## schimbă nimic: pui scena nouă pe linia Obeliscului ei și gata.
 func creeaza_puzzle(scena: PackedScene, nivel: int, context := "", scurtare := 0.0) -> Control:
@@ -1045,7 +1170,7 @@ func _pe_incheie_tura_apasat() -> void:
 		# care „se încheie" într-o luptă deja încheiată nu mai are ce opri —
 		# iar pusă la coadă, verificarea asta lăsa butonul mut exact în cazul
 		# în care aveai cea mai mare nevoie de el: după înfrângere.
-		arata_alegerea()
+		_inapoi_la_harta()
 		return
 	if tura_se_incheie:
 		return   # tura se încheie deja singură — fără două ture de inamic
@@ -1075,7 +1200,7 @@ func tura_inamicului() -> void:
 ## Arhetipul de bază: lovește puțin, dar în fiecare tură. Fără surprize —
 ## presiunea vine din cronometrul puzzle-ului, nu din inamic.
 func _tura_atac_constant() -> void:
-	var daune: int = inamic()["daune"]
+	var daune := daune_inamic()
 	loveste_jucatorul(daune)
 	scrie_in_jurnal("%s ataca pentru %d." % [nume_inamic(), daune])
 
@@ -1091,7 +1216,7 @@ func _tura_grabnic() -> void:
 	ceas_inamic += 1
 	if ceas_inamic >= ceas_max():
 		ceas_inamic = 0
-		var daune: int = inamic()["daune"]
+		var daune := daune_inamic()
 		loveste_jucatorul(daune)
 		scrie_in_jurnal("CEASUL S-A UMPLUT! %s loveste pentru %d." % [nume_inamic(), daune])
 	else:
@@ -1144,6 +1269,16 @@ func termina_lupta(victorie: bool) -> void:
 	var recompensa: Array[Dictionary] = []
 
 	if victorie:
+		# Raportul întâi, răsplata după. Ordinea contează doar pentru citit:
+		# „ce-ai făcut" e cauza, „cât iei" e urmarea.
+		#
+		# Un singur apel cu un dicționar, în loc de patru funcții: când lupta va
+		# avea a cincea statistică, semnătura nu se schimbă.
+		Expeditie.inregistreaza_lupta({
+			"cel_mai_lung_lant": cel_mai_lung_lant,
+			"critice": critice_totale,
+			"daune": pv_max_inamic,
+		})
 		recompensa = acorda_recompensa()
 		scrie_in_jurnal("VICTORIE! Inamicul a cazut in runda %d." % runda)
 		scrie_in_jurnal(text_recompensa_jurnal(recompensa))
@@ -1159,7 +1294,7 @@ func termina_lupta(victorie: bool) -> void:
 	# să nu se desprindă unul de altul.
 	_arata_verdictul(victorie, recompensa)
 
-	buton_incheie_tura.text = "Lupta din nou"
+	buton_incheie_tura.text = "Inapoi pe harta"
 	actualizeaza_ui()
 
 
@@ -1185,11 +1320,11 @@ func _arata_verdictul(victorie: bool, recompensa: Array[Dictionary] = []) -> voi
 		verdict_titlu.text = "VICTORIE"
 		verdict_titlu.modulate = CULOARE_VICTORIE
 		verdict_text.text = "%s a cazut in runda %d.\nAi incheiat lupta cu %d / %d PV." % [
-			nume_inamic(), runda, pv_jucator, PV_MAX_JUCATOR
+			nume_inamic(), runda, pv_jucator, pv_max_jucator
 		]
 		# „Continua", nu „Lupta din nou": după victorie drumul merge înainte.
 		# Când apare harta de expediție, butonul te duce la nodul următor.
-		buton_verdict.text = "Continua"
+		buton_verdict.text = "Inapoi pe harta"
 	else:
 		verdict_titlu.text = "INFRANGERE"
 		verdict_titlu.modulate = CULOARE_INFRANGERE
@@ -1199,7 +1334,10 @@ func _arata_verdictul(victorie: bool, recompensa: Array[Dictionary] = []) -> voi
 		verdict_text.text = "%s te-a doborat in runda %d.\nMai avea %d / %d PV." % [
 			nume_inamic(), runda, pv_inamic, pv_max_inamic
 		]
-		buton_verdict.text = "Lupta din nou"
+		# NU „Luptă din nou". Înfrângerea nu se reia: PV-ul a ajuns zero, deci
+		# expediția s-a încheiat și harta o să spună asta pe față, cu tot cu
+		# sumar. Un buton care ar promite o reluare ar minti.
+		buton_verdict.text = "Vezi sumarul"
 
 	panou_verdict.visible = true
 	# Focus pe buton: se poate apăsa și cu Enter/Space, fără să cauți mouse-ul.
@@ -1240,12 +1378,12 @@ func calculeaza_recompensa() -> Array[Dictionary]:
 	})
 
 	# PROCENT, nu PV brut. Dacă am plăti PV-ul direct, valoarea liniei ar depinde
-	# de cât de mare e regele în lupta asta — iar când PV_MAX_JUCATOR va crește
+	# de cât de mare e regele în lupta asta — iar când pv_max_jucator va crește
 	# din upgrade-uri de cetate, recompensele ar crește singure, pe furiș.
 	# Așa, „am terminat cu jumătate din viață" plătește la fel în orice luptă.
-	var procent_pv := float(pv_jucator) / float(PV_MAX_JUCATOR)
+	var procent_pv := float(pv_jucator) / float(pv_max_jucator)
 	linii.append({
-		"eticheta": "PV ramas (%d / %d)" % [pv_jucator, PV_MAX_JUCATOR],
+		"eticheta": "PV ramas (%d / %d)" % [pv_jucator, pv_max_jucator],
 		"resursa": Tezaur.Resursa.FRAGMENTE,
 		# `roundi` = rotunjește și întoarce un întreg. Fără el am avea 6.67
 		# Fragmente, iar resursele în virgulă nu se pot număra din priviri.
@@ -1271,8 +1409,26 @@ func calculeaza_recompensa() -> Array[Dictionary]:
 ## fix ce a intrat în tezaur — nu o a doua socoteală care ar putea să difere.
 func acorda_recompensa() -> Array[Dictionary]:
 	var linii := calculeaza_recompensa()
+
+	# ELITA PLĂTEȘTE MAI MULT, cu același multiplicator cu care lovește. Un nod
+	# mai greu care ar da aceeași răsplată ca unul ușor n-ar fi o alegere, ar fi
+	# o capcană pentru cine nu știe încă harta — iar jocul ăsta nu pedepsește
+	# curiozitatea.
+	if e_elita:
+		for linie in linii:
+			linie["cantitate"] = roundi(int(linie["cantitate"]) * MULTIPLICATOR_ELITA)
+		linii.append({
+			"eticheta": "Elita infranta",
+			"resursa": Tezaur.Resursa.FRAGMENTE,
+			"cantitate": FRAGMENTE_ELITA,
+		})
+
+	# Prin EXPEDIȚIE, nu direct în tezaur. Ea le pune în amândouă locurile:
+	# în averea permanentă și în socoteala runului, pe care o cere sumarul.
+	# Două adăugiri separate ar fi însemnat două numere care pot ajunge să
+	# difere — exact felul de bug pe care nu-l vezi luni de zile.
 	for linie in linii:
-		Tezaur.adauga(linie["resursa"], linie["cantitate"])
+		Expeditie.incaseaza(linie["resursa"], linie["cantitate"])
 	return linii
 
 
@@ -1373,23 +1529,50 @@ func _rand_recompensa(
 	return rand
 
 
-## Butonul panoului de verdict — deocamdată duce înapoi la alegerea inamicului,
-## pe amândouă drumurile, fiindcă încă nu există unde să continui. Aici se leagă
-## harta de expediție, când ajungem la ea: victoria te întoarce pe hartă, la
-## nodul următor; înfrângerea încheie expediția și te trimite în cetate.
+## Butonul panoului de verdict. Amândouă drumurile duc în ACELAȘI loc — harta —
+## fiindcă harta e cea care știe ce înseamnă fiecare: după victorie deschide
+## nodurile următoare, după înfrângere încheie expediția și arată sumarul.
+##
+## Lupta NU decide asta. Ea nu știe dacă nodul ăsta era ultimul, și nici nu
+## trebuie: singurul lucru pe care îl raportează e cât PV a mai rămas. Dacă
+## ar decide ea, ar exista două locuri care socotesc „s-a terminat expediția?",
+## iar al doilea s-ar înșela într-o zi.
 func _pe_verdict_apasat() -> void:
 	panou_verdict.visible = false
-	arata_alegerea()
+	_inapoi_la_harta()
+
+
+## Predă PV-ul înapoi expediției și schimbă scena.
+##
+## PV-ul se scrie AICI, într-un singur loc, pe amândouă drumurile — și la
+## victorie, și la înfrângere. Pus în `termina_lupta()`, ar fi trebuit scris de
+## două ori; pus în două ramuri, ar fi fost uitat într-una.
+func _inapoi_la_harta() -> void:
+	Expeditie.seteaza_pv(pv_jucator)
+	get_tree().change_scene_to_file(SCENA_HARTA)
 
 
 ## Readuce starea la valorile de start. Ca să testezi rapid, fără să dai F5.
 func reseteaza_lupta() -> void:
 	runda = 1
-	pv_jucator = PV_MAX_JUCATOR
+
+	# CINE ȘI CÂT DE GREU — din nodul de expediție, înainte de orice cifră.
+	_alege_inamicul()
+
+	# PV-UL NU SE REFACE ÎNTRE LUPTE. Se împrumută de la expediție așa cum a
+	# rămas după nodul de dinainte, și se dă înapoi în `termina_lupta()`.
+	# Asta e regula care transformă un șir de lupte într-o EXPEDIȚIE: fără ea,
+	# fiecare nod ar fi un meci separat și drumul n-ar mai conta.
+	pv_max_jucator = Expeditie.pv_max
+	pv_jucator = Expeditie.pv
+	bara_pv_jucator.max_value = pv_max_jucator
 	# Inamicul ales își aduce cifrele ACUM, o singură dată. De aici încolo lupta
 	# citește variabilele, nu tabelul — deci nimic din ce se întâmplă în luptă
 	# nu poate ajunge la datele de bază și nu le poate strica.
-	pv_max_inamic = inamic()["pv"]
+	# Cifrele trec prin multiplicatorul nodului: același Soldat, la o Elită,
+	# are mai mult PV și lovește mai tare. `maxi(..., 1)` fiindcă un inamic cu
+	# 0 PV ar fi deja mort, iar unul cu 0 daune n-ar fi un adversar.
+	pv_max_inamic = maxi(roundi(int(inamic()["pv"]) * _multiplicator_nod()), 1)
 	pv_inamic = pv_max_inamic
 	bara_pv_inamic.max_value = pv_max_inamic
 	# Ceasul are maxim doar la arhetipurile care au ceas. La celelalte punem 1,
@@ -1449,6 +1632,14 @@ func inamic() -> Dictionary:
 	return INAMICI[inamic_curent]
 
 
+## Cât lovește inamicul, DUPĂ multiplicatorul nodului. Toate cele trei locuri
+## care aveau nevoie de cifra asta (cele două ramuri de atac și cardul) trec
+## acum pe aici — altfel Elita ar fi lovit ca un inamic obișnuit într-unul din
+## ele, și nu s-ar fi văzut decât ca „parcă e prea ușoară".
+func daune_inamic() -> int:
+	return maxi(roundi(int(inamic()["daune"]) * _multiplicator_nod()), 1)
+
+
 func nume_inamic() -> String:
 	return inamic()["nume"]
 
@@ -1480,14 +1671,15 @@ func ceas_max() -> int:
 
 ## Lovitura asta cade pe slăbiciunea lui?
 ##
-## Comparăm numele disciplinei ca TEXT, cu cel din `OBELISCURI`. E o legătură
-## slabă — o scrii greșit și nu se întâmplă nimic, fără nicio eroare — dar e
-## aceeași monedă cu care sunt scrise deja disciplinele peste tot în fișierul
-## ăsta. Când disciplinele vor deveni date (pasul 1 din ruta de construcție),
-## aici va fi un identificator, nu un șir de litere, și legătura se strânge
-## singură. Până atunci: un singur loc de comparat, ăsta.
-func e_vulnerabil(disciplina: String) -> bool:
-	return inamic()["vulnerabilitate"] == disciplina
+## Se compară CHEIA disciplinei („cuvinte"), nu numele afișat („Cuvinte").
+##
+## Era invers, și comentariul de aici promitea că legătura se va strânge „când
+## disciplinele vor deveni date". Au devenit (`autoload/discipline.gd`), deci
+## s-a strâns: cheia e identificatorul stabil, numele afișat e liber să se
+## schimbe. „Memorie" o să devină „Cultură generală" cândva — iar în ziua aia
+## nicio vulnerabilitate nu trebuie să se strice în tăcere.
+func e_vulnerabil(cheie: String) -> bool:
+	return inamic()["vulnerabilitate"] == cheie
 
 
 ## Aceeași siluetă, altă lumină pe ea.
@@ -1528,7 +1720,7 @@ func text_intentie() -> String:
 	# Un singur „daune" pentru amândouă arhetipurile: la ATAC_CONSTANT e
 	# lovitura de fiecare tură, la GRABNIC descărcarea. Ce se schimbă e CÂND
 	# lovește, nu de unde citim cifra.
-	return str(inamic()["daune"])
+	return str(daune_inamic())
 
 
 ## Ce face inamicul, într-o frază. Folosită doar în card.
@@ -1555,10 +1747,12 @@ func text_comportament(index: int) -> String:
 ## Slăbiciunea inamicului, scrisă pentru ochi. Liniuță dacă n-are — la fel ca
 ## modificatorii și rezistențele, ca rândurile cardului să arate la fel.
 func text_vulnerabilitate(index: int) -> String:
-	var disciplina: String = INAMICI[index]["vulnerabilitate"]
-	if disciplina == "":
+	var cheie: String = INAMICI[index]["vulnerabilitate"]
+	if cheie == "":
 		return "—"
-	return "%s (daune x%d)" % [disciplina, MULTIPLICATOR_VULNERABILITATE]
+	# Pe ecran merge NUMELE, nu cheia. Tabelul ține „cuvinte", jucătorul
+	# citește „Cuvinte" — catalogul e singurul care le leagă.
+	return "%s (daune x%d)" % [Discipline.nume(cheie), MULTIPLICATOR_VULNERABILITATE]
 
 
 ## O listă de etichete, sau o liniuță dacă e goală.
@@ -1638,94 +1832,17 @@ func _construieste_rand(eticheta: String, valoare: String) -> HBoxContainer:
 
 
 # ─────────────────────────────────────────────────────────────
-# ALEGEREA INAMICULUI
+# CUM SE ALEGE INAMICUL — NU MAI E TREABA LUPTEI
 #
-# E o UNEALTĂ DE TEST, și merită spus pe față: în jocul terminat nu-ți alegi
-# adversarul — ți-l dă nodul de pe harta de expediție (pasul 6). Până atunci,
-# singurul mod de a juca al doilea inamic era să schimb o constantă în cod și să
-# repornesc, ceea ce înseamnă că al treilea inamic n-ar fi fost niciodată jucat
-# de două ori la rând.
+# Aici era un panou cu trei rânduri, din care îți alegeai adversarul înainte de
+# fiecare luptă. A dispărut, și nu fiindcă era prost scris: fiindcă harta de
+# expediție face acum exact ce făcea el, o treaptă mai sus. Alegi un NOD, nodul
+# spune cât e de greu, iar `_alege_inamicul()` traduce greutatea în adversar.
 #
-# Nu e cod de aruncat, însă. Panoul citește tabelul `INAMICI` și cheamă
-# `reseteaza_lupta()` cu un index — exact interfața de care va avea nevoie harta
-# („pornește lupta cu inamicul N"). Când vine harta, dispare panoul, rămâne
-# funcția.
+# Comentariul de atunci promitea: „când vine harta, dispare panoul, rămâne
+# funcția". Exact asta s-a întâmplat — `reseteaza_lupta()` n-a trebuit
+# schimbată deloc, doar cine o cheamă.
 # ─────────────────────────────────────────────────────────────
-
-## Deschide alegerea. Nu atinge starea luptei: câtă vreme panoul e sus, arena de
-## dedesubt e cea de dinainte — încă n-ai ales, deci încă nu s-a schimbat nimic.
-func arata_alegerea() -> void:
-	_construieste_alegerea()
-	panou_alegere.visible = true
-	# Primul buton primește focus: se poate porni o luptă și din tastatură.
-	if lista_alegere.get_child_count() > 0:
-		var primul := lista_alegere.get_child(0).get_child(0) as Button
-		if primul != null:
-			primul.grab_focus()
-
-
-## Reconstruiește lista la fiecare deschidere, ca rândurile cardului și cele de
-## recompensă. Un inamic nou în tabel apare aici fără nicio linie de cod — ăsta
-## e testul că tabelul chiar e o bază de date, nu trei variabile îmbrăcate în
-## paranteze pătrate.
-func _construieste_alegerea() -> void:
-	for copil in lista_alegere.get_children():
-		lista_alegere.remove_child(copil)
-		copil.queue_free()
-
-	for index in range(INAMICI.size()):
-		lista_alegere.add_child(_rand_alegere(index))
-
-
-## Un inamic pe listă: butonul cu titlul, sub el ce face, iar dedesubt
-## slăbiciunea — dacă are.
-##
-## De ce trei noduri și nu un buton cu text pe trei rânduri: slăbiciunea are
-## nevoie de CULOAREA ei (chihlimbar), altfel s-ar pierde în aceeași cerneală cu
-## restul. Iar ce trebuie să-ți sară în ochi înainte de luptă e exact ea.
-func _rand_alegere(index: int) -> Control:
-	var date: Dictionary = INAMICI[index]
-
-	var coloana := VBoxContainer.new()
-	coloana.add_theme_constant_override("separation", 2)
-
-	var buton := Button.new()
-	# Titlul spune cele trei lucruri după care alegi: cine, cât ține, cum se
-	# poartă. PV-ul e cifra care se schimbă cel mai des când reechilibrez, deci
-	# merită văzută dinainte, nu descoperită după trei runde.
-	buton.text = "%s   —   %d PV   ·   %s" % [
-		date["nume"], date["pv"], NUME_ARHETIP[date["arhetip"]]
-	]
-	buton.custom_minimum_size = Vector2(0, 42)
-	buton.pressed.connect(_pe_inamic_ales.bind(index))
-	coloana.add_child(buton)
-
-	var detaliu := Label.new()
-	detaliu.text = text_comportament(index) + "."
-	detaliu.modulate = CULOARE_ALEGERE_DETALIU
-	detaliu.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	detaliu.add_theme_font_size_override("font_size", 13)
-	coloana.add_child(detaliu)
-
-	if date["vulnerabilitate"] != "":
-		var slabiciune := Label.new()
-		slabiciune.text = "Vulnerabil la %s: daune x%d." % [
-			date["vulnerabilitate"], MULTIPLICATOR_VULNERABILITATE
-		]
-		slabiciune.modulate = CULOARE_VULNERABIL
-		slabiciune.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-		slabiciune.add_theme_font_size_override("font_size", 13)
-		coloana.add_child(slabiciune)
-
-	return coloana
-
-
-## Ai ales. Asta e toată legătura dintre panou și luptă: un index, și o
-## resetare. Harta de expediție va chema exact aceleași două linii.
-func _pe_inamic_ales(index: int) -> void:
-	panou_alegere.visible = false
-	inamic_curent = index
-	reseteaza_lupta()
 
 
 # ─────────────────────────────────────────────────────────────
@@ -1740,8 +1857,10 @@ func actualizeaza_ui() -> void:
 	# Numele e un BUTON: click pe el deschide cardul cu detaliile inamicului.
 	# „[i]" e singurul indiciu că se poate apăsa — un buton plat, fără fundal,
 	# nu se anunță singur.
-	buton_inamic.text = "%s — %d/%d PV  [i]" % [
-		nume_inamic(), pv_inamic, pv_max_inamic
+	# „ELITĂ" în fața numelui: același adversar, altă greutate. Trebuie să se
+	# vadă în luptă, nu doar pe hartă — altfel cifrele mai mari par un bug.
+	buton_inamic.text = "%s%s — %d/%d PV  [i]" % [
+		"ELITA " if e_elita else "", nume_inamic(), pv_inamic, pv_max_inamic
 	]
 	anima_bara(bara_pv_inamic, pv_inamic)
 
@@ -1759,7 +1878,7 @@ func actualizeaza_ui() -> void:
 	eticheta_vulnerabil.visible = slabiciune != ""
 	if eticheta_vulnerabil.visible:
 		eticheta_vulnerabil.text = "VULNERABIL: %s  x%d" % [
-			slabiciune, MULTIPLICATOR_VULNERABILITATE
+			Discipline.nume(slabiciune), MULTIPLICATOR_VULNERABILITATE
 		]
 
 	# Intenția, anunțată dinainte (ca în Slay the Spire): decizi cu informație
@@ -1778,7 +1897,7 @@ func actualizeaza_ui() -> void:
 	if bara_ceas.visible:
 		anima_bara(bara_ceas, ceas_inamic)
 
-	eticheta_pv_jucator.text = "REGELE (tu) — %d/%d PV" % [pv_jucator, PV_MAX_JUCATOR]
+	eticheta_pv_jucator.text = "REGELE (tu) — %d/%d PV" % [pv_jucator, pv_max_jucator]
 	anima_bara(bara_pv_jucator, pv_jucator)
 
 	# Butoanele se sting singure când n-ai PA — feedback vizual gratuit,

@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Mindkeep"
-run/main_scene="res://scenes/lupta/lupta.tscn"
+run/main_scene="res://scenes/harta/harta.tscn"
 config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -22,6 +22,8 @@ Sunet="*res://autoload/sunet.gd"
 Fereastra="*res://autoload/fereastra.gd"
 Tezaur="*res://autoload/tezaur.gd"
 Sac="*res://autoload/sac.gd"
+Discipline="*res://autoload/discipline.gd"
+Expeditie="*res://autoload/expeditie.gd"
 
 [display]
 

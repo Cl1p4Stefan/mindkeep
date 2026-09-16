@@ -14,9 +14,9 @@
 | 3. Trivia, ca scenă independentă | ✅ gata |
 | 4. Bucla completă a unei lupte | ✅ victorie · înfrângere · recompense (Fragmente) |
 | 5. Trei inamici manuali | ✅ Soldatul · Lăncierul (ceas) · Spadasinul (vulnerabilitate), aleși din joc |
-| 6. Harta de expediție | ❌ |
+| 6. Harta de expediție | ✅ loadout „N din M" · 8-10 noduri ramificate, cu sămânță · Luptă / Elită / Odihnă / Eveniment · sumar de run |
 | 7. Cetatea | ❌ |
-| 8. Save/Load | 🟡 tezaurul și sacul de întrebări știu deja să se serializeze (`spre_dictionar` / `din_dictionar`); scrierea pe disc, nu încă |
+| 8. Save/Load | 🟡 tezaurul, sacul și expediția știu toate să se serializeze (`spre_dictionar` / `din_dictionar`), pe trei straturi de durată; scrierea pe disc, nu încă |
 | 9. Celelalte discipline | 🟡 Cultură generală ✅ (135 de întrebări) · Logica ✅ (80 de categorii) · Cuvinte ✅ · toate trei fără repetiții pe expediție · celelalte 5 ❌ |
 | 10–13. Generator de inamici, artă, web | ❌ (artă parțial: figurile principale și piesele de pe butoanele de Obelisc au imagini reale) · Regina: **amânată**, vezi CLAUDE.md |
 
@@ -27,6 +27,213 @@ buget, generare) rămâne acolo unde era.
 Am sărit peste ordinea recomandată la pasul 12 (artă): imaginile pentru rege,
 cavaler și pentru cele trei piese de șah de pe butoane au intrat mai devreme, dar
 restul rămâne placeholder. Bucla de luptă e în continuare cea validată, nu arta.
+
+---
+
+## Sesiunea hărții (16 septembrie 2026) — pasul 6: lupta nu mai e tot jocul
+
+**Ce s-a schimbat:** până acum jocul ERA o luptă, cu un panou din care îți
+alegeai adversarul. Acum lupta e un NOD dintr-o expediție: îți alegi uneltele,
+alegi un drum pe o hartă ramificată, iar PV-ul, Fragmentele și loadout-ul te
+însoțesc de la un nod la altul.
+
+Scena principală nu mai e `lupta.tscn`, ci `harta.tscn`.
+
+### Cum e structurată starea expediției (partea care contează la Save)
+
+Ăsta e răspunsul la întrebarea pusă în sesiune, și e cel mai important lucru
+din tot ce s-a scris azi. Toată starea trăiește în `autoload/expeditie.gd`, iar
+forma ei a fost decisă de **trei reguli**:
+
+**1. Starea e DATE, nu noduri.** Nicăieri în `expeditie.gd` nu există o
+referință către un Button, un Control sau o scenă. Harta e un `Array` de
+dicționare; ecranul o *desenează*, dar nu o *ține*. Dacă starea ar sta în noduri
+de interfață, „salvează expediția" ar însemna „salvează o bucată de scenă" —
+imposibil de scris în JSON și imposibil de citit peste un an.
+
+**2. Totul e tip simplu.** int, float, bool, String, Array, Dictionary. Niciun
+`Color`, niciun `Vector2`, niciun `PackedScene`. Astea sunt lucruri de DESENAT,
+nu de reținut: culoarea unei discipline se ia din catalog, după cheie, în clipa
+desenării. De-aia `spre_dictionar()` e o copiere, nu o conversie cu douăzeci de
+cazuri.
+
+**3. Legăturile sunt chei text și indici, nu obiecte.** Loadout-ul ține
+`["memorie", "logica"]`, nu fișele disciplinelor. Un nod ține `"spre": [3, 4]`,
+nu nodurile următoare. Un save e o fotografie, iar o fotografie nu poate conține
+obiecte vii.
+
+Un nod de hartă arată așa:
+
+```
+{ "id": 3, "adancime": 2, "coloana": 0, "tip": Nod.LUPTA,
+  "buget": 2.1, "samanta": 88123, "spre": [5, 6] }
+```
+
+#### Cele trei straturi de durată
+
+Prima decizie a oricărui save nu e „cum scriu", ci „ce trăiește cât":
+
+| Strat | Ce | Unde |
+|---|---|---|
+| **Permanent** | Fragmentele | `Tezaur` |
+| **Pe expediție** | harta, poziția, PV-ul, loadout-ul, recordurile, **plus ce întrebări s-au pus deja** | `Expeditie` + `Sac` |
+| **Pe luptă** | runda, PA, ceasul inamicului, lanțul | `lupta.gd` — **nu se salvează** |
+
+Despărțirea asta e ce face save-ul o problemă mică mai târziu. Consecința
+practică a stratului trei: dacă închizi jocul în mijlocul unei lupte, expediția
+se reia **de la nodul ăla**, nu din mijlocul turei 3. E o alegere, nu o scăpare
+— starea unei lupte în desfășurare (tween-uri, un puzzle deschis, un lanț la
+treapta 7) e de zece ori mai greu de serializat decât merită.
+
+Verificat: `spre_dictionar()` → `JSON.stringify()` → `parse` →
+`din_dictionar()` întoarce harta identică, câmp cu câmp. 973 de octeți pentru o
+expediție întreagă.
+
+`Sac.expeditie_noua()` — scrisă acum două sesiuni și lăsată necheamată de nimeni
+— se cheamă în sfârșit, din `Expeditie.incepe()`. Acolo îi era locul.
+
+### „Alege N din M", fără să scrie 3 sau 8 nicăieri
+
+Tabelul disciplinelor s-a mutat din `lupta.gd` în **`autoload/discipline.gd`**.
+Mutarea n-a fost curățenie: ecranul de loadout are nevoie de aceeași listă, iar
+el nu e o luptă. Un tabel de care au nevoie două scene nu mai poate sta în
+niciuna dintre ele.
+
+- **M** = `Discipline.cate()`
+- **N** = `Expeditie.DISCIPLINE_IN_LOADOUT`
+
+Nicăieri altundeva. Ecranul desenează M rânduri și numără până la N; **lupta
+construiește exact atâtea Obeliscuri câte are loadout-ul**. De-aia scena de
+luptă nu mai are trei noduri Obelisc scrise de mână — cu N variabilă, trei
+noduri fixe în scenă ar fi fost o minciună așteptată să se întâmple.
+
+Azi M = 3 și N = 3, deci „alegerea" e le-iei-pe-toate, iar ecranul o spune pe
+față în loc să se prefacă. Singurul moment în care puteam scrie corect regula
+era acum, cât e banală.
+
+Bonus: vulnerabilitatea inamicului se compară acum pe **cheie** (`"cuvinte"`),
+nu pe numele afișat (`"Cuvinte"`). Comentariul vechi promitea că legătura „se
+strânge când disciplinele vor deveni date". Au devenit, deci s-a strâns.
+
+### Harta: straturi, nu noduri răzlețe
+
+Generată din sămânță, cu `RandomNumberGenerator` propriu — **nu** `randi()`
+global, care depinde de câte numere a cerut restul jocului înainte și ar da alte
+hărți după o luptă mai lungă.
+
+5 sau 6 straturi; primul și ultimul cu un nod, cele din mijloc cu două:
+**8 sau 10 noduri**. Primul strat e mereu Luptă (o expediție care începe cu
+odihnă n-are ce odihni); ultimul e mereu Elită.
+
+Legăturile se trag în doi pași, și al doilea e cel care face harta jucabilă:
+fiecare nod primește 1-2 urmași la întâmplare, **apoi se repară** — orice nod
+rămas fără părinte primește unul. Fără pasul doi, generatorul putea produce un
+nod în care nu se poate ajunge. Verificat pe 200 de hărți: toate nodurile
+accesibile, exact un capăt, de fiecare dată.
+
+#### Bugetul de dificultate (pregătit pentru pasul 10)
+
+Fiecare nod are un **buget** care crește cu adâncimea:
+`BUGET_BAZA + BUGET_PE_ADANCIME × adâncime`, ×`BUGET_ELITA` la Elită.
+
+De ce un buget și nu un „nivel 1-2-3": un număr continuu **se poate împărți**.
+Un nod cu 3,2 poate lua un inamic de 2 plus un modificator de 1, sau unul de 3
+simplu. Un „nivel 2" nu poate cumpăra nimic, poate doar să fie. Scris acum, cât
+e ieftin — e greu de introdus într-un generator care merge deja fără el.
+
+Bugetul alege azi tipul nodului, prin ponderi care se schimbă cu adâncimea
+(`PONDERI_NOD`). Măsurat pe 500 de hărți:
+
+| Adâncime | Luptă | Eveniment | Odihnă | Elită |
+|---|---|---|---|---|
+| 1 | 68% | 20% | 9% | 3% |
+| 2 | 54% | 21% | 16% | 10% |
+| 3 | 45% | 20% | 19% | 17% |
+
+Elita pornește aproape imposibilă și devine probabilă; Odihna e rară la început
+(n-ai ce recupera) și crește pe măsură ce expediția te macină.
+
+### Granița dintre hartă și luptă
+
+Cea mai importantă decizie de structură după forma stării:
+
+> **Expediția știe cât de GREU e un nod. Lupta știe CINE poate fi inamicul.**
+
+`Expeditie` n-are niciun nume de inamic în ea și nu vrea să aibă: produce un
+buget și o sămânță. Tabelul `INAMICI` rămâne în `lupta.gd`, iar
+`_alege_inamicul()` traduce greutatea în adversar. La pasul 10 (generatorul de
+inamici), **tot ce se schimbă e funcția aia** — harta nu află niciodată că s-a
+întâmplat ceva.
+
+Sămânța e **a nodului**, nu a hărții: același nod dă același inamic de fiecare
+dată când reiei expediția, dar două noduri alăturate dau adversari diferiți.
+
+Fiecare inamic a primit un câmp **`cost`** — de la ce buget are voie să apară.
+Fără el, primul nod al unei expediții putea fi cel mai greu adversar din joc.
+
+**Și o corectură găsită la prima rulare:** „încape în buget" singur nu ajungea —
+Soldatul încape în ORICE buget, deci ieșea și la nodul de Elită de la capăt. O
+expediție care se termină cu același adversar cu care a început nu se simte ca
+un drum. Acum din cei care încap se păstrează doar cei mai scumpi, o fereastră
+de doi. Efectul secundar e chiar cel căutat: **alternanță**, fără o listă de
+rotație.
+
+N-am folosit `Sac` aici, deși ar da alternanță perfectă: sacul trage cu
+generatorul global, iar atunci același nod n-ar mai da același inamic la o
+reluare. Reproductibilitatea valorează mai mult decât ultimul pic de varietate.
+
+### Regulile de run
+
+| Regulă | Unde trăiește |
+|---|---|
+| PV-ul **nu** se reface între lupte | `Expeditie.pv`. Lupta îl împrumută în `reseteaza_lupta()` și îl dă înapoi în `_inapoi_la_harta()` — un singur loc, pe amândouă drumurile |
+| Doar Odihna vindecă | `Expeditie.odihneste()`, procent din maxim (35%), nu cifră fixă: când PV_MAX va crește din cetate, odihna crește cu el |
+| Fragmentele se acumulează | `Expeditie.incaseaza()` le pune ȘI în tezaurul permanent, ȘI în socoteala runului. Un singur loc care face amândouă — două adăugiri separate ar fi două numere care pot ajunge să difere |
+| Loadout fix pe toată expediția | `Expeditie.loadout`, scris o dată în `incepe()` |
+
+Elita înmulțește PV, daune **și răsplată** cu același 1,6 (plus un bonus fix).
+Un nod mai greu care ar plăti la fel ar fi o capcană pentru cine nu știe încă
+harta — iar jocul ăsta nu pedepsește curiozitatea.
+
+### Finalul, decis într-un singur loc
+
+Lupta nu știe dacă nodul ăsta era ultimul, și nici nu trebuie: singurul lucru pe
+care îl raportează e PV-ul rămas. Amândouă butoanele de verdict duc în același
+loc — harta —, iar `_dupa_un_nod()` din `harta.gd` e **singura** funcție care
+decide: PV zero → înfrângere; fără noduri mai departe → victorie; altfel →
+mergi mai departe. Dacă ar decide și lupta, ar exista două locuri care socotesc
+„s-a terminat expediția?", iar al doilea s-ar înșela într-o zi.
+
+Sumarul arată: noduri parcurse, lupte câștigate, cel mai lung lanț, critice, cea
+mai grea luptă, Fragmente **din expediție** și Fragmente **cu totul** — două
+cifre dinadins, fiindcă sunt două lucruri: una măsoară runul, alta averea care
+rămâne. Și sămânța, la vedere.
+
+Sămânța stă la vedere și în antetul hărții, tot timpul. Un bug raportat ca „se
+blochează la nodul 6" nu se poate reproduce dacă numărul ăla e ascuns în cod.
+
+### Verificat prin scenele reale, nu prin copii ale lor
+
+- loadout: butonul stă blocat la 1/3 și 2/3, se deschide la 3/3;
+- expediție întreagă parcursă nod cu nod: PV 15 → 12 → 9, Odihnă +6 → 15,
+  Fragmente 18 → 34 → 75, Elita plătește 41;
+- **aceeași sămânță, două rulări: drum identic, inamici identici**
+  (`0XSOLD 1+ 3+ 5? 7!LANC` de două ori);
+- semințe diferite → hărți diferite, 8 sau 10 noduri;
+- înfrângere: butonul scrie „Vezi sumarul", harta arată „EXPEDITIE PIERDUTA";
+- „Expediție nouă" întoarce la loadout, cu expediția golită.
+
+### Ce a rămas de făcut aici
+
+- **Evenimentul e placeholder** și o spune pe față în text. Un nod care nu face
+  nimic dar pretinde că face e mai rău decât unul care recunoaște.
+- Lipsește `assets/audio/muzica_harta.ogg` — harta merge în liniște, cu un
+  avertisment în consolă. (`sound_castle.ogg`, netrackuit în repo, ar putea fi
+  exact piesa.)
+- Save/Load pe disc (pasul 8) are acum tot ce-i trebuie: `Tezaur`, `Expeditie`
+  și `Sac` știu toate trei `spre_dictionar()` / `din_dictionar()`.
+- Harta nu are încă zoom sau derulare. La 10 noduri încape; la o expediție
+  lungă, nu va mai încăpea.
 
 ---
 
