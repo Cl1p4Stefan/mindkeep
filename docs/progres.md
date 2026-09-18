@@ -1,6 +1,6 @@
 # MINDKEEP — Jurnal de progres
 
-*Ultima actualizare: 16 septembrie 2026*
+*Ultima actualizare: 17 septembrie 2026*
 *Atașează acest fișier la începutul fiecărei sesiuni noi, împreună cu `CLAUDE.md` și `docs/pitch-document.md`.*
 
 ---
@@ -14,7 +14,7 @@
 | 3. Trivia, ca scenă independentă | ✅ gata |
 | 4. Bucla completă a unei lupte | ✅ victorie · înfrângere · recompense (Fragmente) |
 | 5. Trei inamici manuali | ✅ Soldatul · Lăncierul (ceas) · Spadasinul (vulnerabilitate), aleși din joc |
-| 6. Harta de expediție | ✅ loadout „N din M" · 8-10 noduri ramificate, cu sămânță · Luptă / Elită / Odihnă / Eveniment · sumar de run |
+| 6. Harta de expediție | ✅ loadout „N din M" · 8-10 noduri ramificate, cu sămânță · Luptă / Elită / Odihnă / Eveniment · sumar de run · **aspect: pergament, simboluri de cerneală, trasee punctate** |
 | 7. Cetatea | ❌ |
 | 8. Save/Load | 🟡 tezaurul, sacul și expediția știu toate să se serializeze (`spre_dictionar` / `din_dictionar`), pe trei straturi de durată; scrierea pe disc, nu încă |
 | 9. Celelalte discipline | 🟡 Cultură generală ✅ (135 de întrebări) · Logica ✅ (80 de categorii) · Cuvinte ✅ · toate trei fără repetiții pe expediție · celelalte 5 ❌ |
@@ -27,6 +27,151 @@ buget, generare) rămâne acolo unde era.
 Am sărit peste ordinea recomandată la pasul 12 (artă): imaginile pentru rege,
 cavaler și pentru cele trei piese de șah de pe butoane au intrat mai devreme, dar
 restul rămâne placeholder. Bucla de luptă e în continuare cea validată, nu arta.
+
+---
+
+## Sesiunea aspectului hărții (17 septembrie 2026) — harta arată a hartă
+
+**Ce s-a schimbat:** nimic din reguli. Harta juca deja corect — doar că arăta ca
+un tabel de dreptunghiuri gri pe fundal negru. Acum e un pergament cu simboluri
+desenate cu cerneală și drumuri punctate. Zero linii atinse în `expeditie.gd`:
+toată sesiunea a fost DESEN, și asta se vede în diff.
+
+Reper de stil: harta din Demon's Hand (`assets/art/demons_hand_reference.png`).
+
+### Inversarea paletei — de ce a atins mai mult decât părea
+
+Tot ce era peste hartă fusese construit pentru fundal negru: text deschis, linii
+palide, culori aprinse de disciplină. Pe hârtie veche **toate astea dispar**,
+fiindcă pergamentul e mai luminos decât ele. Nu era o schimbare de culoare, era
+o inversare: cerneală închisă pe deschis, peste tot.
+
+Al doilea lucru, aflat pe parcurs: pe pergament nu ajunge să fie închis. Textura
+are cute, pete și dealuri desenate, iar o sabie neagră peste o umbră maro e o
+mâzgăleală. De-aia fiecare nod are un **halo** — nu e decor, e lizibilitate. Ce
+trebuie să pară e „aici hârtia e curată", nu „aici e o lumină".
+
+Godot n-are umbră moale la desen, dar 14 cercuri concentrice cu opacitate mică
+fiecare dau exact aceeași degradare. (Cu 8 se vedeau inelele — cel mai ieftin
+gradient din lume, dar are nevoie de destule straturi.)
+
+### `scenes/harta/simbol_nod.gd` — un nod nu mai e buton
+
+Un `Button` desenează întotdeauna ceva al lui: fond, chenar, stare de hover. Se
+pot goli toate cu StyleBox-uri, dar atunci rămâne un buton care nu mai e buton.
+Un `Control` obișnuit primește mouse-ul la fel de bine și desenează exact ce-i
+spui. Ce se pierde: focusul cu tastatura — harta nu l-a folosit niciodată.
+
+**Moștenește `Silueta`**, baza scrisă pe 1 septembrie pentru rege și pentru
+piesele de șah. Ea știe deja să potrivească o casetă pătrată în orice cutie, să
+traducă fracțiuni (0..1) în pixeli și să „respire" pe `sin()`. Respirația aia e,
+aici, pulsul nodurilor accesibile: **n-am scris nicio linie de animație**, doar
+i-am dat `amplitudine` din tabel. Așa arată reutilizarea când baza a fost
+desenată cum trebuie — a doua oară nu mai plătești.
+
+Patru simboluri, desenate în cod (sabie, craniu, foc de tabără, semn de
+întrebare), fiecare o listă de numere între 0 și 1. Tipul → funcția de desen e un
+**dicționar**, oglinda lui `DATE_NOD`: un tip de nod nou e un rând plus o
+funcție, nu o ramură nouă prin `_draw()`.
+
+Ierarhia vizuală cerută e și ea un tabel (`INFATISARI`), un rând pe stare:
+
+| Stare | Cerneală | Halo | Puls | În plus |
+|---|---|---|---|---|
+| **Curent** | plină | maxim | da | **aură caldă, pâlpâind** — singura lumină de pe hartă |
+| **Accesibil** | plină | mare | discret | — |
+| **Parcurs** | pe jumătate | mic | — | **X roșu**: „rezolvat", nu „interzis" |
+| **Închis** | estompată | mic | — | — |
+
+Două lucruri diferite (unde ai fost / ce nu-ți e la îndemână) primesc două semne
+diferite. Dacă ar fi amândouă doar „mai șterse", harta ar minți.
+
+### Textul nodului, doar la survolare
+
+Patru cuvinte scrise peste pergament în zece locuri = zgomot; simbolul spune
+tipul dintr-o privire. Eticheta apare la hover, **una singură pentru toată
+harta** (zece etichete ascunse se pot suprapune exact în clipa în care apar
+două), și n-are fond: are **contur crem** în jurul literelor. Un dreptunghi opac
+ar fi fost un petic de interfață lipit pe hartă.
+
+Consecință: piciorul paginii spune acum cum se citește harta. Un semn pe care nu
+știi să-l interoghezi e un semn degeaba.
+
+### Trasee punctate, curbe — și de unde vine îndoitura
+
+O linie dreaptă și subțire spune „nodul A e legat de nodul B". Un șir de liniuțe
+care se îndoaie spune „de-aici se MERGE acolo". Aceeași informație, altă poveste,
+douăzeci de linii de cod: o Bézier pătratică (mijlocul împins perpendicular),
+măsurată din 2 în 2 pixeli, iar `fmod(parcurs, pas)` decide singur liniuță sau
+pauză — fără să numere liniuțe și fără să știe câte încap.
+
+### Ce ține totul reproductibil: sămânța nodului
+
+Pozițiile pe grilă arătau a tabel, deci fiecare nod primește o abatere. Abaterea,
+înclinarea simbolului, decalajul pulsului și îndoitura fiecărui drum ies din
+**`nod["samanta"]`** — câmp care exista deja, scris sesiunea trecută pentru
+inamici. Niciun câmp nou, niciun `randf()`.
+
+Dacă ar fi fost trase la sorți, harta ar fi tresărit la fiecare redimensionare de
+fereastră și la fiecare întoarcere din luptă, fiindcă `_aseaza_nodurile()` se
+cheamă din nou de fiecare dată. Regula: **tot ce se redesenează des trebuie să
+fie derivat, nu tras la sorți.**
+
+### Zona interzisă (cartea)
+
+Imaginea are o carte desenată în colțul din dreapta-jos. E scrisă ca `Rect2` în
+**fracțiuni de ecran**, nu în pixeli — fundalul se întinde peste toată fereastra,
+deci cartea e „a șasea parte din dreapta", nu „ultimii 180 de pixeli". Un nod
+care cade acolo e împins spre stânga (în dreapta cărții nu mai e pergament).
+
+Nodurile n-au fost singura problemă: **o curbă lungă ajunge mai departe decât
+capetele ei**, iar un drum se umfla peste carte. Îndoitura se verifică acum și,
+dacă partea trasă la sorți e proastă, se încearcă cealaltă.
+
+### Capcana zilei: `campaign_map.png` nu era PNG
+
+Godot refuza fișierul cu „Failed loading resource". Cauza: imaginea e un **JPEG
+cu extensia .png** (începe cu `ffd8ffe0 JFIF`, nu cu `89504e47 PNG`), iar
+importatorul se uită la conținut, nu la nume. Redenumită `campaign_map.jpg` și
+importată fără nimic altceva schimbat.
+
+Dacă mai apare vreodată „Failed loading resource" pe o imagine care se deschide
+perfect în Windows: primii patru octeți spun adevărul.
+
+Tot la import: **mipmaps pornite** pe pergament. Imaginea are 2816px lățime și se
+vede la ~1150; fără mipmaps ar fi sclipit la fiecare redimensionare.
+
+### Verificat, nu presupus
+
+- Rulat cu `--headless`: nicio eroare de parsare, niciun avertisment nou.
+- Captură de ecran la 1280×720, cu o expediție pornită din sămânța 4242 și două
+  noduri parcurse: pergament, opt simboluri, drumuri punctate, aură pe nodul
+  curent, X roșu pe cel parcurs, nimic peste carte.
+- **Clic simulat pe un nod adevărat** (`Input.parse_input_event` pe centrul lui):
+  semnalul `apasat` a ajuns. Un `Control` desenat primește mouse-ul la fel ca un
+  buton — era singurul lucru pe care schimbarea îl putea rupe pe tăcute.
+
+### Ce a rămas de făcut aici
+
+- **Panourile (loadout, sumar, mesaj) au rămas închise la culoare**, sub un voal
+  negru. Nu se bat cap în cap cu pergamentul (voalul le desparte), dar sunt
+  singurele bucăți care n-au trecut prin inversarea paletei. Când vine rândul
+  cetății, merită făcute din aceeași hârtie.
+- `ZONA_CARTE` din `harta.gd` e măsurată din imaginea de azi. Dacă pergamentul se
+  schimbă vreodată, ăla e singurul loc de reglat.
+- Simbolurile sunt desenate în cod, deci nu costă nimic azi. Când vine artă
+  adevărată, fiecare funcție devine un `draw_texture_rect`; tabelul rămâne.
+
+### Fișiere atinse pe 17 septembrie 2026
+
+```
+assets/art/campaign_map.jpg (+ .import)  — redenumit din .png (era JPEG)
+scenes/harta/simbol_nod.gd               — NOU: nodul desenat (class_name SimbolNod)
+scenes/harta/panza.gd                    — rescris: drumuri punctate, curbe
+scenes/harta/harta.gd                    — paletă de cerneală, abatere organică,
+                                           zona cărții, eticheta de hover
+scenes/harta/harta.tscn                  — fundal de pergament, texte de cerneală
+```
 
 ---
 
