@@ -31,20 +31,23 @@ extends Control
 ## de fereastră și la fiecare întoarcere din luptă.
 
 ## Lungimea unei liniuțe și a pauzei dintre ele, în pixeli.
-const LUNGIME_LINIUTA := 9.0
-const PAUZA_LINIUTA := 7.5
+##
+## Erau 9 și 7,5, cu linii de 5 pixeli grosime: la distanța de la care te uiți
+## la hartă, ieșea un punctat mărunt care se pierdea în textura hârtiei. Acum
+## sunt liniuțe LATE și rare — la fel ca pe hărțile de aventură desenate de
+## mână, unde drumul e făcut din trăsături, nu din puncte.
+const LUNGIME_LINIUTA := 15.0
+const PAUZA_LINIUTA := 11.0
 
 ## Cât de des măsurăm curba. Mai mic = liniuțe mai exacte, mai multe apeluri de
 ## desen. 2 pixeli e sub pragul la care s-ar vedea diferența.
 const PAS_ESANTION := 2.0
 
-## Cât lăsăm liber la capete, în jurul simbolului. Fără asta, liniuțele ar
-## intra pe sub craniu și pe sub halo-ul lui, iar drumul ar părea că trece
-## PRIN nod, nu că ajunge la el.
-const RAZA_NOD := 40.0
+## Cât lăsăm liber la capete dacă drumul nu spune singur. Numărul adevărat vine
+## din hartă, în câmpul „oprire" al fiecărei muchii: ea știe cât de mare e un
+## nod, pânza nu. Constanta de aici e doar plasa pentru o muchie venită fără el.
+const OPRIRE_IMPLICITA := 48.0
 
-## Drumurile de desenat. Fiecare: { "de_la": Vector2, "la": Vector2,
-## "culoare": Color, "grosime": float, "curbura": float }.
 var muchii: Array[Dictionary] = []
 
 
@@ -86,6 +89,17 @@ func _deseneaza_drum(muchie: Dictionary) -> void:
 	var esantioane := maxi(16, int(lungime / PAS_ESANTION))
 	var pas := LUNGIME_LINIUTA + PAUZA_LINIUTA
 
+	# Cât de departe de fiecare capăt începe și se termină punctatul. Trimis de
+	# hartă odată cu muchia: drumul trebuie să se OPREASCĂ vizibil înainte de
+	# simbol, altfel pare că trece pe sub el.
+	var oprire := float(muchie.get("oprire", OPRIRE_IMPLICITA))
+	# Un drum mai scurt decât cele două opriri puse cap la cap n-ar avea ce
+	# desena. Se întâmplă la două noduri apropiate de abaterea organică: fără
+	# linia asta, muchia ar dispărea cu totul și s-ar vedea ca un drum lipsă.
+	var capete := de_la.distance_to(la)
+	if capete < oprire * 2.4:
+		oprire = capete * 0.34
+
 	var parcurs := 0.0
 	var anterior := de_la
 	for i in range(1, esantioane + 1):
@@ -96,7 +110,7 @@ func _deseneaza_drum(muchie: Dictionary) -> void:
 		# fără să numărăm liniuțe și fără să știm câte încap.
 		var e_liniuta := fmod(parcurs, pas) < LUNGIME_LINIUTA
 		var langa_capat := (
-			punct.distance_to(de_la) < RAZA_NOD or punct.distance_to(la) < RAZA_NOD
+			punct.distance_to(de_la) < oprire or punct.distance_to(la) < oprire
 		)
 		if e_liniuta and not langa_capat:
 			draw_line(anterior, punct, culoare, grosime, true)

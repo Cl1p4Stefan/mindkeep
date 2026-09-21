@@ -1,6 +1,6 @@
 # MINDKEEP — Jurnal de progres
 
-*Ultima actualizare: 17 septembrie 2026*
+*Ultima actualizare: 18 septembrie 2026*
 *Atașează acest fișier la începutul fiecărei sesiuni noi, împreună cu `CLAUDE.md` și `docs/pitch-document.md`.*
 
 ---
@@ -14,7 +14,7 @@
 | 3. Trivia, ca scenă independentă | ✅ gata |
 | 4. Bucla completă a unei lupte | ✅ victorie · înfrângere · recompense (Fragmente) |
 | 5. Trei inamici manuali | ✅ Soldatul · Lăncierul (ceas) · Spadasinul (vulnerabilitate), aleși din joc |
-| 6. Harta de expediție | ✅ loadout „N din M" · 8-10 noduri ramificate, cu sămânță · Luptă / Elită / Odihnă / Eveniment · sumar de run · **aspect: pergament, simboluri de cerneală, trasee punctate** |
+| 6. Harta de expediție | ✅ loadout „N din M" · **12-16 noduri**, ramificate, cu sămânță · Luptă / Elită / Odihnă / Eveniment / **Magazin** / **Boss** · **Monede + puteri temporare** · sumar de run · **aspect: pergament, de la stânga la dreapta, simboluri de cerneală, trasee punctate** |
 | 7. Cetatea | ❌ |
 | 8. Save/Load | 🟡 tezaurul, sacul și expediția știu toate să se serializeze (`spre_dictionar` / `din_dictionar`), pe trei straturi de durată; scrierea pe disc, nu încă |
 | 9. Celelalte discipline | 🟡 Cultură generală ✅ (135 de întrebări) · Logica ✅ (80 de categorii) · Cuvinte ✅ · toate trei fără repetiții pe expediție · celelalte 5 ❌ |
@@ -27,6 +27,152 @@ buget, generare) rămâne acolo unde era.
 Am sărit peste ordinea recomandată la pasul 12 (artă): imaginile pentru rege,
 cavaler și pentru cele trei piese de șah de pe butoane au intrat mai devreme, dar
 restul rămâne placeholder. Bucla de luptă e în continuare cea validată, nu arta.
+
+---
+
+## Sesiunea hărții largi (18 septembrie 2026) — drumul umple pergamentul
+
+Sesiunea de dinainte a făcut harta să arate a hartă. Asta a făcut-o să arate a
+DRUM: mai lungă, întinsă pe toată hârtia, cu un capăt care se vede de departe
+și cu un loc pe drum unde ce-ai strâns înseamnă ceva.
+
+### 1. Drumul merge de la stânga la dreapta, nu de jos în sus
+
+Adâncimea creștea pe verticală, „ca un munte pe care urci". Pe pergamentul ăsta
+a fost o greșeală de formă: hârtia e lată, nu înaltă, deci cele 7-9 straturi se
+înghesuiau pe înălțimea mică, iar cele 2 coloane se răsfirau pe lățimea mare —
+exact pe dos. Pe orizontală, straturile au unde să respire.
+
+Bonus care nu era planificat: de la stânga la dreapta e și direcția în care
+citim. Un drum care merge încotro se uită ochiul nu mai are nevoie de nicio
+săgeată care să explice pe unde s-o iei.
+
+### 2. Nodurile acoperă toată hârtia, nu jumătatea stângă
+
+Trei reparații, în ordinea în care s-au văzut:
+
+- **Zona utilă e declarată, nu ghicită.** `ZONA_PERGAMENT` spune, în fracțiuni
+  de ecran, unde e hârtie: pergamentul nu acoperă fereastra, are margini arse
+  și se termină pe la 84% din lățime.
+- **Marginea din dreapta trece PE SUB carte.** Cartea legată în piele stă în
+  colț de la 0,845; zona utilă se oprește la 0,838. Rezultatul: tot codul care
+  ocolea zona cărții a putut dispărea. *O regulă de așezare e mai ieftină decât
+  o excepție de ocolit* — asta merită ținută minte, se mai repetă.
+- **Rândurile se răsfiră pe toată înălțimea.** Formula veche așeza două noduri
+  la 25% și 75% din înălțime, adică folosea jumătate din hârtie.
+
+Iar pentru banda goală rămasă fix pe mijloc: straturile **impare se strâng spre
+centru** (`STRANGERE_ALTERNATA`). Rândurile nu mai sunt două linii drepte, ci un
+zigzag lat. Leacul n-a fost „mai multe noduri" — aia ar fi însemnat o expediție
+mai lungă ca să repar un desen.
+
+### 3. Traseele: cerneală, nu creion
+
+Erau gri deschis, de 5 pixeli, cu liniuțe de 9. Pe maro, invizibile. Acum:
+liniuțe de 15 pixeli lungime, culori de cerneală, și **trei greutăți clar
+diferite** — drumul deschis e aproape negru și de 11 pixeli, restul sunt stinse
+și subțiri.
+
+Ce lipsea de fapt nu era grosimea, ci **oprirea**: liniuțele mergeau până în
+centrul nodului, deci drumul părea că trece PRIN el. Acum fiecare muchie
+primește de la hartă un câmp „oprire" și se termină vizibil înainte de simbol.
+Pânza nu știe cât e de mare un nod și nu trebuie să știe.
+
+### 4. Iconițe din fișiere, cu desenul din cod ca plasă
+
+`simbol_nod.gd` încearcă întâi `assets/art/campaign_nodes/<fișier>.png`; dacă
+lipsește sau nu se încarcă, desenează forma din poligoane, ca până acum.
+Încercarea se face **o singură dată per tip** și se ține minte, inclusiv eșecul:
+fără asta, un fișier lipsă ar fi însemnat o căutare pe disc la fiecare
+redesenare a fiecărui nod.
+
+Imaginea nu se pune cu `draw_texture_rect`, ci ca poligon cu textură, cu
+colțurile trecute prin `_punct()` — așa moștenește gratis înclinarea de câteva
+grade și respirația, exact ca formele desenate.
+
+> ✅ **Rezolvat.** Fișierele erau, la prima încercare, JPEG-uri redenumite
+> `.png`, cu un fundal în carouri PICTAT în ele; Godot le refuza cu „Not a PNG
+> file" și harta desena plasa. Au fost reexportate ca PNG adevărate, 512×512,
+> cu canal alfa. Toate **șase** tipurile de nod au acum imagine: Luptă, Elită,
+> Odihnă, Magazin, Boss și **Eveniment** (`campaign_event.png`). Funcțiile de
+> desen din cod rămân pe loc ca plasă — un fișier șters sau prost exportat
+> întoarce harta la poligoane, nu o rupe.
+
+### 5. Tip de nod nou: MAGAZIN, și moneda care moare cu runul
+
+**Monedele** se strâng din lupte (8 la o Luptă, 16 la o Elită, 30 la Boss) și se
+evaporă la finalul expediției. Fragmentele rămân în `Tezaur` și vor plăti
+cetatea.
+
+De ce două monede și nu una: „ce cumpăr ACUM, cu ce am pe drumul ăsta" e o
+decizie complet diferită de „ce-mi construiesc peste zece runuri". Cu o singură
+resursă, a doua ar înghiți-o mereu pe prima — orice leu dat pe un ajutor
+temporar ar fi un leu furat de la ceva permanent, deci n-ai cumpăra niciodată
+nimic pe drum.
+
+Se vând trei puteri (`Expeditie.PUTERI`), toate valabile doar pe runul curent:
+Pana de oțel (+1 PA pe rundă, 24), Zale ferecate (+4 PV maxim, 16), Fiertura
+caldă (+6 PV, 9).
+
+Două lucruri aflate la probă, nu la proiectare:
+
+- **O hartă din 300 ieșea fără Magazin.** Pare puțin până înțelegi ce e: un run
+  în care sistemul de Monede pur și simplu nu există, fără ca jucătorul să afle
+  vreodată de ce. `_asigura_magazin()` transformă un nod liber dacă n-a ieșit
+  niciunul. Acum: 0 din 300.
+- **Fiertura se putea cumpăra cu PV plin** — lua 9 Monede și răspundea „+0 PV".
+  Nu era un bug de cod, era un bug de vitrină. `motiv_refuz()` stinge butonul ȘI
+  scrie de ce („PV plin", „iti mai trebuie 4").
+
+### 6. Tip de nod nou: BOSS, și sfârșitul lui `e_elita`
+
+Ultimul nod era o Elită — aceeași Elită pe care o întâlneai și la nodul 6.
+Capătul drumului nu era un capăt, era încă un nod. Acum e un tip aparte, care
+apare doar acolo.
+
+Bossul a împins o curățenie care se cerea oricum: `lupta.gd` avea un
+`bool e_elita` și două constante (`MULTIPLICATOR_ELITA`, `FRAGMENTE_ELITA`). Un
+„da/nu" nu poate răspunde la „cât de greu", iar al doilea bool lângă primul ar
+fi făcut patru combinații din care două n-au sens.
+
+Acum `Expeditie.DATE_NOD` are patru coloane noi — `putere`, `buget`, `monede`,
+`bonus` — iar lupta le citește. **În `acorda_recompensa()` nu mai scrie nicăieri
+„Elită" sau „Boss".** Un tip de nod nou nu mai cere nicio linie acolo.
+
+„putere" și „buget" sunt două coloane, nu una, fiindcă sunt două lucruri:
+bugetul alege CINE apare (Spadasin în loc de Soldat), puterea îl umflă pe cel
+apărut. Bossul are nevoie de amândouă.
+
+### 7. Harta a crescut la 12-16 noduri
+
+7-9 straturi în loc de 5-6. Motivul e de DESEN, nu de dificultate: pe
+pergamentul întins pe toată fereastra, opt noduri arătau ca opt puncte răzlețe.
+Referința (`assets/art/demons_hand_reference.png`) are paisprezece, și abia la
+densitatea aia drumul pare un traseu pe un teren.
+
+Pantele din `PONDERI_NOD` au fost înmuiate odată cu lungimea — aceeași pantă pe
+9 straturi ar fi însemnat că ultimele trei sunt numai Elite. **Când schimbi
+lungimea hărții, `pe_adancime` e numărul care se reglează odată cu ea.**
+
+### Ce rămâne de reglat (numere, nu structură)
+
+- **Bossul are 78 PV față de 15 ai regelui** (×2,3 peste Lăncier). E capătul
+  unui run de 9 opriri, deci trebuie să fie greu — dar cifra n-a fost jucată,
+  doar calculată. Se reglează din coloana „putere".
+- **Focul de tabără desenat din cod** avea buștenii încrucișați de la un colț la
+  altul — exact forma X-ului cu care se barează nodurile vizitate. S-au făcut
+  scurți și joși. Merită ținut minte ca regulă: *un simbol n-are voie să semene
+  cu o stare.*
+- Expediție de 16 noduri × ~9 opriri: de văzut dacă încape într-o sesiune de 15
+  minute. Dacă nu, se taie din `STRATURI_MAX`, nu din `STRATURI_MIN`.
+
+### Verificat (rulare headless, 300 de semințe)
+
+- 12-16 noduri, întotdeauna; Boss pe ultimul nod în 300 din 300
+- Magazin prezent în 300 din 300
+- Cumpărare, refuz, `bonus_pa()`, save/load dus-întors — toate corecte
+- Lupta la nodul de Boss: „BOSS LANCIERUL — 78/78 PV", 4 puncte de PA cu Pana
+  cumpărată
 
 ---
 

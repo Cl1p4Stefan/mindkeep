@@ -126,7 +126,9 @@ const FRAGMENTE_VICTORIE := 10        # simplul fapt că ai învins
 const FRAGMENTE_PV_INTREG := 10       # cât ia cineva care termină cu PV plin
 const FRAGMENTE_PE_TREAPTA_LANT := 1  # per treaptă din cel mai lung lanț
 const FRAGMENTE_PE_CRITIC := 3        # per lovitură critică din toată lupta
-const FRAGMENTE_ELITA := 12           # bonus fix, peste tot restul, la un nod de Elită
+# Bonusul fix al unui nod greu NU mai e o constantă aici: e coloana „bonus" din
+# `Expeditie.DATE_NOD`. Elita avea 12, Bossul are nevoie de alt număr, iar a
+# doua constantă lângă prima ar fi fost începutul unui `if` cu trei ramuri.
 
 # Culorile panoului de recompensă. Liniile obișnuite sunt gri-calme, totalul e
 # auriu (aurul e deja limbajul lucrurilor câștigate), iar o linie care a ieșit
@@ -294,12 +296,6 @@ const SCENA_OBELISC := preload("res://scenes/lupta/obelisc.tscn")
 ## la infinit. `change_scene_to_file` citește calea abia când e nevoie.
 const SCENA_HARTA := "res://scenes/harta/harta.tscn"
 
-## Cât de tare e un inamic de Elită față de același inamic obișnuit: PV,
-## daune și răsplată, toate înmulțite cu atât. O singură cifră, fiindcă azi
-## Elita e „același adversar, mai tare". Când va fi altceva (altă purtare, nu
-## alte cifre), locul ei e un câmp în tabelul nodurilor, nu constanta asta.
-const MULTIPLICATOR_ELITA := 1.6
-
 ## Câți candidați rămân după ce se taie cei prea slabi pentru buget. Vezi
 ## `_alege_inamicul()`. Doi = destulă varietate ca două noduri alăturate să nu
 ## dea același adversar, destulă strâmtoare ca dificultatea să urce vizibil.
@@ -340,9 +336,20 @@ var pv_max_jucator := 0
 # Se alege la pornirea luptei (`_alege_inamicul()`) și nu se schimbă în timpul ei.
 var inamic_curent := 0
 
-## E nodul ăsta o Elită? Citit o dată, în `_alege_inamicul()`, și folosit în
-## trei locuri: cifrele inamicului, titlul cardului și răsplata.
-var e_elita := false
+## CE FEL DE NOD e ăsta (`Expeditie.Nod.LUPTA`, `.ELITA`, `.BOSS`). Citit o
+## dată, în `_alege_inamicul()`, și folosit în trei locuri: cifrele inamicului,
+## titlul cardului și răsplata.
+##
+## Înainte era un `bool e_elita`, și a ținut exact până a apărut Bossul: un
+## „da/nu" nu poate răspunde la întrebarea „cât de greu", iar al doilea bool
+## lângă primul ar fi făcut patru combinații din care două n-au sens. Tipul
+## nodului e o singură întrebare cu răspunsuri câte vrei, iar cifrele care
+## atârnă de el stau în `Expeditie.DATE_NOD`.
+var tip_nod := Expeditie.Nod.LUPTA
+
+## Fișa tipului de mai sus, luată o dată ca să n-o căutăm în tabel la fiecare
+## lovitură. „putere", „monede", „bonus" — vezi `Expeditie.DATE_NOD`.
+var fisa_nod: Dictionary = Expeditie.DATE_NOD[Expeditie.Nod.LUPTA]
 
 # PV-ul lui, și maximul LUI. Al doilea e o variabilă, nu o constantă, fiindcă
 # fiecare inamic vine cu al lui — se copiază din tabel o singură dată, în
@@ -515,7 +522,9 @@ func _ready() -> void:
 	# Dacă mâine PA_PE_RUNDA devine 4, apar patru puncte fără să atingi scena.
 	# (Iar când adaugi Regina, care costă 2 PA, se vor stinge două deodată —
 	# tocmai ăsta e avantajul punctelor față de o cifră: vezi cât te costă.)
-	for i in range(PA_PE_RUNDA):
+	# `+ bonus_pa()`: Magazinul poate da PA în plus, iar un al patrulea PA fără
+	# un al patrulea punct desenat ar fi un PA pe care nu-l vezi.
+	for i in range(PA_PE_RUNDA + Expeditie.bonus_pa()):
 		# Un `ColorRect` nu poate desena decât dreptunghiuri. Pentru cercuri
 		# folosim un `Panel` cu un `StyleBoxFlat` a cărui rază de colț e
 		# jumătate din latură — un pătrat cu colțurile rotunjite complet
@@ -637,10 +646,12 @@ func _alege_inamicul() -> void:
 	var nod := Expeditie.nod_curent()
 	if nod.is_empty():
 		inamic_curent = 0     # F6 direct pe scena de luptă, fără expediție
-		e_elita = false
+		tip_nod = Expeditie.Nod.LUPTA
+		fisa_nod = Expeditie.date_nod(tip_nod)
 		return
 
-	e_elita = int(nod["tip"]) == Expeditie.Nod.ELITA
+	tip_nod = int(nod["tip"])
+	fisa_nod = Expeditie.date_nod(tip_nod)
 	var buget := float(nod["buget"])
 
 	var rng := RandomNumberGenerator.new()
@@ -697,7 +708,7 @@ func _cel_mai_ieftin() -> int:
 ## ar fi însemnat enorm pentru Soldat și puțin pentru Spadasin, deci ar fi
 ## schimbat ECHILIBRUL dintre ei, nu doar dificultatea nodului.
 func _multiplicator_nod() -> float:
-	return MULTIPLICATOR_ELITA if e_elita else 1.0
+	return float(fisa_nod["putere"])
 
 
 
@@ -707,7 +718,10 @@ func _multiplicator_nod() -> float:
 
 ## Începutul turei TALE: primești PA proaspăt.
 func incepe_runda() -> void:
-	pa = PA_PE_RUNDA   # PA nu se reportează — pur și simplu suprascriem
+	# PA-ul de bază, plus ce ai cumpărat la Magazin. Adunarea se face AICI, la
+	# fiecare rundă, nu o dată la începutul luptei: dacă vreodată o putere se va
+	# putea pierde în mijlocul unei lupte, linia asta o va observa singură.
+	pa = PA_PE_RUNDA + Expeditie.bonus_pa()   # PA nu se reportează
 	tura_se_incheie = false
 	scrie_in_jurnal("--- Runda %d: ai %d PA. ---" % [runda, pa])
 	actualizeaza_ui()
@@ -1282,6 +1296,14 @@ func termina_lupta(victorie: bool) -> void:
 		recompensa = acorda_recompensa()
 		scrie_in_jurnal("VICTORIE! Inamicul a cazut in runda %d." % runda)
 		scrie_in_jurnal(text_recompensa_jurnal(recompensa))
+		# Monedele nu trec prin `acorda_recompensa()`: ele nu intră în tezaur, ci
+		# în expediție, și au fost deja adăugate de `inregistreaza_lupta()`. Aici
+		# doar SPUNEM, fiindcă o resursă care crește fără să anunțe e o resursă
+		# pe care jucătorul n-o descoperă decât din greșeală.
+		var monede_nod := int(fisa_nod["monede"])
+		if monede_nod > 0:
+			scrie_in_jurnal("Ai gasit %d Monede (ai %d pentru magazin)." % [
+				monede_nod, Expeditie.monede])
 		Sunet.reda_verdict(Sunet.Verdict.VICTORIE)
 	else:
 		scrie_in_jurnal("SAH MAT. Ai pierdut in runda %d." % runda)
@@ -1410,17 +1432,28 @@ func calculeaza_recompensa() -> Array[Dictionary]:
 func acorda_recompensa() -> Array[Dictionary]:
 	var linii := calculeaza_recompensa()
 
-	# ELITA PLĂTEȘTE MAI MULT, cu același multiplicator cu care lovește. Un nod
-	# mai greu care ar da aceeași răsplată ca unul ușor n-ar fi o alegere, ar fi
-	# o capcană pentru cine nu știe încă harta — iar jocul ăsta nu pedepsește
-	# curiozitatea.
-	if e_elita:
+	# UN NOD GREU PLĂTEȘTE MAI MULT, cu același multiplicator cu care lovește.
+	# Un nod mai greu care ar da aceeași răsplată ca unul ușor n-ar fi o alegere,
+	# ar fi o capcană pentru cine nu știe încă harta — iar jocul ăsta nu
+	# pedepsește curiozitatea.
+	#
+	# Nicăieri aici nu scrie „Elită" sau „Boss": scrie „înmulțitorul nodului" și
+	# „bonusul nodului". De-aia un tip de nod nou nu cere nicio linie în
+	# funcția asta, doar un rând în `Expeditie.DATE_NOD`.
+	var putere := float(fisa_nod["putere"])
+	if putere > 1.0:
 		for linie in linii:
-			linie["cantitate"] = roundi(int(linie["cantitate"]) * MULTIPLICATOR_ELITA)
+			linie["cantitate"] = roundi(int(linie["cantitate"]) * putere)
+
+	var bonus := int(fisa_nod["bonus"])
+	if bonus > 0:
 		linii.append({
-			"eticheta": "Elita infranta",
+			"eticheta": "%s infrant%s" % [
+				String(fisa_nod["nume"]).to_upper(),
+				"a" if tip_nod == Expeditie.Nod.ELITA else "",
+			],
 			"resursa": Tezaur.Resursa.FRAGMENTE,
-			"cantitate": FRAGMENTE_ELITA,
+			"cantitate": bonus,
 		})
 
 	# Prin EXPEDIȚIE, nu direct în tezaur. Ea le pune în amândouă locurile:
@@ -1857,10 +1890,14 @@ func actualizeaza_ui() -> void:
 	# Numele e un BUTON: click pe el deschide cardul cu detaliile inamicului.
 	# „[i]" e singurul indiciu că se poate apăsa — un buton plat, fără fundal,
 	# nu se anunță singur.
-	# „ELITĂ" în fața numelui: același adversar, altă greutate. Trebuie să se
-	# vadă în luptă, nu doar pe hartă — altfel cifrele mai mari par un bug.
+	# „ELITA" / „BOSS" în fața numelui: același adversar, altă greutate. Trebuie
+	# să se vadă în luptă, nu doar pe hartă — altfel cifrele mai mari par un bug.
+	# Prefixul vine din tabel, deci un tip de nod nou se anunță singur.
+	var prefix := ""
+	if float(fisa_nod["putere"]) > 1.0:
+		prefix = String(fisa_nod["nume"]).to_upper() + " "
 	buton_inamic.text = "%s%s — %d/%d PV  [i]" % [
-		"ELITA " if e_elita else "", nume_inamic(), pv_inamic, pv_max_inamic
+		prefix, nume_inamic(), pv_inamic, pv_max_inamic
 	]
 	anima_bara(bara_pv_inamic, pv_inamic)
 

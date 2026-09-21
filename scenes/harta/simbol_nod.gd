@@ -61,13 +61,20 @@ enum Stare { INCHIS, ACCESIBIL, CURENT, PARCURS }
 ## lipit deasupra; maro-ul închis arată absorbit în fibră.
 const CERNEALA := Color(0.14, 0.09, 0.05)
 
-## Halo-ul din spatele simbolului: o pată de lumină crem. Pergamentul are
-## pete, cute și dealuri desenate — fără halo, o sabie neagră peste o umbră
-## maro devine o mâzgăleală. Halo-ul nu e decor, e LIZIBILITATE.
+## Halo-ul din spatele simbolului: o pată de lumină. Pergamentul are pete,
+## cute și dealuri desenate — fără halo, o sabie închisă peste o umbră maro
+## devine o mâzgăleală. Halo-ul nu e decor, e LIZIBILITATE.
 ##
-## Aproape alb, nu crem: pe hârtie deja deschisă, un crem stins nu se vede
-## deloc. Ce trebuie să pară e „aici hârtia e curată", nu „aici e o lumină".
-const CULOARE_HALOU := Color(1.00, 0.97, 0.90)
+## CULOAREA lui vine din `Expeditie.DATE_NOD`, nu de aici, și asta e o decizie
+## de lizibilitate, nu de stil: craniul Elitei și coiful Luptei sunt forme
+## apropiate la 90 de pixeli pe un fundal aglomerat. Forma nu le desparte —
+## culoarea din spate le desparte. Crem pentru Luptă, portocaliu pentru Elită,
+## cald pentru Odihnă, auriu pentru Magazin, roșu pentru Boss.
+##
+## Constanta de mai jos e doar PLASA: ce se desenează dacă un tip de nod n-are
+## culoare în tabel. Aproape alb, fiindcă pe hârtie deja deschisă un crem stins
+## nu se vede deloc: ce trebuie să pară e „aici hârtia e curată".
+const HALOU_IMPLICIT := Color(1.00, 0.97, 0.90)
 
 ## Aura caldă a nodului curent. Singurul lucru de pe hartă care emite lumină.
 const CULOARE_AURA := Color(1.00, 0.72, 0.28)
@@ -78,8 +85,10 @@ const CULOARE_TAIERE := Color(0.52, 0.14, 0.09)
 
 ## Culoarea „găurilor" din simboluri (orbitele craniului, inima flăcării).
 ## Nu e o culoare de sine stătătoare, e culoarea halo-ului de dedesubt: tăiem
-## în simbol ca să se vadă lumina din spatele lui.
-const CULOARE_GOL := CULOARE_HALOU
+## în simbol ca să se vadă lumina din spatele lui. De-aia e o VARIABILĂ, pusă
+## la fiecare desen din culoarea nodului: pe un halo auriu, o gaură crem ar fi
+## o pată, nu o gaură.
+var _culoare_gol := HALOU_IMPLICIT
 
 # ── TABELUL DE ÎNFĂȚIȘĂRI ─────────────────────────────────────
 # Ierarhia vizuală, ca TABEL, nu ca șir de `if`-uri prin `_draw()`. Un rând pe
@@ -90,9 +99,16 @@ const CULOARE_GOL := CULOARE_HALOU
 #   raza_halou — cât de mare e ea, ca fracțiune din casetă
 #   puls       — cât respiră simbolul (0 = stă nemișcat)
 #   aura       — cât de tare arde aura caldă (0 = deloc)
+##
+## Cifrele lui INCHIS au crescut (0,38 → 0,58 cerneală) după prima hartă
+## desenată cu paisprezece noduri: pe o hârtie cu pete, cute și dealuri
+## desenate, un simbol la 38% opacitate nu e „estompat", e invizibil. Iar un
+## nod pe care nu-l vezi nu e o alegere pe care o refuzi — e una pe care n-ai
+## știut c-o ai. Contrastul dintre „poți" și „nu poți" rămâne, dar e dat acum
+## de puls și de halo, nu de dispariție.
 const INFATISARI := {
-	Stare.INCHIS:    {"cerneala": 0.38, "halou": 0.30, "raza_halou": 0.32, "puls": 0.000, "aura": 0.0},
-	Stare.PARCURS:   {"cerneala": 0.50, "halou": 0.45, "raza_halou": 0.34, "puls": 0.000, "aura": 0.0},
+	Stare.INCHIS:    {"cerneala": 0.58, "halou": 0.55, "raza_halou": 0.34, "puls": 0.000, "aura": 0.0},
+	Stare.PARCURS:   {"cerneala": 0.62, "halou": 0.62, "raza_halou": 0.35, "puls": 0.000, "aura": 0.0},
 	Stare.ACCESIBIL: {"cerneala": 1.00, "halou": 0.95, "raza_halou": 0.41, "puls": 0.022, "aura": 0.0},
 	Stare.CURENT:    {"cerneala": 1.00, "halou": 1.00, "raza_halou": 0.43, "puls": 0.030, "aura": 1.0},
 }
@@ -120,6 +136,47 @@ var tip := 0
 ## sunt două întrebări diferite: „cum arăți" și „ce se întâmplă la click".
 var activ := false
 
+## ─────────────────────────────────────────────────────────────
+## IMAGINI, CU DESENUL DIN COD CA PLASĂ
+##
+## Fiecare tip de nod are DOUĂ înfățișări: un fișier din
+## `assets/art/campaign_nodes/` și o funcție care-l desenează din poligoane.
+## Se încearcă întâi fișierul; dacă lipsește sau nu s-a putut încărca, se
+## desenează.
+##
+## De ce amândouă, și nu doar imaginile: fiindcă o imagine e un fișier care
+## poate lipsi, poate fi prost exportat, sau poate să nu fi fost încă desenat.
+## Un joc care crapă sau arată un pătrat gol fiindcă un PNG n-a ajuns în
+## folder e un joc pe care nu poți lucra. Cu plasa asta, arta se poate adăuga
+## un fișier pe rând, iar harta rămâne jucabilă tot timpul.
+##
+## CERINȚE PENTRU FIȘIERE: PNG ADEVĂRAT, cu transparență reală (canal alfa),
+## decupat strâns pe formă și pătrat. Un JPEG redenumit `.png` NU se încarcă
+## în Godot, iar un „fundal în carouri" desenat în imagine se vede pe hartă
+## exact ca un fundal în carouri.
+const DOSAR_IMAGINI := "res://assets/art/campaign_nodes/"
+
+## Un rând per tip de nod: ce fișier și, dacă el lipsește, ce se desenează.
+## Numele funcției se pune în `_ready()` (vezi de ce, mai jos).
+const IMAGINI := {
+	Expeditie.Nod.LUPTA: "campaign_sword.png",
+	Expeditie.Nod.ELITA: "campaign_skull.png",
+	Expeditie.Nod.ODIHNA: "campaign_bonfire.png",
+	Expeditie.Nod.MAGAZIN: "campaign_shop.png",
+	Expeditie.Nod.BOSS: "campaign_boss.png",
+	Expeditie.Nod.EVENIMENT: "campaign_event.png",
+}
+
+## Cât din casetă ocupă imaginea. Mai mică decât halo-ul, ca lumina să se vadă
+## de jur împrejur — altfel simbolul pare lipit peste o pată, nu așezat în ea.
+const MARIME_IMAGINE := 0.78
+
+## Texturile încărcate, ținute pe CLASĂ, nu pe nod: paisprezece noduri pe
+## hartă ar fi însemnat paisprezece încărcări ale aceluiași fișier. `static
+## var` = o singură copie pentru toți. Cheia e tipul, valoarea e textura sau
+## `null` dacă s-a încercat și n-a mers (încercăm o singură dată).
+static var _texturi := {}
+
 var _hover := false
 ## Cheia tipului → funcția care-l desenează. Construit în `_ready()` fiindcă
 ## un `Callable` către o metodă proprie are nevoie de `self`, iar `self` nu
@@ -137,10 +194,39 @@ func _ready() -> void:
 		Expeditie.Nod.ELITA: _deseneaza_craniu,
 		Expeditie.Nod.ODIHNA: _deseneaza_foc,
 		Expeditie.Nod.EVENIMENT: _deseneaza_intrebare,
+		Expeditie.Nod.MAGAZIN: _deseneaza_punga,
+		Expeditie.Nod.BOSS: _deseneaza_coarne,
 	}
 
 	mouse_entered.connect(_pe_intrare)
 	mouse_exited.connect(_pe_iesire)
+
+
+## Textura tipului dat, sau `null` dacă nu există fișier pentru el.
+##
+## Se încearcă O SINGURĂ DATĂ per tip, și rezultatul (inclusiv „n-a mers") se
+## ține minte în `_texturi`. Fără memorare, un fișier lipsă ar însemna o
+## căutare pe disc la fiecare redesenare a fiecărui nod — adică de zeci de ori
+## pe secundă, pentru un fișier despre care știm deja că nu e acolo.
+##
+## `ResourceLoader.exists()` înainte de `load()` nu e paranoia: `load()` pe o
+## cale inexistentă scrie o eroare roșie în consolă la fiecare apel, iar o
+## consolă plină de erori așteptate e o consolă în care nu mai vezi erorile
+## adevărate.
+static func _textura(tip_cerut: int) -> Texture2D:
+	if _texturi.has(tip_cerut):
+		return _texturi[tip_cerut]
+
+	var textura: Texture2D = null
+	if IMAGINI.has(tip_cerut):
+		var cale: String = DOSAR_IMAGINI + String(IMAGINI[tip_cerut])
+		if ResourceLoader.exists(cale):
+			textura = load(cale) as Texture2D
+		if textura == null:
+			print("SimbolNod: %s lipseste sau nu s-a putut incarca; desenez din cod." % cale)
+
+	_texturi[tip_cerut] = textura
+	return textura
 
 
 ## Tot ce trebuie să știe nodul ca să se deseneze. Un singur apel, cu tot, în
@@ -195,32 +281,72 @@ func _deseneaza_silueta() -> void:
 	var infatisare: Dictionary = INFATISARI[stare]
 	var spor := SPOR_HOVER if _hover else 0.0
 
+	# Culoarea halo-ului vine din fișa tipului. Ea e ȘI culoarea „găurilor" din
+	# simbolurile desenate: o orbită de craniu trebuie să arate ca o gaură prin
+	# care se vede lumina de dedesubt, deci trebuie să fie exact lumina aia.
+	var halou: Color = Expeditie.date_nod(tip).get("culoare", HALOU_IMPLICIT)
+	_culoare_gol = halou
+
 	if float(infatisare["aura"]) > 0.0:
 		_deseneaza_aura(float(infatisare["aura"]))
 
 	_deseneaza_halou(
 		float(infatisare["raza_halou"]) * (1.06 if _hover else 1.0),
-		float(infatisare["halou"]) + spor
+		float(infatisare["halou"]) + spor,
+		halou
 	)
 
 	var cerneala := Color(CERNEALA, minf(1.0, float(infatisare["cerneala"]) + spor))
-	if _desene.has(tip):
+
+	# Imaginea întâi, desenul ca plasă. Un singur `if`, în singurul loc din
+	# fișier care hotărăște „cu ce se umple caseta".
+	var textura := _textura(tip)
+	if textura != null:
+		_deseneaza_imaginea(textura, cerneala.a)
+	elif _desene.has(tip):
 		_desene[tip].call(cerneala)
 
 	if stare == Stare.PARCURS:
 		_deseneaza_taietura()
 
 
+## Imaginea nodului, pusă în casetă ca un poligon cu textură.
+##
+## NU `draw_texture_rect`: ăla desenează un dreptunghi drept, iar simbolurile
+## noastre sunt înclinate câteva grade și respiră. Un poligon cu patru colțuri
+## trecute prin `_punct()` moștenește amândouă, gratis — aceleași colțuri prin
+## care trec și sabia, și craniul desenate din poligoane.
+##
+## „uv" spune ce colț din imagine ajunge în ce colț din poligon. Ordinea celor
+## patru perechi trebuie să fie aceeași în amândouă listele, altfel imaginea
+## iese răsucită ca o panglică.
+##
+## Opacitatea e a STĂRII, nu a imaginii: un nod închis se stinge la fel de
+## mult fie că e desenat, fie că e pictat. Culoarea rămâne albă, fiindcă alb
+## înmulțit cu imaginea înseamnă „lasă imaginea în pace".
+func _deseneaza_imaginea(textura: Texture2D, opacitate: float) -> void:
+	var jos := 0.5 - MARIME_IMAGINE * 0.5
+	var sus := 0.5 + MARIME_IMAGINE * 0.5
+	var colturi := PackedVector2Array([
+		_punct(Vector2(jos, jos)), _punct(Vector2(sus, jos)),
+		_punct(Vector2(sus, sus)), _punct(Vector2(jos, sus)),
+	])
+	var uv := PackedVector2Array([
+		Vector2(0, 0), Vector2(1, 0), Vector2(1, 1), Vector2(0, 1),
+	])
+	draw_colored_polygon(colturi, Color(1, 1, 1, opacitate), uv, textura)
+
+
 ## Halo-ul: cercuri concentrice, de la mare și transparent la mic și dens.
 ## Opacitățile se ADUNĂ acolo unde cercurile se suprapun, deci centrul iese
 ## luminos fără ca marginea să aibă un contur vizibil.
-func _deseneaza_halou(raza: float, putere: float) -> void:
+func _deseneaza_halou(raza: float, putere: float, culoare: Color) -> void:
 	if putere <= 0.0:
 		return
 	for i in range(STRATURI_HALOU):
 		var t := float(i) / float(STRATURI_HALOU)
 		var raza_strat := lerpf(raza, raza * 0.34, t)
-		_cerc_moale(Vector2(0.5, 0.5), raza_strat, Color(CULOARE_HALOU, putere * 0.115))
+		_cerc_moale(Vector2(0.5, 0.5), raza_strat, Color(culoare, putere * 0.115))
 
 
 ## Aura nodului curent: aceeași tehnică, mai mare, mai caldă și pâlpâind.
@@ -285,7 +411,7 @@ func _deseneaza_craniu(cerneala: Color) -> void:
 		Vector2(0.628, 0.800), Vector2(0.372, 0.800),
 	]), cerneala)
 
-	var gol := Color(CULOARE_GOL, cerneala.a)
+	var gol := Color(_culoare_gol, cerneala.a)
 	_cerc(Vector2(0.408, 0.400), 0.078, gol)        # orbite
 	_cerc(Vector2(0.592, 0.400), 0.078, gol)
 	_poligon(PackedVector2Array([                   # nara
@@ -296,26 +422,32 @@ func _deseneaza_craniu(cerneala: Color) -> void:
 	_linie(Vector2(0.580, 0.620), Vector2(0.580, 0.800), 0.030, gol)
 
 
-## ODIHNA — un foc de tabără: doi bușteni încrucișați și o flacără.
+## ODIHNA — un foc de tabără: o grămadă de bușteni și o flacără mare.
+##
+## Buștenii au fost la început două linii lungi încrucișate, de la un colț la
+## altul. Arăta a foc de tabără pe hârtie albă și a NOD BARAT pe hartă: exact
+## aceeași formă cu `_deseneaza_taietura()`, X-ul cu care se taie ce-ai vizitat
+## deja. La mărimea unui nod, un jucător n-avea cum să le deosebească.
+##
+## Acum sunt SCURȚI și JOȘI, strânși în treimea de jos, sub o flacără care ține
+## restul casetei. Silueta nu mai e „un X", e „ceva care arde deasupra a ceva
+## stivuit" — și nu se mai poate confunda cu o barare care taie tot pătratul.
 func _deseneaza_foc(cerneala: Color) -> void:
-	# Buștenii: două linii groase care se încrucișează. Erau două poligoane
-	# aproape orizontale și se citeau ca o singură bară — panta e cea care face
-	# X-ul, nu grosimea.
-	_linie(Vector2(0.145, 0.700), Vector2(0.855, 0.905), 0.095, cerneala)
-	_linie(Vector2(0.855, 0.700), Vector2(0.145, 0.905), 0.095, cerneala)
+	_linie(Vector2(0.255, 0.800), Vector2(0.745, 0.880), 0.080, cerneala)
+	_linie(Vector2(0.745, 0.800), Vector2(0.255, 0.880), 0.080, cerneala)
 
 	_poligon(PackedVector2Array([   # flacăra
-		Vector2(0.500, 0.055), Vector2(0.588, 0.230), Vector2(0.558, 0.330),
-		Vector2(0.650, 0.430), Vector2(0.660, 0.545), Vector2(0.588, 0.645),
-		Vector2(0.412, 0.645), Vector2(0.340, 0.545), Vector2(0.350, 0.430),
-		Vector2(0.442, 0.330), Vector2(0.412, 0.230),
+		Vector2(0.500, 0.075), Vector2(0.596, 0.255), Vector2(0.562, 0.360),
+		Vector2(0.660, 0.455), Vector2(0.672, 0.570), Vector2(0.596, 0.688),
+		Vector2(0.404, 0.688), Vector2(0.328, 0.570), Vector2(0.340, 0.455),
+		Vector2(0.438, 0.360), Vector2(0.404, 0.255),
 	]), cerneala)
 	# Inima flăcării, tăiată în ea. Mică: una mare golea flacăra pe dinăuntru
 	# și o transforma într-o lalea.
 	_poligon(PackedVector2Array([
-		Vector2(0.500, 0.430), Vector2(0.552, 0.520), Vector2(0.535, 0.605),
-		Vector2(0.465, 0.605), Vector2(0.448, 0.520),
-	]), Color(CULOARE_GOL, cerneala.a))
+		Vector2(0.500, 0.455), Vector2(0.554, 0.548), Vector2(0.536, 0.638),
+		Vector2(0.464, 0.638), Vector2(0.446, 0.548),
+	]), Color(_culoare_gol, cerneala.a))
 
 
 ## EVENIMENTUL — un semn de întrebare. Singurul simbol făcut din linii, nu din
@@ -325,6 +457,67 @@ func _deseneaza_intrebare(cerneala: Color) -> void:
 	_arc(Vector2(0.500, 0.330), 0.180, 172.0, 392.0, 0.086, cerneala)
 	_linie(Vector2(0.656, 0.420), Vector2(0.522, 0.620), 0.086, cerneala)
 	_cerc(Vector2(0.500, 0.800), 0.058, cerneala)
+
+
+## MAGAZINUL — o pungă de bani, cu gâtul legat și o monedă rezemată de ea.
+##
+## Nu o monedă singură: un cerc cu un semn în el se confundă, la 90 de pixeli,
+## cu orice alt cerc de pe hartă. Silueta unei pungi — lată jos, strânsă sus —
+## se recunoaște din formă, fără să fie nevoie să distingi ce e desenat în ea.
+func _deseneaza_punga(cerneala: Color) -> void:
+	_poligon(PackedVector2Array([   # trupul pungii
+		Vector2(0.415, 0.330), Vector2(0.585, 0.330), Vector2(0.720, 0.470),
+		Vector2(0.760, 0.680), Vector2(0.680, 0.855), Vector2(0.320, 0.855),
+		Vector2(0.240, 0.680), Vector2(0.280, 0.470),
+	]), cerneala)
+	_linie(Vector2(0.395, 0.305), Vector2(0.605, 0.305), 0.075, cerneala)   # legătura
+	_poligon(PackedVector2Array([   # gâtul strâns, deasupra legăturii
+		Vector2(0.440, 0.150), Vector2(0.560, 0.150),
+		Vector2(0.585, 0.290), Vector2(0.415, 0.290),
+	]), cerneala)
+
+	# Semnul de pe pungă, tăiat în ea: două monede suprapuse. Gaură, nu pată —
+	# vezi nota de la `_culoare_gol`.
+	var gol := Color(_culoare_gol, cerneala.a)
+	_cerc(Vector2(0.455, 0.610), 0.105, gol)
+	_cerc(Vector2(0.455, 0.610), 0.062, cerneala)
+	_cerc(Vector2(0.575, 0.690), 0.088, gol)
+
+
+## BOSSUL — un craniu cu coarne, privit din față.
+##
+## Trebuia să semene cu craniul Elitei cât să spună „tot un adversar", și să
+## difere cât să spună „altceva decât până acum". Coarnele fac amândouă: e
+## aceeași cutie craniană, cu ceva care iese din ea. Iar dacă la mărimea de pe
+## hartă coarnele nu se citesc, haloul roșu din spate termină treaba — de-aia
+## culoarea nu e decor.
+func _deseneaza_coarne(cerneala: Color) -> void:
+	_poligon(PackedVector2Array([   # cornul stâng
+		Vector2(0.330, 0.400), Vector2(0.180, 0.215), Vector2(0.075, 0.075),
+		Vector2(0.150, 0.235), Vector2(0.245, 0.330), Vector2(0.300, 0.470),
+	]), cerneala)
+	_poligon(PackedVector2Array([   # cornul drept, oglindit
+		Vector2(0.670, 0.400), Vector2(0.820, 0.215), Vector2(0.925, 0.075),
+		Vector2(0.850, 0.235), Vector2(0.755, 0.330), Vector2(0.700, 0.470),
+	]), cerneala)
+
+	_poligon(PackedVector2Array([   # cutia craniană, ascuțită spre bot
+		Vector2(0.500, 0.230), Vector2(0.720, 0.360), Vector2(0.700, 0.620),
+		Vector2(0.500, 0.900), Vector2(0.300, 0.620), Vector2(0.280, 0.360),
+	]), cerneala)
+
+	var gol := Color(_culoare_gol, cerneala.a)
+	_poligon(PackedVector2Array([   # orbita stângă, tăiată oblic: o privire
+		Vector2(0.345, 0.420), Vector2(0.470, 0.480),
+		Vector2(0.450, 0.575), Vector2(0.345, 0.545),
+	]), gol)
+	_poligon(PackedVector2Array([   # orbita dreaptă
+		Vector2(0.655, 0.420), Vector2(0.550, 0.480),
+		Vector2(0.570, 0.575), Vector2(0.655, 0.545),
+	]), gol)
+	_poligon(PackedVector2Array([   # botul
+		Vector2(0.500, 0.640), Vector2(0.548, 0.730), Vector2(0.452, 0.730),
+	]), gol)
 
 
 # ─────────────────────────────────────────────────────────────

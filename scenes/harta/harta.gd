@@ -35,12 +35,41 @@ const SCENA_LUPTA := "res://scenes/lupta/lupta.tscn"
 
 # ── GEOMETRIA HĂRȚII ──────────────────────────────────────────
 # Nodurile NU stau într-un container. Un VBox/HBox le-ar așeza în rânduri
-# drepte, dar o hartă are nevoie ca nodul 3 de pe rândul 2 să fie EXACT
-# deasupra spațiului dintre nodurile 1 și 2 — altfel liniile dintre ele nu mai
+# drepte, dar o hartă are nevoie ca nodul 3 de pe coloana 2 să fie EXACT în
+# dreptul spațiului dintre nodurile 1 și 2 — altfel liniile dintre ele nu mai
 # arată a drum, ci a tabel. Deci le punem noi, cu `position`, iar pânza
 # desenează drumurile între centrele lor.
 const MARIME_NOD := Vector2(92, 92)
-const MARGINE_PANZA := 26.0       ## spațiu până la marginea zonei de hartă
+
+## ÎNCOTRO MERGE DRUMUL: DE LA STÂNGA LA DREAPTA.
+##
+## Înainte creștea de jos în sus, ca un munte pe care urci. Pe hârtia asta a
+## fost o greșeală, și una ușor de explicat: pergamentul e lat, nu înalt.
+## Adâncimea pusă pe verticală însemna nouă straturi înghesuite pe înălțimea
+## mică și două coloane răsfirate pe lățimea mare — adică exact pe dos față de
+## cum e forma hârtiei. Pe orizontală, cele nouă straturi au unde să respire.
+##
+## Nu e doar o chestiune de spațiu: „de la stânga la dreapta" e și direcția în
+## care citim. Un drum care merge încotro se uită ochiul nu mai are nevoie de
+## nicio săgeată care să explice pe unde s-o iei.
+##
+## ZONA UTILĂ, în FRACȚIUNI DE ECRAN (0..1). Pergamentul nu acoperă toată
+## fereastra: are margini arse în stânga și sus, se termină pe la 85% din
+## lățime, iar în colțul din dreapta-jos stă cartea legată în piele. Nodurile
+## au voie doar pe hârtie.
+##
+## De ce fracțiuni și nu pixeli: fundalul se întinde peste toată fereastra,
+## deci marginea hârtiei rămâne „la 85% din lățime" indiferent cât de mare e
+## fereastra. În pixeli, ar fi trebuit recalculată la fiecare redimensionare.
+##
+## Marginea din dreapta (0.838) e ALEASĂ SUB cartea din colț (care începe pe la
+## 0.845): dacă niciun nod nu trece de linia aia, cartea nu mai are cum să
+## încurce pe nimeni, iar tot codul care ocolea zona cărții a putut dispărea.
+## O regulă de așezare e mai ieftină decât o excepție de ocolit.
+const ZONA_PERGAMENT := Rect2(0.035, 0.050, 0.803, 0.890)
+
+## Cât lăsăm liber între nodurile de pe marginea zonei și marginea ei.
+const MARGINE_PANZA := 18.0
 
 ## ABATEREA ORGANICĂ
 ##
@@ -52,40 +81,62 @@ const MARGINE_PANZA := 26.0       ## spațiu până la marginea zonei de hartă
 ## Împingerea vine din SĂMÂNȚA NODULUI, nu din `randf()`: aceeași expediție
 ## trebuie să arate identic la fiecare redesenare, altfel harta ar tresări la
 ## fiecare redimensionare de fereastră și la fiecare întoarcere din luptă.
-const ABATERE_X := 0.20
-const ABATERE_Y := 0.14
-const ABATERE_MAXIMA := Vector2(46.0, 24.0)
-
-## ZONA CĂRȚII — colțul din dreapta-jos al pergamentului, unde imaginea are
-## desenată o carte legată în piele. Un nod pus peste ea ar pluti pe altceva
-## decât pe hârtie.
 ##
-## Scrisă în FRACȚIUNI DE ECRAN (0..1), nu în pixeli, fiindcă fundalul se
-## întinde peste toată fereastra: cartea rămâne în același colț al imaginii
-## indiferent cât de mare e fereastra, deci și zona interzisă trebuie să fie
-## „a zecea parte din dreapta", nu „ultimii 180 de pixeli".
-const ZONA_CARTE := Rect2(0.845, 0.44, 0.155, 0.56)
-const MARJA_CARTE := 16.0
+## Pe verticală e mai mare decât pe orizontală (0.22 față de 0.16), și asta e
+## dinadins: pe orizontală, o abatere mare ar amesteca două straturi vecine și
+## n-ai mai ști care vine după care. Pe verticală nu se poate amesteca nimic —
+## sunt doar două rânduri — deci acolo îmi permit dezordinea care face drumul
+## să arate desenat de mână.
+const ABATERE_X := 0.16
+const ABATERE_Y := 0.22
+const ABATERE_MAXIMA := Vector2(34.0, 52.0)
 
-const GROSIME_DRUM := 5.0
-const GROSIME_DRUM_ALES := 6.5
+## Cât din înălțimea zonei ocupă rândurile de noduri. 0.86 lasă sus și jos
+## câte o șapte-la-sută de hârtie liberă: fără ea, rândul de sus s-ar lipi de
+## marginea arsă a pergamentului, iar abaterea organică l-ar scoate de pe el.
+const INTINDERE_VERTICALA := 0.86
+
+## STRATURILE ALTERNATE SE STRÂNG SPRE MIJLOC.
+##
+## Cu două noduri pe strat, toate ies pe două rânduri — unul sus, unul jos —
+## și rămâne o bandă goală fix pe mijlocul hârtiei. Se vedea din prima captură:
+## harta avea noduri pe margini și nimic în centru, adică exact acolo unde se
+## uită ochiul întâi.
+##
+## Leacul nu e să mai adaug noduri (ar însemna o expediție mai lungă ca să
+## repar un desen), ci să TRAG stratul din doi în doi mai aproape de centru.
+## Rândurile nu mai sunt două linii drepte, ci un zigzag lat — ceea ce umple
+## mijlocul ȘI face harta să arate mai puțin a tabel.
+const STRANGERE_ALTERNATA := 0.52
+
+# ── DRUMURILE ─────────────────────────────────────────────────
+# Erau gri-deschise și subțiri, adică invizibile: pe un pergament maro, o linie
+# deschisă și de 5 pixeli nu spune nimic despre ce leagă de ce. Acum sunt
+# CERNEALĂ: groase, închise, cu liniuțe lungi — ca traseele punctate de pe
+# hărțile de aventură din care ne inspirăm.
+
+const GROSIME_DRUM := 6.0
+const GROSIME_DRUM_ALES := 11.0
 
 ## Cât se îndoaie un drum, ca fracțiune din distanța dintre capete.
 const CURBURA_MINIMA := 0.08
 const CURBURA_MAXIMA := 0.16
 
-## Culorile drumurilor, în tonuri de CERNEALĂ. Vechile culori (auriu pal,
-## gri-albastru) erau alese pentru fundal negru; pe pergament, o linie deschisă
-## dispare, fiindcă hârtia e mai luminoasă decât ea.
-##
-## Trei stări, trei nuanțe:
+## Unde se OPRESC liniuțele, în jurul centrului unui nod. Mai mare decât
+## jumătatea nodului (46), ca drumul să se termine VIZIBIL înainte de simbol:
+## o liniuță care atinge haloul pare că trece prin nod, nu că ajunge la el.
+const OPRIRE_LA_NOD := 56.0
+
+## Culorile drumurilor, în tonuri de CERNEALĂ. Trei stări, trei nuanțe:
 ##   parcurs   — pe unde ai fost deja. Cerneală spălată: e istorie, nu opțiune.
-##   deschis   — de unde ești, spre unde poți merge. Cea mai apăsată.
-##   inchis    — restul hărții. Abia vizibil, dar VIZIBIL: vrei să vezi ce n-ai
-##               ales, altfel alegerea nu are greutate.
-const CULOARE_DRUM_PARCURS := Color(0.34, 0.22, 0.13, 0.38)
-const CULOARE_DRUM_DESCHIS := Color(0.26, 0.15, 0.07, 0.95)
-const CULOARE_DRUM_INCHIS := Color(0.32, 0.24, 0.16, 0.30)
+##   deschis   — de unde ești, spre unde poți merge. Cea mai apăsată din tot
+##               ecranul; practic negru-maro, opac.
+##   inchis    — restul hărții. Mai stins, dar CITIBIL: vrei să vezi ce n-ai
+##               ales, altfel alegerea nu are greutate. Vechea valoare (0.30
+##               opacitate) făcea din „citibil" o vorbă goală.
+const CULOARE_DRUM_PARCURS := Color(0.42, 0.28, 0.17, 0.45)
+const CULOARE_DRUM_DESCHIS := Color(0.16, 0.08, 0.03, 1.00)
+const CULOARE_DRUM_INCHIS := Color(0.31, 0.20, 0.10, 0.44)
 
 ## Cerneala textului care stă DIRECT pe pergament (eticheta de hover), cu
 ## conturul crem care o desprinde de textura de dedesubt.
@@ -112,6 +163,11 @@ const LATIME_ETICHETA := 230.0
 @onready var sumar_text: Label = %SumarText
 @onready var sumar_randuri: VBoxContainer = %SumarRanduri
 @onready var buton_sumar: Button = %SumarButon
+
+@onready var panou_magazin: Control = %PanouMagazin
+@onready var magazin_subtitlu: Label = %MagazinSubtitlu
+@onready var magazin_lista: VBoxContainer = %MagazinLista
+@onready var buton_magazin: Button = %MagazinButon
 
 @onready var panou_mesaj: Control = %PanouMesaj
 @onready var mesaj_titlu: Label = %MesajTitlu
@@ -143,6 +199,7 @@ func _ready() -> void:
 	buton_loadout.pressed.connect(_pe_pornire)
 	buton_sumar.pressed.connect(_pe_expeditie_noua)
 	buton_mesaj.pressed.connect(_pe_mesaj_inchis)
+	buton_magazin.pressed.connect(_pe_magazin_inchis)
 	# Fereastra redimensionată ⇒ nodurile trebuie reașezate. Semnalul vine de
 	# la pânză, nu de la fereastră: pe noi ne interesează cât spațiu a primit
 	# ZONA DE HARTĂ, care depinde și de cât ocupă antetul de deasupra.
@@ -151,6 +208,7 @@ func _ready() -> void:
 	panou_loadout.visible = false
 	panou_sumar.visible = false
 	panou_mesaj.visible = false
+	panou_magazin.visible = false
 
 	Muzica.reda(Muzica.Piesa.HARTA)
 
@@ -275,8 +333,12 @@ func _actualizeaza_antet() -> void:
 	var pas := Expeditie.parcurse.size()
 	var total := Expeditie.adancime_maxima() + 1
 	eticheta_titlu.text = "EXPEDITIE  —  nodul %d din %d" % [mini(pas + 1, total), total]
-	eticheta_stare.text = "%d / %d PV     %d Fragmente     samanta %d" % [
-		Expeditie.pv, Expeditie.pv_max, Tezaur.cat(Tezaur.Resursa.FRAGMENTE), Expeditie.samanta
+	# Monedele stau lângă Fragmente, dar înseamnă altceva, și antetul o spune:
+	# Fragmentele sunt averea care rămâne, Monedele sunt ce ai pe drumul ăsta.
+	# Un jucător care nu le vede crescând n-o să caute niciodată un Magazin.
+	eticheta_stare.text = "%d / %d PV     %d Monede     %d Fragmente     samanta %d" % [
+		Expeditie.pv, Expeditie.pv_max, Expeditie.monede,
+		Tezaur.cat(Tezaur.Resursa.FRAGMENTE), Expeditie.samanta
 	]
 
 	var nume: Array[String] = []
@@ -394,7 +456,7 @@ func _pe_nod_survolat(id: int, intrat: bool) -> void:
 		return
 
 	nod_survolat = id
-	var date_tip: Dictionary = Expeditie.DATE_NOD[Expeditie.harta[id]["tip"]]
+	var date_tip := Expeditie.date_nod(int(Expeditie.harta[id]["tip"]))
 	eticheta_nod_nume.text = String(date_tip["nume"]).to_upper()
 	eticheta_nod_rol.text = String(date_tip["descriere"])
 	eticheta_nod.visible = true
@@ -421,31 +483,32 @@ func _aseaza_eticheta(id: int) -> void:
 	eticheta_nod.position = loc
 
 
-## Pune fiecare buton la locul lui și cere pânzei liniile dintre ele.
+## Pune fiecare nod la locul lui și cere pânzei liniile dintre ele.
 ##
-## Adâncimea 0 e JOS, ca într-un drum pe care urci. Un nod de adâncime mai mare
-## e mai sus și mai departe — mișcarea ochiului de jos în sus face singură
-## povestea „am plecat de acolo și am ajuns aici".
+## Adâncimea 0 e în STÂNGA, capătul în dreapta — vezi nota de la
+## `ZONA_PERGAMENT`. Coloana nodului devine poziția lui pe verticală.
 func _aseaza_nodurile() -> void:
 	if simboluri_nod.is_empty():
 		return
 
-	var straturi := Expeditie.adancime_maxima() + 1
-	var latime := panza.size.x
-	var inaltime := panza.size.y
-	if latime <= 0.0 or inaltime <= 0.0:
+	var zona := _zona_utila()
+	if zona.size.x <= 0.0 or zona.size.y <= 0.0:
 		return   # încă nu s-a așezat nimic; semnalul `resized` ne mai cheamă o dată
 
-	# Câte noduri are fiecare strat — ca să le pot centra pe orizontală.
+	var straturi := Expeditie.adancime_maxima() + 1
+
+	# Câte noduri are fiecare strat — ca să le pot răsfira pe verticală.
 	var pe_strat := {}
 	for nod in Expeditie.harta:
 		var a := int(nod["adancime"])
 		pe_strat[a] = int(pe_strat.get(a, 0)) + 1
 
-	var utila_x := latime - 2.0 * MARGINE_PANZA - MARIME_NOD.x
-	var utila_y := inaltime - 2.0 * MARGINE_PANZA - MARIME_NOD.y
-	var inaltime_strat := utila_y / float(maxi(straturi - 1, 1))
-	var zona_carte := _zona_cartii()
+	# Cât spațiu revine unui strat pe orizontală și unui rând pe verticală.
+	# De aici se calculează cât are voie să bată abaterea organică: legată de
+	# distanța dintre vecini, nu de un număr fix de pixeli, ca harta să arate
+	# la fel de „așezată" și pe o fereastră mică, și pe una mare.
+	var pas_x := zona.size.x / float(maxi(straturi - 1, 1))
+	var pas_y := zona.size.y * INTINDERE_VERTICALA / float(maxi(Expeditie.NODURI_PE_STRAT - 1, 1))
 
 	# Un singur generator, reînsămânțat pentru fiecare nod din sămânța LUI.
 	# Dacă l-aș lăsa să curgă de la un nod la altul, abaterea nodului 5 ar
@@ -460,66 +523,85 @@ func _aseaza_nodurile() -> void:
 		var coloana := int(nod["coloana"])
 		var cate: int = pe_strat[adancime]
 
-		# Fracția (coloana + 0.5) / cate centrează stratul indiferent câte
-		# noduri are: un strat cu unul singur iese la 0,5 — adică la mijloc.
-		var fx := (coloana + 0.5) / float(cate)
-		# `straturi - 1 - adancime` întoarce ordinea: adâncimea 0 ajunge jos.
-		var fy := float(straturi - 1 - adancime) / float(maxi(straturi - 1, 1))
+		# ORIZONTALA: stratul 0 lipit de marginea din stânga, ultimul de cea
+		# din dreapta, restul împărțite egal între ele.
+		var fx := float(adancime) / float(maxi(straturi - 1, 1))
 
-		var centru := Vector2(
-			MARGINE_PANZA + utila_x * fx,
-			MARGINE_PANZA + utila_y * fy
-		) + MARIME_NOD * 0.5
+		# VERTICALA: nodurile unui strat se răsfiră pe toată înălțimea utilă,
+		# nu pe mijlocul ei. Cu formula veche ((coloana + 0.5) / cate) două
+		# noduri ieșeau la 25% și 75% din înălțime, adică foloseau jumătate din
+		# hârtie și lăsau sus și jos câte un sfert gol.
+		#
+		# Un strat cu un singur nod (primul și ultimul) iese la mijloc: nu ai
+		# ce răsfira, iar mijlocul e locul de unde pleci și unde ajungi.
+		var fy := 0.5
+		if cate > 1:
+			var intins := float(coloana) / float(cate - 1)   # 0 .. 1
+			# Straturile impare se strâng spre centru — vezi `STRANGERE_ALTERNATA`.
+			var deschidere := INTINDERE_VERTICALA
+			if adancime % 2 == 1:
+				deschidere *= STRANGERE_ALTERNATA
+			fy = 0.5 + (intins - 0.5) * deschidere
+
+		var centru := zona.position + Vector2(zona.size.x * fx, zona.size.y * fy)
 
 		rng.seed = int(nod["samanta"])
 		centru += Vector2(
-			rng.randf_range(-1.0, 1.0) * minf(
-				utila_x / float(cate) * ABATERE_X, ABATERE_MAXIMA.x),
-			rng.randf_range(-1.0, 1.0) * minf(
-				inaltime_strat * ABATERE_Y, ABATERE_MAXIMA.y)
+			rng.randf_range(-1.0, 1.0) * minf(pas_x * ABATERE_X, ABATERE_MAXIMA.x),
+			rng.randf_range(-1.0, 1.0) * minf(pas_y * ABATERE_Y, ABATERE_MAXIMA.y)
 		)
 
-		centru = _ocoleste_cartea(centru, zona_carte)
-		# Plasa de siguranță: abaterea nu are voie să scoată un nod din pânză.
-		centru.x = clampf(centru.x, MARIME_NOD.x * 0.5, latime - MARIME_NOD.x * 0.5)
-		centru.y = clampf(centru.y, MARIME_NOD.y * 0.5, inaltime - MARIME_NOD.y * 0.5)
+		# Plasa de siguranță: abaterea n-are voie să scoată un nod de pe hârtie.
+		# Aceeași plasă ține nodurile și la stânga de carte, fiindcă zona utilă
+		# se termină înaintea ei — vezi nota de la `ZONA_PERGAMENT`.
+		centru = _in_zona(centru, zona)
 
 		var simbol: Control = simboluri_nod[id]
 		simbol.position = centru - MARIME_NOD * 0.5
 		simbol.size = MARIME_NOD
 		centre[id] = centru
 
-	panza.arata(_muchii(centre, zona_carte))
+	panza.arata(_muchii(centre, zona))
 
 
-## Zona interzisă (cartea din colțul pergamentului), tradusă din fracțiuni de
-## ECRAN în coordonatele PÂNZEI.
+## Dreptunghiul de hârtie pe care au voie să stea nodurile, în coordonatele
+## PÂNZEI.
 ##
-## Cele două nu sunt același lucru: fundalul se întinde peste toată fereastra,
-## dar pânza e doar dreptunghiul rămas sub antet, între margini. Scăderea
-## poziției globale a pânzei e toată traducerea.
-func _zona_cartii() -> Rect2:
+## Două traduceri într-una. Întâi `ZONA_PERGAMENT` (fracțiuni de ECRAN) devine
+## pixeli și se mută în sistemul pânzei — cele două nu sunt același lucru,
+## fiindcă fundalul se întinde peste toată fereastra, iar pânza e doar
+## dreptunghiul rămas sub antet.
+##
+## Apoi o INTERSECTĂM cu pânza: hârtia începe mai sus decât pânza (acolo e
+## antetul), deci partea aia nu ne e disponibilă oricum. Intersecția e
+## răspunsul la „unde e ȘI hârtie, ȘI loc al meu".
+##
+## La final scădem jumătate de nod din fiecare margine: `zona` e locul unde pot
+## sta CENTRELE, iar un centru lipit de margine ar însemna un simbol pe
+## jumătate în afară.
+func _zona_utila() -> Rect2:
 	var ecran := get_viewport_rect().size
-	var zona := Rect2(ZONA_CARTE.position * ecran, ZONA_CARTE.size * ecran)
-	zona.position -= panza.global_position
-	return zona.grow(MARJA_CARTE)
+	var hartie := Rect2(ZONA_PERGAMENT.position * ecran, ZONA_PERGAMENT.size * ecran)
+	hartie.position -= panza.global_position
+
+	var zona := hartie.intersection(Rect2(Vector2.ZERO, panza.size))
+	return zona.grow_individual(
+		-(MARIME_NOD.x * 0.5 + MARGINE_PANZA), -(MARIME_NOD.y * 0.5 + MARGINE_PANZA),
+		-(MARIME_NOD.x * 0.5 + MARGINE_PANZA), -(MARIME_NOD.y * 0.5 + MARGINE_PANZA)
+	)
 
 
-## Împinge un nod afară din zona cărții.
-##
-## Împingem mereu spre STÂNGA, și asta nu e o alegere la întâmplare: cartea stă
-## lipită de marginea din dreapta a imaginii, deci în dreapta ei nu mai e
-## pergament pe care să ai unde muta nodul. În stânga e mereu.
-func _ocoleste_cartea(centru: Vector2, zona: Rect2) -> Vector2:
-	if not zona.has_point(centru):
-		return centru
-	centru.x = zona.position.x - MARIME_NOD.x * 0.5
-	return centru
+## Un punct adus înapoi în zonă, dacă a ieșit din ea.
+func _in_zona(punct: Vector2, zona: Rect2) -> Vector2:
+	return Vector2(
+		clampf(punct.x, zona.position.x, zona.end.x),
+		clampf(punct.y, zona.position.y, zona.end.y)
+	)
 
 
 ## Liniile, cu starea lor. Se construiesc din aceleași date ca butoanele, deci
 ## nu pot ajunge să arate un drum care nu există.
-func _muchii(centre: Dictionary, zona_carte: Rect2) -> Array[Dictionary]:
+func _muchii(centre: Dictionary, zona: Rect2) -> Array[Dictionary]:
 	var accesibile := Expeditie.accesibile()
 	var muchii: Array[Dictionary] = []
 
@@ -549,7 +631,11 @@ func _muchii(centre: Dictionary, zona_carte: Rect2) -> Array[Dictionary]:
 				"la": centre[urmator],
 				"culoare": culoare,
 				"grosime": grosime,
-				"curbura": _curbura(id, urmator, centre, zona_carte),
+				"curbura": _curbura(id, urmator, centre, zona),
+				# Unde se opresc liniuțele la capete. Trimisă de AICI, nu
+				# ghicită în pânză: harta e singura care știe cât de mare e un
+				# nod, iar pânza nu are de ce să afle ce e un nod.
+				"oprire": OPRIRE_LA_NOD,
 			})
 	return muchii
 
@@ -562,12 +648,12 @@ func _muchii(centre: Dictionary, zona_carte: Rect2) -> Array[Dictionary]:
 ## Numerele 31 și 7919 n-au nimic magic în ele — sunt doar primi, care amestecă
 ## mai bine decât un 2 sau un 10.
 ##
-## Apoi VERIFICĂM unde ajunge îndoitura. Un drum care se umflă peste carte sau
-## în afara pânzei arată rupt, iar nodurile nu erau singurele care puteau da
-## peste zona interzisă — o curbă lungă ajunge mai departe decât capetele ei.
-## Dacă partea trasă la sorți e proastă, o încercăm pe cealaltă; dacă amândouă
-## sunt proaste, îndoim abia perceptibil. Tot deterministic, în toate cazurile.
-func _curbura(a: int, b: int, centre: Dictionary, zona_carte: Rect2) -> float:
+## Apoi VERIFICĂM unde ajunge îndoitura. O curbă lungă ajunge mai departe decât
+## capetele ei, deci un drum poate ieși de pe hârtie chiar dacă amândouă
+## nodurile lui sunt pe ea. Dacă partea trasă la sorți e proastă, o încercăm pe
+## cealaltă; dacă amândouă sunt proaste, îndoim abia perceptibil. Tot
+## deterministic, în toate cazurile.
+func _curbura(a: int, b: int, centre: Dictionary, zona: Rect2) -> float:
 	var rng := RandomNumberGenerator.new()
 	rng.seed = int(Expeditie.harta[a]["samanta"]) * 31 + int(Expeditie.harta[b]["samanta"]) * 7919
 	var marime := rng.randf_range(CURBURA_MINIMA, CURBURA_MAXIMA)
@@ -579,11 +665,10 @@ func _curbura(a: int, b: int, centre: Dictionary, zona_carte: Rect2) -> float:
 	var la: Vector2 = centre[b]
 	var mijloc := (de_la + la) * 0.5
 	var perpendiculara := Vector2(-(la - de_la).y, (la - de_la).x)
-	var panza_intreaga := Rect2(Vector2.ZERO, panza.size)
 
 	for incercare in [semn, -semn]:
 		var control: Vector2 = mijloc + perpendiculara * marime * incercare
-		if panza_intreaga.has_point(control) and not zona_carte.has_point(control):
+		if zona.has_point(control):
 			return marime * incercare
 	return CURBURA_MINIMA * 0.4 * semn
 
@@ -605,7 +690,7 @@ func _pe_nod_apasat(id: int) -> void:
 	var nod := Expeditie.nod_curent()
 
 	match int(nod["tip"]):
-		Expeditie.Nod.LUPTA, Expeditie.Nod.ELITA:
+		Expeditie.Nod.LUPTA, Expeditie.Nod.ELITA, Expeditie.Nod.BOSS:
 			# Lupta e o SCENĂ ALTA. Tot ce trebuie să știe despre nodul ăsta
 			# citește singură din `Expeditie.nod_curent()` — n-avem ce să-i
 			# „trimitem", și e bine așa: un parametru pasat între scene ar fi
@@ -618,6 +703,8 @@ func _pe_nod_apasat(id: int) -> void:
 				"Regele isi recapata suflul: +%d PV.\nAcum %d / %d." % [
 					recuperat, Expeditie.pv, Expeditie.pv_max]
 			)
+		Expeditie.Nod.MAGAZIN:
+			_arata_magazin()
 		Expeditie.Nod.EVENIMENT:
 			# Placeholder, și scris ca atare. Un nod care nu face nimic dar
 			# pretinde că face e mai rău decât unul care recunoaște.
@@ -639,6 +726,89 @@ func _dupa_un_nod() -> void:
 		_arata_sumar()
 	else:
 		_arata_harta()
+
+
+# ─────────────────────────────────────────────────────────────
+# MAGAZINUL
+#
+# Singurul loc din expediție în care Monedele înseamnă ceva. Ecranul ăsta nu
+# știe nicio regulă: citește `Expeditie.PUTERI`, cere `Expeditie.cumpara()`, și
+# se redesenează după. Prețurile, efectele și ce se poate cumpăra de două ori
+# stau toate în expediție — aici e doar vitrina.
+#
+# De ce nu se închide singur după o cumpărătură: fiindcă poți cumpăra mai
+# multe, dacă ai Monede. Un magazin care te dă afară după primul lucru cumpărat
+# te-ar face să numeri înainte, nu să alegi.
+# ─────────────────────────────────────────────────────────────
+
+func _arata_magazin() -> void:
+	panou_magazin.visible = true
+	_construieste_magazin()
+	buton_magazin.grab_focus()
+	# Harta de sub voal se redesenează ACUM, ca să arate deja nodul devenit
+	# „parcurs" când voalul se ridică. Același tipar ca la `_arata_mesaj`.
+	_arata_harta()
+
+
+## Un rând per putere din tabel. Niciun nume scris de mână: o putere nouă e un
+## rând în `Expeditie.PUTERI`, nu o linie aici.
+func _construieste_magazin() -> void:
+	magazin_subtitlu.text = "Ai %d Monede. Ce cumperi tine pana la capatul expeditiei — apoi dispare." % Expeditie.monede
+
+	for copil in magazin_lista.get_children():
+		magazin_lista.remove_child(copil)
+		copil.queue_free()
+
+	for fisa in Expeditie.PUTERI:
+		magazin_lista.add_child(_rand_magazin(fisa))
+
+
+func _rand_magazin(fisa: Dictionary) -> Control:
+	var cheie := String(fisa["cheie"])
+
+	var coloana := VBoxContainer.new()
+	coloana.add_theme_constant_override("separation", 2)
+
+	# Butonul se stinge singur când nu se poate cumpăra, ȘI SPUNE DE CE — fie
+	# „iti mai trebuie 8", fie „PV plin". Un buton stins fără explicație e o ușă
+	# închisă fără tăbliță: te uiți la ea și nu știi dacă e vina ta sau a jocului.
+	var refuz := Expeditie.motiv_refuz(cheie)
+
+	var buton := Button.new()
+	buton.text = "%s  —  %d Monede" % [String(fisa["nume"]), int(fisa["cost"])]
+	if refuz != "":
+		buton.text += "   (%s)" % refuz
+	buton.custom_minimum_size = Vector2(0, 40)
+	buton.disabled = refuz != ""
+	buton.pressed.connect(_pe_putere_cumparata.bind(cheie))
+	coloana.add_child(buton)
+
+	var descriere := Label.new()
+	descriere.text = String(fisa["descriere"])
+	descriere.modulate = Color(0.58, 0.58, 0.66)
+	descriere.add_theme_font_size_override("font_size", 13)
+	descriere.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	coloana.add_child(descriere)
+
+	return coloana
+
+
+func _pe_putere_cumparata(cheie: String) -> void:
+	var urmare := Expeditie.cumpara(cheie)
+	if urmare == "":
+		return   # n-au ajuns Monedele; butonul era oricum stins
+
+	Sunet.reda(Sunet.Efect.CORECT)
+	# Rescriem vitrina: Monedele au scăzut, deci alte butoane trebuie stinse.
+	_construieste_magazin()
+	# Și antetul, fiindcă și el arată Monedele — și, la „Zale ferecate", PV-ul.
+	_actualizeaza_antet()
+	magazin_subtitlu.text = "%s  Ti-au ramas %d Monede." % [urmare, Expeditie.monede]
+
+
+func _pe_magazin_inchis() -> void:
+	panou_magazin.visible = false
+	_dupa_un_nod()
 
 
 func _arata_mesaj(titlu: String, text: String) -> void:
@@ -703,6 +873,7 @@ func _construieste_sumar() -> void:
 		["Lovituri critice", str(Expeditie.recorduri["critice"])],
 		["Cea mai grea lupta", "%d daune" % Expeditie.recorduri["daune_intr_o_lupta"]],
 		["Fragmente din expeditie", str(Expeditie.fragmente_castigate)],
+		["Cumparat la magazin", Expeditie.puteri_pe_scurt()],
 		["Fragmente cu totul", str(Tezaur.cat(Tezaur.Resursa.FRAGMENTE))],
 	]
 

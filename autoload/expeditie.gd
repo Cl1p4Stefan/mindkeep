@@ -56,35 +56,76 @@ enum Nod {
 	ELITA,       ## mai greu, răsplată mai mare
 	ODIHNA,      ## singurul loc în care PV-ul se întoarce
 	EVENIMENT,   ## placeholder: marcat pe hartă, fără conținut încă
+	MAGAZIN,     ## singurul loc în care Monedele se transformă în ceva
+	BOSS,        ## capătul drumului, mai greu decât o Elită
 }
 
 ## FIȘA fiecărui tip de nod. Tabel, nu ramuri în cod: harta desenează de aici
-## și nu conține niciun `if tip == ...`. Un tip nou (magazin, comoară) e un
-## rând în plus, plus ce face el la vizitare.
+## și nu conține niciun `if tip == ...`. Un tip nou (comoară, altar) e un rând
+## în plus, plus ce face el la vizitare.
 ##
-## „cheie" e numele pe disc. „simbol" e ce se vede în cerculețul de pe hartă.
+## CE ÎNSEAMNĂ FIECARE COLOANĂ:
+##   cheie        — numele pe disc (vezi nota de la `enum Nod`)
+##   nume         — ce scrie pe etichetă când survolezi nodul
+##   descriere    — ce te așteaptă acolo, într-o propoziție
+##   culoare      — HALOUL din spatele simbolului. Nu e decor: craniul Elitei
+##                  și coiful Luptei sunt forme apropiate la 90 de pixeli, iar
+##                  culoarea din spate e ce le desparte dintr-o privire.
+##   putere       — cât de tare lovește inamicul de-acolo, ca înmulțitor peste
+##                  cifrele lui din tabelul luptei
+##   buget        — cât de SCUMP poate fi inamicul ales acolo (cine încape)
+##   monede       — câte Monede cad la o victorie
+##   bonus        — Fragmente în plus, o singură dată, pentru un nod greu
+##
+## „putere" și „buget" sunt două lucruri diferite, și merită două coloane:
+## bugetul alege CINE apare (un Spadasin în loc de un Soldat), puterea îl umflă
+## pe cel apărut. Un nod de Boss are nevoie de amândouă — cel mai scump adversar
+## disponibil, și încă o dată pe-atât peste el.
 const DATE_NOD := {
 	Nod.LUPTA: {
-		"cheie": "lupta", "nume": "Lupta", "simbol": "X",
-		"culoare": Color(0.82, 0.82, 0.90),
+		"cheie": "lupta", "nume": "Lupta",
 		"descriere": "Un adversar obisnuit iti taie drumul.",
+		"culoare": Color(0.96, 0.93, 0.86),
+		"putere": 1.0, "buget": 1.0, "monede": 8, "bonus": 0,
 	},
 	Nod.ELITA: {
-		"cheie": "elita", "nume": "Elita", "simbol": "!",
-		"culoare": Color(1.00, 0.55, 0.45),
+		"cheie": "elita", "nume": "Elita",
 		"descriere": "Mai mult PV, lovituri mai grele — si o rasplata pe masura.",
+		"culoare": Color(1.00, 0.62, 0.26),
+		"putere": 1.6, "buget": 1.8, "monede": 16, "bonus": 12,
 	},
 	Nod.ODIHNA: {
-		"cheie": "odihna", "nume": "Odihna", "simbol": "+",
-		"culoare": Color(0.55, 0.95, 0.65),
+		"cheie": "odihna", "nume": "Odihna",
 		"descriere": "Singurul loc din expeditie in care regele isi revine.",
+		"culoare": Color(1.00, 0.80, 0.52),
+		"putere": 1.0, "buget": 1.0, "monede": 0, "bonus": 0,
 	},
 	Nod.EVENIMENT: {
-		"cheie": "eveniment", "nume": "Eveniment", "simbol": "?",
-		"culoare": Color(0.75, 0.70, 1.00),
+		"cheie": "eveniment", "nume": "Eveniment",
 		"descriere": "Ceva se va intampla aici. Deocamdata, doar trecem.",
+		"culoare": Color(0.84, 0.82, 0.96),
+		"putere": 1.0, "buget": 1.0, "monede": 0, "bonus": 0,
+	},
+	Nod.MAGAZIN: {
+		"cheie": "magazin", "nume": "Magazin",
+		"descriere": "Un negustor pe drum. Monedele stranse se schimba aici pe ajutor — doar pentru expeditia asta.",
+		"culoare": Color(1.00, 0.86, 0.38),
+		"putere": 1.0, "buget": 1.0, "monede": 0, "bonus": 0,
+	},
+	Nod.BOSS: {
+		"cheie": "boss", "nume": "Boss",
+		"descriere": "Capatul drumului. Mai greu decat orice Elita — si ultimul lucru dintre tine si sumar.",
+		"culoare": Color(0.92, 0.30, 0.22),
+		"putere": 2.3, "buget": 2.6, "monede": 30, "bonus": 30,
 	},
 }
+
+
+## Fișa unui tip de nod, cu plasă de siguranță: un tip necunoscut (un save
+## vechi, un enum umblat) întoarce fișa Luptei în loc să oprească jocul.
+static func date_nod(tip: int) -> Dictionary:
+	return DATE_NOD.get(tip, DATE_NOD[Nod.LUPTA])
+
 
 # ─────────────────────────────────────────────────────────────
 # REGULILE EXPEDIȚIEI
@@ -105,11 +146,25 @@ const PV_MAX := 15
 const ODIHNA_FRACTIUNE := 0.35
 
 ## Câte STRATURI are harta. Straturile hotărăsc numărul de noduri:
-## primul și ultimul au câte unul, cele din mijloc câte două.
-##   5 straturi → 1 + 2 + 2 + 2 + 1 =  8 noduri
-##   6 straturi → 1 + 2 + 2 + 2 + 2 + 1 = 10 noduri
-const STRATURI_MIN := 5
-const STRATURI_MAX := 6
+## primul și ultimul au câte unul, cele din mijloc câte `NODURI_PE_STRAT`.
+##   7 straturi → 1 + 2·5 + 1 = 12 noduri
+##   9 straturi → 1 + 2·7 + 1 = 16 noduri
+##
+## Cifrele astea au crescut de la 5-6 la 7-9 dintr-un motiv de DESEN, nu de
+## dificultate: pe pergamentul întins pe toată fereastra, opt noduri arătau ca
+## opt puncte răzlețe, nu ca un drum. Harta de referință are paisprezece, și
+## abia la densitatea aia drumul începe să pară un TRASEU pe un teren.
+##
+## Dacă o expediție de 16 noduri se dovedește prea lungă pentru o sesiune de
+## 15 minute, aici se taie — dar se taie știind că sub 12 noduri harta redevine
+## un desen sărac.
+const STRATURI_MIN := 7
+const STRATURI_MAX := 9
+
+## Sub atâtea noduri nu coborâm niciodată. E o PLASĂ, nu o regulă: astăzi
+## `STRATURI_MIN` garantează deja 12, dar dacă mâine cineva scade straturile
+## fără să se uite aici, generatorul adaugă straturi până iese numărul.
+const NODURI_MINIME := 12
 
 ## Câte noduri are un strat din mijloc. Două = o alegere reală la fiecare pas,
 ## fără ca harta să devină un păienjeniș pe care nu-l mai citești dintr-o
@@ -134,7 +189,9 @@ const NODURI_PE_STRAT := 2
 # ─────────────────────────────────────────────────────────────
 const BUGET_BAZA := 1.0
 const BUGET_PE_ADANCIME := 0.55
-const BUGET_ELITA := 1.8   ## multiplicatorul pe care Elita îl pune peste buget
+# Multiplicatorul de buget al unui nod greu NU mai e o constantă aici: e
+# coloana „buget" din `DATE_NOD`. Elita îl avea, Bossul avea nevoie de altul,
+# iar două constante cu același rost sunt începutul unei a treia.
 
 ## PONDERILE tipurilor de nod, ca tabel. Ponderea finală a unui tip e
 ## `pondere + pe_adancime * adancime`, tăiată la zero.
@@ -142,13 +199,65 @@ const BUGET_ELITA := 1.8   ## multiplicatorul pe care Elita îl pune peste buget
 ## Cifrele spun o poveste, și merită citită așa: LUPTA pornește dominantă și
 ## scade; ELITA pornește imposibilă (0) și devine probabilă spre final;
 ## ODIHNA e rară la început (n-ai ce recupera) și crește pe măsură ce
-## expediția te macină; EVENIMENTul e constant, fiindcă nu e o chestiune de
+## expediția te macină; MAGAZINul urcă și el, fiindcă la început n-ai Monede
+## cu ce cumpăra; EVENIMENTul e constant, fiindcă nu e o chestiune de
 ## dificultate.
+##
+## Pantele sunt mai blânde decât la harta de 5-6 straturi: aceeași pantă pe un
+## drum de 9 straturi ar fi însemnat că ultimele trei straturi sunt numai Elite.
+## Când schimbi lungimea hărții, `pe_adancime` e numărul care trebuie reglat
+## odată cu ea — de-aia stă într-un tabel și nu împrăștiat prin cod.
 const PONDERI_NOD := [
-	{"tip": Nod.LUPTA, "pondere": 6.0, "pe_adancime": -0.6},
-	{"tip": Nod.ELITA, "pondere": -0.5, "pe_adancime": 0.7},
-	{"tip": Nod.ODIHNA, "pondere": 0.2, "pe_adancime": 0.5},
-	{"tip": Nod.EVENIMENT, "pondere": 1.8, "pe_adancime": 0.0},
+	{"tip": Nod.LUPTA, "pondere": 6.0, "pe_adancime": -0.40},
+	{"tip": Nod.ELITA, "pondere": -0.8, "pe_adancime": 0.50},
+	{"tip": Nod.ODIHNA, "pondere": 0.2, "pe_adancime": 0.30},
+	{"tip": Nod.EVENIMENT, "pondere": 1.6, "pe_adancime": 0.0},
+	{"tip": Nod.MAGAZIN, "pondere": 0.3, "pe_adancime": 0.26},
+]
+
+# ─────────────────────────────────────────────────────────────
+# MONEDELE ȘI PUTERILE — economia care moare cu expediția
+#
+# Fragmentele sunt AVERE: rămân în `Tezaur` după ce runul se termină, oricum
+# s-ar termina, și vor plăti clădirile cetății. Monedele sunt cu totul altceva:
+# se strâng din lupte, se cheltuie la Magazin, și se evaporă la finalul
+# expediției.
+#
+# De ce două monede și nu una: fiindcă întrebarea „ce cumpăr ACUM, cu ce am pe
+# drumul ăsta" e o decizie complet diferită de „ce-mi construiesc în cetate
+# peste zece runuri". Dacă ar fi aceeași resursă, a doua ar înghiți-o mereu pe
+# prima — orice leu cheltuit pe un ajutor temporar ar fi un leu furat de la
+# ceva permanent, deci n-ai cumpăra niciodată nimic pe drum.
+#
+# Monedele NU intră în `Tezaur`. Tezaurul e, prin definiție, ce supraviețuiește
+# expediției; o resursă care se resetează n-are ce căuta acolo.
+# ─────────────────────────────────────────────────────────────
+
+## Ce se vinde la Magazin. Tabel, ca tot restul: o putere nouă e un rând.
+##
+## „efect" e cheia pe care o citește codul; restul e ce citește jucătorul.
+## Puterile INSTANTANEE (PV, PV maxim) își fac treaba în clipa cumpărării și
+## sunt trecute în istoric. Cele DURABILE („pa") rămân în `puteri` și sunt
+## întrebate de luptă la fiecare rundă — de-aia lista se salvează.
+##
+## Prețurile pornesc de la ce aduce un nod: o Luptă dă 8 Monede, o Elită 16.
+## Deci „fiertura" e aproape un nod de luptă, iar „pana" e trei. Vrei ca
+## alegerea de la Magazin să coste ceva, altfel nu e o alegere.
+const PUTERI := [
+	{
+		"cheie": "pana", "nume": "Pana de otel", "cost": 24, "efect": "pa",
+		"descriere": "+1 PA in fiecare runda, pana la capatul expeditiei.",
+	},
+	{
+		"cheie": "zale", "nume": "Zale ferecate", "cost": 16, "efect": "pv_max",
+		"cantitate": 4,
+		"descriere": "+4 PV maxim, si tot atatia acum.",
+	},
+	{
+		"cheie": "fiertura", "nume": "Fiertura calda", "cost": 9, "efect": "pv",
+		"cantitate": 6,
+		"descriere": "+6 PV pe loc. Nimic pe termen lung.",
+	},
 ]
 
 # ─────────────────────────────────────────────────────────────
@@ -202,6 +311,17 @@ var pv_max := PV_MAX
 ## asta", nu „ai 312 cu totul".
 var fragmente_castigate := 0
 
+## MONEDELE din expediția curentă. Se strâng din lupte, se cheltuie la Magazin,
+## și mor odată cu runul — vezi nota de la `PUTERI`.
+##
+## Stau AICI, nu în `Tezaur`, exact fiindcă asta e granița dintre cele două
+## fișiere: tezaurul e ce rămâne, expediția e ce trece.
+var monede := 0
+
+## Ce ai cumpărat la Magazin, în ordine. Chei text, cu dubluri permise: două
+## „Pene de otel" înseamnă +2 PA, iar istoricul e și ce arată sumarul.
+var puteri: Array[String] = []
+
 ## Cea mai bună performanță din run, pentru sumar. Un dicționar, nu patru
 ## variabile, din același motiv pentru care `Tezaur` e un dicționar: o
 ## statistică nouă e o cheie, nu un drum prin tot fișierul.
@@ -235,6 +355,8 @@ func goleste() -> void:
 	pv = PV_MAX
 	pv_max = PV_MAX
 	fragmente_castigate = 0
+	monede = 0
+	puteri.clear()
 	recorduri = {
 		"lupte_castigate": 0,
 		"cel_mai_lung_lant": 0,
@@ -382,6 +504,12 @@ func inregistreaza_lupta(raport: Dictionary) -> void:
 	# „care a fost cea mai bună luptă". Două statistici, două feluri de a
 	# aduna — de-aia stau într-un tabel și nu într-o buclă care le tratează la fel.
 	recorduri["critice"] = int(recorduri["critice"]) + int(raport.get("critice", 0))
+
+	# MONEDELE cad aici, nu în luptă, și nu e o chestiune de comoditate: ăsta e
+	# singurul loc din tot jocul care știe ȘI că s-a câștigat o luptă, ȘI la ce
+	# fel de nod. Lupta ar fi trebuit să întrebe harta ce nod e ca să afle cât
+	# plătește — adică să repete o socoteală care se face oricum aici.
+	monede += int(date_nod(int(nod_curent().get("tip", Nod.LUPTA)))["monede"])
 	s_a_schimbat.emit()
 
 
@@ -394,6 +522,125 @@ func incaseaza(resursa: Tezaur.Resursa, cantitate: int) -> void:
 	if resursa == Tezaur.Resursa.FRAGMENTE:
 		fragmente_castigate += cantitate
 	s_a_schimbat.emit()
+
+
+# ─────────────────────────────────────────────────────────────
+# MAGAZINUL
+# ─────────────────────────────────────────────────────────────
+
+## Fișa unei puteri, după cheie. Dicționar gol dacă nu există — apelantul
+## verifică cu `is_empty()`, în loc să primească `null` și să crape două
+## funcții mai încolo.
+static func putere(cheie: String) -> Dictionary:
+	for rand in PUTERI:
+		if String(rand["cheie"]) == cheie:
+			return rand
+	return {}
+
+
+## Poți cumpăra puterea asta ACUM? Două condiții, nu una.
+##
+## Prima e evidentă: să ai Monedele. A doua s-a văzut abia la prima probă —
+## „Fiertura calda" (+6 PV) se putea cumpăra cu PV-ul plin, lua 9 Monede și
+## răspundea „+0 PV". Nu era un bug de cod; era un bug de vitrină. Un magazin
+## n-are voie să-ți vândă nimic sub formă de ceva.
+func pot_cumpara(cheie: String) -> bool:
+	var fisa := putere(cheie)
+	if fisa.is_empty() or monede < int(fisa["cost"]):
+		return false
+	return _are_efect(fisa)
+
+
+## Ar schimba puterea asta ceva, în starea de acum?
+##
+## Doar vindecarea poate fi degeaba (PV plin). Un PV maxim în plus e mereu bun,
+## iar un PA în plus la fel — de-aia funcția răspunde „da" pentru orice efect
+## despre care n-are motiv să creadă altceva, în loc să ceară un rând nou în
+## tabel pentru fiecare putere viitoare.
+static func _are_efect_pentru(fisa: Dictionary, pv_acum: int, pv_maxim: int) -> bool:
+	if String(fisa["efect"]) == "pv":
+		return pv_acum < pv_maxim
+	return true
+
+
+func _are_efect(fisa: Dictionary) -> bool:
+	return _are_efect_pentru(fisa, pv, pv_max)
+
+
+## De ce nu poți cumpăra, într-un cuvânt — ca butonul stins să spună singur
+## ce-i lipsește. "" înseamnă „poți".
+func motiv_refuz(cheie: String) -> String:
+	var fisa := putere(cheie)
+	if fisa.is_empty():
+		return "nu exista"
+	if not _are_efect(fisa):
+		return "PV plin"
+	if monede < int(fisa["cost"]):
+		return "iti mai trebuie %d" % (int(fisa["cost"]) - monede)
+	return ""
+
+
+## Cumpără. Întoarce textul de arătat jucătorului („+6 PV") sau "" dacă n-a
+## mers — un singur apel care ȘI plătește, ȘI aplică, ȘI spune ce s-a
+## întâmplat. Trei apeluri separate ar fi însemnat că se poate plăti fără să se
+## aplice nimic, iar ăla e exact bugul pe care nu-l observi decât ca jucător.
+func cumpara(cheie: String) -> String:
+	if not pot_cumpara(cheie):
+		return ""
+
+	var fisa := putere(cheie)
+	monede -= int(fisa["cost"])
+	puteri.append(cheie)
+
+	# Efectele instantanee se consumă ACUM. Cele durabile n-au nimic de făcut
+	# aici: ele trăiesc în `puteri` și sunt întrebate de luptă, la fiecare
+	# rundă, prin `bonus_pa()`.
+	var urmare := ""
+	match String(fisa["efect"]):
+		"pv":
+			var inainte := pv
+			pv = mini(pv + int(fisa["cantitate"]), pv_max)
+			urmare = "+%d PV. Acum %d / %d." % [pv - inainte, pv, pv_max]
+		"pv_max":
+			pv_max += int(fisa["cantitate"])
+			pv += int(fisa["cantitate"])
+			urmare = "+%d PV maxim. Acum %d / %d." % [
+				int(fisa["cantitate"]), pv, pv_max]
+		"pa":
+			# „Cu cât mai mult", nu „câte cu totul": PA-ul de bază e al luptei
+			# (`PA_PE_RUNDA`), iar expediția n-are de ce să-l știe.
+			urmare = "De acum, +%d PA in fiecare runda." % bonus_pa()
+
+	s_a_schimbat.emit()
+	return urmare
+
+
+## Câte PA în plus dai în fiecare rundă, din puterile cumpărate.
+##
+## Se NUMĂRĂ, nu se ține un contor separat: lista de puteri e adevărul, iar un
+## al doilea număr care ar trebui să fie mereu egal cu ea e un al doilea număr
+## care într-o zi n-o să mai fie.
+func bonus_pa() -> int:
+	var spor := 0
+	for cheie in puteri:
+		var fisa := putere(cheie)
+		if not fisa.is_empty() and String(fisa["efect"]) == "pa":
+			spor += 1
+	return spor
+
+
+## Numele puterilor cumpărate, pentru sumar. Cu dubluri: „Pana de otel ×2".
+func puteri_pe_scurt() -> String:
+	if puteri.is_empty():
+		return "-"
+	var cate := {}
+	for cheie in puteri:
+		cate[cheie] = int(cate.get(cheie, 0)) + 1
+	var bucati: Array[String] = []
+	for cheie in cate:
+		var nume := String(putere(cheie).get("nume", cheie))
+		bucati.append(nume if cate[cheie] == 1 else "%s x%d" % [nume, cate[cheie]])
+	return ", ".join(bucati)
 
 
 # ─────────────────────────────────────────────────────────────
@@ -413,6 +660,13 @@ static func genereaza_harta(samanta_harta: int) -> Array[Dictionary]:
 	rng.seed = samanta_harta
 
 	var straturi := rng.randi_range(STRATURI_MIN, STRATURI_MAX)
+	# Plasa de la `NODURI_MINIME`: un strat din mijloc aduce `NODURI_PE_STRAT`
+	# noduri, deci creștem straturile până iese numărul cerut. Bucla asta nu
+	# face nimic azi (7 straturi dau deja 12) — e acolo ca să NU se poată
+	# ajunge, dintr-o reglare de dificultate, la o hartă de opt puncte răzlețe.
+	while 2 + (straturi - 2) * NODURI_PE_STRAT < NODURI_MINIME:
+		straturi += 1
+
 	var noduri: Array[Dictionary] = []
 	# „Cine e pe stratul de dinainte" — avem nevoie de indicii lor ca să
 	# tragem muchiile înapoi, după ce stratul nou e construit.
@@ -429,10 +683,11 @@ static func genereaza_harta(samanta_harta: int) -> Array[Dictionary]:
 		var stratul_nou: Array[int] = []
 		for coloana in range(cate):
 			var id := noduri.size()
-			var buget := BUGET_BAZA + BUGET_PE_ADANCIME * adancime
 			var tip := _alege_tip(rng, adancime, straturi)
-			if tip == Nod.ELITA:
-				buget *= BUGET_ELITA
+			# Bugetul crește cu adâncimea, apoi îl înmulțește tipul nodului.
+			# Multiplicatorul vine din `DATE_NOD`, nu dintr-un `if tip == ELITA`:
+			# de-aia Bossul n-a cerut nicio linie de cod aici, doar un rând în tabel.
+			var buget: float = (BUGET_BAZA + BUGET_PE_ADANCIME * adancime) 				* float(date_nod(tip)["buget"])
 			noduri.append({
 				"id": id,
 				"adancime": adancime,
@@ -450,22 +705,83 @@ static func genereaza_harta(samanta_harta: int) -> Array[Dictionary]:
 			_leaga(rng, noduri, stratul_trecut, stratul_nou)
 		stratul_trecut = stratul_nou
 
+	_asigura_magazin(rng, noduri, straturi)
 	return noduri
+
+
+## O hartă FĂRĂ Magazin face Monedele o glumă proastă: le-ai strâns toată
+## expediția și n-ai avut unde să le dai. Ponderile îl fac probabil, dar
+## „probabil" nu e „sigur", iar un jucător care nimerește sămânța nefericită
+## nu află niciodată că sistemul există.
+##
+## Deci: dacă n-a ieșit niciun Magazin, transformăm unul. Alegem din a DOUA
+## JUMĂTATE a drumului (ai apucat să aduni ceva) și numai un nod care nu are
+## deja un rol propriu — o Luptă sau un Eveniment, niciodată o Odihnă, o Elită
+## sau Bossul, fiindcă alea sunt trepte de dificultate, nu spațiu liber.
+static func _asigura_magazin(
+	rng: RandomNumberGenerator, noduri: Array[Dictionary], straturi: int
+) -> void:
+	for nod in noduri:
+		if int(nod["tip"]) == Nod.MAGAZIN:
+			return
+
+	# Două căutări, în ordinea preferinței. Prima e cea dorită: a doua jumătate
+	# a drumului, unde ai apucat să aduni Monede. A doua acceptă orice nod liber,
+	# oriunde pe drum — un Magazin prea devreme e tot mai bun decât niciunul.
+	#
+	# La 300 de semințe încercate, a doua căutare salvează o hartă. Una la trei
+	# sute pare puțin până înțelegi ce e: un run în care sistemul de Monede pur
+	# și simplu nu există, fără ca jucătorul să afle vreodată de ce.
+	var candidati := _noduri_libere(noduri, straturi / 2, straturi - 1)
+	if candidati.is_empty():
+		candidati = _noduri_libere(noduri, 1, straturi - 1)
+	if candidati.is_empty():
+		return   # hartă numai din Elite și Odihne: rară, dar n-o stricăm cu forța
+
+	var ales: int = candidati[rng.randi_range(0, candidati.size() - 1)]
+	noduri[ales]["tip"] = Nod.MAGAZIN
+	# Bugetul se recalculează: nodul nu mai e o luptă, deci multiplicatorul lui
+	# de dificultate s-a schimbat. Fără linia asta, un Magazin făcut dintr-o
+	# Elită ar fi rămas cu bugetul Elitei — invizibil azi, otravă la pasul 10.
+	noduri[ales]["buget"] = snappedf(
+		(BUGET_BAZA + BUGET_PE_ADANCIME * int(noduri[ales]["adancime"]))
+		* float(DATE_NOD[Nod.MAGAZIN]["buget"]), 0.01)
+
+
+## Nodurile care pot fi transformate în altceva, între două adâncimi.
+##
+## „Liber" înseamnă Luptă sau Eveniment: nodurile care nu au un rol propriu în
+## economia drumului. O Odihnă, o Elită sau Bossul sunt trepte puse dinadins —
+## dacă le-am rescrie, am repara o problemă stricând alta.
+static func _noduri_libere(
+	noduri: Array[Dictionary], de_la_adancime: int, pana_la_adancime: int
+) -> Array[int]:
+	var gasite: Array[int] = []
+	for nod in noduri:
+		var adancime := int(nod["adancime"])
+		var e_liber: bool = int(nod["tip"]) in [Nod.LUPTA, Nod.EVENIMENT]
+		if e_liber and adancime >= de_la_adancime and adancime < pana_la_adancime:
+			gasite.append(int(nod["id"]))
+	return gasite
 
 
 ## Ce fel de nod e ăsta.
 ##
 ## Primul strat e MEREU o luptă obișnuită: o expediție care începe cu odihnă
 ## („n-ai ce odihni") sau cu o elită („n-ai apucat să înveți nimic") pornește
-## prost, indiferent ce spun ponderile. Ultimul e MEREU elită: ăla e finalul,
-## și un final trebuie să fie ceva.
+## prost, indiferent ce spun ponderile.
+##
+## Ultimul e MEREU Boss. Era Elită, și asta era o scăpare de design pe care
+## harta o arăta pe față: dacă la nodul 6 întâlnești o Elită și la nodul 12
+## tot o Elită, capătul drumului nu e un capăt — e încă un nod. Un tip aparte,
+## doar acolo, face finalul un LOC, nu o repetare.
 ##
 ## Restul se trage din `PONDERI_NOD`, cu ponderile crescute de adâncime.
 static func _alege_tip(rng: RandomNumberGenerator, adancime: int, straturi: int) -> Nod:
 	if adancime == 0:
 		return Nod.LUPTA
 	if adancime == straturi - 1:
-		return Nod.ELITA
+		return Nod.BOSS
 
 	# „Roata norocului": fiecare tip primește o felie cât ponderea lui, apoi
 	# aruncăm o singură dată în tot cercul. Ponderea zero = felie inexistentă,
@@ -581,6 +897,8 @@ func spre_dictionar() -> Dictionary:
 		"pv": pv,
 		"pv_max": pv_max,
 		"fragmente_castigate": fragmente_castigate,
+		"monede": monede,
+		"puteri": puteri.duplicate(),
 		"recorduri": recorduri.duplicate(true),
 		"final": final,
 	}
@@ -593,11 +911,14 @@ func din_dictionar(date: Dictionary) -> void:
 	pv = int(date.get("pv", PV_MAX))
 	pv_max = int(date.get("pv_max", PV_MAX))
 	fragmente_castigate = int(date.get("fragmente_castigate", 0))
+	monede = int(date.get("monede", 0))
 	final = String(date.get("final", ""))
 	activa = bool(date.get("activa", false))
 
 	for cheie in date.get("loadout", []):
 		loadout.append(String(cheie))
+	for cheie in date.get("puteri", []):
+		puteri.append(String(cheie))
 	for id in date.get("parcurse", []):
 		parcurse.append(int(id))
 	for cheie in recorduri:
