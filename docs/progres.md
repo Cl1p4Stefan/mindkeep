@@ -1,6 +1,6 @@
 # MINDKEEP — Jurnal de progres
 
-*Ultima actualizare: 18 septembrie 2026*
+*Ultima actualizare: 21 septembrie 2026*
 *Atașează acest fișier la începutul fiecărei sesiuni noi, împreună cu `CLAUDE.md` și `docs/pitch-document.md`.*
 
 ---
@@ -14,7 +14,7 @@
 | 3. Trivia, ca scenă independentă | ✅ gata |
 | 4. Bucla completă a unei lupte | ✅ victorie · înfrângere · recompense (Fragmente) |
 | 5. Trei inamici manuali | ✅ Soldatul · Lăncierul (ceas) · Spadasinul (vulnerabilitate), aleși din joc |
-| 6. Harta de expediție | ✅ loadout „N din M" · **12-16 noduri**, ramificate, cu sămânță · Luptă / Elită / Odihnă / Eveniment / **Magazin** / **Boss** · **Monede + puteri temporare** · sumar de run · **aspect: pergament, de la stânga la dreapta, simboluri de cerneală, trasee punctate** |
+| 6. Harta de expediție | ✅ loadout „N din M" · **12-16 noduri**, ramificate, cu sămânță · Luptă / Elită / Odihnă / Eveniment / **Magazin** / **Boss** · **Monede + puteri temporare** · sumar de run · aspect: pergament, de la stânga la dreapta, simboluri de cerneală, trasee punctate · **drumuri care nu se încrucișează niciodată (0 la 300 de semințe)** · **nodul curent are și aură, și X** |
 | 7. Cetatea | ❌ |
 | 8. Save/Load | 🟡 tezaurul, sacul și expediția știu toate să se serializeze (`spre_dictionar` / `din_dictionar`), pe trei straturi de durată; scrierea pe disc, nu încă |
 | 9. Celelalte discipline | 🟡 Cultură generală ✅ (135 de întrebări) · Logica ✅ (80 de categorii) · Cuvinte ✅ · toate trei fără repetiții pe expediție · celelalte 5 ❌ |
@@ -27,6 +27,80 @@ buget, generare) rămâne acolo unde era.
 Am sărit peste ordinea recomandată la pasul 12 (artă): imaginile pentru rege,
 cavaler și pentru cele trei piese de șah de pe butoane au intrat mai devreme, dar
 restul rămâne placeholder. Bucla de luptă e în continuare cea validată, nu arta.
+
+---
+
+## Sesiunea nodului tăiat (21 septembrie 2026) — stai pe un loc deja bifat
+
+O sesiune de câteva linii, dar cu o întrebare care merita pusă înainte de ele.
+
+### Ce arăta greșit
+
+Nodul pe care tocmai l-ai câștigat primea starea CURENT (aura caldă) și, fiindcă
+lanțul de `if`-uri din `_construieste_harta()` îl prinde pe prima ramură, nu mai
+ajungea niciodată la PARCURS — deci nu primea X-ul. Pe harta de referință, figura
+stă pe un loc deja tăiat: ai ajuns acolo ȘI ai terminat treaba. Aura spune „aici
+sunt", X-ul spune „aici s-a rezolvat". Sunt două informații, nu una.
+
+### Întrebarea pusă întâi: e sigur că nodul curent e mereu terminat?
+
+Verificat pe toate rutele, fiindcă un X pe un nod nejucat ar fi fost o minciună
+vizuală mai rea decât lipsa lui:
+
+- **Luptă / Elită / Boss** — `_pe_nod_apasat()` schimbă scena. Harta e distrusă
+  și revine abia din `_inapoi_la_harta()` (`lupta.gd`), adică după verdict. Harta
+  nu există niciodată în timpul unei lupte, deci nu poate desena nodul ei.
+- **Odihnă / Magazin / Eveniment** — harta rămâne, iar `_arata_magazin()` și
+  `_arata_mesaj()` cheamă dinadins `_arata_harta()` cât e voalul ridicat, exact
+  ca nodul să fie deja tăiat când voalul se ridică. Era regula scrisă acolo de
+  mai demult, nu o excepție nouă.
+- **`pozitie == -1`** (loadout) — nu există nod curent, deci nici întrebare.
+- **Reluare după închiderea jocului în mijlocul unei lupte** — nu există azi.
+  `Expeditie.din_dictionar()` e scrisă, dar nimic n-o cheamă: scrierea pe disc e
+  pasul 8.
+
+### Ce s-a schimbat
+
+`stare` și „e consumat?" au devenit două întrebări separate, ca `stare` și
+`activ` de dinainte. `SimbolNod` are un câmp `terminat`, primit printr-un al
+cincilea parametru al lui `configureaza()` (cu valoare implicită, deci un apel
+vechi se comportă identic), iar X-ul se desenează pe
+`PARCURS or (CURENT and terminat)`. Ordinea din `_construieste_harta()` n-a fost
+atinsă — CURENT rămâne primul, deci aura nu se pierde; lângă lanț s-a adăugat o
+singură linie, `var terminat := id in Expeditie.parcurse`, fiindcă `parcurse` îl
+conține și pe nodul curent.
+
+**De ce nu o a cincea stare.** Stările sunt ROLURI în ierarhia vizuală, iar rolul
+nu se schimbă: un nod terminat pe care stai e tot „unde ești", doar că are un semn
+în plus. Un `CURENT_TERMINAT` ar fi însemnat un rând în `INFATISARI` copiat cuvânt
+cu cuvânt după CURENT — adică două locuri de reglat la fiecare ajustare de aură.
+
+### Datoria lăsată în urmă, scrisă în cod
+
+Regula „nodul curent e terminat" se sprijină pe faptul că harta se desenează doar
+între noduri. **Save-ul (pasul 8) e singurul lucru care o poate sparge:** un save
+făcut în mijlocul unei lupte trebuie să se întoarcă ÎN LUPTĂ, nu pe hartă — altfel
+nodul ar apărea tăiat înainte să fi fost jucat. Dacă vreodată chiar e nevoie să se
+reintre pe hartă cu un nod neterminat, `parcurse` nu ajunge: el înseamnă „am
+intrat", nu „am terminat", și ar trebui un câmp explicit în `Expeditie`. Nu l-am
+adăugat acum, fiindcă azi ar fi mereu `false`, iar o stare care nu se schimbă
+niciodată e o minciună în cod. Avertismentul stă în docstring-ul lui
+`_construieste_harta()`, unde îl citește cine scrie save-ul.
+
+### Fișiere atinse
+
+```
+scenes/harta/simbol_nod.gd   - `var terminat`; al 5-lea parametru la `configureaza()`;
+                               regula de desen a X-ului
+scenes/harta/harta.gd        - `terminat` calculat si pasat; docstring-ul
+                               `_construieste_harta()` explica regula noua
+```
+
+### Ce a rămas de verificat
+
+Rulat cu ochii în joc: dacă X-ul peste aură e prea încărcat vizual, se scade
+opacitatea lui doar pentru nodul curent, dintr-un singur loc
+(`_deseneaza_taietura()`).
 
 ---
 
@@ -173,6 +247,152 @@ lungimea hărții, `pe_adancime` e numărul care se reglează odată cu ea.**
 - Cumpărare, refuz, `bonus_pa()`, save/load dus-întors — toate corecte
 - Lupta la nodul de Boss: „BOSS LANCIERUL — 78/78 PV", 4 puncte de PA cu Pana
   cumpărată
+
+---
+
+## Sesiunea drumurilor curate (21 septembrie 2026) — niciun traseu nu mai taie altul
+
+Harta arăta a hartă și umplea hârtia, dar traseele se încălecau. Sesiunea asta
+n-a adăugat nimic: a scos o problemă pe care ochiul o vedea și cifrele n-o
+numărau.
+
+### Întâi măsurat, apoi reparat (a treia oară, și tot merită)
+
+`tools/verifica_harta.gd` — o SCENĂ headless, rulată cu
+`godot --headless --path . res://tools/verifica_harta.tscn` — trece generatorul
+prin 300 de semințe și numără patru lucruri:
+
+| | ce numără | înainte | după |
+|---|---|---|---|
+| (a) | muchii care sar peste un strat | **0** | 0 |
+| (b) | încrucișări în GRAF (coloane inversate la capete) | **949** (pe 298 de hărți) | **0** |
+| (c) | straturi în care abaterea organică inversează ordinea pe verticală | **22** (pe 21 de hărți) | **0** |
+| (d) | încrucișări în DESENUL efectiv, drumurile tăiate în linii frânte | **824** (pe 297 de hărți) | **0** |
+
+(a) fiind deja zero, n-a fost nimic de decis acolo: generatorul nu leagă decât
+straturi vecine.
+
+**De ce e o scenă și nu un `--script`:** cu `--script`, Godot nu pornește
+autoload-urile, iar `expeditie.gd` se referă la `Sac` și `harta.gd` la `Muzica`.
+Nimic nu se compila. O scenă pornește jocul normal, doar fără fereastră.
+
+**Testul nu are logică proprie.** Cheamă `Expeditie.genereaza_harta()`,
+`Harta.centre_noduri()` și `Panza.punct_pe_drum()` — exact codul din joc. De-aia
+`_aseaza_nodurile()` a fost spart în două: partea de geometrie pură a devenit
+`centre_noduri()`, `static`, cu harta primită ca parametru. O funcție căreia îi
+dai tot ce-i trebuie se poate chema din orice, inclusiv dintr-un test fără
+fereastră. La final rulează și o probă de fum pe scena adevărată de hartă, ca să
+nu iasă cifre bune dintr-un cod pe care jocul nu-l mai poate porni.
+
+### Reparația 1 — muchiile: felii care merg înainte (`_leaga`)
+
+Regula veche era „fiecare nod de sus își alege 1-2 urmași la întâmplare, apoi
+reparăm nodurile de jos rămase fără părinte". Corectă pe bucăți, greșită pe
+ansamblu: nodul de sus de pe coloana 0 putea alege nodul de jos de pe coloana 1
+și invers — două drumuri care își schimbă locurile.
+
+Regula nouă: fiecare nod de sus primește o **felie continuă** de noduri de jos,
+iar felia următoare nu are voie să înceapă înaintea locului unde s-a terminat
+cea dinainte. Feliile au voie să se ATINGĂ (două cărări care se adună într-un
+nod — exact ce vrei pe o hartă), n-au voie să se încalece pe dos.
+
+E o **construcție**, nu o verificare. N-am scris nicăieri „încrucișează muchia
+asta pe alta? atunci mai trag un zar" — pur și simplu nu există aruncare de zar
+care să producă o încrucișare. Diferența contează: o verificare cu reîncercări
+poate intra în buclă sau poate rata un caz; o construcție nu are cum.
+
+Ce a rămas garantat, și de ce: prima felie începe la 0, ultima se termină la
+ultimul nod, iar feliile sunt lipite cap la cap — deci **fiecare nod de jos e
+accesibil**, fără pasul vechi de „reparație". Și `capat >= start` mereu, deci
+**fiecare nod de sus are cel puțin o ieșire**.
+
+`_amesteca()` (Fisher-Yates cu generator propriu) a rămas fără utilizator și a
+fost ștearsă din `expeditie.gd`.
+
+### Reparația 2 — abaterea organică nu mai poate inversa un strat
+
+Abaterea se trăgea nod cu nod, ±52 de pixeli. Pe straturile strânse spre mijloc
+(`STRANGERE_ALTERNATA`) cele două noduri stau la 177 de pixeli: dacă cel de sus
+e împins în jos cu 52 și cel de jos în sus cu 52, rămân 73. Nodul are 92. Se
+suprapuneau, iar uneori se inversau — și atunci graful curat nu mai ajuta la
+nimic, fiindcă nodurile își schimbau locurile pe hârtie.
+
+`_potoleste_abaterea()` calculează, pentru fiecare strat, **un singur factor**
+între 0 și 1 cu care se înmulțesc toate abaterile verticale de acolo.
+
+Prima idee — „îl mut pe cel de jos cu încă 20 de pixeli mai jos" — e greșită:
+nodul mutat poate ieși de pe pergament, iar oprit la margine se strâmbă și mai
+tare. Înmulțind tot stratul, formele rămân proporționale, stratul arată la fel
+(doar mai puțin dezordonat) și niciun nod nu se apropie de margine mai mult
+decât se apropia înainte, fiindcă abaterea doar scade. Pe 279 de hărți din 300
+factorul iese 1 și nu se schimbă nimic.
+
+### Capcana zilei: egalitatea în virgulă mobilă
+
+După reparație, (c) a scăzut de la 22 la **4**, nu la 0. Cazurile arătau așa:
+
+```
+strat 5: nodul 9 la y=215.6290, nodul 10 la y=307.6289  ->  92.0000 px (minim 92.0)
+```
+
+Formula nimerea fix pe limită, iar la a șaptea zecimală scăderea cădea când
+deasupra, când dedesubtul ei. Leacul e `DISTANTA_MINIMA_VERTICALA =
+MARIME_NOD.y + 2.0`: doi pixeli care nu se văd, dar scot condiția de pe muchia
+de cuțit. **Regulă de ținut minte: când o condiție e „cel puțin atât", țintește
+puțin peste, nu exact.**
+
+### Reparația 3 — curbura nu mai vine din sămânță, vine din geometrie
+
+Fiecare drum primea un număr `curbura`, tras la sorți din semințele celor două
+noduri, și se îndoia PERPENDICULAR pe segment. Arăta bine luat drum cu drum și
+prost luată harta întreagă: două drumuri între aceleași straturi puteau primi
+îndoituri în direcții opuse.
+
+Acum forma e fixă, aceeași pentru toate: o **Bézier cubică** (patru puncte, nu
+trei) cu punctele de control la
+
+```
+c1 = de_la + Vector2(dx * 0.5, dy * 0.15)
+c2 = la    - Vector2(dx * 0.5, dy * 0.15)
+```
+
+adică un „S" care pleacă orizontal din nodul din stânga și intră orizontal în
+cel din dreapta, ca șinele unui macaz. Pătratica avea un singur punct de
+control, deci o singură cocoașă; cubica are două, și exact asta e un S.
+
+**De ce un S nu poate tăia alt S:** ambele coordonate ale punctelor de control
+stau între capete, deci x-ul curbei crește tot timpul, iar y-ul merge într-un
+singur sens. Un drum monoton e, pentru fiecare x, exact un y — adică e graficul
+unei funcții, nu o buclă. Două drumuri între aceleași două straturi pleacă de pe
+aceeași verticală și ajung pe aceeași verticală; dacă la stânga unul e deasupra
+celuilalt ȘI la dreapta tot deasupra, ca să se întâlnească la mijloc ar trebui
+să se inverseze și apoi să se inverseze la loc — adică să se taie de două ori.
+De-aia (b) = 0 și (c) = 0 sunt tot ce trebuie ca să iasă (d) = 0.
+
+Au dispărut: `_curbura()`, `CURBURA_MINIMA`, `CURBURA_MAXIMA`, câmpul `curbura`
+din muchii și parametrul `zona` al lui `_muchii()`, care nu mai avea ce face
+acolo. Desenul nu mai are niciun zar în el.
+
+### Fișiere atinse pe 21 septembrie 2026
+
+```
+autoload/expeditie.gd        - `_leaga` rescrisa; `_amesteca` stearsa
+scenes/harta/harta.gd        - `centre_noduri()` + `_potoleste_abaterea()` (noi, static)
+                               `DISTANTA_MINIMA_VERTICALA`; fara `_curbura`
+scenes/harta/panza.gd        - Bezier cubica, `punct_pe_drum()` static
+tools/verifica_harta.gd      - NOU: verificarea headless
+tools/verifica_harta.tscn    - NOU: scena care o porneste
+```
+
+### Ce a rămas de făcut aici
+
+- `res://assets/audio/muzica_harta.ogg` lipsește. Nu oprește nimic (`Muzica`
+  scrie un avertisment și merge mai departe în liniște), dar harta e singurul
+  ecran fără muzică.
+- Verificarea (d) e scumpă: drumurile se taie în bucăți de 16 segmente și se
+  compară doar cutiile care se ating. Fără trucul ăsta, 300 de semințe însemnau
+  miliarde de verificări de segmente și ore de așteptare. Dacă hărțile cresc,
+  aici se optimizează mai departe.
 
 ---
 

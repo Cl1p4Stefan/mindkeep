@@ -25,10 +25,28 @@ extends Control
 ## „de-aici se MERGE acolo" — e un drum pe un teren, cu tot cu ocolișul lui.
 ## Aceeași informație, altă poveste, și costă douăzeci de linii de cod.
 ##
-## Curbura nu se inventează la desenare: vine gata calculată din `harta.gd`,
-## din sămânța expediției. Dacă ar fi aleasă aici la întâmplare, drumurile
-## s-ar unduli altfel la fiecare redesenare — adică la fiecare redimensionare
-## de fereastră și la fiecare întoarcere din luptă.
+## ─────────────────────────────────────────────────────────────
+## CURBURA NU MAI VINE DIN SĂMÂNȚĂ. VINE DIN GEOMETRIE.
+##
+## Înainte, fiecare drum primea din `harta.gd` un număr „curbura", tras la sorți
+## din semințele celor două noduri, și se îndoia PERPENDICULAR pe segment, cu
+## atât. Arăta bine luat drum cu drum, și prost luat harta întreagă: două drumuri
+## între aceleași două straturi puteau primi îndoituri în direcții opuse, iar
+## atunci se tăiau unul pe altul chiar dacă nodurile stăteau în ordine.
+##
+## Acum forma e FIXĂ și aceeași pentru toate: un „S" care pleacă orizontal din
+## nodul din stânga și intră orizontal în cel din dreapta. Nu mai există niciun
+## zar în desen — un drum arată la fel de câte ori l-ai redesena, iar două
+## drumuri care pleacă în ordine ajung în ordine.
+##
+## De ce un S nu poate tăia alt S: forma merge MONOTON de la stânga la dreapta
+## (x-ul crește tot timpul, fiindcă și cele două puncte de control stau între
+## capete pe orizontală). Un drum monoton e, pentru fiecare x, exact un y. Două
+## drumuri între aceleași straturi pornesc de pe aceeași verticală și ajung pe
+## aceeași verticală; dacă la stânga unul e deasupra celuilalt ȘI la dreapta
+## tot deasupra, cele două șiruri de y nu au cum să se întâlnească la mijloc —
+## ar însemna să se inverseze și apoi să se inverseze la loc, adică să se taie
+## de două ori. Verificarea din `tools/verifica_harta.gd` numără exact asta.
 
 ## Lungimea unei liniuțe și a pauzei dintre ele, în pixeli.
 ##
@@ -42,6 +60,20 @@ const PAUZA_LINIUTA := 11.0
 ## Cât de des măsurăm curba. Mai mic = liniuțe mai exacte, mai multe apeluri de
 ## desen. 2 pixeli e sub pragul la care s-ar vedea diferența.
 const PAS_ESANTION := 2.0
+
+## CÂT DE TARE SE ÎNDOAIE S-UL, ca fracțiune din distanța dintre capete.
+##
+## `INTINDERE` (0,5) spune cât de departe pe ORIZONTALĂ pleacă punctele de
+## control: exact la jumătatea drumului. E ce face capetele să iasă și să intre
+## orizontal, ca șinele unui macaz.
+##
+## `INCLINARE` (0,15) le dă o mică împingere și pe VERTICALĂ, în sensul în care
+## merge drumul. Fără ea, un drum care urcă mult ar avea un mijloc aproape
+## vertical — o cotitură bruscă în loc de un S. Cu ea, îndoitura se întinde.
+##
+## Amândouă sunt constante, nu zaruri: vezi nota de mai sus.
+const INTINDERE := 0.5
+const INCLINARE := 0.15
 
 ## Cât lăsăm liber la capete dacă drumul nu spune singur. Numărul adevărat vine
 ## din hartă, în câmpul „oprire" al fiecărei muchii: ea știe cât de mare e un
@@ -66,26 +98,20 @@ func _draw() -> void:
 		_deseneaza_drum(muchie)
 
 
-## Un drum punctat, îndoit.
-##
-## Curba e o BÉZIER PĂTRATICĂ: două capete și un punct de control care trage de
-## mijloc. Punctul de control e mijlocul segmentului împins PERPENDICULAR pe
-## el — așa, indiferent cum stau cele două noduri față de altul, îndoitura iese
-## mereu „în lateral", niciodată răsucită.
+## Un drum punctat, în formă de S.
 func _deseneaza_drum(muchie: Dictionary) -> void:
 	var de_la: Vector2 = muchie["de_la"]
 	var la: Vector2 = muchie["la"]
 	var culoare: Color = muchie["culoare"]
 	var grosime := float(muchie["grosime"])
 
-	var directie := la - de_la
-	var perpendiculara := Vector2(-directie.y, directie.x)
-	var control := (de_la + la) * 0.5 + perpendiculara * float(muchie.get("curbura", 0.0))
-
-	# Lungimea curbei, aproximată prin cele două laturi ale triunghiului de
-	# control. E puțin mai mare decât lungimea adevărată, ceea ce înseamnă
-	# doar câteva eșantioane în plus — exact greșeala pe care ți-o permiți.
-	var lungime := de_la.distance_to(control) + control.distance_to(la)
+	# Lungimea curbei, aproximată prin poligonul de control (capete + cele două
+	# puncte de control). E puțin mai mare decât lungimea adevărată, ceea ce
+	# înseamnă doar câteva eșantioane în plus — exact greșeala pe care ți-o
+	# permiți.
+	var c1 := _control_1(de_la, la)
+	var c2 := _control_2(de_la, la)
+	var lungime := (de_la.distance_to(c1) + c1.distance_to(c2) + c2.distance_to(la))
 	var esantioane := maxi(16, int(lungime / PAS_ESANTION))
 	var pas := LUNGIME_LINIUTA + PAUZA_LINIUTA
 
@@ -103,7 +129,7 @@ func _deseneaza_drum(muchie: Dictionary) -> void:
 	var parcurs := 0.0
 	var anterior := de_la
 	for i in range(1, esantioane + 1):
-		var punct := _bezier(de_la, control, la, float(i) / esantioane)
+		var punct := punct_pe_drum(de_la, la, float(i) / esantioane)
 		parcurs += anterior.distance_to(punct)
 
 		# Liniuță sau pauză? Poziția pe drum, împărțită la pas, decide singură —
@@ -118,10 +144,39 @@ func _deseneaza_drum(muchie: Dictionary) -> void:
 		anterior = punct
 
 
-## Un punct de pe curba Bézier pătratică, la fracțiunea `t` (0 = start, 1 = capăt).
+## Un punct de pe drumul dintre două noduri, la fracțiunea `t` (0 = start,
+## 1 = capăt).
 ##
-## Toată formula e „interpolare de interpolări": mergi `t` de la A spre C,
-## mergi `t` de la C spre B, apoi mergi `t` între rezultatele astea două.
-## Trei `lerp`-uri, nicio formulă de memorat.
-func _bezier(a: Vector2, c: Vector2, b: Vector2, t: float) -> Vector2:
-	return a.lerp(c, t).lerp(c.lerp(b, t), t)
+## E `static` ca să poată fi chemată din verificarea headless: acolo drumul
+## trebuie transformat în linie frântă și tăiat cu celelalte, fără să existe
+## vreo pânză pe ecran. Aceeași funcție desenează și verifică, deci verificarea
+## nu poate trece pe o formă pe care jocul n-o desenează.
+static func punct_pe_drum(de_la: Vector2, la: Vector2, t: float) -> Vector2:
+	return _bezier(de_la, _control_1(de_la, la), _control_2(de_la, la), la, t)
+
+
+## Primul punct de control: împins spre dreapta din nodul de plecare.
+static func _control_1(de_la: Vector2, la: Vector2) -> Vector2:
+	var d := la - de_la
+	return de_la + Vector2(d.x * INTINDERE, d.y * INCLINARE)
+
+
+## Al doilea: împins spre stânga din nodul de sosire.
+static func _control_2(de_la: Vector2, la: Vector2) -> Vector2:
+	var d := la - de_la
+	return la - Vector2(d.x * INTINDERE, d.y * INCLINARE)
+
+
+## Un punct de pe curba Bézier CUBICĂ: patru puncte în loc de trei.
+##
+## Pătratica (un singur punct de control) putea face o singură cocoașă. Cubica
+## are două puncte de control, deci două cocoașe — și exact asta e un S: ieși
+## într-o parte, intri în cealaltă.
+##
+## Formula e tot „interpolare de interpolări", doar cu un rând în plus:
+## din patru puncte faci trei, din trei faci două, din două faci unul.
+static func _bezier(a: Vector2, c1: Vector2, c2: Vector2, b: Vector2, t: float) -> Vector2:
+	var p1 := a.lerp(c1, t)
+	var p2 := c1.lerp(c2, t)
+	var p3 := c2.lerp(b, t)
+	return p1.lerp(p2, t).lerp(p2.lerp(p3, t), t)

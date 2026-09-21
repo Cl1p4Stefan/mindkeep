@@ -71,6 +71,22 @@ const CERNEALA := Color(0.14, 0.09, 0.05)
 ## culoarea din spate le desparte. Crem pentru Luptă, portocaliu pentru Elită,
 ## cald pentru Odihnă, auriu pentru Magazin, roșu pentru Boss.
 ##
+## DAR SE DESENEAZĂ DOAR SUB DESENELE DIN POLIGOANE. Amândouă treburile de
+## mai sus — „despart tipurile prin culoare" și „umplu găurile tăiate în
+## simbol" — sunt treburi pe care le are numai un simbol desenat din
+## poligoane: el e o siluetă plată de o singură culoare, cu găuri prin care
+## trebuie să se vadă ceva. O imagine nu are niciuna din problemele astea:
+## are propriile ei culori, propriile ei umbre și propriul ei contur, deci
+## se desparte de vecini singură. Peste ea, pata de lumină nu mai adaugă
+## lizibilitate — doar spală culorile, fiindcă e un strat deschis așezat
+## exact sub zona pe care o acoperă imaginea.
+##
+## De-aia e OPRITĂ la imagini, nu ȘTEARSĂ: desenul din poligoane e în
+## continuare plasa de siguranță (vezi `IMAGINI`), iar în ziua în care un PNG
+## lipsește sau e prost exportat, nodul cade înapoi pe poligoane — și acolo
+## halo-ul e tot ce-l ține citibil. Ștergându-l, plasa ar exista în cod, dar
+## ar prinde un simbol ilizibil.
+##
 ## Constanta de mai jos e doar PLASA: ce se desenează dacă un tip de nod n-are
 ## culoare în tabel. Aproape alb, fiindcă pe hârtie deja deschisă un crem stins
 ## nu se vede deloc: ce trebuie să pară e „aici hârtia e curată".
@@ -136,6 +152,19 @@ var tip := 0
 ## sunt două întrebări diferite: „cum arăți" și „ce se întâmplă la click".
 var activ := false
 
+## Nodul ăsta s-a consumat deja? Din nou o întrebare SEPARATĂ de `stare`, și
+## din nou pentru că e alta: `stare` spune „unde ești pe hartă", asta spune
+## „ce s-a întâmplat aici". Pentru PARCURS răspunsul e mereu da, dar nodul
+## CURENT le poate avea pe amândouă — stai pe el ȘI l-ai terminat — iar
+## harta e cea care știe asta, nu simbolul.
+##
+## De ce nu o a cincea stare („CURENT_TERMINAT"): stările sunt roluri în
+## ierarhia vizuală, iar rolul nu se schimbă. Un nod terminat pe care stai
+## rămâne „unde ești"; se adaugă doar un semn peste el. O stare în plus ar
+## fi însemnat un rând nou în `INFATISARI` care repetă cuvânt cu cuvânt
+## rândul lui CURENT — adică două locuri de schimbat la fiecare reglaj.
+var terminat := false
+
 ## ─────────────────────────────────────────────────────────────
 ## IMAGINI, CU DESENUL DIN COD CA PLASĂ
 ##
@@ -167,9 +196,40 @@ const IMAGINI := {
 	Expeditie.Nod.EVENIMENT: "campaign_event.png",
 }
 
-## Cât din casetă ocupă imaginea. Mai mică decât halo-ul, ca lumina să se vadă
-## de jur împrejur — altfel simbolul pare lipit peste o pată, nu așezat în ea.
+## Cât din casetă ocupă imaginea, ÎNAINTE de corecția pe tip de mai jos.
+## Mai mică decât halo-ul era gândită ca lumina să se vadă de jur împrejur;
+## acum că halo-ul nu se mai desenează sub imagini, marginea liberă rămâne
+## tot utilă — în ea încape umbra desenată direct în PNG.
 const MARIME_IMAGINE := 0.78
+
+## MĂRIMEA PE TIP DE NOD — ierarhia, dată în mărime.
+##
+## Oglinda lui `IMAGINI`: aceleași chei, un multiplicator per tip, înmulțit cu
+## `MARIME_IMAGINE`. Toate nodurile au aceeași casetă (`MARIME_NOD` din
+## `harta.gd`), fiindcă așezarea lor pe pergament trebuie să rămână o grilă
+## uniformă — dar un boss desenat la fel de mare ca o luptă oarecare spune
+## „încă un nod", nu „capătul drumului". Aici se rupe uniformitatea, în DESEN,
+## fără să se atingă layout-ul.
+##
+## Un tip care lipsește din tabel primește 1.0, adică exact ce avea înainte —
+## tabelul ăsta nu poate strica un tip de nod pe care uiți să-l treci în el.
+##
+## NOTĂ, măsurată, nu presupusă: caseta e de 92 px (`MARIME_NOD`), iar BOSS la
+## 1.45 dă 0.78 × 1.45 = 1.131 din casetă ≈ 104 px, deci ~6 px pe fiecare
+## latură ÎN AFARA ei (cu pulsul nodului curent, ~7,5 px). Nu se retează
+## nimic — `clip_contents` e fals, deci desenul iese liniștit peste margine,
+## iar bossul e singur pe ultimul strat, deci n-are ce lovi. Ce rămâne: zona
+## de click a nodului tot 92×92 e, iar eticheta (pusă la 42% din casetă sub
+## centru) intră câțiva pixeli peste marginea de jos a imaginii. Decizie
+## luată în cunoștință de cauză: se acceptă, ca să nu crească TOATE nodurile.
+const MARIMI := {
+	Expeditie.Nod.BOSS: 1.45,
+	Expeditie.Nod.ELITA: 1.15,
+	Expeditie.Nod.LUPTA: 1.0,
+	Expeditie.Nod.EVENIMENT: 0.85,
+	Expeditie.Nod.MAGAZIN: 0.9,
+	Expeditie.Nod.ODIHNA: 0.9,
+}
 
 ## Texturile încărcate, ținute pe CLASĂ, nu pe nod: paisprezece noduri pe
 ## hartă ar fi însemnat paisprezece încărcări ale aceluiași fișier. `static
@@ -236,10 +296,17 @@ static func _textura(tip_cerut: int) -> Texture2D:
 ## `samanta` vine din nodul de hartă și face două lucruri, amândouă pentru
 ## aceeași senzație de „desenat de mână": înclină simbolul cu câteva grade și
 ## decalează pornirea pulsului, ca nodurile să nu respire la unison.
-func configureaza(id_nou: int, tip_nou: int, stare_noua: Stare, samanta: int) -> void:
+## `terminat` vine ultimul și cu valoare implicită fiindcă e informație EN
+## PLUS, nu una de care desenul are neapărat nevoie: un apel vechi, cu patru
+## argumente, se comportă exact ca înainte.
+func configureaza(
+	id_nou: int, tip_nou: int, stare_noua: Stare, samanta: int,
+	terminat_nou := false
+) -> void:
 	id = id_nou
 	tip = tip_nou
 	stare = stare_noua
+	terminat = terminat_nou
 	activ = stare == Stare.ACCESIBIL
 
 	var infatisare: Dictionary = INFATISARI[stare]
@@ -287,26 +354,46 @@ func _deseneaza_silueta() -> void:
 	var halou: Color = Expeditie.date_nod(tip).get("culoare", HALOU_IMPLICIT)
 	_culoare_gol = halou
 
+	# Ce umple caseta se hotărăște ÎNAINTE de straturile de dedesubt, fiindcă
+	# de răspunsul ăsta depinde dacă mai desenăm halo sau nu.
+	var textura := _textura(tip)
+
+	# AURA rămâne în amândouă cazurile. Ea nu e lizibilitate, e localizare:
+	# răspunde la „unde sunt acum", iar întrebarea aia n-are nicio legătură cu
+	# felul în care e desenat simbolul. E și mai mare decât imaginea (vezi
+	# `RAZA_AURA`), deci se vede de jur împrejurul ei, nu pe sub ea.
 	if float(infatisare["aura"]) > 0.0:
 		_deseneaza_aura(float(infatisare["aura"]))
 
-	_deseneaza_halou(
-		float(infatisare["raza_halou"]) * (1.06 if _hover else 1.0),
-		float(infatisare["halou"]) + spor,
-		halou
-	)
+	# HALO-UL, doar sub desenul din poligoane. Motivul întreg e la
+	# `HALOU_IMPLICIT`, pe scurt: pata de lumină desparte tipurile și umple
+	# găurile tăiate în simbol — două servicii de care are nevoie numai o
+	# siluetă plată de o singură culoare. Sub o imagine, care are culorile și
+	# conturul ei, nu mai adaugă nimic; doar o spală, fiindcă e un strat
+	# deschis exact acolo unde imaginea are nevoie de contrast.
+	#
+	# Oprit, nu șters: imaginea poate lipsi (vezi `IMAGINI`), iar pe ruta de
+	# rezervă halo-ul e tot ce ține simbolul citibil pe pergament.
+	if textura == null:
+		_deseneaza_halou(
+			float(infatisare["raza_halou"]) * (1.06 if _hover else 1.0),
+			float(infatisare["halou"]) + spor,
+			halou
+		)
 
 	var cerneala := Color(CERNEALA, minf(1.0, float(infatisare["cerneala"]) + spor))
 
 	# Imaginea întâi, desenul ca plasă. Un singur `if`, în singurul loc din
 	# fișier care hotărăște „cu ce se umple caseta".
-	var textura := _textura(tip)
 	if textura != null:
 		_deseneaza_imaginea(textura, cerneala.a)
 	elif _desene.has(tip):
 		_desene[tip].call(cerneala)
 
-	if stare == Stare.PARCURS:
+	# X-ul nu ține de stare, ci de „s-a consumat nodul ăsta?". PARCURS e
+	# consumat prin definiție; CURENT numai dacă harta ne-a spus-o. Așa nodul
+	# pe care stai apare ca în referință: și cu aură, și tăiat.
+	if stare == Stare.PARCURS or (stare == Stare.CURENT and terminat):
 		_deseneaza_taietura()
 
 
@@ -325,8 +412,12 @@ func _deseneaza_silueta() -> void:
 ## mult fie că e desenat, fie că e pictat. Culoarea rămâne albă, fiindcă alb
 ## înmulțit cu imaginea înseamnă „lasă imaginea în pace".
 func _deseneaza_imaginea(textura: Texture2D, opacitate: float) -> void:
-	var jos := 0.5 - MARIME_IMAGINE * 0.5
-	var sus := 0.5 + MARIME_IMAGINE * 0.5
+	# Mărimea de bază, corectată pe tip. `get` cu 1.0 înseamnă că un tip
+	# netrecut în `MARIMI` se desenează exact ca înainte de tabel.
+	var latura := MARIME_IMAGINE * float(MARIMI.get(tip, 1.0))
+
+	var jos := 0.5 - latura * 0.5
+	var sus := 0.5 + latura * 0.5
 	var colturi := PackedVector2Array([
 		_punct(Vector2(jos, jos)), _punct(Vector2(sus, jos)),
 		_punct(Vector2(sus, sus)), _punct(Vector2(jos, sus)),
@@ -340,6 +431,12 @@ func _deseneaza_imaginea(textura: Texture2D, opacitate: float) -> void:
 ## Halo-ul: cercuri concentrice, de la mare și transparent la mic și dens.
 ## Opacitățile se ADUNĂ acolo unde cercurile se suprapun, deci centrul iese
 ## luminos fără ca marginea să aibă un contur vizibil.
+##
+## Se cheamă DOAR pe ruta desenului din poligoane — vezi `_deseneaza_silueta`
+## și motivul lung de la `HALOU_IMPLICIT`. Funcția rămâne exact cum era, cu
+## toți parametrii ei (inclusiv sporul de hover): nu e cod mort, e codul care
+## ține harta citibilă în ziua în care un PNG lipsește din
+## `assets/art/campaign_nodes/`.
 func _deseneaza_halou(raza: float, putere: float, culoare: Color) -> void:
 	if putere <= 0.0:
 		return
@@ -361,9 +458,9 @@ func _deseneaza_aura(putere: float) -> void:
 		_cerc_moale(Vector2(0.5, 0.5), raza_strat, Color(CULOARE_AURA, putere * 0.032))
 
 
-## X-ul de pe nodurile prin care ai trecut deja. Nu e „dezactivat" (aia e
-## starea ÎNCHIS, estompată) — e „rezolvat". Două lucruri diferite, două
-## semne diferite.
+## X-ul de pe nodurile consumate — și cele din urmă, și cel pe care stai, dacă
+## l-ai terminat. Nu e „dezactivat" (aia e starea ÎNCHIS, estompată) — e
+## „rezolvat". Două lucruri diferite, două semne diferite.
 func _deseneaza_taietura() -> void:
 	var culoare := Color(CULOARE_TAIERE, 0.5)
 	_linie(Vector2(0.26, 0.26), Vector2(0.74, 0.74), 0.055, culoare)

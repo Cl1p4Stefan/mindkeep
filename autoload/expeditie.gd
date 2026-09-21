@@ -805,54 +805,92 @@ static func _pondere(rand: Dictionary, adancime: int) -> float:
 	return maxf(0.0, float(rand["pondere"]) + float(rand["pe_adancime"]) * adancime)
 
 
-## Trage muchiile dintre două straturi vecine.
+## Trage muchiile dintre două straturi vecine — FĂRĂ SĂ SE ÎNCRUCIȘEZE.
 ##
-## Regula are două jumătăți, și a doua e cea care face harta jucabilă:
-##   1. fiecare nod de sus primește 1-2 urmași, la întâmplare;
-##   2. apoi REPARĂM: orice nod de jos rămas fără niciun părinte primește
-##      unul. Fără pasul 2, generatorul ar putea produce un nod în care nu se
-##      poate ajunge — adică o bucată de hartă desenată degeaba, și, dacă
-##      nimereai prost, un drum înfundat.
+## ─────────────────────────────────────────────────────────────
+## CE ERA ÎNAINTE, ȘI DE CE NU MERGEA
+##
+## Regula veche era: fiecare nod de sus își alege 1-2 urmași la întâmplare,
+## apoi reparăm nodurile de jos rămase fără părinte. Ambele jumătăți erau
+## corecte luate separat — harta ieșea conectată, fiecare nod era accesibil —
+## și totuși drumurile se tăiau unul pe altul la aproape fiecare sămânță
+## (949 de încrucișări la 300 de hărți).
+##
+## Motivul e simplu odată văzut: „la întâmplare" înseamnă că nodul de sus de pe
+## coloana 0 putea alege nodul de jos de pe coloana 1, iar cel de pe coloana 1
+## pe cel de pe coloana 0. Două drumuri care își schimbă locurile. Nicio
+## curbură frumoasă nu repară asta — e o încrucișare în GRAF, nu în desen.
+##
+## ─────────────────────────────────────────────────────────────
+## REGULA NOUĂ: FIECARE NOD DE SUS IA O FELIE, ȘI FELIILE MERG ÎNAINTE
+##
+## Nodurile ambelor straturi sunt luate în ordinea coloanei. Fiecare nod de sus
+## primește o felie CONTINUĂ de noduri de jos — de la `start` la `capat` — iar
+## felia următoare nu are voie să înceapă înaintea locului unde s-a terminat
+## cea dinainte.
+##
+## Două felii care merg înainte nu se pot inversa, iar dacă nu se inversează,
+## drumurile nu se încrucișează. Asta e tot. Nu e o verificare („încrucișează
+## muchia asta pe alta? atunci mai trag un zar") — e o construcție din care
+## încrucișarea pur și simplu nu poate ieși, oricâte zaruri ai arunca.
+##
+## Feliile au voie să se ATINGĂ: `start` poate fi chiar ultimul nod al feliei
+## de dinainte. Atunci două drumuri intră în același nod de jos — două cărări
+## care se adună, care e exact ce vrei să vezi pe o hartă. Ce nu au voie e să
+## se încalece pe dos.
+##
+## ─────────────────────────────────────────────────────────────
+## CE RĂMÂNE GARANTAT
+##
+## 1. FIECARE NOD DE JOS E ACCESIBIL. Prima felie începe la 0, ultima se termină
+##    la ultimul nod, iar între ele feliile sunt lipite cap la cap. Reuniunea lor
+##    e tot stratul, fără găuri. Nu mai e nevoie de pasul de „reparație" de
+##    dinainte, fiindcă nu mai există ce repara.
+## 2. FIECARE NOD DE SUS ARE CEL PUȚIN O IEȘIRE. `capat` e mereu cel puțin egal
+##    cu `start`, deci felia nu poate fi goală. Un nod fără ieșire ar fi fost un
+##    drum înfundat — mergi acolo și nu mai ai unde.
+##
+## O CONDIȚIE pe care o presupune: `sus` și `jos` vin în ORDINEA COLOANEI. Le
+## construiește `genereaza_harta()`, cu `for coloana in range(cate)`, deci așa
+## sunt. Dacă într-o zi cineva le amestecă acolo, regula de aici devine o
+## minciună — și nu se va plânge nimeni, doar drumurile se vor tăia iar.
 static func _leaga(
 	rng: RandomNumberGenerator,
 	noduri: Array[Dictionary],
 	sus: Array[int],
 	jos: Array[int]
 ) -> void:
-	for id_sus in sus:
-		var cati := 1 if jos.size() == 1 else rng.randi_range(1, jos.size())
-		var candidati := jos.duplicate()
-		# `shuffle` pe un rng cu sămânță — nu `Array.shuffle()`, care folosește
-		# generatorul global și ar rupe reproductibilitatea.
-		_amesteca(rng, candidati)
-		var legaturi: Array = noduri[id_sus]["spre"]
-		for i in range(cati):
-			legaturi.append(candidati[i])
+	var n := sus.size()
+	var m := jos.size()
+	if n == 0 or m == 0:
+		return
+
+	# Unde s-a terminat felia nodului de sus dinainte. Prima felie n-are una.
+	var capat_anterior := -1
+
+	for k in range(n):
+		var start := 0
+		if k > 0:
+			# Două variante, și doar două. Ori pornim CHIAR din nodul unde s-a
+			# oprit vecinul de deasupra (cele două drumuri se adună acolo), ori
+			# de la următorul (drumuri complet separate). Orice altceva ar
+			# însemna să dăm înapoi — adică o încrucișare.
+			start = capat_anterior
+			if start < m - 1 and rng.randf() < 0.5:
+				start += 1
+
+		# Ultimul nod de sus acoperă tot ce-a mai rămas: altfel ar rămâne
+		# noduri de jos fără niciun părinte, adică bucăți de hartă în care nu
+		# se poate ajunge.
+		var capat := m - 1
+		if k < n - 1:
+			capat = rng.randi_range(start, m - 1)
+
+		var legaturi: Array = noduri[sus[k]]["spre"]
+		for indice in range(start, capat + 1):
+			legaturi.append(jos[indice])
 		legaturi.sort()
-
-	# Reparația.
-	for id_jos in jos:
-		var are_parinte := false
-		for id_sus in sus:
-			if id_jos in noduri[id_sus]["spre"]:
-				are_parinte = true
-				break
-		if not are_parinte:
-			var parinte: int = sus[rng.randi_range(0, sus.size() - 1)]
-			var legaturi: Array = noduri[parinte]["spre"]
-			legaturi.append(id_jos)
-			legaturi.sort()
-
-
-## Amestecare cu generator propriu (Fisher-Yates). `Array.shuffle()` n-ar
-## merge: el folosește generatorul global, iar atunci harta n-ar mai fi
-## reproductibilă din sămânță.
-static func _amesteca(rng: RandomNumberGenerator, lista: Array) -> void:
-	for i in range(lista.size() - 1, 0, -1):
-		var j := rng.randi_range(0, i)
-		var tmp = lista[i]
-		lista[i] = lista[j]
-		lista[j] = tmp
+		capat_anterior = capat
 
 
 ## Loadout curățat: doar chei care există, fără dubluri, cel mult N.

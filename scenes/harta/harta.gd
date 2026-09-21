@@ -71,6 +71,19 @@ const ZONA_PERGAMENT := Rect2(0.035, 0.050, 0.803, 0.890)
 ## Cât lăsăm liber între nodurile de pe marginea zonei și marginea ei.
 const MARGINE_PANZA := 18.0
 
+## Cât trebuie să rămână între două noduri de pe ACELAȘI strat, pe verticală.
+##
+## `MARIME_NOD.y` e minimul evident: sub el, două simboluri se ating. Cei doi
+## pixeli în plus nu se văd, dar au un rol. Fără ei, `_potoleste_abaterea`
+## nimerea fix pe limită — 92,0000 pixeli — iar la a șaptea zecimală o scădere
+## de numere în virgulă mobilă cădea când deasupra, când dedesubtul ei. Patru
+## hărți din 300 „picau" o verificare pe care o treceau de fapt.
+##
+## Regula generală merită ținută minte: când o condiție e „cel puțin atât",
+## țintește puțin peste, nu exact. Egalitatea e singurul loc din virgula
+## mobilă unde nu te poți baza pe nimic.
+const DISTANTA_MINIMA_VERTICALA := MARIME_NOD.y + 2.0
+
 ## ABATEREA ORGANICĂ
 ##
 ## Nodurile așezate exact pe o grilă arată a tabel, oricât de frumos le-ai
@@ -117,10 +130,6 @@ const STRANGERE_ALTERNATA := 0.52
 
 const GROSIME_DRUM := 6.0
 const GROSIME_DRUM_ALES := 11.0
-
-## Cât se îndoaie un drum, ca fracțiune din distanța dintre capete.
-const CURBURA_MINIMA := 0.08
-const CURBURA_MAXIMA := 0.16
 
 ## Unde se OPRESC liniuțele, în jurul centrului unui nod. Mai mare decât
 ## jumătatea nodului (46), ca drumul să se termine VIZIBIL înainte de simbol:
@@ -372,6 +381,20 @@ func _goleste_panza() -> void:
 ## Starea fiecărui nod se alege AICI, într-un singur lanț de `if`-uri, și e
 ## singurul loc din tot ecranul care hotărăște „cum arată nodul ăsta". Nodul nu
 ## întreabă expediția nimic; primește o stare și o desenează.
+##
+## Pe lângă stare, nodul primește și „te-ai consumat?" (`terminat`). Sunt două
+## întrebări, nu una: starea spune unde stă figura, `terminat` spune ce s-a
+## întâmplat acolo. Nodul CURENT răspunde da la amândouă — deci se desenează
+## cu aură ȘI cu X, ca pe harta de referință, unde figura stă pe un loc deja
+## tăiat. Regula lui `terminat` e „ai intrat deja în el", adică apare în
+## `parcurse` — iar `intra_in_nod()` pune nodul acolo chiar în clipa în care îl
+## alegi. Asta e corect atâta vreme cât harta se desenează DOAR între noduri:
+## o luptă înlocuiește scena hărții cu totul, iar Magazinul și Odihna se
+## redesenează dinadins ca „parcurse" sub voal (vezi `_arata_magazin`), ca să
+## fie deja tăiate când voalul se ridică. Singurul caz care ar sparge regula
+## vine odată cu save-ul (pasul 8): un save făcut în mijlocul unei lupte
+## trebuie să se întoarcă ÎN LUPTĂ, nu pe hartă — altfel nodul ar apărea tăiat
+## înainte să fi fost jucat.
 func _construieste_harta() -> void:
 	_goleste_panza()
 	var accesibile := Expeditie.accesibile()
@@ -388,9 +411,16 @@ func _construieste_harta() -> void:
 		elif id in accesibile:
 			stare = SimbolNod.Stare.ACCESIBIL
 
+		# A doua întrebare, independentă de lanțul de sus: nodul e consumat?
+		# `parcurse` îl conține și pe cel curent, deci răspunsul e da și pentru
+		# el — fix ce ne trebuie ca să-i desenăm X-ul fără să-i luăm aura.
+		var terminat := id in Expeditie.parcurse
+
 		var simbol := SimbolNod.new()
 		simbol.size = MARIME_NOD
-		simbol.configureaza(id, int(nod["tip"]), stare, int(nod["samanta"]))
+		simbol.configureaza(
+			id, int(nod["tip"]), stare, int(nod["samanta"]), terminat
+		)
 		simbol.apasat.connect(_pe_nod_apasat)
 		simbol.survolat.connect(_pe_nod_survolat)
 		panza.add_child(simbol)
@@ -495,13 +525,44 @@ func _aseaza_nodurile() -> void:
 	if zona.size.x <= 0.0 or zona.size.y <= 0.0:
 		return   # încă nu s-a așezat nimic; semnalul `resized` ne mai cheamă o dată
 
-	var straturi := Expeditie.adancime_maxima() + 1
+	var centre := centre_noduri(Expeditie.harta, zona)
 
-	# Câte noduri are fiecare strat — ca să le pot răsfira pe verticală.
+	for id_nod in centre:
+		var id := int(id_nod)
+		if not simboluri_nod.has(id):
+			continue
+		var simbol: Control = simboluri_nod[id]
+		simbol.position = centre[id] - MARIME_NOD * 0.5
+		simbol.size = MARIME_NOD
+
+	panza.arata(_muchii(centre))
+
+
+## GEOMETRIA PURĂ: „unde cade centrul fiecărui nod, pe dreptunghiul ăsta".
+##
+## E `static` și nu atinge niciun nod de interfață dintr-un motiv practic: așa
+## se poate CHEMA DINTR-UN TEST, fără să pornești jocul, fără fereastră, fără
+## scenă. Verificarea din `tools/verifica_harta.gd` măsoară exact codul ăsta,
+## nu o copie a lui — iar o copie a lui ar fi fost cel mai sigur mod de a
+## repara desenul în test și de a-l lăsa stricat în joc.
+##
+## Primește harta ca parametru (nu citește `Expeditie.harta` singură) din
+## același motiv: o funcție căreia îi dai tot ce-i trebuie se poate chema cu o
+## hartă inventată, dintr-o sămânță oarecare.
+static func centre_noduri(harta: Array, zona: Rect2) -> Dictionary:
+	var straturi := 1
+	# „Cine e pe stratul ăsta", în ordinea coloanei. Am nevoie de STRATUL
+	# întreg, nu doar de câte noduri are, fiindcă abaterea pe verticală nu se
+	# mai poate hotărî nod cu nod — vezi `_potoleste_abaterea`.
 	var pe_strat := {}
-	for nod in Expeditie.harta:
+	for nod in harta:
 		var a := int(nod["adancime"])
-		pe_strat[a] = int(pe_strat.get(a, 0)) + 1
+		straturi = maxi(straturi, a + 1)
+		if not pe_strat.has(a):
+			pe_strat[a] = []
+		pe_strat[a].append(nod)
+	for a in pe_strat:
+		pe_strat[a].sort_custom(func(x, y): return int(x["coloana"]) < int(y["coloana"]))
 
 	# Cât spațiu revine unui strat pe orizontală și unui rând pe verticală.
 	# De aici se calculează cât are voie să bată abaterea organică: legată de
@@ -517,51 +578,109 @@ func _aseaza_nodurile() -> void:
 	var rng := RandomNumberGenerator.new()
 
 	var centre := {}
-	for nod in Expeditie.harta:
-		var id := int(nod["id"])
-		var adancime := int(nod["adancime"])
-		var coloana := int(nod["coloana"])
-		var cate: int = pe_strat[adancime]
+	for a in pe_strat:
+		var strat: Array = pe_strat[a]
+		var cate := strat.size()
 
-		# ORIZONTALA: stratul 0 lipit de marginea din stânga, ultimul de cea
-		# din dreapta, restul împărțite egal între ele.
-		var fx := float(adancime) / float(maxi(straturi - 1, 1))
+		# Întâi locurile „de manual" și abaterile dorite, separat. Nu le adun
+		# încă: ca să știu cu cât trebuie potolită abaterea, trebuie să le văd
+		# pe toate din stratul ăsta deodată.
+		var baza := []
+		var abateri := []
+		for nod in strat:
+			var coloana := int(nod["coloana"])
 
-		# VERTICALA: nodurile unui strat se răsfiră pe toată înălțimea utilă,
-		# nu pe mijlocul ei. Cu formula veche ((coloana + 0.5) / cate) două
-		# noduri ieșeau la 25% și 75% din înălțime, adică foloseau jumătate din
-		# hârtie și lăsau sus și jos câte un sfert gol.
-		#
-		# Un strat cu un singur nod (primul și ultimul) iese la mijloc: nu ai
-		# ce răsfira, iar mijlocul e locul de unde pleci și unde ajungi.
-		var fy := 0.5
-		if cate > 1:
-			var intins := float(coloana) / float(cate - 1)   # 0 .. 1
-			# Straturile impare se strâng spre centru — vezi `STRANGERE_ALTERNATA`.
-			var deschidere := INTINDERE_VERTICALA
-			if adancime % 2 == 1:
-				deschidere *= STRANGERE_ALTERNATA
-			fy = 0.5 + (intins - 0.5) * deschidere
+			# ORIZONTALA: stratul 0 lipit de marginea din stânga, ultimul de cea
+			# din dreapta, restul împărțite egal între ele.
+			var fx := float(a) / float(maxi(straturi - 1, 1))
 
-		var centru := zona.position + Vector2(zona.size.x * fx, zona.size.y * fy)
+			# VERTICALA: nodurile unui strat se răsfiră pe toată înălțimea utilă,
+			# nu pe mijlocul ei. Cu formula veche ((coloana + 0.5) / cate) două
+			# noduri ieșeau la 25% și 75% din înălțime, adică foloseau jumătate din
+			# hârtie și lăsau sus și jos câte un sfert gol.
+			#
+			# Un strat cu un singur nod (primul și ultimul) iese la mijloc: nu ai
+			# ce răsfira, iar mijlocul e locul de unde pleci și unde ajungi.
+			var fy := 0.5
+			if cate > 1:
+				var intins := float(coloana) / float(cate - 1)   # 0 .. 1
+				# Straturile impare se strâng spre centru — vezi `STRANGERE_ALTERNATA`.
+				var deschidere := INTINDERE_VERTICALA
+				if a % 2 == 1:
+					deschidere *= STRANGERE_ALTERNATA
+				fy = 0.5 + (intins - 0.5) * deschidere
 
-		rng.seed = int(nod["samanta"])
-		centru += Vector2(
-			rng.randf_range(-1.0, 1.0) * minf(pas_x * ABATERE_X, ABATERE_MAXIMA.x),
-			rng.randf_range(-1.0, 1.0) * minf(pas_y * ABATERE_Y, ABATERE_MAXIMA.y)
-		)
+			baza.append(zona.position + Vector2(zona.size.x * fx, zona.size.y * fy))
 
-		# Plasa de siguranță: abaterea n-are voie să scoată un nod de pe hârtie.
-		# Aceeași plasă ține nodurile și la stânga de carte, fiindcă zona utilă
-		# se termină înaintea ei — vezi nota de la `ZONA_PERGAMENT`.
-		centru = _in_zona(centru, zona)
+			rng.seed = int(nod["samanta"])
+			abateri.append(Vector2(
+				rng.randf_range(-1.0, 1.0) * minf(pas_x * ABATERE_X, ABATERE_MAXIMA.x),
+				rng.randf_range(-1.0, 1.0) * minf(pas_y * ABATERE_Y, ABATERE_MAXIMA.y)
+			))
 
-		var simbol: Control = simboluri_nod[id]
-		simbol.position = centru - MARIME_NOD * 0.5
-		simbol.size = MARIME_NOD
-		centre[id] = centru
+		var potolire := _potoleste_abaterea(baza, abateri)
 
-	panza.arata(_muchii(centre, zona))
+		for i in range(cate):
+			var centru: Vector2 = baza[i] + Vector2(
+				abateri[i].x, abateri[i].y * potolire)
+			# Plasa de siguranță: abaterea n-are voie să scoată un nod de pe
+			# hârtie. Aceeași plasă ține nodurile și la stânga de carte, fiindcă
+			# zona utilă se termină înaintea ei — vezi nota de la `ZONA_PERGAMENT`.
+			centre[int(strat[i]["id"])] = _in_zona(centru, zona)
+
+	return centre
+
+
+## CÂT DIN ABATEREA PE VERTICALĂ ARE VOIE SĂ RĂMÂNĂ, într-un strat.
+##
+## Întoarce un număr între 0 și 1 cu care se înmulțesc toate abaterile pe
+## verticală din stratul ăla.
+##
+## ─────────────────────────────────────────────────────────────
+## DE CE E NEVOIE DE EL
+##
+## Abaterea organică se trăgea la sorți nod cu nod, ±52 de pixeli. Pe straturile
+## strânse spre mijloc (vezi `STRANGERE_ALTERNATA`), cele două noduri stau la
+## 177 de pixeli unul de altul — deci dacă cel de sus e împins în jos cu 52 și
+## cel de jos în sus cu 52, rămân 73 de pixeli între ei. Nodul are 92. Se
+## suprapun, și, mai rău, uneori se INVERSEAZĂ: cel de pe coloana 0 ajunge sub
+## cel de pe coloana 1.
+##
+## Asta strică tot ce am câștigat în `_leaga`: graful poate fi curat, dar dacă
+## nodurile își schimbă locurile pe hârtie, drumurile se taie la desenare.
+## S-a întâmplat pe 21 de hărți din 300.
+##
+## ─────────────────────────────────────────────────────────────
+## DE CE ÎNMULȚIM TOT STRATUL, ÎN LOC SĂ ÎMPINGEM NODUL VINOVAT
+##
+## „Îl mut pe cel de jos cu încă 20 de pixeli mai jos" e prima idee, și e
+## greșită: nodul mutat poate ieși de pe pergament, iar dacă îl oprim la
+## margine, se strâmbă și mai tare. Un singur nod împins strică echilibrul pe
+## care întinderea verticală tocmai l-a calculat.
+##
+## Înmulțind toate abaterile stratului cu același număr, formele rămân
+## PROPORȚIONALE — stratul arată la fel, doar mai puțin dezordonat — și niciun
+## nod nu se apropie de margine mai mult decât se apropia înainte, fiindcă
+## abaterea doar scade.
+##
+## Cum se află numărul: pentru fiecare pereche de vecini avem nevoie ca
+##   (baza_jos + f·abatere_jos) − (baza_sus + f·abatere_sus) ≥ DISTANTA_MINIMA_VERTICALA
+## Distanța de bază e deja destul de mare, deci singurul caz în care se strică
+## e când abaterile se apropie una de alta. Atunci scoatem `f` din inegalitate
+## și luăm cel mai mic `f` cerut de vreo pereche. Dacă nicio pereche nu se
+## plânge, `f` rămâne 1 și nu s-a schimbat nimic — ceea ce se întâmplă pe 279
+## de hărți din 300.
+static func _potoleste_abaterea(baza: Array, abateri: Array) -> float:
+	var factor := 1.0
+	for i in range(baza.size() - 1):
+		var loc: float = baza[i + 1].y - baza[i].y
+		var strangere: float = abateri[i].y - abateri[i + 1].y   # cât apropie abaterea
+		if strangere <= 0.0:
+			continue   # abaterile depărtează nodurile; n-are cum să strice
+		if loc <= DISTANTA_MINIMA_VERTICALA:
+			return 0.0   # nici fără abatere nu încap: n-o lăsa să mai strice ceva
+		factor = minf(factor, (loc - DISTANTA_MINIMA_VERTICALA) / strangere)
+	return clampf(factor, 0.0, 1.0)
 
 
 ## Dreptunghiul de hârtie pe care au voie să stea nodurile, în coordonatele
@@ -592,7 +711,7 @@ func _zona_utila() -> Rect2:
 
 
 ## Un punct adus înapoi în zonă, dacă a ieșit din ea.
-func _in_zona(punct: Vector2, zona: Rect2) -> Vector2:
+static func _in_zona(punct: Vector2, zona: Rect2) -> Vector2:
 	return Vector2(
 		clampf(punct.x, zona.position.x, zona.end.x),
 		clampf(punct.y, zona.position.y, zona.end.y)
@@ -601,7 +720,7 @@ func _in_zona(punct: Vector2, zona: Rect2) -> Vector2:
 
 ## Liniile, cu starea lor. Se construiesc din aceleași date ca butoanele, deci
 ## nu pot ajunge să arate un drum care nu există.
-func _muchii(centre: Dictionary, zona: Rect2) -> Array[Dictionary]:
+func _muchii(centre: Dictionary) -> Array[Dictionary]:
 	var accesibile := Expeditie.accesibile()
 	var muchii: Array[Dictionary] = []
 
@@ -631,46 +750,12 @@ func _muchii(centre: Dictionary, zona: Rect2) -> Array[Dictionary]:
 				"la": centre[urmator],
 				"culoare": culoare,
 				"grosime": grosime,
-				"curbura": _curbura(id, urmator, centre, zona),
 				# Unde se opresc liniuțele la capete. Trimisă de AICI, nu
 				# ghicită în pânză: harta e singura care știe cât de mare e un
 				# nod, iar pânza nu are de ce să afle ce e un nod.
 				"oprire": OPRIRE_LA_NOD,
 			})
 	return muchii
-
-
-## Cât și în ce parte se îndoaie drumul dintre două noduri.
-##
-## Amestecăm semințele CELOR DOUĂ noduri, ca fiecare pereche să aibă îndoitura
-## ei: dacă aș folosi doar sămânța nodului de plecare, toate drumurile care
-## pleacă din același nod s-ar curba identic și s-ar suprapune două câte două.
-## Numerele 31 și 7919 n-au nimic magic în ele — sunt doar primi, care amestecă
-## mai bine decât un 2 sau un 10.
-##
-## Apoi VERIFICĂM unde ajunge îndoitura. O curbă lungă ajunge mai departe decât
-## capetele ei, deci un drum poate ieși de pe hârtie chiar dacă amândouă
-## nodurile lui sunt pe ea. Dacă partea trasă la sorți e proastă, o încercăm pe
-## cealaltă; dacă amândouă sunt proaste, îndoim abia perceptibil. Tot
-## deterministic, în toate cazurile.
-func _curbura(a: int, b: int, centre: Dictionary, zona: Rect2) -> float:
-	var rng := RandomNumberGenerator.new()
-	rng.seed = int(Expeditie.harta[a]["samanta"]) * 31 + int(Expeditie.harta[b]["samanta"]) * 7919
-	var marime := rng.randf_range(CURBURA_MINIMA, CURBURA_MAXIMA)
-	var semn := 1.0 if rng.randf() < 0.5 else -1.0
-
-	# Punctul de control, calculat exact ca în pânză: mijlocul împins
-	# perpendicular. El e vârful îndoiturii, deci e și cel mai depărtat punct.
-	var de_la: Vector2 = centre[a]
-	var la: Vector2 = centre[b]
-	var mijloc := (de_la + la) * 0.5
-	var perpendiculara := Vector2(-(la - de_la).y, (la - de_la).x)
-
-	for incercare in [semn, -semn]:
-		var control: Vector2 = mijloc + perpendiculara * marime * incercare
-		if zona.has_point(control):
-			return marime * incercare
-	return CURBURA_MINIMA * 0.4 * semn
 
 
 ## Au fost nodurile astea două, una după alta, chiar pe drumul meu?
