@@ -88,6 +88,7 @@ func _ready() -> void:
 	# ci „care merge?" — iar pe aia n-o poți răspunde măsurând unul singur.
 	_masoara_traseu("VAL", Harta.Traseu.VAL, zona)
 	_masoara_traseu("POTCOAVĂ", Harta.Traseu.POTCOAVA, zona)
+	_masoara_traseu("POTCOAVĂ OGLINDITĂ", Harta.Traseu.POTCOAVA_OGLINDITA, zona)
 	_masoara_traseu("ȘARPE", Harta.Traseu.SARPE, zona)
 
 	await _proba_pe_scena_adevarata()
@@ -438,6 +439,8 @@ func _nume_traseu(traseu: int) -> String:
 			return "VAL"
 		Harta.Traseu.POTCOAVA:
 			return "POTCOAVĂ"
+		Harta.Traseu.POTCOAVA_OGLINDITA:
+			return "POTCOAVĂ OGLINDITĂ"
 		Harta.Traseu.SARPE:
 			return "ȘARPE"
 	return "?"

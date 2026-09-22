@@ -14,8 +14,8 @@ extends Node
 ## 1. **STAREA E DATE, NU NODURI.** Nicăieri mai jos nu există o referință
 ##    către un Button, un Control sau o scenă. Harta e un Array de
 ##    dicționare; ecranul o DESENEAZĂ, dar nu o ține. Dacă starea ar fi
-##    ținută în noduri de interfață, „salvează expediția" ar însemna
-##    „salvează o bucată de scenă" — imposibil de scris în JSON și imposibil
+##    ținută în noduri de interfață, „salvează expediția” ar însemna
+##    „salvează o bucată de scenă” — imposibil de scris în JSON și imposibil
 ##    de citit peste un an.
 ##
 ## 2. **TOTUL E TIP SIMPLU.** int, float, bool, String, Array, Dictionary.
@@ -77,7 +77,7 @@ enum Nod {
 ##   monede       — câte Monede cad la o victorie
 ##   bonus        — Fragmente în plus, o singură dată, pentru un nod greu
 ##
-## „putere" și „buget" sunt două lucruri diferite, și merită două coloane:
+## „putere” și „buget” sunt două lucruri diferite, și merită două coloane:
 ## bugetul alege CINE apare (un Spadasin în loc de un Soldat), puterea îl umflă
 ## pe cel apărut. Un nod de Boss are nevoie de amândouă — cel mai scump adversar
 ## disponibil, și încă o dată pe-atât peste el.
@@ -131,8 +131,8 @@ static func date_nod(tip: int) -> Dictionary:
 # REGULILE EXPEDIȚIEI
 # ─────────────────────────────────────────────────────────────
 
-## N-ul din „alege N din M". M e `Discipline.cate()`.
-## CLAUDE.md: „Numărul 3 e variabilă de reglat, nu presupunere."
+## N-ul din „alege N din M”. M e `Discipline.cate()`.
+## CLAUDE.md: „Numărul 3 e variabilă de reglat, nu presupunere.”
 const DISCIPLINE_IN_LOADOUT := 3
 
 ## PV-ul regelui la pornirea expediției. NU se reface între lupte — doar la
@@ -144,6 +144,29 @@ const PV_MAX := 15
 ## Procent, nu cifră fixă: când PV_MAX va crește din upgrade-uri de cetate,
 ## odihna crește odată cu el, fără să umble nimeni la ea.
 const ODIHNA_FRACTIUNE := 0.35
+
+## DE UNDE VINE HARTA. ← comutatorul. O singură linie de schimbat:
+##
+##     const SURSA_HARTII := Sursa.DESENATA    planșa din `PLANSA_IMPLICITA` (activ)
+##     const SURSA_HARTII := Sursa.GENERATA    panglica + straturi, ca înainte
+##
+## Cele două surse răspund la întrebări diferite, și de-aia coexistă în loc să
+## se înlocuiască:
+##
+##   GENERATA  — o hartă nouă la fiecare sămânță, garantat fără încrucișări,
+##               fiindcă geometria ei e demonstrată (vezi `harta.gd`). Nu poate
+##               însă desena UN LOC anume.
+##   DESENATA  — forma o pui tu, cu mâna, într-un fișier. În schimb, garanția se
+##               mută de la demonstrație la VERIFICARE: `tools/verifica_plansa.gd`.
+##
+## Ce NU se schimbă între ele: tipurile nodurilor (Luptă, Elită, Magazin…) se
+## trag din sămânță în amândouă cazurile, cu aceleași reguli. Planșa dă doar
+## forma; conținutul rămâne al sămânței.
+enum Sursa { GENERATA, DESENATA }
+const SURSA_HARTII := Sursa.DESENATA
+
+## Ce planșă se joacă, cât timp `SURSA_HARTII` e DESENATA.
+const PLANSA_IMPLICITA := Plansa.DOSAR + "harta_01.json"
 
 ## Câte STRATURI are harta. Straturile hotărăsc numărul de noduri:
 ## primul și ultimul au câte unul, cele din mijloc câte `NODURI_PE_STRAT`.
@@ -177,11 +200,11 @@ const NODURI_PE_STRAT := 2
 # Fiecare nod primește un BUGET, care crește cu adâncimea. Azi el face două
 # lucruri: alege tipul nodului și, mai târziu, spune luptei cât de tare poate
 # fi inamicul. Mâine (pasul 10, generatorul de inamici) tot el va cumpăra
-# modificatori: „+50% PV" costă atât, „lovește de două ori" costă atât.
+# modificatori: „+50% PV” costă atât, „lovește de două ori” costă atât.
 #
-# De ce un BUGET și nu un „nivel 1-2-3": un număr continuu se poate împărți.
+# De ce un BUGET și nu un „nivel 1-2-3”: un număr continuu se poate împărți.
 # Un nod de adâncime 4 cu buget 3,2 poate lua un inamic de 2 plus un
-# modificator de 1, sau unul de 3 simplu. Un „nivel 2" nu poate cumpăra nimic,
+# modificator de 1, sau unul de 3 simplu. Un „nivel 2” nu poate cumpăra nimic,
 # poate doar să fie.
 #
 # Scris acum, cât e ieftin, fiindcă e greu de introdus într-un generator care
@@ -190,7 +213,7 @@ const NODURI_PE_STRAT := 2
 const BUGET_BAZA := 1.0
 const BUGET_PE_ADANCIME := 0.55
 # Multiplicatorul de buget al unui nod greu NU mai e o constantă aici: e
-# coloana „buget" din `DATE_NOD`. Elita îl avea, Bossul avea nevoie de altul,
+# coloana „buget” din `DATE_NOD`. Elita îl avea, Bossul avea nevoie de altul,
 # iar două constante cu același rost sunt începutul unei a treia.
 
 ## PONDERILE tipurilor de nod, ca tabel. Ponderea finală a unui tip e
@@ -235,13 +258,13 @@ const PONDERI_NOD := [
 
 ## Ce se vinde la Magazin. Tabel, ca tot restul: o putere nouă e un rând.
 ##
-## „efect" e cheia pe care o citește codul; restul e ce citește jucătorul.
+## „efect” e cheia pe care o citește codul; restul e ce citește jucătorul.
 ## Puterile INSTANTANEE (PV, PV maxim) își fac treaba în clipa cumpărării și
-## sunt trecute în istoric. Cele DURABILE („pa") rămân în `puteri` și sunt
+## sunt trecute în istoric. Cele DURABILE („pa”) rămân în `puteri` și sunt
 ## întrebate de luptă la fiecare rundă — de-aia lista se salvează.
 ##
 ## Prețurile pornesc de la ce aduce un nod: o Luptă dă 8 Monede, o Elită 16.
-## Deci „fiertura" e aproape un nod de luptă, iar „pana" e trei. Vrei ca
+## Deci „fiertura” e aproape un nod de luptă, iar „pana” e trei. Vrei ca
 ## alegerea de la Magazin să coste ceva, altfel nu e o alegere.
 const PUTERI := [
 	{
@@ -268,23 +291,39 @@ const PUTERI := [
 ## care trebuie redesenată după ce te întorci dintr-o luptă.
 signal s_a_schimbat
 
-## E o expediție în desfășurare? `false` înseamnă „ești în meniu / la sumar".
+## E o expediție în desfășurare? `false` înseamnă „ești în meniu / la sumar”.
 var activa := false
 
 ## Sămânța din care s-a generat harta. SE SALVEAZĂ, și ăsta e tot rostul ei:
 ## cu aceeași sămânță iese exact aceeași hartă, deci un bug raportat ca
-## „expediția 12345 se blochează la nodul 6" e reproductibil pe loc.
+## „expediția 12345 se blochează la nodul 6” e reproductibil pe loc.
 var samanta := 0
+
+## PE CE PLANȘĂ se joacă: calea fișierului, sau "" pentru o hartă generată.
+##
+## E STARE, nu constantă, și ăsta e tot rostul: `SURSA_HARTII` spune ce se
+## alege la pornirea unei expediții NOI, dar o expediție deja pornită trebuie să
+## se deseneze pe planșa pe care a pornit — inclusiv după un save reîncărcat
+## peste o lună, când comutatorul o fi fost mutat de zece ori.
+##
+## Text, deci serializabil. Ecranul hărții întreabă câmpul ăsta, nu constanta:
+## un singur adevăr, ținut într-un singur loc.
+var plansa := ""
 
 ## Harta: un Array de dicționare, fiecare cu forma
 ##   { "id": 3, "adancime": 2, "coloana": 0, "tip": Nod.LUPTA,
 ##     "buget": 2.1, "samanta": 88123, "spre": [5, 6] }
 ##
-## „spre" ține INDICI, nu noduri. Un nod care și-ar ține vecinii ca obiecte ar
+## Pe o hartă DESENATĂ mai apare un câmp, "reper": id-ul text al nodului din
+## planșă („S”, „C3”). E firul care leagă nodul de desen — poziția LUI nu se
+## ține aici, fiindcă un `Vector2` n-are ce căuta în starea care se salvează
+## (vezi regula 2 din antet). Ecranul deschide aceeași planșă și caută reperul.
+##
+## „spre” ține INDICI, nu noduri. Un nod care și-ar ține vecinii ca obiecte ar
 ## fi un graf de referințe încrucișate — imposibil de scris în JSON fără să-l
 ## desfaci oricum în indici.
 ##
-## „samanta" e a nodului, nu a hărții: lupta de la nodul 6 își alege inamicul
+## „samanta” e a nodului, nu a hărții: lupta de la nodul 6 își alege inamicul
 ## din ea, deci alege ACELAȘI inamic de fiecare dată când reiei expediția —
 ## fără ca expediția să fie nevoită să știe ce e un inamic.
 var harta: Array[Dictionary] = []
@@ -293,7 +332,7 @@ var harta: Array[Dictionary] = []
 var pozitie := -1
 
 ## Drumul parcurs, în ordine. E ȘI istoricul pentru ecranul de sumar, ȘI
-## sursa lui „ce noduri sunt în urma mea" pentru desenarea hărții.
+## sursa lui „ce noduri sunt în urma mea” pentru desenarea hărții.
 var parcurse: Array[int] = []
 
 ## Cheile disciplinelor alese. Text, nu indici: vezi antetul lui
@@ -301,14 +340,14 @@ var parcurse: Array[int] = []
 var loadout: Array[String] = []
 
 ## PV-ul regelui, purtat de la un nod la altul. AICI, nu în `lupta.gd`, și
-## asta e toată regula „PV-ul nu se reface între lupte": lupta îl citește la
+## asta e toată regula „PV-ul nu se reface între lupte”: lupta îl citește la
 ## început și îl scrie înapoi la sfârșit, dar nu-l deține.
 var pv := 0
 var pv_max := PV_MAX
 
 ## Ce a produs expediția asta. Separat de `Tezaur`, care ține totalul
 ## permanent: ecranul de sumar vrea să spună „ai câștigat 84 în expediția
-## asta", nu „ai 312 cu totul".
+## asta", nu „ai 312 cu totul”.
 var fragmente_castigate := 0
 
 ## MONEDELE din expediția curentă. Se strâng din lupte, se cheltuie la Magazin,
@@ -319,7 +358,7 @@ var fragmente_castigate := 0
 var monede := 0
 
 ## Ce ai cumpărat la Magazin, în ordine. Chei text, cu dubluri permise: două
-## „Pene de otel" înseamnă +2 PA, iar istoricul e și ce arată sumarul.
+## „Pene de otel” înseamnă +2 PA, iar istoricul e și ce arată sumarul.
 var puteri: Array[String] = []
 
 ## Cea mai bună performanță din run, pentru sumar. Un dicționar, nu patru
@@ -344,10 +383,11 @@ func _ready() -> void:
 # CICLUL DE VIAȚĂ
 # ─────────────────────────────────────────────────────────────
 
-## Starea „nicio expediție". Pornim de aici la fiecare joc nou.
+## Starea „nicio expediție”. Pornim de aici la fiecare joc nou.
 func goleste() -> void:
 	activa = false
 	samanta = 0
+	plansa = ""
 	harta.clear()
 	pozitie = -1
 	parcurse.clear()
@@ -368,9 +408,9 @@ func goleste() -> void:
 
 ## Pornește o expediție nouă.
 ##
-## `samanta_ceruta` = 0 înseamnă „alege una la întâmplare, dar ȚINE-O MINTE".
+## `samanta_ceruta` = 0 înseamnă „alege una la întâmplare, dar ȚINE-O MINTE”.
 ## Asta e diferența dintre un joc care se poate depana și unul care nu se
-## poate: fiecare expediție are o sămânță, chiar și cele „aleatoare". Ca s-o
+## poate: fiecare expediție are o sămânță, chiar și cele „aleatoare”. Ca s-o
 ## reproduci, o citești din jurnal și o dai înapoi aici.
 func incepe(discipline: Array[String], samanta_ceruta := 0) -> void:
 	goleste()
@@ -380,7 +420,8 @@ func incepe(discipline: Array[String], samanta_ceruta := 0) -> void:
 		samanta = randi_range(1, 999999)
 
 	loadout = _curata_loadout(discipline)
-	harta = genereaza_harta(samanta)
+	plansa = _plansa_de_jucat()
+	harta = genereaza_harta(samanta, plansa)
 	pozitie = -1
 	pv = pv_max
 	activa = true
@@ -391,10 +432,31 @@ func incepe(discipline: Array[String], samanta_ceruta := 0) -> void:
 	# nouă", deci aici se cheamă.
 	Sac.expeditie_noua()
 
-	print("Expeditie noua: samanta %d, %d noduri, loadout %s." % [
-		samanta, harta.size(), ", ".join(loadout)
+	print("Expeditie noua: samanta %d, %d noduri, harta %s, loadout %s." % [
+		samanta, harta.size(),
+		plansa.get_file() if plansa != "" else "generata",
+		", ".join(loadout)
 	])
 	s_a_schimbat.emit()
+
+
+## CE PLANȘĂ SE JOACĂ ACUM — sau "" dacă harta se generează.
+##
+## Comutatorul spune ce vrem; funcția asta verifică dacă se poate. O planșă
+## lipsă sau stricată NU are voie să oprească jocul: te întorci la generator,
+## cu un avertisment în consolă. Un fișier de date prost scris e o greșeală de
+## conținut, iar jocul trebuie să supraviețuiască greșelilor de conținut — altfel
+## o virgulă uitată în JSON înseamnă „jocul nu mai pornește”.
+static func _plansa_de_jucat() -> String:
+	if SURSA_HARTII != Sursa.DESENATA:
+		return ""
+	var citita := Plansa.incarca(PLANSA_IMPLICITA)
+	var eroare := String(citita["eroare"])
+	if eroare == "":
+		return PLANSA_IMPLICITA
+	push_warning("Plansa %s nu se poate citi: %s. Harta se genereaza."
+		% [PLANSA_IMPLICITA, eroare])
+	return ""
 
 
 ## Intră în nodul cu indicele dat. Cheamă-l DOAR cu un nod din `accesibile()`.
@@ -434,8 +496,8 @@ func nod_curent() -> Dictionary:
 ## În ce noduri poți intra ACUM.
 ##
 ## La început (`pozitie == -1`) sunt toate nodurile de adâncime 0 — adică
-## intrarea pe hartă. După aceea, exact ce scrie în „spre" la nodul curent.
-## Lista goală înseamnă „ai ajuns la capăt": vezi `la_capat()`.
+## intrarea pe hartă. După aceea, exact ce scrie în „spre” la nodul curent.
+## Lista goală înseamnă „ai ajuns la capăt”: vezi `la_capat()`.
 func accesibile() -> Array[int]:
 	var lista: Array[int] = []
 	if pozitie < 0:
@@ -453,12 +515,73 @@ func la_capat() -> bool:
 	return pozitie >= 0 and accesibile().is_empty()
 
 
-## Câte straturi are harta. Folosit de ecran ca să deseneze rândurile.
-func adancime_maxima() -> int:
-	var maxim := 0
+## `adancime_maxima()` A DISPĂRUT de aici, și merită spus de ce, fiindcă e genul
+## de funcție care pare nevinovată.
+##
+## Avea doi apelanți, amândoi în antetul hărții, amândoi ca să scrie „din câte
+## noduri". Pe harta generată răspunsul era corect: toate traseele aveau exact
+## câte un nod pe strat. Pe o planșă desenată, aceeași funcție ar fi răspuns „cel
+## mai depărtat nod de Start" — un număr care ARATĂ ca lungimea drumului și nu e.
+##
+## Puteam s-o las, cu un comentariu de avertisment. Dar o funcție nefolosită al
+## cărei nume minte e o capcană pusă pentru mine peste șase luni. Ce răspunde
+## acum la aceeași nevoie e `pasi_pana_la_boss()`, de mai jos, care e adevărată
+## pe orice hartă.
+
+
+## Care nod e Bossul. `-1` dacă n-are (n-ar trebui să se întâmple).
+##
+## Se caută după TIP, nu după poziția în listă. Pe harta generată Bossul e
+## ultimul nod și s-ar fi putut lua așa; pe o planșă desenată, „ultimul din
+## listă" și „capătul drumului” sunt două lucruri care se nimeresc să coincidă,
+## iar codul n-are voie să se sprijine pe o coincidență.
+func id_boss() -> int:
 	for nod in harta:
-		maxim = maxi(maxim, int(nod["adancime"]))
-	return maxim
+		if int(nod["tip"]) == Nod.BOSS:
+			return int(nod["id"])
+	return -1
+
+
+## CÂȚI PAȘI MAI SUNT PÂNĂ LA BOSS, pe cel mai scurt drum.
+##
+## Înlocuiește vechiul „nodul 4 din 12” din antet, și motivul e că întrebarea
+## veche n-are răspuns pe o hartă desenată. Pe harta generată toate traseele
+## aveau exact atâtea noduri câte straturi, deci „din 12” era adevărat oricum ai
+## fi mers. Pe o planșă, un traseu are 7 noduri și altul 9 — iar un antet care
+## ar scrie „din 9” cât mergi pe drumul de 7 ar minți cu fiecare pas.
+##
+## „La cel puțin 3 pași” e adevărat pe orice hartă, pe orice drum. Pe harta
+## generată dă exact numărul vechi (straturi rămase), deci nu s-a pierdut nimic
+## din informație — s-a pierdut doar presupunerea că toate drumurile sunt egale.
+##
+## Tot un BFS, ca la adâncimi, dar pornit din nodul CURENT. Înainte de intrarea
+## pe hartă (`pozitie == -1`) pornește din prima intrare.
+func pasi_pana_la_boss() -> int:
+	var tinta := id_boss()
+	if tinta < 0:
+		return 0
+
+	var pornire := pozitie
+	if pornire < 0:
+		var intrari := accesibile()
+		if intrari.is_empty():
+			return 0
+		pornire = intrari[0]
+
+	var pasi := {pornire: 0}
+	var coada: Array[int] = [pornire]
+	var i := 0
+	while i < coada.size():
+		var aici: int = coada[i]
+		i += 1
+		if aici == tinta:
+			return int(pasi[aici])
+		for id in harta[aici].get("spre", []):
+			var urmator := int(id)
+			if not pasi.has(urmator):
+				pasi[urmator] = int(pasi[aici]) + 1
+				coada.append(urmator)
+	return 0
 
 
 # ─────────────────────────────────────────────────────────────
@@ -473,7 +596,7 @@ func seteaza_pv(valoare: int) -> void:
 
 
 ## Odihna. Întoarce cât s-a recuperat DE FAPT, ca ecranul să poată scrie
-## „+5 PV" fără să facă el socoteala și fără să poată ajunge la alt număr.
+## „+5 PV” fără să facă el socoteala și fără să poată ajunge la alt număr.
 func odihneste() -> int:
 	var inainte := pv
 	pv = mini(pv + ceili(pv_max * ODIHNA_FRACTIUNE), pv_max)
@@ -500,8 +623,8 @@ func inregistreaza_lupta(raport: Dictionary) -> void:
 		int(recorduri["cel_mai_lung_lant"]), int(raport.get("cel_mai_lung_lant", 0)))
 	recorduri["daune_intr_o_lupta"] = maxi(
 		int(recorduri["daune_intr_o_lupta"]), int(raport.get("daune", 0)))
-	# Criticele se ADUNĂ: aici întrebarea e „câte ai dat în tot runul", nu
-	# „care a fost cea mai bună luptă". Două statistici, două feluri de a
+	# Criticele se ADUNĂ: aici întrebarea e „câte ai dat în tot runul”, nu
+	# „care a fost cea mai bună luptă”. Două statistici, două feluri de a
 	# aduna — de-aia stau într-un tabel și nu într-o buclă care le tratează la fel.
 	recorduri["critice"] = int(recorduri["critice"]) + int(raport.get("critice", 0))
 
@@ -541,8 +664,8 @@ static func putere(cheie: String) -> Dictionary:
 ## Poți cumpăra puterea asta ACUM? Două condiții, nu una.
 ##
 ## Prima e evidentă: să ai Monedele. A doua s-a văzut abia la prima probă —
-## „Fiertura calda" (+6 PV) se putea cumpăra cu PV-ul plin, lua 9 Monede și
-## răspundea „+0 PV". Nu era un bug de cod; era un bug de vitrină. Un magazin
+## „Fiertura calda” (+6 PV) se putea cumpăra cu PV-ul plin, lua 9 Monede și
+## răspundea „+0 PV”. Nu era un bug de cod; era un bug de vitrină. Un magazin
 ## n-are voie să-ți vândă nimic sub formă de ceva.
 func pot_cumpara(cheie: String) -> bool:
 	var fisa := putere(cheie)
@@ -554,7 +677,7 @@ func pot_cumpara(cheie: String) -> bool:
 ## Ar schimba puterea asta ceva, în starea de acum?
 ##
 ## Doar vindecarea poate fi degeaba (PV plin). Un PV maxim în plus e mereu bun,
-## iar un PA în plus la fel — de-aia funcția răspunde „da" pentru orice efect
+## iar un PA în plus la fel — de-aia funcția răspunde „da” pentru orice efect
 ## despre care n-are motiv să creadă altceva, în loc să ceară un rând nou în
 ## tabel pentru fiecare putere viitoare.
 static func _are_efect_pentru(fisa: Dictionary, pv_acum: int, pv_maxim: int) -> bool:
@@ -568,7 +691,7 @@ func _are_efect(fisa: Dictionary) -> bool:
 
 
 ## De ce nu poți cumpăra, într-un cuvânt — ca butonul stins să spună singur
-## ce-i lipsește. "" înseamnă „poți".
+## ce-i lipsește. "" înseamnă „poți”.
 func motiv_refuz(cheie: String) -> String:
 	var fisa := putere(cheie)
 	if fisa.is_empty():
@@ -580,7 +703,7 @@ func motiv_refuz(cheie: String) -> String:
 	return ""
 
 
-## Cumpără. Întoarce textul de arătat jucătorului („+6 PV") sau "" dacă n-a
+## Cumpără. Întoarce textul de arătat jucătorului („+6 PV”) sau ”" dacă n-a
 ## mers — un singur apel care ȘI plătește, ȘI aplică, ȘI spune ce s-a
 ## întâmplat. Trei apeluri separate ar fi însemnat că se poate plăti fără să se
 ## aplice nimic, iar ăla e exact bugul pe care nu-l observi decât ca jucător.
@@ -607,7 +730,7 @@ func cumpara(cheie: String) -> String:
 			urmare = "+%d PV maxim. Acum %d / %d." % [
 				int(fisa["cantitate"]), pv, pv_max]
 		"pa":
-			# „Cu cât mai mult", nu „câte cu totul": PA-ul de bază e al luptei
+			# „Cu cât mai mult”, nu „câte cu totul”: PA-ul de bază e al luptei
 			# (`PA_PE_RUNDA`), iar expediția n-are de ce să-l știe.
 			urmare = "De acum, +%d PA in fiecare runda." % bonus_pa()
 
@@ -629,7 +752,7 @@ func bonus_pa() -> int:
 	return spor
 
 
-## Numele puterilor cumpărate, pentru sumar. Cu dubluri: „Pana de otel ×2".
+## Numele puterilor cumpărate, pentru sumar. Cu dubluri: „Pana de otel ×2”.
 func puteri_pe_scurt() -> String:
 	if puteri.is_empty():
 		return "-"
@@ -655,10 +778,19 @@ func puteri_pe_scurt() -> String:
 
 ## Construiește harta din sămânță. `static` fiindcă nu atinge starea: îi dai o
 ## sămânță, îți dă noduri. Așa se poate testa fără să pornești o expediție.
-static func genereaza_harta(samanta_harta: int) -> Array[Dictionary]:
+##
+## `cale_plansa` gol = harta se generează, ca înainte. Altfel, FORMA vine din
+## fișier și doar conținutul din sămânță. Parametrul are o valoare implicită ca
+## apelurile vechi (verificarea headless) să meargă nemodificate.
+static func genereaza_harta(samanta_harta: int, cale_plansa := "") -> Array[Dictionary]:
 	var rng := RandomNumberGenerator.new()
 	rng.seed = samanta_harta
+	if cale_plansa != "":
+		return _harta_din_plansa(rng, Plansa.incarca(cale_plansa))
+	return _harta_generata(rng)
 
+
+static func _harta_generata(rng: RandomNumberGenerator) -> Array[Dictionary]:
 	var straturi := rng.randi_range(STRATURI_MIN, STRATURI_MAX)
 	# Plasa de la `NODURI_MINIME`: un strat din mijloc aduce `NODURI_PE_STRAT`
 	# noduri, deci creștem straturile până iese numărul cerut. Bucla asta nu
@@ -668,13 +800,13 @@ static func genereaza_harta(samanta_harta: int) -> Array[Dictionary]:
 		straturi += 1
 
 	var noduri: Array[Dictionary] = []
-	# „Cine e pe stratul de dinainte" — avem nevoie de indicii lor ca să
+	# „Cine e pe stratul de dinainte” — avem nevoie de indicii lor ca să
 	# tragem muchiile înapoi, după ce stratul nou e construit.
 	var stratul_trecut: Array[int] = []
 
 	for adancime in range(straturi):
 		# Primul și ultimul strat au un singur nod: expediția pornește dintr-un
-		# punct și se termină într-unul. Fără asta, „ai ajuns la capăt" ar fi
+		# punct și se termină într-unul. Fără asta, „ai ajuns la capăt” ar fi
 		# două capete diferite, iar finalul ar depinde de coloana pe care ai mers.
 		var cate := NODURI_PE_STRAT
 		if adancime == 0 or adancime == straturi - 1:
@@ -683,7 +815,8 @@ static func genereaza_harta(samanta_harta: int) -> Array[Dictionary]:
 		var stratul_nou: Array[int] = []
 		for coloana in range(cate):
 			var id := noduri.size()
-			var tip := _alege_tip(rng, adancime, straturi)
+			var tip := _alege_tip(
+				rng, adancime, adancime == 0, adancime == straturi - 1)
 			# Bugetul crește cu adâncimea, apoi îl înmulțește tipul nodului.
 			# Multiplicatorul vine din `DATE_NOD`, nu dintr-un `if tip == ELITA`:
 			# de-aia Bossul n-a cerut nicio linie de cod aici, doar un rând în tabel.
@@ -709,9 +842,139 @@ static func genereaza_harta(samanta_harta: int) -> Array[Dictionary]:
 	return noduri
 
 
+## HARTA DINTR-O PLANȘĂ DESENATĂ: forma din fișier, conținutul din sămânță.
+##
+## Planșa dă nodurile și drumurile. Tot restul — ce tip e fiecare nod, ce buget
+## are, ce sămânță — se trage aici, exact cu regulile de la harta generată.
+##
+## ─────────────────────────────────────────────────────────────
+## CE REGULI DEPINDEAU DE STRAT, ȘI CUM SE TRADUC
+##
+## Pe harta generată, „stratul” era trei lucruri deodată: adâncimea, ordinea în
+## listă, și capătul drumului. Pe o planșă se despart, iar fiecare regulă
+## trebuie să spună pe care din ele se sprijină de fapt:
+##
+##   ADÂNCIMEA (cea mai scurtă distanță de la Start, vezi `Plansa.adancimi`)
+##   rămâne ce era: ponderile tipurilor și bugetul se calculează din ea, cu
+##   aceleași formule. Singura diferență e că nu mai e monotonă de-a lungul
+##   fiecărui drum — o scurtătură poate duce la un nod mai puțin adânc decât cel
+##   din care ai plecat.
+##
+##   INTRAREA nu mai e „adâncimea 0”, ci nodul `start` din fișier. Se nimerește
+##   să fie același lucru (Startul e singurul la distanța 0 de el însuși), dar
+##   regula e citită din fișier, nu dedusă.
+##
+##   CAPĂTUL nu mai e „ultimul strat”, ci nodul `boss` din fișier — și aici
+##   diferența e reală: pe o ocolitoare lungă poate sta un nod mai adânc decât
+##   Bossul. Vezi nota de la `_alege_tip`.
+##
+##   ORDINEA ÎN LISTĂ („ultimul nod e Bossul”) era o consecință a generării. Aici
+##   se construiește dinadins: nodurile se pun în ordinea adâncimii, iar Bossul
+##   se pune ULTIMUL, oricât de adânc ar fi. Nu e cosmetic — `id`-ul unui nod e
+##   chiar indicele lui, deci ordinea asta e ce face „Bossul e ultimul nod” să
+##   rămână adevărat pentru verificări și pentru orice save vechi.
+##
+##   COLOANA nu mai înseamnă „a câta bandă de pe panglică”, fiindcă nu mai e
+##   nicio panglică. Devine rangul nodului în stratul lui, de sus în jos pe
+##   desen — adică tot „a câta bandă”, doar măsurată pe hârtie. E folosită numai
+##   la diagnostic; desenul se face din poziția din fișier.
+static func _harta_din_plansa(
+	rng: RandomNumberGenerator, plansa: Dictionary
+) -> Array[Dictionary]:
+	var adanc := Plansa.adancimi(plansa)
+	var start := String(plansa["start"])
+	var boss := String(plansa["boss"])
+
+	# Locul fiecărui reper în fișier: departajarea nodurilor de pe același strat.
+	# Așa, două noduri la aceeași adâncime rămân în ordinea în care le-ai scris,
+	# deci fișierul se poate citi alături de harta din joc.
+	var rang := {}
+	for i in range(plansa["ordine"].size()):
+		rang[String(plansa["ordine"][i])] = i
+
+	var repere: Array[String] = []
+	for reper_brut in plansa["ordine"]:
+		var reper := String(reper_brut)
+		if not adanc.has(reper):
+			# Un nod la care nu se poate ajunge e un nod care n-o să fie jucat
+			# NICIODATĂ. L-am putea desena oricum, dar atunci harta ar minți:
+			# ar arăta un loc unde nu se poate merge. Îl sărim, și o spunem.
+			push_warning("Plansa %s: la nodul %s nu se poate ajunge din start."
+				% [plansa["cale"], reper])
+			continue
+		if reper != boss:
+			repere.append(reper)
+	repere.sort_custom(func(a, b):
+		var da := int(adanc[a])
+		var db := int(adanc[b])
+		if da != db:
+			return da < db
+		return int(rang[a]) < int(rang[b]))
+	if adanc.has(boss):
+		repere.append(boss)
+	else:
+		push_warning("Plansa %s: la Boss nu se poate ajunge din start."
+			% plansa["cale"])
+
+	# Coloana: rangul în stratul lui, de sus în jos pe desen.
+	var coloane := {}
+	var pe_strat := {}
+	for reper in repere:
+		var a := int(adanc[reper])
+		if not pe_strat.has(a):
+			pe_strat[a] = []
+		pe_strat[a].append(reper)
+	for a in pe_strat:
+		var strat: Array = pe_strat[a]
+		strat.sort_custom(func(x, y):
+			var px: Vector2 = plansa["poz"][x]
+			var py: Vector2 = plansa["poz"][y]
+			if absf(px.y - py.y) > 0.0001:
+				return px.y < py.y
+			return px.x < py.x)
+		for i in range(strat.size()):
+			coloane[strat[i]] = i
+
+	# Reper → id. Trebuie gata ÎNAINTE de bucla de mai jos: un nod își scrie
+	# vecinii ca indici, iar vecinii lui pot fi noduri încă neconstruite.
+	var id_al := {}
+	var straturi := 0
+	for i in range(repere.size()):
+		id_al[repere[i]] = i
+		straturi = maxi(straturi, int(adanc[repere[i]]) + 1)
+
+	var noduri: Array[Dictionary] = []
+	for reper in repere:
+		var adancime := int(adanc[reper])
+		var tip := _alege_tip(rng, adancime, reper == start, reper == boss)
+		var buget: float = (BUGET_BAZA + BUGET_PE_ADANCIME * adancime) \
+			* float(date_nod(tip)["buget"])
+
+		var spre: Array = []
+		for urmator in plansa["spre"].get(reper, []):
+			if id_al.has(urmator):
+				spre.append(int(id_al[urmator]))
+		spre.sort()
+
+		noduri.append({
+			"id": int(id_al[reper]),
+			# Firul către desen. Singurul câmp pe care harta generată nu-l are.
+			"reper": reper,
+			"adancime": adancime,
+			"coloana": int(coloane.get(reper, 0)),
+			"tip": tip,
+			"buget": snappedf(buget, 0.01),
+			"samanta": rng.randi_range(1, 999999),
+			"spre": spre,
+		})
+
+	_asigura_magazin(rng, noduri, straturi)
+	return noduri
+
+
 ## O hartă FĂRĂ Magazin face Monedele o glumă proastă: le-ai strâns toată
 ## expediția și n-ai avut unde să le dai. Ponderile îl fac probabil, dar
-## „probabil" nu e „sigur", iar un jucător care nimerește sămânța nefericită
+## „probabil” nu e „sigur”, iar un jucător care nimerește sămânța nefericită
 ## nu află niciodată că sistemul există.
 ##
 ## Deci: dacă n-a ieșit niciun Magazin, transformăm unul. Alegem din a DOUA
@@ -750,7 +1013,7 @@ static func _asigura_magazin(
 
 ## Nodurile care pot fi transformate în altceva, între două adâncimi.
 ##
-## „Liber" înseamnă Luptă sau Eveniment: nodurile care nu au un rol propriu în
+## „Liber” înseamnă Luptă sau Eveniment: nodurile care nu au un rol propriu în
 ## economia drumului. O Odihnă, o Elită sau Bossul sunt trepte puse dinadins —
 ## dacă le-am rescrie, am repara o problemă stricând alta.
 static func _noduri_libere(
@@ -767,23 +1030,42 @@ static func _noduri_libere(
 
 ## Ce fel de nod e ăsta.
 ##
-## Primul strat e MEREU o luptă obișnuită: o expediție care începe cu odihnă
-## („n-ai ce odihni") sau cu o elită („n-ai apucat să înveți nimic") pornește
+## Nodul de START e MEREU o luptă obișnuită: o expediție care începe cu odihnă
+## („n-ai ce odihni”) sau cu o elită („n-ai apucat să înveți nimic”) pornește
 ## prost, indiferent ce spun ponderile.
 ##
-## Ultimul e MEREU Boss. Era Elită, și asta era o scăpare de design pe care
-## harta o arăta pe față: dacă la nodul 6 întâlnești o Elită și la nodul 12
+## Nodul de CAPĂT e MEREU Boss. Era Elită, și asta era o scăpare de design pe
+## care harta o arăta pe față: dacă la nodul 6 întâlnești o Elită și la nodul 12
 ## tot o Elită, capătul drumului nu e un capăt — e încă un nod. Un tip aparte,
 ## doar acolo, face finalul un LOC, nu o repetare.
 ##
+## ─────────────────────────────────────────────────────────────
+## DE CE PRIMEȘTE „E STARTUL?” ȘI „E BOSSUL?” ÎN LOC DE „AL CÂTELEA STRAT”
+##
+## Vechea semnătură era `(adancime, straturi)`, și citea regulile ca
+## `adancime == 0` și `adancime == straturi - 1`. Pe harta generată, cele două
+## întrebări sunt același lucru: primul strat ESTE intrarea, ultimul ESTE
+## capătul.
+##
+## Pe o planșă desenată nu mai sunt. „Cel mai depărtat nod de Start” poate fi un
+## nod de pe o ocolitoare lungă, iar Bossul poate sta la o adâncime mai mică
+## decât el. Cine e capătul o spune fișierul, prin câmpul `boss`.
+##
+## Deci regula n-a fost schimbată, ci CITITĂ CUM TREBUIE: ea vorbea mereu despre
+## intrare și capăt, doar că adâncimea era, până acum, un mod corect de a le
+## afla. Cele două surse răspund fiecare cum știe, iar tabelul de ponderi rămâne
+## singurul lucru din mijloc.
+##
 ## Restul se trage din `PONDERI_NOD`, cu ponderile crescute de adâncime.
-static func _alege_tip(rng: RandomNumberGenerator, adancime: int, straturi: int) -> Nod:
-	if adancime == 0:
+static func _alege_tip(
+	rng: RandomNumberGenerator, adancime: int, e_start: bool, e_boss: bool
+) -> Nod:
+	if e_start:
 		return Nod.LUPTA
-	if adancime == straturi - 1:
+	if e_boss:
 		return Nod.BOSS
 
-	# „Roata norocului": fiecare tip primește o felie cât ponderea lui, apoi
+	# „Roata norocului”: fiecare tip primește o felie cât ponderea lui, apoi
 	# aruncăm o singură dată în tot cercul. Ponderea zero = felie inexistentă,
 	# deci tipul pur și simplu nu poate ieși.
 	var total := 0.0
@@ -816,7 +1098,7 @@ static func _pondere(rand: Dictionary, adancime: int) -> float:
 ## și totuși drumurile se tăiau unul pe altul la aproape fiecare sămânță
 ## (949 de încrucișări la 300 de hărți).
 ##
-## Motivul e simplu odată văzut: „la întâmplare" înseamnă că nodul de sus de pe
+## Motivul e simplu odată văzut: „la întâmplare” înseamnă că nodul de sus de pe
 ## coloana 0 putea alege nodul de jos de pe coloana 1, iar cel de pe coloana 1
 ## pe cel de pe coloana 0. Două drumuri care își schimbă locurile. Nicio
 ## curbură frumoasă nu repară asta — e o încrucișare în GRAF, nu în desen.
@@ -844,7 +1126,7 @@ static func _pondere(rand: Dictionary, adancime: int) -> float:
 ##
 ## 1. FIECARE NOD DE JOS E ACCESIBIL. Prima felie începe la 0, ultima se termină
 ##    la ultimul nod, iar între ele feliile sunt lipite cap la cap. Reuniunea lor
-##    e tot stratul, fără găuri. Nu mai e nevoie de pasul de „reparație" de
+##    e tot stratul, fără găuri. Nu mai e nevoie de pasul de „reparație” de
 ##    dinainte, fiindcă nu mai există ce repara.
 ## 2. FIECARE NOD DE SUS ARE CEL PUȚIN O IEȘIRE. `capat` e mereu cel puțin egal
 ##    cu `start`, deci felia nu poate fi goală. Un nod fără ieșire ar fi fost un
@@ -928,6 +1210,7 @@ func spre_dictionar() -> Dictionary:
 	return {
 		"activa": activa,
 		"samanta": samanta,
+		"plansa": plansa,
 		"harta": noduri,
 		"pozitie": pozitie,
 		"parcurse": parcurse.duplicate(),
@@ -945,6 +1228,8 @@ func spre_dictionar() -> Dictionary:
 func din_dictionar(date: Dictionary) -> void:
 	goleste()
 	samanta = int(date.get("samanta", 0))
+	# Un save vechi n-are câmpul, deci "" — adică hartă generată. Exact ce era.
+	plansa = String(date.get("plansa", ""))
 	pozitie = int(date.get("pozitie", -1))
 	pv = int(date.get("pv", PV_MAX))
 	pv_max = int(date.get("pv_max", PV_MAX))

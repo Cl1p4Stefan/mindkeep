@@ -14,7 +14,7 @@
 | 3. Trivia, ca scenă independentă | ✅ gata |
 | 4. Bucla completă a unei lupte | ✅ victorie · înfrângere · recompense (Fragmente) |
 | 5. Trei inamici manuali | ✅ Soldatul · Lăncierul (ceas) · Spadasinul (vulnerabilitate), aleși din joc |
-| 6. Harta de expediție | ✅ loadout „N din M" · **12-16 noduri**, ramificate, cu sămânță · Luptă / Elită / Odihnă / Eveniment / **Magazin** / **Boss** · **Monede + puteri temporare** · sumar de run · aspect: pergament, simboluri de cerneală, trasee punctate · **nodurile și drumurile stau pe o PANGLICĂ (curbă centrală + benzi)**, nu pe o grilă dreaptă · **trei trasee, toate verzi pe 300 de semințe** (POTCOAVĂ activă) · strat înclinat (forfecare) la ȘARPE · **drumuri care nu se încrucișează niciodată (0 la 300 de semințe)** · **nodul curent are și aură, și X** |
+| 6. Harta de expediție | ✅ loadout „N din M" · **12-16 noduri**, ramificate, cu sămânță · Luptă / Elită / Odihnă / Eveniment / **Magazin** / **Boss** · **Monede + puteri temporare** · sumar de run · aspect: pergament, simboluri de cerneală, trasee punctate · **nodurile și drumurile stau pe o PANGLICĂ (curbă centrală + benzi)**, nu pe o grilă dreaptă · **patru trasee, toate verzi pe 300 de semințe** (POTCOAVĂ activă; POTCOAVA OGLINDITĂ e aceeași formă, întoarsă) · strat înclinat (forfecare) la ȘARPE · **drumuri care nu se încrucișează niciodată (0 la 300 de semințe)** · **nodul curent are și aură, și X** · **două surse de hartă: GENERATĂ (panglica) sau DESENATĂ dintr-un fișier `data/harti/*.json`** — comutatorul `Expeditie.SURSA_HARTII`; azi e pe DESENATĂ |
 | 7. Cetatea | ❌ |
 | 8. Save/Load | 🟡 tezaurul, sacul și expediția știu toate să se serializeze (`spre_dictionar` / `din_dictionar`), pe trei straturi de durată; scrierea pe disc, nu încă |
 | 9. Celelalte discipline | 🟡 Cultură generală ✅ (135 de întrebări) · Logica ✅ (80 de categorii) · Cuvinte ✅ · toate trei fără repetiții pe expediție · celelalte 5 ❌ |
@@ -27,6 +27,221 @@ buget, generare) rămâne acolo unde era.
 Am sărit peste ordinea recomandată la pasul 12 (artă): imaginile pentru rege,
 cavaler și pentru cele trei piese de șah de pe butoane au intrat mai devreme, dar
 restul rămâne placeholder. Bucla de luptă e în continuare cea validată, nu arta.
+
+---
+
+## HĂRȚI DESENATE (22 septembrie 2026) — forma din fișier, conținutul din sămânță
+
+Harta nu mai are o singură sursă. Pe lângă generator, există acum **planșa**: un
+fișier JSON în care nodurile și drumurile sunt puse cu mâna. Comutatorul e o
+linie în `autoload/expeditie.gd`:
+
+```gdscript
+const SURSA_HARTII := Sursa.DESENATA    # sau Sursa.GENERATA
+const PLANSA_IMPLICITA := Plansa.DOSAR + "harta_01.json"
+```
+
+Generarea și cele patru trasee (VAL, POTCOAVĂ, POTCOAVA OGLINDITĂ, ȘARPE) n-au
+fost atinse: pe `GENERATA`, harta iese exact ca înainte, verificată.
+
+**Tipurile nodurilor rămân trase din sămânță, în amândouă cazurile.** Planșa dă
+forma, sămânța dă conținutul. Dacă aș fi scris „aici e Magazinul" în fișier,
+harta s-ar fi învățat pe de rost după trei runuri.
+
+### Ce e în fișier
+
+Fracțiuni 0..1 dintr-o cutie cu un raport dat, nu pixeli — cutia se scalează
+UNIFORM în zona utilă și se centrează, deci forma desenată rămâne forma văzută.
+Un drum e o listă de puncte prin care trece o curbă netedă (Catmull-Rom, aceeași
+funcție ca panglica: `Harta.curba_neteda`). Formatul complet e în antetul lui
+`scenes/harta/plansa.gd`.
+
+### Ce s-a despărțit: „stratul" era trei lucruri deodată
+
+Pe harta generată, stratul era în același timp adâncimea, ordinea în listă și
+capătul drumului. Pe o planșă se despart, și fiecare regulă a trebuit să spună pe
+care se sprijină de fapt:
+
+| Regula | Înainte | Acum |
+|---|---|---|
+| Startul e mereu Luptă | `adancime == 0` | nodul `start` din fișier |
+| Capătul e mereu Boss | `adancime == straturi - 1` | nodul `boss` din fișier |
+| Ponderi + buget | din adâncime | **neschimbat**, cu adâncimea = cea mai scurtă distanță de la Start |
+| Magazinul, în a doua jumătate | din adâncime | **neschimbat** |
+| Bossul e ultimul nod din listă | ieșea din generare | se construiește dinadins: noduri în ordinea adâncimii, Bossul pus ultimul |
+| Coloana | a câta bandă de pe panglică | rangul în strat, de sus în jos pe desen (doar diagnostic) |
+
+`_alege_tip()` primește acum „e startul?" și „e bossul?" în loc de „al câtelea
+strat". Regula n-a fost schimbată — a fost **citită cum trebuie**: ea vorbea
+mereu despre intrare și capăt, doar că adâncimea era, până acum, un mod corect de
+a le afla.
+
+Adâncimea nu mai e monotonă de-a lungul fiecărui drum. În `harta_01.json`, drumul
+W2 → C3 pleacă de la adâncimea 4 și ajunge la 3, fiindcă la C3 se ajunge și
+direct din K, mai scurt. Nu e o greșeală: asta înseamnă o scurtătură. Alternativa
+(adâncimea = cel mai LUNG drum) ar fi făcut bugetul monoton, dar ar fi pedepsit
+scurtăturile — mergi pe drumul scurt și te trezești cu inamicii drumului lung.
+
+### Ce a devenit „nodul X din Y"
+
+A devenit **„nodul 4, Bossul la cel puțin 3 pași"**. Vechiul text era adevărat pe
+harta generată fiindcă toate traseele aveau exact atâtea noduri câte straturi. Pe
+o planșă, un traseu are 7 noduri și altul 9 — iar un antet care scrie „din 9" cât
+timp mergi pe drumul de 7 minte la fiecare pas, și nu se repară alegând celălalt
+număr: niciunul nu e al DRUMULUI TĂU, fiindcă drumul tău nu e ales încă.
+
+„La cel puțin atât" e adevărat pe orice hartă și pe orice drum, iar pe harta
+generată dă exact numărul vechi (straturile rămase). Nu s-a pierdut informație —
+s-a pierdut presupunerea că toate drumurile sunt egale. La înfrângere, sumarul
+spune acum „Bossul mai era la 4 pași", care chiar măsoară cât de aproape ai fost.
+
+### Verificatorul: `tools/verifica_plansa.gd`
+
+```
+godot --headless --path . res://tools/verifica_plansa.tscn
+```
+
+Trece prin TOATE fișierele din `data/harti/`. Motivul pentru care există e mai
+important decât ce măsoară: **harta generată nu se poate încrucișa fiindcă e
+construită așa; o planșă desenată de mână n-are nicio demonstrație.** Aici
+verificarea nu mai e o plasă sub un argument — e singura garanție. Deci nu e un
+test de regresie, e unealta de desen: o rulezi în timp ce desenezi.
+
+- **Graful:** toate nodurile se ating din Start · din orice nod se ajunge la Boss ·
+  fără cicluri · nicio fundătură în afară de Boss.
+- **Desenul:** capetele drumurilor pe centrele nodurilor · drumurile nu se taie ·
+  cea mai apropiată pereche de noduri ≥ 72 px · totul stă pe hârtie.
+- **Conținutul, pe 300 de semințe:** Bossul pe ultimul nod · Startul mereu Luptă ·
+  Magazinul prezent · toate nodurile ajung în hartă.
+- **Informativ:** cel mai scurt și cel mai lung traseu, cât de aproape trece un
+  drum de un nod străin, cum se împart tipurile.
+
+**Rezultatul, pe ambele fișiere: totul verde.**
+
+| | `harta_01.json` | `harta_02.json` |
+|---|---|---|
+| noduri / drumuri | 14 / 18 | 16 / 23 |
+| cutia pe ecran | 717 × 397 px | 695 × 397 px |
+| cea mai apropiată pereche | 111,4 px (C3–W4) | 80,8 px (C4–D4) |
+| cel mai scurt traseu | S→T→K→C1→F1→W1→B (7 noduri) | S→A→B1→C1→D1→E1→Z (7 noduri) |
+| cel mai lung traseu | S→T→K→C2→W2→C3→W3→W1→B (9 noduri) | S→A→B3→C4→D4→D3→E2→Z (8 noduri) |
+| tipuri, 300 de semințe | Boss ✅ · Magazin ✅ · Start ✅ | Boss ✅ · Magazin ✅ · Start ✅ |
+
+`harta_02.json` e desenată de la zero, ca exemplu de format: un drum care se
+desface în trei culoare și se adună la Boss, cu un ocol pe culoarul de jos ca să
+existe trasee de lungimi diferite.
+
+### Ce am aflat măsurând: „hârtie" înseamnă altceva pentru un nod decât pentru un drum
+
+Prima rulare a dat PICAT la „totul stă pe hârtie": drumul C4 → W4 din
+`harta_01.json` trecea cu **1,1 px** dincolo de marginea zonei utile, fiindcă are
+un punct desenat fix pe fracțiunea 1,0, iar curba netedă iese puțin în afara
+punctelor ei la cotituri — exact cum o coardă întinsă iese din potcoavă.
+
+Verdictul era greșit, nu desenul. Zona utilă e pergamentul micșorat cu o
+**jumătate de nod** (46 px) plus margine, fiindcă un nod e un simbol de 92 px și
+trebuie să încapă întreg. Un drum e o linie de 6 px — n-are nicio jumătate de nod
+de protejat, iar sub el mai erau 64 px de hârtie liberă.
+
+Puteam „repara" strâmbând desenul (o cutie ceva mai mică decât zona). Ar fi fost
+o minciună mică: forma desenată n-ar mai fi fost forma văzută, ca să treacă o
+măsurătoare pusă greșit. Verificarea măsoară acum nodurile față de zona lor și
+drumurile față de hârtie, iar cei 1,1 px rămân la vedere ca informație — nu
+contează azi, dar dacă ajung vreodată 60, chiar ai desenat pe lângă pergament.
+
+### Ce s-a refăcut în cod, și ce nu
+
+`Harta.curba_neteda()` a ieșit din `panglica()` ca funcție de sine stătătoare:
+aceeași Catmull-Rom cu mânerele scalate separat pe fiecare segment, folosită
+acum și de drumurile desenate. La o planșă ajută și mai mult decât la panglică,
+fiindcă acolo punctele sunt puse cu ochiul, deci niciodată răsfirate egal.
+
+Granița dintre cele două surse e o singură funcție, `_geometria(zona)`, care
+întoarce mereu aceleași două lucruri: `centre` (id → punct) și `drumuri`
+(id → id → puncte). Deasupra ei, ecranul nu are de unde ști dacă nodurile vin
+dintr-o panglică sau dintr-un fișier; dedesubt, cele două n-au nimic în comun.
+`_muchii()` nu mai calculează nimic — primește drumurile gata făcute și adaugă
+doar culoarea și grosimea.
+
+`Expeditie.plansa` (text, "" = generată) e STARE, nu constantă: o expediție deja
+pornită trebuie să se deseneze pe planșa pe care a pornit, inclusiv după un save
+reîncărcat peste o lună, când comutatorul o fi fost mutat de zece ori. Fiecare
+nod al unei hărți desenate ține un câmp `reper` — id-ul text din fișier. Poziția
+NU se ține în stare (regula „niciun Vector2 în ce se salvează"): ecranul deschide
+aceeași planșă și caută reperul.
+
+Un fișier lipsă sau stricat nu oprește jocul: `push_warning` în consolă și harta
+se generează.
+
+---
+
+## POTCOAVA OGLINDITĂ (22 septembrie 2026) — un traseu nou, fără puncte noi
+
+Al patrulea traseu: aceeași potcoavă, întoarsă stânga-dreapta. Pleacă din
+dreapta-sus, merge spre stânga-sus, cotește pe STÂNGA, coboară și se întoarce
+spre dreapta-jos, unde stă Bossul. **Nu e activ** — `TRASEU` rămâne pe
+`Traseu.POTCOAVA`; se schimbă tot dintr-o linie.
+
+### Oglinda e o operație, nu un al doilea tabel
+
+Puteam scrie cele nouăsprezece puncte cu x-ul deja scăzut din 1. Ar fi mers până
+în ziua în care reglez culoarul de sus în POTCOAVĂ și uit de geamăna ei — iar
+nepotrivirea aia n-o vezi decât dacă le compari punct cu punct.
+
+Așa, un singur tabel rămâne adevărul, iar oglinda îl citește invers:
+
+```gdscript
+const OGLINDIRI := { Traseu.POTCOAVA_OGLINDITA: Traseu.POTCOAVA }
+
+static func traseu_de_baza(traseu := TRASEU) -> int:
+	return int(OGLINDIRI.get(traseu, traseu))
+```
+
+`traseu_de_baza()` răspunde „din ce traseu e făcut ăsta", iar `repere_traseu()` e
+acum singurul loc care știe care tabel de puncte aparține cărui traseu —
+`panglica()` cere puncte și primește puncte. Fiindcă o oglindă nu schimbă nicio
+distanță, `LATIMI_PANGLICA` și `FORFECARI` n-au avut nevoie de rânduri noi: se
+întreabă tot pe traseul de bază. Un `104.0` copiat în două tabele ar fi fost încă
+un loc unde se poate uita ceva.
+
+Reperele fiind FRACȚIUNI (0..1), oglinda e chiar `x → 1 − x`. În pixeli ar fi
+fost `2·zona.x + lățime − x` — încă un motiv pentru care traseele se țin în
+fracțiuni.
+
+**Ordinea punctelor rămâne neschimbată.** Instinctul zice că un traseu întors se
+parcurge și de la coadă la cap; dacă aș fi inversat și ordinea, Startul ar fi
+căzut jos-stânga și ieșea potcoava ROTITĂ cu 180°, nu oglindită. Cu x-ul
+răsturnat și ordinea păstrată, primul punct (0,035; 0,185) devine (0,965; 0,185):
+dreapta-sus, exact de unde trebuie să plece. Startul rămâne primul punct, Bossul
+ultimul — ca la toate celelalte trasee.
+
+### Ce am aflat măsurând: nu e o fotografie întoarsă
+
+Geometria panglicii iese identică — 1517 px lungime, rază minimă 101,5 px,
+rezervă ×1,54 — dar **așezarea nodurilor nu**: distanța medie între noduri legate
+214,9 px față de 215,2, iar cea mai apropiată pereche 86,9 px față de 84,2.
+
+Cauza e un semn. Un nod se așază la `C(s) + dec · N(s)`, iar normala `N`, fiind
+tangenta ROTITĂ cu 90°, iese din oglindire și oglindită, ȘI cu semn schimbat. Pe
+traseul întors, `dec` pozitiv arată deci în partea cealaltă — iar `dec` vine din
+coloană. Coloana 0 ajunge pe banda pe care stătea ultima coloană.
+
+Măsurat nod cu nod pe sămânța 1000: x-urile se potrivesc la zecimală cu oglinda
+perfectă, iar nodurile de pe același strat sunt exact interschimbate. Startul și
+Bossul, singuri pe stratul lor, cad fix în oglindă (diferență 0,0 px).
+
+L-am lăsat așa, și nu din lene: o oglindă perfectă ar fi dat același desen,
+recunoscut din prima. Așa, cele două potcoave au aceeași formă și aranjamente
+diferite — adică exact ce vrei de la un al doilea traseu. Dacă vreodată vrei
+oglinda exactă, se face dintr-un semn: `dec` negat în `asezare()`.
+
+### Verificarea
+
+`tools/verifica_harta.gd` măsoară acum patru trasee în aceeași rulare. Pe 300 de
+semințe, POTCOAVA OGLINDITĂ: **0 sărituri de strat, 0 încrucișări în graf, 0
+ordini inversate, 0 încrucișări în desen**, cea mai apropiată pereche 86,9 px
+(prag 72), 0 noduri și 0 px de drum ieșite din zona utilă. Celelalte trei au ieșit
+neschimbate — semn că generalizarea n-a mișcat nimic din ce mergea.
 
 ---
 

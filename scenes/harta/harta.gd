@@ -26,7 +26,7 @@ extends Control
 ##     expediție încheiată   → SUMAR
 ##     expediție în mers     → HARTA
 ##
-## Asta e tot. Nu există „de unde am venit": ecranul nu ține minte dacă ai
+## Asta e tot. Nu există „de unde am venit”: ecranul nu ține minte dacă ai
 ## ajuns aici din meniu, dintr-o victorie sau dintr-o înfrângere, fiindcă
 ## starea spune deja totul. Un ecran care ar trebui să știe pe ce drum a fost
 ## deschis e un ecran care se va deschide greșit, într-o zi, pe al patrulea drum.
@@ -44,7 +44,7 @@ const MARIME_NOD := Vector2(92, 92)
 ## ÎNCOTRO MERGE DRUMUL: PE O PANGLICĂ.
 ##
 ## Harta de până acum mergea în linie dreaptă de la stânga la dreapta:
-## adâncimea era „cât de departe în dreapta", coloana era „cât de sus".
+## adâncimea era „cât de departe în dreapta”, coloana era „cât de sus”.
 ## Panglica nu schimbă ideea, o GENERALIZEAZĂ. Există o curbă, iar:
 ##
 ##   ADÂNCIMEA = cât ai mers PE curbă  (lungime de arc, `s`)
@@ -62,7 +62,7 @@ const MARIME_NOD := Vector2(92, 92)
 ## dreaptă, fără să ating o linie din cod.
 ##
 ## Drumul tot merge, în mare, încotro citim. Un drum care șerpuiește spune
-## însă și „e un TEREN pe dedesubt" — lucru pe care o linie dreaptă nu-l poate
+## însă și „e un TEREN pe dedesubt” — lucru pe care o linie dreaptă nu-l poate
 ## spune oricâte liniuțe ai desena pe ea.
 ##
 ## ZONA UTILĂ, în FRACȚIUNI DE ECRAN (0..1). Pergamentul nu acoperă toată
@@ -71,7 +71,7 @@ const MARIME_NOD := Vector2(92, 92)
 ## au voie doar pe hârtie.
 ##
 ## De ce fracțiuni și nu pixeli: fundalul se întinde peste toată fereastra,
-## deci marginea hârtiei rămâne „la 85% din lățime" indiferent cât de mare e
+## deci marginea hârtiei rămâne „la 85% din lățime” indiferent cât de mare e
 ## fereastra. În pixeli, ar fi trebuit recalculată la fiecare redimensionare.
 ##
 ## Marginea din dreapta (0.838) e ALEASĂ SUB cartea din colț (care începe pe la
@@ -94,7 +94,7 @@ const MARGINE_PANZA := 18.0
 ## De ce fracțiuni: același motiv ca la `ZONA_PERGAMENT` — forma traseului nu
 ## are voie să depindă de mărimea ferestrei.
 ##
-## De ce „după lungime" și nu „după x": pe o porțiune povârnită, un pas egal pe
+## De ce „după lungime” și nu „după x”: pe o porțiune povârnită, un pas egal pe
 ## x înseamnă un pas mult mai lung pe hârtie. Straturile ar ieși înghesuite pe
 ## porțiunile drepte și răsfirate pe cele povârnite. Măsurată după lungime,
 ## distanța dintre două straturi e aceeași peste tot — exact ce se aștepta
@@ -246,13 +246,70 @@ const TRASEU_POTCOAVA := [
 	Vector2(0.317, 0.815), Vector2(0.176, 0.815), Vector2(0.035, 0.815),
 ]
 
-enum Traseu { VAL, SARPE, POTCOAVA }
+enum Traseu { VAL, SARPE, POTCOAVA, POTCOAVA_OGLINDITA }
+
+## TRASEE OGLINDITE — cine din cine se naște.
+##
+## POTCOAVA_OGLINDITĂ e aceeași potcoavă, întoarsă stânga-dreapta: pleacă din
+## dreapta-sus, merge spre stânga-sus, cotește pe STÂNGA, coboară și se
+## întoarce spre dreapta-jos, unde stă Bossul.
+##
+## DE CE NU E UN AL DOILEA TABEL DE PUNCTE. Aș fi putut scrie cele
+## nouăsprezece perechi cu x-ul deja scăzut din 1. Ar fi mers — până în ziua în
+## care mut culoarul de sus de la 0,185 la 0,17 în POTCOAVĂ și uit de geamăna
+## ei. Atunci ai două hărți care se numesc la fel și arată diferit, iar
+## nepotrivirea n-o vezi decât dacă le compari punct cu punct.
+##
+## Oglindirea e o OPERAȚIE, nu o copie: `x → 1 − x`, aplicată la citire. Un
+## singur tabel de puncte rămâne adevărul; oglinda doar îl citește invers. Orice
+## reglaj din POTCOAVĂ ajunge automat și aici.
+##
+## DE CE ORDINEA PUNCTELOR RĂMÂNE NESCHIMBATĂ. Instinctul zice că un traseu
+## întors se parcurge și de la coadă la cap. Nu aici: dacă aș inversa și
+## ordinea, Startul ar cădea pe (0,035; 0,815) — adică jos-stânga — și am
+## obține potcoava rotită cu 180°, nu oglindită. Cu x-ul răsturnat și ordinea
+## păstrată, primul punct (0,035; 0,185) devine (0,965; 0,185): dreapta-sus,
+## exact de unde trebuie să plece. Startul rămâne primul punct, Bossul ultimul,
+## ca la toate celelalte trasee — regula aia n-are voie să aibă excepții.
+##
+## ─────────────────────────────────────────────────────────────
+## CE AM AFLAT MĂSURÂND: NU E O FOTOGRAFIE ÎNTOARSĂ
+##
+## Așteptarea firească e ca harta oglindită să fie exact harta veche văzută în
+## oglindă — aceleași noduri, aceleași distanțe, doar mutate. Verificarea a
+## ieșit ALTFEL: distanța medie între noduri legate 214,9 px față de 215,2, iar
+## cea mai apropiată pereche 86,9 px față de 84,2. Aproape, dar nu identic.
+##
+## Cauza e într-un semn. Un nod se așază la `C(s) + dec · N(s)`, unde `N` e
+## normala la curbă, adică tangenta rotită cu 90°. Când oglindești curba,
+## tangenta își schimbă semnul lui x — dar normala, fiind tangenta ROTITĂ, iese
+## oglindită ȘI cu semn schimbat. Pe scurt: pe traseul oglindit, `dec` pozitiv
+## arată în partea cealaltă.
+##
+## Iar `dec` e dat de coloană. Deci pe harta oglindită coloana 0 stă pe banda pe
+## care înainte stătea ultima coloană. Fiecare nod își păstrează sămânța și
+## abaterea organică, dar aterizează pe banda opusă — și atunci distanțele nu
+## mai pot ieși aceleași.
+##
+## Măsurat nod cu nod pe sămânța 1000: x-urile se potrivesc la zecimală cu
+## oglinda perfectă, iar nodurile de pe același strat sunt EXACT interschimbate.
+## Startul și Bossul, singuri pe stratul lor, cad fix în oglindă.
+##
+## L-am lăsat așa, și nu din lene. O oglindă perfectă ar fi dat aceeași hartă
+## întoarsă — același desen, recunoscut imediat. Așa, cele două potcoave au
+## aceeași FORMĂ și aranjamente diferite, ceea ce e chiar ce vrei de la un al
+## doilea traseu. Dacă vreodată o să vrei oglinda exactă, se face dintr-un semn:
+## `dec` negat când traseul e oglindit, în `asezare()`.
+const OGLINDIRI := {
+	Traseu.POTCOAVA_OGLINDITA: Traseu.POTCOAVA,
+}
 
 ## CARE TRASEU E ÎN JOC. ← comutatorul. O singură linie de schimbat:
 ##
-##     const TRASEU := Traseu.POTCOAVA   două rânduri și o cotitură (activ)
-##     const TRASEU := Traseu.VAL        ondulația
-##     const TRASEU := Traseu.SARPE      trei culoare, strat înclinat
+##     const TRASEU := Traseu.POTCOAVA             două rânduri și o cotitură (activ)
+##     const TRASEU := Traseu.POTCOAVA_OGLINDITA   aceeași, cotitura pe stânga
+##     const TRASEU := Traseu.VAL                  ondulația
+##     const TRASEU := Traseu.SARPE                trei culoare, strat înclinat
 ##
 ## Salvezi fișierul, redeschizi ecranul de expediție, și harta e alta. Nu
 ## trebuie repornit jocul: `_aseaza_nodurile()` reconstruiește panglica de
@@ -260,7 +317,7 @@ enum Traseu { VAL, SARPE, POTCOAVA }
 ##
 ## E o constantă, nu o setare de meniu: forma hărții e o decizie de design, nu
 ## o preferință a jucătorului.
-const TRASEU := Traseu.POTCOAVA
+const TRASEU := Traseu.POTCOAVA_OGLINDITA
 
 ## Cât de lung e mânerul unui punct, ca fracțiune din segmentul de lângă el.
 ##
@@ -310,7 +367,7 @@ const PAS_RAZA := 4.0
 ##    Din cauza asta lățimea și amplitudinea NU se pot mări amândouă: raza
 ##    scade cam invers proporțional cu amplitudinea (R ≈ 6000 / amplitudine,
 ##    pe lățimea hârtiei ăsteia și cu o ondulație și jumătate), deci produsul
-##    „lățime × amplitudine" e practic fix. Vrei val mai mare ⇒ panglică mai
+##    „lățime × amplitudine” e practic fix. Vrei val mai mare ⇒ panglică mai
 ##    îngustă, și invers.
 ##
 ## Valorile de azi ies dintr-o măsurătoare, nu dintr-o presimțire: harta
@@ -340,7 +397,7 @@ const PROPORTIE_MAXIMA_PANGLICA := 0.64
 ## nimerea fix pe limită — 92,0000 pixeli — iar la a șaptea zecimală o scădere
 ## de numere în virgulă mobilă cădea când deasupra, când dedesubtul ei.
 ##
-## Regula generală merită ținută minte: când o condiție e „cel puțin atât",
+## Regula generală merită ținută minte: când o condiție e „cel puțin atât”,
 ## țintește puțin peste, nu exact. Egalitatea e singurul loc din virgula
 ## mobilă unde nu te poți baza pe nimic.
 const DISTANTA_MINIMA_BANDA := MARIME_NOD.y + 2.0
@@ -349,7 +406,7 @@ const DISTANTA_MINIMA_BANDA := MARIME_NOD.y + 2.0
 ##
 ## Nodurile așezate exact pe o grilă arată a tabel, oricât de frumos le-ai
 ## desena. Fiecare primește deci o împingere într-o direcție oarecare, destul
-## cât să se simtă „așezat pe un teren", prea puțin cât să încurce citirea.
+## cât să se simtă „așezat pe un teren”, prea puțin cât să încurce citirea.
 ##
 ## Împingerea vine din SĂMÂNȚA NODULUI, nu din `randf()`: aceeași expediție
 ## trebuie să arate identic la fiecare redesenare, altfel harta ar tresări la
@@ -366,7 +423,7 @@ const DISTANTA_MINIMA_BANDA := MARIME_NOD.y + 2.0
 ##   benzi — deci îmi permit mai multă dezordine, cu condiția de ordine ținută
 ##   de `_potoleste_abaterea`.
 ##
-## De ce pe panglică și nu pe ecran: o abatere „în jos" pe o porțiune unde
+## De ce pe panglică și nu pe ecran: o abatere „în jos” pe o porțiune unde
 ## panglica coboară abrupt ar împinge nodul DE-A LUNGUL drumului, nu lateral —
 ## adică ar strica exact lucrul (distanța dintre straturi) pe care abaterea nu
 ## trebuie să-l atingă.
@@ -481,7 +538,7 @@ const OPRIRE_LA_NOD := 56.0
 ##               ecranul; practic negru-maro, opac.
 ##   inchis    — restul hărții. Mai stins, dar CITIBIL: vrei să vezi ce n-ai
 ##               ales, altfel alegerea nu are greutate. Vechea valoare (0.30
-##               opacitate) făcea din „citibil" o vorbă goală.
+##               opacitate) făcea din „citibil” o vorbă goală.
 const CULOARE_DRUM_PARCURS := Color(0.42, 0.28, 0.17, 0.45)
 const CULOARE_DRUM_DESCHIS := Color(0.16, 0.08, 0.03, 1.00)
 const CULOARE_DRUM_INCHIS := Color(0.31, 0.20, 0.10, 0.44)
@@ -523,11 +580,11 @@ const LATIME_ETICHETA := 230.0
 @onready var buton_mesaj: Button = %MesajButon
 
 ## Ce discipline sunt bifate în ecranul de loadout. Trăiește doar cât ține
-## ecranul: din clipa în care apeși „Pornește", adevărul e `Expeditie.loadout`.
+## ecranul: din clipa în care apeși „Pornește”, adevărul e `Expeditie.loadout`.
 var alese: Array[String] = []
 
 ## Simbolurile nodurilor, ca să le pot reașeza la redimensionarea ferestrei
-## fără să reconstruiesc harta. „id de nod → SimbolNod".
+## fără să reconstruiesc harta. „id de nod → SimbolNod”.
 var simboluri_nod := {}
 
 ## Eticheta care apare sub nodul survolat. UNA singură, ținută de ecran, nu
@@ -570,7 +627,7 @@ func _ready() -> void:
 
 
 # ─────────────────────────────────────────────────────────────
-# ECRANUL 1: LOADOUT — „alege N din M"
+# ECRANUL 1: LOADOUT — „alege N din M”
 # ─────────────────────────────────────────────────────────────
 
 func _arata_loadout() -> void:
@@ -640,7 +697,7 @@ func _actualizeaza_loadout() -> void:
 
 	if m <= n:
 		# Cazul de azi: ai exact atâtea discipline câte încap. Spune-o pe față,
-		# în loc să ceri o „alegere" care n-are variante.
+		# în loc să ceri o „alegere” care n-are variante.
 		loadout_subtitlu.text = "Ai %d discipline si incap toate %d. Alegerea incepe cand vei avea mai multe." % [m, n]
 	else:
 		loadout_subtitlu.text = "Alege %d din %d. Raman fixe pe toata expeditia." % [n, m]
@@ -677,10 +734,29 @@ func _arata_harta() -> void:
 ## Antetul: unde ești, cât PV ai, ce ai adunat, cu ce lupți, din ce sămânță.
 ## Sămânța stă la vedere DINADINS — un bug raportat ca „se blochează la nodul
 ## 6" nu se poate reproduce dacă numărul ăla e ascuns în cod.
+## CE S-A ÎNTÂMPLAT CU „NODUL X DIN Y”.
+##
+## Scria „nodul 4 din 12”, unde 12 erau straturile hărții. Pe harta generată era
+## adevărat oricum ai fi mers: toate traseele aveau exact câte un nod pe strat,
+## deci și exact aceeași lungime. Pe o planșă desenată de mână, un traseu are
+## șapte noduri și altul nouă — iar un antet care scrie „din 9” în timp ce tu
+## mergi pe drumul de 7 minte la fiecare pas, și nu se poate repara alegând
+## celălalt număr: niciunul nu e al DRUMULUI TĂU, fiindcă drumul tău nu e ales
+## încă.
+##
+## Numărul care rămâne adevărat pe orice hartă și pe orice drum e CÂT MAI AI
+## PÂNĂ LA BOSS, pe cel mai scurt drum. „Cel puțin”, fiindcă poți alege și
+## ocolul. Pe harta generată dă exact câte straturi au rămas — adică fix
+## informația veche — deci nu s-a pierdut nimic; s-a pierdut doar presupunerea
+## că toate drumurile sunt la fel de lungi.
 func _actualizeaza_antet() -> void:
 	var pas := Expeditie.parcurse.size()
-	var total := Expeditie.adancime_maxima() + 1
-	eticheta_titlu.text = "EXPEDITIE  —  nodul %d din %d" % [mini(pas + 1, total), total]
+	var ramas := Expeditie.pasi_pana_la_boss()
+	if ramas <= 0:
+		eticheta_titlu.text = "EXPEDITIE  —  nodul %d: Bossul" % (pas + 1)
+	else:
+		eticheta_titlu.text = "EXPEDITIE  —  nodul %d, Bossul la cel putin %d pasi" % [
+			pas + 1, ramas]
 	# Monedele stau lângă Fragmente, dar înseamnă altceva, și antetul o spune:
 	# Fragmentele sunt averea care rămâne, Monedele sunt ce ai pe drumul ăsta.
 	# Un jucător care nu le vede crescând n-o să caute niciodată un Magazin.
@@ -718,18 +794,18 @@ func _goleste_panza() -> void:
 ## se află abia după ce Godot a terminat de așezat containerele de deasupra.
 ##
 ## Starea fiecărui nod se alege AICI, într-un singur lanț de `if`-uri, și e
-## singurul loc din tot ecranul care hotărăște „cum arată nodul ăsta". Nodul nu
+## singurul loc din tot ecranul care hotărăște „cum arată nodul ăsta”. Nodul nu
 ## întreabă expediția nimic; primește o stare și o desenează.
 ##
-## Pe lângă stare, nodul primește și „te-ai consumat?" (`terminat`). Sunt două
+## Pe lângă stare, nodul primește și „te-ai consumat?” (`terminat`). Sunt două
 ## întrebări, nu una: starea spune unde stă figura, `terminat` spune ce s-a
 ## întâmplat acolo. Nodul CURENT răspunde da la amândouă — deci se desenează
 ## cu aură ȘI cu X, ca pe harta de referință, unde figura stă pe un loc deja
-## tăiat. Regula lui `terminat` e „ai intrat deja în el", adică apare în
+## tăiat. Regula lui `terminat` e „ai intrat deja în el”, adică apare în
 ## `parcurse` — iar `intra_in_nod()` pune nodul acolo chiar în clipa în care îl
 ## alegi. Asta e corect atâta vreme cât harta se desenează DOAR între noduri:
 ## o luptă înlocuiește scena hărții cu totul, iar Magazinul și Odihna se
-## redesenează dinadins ca „parcurse" sub voal (vezi `_arata_magazin`), ca să
+## redesenează dinadins ca „parcurse” sub voal (vezi `_arata_magazin`), ca să
 ## fie deja tăiate când voalul se ridică. Singurul caz care ar sparge regula
 ## vine odată cu save-ul (pasul 8): un save făcut în mijlocul unei lupte
 ## trebuie să se întoarcă ÎN LUPTĂ, nu pe hartă — altfel nodul ar apărea tăiat
@@ -864,23 +940,35 @@ func _aseaza_nodurile() -> void:
 	if zona.size.x <= 0.0 or zona.size.y <= 0.0:
 		return   # încă nu s-a așezat nimic; semnalul `resized` ne mai cheamă o dată
 
-	# Panglica se face O SINGURĂ DATĂ și se dă mai departe și nodurilor, și
+	# Geometria se face O SINGURĂ DATĂ și se dă mai departe și nodurilor, și
 	# drumurilor. Dacă fiecare și-ar face-o pe a lui, două curbe construite din
 	# aceleași puncte ar fi egale azi și diferite în ziua în care cineva strecoară
 	# un zar în construcție — iar drumurile n-ar mai porni exact din noduri.
-	var pang := panglica(zona)
-	var asez := asezare(
-		Expeditie.harta, pang, latime_panglica(zona), forfecare())
+	var geo := _geometria(zona)
+	var centre: Dictionary = geo["centre"]
 
-	for id_nod in asez:
+	for id_nod in centre:
 		var id := int(id_nod)
 		if not simboluri_nod.has(id):
 			continue
 		var simbol: Control = simboluri_nod[id]
-		simbol.position = asez[id]["centru"] - MARIME_NOD * 0.5
+		simbol.position = centre[id] - MARIME_NOD * 0.5
 		simbol.size = MARIME_NOD
 
-	panza.arata(_muchii(asez, pang, forfecare()))
+	panza.arata(_muchii(geo["drumuri"]))
+
+
+## De unde vine geometria hărții CURENTE.
+##
+## Întrebarea se pune o singură dată, aici, și se pune STĂRII (`Expeditie.plansa`),
+## nu comutatorului (`Expeditie.SURSA_HARTII`). Diferența contează la save: o
+## expediție pornită pe o planșă trebuie să se deseneze pe planșa aia și după ce
+## comutatorul a fost mutat înapoi pe „generată”.
+func _geometria(zona: Rect2) -> Dictionary:
+	if Expeditie.plansa != "":
+		return geometrie_desenata(
+			Expeditie.harta, Plansa.incarca(Expeditie.plansa), zona)
+	return geometrie_pe_panglica(Expeditie.harta, zona)
 
 
 ## PANGLICA MĂSURATĂ — curba centrală, plus tot ce trebuie ca s-o poți folosi
@@ -894,7 +982,7 @@ func _aseaza_nodurile() -> void:
 ## zeci de mii de căutări, iar la verificarea pe 300 de semințe, milioane.
 ##
 ## Calculate O DATĂ, la pași egali de lungime, și ținute în două șiruri, toate
-## întrebările de mai târziu devin „ia elementul i și interpolează spre i+1".
+## întrebările de mai târziu devin „ia elementul i și interpolează spre i+1”.
 ## Asta e o idee generală, nu un truc: când aceeași funcție scumpă e chemată de
 ## multe ori pe același domeniu, o tabelezi.
 class Panglica:
@@ -912,7 +1000,7 @@ class Panglica:
 	## Porțiunile pe care au voie să stea noduri: perechi (început, sfârșit), în
 	## pixeli de arc. Vezi `_afla_portiunile()`.
 	var portiuni: Array[Vector2] = []
-	## Lungimea lor însumată — „drumul folosibil".
+	## Lungimea lor însumată — „drumul folosibil”.
 	var lungime_utila := 0.0
 
 	func _init(curba: Curve2D, pas_cerut: float, raza_minima := 0.0, marja := 0.0) -> void:
@@ -928,7 +1016,7 @@ class Panglica:
 		_afla_portiunile(raza_minima, marja)
 
 	## RAZA CERCULUI care trece prin trei puncte de pe curbă, luate la `PAS_RAZA`
-	## unul de altul. E măsura „cât de strânsă e cotitura aici".
+	## unul de altul. E măsura „cât de strânsă e cotitura aici”.
 	##
 	## Trei puncte pe o dreaptă dau un triunghi de suprafață zero, adică rază
 	## infinită — exact ce vrei pe porțiunile drepte. Formula e cea clasică:
@@ -953,7 +1041,7 @@ class Panglica:
 	## Capetele PANGLICII (s = 0 și s = lungime) nu se scurtează: acolo nu e
 	## nicio cotitură, iar Startul și Bossul trebuie să rămână fix pe ele.
 	##
-	## `raza_minima` = 0 înseamnă „toată panglica e bună" — cazul VALULUI și al
+	## `raza_minima` = 0 înseamnă „toată panglica e bună” — cazul VALULUI și al
 	## POTCOAVEI, unde nu există cotitură prea strânsă. Atunci iese o singură
 	## porțiune, [0, lungime], iar așezarea e identică cu cea de dinainte.
 	func _afla_portiunile(raza_minima: float, marja: float) -> void:
@@ -981,8 +1069,8 @@ class Panglica:
 			#
 			# M-a costat o măsurătoare: la k = 1,9 pe o panglică de 50 px,
 			# `raza_minima_noduri` iese infinit, plasa se activa în tăcere, iar
-			# raportul arăta „o porțiune, toată panglica" — care seamănă leit cu
-			# „totul e în regulă". De-aia scrie acum în consolă.
+			# raportul arăta „o porțiune, toată panglica” — care seamănă leit cu
+			# „totul e în regulă”. De-aia scrie acum în consolă.
 			push_warning("Panglica: nicio porțiune destul de dreaptă. "
 				+ "Panglica e prea îngustă pentru forfecarea cerută.")
 			portiuni.append(Vector2(0.0, lungime))
@@ -1017,7 +1105,7 @@ class Panglica:
 
 	## NORMALA: tangenta rotită cu 90°, MEREU ÎN ACELAȘI SENS.
 	##
-	## „Mereu în același sens" e singurul lucru care contează aici. Dacă normala
+	## „Mereu în același sens” e singurul lucru care contează aici. Dacă normala
 	## s-ar întoarce undeva pe drum, banda de sus ar deveni banda de jos fix în
 	## punctul ăla, iar toate drumurile care trec pe acolo s-ar încrucișa.
 	## Rotind întotdeauna cu +90° (în 2D, cu y în jos, asta înseamnă „spre
@@ -1079,16 +1167,54 @@ class Panglica:
 ## acolo e mereu `TRASEU`. Verificarea headless o dă explicit, fiindcă ea
 ## trebuie să măsoare amândouă traseele în aceeași rulare.
 static func panglica(zona: Rect2, traseu := TRASEU) -> Panglica:
-	var repere: Array = TRASEU_VAL
-	if traseu == Traseu.SARPE:
-		repere = TRASEU_SARPE
-	elif traseu == Traseu.POTCOAVA:
-		repere = TRASEU_POTCOAVA
-
 	var puncte := []
-	for reper in repere:
+	for reper in repere_traseu(traseu):
 		puncte.append(zona.position + Vector2(reper) * zona.size)
 
+	var curba := curba_neteda(puncte)
+
+	# Cât de departe de locul lui „de manual” poate ajunge un nod pe lungime:
+	# abaterea organică plus cât îl mută forfecarea. Cu atât se scurtează
+	# porțiunile drepte la capetele dinspre cotituri.
+	var latime := latime_panglica(zona, traseu)
+	var k := forfecare(traseu)
+	var marja := ABATERE_MAXIMA_LUNG + k * abatere_maxima_dec(latime)
+	return Panglica.new(curba, PAS_MASURARE, raza_minima_noduri(latime, k), marja)
+
+
+## O CURBĂ NETEDĂ CARE TRECE PRIN TOATE PUNCTELE DATE — Catmull-Rom.
+##
+## Aceeași funcție pentru două lucruri care par foarte diferite: curba centrală
+## a panglicii (dintr-un traseu scris în cod) și fiecare drum al unei planșe
+## desenate (dintr-o listă de puncte scrisă în fișier). Sunt același lucru:
+## „am niște puncte, treci prin ele fără colțuri”.
+##
+## CUM: fiecare punct primește două mânere pe ACEEAȘI direcție — de la vecinul
+## dinainte spre cel de după. Asta e ce face curba netedă: mânerul cu care intri
+## și cel cu care ieși sunt coliniare, deci nu se rupe panta. La capete nu există
+## un vecin, deci se folosește punctul însuși — curba intră și iese drept.
+##
+## LUNGIMEA mânerelor e proporțională cu segmentul de lângă FIECARE, nu aceeași
+## în ambele părți, și asta a costat o măsurătoare ca s-o aflu.
+##
+## Varianta simplă (un singur mâner, `(dupa - inainte) / 6`) merge cât timp
+## punctele sunt răsfirate egal. La POTCOAVĂ nu sunt: culoarele au puncte din
+## 112 în 112 px, iar cotitura din 49 în 49. Fix la trecerea dintre ele, mânerul
+## scurt al cotiturii trebuia să ducă o schimbare de direcție de-a lungul unui
+## segment lung — iar un mâner scurt care trebuie să întoarcă mult înseamnă o
+## cotitură strânsă. Raza măsurată acolo ieșea 79 px în loc de 125, și nu se
+## repara îndesind cotitura (am încercat: 79,2 → 79,0), fiindcă problema nu era
+## cotitura, ci SALTUL de densitate dintre ea și culoar.
+##
+## Cu mânere pe măsura fiecărui segment, saltul dispare: partea dinspre culoar
+## primește mâner lung, partea dinspre cotitură mâner scurt, iar curbura trece
+## lin dintr-una în alta. Când segmentele sunt egale, formula dă exact ce dădea
+## cea veche — deci e o generalizare, nu o schimbare de formă.
+##
+## Pentru o planșă desenată de mână, regula asta e și mai folositoare: acolo
+## punctele sunt puse cu ochiul, deci NICIODATĂ răsfirate egal. Un drum cu două
+## puncte dese pe o cotitură și unul lung după ea iese exact cum l-ai desenat.
+static func curba_neteda(puncte: Array) -> Curve2D:
 	var curba := Curve2D.new()
 	curba.bake_interval = PAS_MASURARE
 	for i in range(puncte.size()):
@@ -1102,35 +1228,10 @@ static func panglica(zona: Rect2, traseu := TRASEU) -> Panglica:
 			directie = Vector2.RIGHT
 		directie = directie.normalized()
 
-		# LUNGIMEA mânerelor: proporțională cu segmentul de lângă fiecare, nu
-		# aceeași în ambele părți.
-		#
-		# Varianta simplă (un singur mâner, `(dupa - inainte) / 6`) merge cât
-		# timp punctele sunt răsfirate egal. La POTCOAVĂ nu sunt: culoarele au
-		# puncte din 112 în 112 px, iar cotitura din 49 în 49. Fix la trecerea
-		# dintre ele, mânerul scurt al cotiturii trebuia să ducă o schimbare de
-		# direcție de-a lungul unui segment lung — iar un mâner scurt care
-		# trebuie să întoarcă mult înseamnă o cotitură strânsă. Raza măsurată
-		# acolo ieșea 79 px în loc de 125, și nu se repara îndesind cotitura
-		# (am încercat: 79,2 → 79,0), fiindcă problema nu era cotitura, ci
-		# SALTUL de densitate dintre ea și culoar.
-		#
-		# Cu mânere pe măsura fiecărui segment, saltul dispare: partea dinspre
-		# culoar primește mâner lung, partea dinspre cotitură mâner scurt, iar
-		# curbura trece lin dintr-una în alta. Când segmentele sunt egale,
-		# formula dă exact ce dădea cea veche — deci e o generalizare, nu o
-		# schimbare de formă.
 		var spre_inapoi := aici.distance_to(inainte) * NETEZIRE_PANGLICA
 		var spre_inainte := aici.distance_to(dupa) * NETEZIRE_PANGLICA
 		curba.add_point(aici, -directie * spre_inapoi, directie * spre_inainte)
-
-	# Cât de departe de locul lui „de manual" poate ajunge un nod pe lungime:
-	# abaterea organică plus cât îl mută forfecarea. Cu atât se scurtează
-	# porțiunile drepte la capetele dinspre cotituri.
-	var latime := latime_panglica(zona, traseu)
-	var k := forfecare(traseu)
-	var marja := ABATERE_MAXIMA_LUNG + k * abatere_maxima_dec(latime)
-	return Panglica.new(curba, PAS_MASURARE, raza_minima_noduri(latime, k), marja)
+	return curba
 
 
 ## Cât de lată are voie să fie panglica pe zona asta.
@@ -1141,13 +1242,58 @@ static func panglica(zona: Rect2, traseu := TRASEU) -> Panglica:
 ## fereastra implicită nu se activează (148 din 397 înseamnă 37%), pe una mică
 ## strânge panglica în loc s-o lase să dea pe afară.
 static func latime_panglica(zona: Rect2, traseu := TRASEU) -> float:
-	var ceruta: float = LATIMI_PANGLICA.get(traseu, 148.0)
+	var ceruta: float = LATIMI_PANGLICA.get(traseu_de_baza(traseu), 148.0)
 	return minf(ceruta, zona.size.y * PROPORTIE_MAXIMA_PANGLICA)
 
 
 ## Cât de tare e înclinat stratul pe traseul ăsta. 0 = perpendicular, ca înainte.
 static func forfecare(traseu := TRASEU) -> float:
-	return float(FORFECARI.get(traseu, 0.0))
+	return float(FORFECARI.get(traseu_de_baza(traseu), 0.0))
+
+
+## DIN CE TRASEU E FĂCUT TRASEUL ĂSTA.
+##
+## Un traseu oglindit are exact geometria originalului: aceleași lungimi,
+## aceleași raze de cotitură, aceeași înălțime ocupată — o oglindă nu schimbă
+## nicio distanță. Deci și lățimea panglicii, și forfecarea, sunt ale
+## originalului, iar tabelele `LATIMI_PANGLICA` și `FORFECARI` nu au nevoie de
+## rânduri noi.
+##
+## Alternativa ar fi fost să copiez `Traseu.POTCOAVA_OGLINDITA: 104.0` în
+## amândouă tabelele. Merge azi și minte mâine: reglez 104 într-un loc, uit
+## celălalt, și ies două potcoave cu panglici de lățimi diferite — o diferență
+## care se vede pe ecran, dar pe care n-ai s-o cauți în tabel.
+##
+## Pentru un traseu care nu e oglinda nimănui, răspunsul e el însuși, deci
+## funcția se poate chema peste tot fără să întrebi întâi dacă e cazul.
+static func traseu_de_baza(traseu := TRASEU) -> int:
+	return int(OGLINDIRI.get(traseu, traseu))
+
+
+## PUNCTELE DE TRECERE ale unui traseu, gata oglindite dacă e cazul.
+##
+## Singurul loc din fișier care știe care tabel de puncte aparține cărui traseu.
+## `panglica()` cere puncte și primește puncte; nu are de unde ști — și nici de
+## ce să știe — că unele au trecut printr-o oglindă pe drum.
+static func repere_traseu(traseu := TRASEU) -> Array:
+	var repere: Array = TRASEU_VAL
+	match traseu_de_baza(traseu):
+		Traseu.SARPE:
+			repere = TRASEU_SARPE
+		Traseu.POTCOAVA:
+			repere = TRASEU_POTCOAVA
+
+	if not OGLINDIRI.has(traseu):
+		return repere
+
+	# Reperele sunt FRACȚIUNI din zona utilă (0..1), deci oglinda pe verticala
+	# din mijlocul hârtiei e chiar `x → 1 − x`. Dacă ar fi fost pixeli, ar fi
+	# trebuit `zona.position.x * 2 + zona.size.x - x` — încă un motiv pentru
+	# care traseele se țin în fracțiuni.
+	var intoarse := []
+	for reper in repere:
+		intoarse.append(Vector2(1.0 - reper.x, reper.y))
+	return intoarse
 
 
 ## CÂT TREBUIE SĂ RĂMÂNĂ ÎNTRE DOUĂ BENZI, ca nodurile lor să nu se atingă.
@@ -1246,7 +1392,7 @@ static func abatere_maxima_dec(latime: float) -> float:
 
 ## AȘEZAREA: pentru fiecare nod, unde cade pe panglică.
 ##
-## Întoarce „id de nod → { s, dec, centru }". Nu doar centrul, fiindcă
+## Întoarce „id de nod → { s, dec, centru }”. Nu doar centrul, fiindcă
 ## drumurile au nevoie de coordonatele PE PANGLICĂ ale capetelor: un drum se
 ## desenează mergând pe curbă de la un `s` la altul, nu tăind în linie dreaptă
 ## printre ele. Dacă i-aș da pânzei doar două centre, ea ar trebui să ghicească
@@ -1257,7 +1403,7 @@ static func abatere_maxima_dec(latime: float) -> float:
 ## poată fi chemată cu o hartă inventată, dintr-un test.
 static func asezare(harta: Array, pang: Panglica, latime: float, k := 0.0) -> Dictionary:
 	var straturi := 1
-	# „Cine e pe stratul ăsta", în ordinea coloanei. Am nevoie de STRATUL
+	# „Cine e pe stratul ăsta”, în ordinea coloanei. Am nevoie de STRATUL
 	# întreg, nu doar de câte noduri are, fiindcă abaterea laterală nu se poate
 	# hotărî nod cu nod — vezi `_potoleste_abaterea`.
 	var pe_strat := {}
@@ -1273,7 +1419,7 @@ static func asezare(harta: Array, pang: Panglica, latime: float, k := 0.0) -> Di
 	# Cât drum revine unui strat, și cât spațiu lateral unei benzi. De aici se
 	# calculează cât are voie să bată abaterea organică: legată de distanța
 	# dintre vecini, nu de un număr fix de pixeli, ca harta să arate la fel de
-	# „așezată" și pe o fereastră mică, și pe una mare.
+	# „așezată” și pe o fereastră mică, și pe una mare.
 	#
 	# `pas_s` se socotește din lungimea UTILĂ (fără cotituri): e distanța dintre
 	# două straturi vecine măsurată pe drumul pe care chiar stau noduri.
@@ -1307,7 +1453,7 @@ static func asezare(harta: Array, pang: Panglica, latime: float, k := 0.0) -> Di
 		# folositoare, doar risc.
 		var e_capat: bool = int(a) == 0 or int(a) == straturi - 1
 
-		# Întâi locurile „de manual" și abaterile dorite, separat. Nu le adun
+		# Întâi locurile „de manual” și abaterile dorite, separat. Nu le adun
 		# încă: ca să știu cu cât trebuie potolită abaterea laterală, trebuie să
 		# le văd pe toate din stratul ăsta deodată.
 		var baza_dec := []
@@ -1330,7 +1476,7 @@ static func asezare(harta: Array, pang: Panglica, latime: float, k := 0.0) -> Di
 					# și atunci strângerea se oprește singură la 94.
 					#
 					# Rezultatul e o regulă care nu trebuie reglată pe fiecare
-					# traseu: „strânge cât poți, dar nu până la suprapunere".
+					# traseu: „strânge cât poți, dar nu până la suprapunere”.
 					# O constantă în plus pentru fiecare traseu ar fi fost încă
 					# un loc unde se poate uita ceva.
 					deschidere = clampf(
@@ -1349,7 +1495,7 @@ static func asezare(harta: Array, pang: Panglica, latime: float, k := 0.0) -> Di
 			# DE-A LUNGUL: stratul 0 la începutul panglicii, ultimul la capăt,
 			# restul împărțite egal între ele — egal pe DRUMUL FOLOSIBIL, nu pe
 			# orizontală și nici măcar pe toată curba. `s_la_fractie` sare peste
-			# cotituri, deci „la jumătatea drumului" înseamnă „la jumătatea
+			# cotituri, deci „la jumătatea drumului” înseamnă „la jumătatea
 			# porțiunilor drepte".
 			var fractie := float(a) / float(maxi(straturi - 1, 1))
 			s_uri.append(clampf(
@@ -1374,14 +1520,103 @@ static func asezare(harta: Array, pang: Panglica, latime: float, k := 0.0) -> Di
 	return rezultat
 
 
-## Doar centrele, pentru cine nu are treabă cu panglica.
-static func centre_noduri(harta: Array, zona: Rect2) -> Dictionary:
-	var asez := asezare(
-		harta, panglica(zona), latime_panglica(zona), forfecare())
+## ─────────────────────────────────────────────────────────────
+## GEOMETRIA HĂRȚII — un singur rezultat, două surse
+##
+## Întoarce mereu aceleași două lucruri, oricine le-ar fi calculat:
+##
+##   "centre"  — id de nod → punctul lui pe ecran
+##   "drumuri" — id → { id_urmator → PackedVector2Array cu punctele drumului }
+##
+## Asta e granița pe care stă tot comutatorul GENERATA / DESENATA. Deasupra ei,
+## ecranul așază simboluri și colorează drumuri și nu are de unde ști dacă
+## nodurile vin dintr-o panglică sau dintr-un fișier. Dedesubt, cele două surse
+## n-au nimic în comun și nici nu trebuie să aibă.
+##
+## Dacă granița ar fi fost pusă mai jos — să zicem, „planșa își face și ea o
+## panglică" — ar fi trebuit să inventez o curbă centrală pentru un desen care
+## n-are așa ceva. Dacă ar fi fost mai sus — „ecranul întreabă din ce sursă e” —
+## fiecare funcție de desen ar fi căpătat un `if`. Locul potrivit e exact unde
+## cele două surse au același răspuns de dat.
+## ─────────────────────────────────────────────────────────────
+
+## Geometria din PANGLICĂ: nodurile pe benzi, drumurile pe curbă.
+static func geometrie_pe_panglica(harta: Array, zona: Rect2) -> Dictionary:
+	var pang := panglica(zona)
+	var k := forfecare()
+	var asez := asezare(harta, pang, latime_panglica(zona), k)
+
 	var centre := {}
-	for id in asez:
+	var drumuri := {}
+	for nod in harta:
+		var id := int(nod["id"])
+		if not asez.has(id):
+			continue
 		centre[id] = asez[id]["centru"]
-	return centre
+
+	for nod in harta:
+		var id := int(nod["id"])
+		if not asez.has(id):
+			continue
+		for id_brut in nod["spre"]:
+			var urmator := int(id_brut)
+			if not asez.has(urmator):
+				continue
+			if not drumuri.has(id):
+				drumuri[id] = {}
+			drumuri[id][urmator] = puncte_drum(
+				pang, asez[id]["s"], asez[id]["dec"],
+				asez[urmator]["s"], asez[urmator]["dec"], k)
+
+	return {"centre": centre, "drumuri": drumuri}
+
+
+## Geometria dintr-o PLANȘĂ desenată: totul citit din fișier și scalat.
+##
+## Nodurile își iau poziția după „reper” — id-ul text pe care `Expeditie` l-a
+## pus în fiecare nod când a construit harta din planșă. Drumurile își iau
+## punctele din fișier, trecute printr-o curbă netedă ca să nu se vadă colțuri.
+##
+## De ce drumurile se caută în PLANȘĂ și nu în câmpul „spre” al nodurilor: ca să
+## nu existe două surse pentru aceeași informație. „spre” e graful — cine duce
+## unde — și el e adevărul pentru NAVIGARE. Punctele sunt desenul, și el e
+## adevărul pentru DESEN. Când un drum e în graf dar n-are puncte în fișier (nu
+## se poate azi: `spre` e construit chiar din lista de drumuri), pur și simplu
+## nu se desenează — nu se inventează o linie dreaptă care ar minți.
+static func geometrie_desenata(
+	harta: Array, plansa: Dictionary, zona: Rect2
+) -> Dictionary:
+	var cutia := Plansa.cutie(zona, float(plansa["raport"]))
+
+	var id_al := {}       # reper → id de nod
+	var centre := {}
+	for nod in harta:
+		var reper := String(nod.get("reper", ""))
+		var id := int(nod["id"])
+		id_al[reper] = id
+		centre[id] = Plansa.in_pixeli(
+			plansa["poz"].get(reper, Vector2.ZERO), cutia)
+
+	var drumuri := {}
+	for drum in plansa["drumuri"]:
+		var de_la := String(drum["de_la"])
+		var la := String(drum["la"])
+		if not (id_al.has(de_la) and id_al.has(la)):
+			continue   # un capăt a fost sărit (nod inaccesibil); n-are ce desena
+
+		var puncte := []
+		for fractie in drum["puncte"]:
+			puncte.append(Plansa.in_pixeli(fractie, cutia))
+
+		var id: int = id_al[de_la]
+		if not drumuri.has(id):
+			drumuri[id] = {}
+		# `get_baked_points()` întoarce curba deja eșantionată, la `PAS_MASURARE`
+		# pixeli — exact forma pe care o așteaptă pânza: un șir de puncte pe
+		# care ea pune liniuțe, fără să știe ce le-a produs.
+		drumuri[id][int(id_al[la])] = curba_neteda(puncte).get_baked_points()
+
+	return {"centre": centre, "drumuri": drumuri}
 
 
 ## PUNCTELE UNUI DRUM, calculate PE PANGLICĂ.
@@ -1413,8 +1648,8 @@ static func centre_noduri(harta: Array, zona: Rect2) -> Dictionary:
 static func puncte_drum(
 	pang: Panglica, s_a: float, dec_a: float, s_b: float, dec_b: float, k := 0.0
 ) -> PackedVector2Array:
-	# Cât de des măsurăm. Lungimea adevărată a drumului e între „cât înaintează"
-	# și „cât înaintează plus cât se dă lateral"; a doua e o supraestimare
+	# Cât de des măsurăm. Lungimea adevărată a drumului e între „cât înaintează”
+	# și „cât înaintează plus cât se dă lateral”; a doua e o supraestimare
 	# ieftină, adică doar câteva eșantioane în plus.
 	var aproximativ := absf(s_b - s_a) + absf(dec_b - dec_a) * (1.0 + k)
 	var esantioane := maxi(16, int(aproximativ / PAS_MASURARE))
@@ -1452,7 +1687,7 @@ static func puncte_drum(
 ## ─────────────────────────────────────────────────────────────
 ## DE CE ÎNMULȚIM TOT STRATUL, ÎN LOC SĂ ÎMPINGEM NODUL VINOVAT
 ##
-## „Îl mai împing pe cel de jos cu douăzeci de pixeli" e prima idee, și e
+## „Îl mai împing pe cel de jos cu douăzeci de pixeli” e prima idee, și e
 ## greșită: nodul mutat poate ieși de pe pergament, iar dacă îl oprim la
 ## margine se strâmbă și mai tare.
 ##
@@ -1490,7 +1725,7 @@ static func _potoleste_abaterea(baza: Array, abateri: Array, minim: float) -> fl
 ##
 ## Apoi o INTERSECTĂM cu pânza: hârtia începe mai sus decât pânza (acolo e
 ## antetul), deci partea aia nu ne e disponibilă oricum. Intersecția e
-## răspunsul la „unde e ȘI hârtie, ȘI loc al meu".
+## răspunsul la „unde e ȘI hârtie, ȘI loc al meu”.
 ##
 ## La final scădem jumătate de nod din fiecare margine: `zona` e locul unde pot
 ## sta CENTRELE, iar un centru lipit de margine ar însemna un simbol pe
@@ -1517,7 +1752,11 @@ static func _in_zona(punct: Vector2, zona: Rect2) -> Vector2:
 
 ## Liniile, cu starea lor. Se construiesc din aceleași date ca butoanele, deci
 ## nu pot ajunge să arate un drum care nu există.
-func _muchii(asez: Dictionary, pang: Panglica, k: float) -> Array[Dictionary]:
+##
+## Primește drumurile GATA CALCULATE (vezi `_geometria`) și nu adaugă decât
+## culoarea și grosimea. Funcția asta nu mai știe nici ce e o panglică, nici ce
+## e o planșă — știe doar cine e în urma ta și încotro poți merge.
+func _muchii(drumuri: Dictionary) -> Array[Dictionary]:
 	var accesibile := Expeditie.accesibile()
 	var muchii: Array[Dictionary] = []
 
@@ -1525,10 +1764,10 @@ func _muchii(asez: Dictionary, pang: Panglica, k: float) -> Array[Dictionary]:
 		var id := int(nod["id"])
 		for id_urmator in nod["spre"]:
 			var urmator := int(id_urmator)
-			if not (asez.has(id) and asez.has(urmator)):
+			if not drumuri.has(id) or not drumuri[id].has(urmator):
 				continue
 
-			# Drumul e „parcurs" doar dacă AMÂNDOUĂ capetele sunt în urma ta ȘI
+			# Drumul e „parcurs” doar dacă AMÂNDOUĂ capetele sunt în urma ta ȘI
 			# sunt vecine în drumul efectiv mers. Fără verificarea a doua, un
 			# nod vizitat ar aprinde toate drumurile care pleacă din el, inclusiv
 			# cele pe care NU le-ai luat.
@@ -1542,12 +1781,8 @@ func _muchii(asez: Dictionary, pang: Panglica, k: float) -> Array[Dictionary]:
 				culoare = CULOARE_DRUM_DESCHIS
 				grosime = GROSIME_DRUM_ALES
 
-			var a: Dictionary = asez[id]
-			var b: Dictionary = asez[urmator]
 			muchii.append({
-				# Drumul, ca șir de puncte. Calculat AICI, fiindcă harta e
-				# singura care știe pe ce panglică stau nodurile.
-				"puncte": puncte_drum(pang, a["s"], a["dec"], b["s"], b["dec"], k),
+				"puncte": drumuri[id][urmator],
 				"culoare": culoare,
 				"grosime": grosime,
 				# Unde se opresc liniuțele la capete. Trimisă tot de AICI, nu
@@ -1578,7 +1813,7 @@ func _pe_nod_apasat(id: int) -> void:
 		Expeditie.Nod.LUPTA, Expeditie.Nod.ELITA, Expeditie.Nod.BOSS:
 			# Lupta e o SCENĂ ALTA. Tot ce trebuie să știe despre nodul ăsta
 			# citește singură din `Expeditie.nod_curent()` — n-avem ce să-i
-			# „trimitem", și e bine așa: un parametru pasat între scene ar fi
+			# „trimitem”, și e bine așa: un parametru pasat între scene ar fi
 			# exact lucrul care se pierde la un save.
 			get_tree().change_scene_to_file(SCENA_LUPTA)
 		Expeditie.Nod.ODIHNA:
@@ -1631,7 +1866,7 @@ func _arata_magazin() -> void:
 	_construieste_magazin()
 	buton_magazin.grab_focus()
 	# Harta de sub voal se redesenează ACUM, ca să arate deja nodul devenit
-	# „parcurs" când voalul se ridică. Același tipar ca la `_arata_mesaj`.
+	# „parcurs” când voalul se ridică. Același tipar ca la `_arata_mesaj`.
 	_arata_harta()
 
 
@@ -1655,7 +1890,7 @@ func _rand_magazin(fisa: Dictionary) -> Control:
 	coloana.add_theme_constant_override("separation", 2)
 
 	# Butonul se stinge singur când nu se poate cumpăra, ȘI SPUNE DE CE — fie
-	# „iti mai trebuie 8", fie „PV plin". Un buton stins fără explicație e o ușă
+	# „iti mai trebuie 8”, fie „PV plin”. Un buton stins fără explicație e o ușă
 	# închisă fără tăbliță: te uiți la ea și nu știi dacă e vina ta sau a jocului.
 	var refuz := Expeditie.motiv_refuz(cheie)
 
@@ -1686,7 +1921,7 @@ func _pe_putere_cumparata(cheie: String) -> void:
 	Sunet.reda(Sunet.Efect.CORECT)
 	# Rescriem vitrina: Monedele au scăzut, deci alte butoane trebuie stinse.
 	_construieste_magazin()
-	# Și antetul, fiindcă și el arată Monedele — și, la „Zale ferecate", PV-ul.
+	# Și antetul, fiindcă și el arată Monedele — și, la „Zale ferecate”, PV-ul.
 	_actualizeaza_antet()
 	magazin_subtitlu.text = "%s  Ti-au ramas %d Monede." % [urmare, Expeditie.monede]
 
@@ -1702,7 +1937,7 @@ func _arata_mesaj(titlu: String, text: String) -> void:
 	panou_mesaj.visible = true
 	buton_mesaj.grab_focus()
 	# Harta de sub voal se redesenează ACUM, ca să arate deja starea nouă
-	# (PV-ul recuperat, nodul devenit „parcurs") când voalul se ridică.
+	# (PV-ul recuperat, nodul devenit „parcurs”) când voalul se ridică.
 	_arata_harta()
 
 
@@ -1731,8 +1966,11 @@ func _arata_sumar() -> void:
 		sumar_text.text = "Ai mers drumul pana la capat, cu %d / %d PV." % [
 			Expeditie.pv, Expeditie.pv_max]
 	else:
-		sumar_text.text = "Regele a cazut la nodul %d din %d." % [
-			Expeditie.parcurse.size(), Expeditie.adancime_maxima() + 1]
+		# Tot fără „din câte”: vezi nota de la `_actualizeaza_antet`. Aici e și
+		# mai la locul lui — „Bossul mai era la 4 pași” spune cât de aproape ai
+		# fost, ceea ce „nodul 8 din 12” nu spunea niciodată.
+		sumar_text.text = "Regele a cazut dupa %d noduri. Bossul mai era la %d pasi." % [
+			Expeditie.parcurse.size(), Expeditie.pasi_pana_la_boss()]
 
 	_construieste_sumar()
 	buton_sumar.grab_focus()
@@ -1741,7 +1979,7 @@ func _arata_sumar() -> void:
 ## Rândurile sumarului, din același tabel din care se desenează și defalcarea
 ## recompenselor din luptă: etichetă la stânga, cifră la dreapta.
 ##
-## Fragmentele apar de DOUĂ ori dinadins — „în expediția asta" și „cu totul" —
+## Fragmentele apar de DOUĂ ori dinadins — „în expediția asta” și „cu totul” —
 ## fiindcă sunt două lucruri diferite: primul măsoară runul, al doilea e averea
 ## care rămâne după el. Un singur număr ar fi ascuns exact despărțirea pe care
 ## se sprijină tot save-ul.
@@ -1789,7 +2027,7 @@ func _rand_sumar(eticheta: String, valoare: String) -> Control:
 
 
 func _pe_expeditie_noua() -> void:
-	# `goleste()` face starea „nicio expediție", iar `_arata_loadout()` e
+	# `goleste()` face starea „nicio expediție”, iar `_arata_loadout()` e
 	# ecranul pentru starea aia. Nu reîncărcăm scena: n-ar aduce nimic în plus
 	# și ar arunca muzica de la capăt.
 	Expeditie.goleste()
