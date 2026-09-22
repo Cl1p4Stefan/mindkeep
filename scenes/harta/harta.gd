@@ -66,19 +66,60 @@ const MARIME_NOD := Vector2(92, 92)
 ## spune oricâte liniuțe ai desena pe ea.
 ##
 ## ZONA UTILĂ, în FRACȚIUNI DE ECRAN (0..1). Pergamentul nu acoperă toată
-## fereastra: are margini arse în stânga și sus, se termină pe la 85% din
-## lățime, iar în colțul din dreapta-jos stă cartea legată în piele. Nodurile
-## au voie doar pe hârtie.
+## fereastra: are margini arse în stânga și sus, iar în colțul din dreapta-jos
+## stă cartea legată în piele. Nodurile au voie doar pe hârtie.
 ##
 ## De ce fracțiuni și nu pixeli: fundalul se întinde peste toată fereastra,
-## deci marginea hârtiei rămâne „la 85% din lățime” indiferent cât de mare e
+## deci marginea hârtiei rămâne în același loc indiferent cât de mare e
 ## fereastra. În pixeli, ar fi trebuit recalculată la fiecare redimensionare.
 ##
-## Marginea din dreapta (0.838) e ALEASĂ SUB cartea din colț (care începe pe la
-## 0.845): dacă niciun nod nu trece de linia aia, cartea nu mai are cum să
-## încurce pe nimeni, iar tot codul care ocolea zona cărții a putut dispărea.
-## O regulă de așezare e mai ieftină decât o excepție de ocolit.
+## HÂRTIA NU SE TERMINĂ LA 85% DIN LĂȚIME — asta scria aici până acum și era
+## greșit. Măsurată pe fundal, foaia ajunge până pe la 0,95–0,97 din lățime pe
+## toată înălțimea ei; DOAR CARTEA începe pe la 0,84, și doar în colțul de jos.
+## Vechiul 0,803 (marginea din dreapta la 0,838) tăia deci o fâșie de hârtie
+## bună de peste o sută de pixeli, pe toată înălțimea, ca să ocolească un obiect
+## care stă într-un singur colț.
+##
+## Zona asta rămâne totuși cea a HĂRȚII GENERATE, neatinsă: panglica ei e un
+## dreptunghi cu benzi, deci un colț interzis n-ar avea cum să fie ocolit fără
+## să rescriu generarea. Ea plătește fâșia și nu se schimbă azi. Planșele
+## desenate primesc `ZONA_PLANSA` de mai jos, unde colțul se ocolește cu mâna.
 const ZONA_PERGAMENT := Rect2(0.035, 0.050, 0.803, 0.890)
+
+## ZONA PLANȘELOR DESENATE — aceeași hârtie, măsurată până la marginea ei
+## adevărată din dreapta (0,952 din lățime), nu până la linia cărții.
+##
+## De unde vine 0,952: pe fundal, marginea dreaptă a foii oscilează între 0,953
+## și 0,979 pe toată banda de deasupra cărții (e o foaie ruptă, nu tăiată).
+## 0,952 e sub cel mai strâmt rând al ei, deci e hârtie oriunde.
+##
+## De ce o a doua zonă și nu una singură lărgită: vezi nota de la
+## `ZONA_PERGAMENT`. Cele două surse de hartă nu se apără la fel de carte — una
+## prin formă, alta prin regulă — deci au nevoie de două dreptunghiuri, nu de un
+## compromis care le nemulțumește pe amândouă.
+const ZONA_PLANSA := Rect2(0.035, 0.050, 0.917, 0.890)
+
+## CARTEA din colțul de jos-dreapta, ca DREPTUNGHI INTERZIS, în fracțiuni de
+## ecran. Se întinde până în colțul ferestrei, fiindcă dincolo de ea nu mai e
+## nimic de câștigat.
+##
+## Măsurată pe fundal urmărind unde se oprește hârtia sub ea: cotorul coboară
+## oblic, de la (0,916 · 0,533) în vârf până pe la (0,840 · 0,893) la bază.
+## Dreptunghiul ia colțul cel mai din stânga și cel mai de sus al formei ăsteia,
+## cu un pic de rezervă.
+##
+## CE COSTĂ DREPTUNGHIUL: cartea e OBLICĂ, deci un dreptunghi care o cuprinde
+## interzice și un triunghi de hârtie bună — vreo 110 px lățime chiar sub vârful
+## cotorului. E prețul unei reguli pe care o poți verifica dintr-o singură
+## comparație de dreptunghiuri; o formă oblică ar fi cerut o a doua geometrie în
+## validator, în desen și în șablon, pentru o fâșie pe care oricum n-aș desena
+## nimic important.
+##
+## REGULA NU E LA FEL PENTRU NODURI ȘI PENTRU DRUMURI, din același motiv ca la
+## verificarea „totul stă pe hârtie”: un nod e un simbol de 92 px, deci CENTRUL
+## lui trebuie ținut la jumătate de nod plus `MARGINE_PANZA` de carte; un drum e
+## o linie de 6 px, care n-are ce proteja în afară de ea însăși.
+const CARTEA := Rect2(0.838, 0.530, 0.162, 0.470)
 
 ## Cât lăsăm liber între nodurile de pe marginea zonei și marginea ei.
 const MARGINE_PANZA := 18.0
@@ -524,8 +565,13 @@ const AMESTEC_LINIAR := 0.7
 # CERNEALĂ: groase, închise, cu liniuțe lungi — ca traseele punctate de pe
 # hărțile de aventură din care ne inspirăm.
 
-const GROSIME_DRUM := 6.0
-const GROSIME_DRUM_ALES := 11.0
+## Cu ~50% mai groase decât erau (6 și 11). Motivul e același care le-a scos
+## din gri: la mărimea la care se vede harta, o trăsătură subțire nu e „discretă",
+## e „neterminată". Capetele rotunjite (vezi `panza.gd`) au venit odată cu
+## grosimea — cu cât e mai lată o liniuță, cu atât se vede mai tare că e tăiată
+## drept la capăt.
+const GROSIME_DRUM := 9.0
+const GROSIME_DRUM_ALES := 16.5
 
 ## Unde se OPRESC liniuțele, în jurul centrului unui nod. Mai mare decât
 ## jumătatea nodului (46), ca drumul să se termine VIZIBIL înainte de simbol:
@@ -533,15 +579,24 @@ const GROSIME_DRUM_ALES := 11.0
 const OPRIRE_LA_NOD := 56.0
 
 ## Culorile drumurilor, în tonuri de CERNEALĂ. Trei stări, trei nuanțe:
-##   parcurs   — pe unde ai fost deja. Cerneală spălată: e istorie, nu opțiune.
+##   parcurs   — pe unde ai fost deja. Cerneala cea mai palidă: e istorie, nu
+##               opțiune.
 ##   deschis   — de unde ești, spre unde poți merge. Cea mai apăsată din tot
-##               ecranul; practic negru-maro, opac.
-##   inchis    — restul hărții. Mai stins, dar CITIBIL: vrei să vezi ce n-ai
-##               ales, altfel alegerea nu are greutate. Vechea valoare (0.30
-##               opacitate) făcea din „citibil” o vorbă goală.
-const CULOARE_DRUM_PARCURS := Color(0.42, 0.28, 0.17, 0.45)
-const CULOARE_DRUM_DESCHIS := Color(0.16, 0.08, 0.03, 1.00)
-const CULOARE_DRUM_INCHIS := Color(0.31, 0.20, 0.10, 0.44)
+##               ecranul; practic negru-maro.
+##   inchis    — restul hărții. Între ele: vrei să vezi ce n-ai ales, altfel
+##               alegerea nu are greutate.
+##
+## TOATE TREI SUNT OPACE ACUM, și asta e schimbarea care contează. Înainte,
+## „mai stins” se obținea din transparență — iar un maro transparent peste un
+## pergament maro nu iese mai deschis, iese GRI și pare un drum desenat greșit,
+## nu unul desenat discret. Cerneala adevărată nu e transparentă: e mai puțin
+## apăsată. Deci diferența dintre cele trei stări se ține acum din LUMINOZITATE
+## (cât de aproape de negru e maroul) și din grosime, nu din alfa.
+##
+## Regula, dacă mai schimbi vreodată valorile: alfa rămâne 1,00 pe toate trei.
+const CULOARE_DRUM_PARCURS := Color(0.46, 0.34, 0.23, 1.00)
+const CULOARE_DRUM_DESCHIS := Color(0.14, 0.07, 0.03, 1.00)
+const CULOARE_DRUM_INCHIS := Color(0.30, 0.19, 0.10, 1.00)
 
 ## Cerneala textului care stă DIRECT pe pergament (eticheta de hover), cu
 ## conturul crem care o desprinde de textura de dedesubt.
@@ -586,6 +641,11 @@ var alese: Array[String] = []
 ## Simbolurile nodurilor, ca să le pot reașeza la redimensionarea ferestrei
 ## fără să reconstruiesc harta. „id de nod → SimbolNod”.
 var simboluri_nod := {}
+
+## Figurina de pe nodul curent, sau `null` dacă PNG-ul ei lipsește. Ținută
+## separat de `simboluri_nod` fiindcă nu e un nod: e un obiect așezat PESTE
+## hartă, cu propriile lui reguli de mărime și de poziție (vezi `figurina.gd`).
+var figurina: FigurinaHarta = null
 
 ## Eticheta care apare sub nodul survolat. UNA singură, ținută de ecran, nu
 ## câte una în fiecare nod: zece etichete permanente ar acoperi harta, iar zece
@@ -773,7 +833,7 @@ func _actualizeaza_antet() -> void:
 	# Acum că numele nodurilor apar doar la survolare, piciorul e locul în care
 	# scrie CUM se citește harta. Un semn pe care nu știi să-l interoghezi e un
 	# semn degeaba.
-	eticheta_picior.text = "Treci peste un semn ca sa vezi ce te asteapta. Drumul nu se poate reface."
+	eticheta_picior.text = "Treci peste un semn ca sa vezi ce te asteapta. Drumurile merg in ambele sensuri, dar nu treci de doua ori prin acelasi loc."
 
 
 ## Șterge tot ce e desenat pe pânză: simbolurile și eticheta lor.
@@ -786,6 +846,10 @@ func _goleste_panza() -> void:
 		panza.remove_child(copil)
 		copil.queue_free()
 	simboluri_nod.clear()
+	# Obiectul e deja eliberat de bucla de sus (e copil al pânzei); aici doar
+	# uităm adresa lui. Fără asta, `_aseaza_nodurile()` ar putea fi chemată de
+	# semnalul de redimensionare cu o figurină ștearsă în mână.
+	figurina = null
 	nod_survolat = -1
 
 
@@ -814,6 +878,11 @@ func _construieste_harta() -> void:
 	_goleste_panza()
 	var accesibile := Expeditie.accesibile()
 
+	# Întrebat O DATĂ, înainte de buclă, fiindcă răspunsul schimbă felul în
+	# care se desenează un nod. Dacă PNG-ul figurinei lipsește, `acoperit`
+	# rămâne fals peste tot și harta arată exact ca înainte de ea.
+	var e_figurina := FigurinaHarta.exista()
+
 	for nod in Expeditie.harta:
 		var id := int(nod["id"])
 		# Ordinea contează: nodul curent e ȘI parcurs, deci trebuie întrebat
@@ -834,15 +903,24 @@ func _construieste_harta() -> void:
 		var simbol := SimbolNod.new()
 		simbol.size = MARIME_NOD
 		simbol.configureaza(
-			id, int(nod["tip"]), stare, int(nod["samanta"]), terminat
+			id, int(nod["tip"]), stare, int(nod["samanta"]), terminat,
+			e_figurina and stare == SimbolNod.Stare.CURENT
 		)
 		simbol.apasat.connect(_pe_nod_apasat)
 		simbol.survolat.connect(_pe_nod_survolat)
 		panza.add_child(simbol)
 		simboluri_nod[id] = simbol
 
-	# Adăugată ULTIMA, deci desenată peste toate simbolurile: un nod vecin n-are
-	# cum să treacă peste eticheta care tocmai a apărut.
+	# Figurina, peste toate simbolurile. Poziția ei vine din `_aseaza_nodurile`,
+	# odată cu a nodurilor și din aceleași centre — altfel ar sta lângă nodul
+	# pe care crede că stă.
+	if e_figurina and Expeditie.pozitie >= 0:
+		figurina = FigurinaHarta.new()
+		panza.add_child(figurina)
+
+	# Adăugată ULTIMA, deci desenată peste tot — inclusiv peste figurină. Un
+	# nume care trebuie citit e singurul lucru căruia i se cuvine să acopere
+	# piesa: eticheta e trecătoare, figurina stă acolo toată runda.
 	_creeaza_eticheta_nod()
 	_aseaza_nodurile()
 
@@ -954,6 +1032,12 @@ func _aseaza_nodurile() -> void:
 		var simbol: Control = simboluri_nod[id]
 		simbol.position = centre[id] - MARIME_NOD * 0.5
 		simbol.size = MARIME_NOD
+
+	# Figurina stă pe ACELEAȘI centre, nu pe poziția simbolului de dedesubt:
+	# simbolul e centrat pe nod, figurina e sprijinită pe el. Două reguli
+	# diferite pentru același punct — vezi nota din `figurina.gd`.
+	if figurina != null and centre.has(Expeditie.pozitie):
+		figurina.aseaza(centre[Expeditie.pozitie], MARIME_NOD.y)
 
 	panza.arata(_muchii(geo["drumuri"]))
 
@@ -1715,31 +1799,71 @@ static func _potoleste_abaterea(baza: Array, abateri: Array, minim: float) -> fl
 	return clampf(factor, 0.0, 1.0)
 
 
+## Cât se retrage o margine a zonei față de marginea hârtiei: jumătate de nod
+## (ca simbolul să încapă întreg) plus `MARGINE_PANZA`.
+##
+## E scoasă ca funcție fiindcă o folosesc trei locuri cu același înțeles: zona
+## utilă de aici, umflarea cărții la verificare și conturul din șablon. Trei
+## copii ale aceluiași „64” ar fi trei ocazii să rămână una în urmă.
+static func retragere() -> Vector2:
+	return MARIME_NOD * 0.5 + Vector2(MARGINE_PANZA, MARGINE_PANZA)
+
+
 ## Dreptunghiul de hârtie pe care au voie să stea nodurile, în coordonatele
 ## PÂNZEI.
 ##
-## Două traduceri într-una. Întâi `ZONA_PERGAMENT` (fracțiuni de ECRAN) devine
-## pixeli și se mută în sistemul pânzei — cele două nu sunt același lucru,
-## fiindcă fundalul se întinde peste toată fereastra, iar pânza e doar
-## dreptunghiul rămas sub antet.
+## Două traduceri într-una. Întâi zona (fracțiuni de ECRAN) devine pixeli și se
+## mută în sistemul pânzei — cele două nu sunt același lucru, fiindcă fundalul
+## se întinde peste toată fereastra, iar pânza e doar dreptunghiul rămas sub
+## antet.
 ##
 ## Apoi o INTERSECTĂM cu pânza: hârtia începe mai sus decât pânza (acolo e
 ## antetul), deci partea aia nu ne e disponibilă oricum. Intersecția e
 ## răspunsul la „unde e ȘI hârtie, ȘI loc al meu”.
 ##
-## La final scădem jumătate de nod din fiecare margine: `zona` e locul unde pot
+## La final scădem `retragere()` din fiecare margine: `zona` e locul unde pot
 ## sta CENTRELE, iar un centru lipit de margine ar însemna un simbol pe
 ## jumătate în afară.
+##
+## CARE ZONĂ, se întreabă tot STĂRII (`Expeditie.plansa`), nu comutatorului —
+## exact ca la `_geometria()`, și din același motiv: o expediție pornită pe o
+## planșă trebuie să se deseneze pe hârtia planșei și după ce comutatorul a fost
+## mutat înapoi pe „generată”. Dacă cele două ar întreba lucruri diferite,
+## nodurile ar ajunge într-o zonă și drumurile în alta.
 func _zona_utila() -> Rect2:
-	var ecran := get_viewport_rect().size
-	var hartie := Rect2(ZONA_PERGAMENT.position * ecran, ZONA_PERGAMENT.size * ecran)
-	hartie.position -= panza.global_position
+	var fractii := ZONA_PLANSA if Expeditie.plansa != "" else ZONA_PERGAMENT
+	return zona_utila_din(
+		fractii, get_viewport_rect().size, panza.global_position, panza.size)
 
-	var zona := hartie.intersection(Rect2(Vector2.ZERO, panza.size))
-	return zona.grow_individual(
-		-(MARIME_NOD.x * 0.5 + MARGINE_PANZA), -(MARIME_NOD.y * 0.5 + MARGINE_PANZA),
-		-(MARIME_NOD.x * 0.5 + MARGINE_PANZA), -(MARIME_NOD.y * 0.5 + MARGINE_PANZA)
-	)
+
+## Aceeași socoteală, dar cu ecranul și pânza primite din afară.
+##
+## Despărțită ca s-o poată chema și uneltele din `tools/`, care n-au nici
+## fereastră, nici pânză — până acum își copiau formula, iar o formulă copiată e
+## o formulă care se schimbă într-un singur loc.
+static func zona_utila_din(
+	fractii: Rect2, ecran: Vector2, origine_panza: Vector2, marime_panza: Vector2
+) -> Rect2:
+	var hartie := Rect2(fractii.position * ecran, fractii.size * ecran)
+	hartie.position -= origine_panza
+
+	var zona := hartie.intersection(Rect2(Vector2.ZERO, marime_panza))
+	var r := retragere()
+	return zona.grow_individual(-r.x, -r.y, -r.x, -r.y)
+
+
+## CARTEA, în coordonatele PÂNZEI. `pentru_noduri` o umflă cu `retragere()`,
+## fiindcă un nod e un simbol, nu un punct: centrul lui trebuie ținut mai
+## departe decât marginea desenului lui.
+static func cartea_din(
+	ecran: Vector2, origine_panza: Vector2, pentru_noduri: bool
+) -> Rect2:
+	var carte := Rect2(CARTEA.position * ecran, CARTEA.size * ecran)
+	carte.position -= origine_panza
+	if not pentru_noduri:
+		return carte
+	var r := retragere()
+	return carte.grow_individual(r.x, r.y, r.x, r.y)
 
 
 ## Un punct adus înapoi în zonă, dacă a ieșit din ea.
@@ -1771,8 +1895,12 @@ func _muchii(drumuri: Dictionary) -> Array[Dictionary]:
 			# sunt vecine în drumul efectiv mers. Fără verificarea a doua, un
 			# nod vizitat ar aprinde toate drumurile care pleacă din el, inclusiv
 			# cele pe care NU le-ai luat.
+			# Ambele întrebări se pun în AMBELE sensuri: drumul e scris o dată,
+			# la un capăt (`id` → `urmator`), dar se merge în oricare. Un drum
+			# scris spre nodul tău e o ieșire la fel de bună ca unul scris din el.
 			var parcurs := _sunt_vecini_in_drum(id, urmator)
-			var deschis := id == Expeditie.pozitie and urmator in accesibile
+			var deschis := (id == Expeditie.pozitie and urmator in accesibile) \
+				or (urmator == Expeditie.pozitie and id in accesibile)
 			var culoare := CULOARE_DRUM_INCHIS
 			var grosime := GROSIME_DRUM
 			if parcurs:
@@ -1793,10 +1921,13 @@ func _muchii(drumuri: Dictionary) -> Array[Dictionary]:
 	return muchii
 
 
-## Au fost nodurile astea două, una după alta, chiar pe drumul meu?
+## Au fost nodurile astea două, una după alta, chiar pe drumul meu — în
+## oricare ordine? Un drum mers „de la b la a” e parcurs la fel de bine.
 func _sunt_vecini_in_drum(a: int, b: int) -> bool:
 	for i in range(Expeditie.parcurse.size() - 1):
-		if Expeditie.parcurse[i] == a and Expeditie.parcurse[i + 1] == b:
+		var x := Expeditie.parcurse[i]
+		var y := Expeditie.parcurse[i + 1]
+		if (x == a and y == b) or (x == b and y == a):
 			return true
 	return false
 

@@ -14,7 +14,7 @@
 | 3. Trivia, ca scenă independentă | ✅ gata |
 | 4. Bucla completă a unei lupte | ✅ victorie · înfrângere · recompense (Fragmente) |
 | 5. Trei inamici manuali | ✅ Soldatul · Lăncierul (ceas) · Spadasinul (vulnerabilitate), aleși din joc |
-| 6. Harta de expediție | ✅ loadout „N din M" · **12-16 noduri**, ramificate, cu sămânță · Luptă / Elită / Odihnă / Eveniment / **Magazin** / **Boss** · **Monede + puteri temporare** · sumar de run · aspect: pergament, simboluri de cerneală, trasee punctate · **nodurile și drumurile stau pe o PANGLICĂ (curbă centrală + benzi)**, nu pe o grilă dreaptă · **patru trasee, toate verzi pe 300 de semințe** (POTCOAVĂ activă; POTCOAVA OGLINDITĂ e aceeași formă, întoarsă) · strat înclinat (forfecare) la ȘARPE · **drumuri care nu se încrucișează niciodată (0 la 300 de semințe)** · **nodul curent are și aură, și X** · **două surse de hartă: GENERATĂ (panglica) sau DESENATĂ dintr-un fișier `data/harti/*.json`** — comutatorul `Expeditie.SURSA_HARTII`; azi e pe DESENATĂ |
+| 6. Harta de expediție | ✅ loadout „N din M" · **12-16 noduri**, ramificate, cu sămânță · Luptă / Elită / Odihnă / Eveniment / **Magazin** / **Boss** · **Monede + puteri temporare** · sumar de run · aspect: pergament, simboluri de cerneală, trasee punctate · **nodurile și drumurile stau pe o PANGLICĂ (curbă centrală + benzi)**, nu pe o grilă dreaptă · **patru trasee, toate verzi pe 300 de semințe** (POTCOAVĂ activă; POTCOAVA OGLINDITĂ e aceeași formă, întoarsă) · strat înclinat (forfecare) la ȘARPE · **drumuri care nu se încrucișează niciodată (0 la 300 de semințe)** · **nodul curent are și aură, și X** · **două surse de hartă: GENERATĂ (panglica) sau DESENATĂ dintr-un fișier `data/harti/*.json`** (azi una singură: `harta_01.json`) — comutatorul `Expeditie.SURSA_HARTII`; azi e pe DESENATĂ · **planșele folosesc tot pergamentul (928 × 397 px în loc de 797 × 397), cu cartea ca dreptunghi interzis** · șablon de desen în `docs/sablon_plansa.png` · **figurină de șah pe nodul curent** · drumuri groase, cu capete rotunjite, opace |
 | 7. Cetatea | ❌ |
 | 8. Save/Load | 🟡 tezaurul, sacul și expediția știu toate să se serializeze (`spre_dictionar` / `din_dictionar`), pe trei straturi de durată; scrierea pe disc, nu încă |
 | 9. Celelalte discipline | 🟡 Cultură generală ✅ (135 de întrebări) · Logica ✅ (80 de categorii) · Cuvinte ✅ · toate trei fără repetiții pe expediție · celelalte 5 ❌ |
@@ -27,6 +27,290 @@ buget, generare) rămâne acolo unde era.
 Am sărit peste ordinea recomandată la pasul 12 (artă): imaginile pentru rege,
 cavaler și pentru cele trei piese de șah de pe butoane au intrat mai devreme, dar
 restul rămâne placeholder. Bucla de luptă e în continuare cea validată, nu arta.
+
+---
+
+## FIGURINA ȘI CERNEALA (22 septembrie 2026) — harta arată a tablă de joc
+
+Trei schimbări de desen, niciuna de reguli. Harta se joacă exact la fel.
+
+### Drumurile: groase, rotunjite, OPACE
+
+| | înainte | acum |
+|---|---|---|
+| grosime, drum obișnuit | 6 px | **9 px** |
+| grosime, drum accesibil | 11 px | **16,5 px** |
+| capete | tăiate drept | **rotunjite** (liniuță + cerc la fiecare capăt) |
+| parcurs | `0.42, 0.28, 0.17, **0.45**` | `0.46, 0.34, 0.23, **1.00**` |
+| deschis | `0.16, 0.08, 0.03, 1.00` | `0.14, 0.07, 0.03, 1.00` |
+| închis | `0.31, 0.20, 0.10, **0.44**` | `0.30, 0.19, 0.10, **1.00**` |
+
+**Ce contează în tabelul ăsta e coloana alfa.** „Mai stins" se obținea din
+transparență — iar un maro transparent peste un pergament maro nu iese mai
+deschis, iese GRI. Drumul pe care nu-l poți lua arăta ca un drum desenat greșit,
+nu ca unul desenat discret. Cerneala adevărată nu e transparentă: e mai puțin
+apăsată. Deci diferența dintre cele trei stări se ține acum din LUMINOZITATE și
+din grosime. **Regulă, dacă mai umbli la culori: alfa rămâne 1,00 pe toate trei.**
+
+Capetele rotunjite: Godot n-are „capăt rotund" la `draw_polyline` — o linie se
+termină tăiat, în unghi drept. La 6 px nu se vedea; la 9-16 px fiecare liniuță
+arăta ca o cărămidă. Un cerc cu raza `grosime / 2` pus fix pe capăt umple exact
+colțurile care lipsesc. Două apeluri de desen per liniuță.
+
+Ca să știe unde-i sunt capetele, pânza nu mai desenează segment cu segment: ea
+STRÂNGE segmentele unei liniuțe și o desenează întreagă, când s-a terminat.
+
+### Ritmul punctatului se dă acum în GROSIMI, nu în pixeli
+
+Era `15 px miez + 11 px pauză`, fix. Cu capete rotunjite, o liniuță se vede
+`miez + grosime` — deci drumul ales (16,5 px) ieșea 31,5 px lung la 16,5 lat,
+adică **1,9:1: o bulină, nu o trăsătură.** Tocmai drumul care trebuie văzut cel
+mai bine arăta cel mai puțin a drum.
+
+```
+miez  = grosime × 1,70      → ce se vede = grosime × 2,70, mereu
+pauza = grosime × 1,25
+```
+
+La 9 px iese 15,3 și 11,25 — adică exact punctatul dinainte, cu care hărțile
+erau deja reglate. Nu e o schimbare de aspect; e aceeași regulă scrisă astfel
+încât să reziste și la alte grosimi.
+
+### Figurina: `scenes/harta/figurina.gd` (`FigurinaHarta`)
+
+Pe nodul curent stă `campaign_token.png` — un cal de șah. Nodul de sub ea nu-și
+mai desenează nici aura caldă, nici simbolul tipului: rămân X-ul și figurina, ca
+în machetă.
+
+**De ce un obiect separat, și nu un desen în `simbol_nod.gd`:**
+
+1. **E una singură.** Paisprezece noduri ar purta fiecare codul unui obiect care
+   apare pe cel mult unul dintre ele.
+2. **Trebuie să iasă din casetă.** Nodul e 92 px; figurina e 1,3 din el (≈120 px)
+   și stă cu TALPA pe centru, deci urcă mult deasupra casetei. Poate desena în
+   afara ei, dar ordinea de desenare nu e a lui: vecinul adăugat după i-ar trece
+   peste cap.
+3. **E deasupra a tot.** Ca obiect separat, adăugat ultimul în pânză, e gratis.
+
+**Talpa, nu centrul.** Un simbol de nod se CENTREAZĂ pe punctul lui; o figurină
+STĂ pe el. Talpa e la 0,96 din înălțimea texturii (sub soclu mai e o fâșie de
+transparență în PNG), deci `pozitie = centru − (latura/2, latura·0,96)`.
+
+**Dacă PNG-ul lipsește, nu se întâmplă nimic:** `FigurinaHarta.exista()` e
+întrebat O DATĂ, înainte de buclă, iar răspunsul lui devine `acoperit` pe nodul
+curent. Fals peste tot ⇒ nodul curent se desenează exact ca înainte, cu aură și
+cu sabia lui. Aceeași plasă ca la simbolurile de nod.
+
+`acoperit` e a TREIA întrebare independentă despre un nod, după `stare` și
+`terminat`. Nu spune nimic despre nod — spune ce se întâmplă deasupra lui.
+
+### Mărimi variate: ±12%, din sămânță
+
+`VARIATIE_MARIME := 0.12` în `simbol_nod.gd`. O hartă pe care toate Luptele sunt
+milimetric identice arată ȘTAMPILATĂ: douăsprezece săbii de aceeași mărime, la
+aceeași distanță, sunt o grilă oricât de șerpuit ar fi drumul dintre ele.
+
+Sub 8% nu se vede deloc; peste 20% începi să crezi că mărimea ÎNSEAMNĂ ceva —
+iar dacă ar însemna, ar contrazice `MARIMI`, singurul loc unde mărimea chiar
+spune ceva (bossul e mai mare fiindcă e bossul).
+
+**Unde s-a aplicat:** `Silueta` a primit `scara_fixa`, o scară peste care se
+adaugă respirația. `_punct()` și `_cerc()` înmulțesc deja totul cu `_scara`, deci
+un singur număr mută uniform TOT: contur, găuri, bararea, imaginea. Alternativa —
+să atingi numerele fiecărui simbol — n-ar fi mers deloc pentru nodurile care sunt
+o imagine.
+
+E un `setter`, nu o variabilă simplă, fiindcă un nod fără puls nu intră niciodată
+în `_process()`: fără setter, `_scara` n-ar fi fost calculată nicăieri și
+variația ar fi fost ignorată tocmai de nodurile nemișcate.
+
+**Al treilea zar e tras ULTIMUL, dinadins.** Fiecare `randf_range` mută
+generatorul mai departe; strecurat înaintea celorlalte, ar fi schimbat și
+înclinările, și decalajele de puls. La coadă, harta e doar mai puțin regulată, nu
+alta.
+
+### Validatorul, după schimbări
+
+`godot --headless --path . res://tools/verifica_plansa.tscn` — **ambele planșe
+verzi, toate cele nouă verificări.** Și `verifica_harta.tscn` e verde (0
+încrucișări la 300 de semințe), inclusiv proba pe scena adevărată.
+
+### Pragul (7), refăcut cu variația în el
+
+```
+0,78  ×  92  ×  1,12  =  80,4  →  81 px
+ │        │      │
+ │        │      └── VARIATIE_MARIME: ±12% pe nod
+ │        └───────── MARIME_NOD: caseta
+ └────────────────── MARIME_IMAGINE: cât din casetă umple imaginea
+```
+
+72 era același calcul fără al treilea factor — dedus corect, înainte să existe
+variația. Atunci „cea mai mare lățime" și „lățimea" erau același lucru. De când
+un nod poate fi cu 12% mai mare decât fratele lui, pragul trebuie să măsoare
+cazul cel mai rău, altfel spune OK pentru o pereche care se atinge la o aruncare
+nefericită.
+
+**`harta_01` trece: 106,6 px (C3–W4) față de 81. Rezervă: 25,6 px.**
+
+**Pragul din `verifica_harta.gd` a rămas 72,** și acum cele două chiar sunt
+numere diferite, nu o copie. Harta generată își alege singură distanțele, iar pe
+ea cea mai apropiată pereche măsurată pe 300 de semințe e la 78,5 px — ridicat
+la 81, ar pica generatorul, care nu s-a stricat, doar n-a fost proiectat cu
+variația în minte. **Datorie deschisă:** ori generatorul urcă `DISTANTA_MINIMA_BANDA`
+până trece de 81, ori variația se taie la ±5% pe harta generată. Până atunci,
+două surse de hartă, două praguri, fiecare cu socoteala lui.
+
+### `harta_02.json` a ieșit din `data/harti/`
+
+Era un fișier de probă pentru încărcător, nu o planșă desenată — și se vedea în
+cifre: trecea (7) la 73,2 px cu vechiul prag de 72, adică pe muchie, fiindcă
+bossul ei stă fix în dreptul cărții și cerea o forfecare mare, iar forfecarea
+mare strânge baza trapezului.
+
+Mutată în `data/harti/machete/`. Validatorul citește `data/harti/` cu
+`DirAccess.get_files_at()`, care **nu** intră în subdosare — deci e de-ajuns s-o
+muți ca să iasă din rulare, fără nicio excepție scrisă în cod. Același lucru e
+adevărat pentru `intinde_plansa.gd`: nu mai are ce forfeca acolo.
+
+Rămâne lângă `harta_02_macheta.json`, care e versiunea ei de dinainte de
+forfecare. Două fișiere pentru aceeași hartă moartă — dacă vreodată faci din ea
+o planșă adevărată, `macheta` e cea din care se pornește.
+
+### Măsurat, nu schimbat: câte Lupte iese o hartă
+
+Pe 300 de semințe (1000–1299), numărând nodurile de tip Luptă:
+
+| | noduri | Lupte, medie | min / max | hărți cu ≥ 9 Lupte |
+|---|---|---|---|---|
+| `harta_01.json` | 14 | **7,06** | 2 / 10 | **53 din 300 (17,7%)** |
+| `harta_02.json` (scoasă) | 16 | 8,11 | 4 / 12 | 132 din 300 (44,0%) |
+| generată | ~14 | 6,62 | 2 / 12 | 32 din 300 (10,7%) |
+
+Doar raportat, nimic schimbat în reguli. Rândul lui `harta_02` e ținut ca
+MĂSURĂTOARE, nu ca planșă (a ieșit din rulare — vezi mai sus): două noduri în
+plus înseamnă aproape o Luptă în plus și aproape jumătate din rulări peste 9
+lupte. Adică **numărul de noduri e maneta lungimii unei expediții**, nu forma
+desenului. Ăsta e numărul de reglat în ziua în care „15 minute" nu mai iese.
+
+---
+
+## TOT PERGAMENTUL (22 septembrie 2026) — hârtia nu se termina la 85%, doar cartea
+
+Planșele desenate se opreau la 0,838 din lățimea ecranului, pe toată înălțimea.
+Comentariul de la `ZONA_PERGAMENT` spunea că acolo se termină hârtia. **Nu se
+termină acolo.** Măsurată pe fundal, foaia ajunge la 0,953–0,979 din lățime pe
+toată banda de deasupra cărții; doar cartea legată în piele începe pe la 0,84, și
+doar în colțul de jos-dreapta.
+
+Vechea linie plătea deci, pe TOATĂ înălțimea, prețul unui obiect care stă
+într-un SINGUR colț: o fâșie de 131 px lățime, aruncată ca să se ocolească un
+dreptunghi de 130 × 190.
+
+### Două zone, nu una lărgită
+
+| | zonă | de ce |
+|---|---|---|
+| `ZONA_PERGAMENT` | 797 × 397 px | harta GENERATĂ. Panglica ei e un dreptunghi cu benzi; n-are cum să ocolească un colț fără să rescriu generarea. Plătește fâșia, neatinsă. |
+| `ZONA_PLANSA` | **928 × 397 px** (raport 2,3378) | planșele DESENATE. Ele ocolesc colțul cu mâna, deci pot lua toată hârtia. |
+| `CARTEA` | `Rect2(0.838, 0.530, …)` | dreptunghiul interzis, până în colțul ferestrei |
+
+`_zona_utila()` întreabă STAREA (`Expeditie.plansa`), nu comutatorul — exact ca
+`_geometria()`, și din același motiv: o expediție pornită pe o planșă trebuie să
+se deseneze pe hârtia planșei și după ce comutatorul a fost mutat înapoi. Dacă
+cele două ar întreba lucruri diferite, nodurile ar ajunge într-o zonă și
+drumurile în alta.
+
+**Regula nu e aceeași pentru noduri și pentru drumuri**, ca la verificarea (8): un
+nod e un simbol de 92 px, deci CENTRUL lui se ține la jumătate de nod plus
+`MARGINE_PANZA` (64 px) de carte; un drum e o linie de 6 px și n-are ce proteja
+în afară de el însuși.
+
+**Ce costă dreptunghiul:** cartea e oblică — cotorul coboară de la (0,916 · 0,533)
+până pe la (0,840 · 0,893). Un dreptunghi care o cuprinde interzice și un triunghi
+de hârtie bună, vreo 110 px chiar sub vârful cotorului. E prețul unei reguli care
+se verifică dintr-o comparație de dreptunghiuri; o formă oblică ar fi cerut o a
+doua geometrie în validator, în desen ȘI în șablon, pentru o fâșie pe care oricum
+n-aș desena nimic important.
+
+### A noua verificare: nimic pe carte
+
+Zona lărgită nu mai e de-ajuns singură: e un dreptunghi de hârtie bună cu un
+obiect așezat peste el. `verifica_plansa.gd` măsoară acum și asta, pe punctele
+CURBEI (nu pe cele scrise în fișier — curba iese puțin în afara punctelor la
+cotituri, iar „puțin” pe lângă o carte înseamnă o linie peste piele).
+
+Rularea raportează în antet zona și raportul ei, iar pentru fiecare planșă
+dimensiunea și raportul cutiei de desen.
+
+### Planșele, refăcute cu un script: o forfecare
+
+`tools/intinde_plansa.gd` (`godot --headless --path . res://tools/intinde_plansa.tscn`).
+
+```
+y' = y                                (înălțimea, neatinsă)
+x' = x · (1 + k · (1 − y)) / (1 + k)
+```
+
+În fișier `y` crește ÎN JOS, deci factorul e `(1 + k)` sus și `1` jos: cutia iese
+un **trapez** — lat sus, unde hârtia e liberă până la margine, îngust jos, unde
+stă cartea. O mărire uniformă ar fi dus colțul de jos-dreapta fix pe piele.
+
+Ordinea pe orizontală se păstrează (la o înălțime dată factorul e o constantă
+pozitivă), dar asta nu e o demonstrație că drumurile nu se încrucișează — două
+puncte de pe rânduri diferite se pot apropia. **Validatorul are ultimul cuvânt**,
+și e verde.
+
+`k` nu e ales din ochi: unealta caută CEL MAI MIC `k` la care nimic nu mai cade
+pe carte, cu 8 px rezervă. Cel mai mic, fiindcă forfecarea are un preț — cu cât e
+mai mare, cu atât baza trapezului e mai îngustă și nodurile de jos se string.
+
+Fișierele dinainte s-au păstrat ca `data/harti/machete/harta_0X_macheta.json`, și
+de acolo se citește ÎNTOTDEAUNA: unealta se poate rula de oricâte ori fără să se
+„adune” transformările. Stau într-un subdosar fiindcă validatorul verifică tot ce
+e în `data/harti/`, iar o machetă e desenul de dinainte de a ocoli cartea — un
+subdosar e mai ieftin decât o excepție scrisă în validator.
+
+| | `harta_01.json` | `harta_02.json` |
+|---|---|---|
+| raport | 1,8055 → **2,3378** | 1,7500 → **2,3378** |
+| cutia pe ecran | 717 × 397 → **928 × 397** | 695 × 397 → **928 × 397** |
+| `k` | 0,170 | 0,410 |
+| lățimea de bază (jos) | 793 px | 658 px |
+| spațiu până la carte | noduri 9 px, drumuri 73 px | noduri 9 px, drumuri 73 px |
+| cea mai apropiată pereche | 111,4 → **106,6 px** (C3–W4) | 80,8 → **73,2 px** (C4–D4) |
+
+**`harta_02` trece la limită și unealta se plânge de asta.** Bossul ei (Z) stă la
+x = 1,0 și y = 0,52 — adică exact în dreptul cărții — deci cere o forfecare mare,
+iar forfecarea mare strânge baza. 73,2 px față de un prag de 72 nu e un desen bun,
+e un desen norocos. Reparația adevărată e să mut C4, D4 și Z în MACHETĂ și să
+rulez din nou, nu să scad `k`. Unealta scrie avertismentul sub 80 px, ca să nu
+uit.
+
+### Șablonul de desen
+
+`tools/sablon_plansa.gd` scoate `docs/sablon_plansa.png`: fundalul la 1152 × 648,
+cu regulile desenate peste el.
+
+| ce vezi | ce înseamnă |
+|---|---|
+| linie plină albastră + grilă la 0,1 | cutia de desen: fracțiunea 0,0 e colțul din stânga-sus. Aici stau CENTRELE nodurilor |
+| linie albastră punctată | marginea hârtiei: cu 64 px mai încolo. Nodurile n-au voie, DRUMURILE da |
+| hașură roșie deasă + contur plin | cartea: nimic pe ea, nici nod, nici drum |
+| hașură roșie rară + contur punctat | cartea umflată cu 64 px: drumurile au voie, nodurile nu |
+
+Numerele existau deja în `ZONA_PLANSA` și `CARTEA`. Problema era că un desen se
+face cu ochiul, iar ochiul nu ține minte „0,838 pe lățime, dar numai sub 0,530 pe
+înălțime, și încă 64 px mai încolo dacă e nod”. Șablonul mută regula din cap pe
+hârtie.
+
+### Ce s-a mai curățat
+
+`_zona_utila()` s-a despărțit în `Harta.zona_utila_din()` (statică, primește
+ecranul și pânza din afară) plus `Harta.retragere()` și `Harta.cartea_din()`.
+Amândouă uneltele de verificare își copiau până acum formula zonei; acum o cheamă
+pe cea a jocului. O formulă copiată e o formulă care se schimbă într-un singur
+loc.
 
 ---
 

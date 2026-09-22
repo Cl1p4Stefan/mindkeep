@@ -48,6 +48,29 @@ extends Control
 ## 0.5 = centrul: silueta plutește, se umflă în toate direcțiile.
 @export var ancora_y := 1.0
 
+## O scară FIXĂ, peste care se adaugă respirația. 1.0 = nimic schimbat.
+##
+## De ce aici și nu în fiecare siluetă: mărimea unei siluete se poate schimba în
+## două feluri complet diferite. Poți desena forma mai mare (adică să atingi
+## toate numerele din care e făcută), sau poți lăsa forma în pace și să scalezi
+## caseta. A doua e singura care merge și pentru siluetele desenate din
+## poligoane, ȘI pentru cele care sunt o imagine — fiindcă nu se uită deloc la
+## ce e desenat.
+##
+## `_punct()` și `_cerc()` înmulțesc deja totul cu `_scara`, deci un singur
+## număr schimbat aici mută uniform toată silueta: contur, găuri, bararea,
+## imaginea. Asta o face locul potrivit pentru „nodurile hărții să nu fie toate
+## exact la fel de mari" (vezi `VARIATIE_MARIME` din `simbol_nod.gd`).
+##
+## Setter, nu variabilă simplă: o siluetă fără respirație nu intră niciodată în
+## `_process()`, deci `_scara` n-ar fi apucat să fie calculată nicăieri și
+## variația ar fi fost ignorată tocmai de nodurile care stau nemișcate.
+@export var scara_fixa := 1.0:
+	set(valoare):
+		scara_fixa = valoare
+		_scara = valoare
+		queue_redraw()
+
 # Starea animației. Prefixul „_" e o convenție: „nu umbla la asta din afară".
 var _timp := 0.0
 var _scara := 1.0
@@ -68,7 +91,7 @@ func _process(delta: float) -> void:
 	# `sin()` merge de la -1 la 1 și se întoarce, la nesfârșit: exact forma unei
 	# respirații. `TAU` e un cerc complet în radiani, deci `timp * TAU / durata`
 	# înseamnă „un ciclu complet la fiecare `durata` secunde".
-	_scara = 1.0 + sin(_timp * TAU / durata_respiratie) * amplitudine
+	_scara = scara_fixa * (1.0 + sin(_timp * TAU / durata_respiratie) * amplitudine)
 	queue_redraw()
 
 

@@ -38,6 +38,7 @@ extends Node
 ##   (6) drumurile nu se taie între ele
 ##   (7) cea mai apropiată pereche de noduri e la cel puțin 72 px
 ##   (8) totul stă pe hârtie
+##   (9) nimic pe carte
 ##
 ## CONȚINUTUL — regulile care trag tipurile din sămânță, pe 300 de semințe:
 ##   Bossul pe ultimul nod, Magazinul prezent, Startul mereu o Luptă obișnuită.
@@ -55,11 +56,33 @@ const ECRAN := Vector2(1152.0, 648.0)
 ## Înălțimea antetului de deasupra pânzei, în scena hărții.
 const INALTIME_ANTET := 84.0
 
-## PRAGUL DE DISTANȚĂ ÎNTRE NODURI, în pixeli. Același cu cel din
-## `verifica_harta.gd`, și din același motiv: imaginea desenată ocupă 0,78 din
-## caseta de 92 px, adică vreo 72 px — deci sub 72 două SIMBOLURI se ating, chiar
-## dacă până la 92 doar casetele lor invizibile se suprapun.
-const DISTANTA_PRAG := 72.0
+## PRAGUL DE DISTANȚĂ ÎNTRE NODURI, în pixeli.
+##
+##     0,78  ×  92  ×  1,12  =  80,4  →  81
+##      │       │      │
+##      │       │      └── `VARIATIE_MARIME`: ±12% pe nod, din sămânță
+##      │       └───────── `MARIME_NOD`: caseta, în pixeli
+##      └───────────────── `MARIME_IMAGINE`: cât din casetă umple imaginea
+##
+## Adică LĂȚIMEA CEA MAI MARE pe care o poate lua un simbol obișnuit. Sub atât,
+## două simboluri se pot atinge — chiar dacă până la 92 doar casetele lor
+## invizibile se suprapun.
+##
+## DE CE NU MAI E 72, ȘI DE CE VECHIUL NUMĂR NU ERA GREȘIT
+##
+## 72 era 0,78 × 92, fără al treilea factor, și a fost dedus corect — înainte să
+## existe variația de mărime. Atunci toate simbolurile ieșeau exact cât spunea
+## `MARIME_IMAGINE`, deci „cea mai mare lățime" și „lățimea" erau același lucru.
+## Din clipa în care un nod poate fi cu 12% mai mare decât fratele lui, pragul
+## trebuie să măsoare cazul cel mai rău, nu cazul mediu — altfel verificarea
+## spune OK pentru o pereche care se atinge la o aruncare nefericită.
+##
+## NU e același cu cel din `verifica_harta.gd`, și nu mai poate fi: harta
+## generată își alege singură distanțele, iar pe ea cea mai apropiată pereche
+## măsurată pe 300 de semințe e la 78,5 px. Ridicat acolo la 81, ar pica
+## generatorul — care nu s-a stricat, doar n-a fost proiectat cu variația în
+## minte. Două surse de hartă, două praguri, fiecare cu socoteala lui.
+const DISTANTA_PRAG := 81.0
 
 ## Cât are voie să fie depărtat capătul unui drum de centrul nodului lui.
 ## Câțiva pixeli nu se văd (drumul se oprește oricum la `OPRIRE_LA_NOD` de nod);
@@ -72,8 +95,15 @@ const SEGMENTE_PE_BUCATA := 16
 
 func _ready() -> void:
 	var zona := _zona_de_test()
-	print("Zona utilă de test: %.0f × %.0f px  (fereastra %.0f × %.0f)"
-		% [zona.size.x, zona.size.y, ECRAN.x, ECRAN.y])
+	print("Zona utilă de test: %.0f × %.0f px, raport %.4f  (fereastra %.0f × %.0f)"
+		% [zona.size.x, zona.size.y, zona.size.x / zona.size.y, ECRAN.x, ECRAN.y])
+	var carte := Harta.cartea_din(ECRAN, ORIGINE_PANZA, false)
+	print("Cartea, dreptunghi interzis: x ≥ %.0f, y ≥ %.0f px"
+		% [carte.position.x, carte.position.y])
+	print("    pentru noduri, umflată cu %.0f px: x ≥ %.0f, y ≥ %.0f px"
+		% [Harta.retragere().x,
+			carte.position.x - Harta.retragere().x,
+			carte.position.y - Harta.retragere().y])
 	print("Semințe verificate pentru tipuri: %d" % SEMINTE)
 
 	var cai := _planse()
@@ -120,8 +150,9 @@ func _verifica(cale: String, zona: Rect2) -> bool:
 	var cutia := Plansa.cutie(zona, float(plansa["raport"]))
 	print("    %d noduri, %d drumuri, raport %.4f"
 		% [plansa["ordine"].size(), plansa["drumuri"].size(), plansa["raport"]])
-	print("    cutia desenului, pe ecran: %.0f × %.0f px, colț la (%.0f, %.0f)"
-		% [cutia.size.x, cutia.size.y, cutia.position.x, cutia.position.y])
+	print("    cutia desenului, pe ecran: %.0f × %.0f px, raport %.4f, colț la (%.0f, %.0f)"
+		% [cutia.size.x, cutia.size.y, cutia.size.x / cutia.size.y,
+			cutia.position.x, cutia.position.y])
 
 	var bun := true
 	print("")
@@ -138,6 +169,7 @@ func _verifica(cale: String, zona: Rect2) -> bool:
 	bun = _fara_incrucisari(plansa, cutia) and bun
 	bun = _noduri_departate(plansa, cutia) and bun
 	bun = _totul_pe_hartie(plansa, cutia, zona) and bun
+	bun = _nimic_pe_carte(plansa, cutia) and bun
 	_drumuri_pe_langa_noduri(plansa, cutia)
 
 	print("")
@@ -493,6 +525,77 @@ func _totul_pe_hartie(plansa: Dictionary, cutia: Rect2, zona: Rect2) -> bool:
 	return bun
 
 
+## (9) NIMIC PE CARTE.
+##
+## Zona planșelor merge acum până la marginea adevărată a hârtiei, iar hârtia
+## trece pe sub cartea din colțul de jos-dreapta. Deci zona singură nu mai e
+## de-ajuns: e un dreptunghi de hârtie bună cu un obiect așezat peste el.
+##
+## Aici se vede de ce merită o verificare și nu o zonă mai mică: zona mică ar fi
+## interzis fâșia din dreapta pe TOATĂ înălțimea, ca să ocolească un obiect care
+## stă doar în colț. Verificarea interzice exact colțul.
+##
+## Pragurile sunt două, din același motiv ca la (8):
+##   NODUL e un simbol de 92 px, deci centrul lui trebuie ținut la jumătate de
+##     nod plus `MARGINE_PANZA` de carte — altfel simbolul intră pe piele chiar
+##     dacă punctul lui n-a intrat;
+##   DRUMUL e o linie de 6 px, deci îi ajunge să nu atingă cartea el însuși.
+##
+## Se măsoară pe punctele CURBEI, nu pe punctele scrise în fișier: curba netedă
+## iese puțin în afara punctelor ei la cotituri, iar „puțin” pe lângă o carte
+## înseamnă o linie care trece peste piele.
+func _nimic_pe_carte(plansa: Dictionary, cutia: Rect2) -> bool:
+	var carte_noduri := Harta.cartea_din(ECRAN, ORIGINE_PANZA, true)
+	var carte_drumuri := Harta.cartea_din(ECRAN, ORIGINE_PANZA, false)
+
+	var noduri_peste: Array[String] = []
+	var spatiu_nod := INF   # cât mai e până la carte, pentru nodul cel mai apropiat
+	var nod_apropiat := ""
+	for reper in plansa["ordine"]:
+		var centru := Plansa.in_pixeli(plansa["poz"][reper], cutia)
+		if carte_noduri.has_point(centru):
+			noduri_peste.append(String(reper))
+		var cat := _cat_pana_la(centru, carte_noduri)
+		if cat < spatiu_nod:
+			spatiu_nod = cat
+			nod_apropiat = String(reper)
+
+	var drumuri_peste: Array[String] = []
+	var spatiu_drum := INF
+	var drum_apropiat := ""
+	for drum in plansa["drumuri"]:
+		var nume := "%s→%s" % [drum["de_la"], drum["la"]]
+		var atinge := false
+		for punct in _puncte(plansa, drum, cutia):
+			if carte_drumuri.has_point(punct):
+				atinge = true
+			var cat := _cat_pana_la(punct, carte_drumuri)
+			if cat < spatiu_drum:
+				spatiu_drum = cat
+				drum_apropiat = nume
+		if atinge:
+			drumuri_peste.append(nume)
+
+	var bun := noduri_peste.is_empty() and drumuri_peste.is_empty()
+	var amanunt := "noduri: %.0f px liberi (%s), drumuri: %.0f px liberi (%s)" % [
+		spatiu_nod, nod_apropiat, spatiu_drum, drum_apropiat]
+	if not bun:
+		amanunt = "PE CARTE — noduri: %s; drumuri: %s" % [
+			"niciunul" if noduri_peste.is_empty() else ", ".join(noduri_peste),
+			"niciunul" if drumuri_peste.is_empty() else ", ".join(drumuri_peste)]
+	return _verdict("(9) nimic pe carte", bun, amanunt)
+
+
+## Cât mai e de la punct până la dreptunghi, pe axa pe care scapă cel mai ușor.
+##
+## Negativ dacă punctul e deja înăuntru. Cartea se întinde până în colțul
+## ferestrei, deci nu poți scăpa de ea decât spre stânga sau în sus — de-aia se
+## ia MAXIMUL celor două distanțe, nu distanța până la cel mai apropiat colț:
+## un punct care e deasupra cărții e în afara ei chiar dacă e mult la dreapta.
+func _cat_pana_la(p: Vector2, carte: Rect2) -> float:
+	return maxf(carte.position.x - p.x, carte.position.y - p.y)
+
+
 ## Cu câți pixeli iese punctul din dreptunghi (0 dacă e înăuntru).
 func _cat_iese(p: Vector2, zona: Rect2) -> float:
 	return maxf(
@@ -661,18 +764,21 @@ func _tipuri_pe_seminte(cale: String, plansa: Dictionary) -> bool:
 
 # ─────────────────────────────────────────────────────────────
 
+## Originea pânzei în fereastră: sub antet, lipită de marginea din stânga.
+const ORIGINE_PANZA := Vector2(0.0, INALTIME_ANTET)
+
+
 ## Zona utilă, pentru fereastra implicită.
 ##
-## Copiată din `_zona_utila()` a hărții, fiindcă aia întreabă `get_viewport_rect()`
-## și poziția pânzei — lucruri care există doar când jocul rulează. Se copiază
-## doar traducerea „fracțiuni de ecran → pixeli”.
+## Nu mai e copiată: `Harta.zona_utila_din()` e chiar socoteala jocului, cu
+## ecranul și pânza primite din afară (`_zona_utila()` le-ar cere de la
+## `get_viewport_rect()`, care există doar când jocul rulează).
+##
+## `ZONA_PLANSA`, nu `ZONA_PERGAMENT`: planșele desenate au voie pe toată
+## hârtia, până la marginea ei adevărată din dreapta, fiindcă ele pot ocoli
+## cartea cu mâna. Harta generată n-o poate ocoli și rămâne pe zona veche — vezi
+## notele de la cele două constante.
 func _zona_de_test() -> Rect2:
-	var hartie := Rect2(
-		Harta.ZONA_PERGAMENT.position * ECRAN, Harta.ZONA_PERGAMENT.size * ECRAN)
-	hartie.position.y -= INALTIME_ANTET
-	var zona := hartie.intersection(
-		Rect2(Vector2.ZERO, Vector2(ECRAN.x, ECRAN.y - INALTIME_ANTET)))
-	var margine := Vector2(
-		Harta.MARIME_NOD.x * 0.5 + Harta.MARGINE_PANZA,
-		Harta.MARIME_NOD.y * 0.5 + Harta.MARGINE_PANZA)
-	return zona.grow_individual(-margine.x, -margine.y, -margine.x, -margine.y)
+	return Harta.zona_utila_din(
+		Harta.ZONA_PLANSA, ECRAN, ORIGINE_PANZA,
+		Vector2(ECRAN.x, ECRAN.y - INALTIME_ANTET))

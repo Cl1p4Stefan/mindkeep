@@ -46,14 +46,29 @@ extends Control
 ## `puncte_drum()` din `harta.gd`. Verificarea din `tools/verifica_harta.gd`
 ## numără exact asta, pe aceleași puncte pe care le desenăm aici.
 
-## Lungimea unei liniuțe și a pauzei dintre ele, în pixeli.
+## RITMUL PUNCTATULUI, dat în GROSIMI, nu în pixeli.
 ##
-## Erau 9 și 7,5, cu linii de 5 pixeli grosime: la distanța de la care te uiți
-## la hartă, ieșea un punctat mărunt care se pierdea în textura hârtiei. Acum
-## sunt liniuțe LATE și rare — la fel ca pe hărțile de aventură desenate de
-## mână, unde drumul e făcut din trăsături, nu din puncte.
-const LUNGIME_LINIUTA := 15.0
-const PAUZA_LINIUTA := 11.0
+##   miezul liniuței  = grosime × 1,70   ← partea dreaptă, desenată ca linie
+##   pauza dintre ele = grosime × 1,25
+##
+## De ce în grosimi și nu în pixeli, cum era înainte (15 și 11): fiindcă de la
+## capetele rotunjite încoace, o liniuță e miezul PLUS un capac de o jumătate de
+## grosime la fiecare capăt. Ce se vede pe hârtie e deci `miez + grosime` —
+## adică 2,7 grosimi. Numărul ăsta, 2,7, e PROPORȚIA trăsăturii, și el e ce
+## trebuie ținut constant: o trăsătură de 2,7 ori mai lungă decât lată se
+## citește ca o urmă de peniță, una de 1,2 ori se citește ca o bulină.
+##
+## Cu numere fixe în pixeli, drumul ales (16,5 px gros, cel mai gros de pe
+## hartă) ajungea fix la buline: 15 + 16,5 = 31,5 px lungime la 16,5 lățime.
+## Adică tocmai drumul pe care trebuie să-l vezi cel mai bine arăta cel mai
+## puțin a drum.
+##
+## Cifrele sunt alese ca la 9 px (grosimea obișnuită) să iasă 15,3 și 11,25 —
+## adică exact punctatul de dinainte, cu care hărțile erau deja reglate. Nu e o
+## schimbare de aspect, e aceeași regulă scrisă astfel încât să reziste și la
+## alte grosimi.
+const MIEZ_PE_GROSIME := 1.70
+const PAUZA_PE_GROSIME := 1.25
 
 ## Cât lăsăm liber la capete dacă drumul nu spune singur. Numărul adevărat vine
 ## din hartă, în câmpul „oprire" al fiecărei muchii: ea știe cât de mare e un
@@ -100,8 +115,17 @@ func _deseneaza_drum(muchie: Dictionary) -> void:
 	if capete < oprire * 2.4:
 		oprire = capete * 0.34
 
-	var pas := LUNGIME_LINIUTA + PAUZA_LINIUTA
+	# Pasul = miezul + cele două jumătăți de capac (care fac un `grosime`
+	# întreg) + pauza. Capacele sunt plătite AICI, în pas, ca pauza care se vede
+	# pe hârtie să fie chiar cea cerută, nu ea minus capacele.
+	var miez := grosime * MIEZ_PE_GROSIME
+	var pas := miez + grosime + grosime * PAUZA_PE_GROSIME
 	var parcurs := 0.0
+	# Liniuța curentă, strânsă punct cu punct. O desenăm abia când se termină,
+	# fiindcă un capac rotund are nevoie să ȘTIE unde e capătul — iar asta se
+	# află doar după ce a trecut de el.
+	var liniuta := PackedVector2Array()
+
 	for i in range(1, puncte.size()):
 		var anterior := puncte[i - 1]
 		var punct := puncte[i]
@@ -109,9 +133,42 @@ func _deseneaza_drum(muchie: Dictionary) -> void:
 
 		# Liniuță sau pauză? Poziția pe drum, împărțită la pas, decide singură —
 		# fără să numărăm liniuțe și fără să știm câte încap.
-		var e_liniuta := fmod(parcurs, pas) < LUNGIME_LINIUTA
+		var e_liniuta := fmod(parcurs, pas) < miez
 		var langa_capat := (
 			punct.distance_to(de_la) < oprire or punct.distance_to(la) < oprire
 		)
 		if e_liniuta and not langa_capat:
-			draw_line(anterior, punct, culoare, grosime, true)
+			if liniuta.is_empty():
+				liniuta.append(anterior)
+			liniuta.append(punct)
+		else:
+			_trage_liniuta(liniuta, culoare, grosime)
+			liniuta = PackedVector2Array()
+
+	# Drumul se poate termina în mijlocul unei liniuțe (la o pauză sau lângă un
+	# nod, bucla de mai sus o închide singură; aici prindem doar ultimul caz).
+	_trage_liniuta(liniuta, culoare, grosime)
+
+
+## O liniuță: linia ei frântă, plus un cerc la fiecare capăt.
+##
+## DE CE CERCURI ȘI NU UN „capăt rotunjit"
+##
+## Fiindcă `draw_polyline` nu are așa ceva. În Godot, o linie desenată se
+## termină TĂIAT, în unghi drept — la 6 px nu se vedea, la 9-16,5 px fiecare
+## liniuță arată ca o cărămidă. Un cerc cu raza `grosime / 2` pus fix pe capăt
+## umple exact colțurile care lipsesc, deci rezultatul e nedeosebit de un capăt
+## rotund adevărat, și costă două apeluri de desen.
+##
+## Cercurile se desenează ANTIALIASATE (ultimul `true`). Fără el, capacul are
+## trepte vizibile tocmai fiindcă e mic — iar o liniuță cu capete zimțate arată
+## mai rău decât una tăiată drept.
+func _trage_liniuta(
+	liniuta: PackedVector2Array, culoare: Color, grosime: float
+) -> void:
+	if liniuta.size() < 2:
+		return
+	draw_polyline(liniuta, culoare, grosime, true)
+	var raza := grosime * 0.5
+	draw_circle(liniuta[0], raza, culoare, true, -1.0, true)
+	draw_circle(liniuta[liniuta.size() - 1], raza, culoare, true, -1.0, true)

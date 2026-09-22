@@ -413,20 +413,19 @@ func _proba_pe_scena_adevarata() -> void:
 
 ## Zona utilă, pentru fereastra implicită.
 ##
-## Aici SE COPIAZĂ o formulă din joc, și e singura copie din tot fișierul.
-## Motivul: `_zona_utila()` întreabă `get_viewport_rect()` și poziția pânzei,
-## adică lucruri care există doar când jocul chiar rulează. Ce se copiază e
-## doar traducerea „fracțiuni de ecran → pixeli", nu așezarea nodurilor.
+## Nu mai e nicio formulă copiată aici: `Harta.zona_utila_din()` e chiar
+## socoteala jocului, doar cu ecranul și pânza primite din afară — fiindcă
+## `_zona_utila()` le-ar cere de la `get_viewport_rect()` și de la pânză, adică
+## de la lucruri care există numai când jocul chiar rulează.
+##
+## Harta GENERATĂ stă pe `ZONA_PERGAMENT`, cea tăiată sub linia cărții. Vezi
+## nota de acolo: panglica e un dreptunghi cu benzi, deci nu poate ocoli un colț
+## interzis. Planșele desenate au zona lor, mai largă (`ZONA_PLANSA`), verificată
+## în `verifica_plansa.gd`.
 func _zona_de_test() -> Rect2:
-	var hartie := Rect2(
-		Harta.ZONA_PERGAMENT.position * ECRAN, Harta.ZONA_PERGAMENT.size * ECRAN)
-	hartie.position.y -= INALTIME_ANTET
-	var zona := hartie.intersection(
-		Rect2(Vector2.ZERO, Vector2(ECRAN.x, ECRAN.y - INALTIME_ANTET)))
-	var margine := Vector2(
-		Harta.MARIME_NOD.x * 0.5 + Harta.MARGINE_PANZA,
-		Harta.MARIME_NOD.y * 0.5 + Harta.MARGINE_PANZA)
-	return zona.grow_individual(-margine.x, -margine.y, -margine.x, -margine.y)
+	return Harta.zona_utila_din(
+		Harta.ZONA_PERGAMENT, ECRAN, Vector2(0.0, INALTIME_ANTET),
+		Vector2(ECRAN.x, ECRAN.y - INALTIME_ANTET))
 
 
 # ─────────────────────────────────────────────────────────────

@@ -323,6 +323,9 @@ var plansa := ""
 ## fi un graf de referințe încrucișate — imposibil de scris în JSON fără să-l
 ## desfaci oricum în indici.
 ##
+## „spre” NU mai e un sens de mers: fiecare drum e scris o singură dată, la unul
+## din capete, dar se merge în ambele sensuri. Vecinii reali îi dă `vecini()`.
+##
 ## „samanta” e a nodului, nu a hărții: lupta de la nodul 6 își alege inamicul
 ## din ea, deci alege ACELAȘI inamic de fiecare dată când reiei expediția —
 ## fără ca expediția să fie nevoită să știe ce e un inamic.
@@ -493,11 +496,67 @@ func nod_curent() -> Dictionary:
 	return harta[pozitie]
 
 
+## VECINII unui nod: toate nodurile legate de el printr-un drum, ÎN ORICE SENS.
+##
+## „spre” rămâne scris într-un singur sens — așa vine din planșă și din
+## generator, și așa stă în save. Dar sensul ăla nu mai înseamnă „încotro ai
+## voie”, ci doar „cum a fost scris drumul”. Un drum se merge în ambele
+## sensuri, deci vecinii sunt reuniunea: cei spre care duce nodul, plus cei
+## care duc spre el.
+##
+## De ce drumurile erau cu sens unic și de ce nu mai sunt: pe harta generată,
+## de la stânga la dreapta, sensul se citea din desen, deci nu deranja pe
+## nimeni. Pe planșa desenată, nodurile stau oriunde, iar un drum care INTRĂ în
+## nodul tău arăta exact ca unul care iese. Harta îți arăta o cărare pe care
+## n-aveai voie s-o iei — bug raportat pe sămânța 37.
+##
+## Calculat la cerere, nu ținut într-un câmp „dinspre”: ar fi o a doua copie a
+## acelorași drumuri, de salvat și de ținut sincronizată cu prima. La 16
+## noduri, a trece prin toată harta e gratis.
+##
+## Comparația e cu `int(...) ==`, nu cu `in`: în Godot 4, `[3.0].has(3)` e
+## FALS (compară și tipul), iar un „spre” venit din JSON e plin de float-uri.
+func vecini(id: int) -> Array[int]:
+	var lista: Array[int] = []
+	if id < 0 or id >= harta.size():
+		return lista
+	for brut in harta[id].get("spre", []):
+		var urmator := int(brut)
+		if not (urmator in lista):
+			lista.append(urmator)
+	for nod in harta:
+		var alt := int(nod["id"])
+		if alt == id or alt in lista:
+			continue
+		for brut in nod.get("spre", []):
+			if int(brut) == id:
+				lista.append(alt)
+				break
+	return lista
+
+
 ## În ce noduri poți intra ACUM.
 ##
 ## La început (`pozitie == -1`) sunt toate nodurile de adâncime 0 — adică
-## intrarea pe hartă. După aceea, exact ce scrie în „spre” la nodul curent.
-## Lista goală înseamnă „ai ajuns la capăt”: vezi `la_capat()`.
+## intrarea pe hartă. După aceea: orice vecin (vezi `vecini()`) care
+## îndeplinește două condiții.
+##
+##   1. N-AI FOST ÎNCĂ ACOLO. „Drumul nu se poate reface”: poți merge în orice
+##      sens, dar nu treci de două ori prin același loc.
+##
+##   2. DE ACOLO SE MAI POATE AJUNGE LA BOSS, fără să calci pe unde ai fost.
+##      Asta e condiția care face drumurile în ambele sensuri sigure. Fără ea,
+##      te-ai putea întoarce într-un colț al hărții din care toate ieșirile duc
+##      prin noduri deja parcurse — și ai rămâne pe hartă, fără niciun nod de
+##      apăsat și fără niciun final.
+##
+## De ce condiția 2 nu se poate strica pe parcurs: dacă din vecinul V există un
+## drum curat până la Boss, primul nod de pe drumul ăla e, la pasul următor, un
+## vecin al lui V care îndeplinește și el condiția 2. Deci cât timp nu ești pe
+## Boss, lista nu e niciodată goală. (Verificat și prin simulare: 15.000 de
+## expediții pe grafuri la întâmplare, niciuna înfundată.)
+##
+## Pe Boss lista e goală dinadins: Bossul e capătul, nu o răscruce.
 func accesibile() -> Array[int]:
 	var lista: Array[int] = []
 	if pozitie < 0:
@@ -505,14 +564,56 @@ func accesibile() -> Array[int]:
 			if int(nod["adancime"]) == 0:
 				lista.append(int(nod["id"]))
 		return lista
-	for id in nod_curent().get("spre", []):
-		lista.append(int(id))
+
+	var tinta := id_boss()
+	if pozitie == tinta:
+		return lista
+
+	for vecin in vecini(pozitie):
+		if vecin in parcurse:
+			continue
+		if tinta >= 0 and _pasi_intre(vecin, tinta, parcurse) < 0:
+			continue
+		lista.append(vecin)
 	return lista
 
 
-## Ai terminat drumul? (Ultimul nod n-are unde să ducă.)
+## Ai terminat drumul?
+##
+## Înainte răspunsul era „n-ai unde merge mai departe”. Cu drumuri în ambele
+## sensuri, asta nu mai e o definiție a capătului — capătul e BOSSUL. Plasa de
+## jos (lista goală) rămâne doar pentru o hartă fără Boss, care n-ar trebui să
+## existe.
 func la_capat() -> bool:
-	return pozitie >= 0 and accesibile().is_empty()
+	if pozitie < 0:
+		return false
+	var tinta := id_boss()
+	if tinta >= 0:
+		return pozitie == tinta
+	return accesibile().is_empty()
+
+
+## CEL MAI SCURT DRUM de la `de_la` la `pana_la`, în pași, fără să treacă prin
+## vreun nod din `ocolite`. `-1` dacă nu există.
+##
+## `de_la` are voie să fie în `ocolite` (e nodul pe care stai, deci e parcurs);
+## doar nodurile NOI întâlnite pe drum sunt verificate. Un BFS, fiindcă toți
+## pașii costă la fel: primul drum găsit e și cel mai scurt.
+func _pasi_intre(de_la: int, pana_la: int, ocolite: Array[int]) -> int:
+	var pasi := {de_la: 0}
+	var coada: Array[int] = [de_la]
+	var i := 0
+	while i < coada.size():
+		var aici: int = coada[i]
+		i += 1
+		if aici == pana_la:
+			return int(pasi[aici])
+		for urmator in vecini(aici):
+			if pasi.has(urmator) or urmator in ocolite:
+				continue
+			pasi[urmator] = int(pasi[aici]) + 1
+			coada.append(urmator)
+	return -1
 
 
 ## `adancime_maxima()` A DISPĂRUT de aici, și merită spus de ce, fiindcă e genul
@@ -554,8 +655,10 @@ func id_boss() -> int:
 ## generată dă exact numărul vechi (straturi rămase), deci nu s-a pierdut nimic
 ## din informație — s-a pierdut doar presupunerea că toate drumurile sunt egale.
 ##
-## Tot un BFS, ca la adâncimi, dar pornit din nodul CURENT. Înainte de intrarea
-## pe hartă (`pozitie == -1`) pornește din prima intrare.
+## Pornit din nodul CURENT (înainte de intrarea pe hartă, din prima intrare),
+## pe drumuri în ambele sensuri și FĂRĂ nodurile parcurse — aceleași reguli ca
+## `accesibile()`. Altfel antetul ar număra pași printr-un nod în care nu mai
+## ai voie să intri.
 func pasi_pana_la_boss() -> int:
 	var tinta := id_boss()
 	if tinta < 0:
@@ -568,20 +671,7 @@ func pasi_pana_la_boss() -> int:
 			return 0
 		pornire = intrari[0]
 
-	var pasi := {pornire: 0}
-	var coada: Array[int] = [pornire]
-	var i := 0
-	while i < coada.size():
-		var aici: int = coada[i]
-		i += 1
-		if aici == tinta:
-			return int(pasi[aici])
-		for id in harta[aici].get("spre", []):
-			var urmator := int(id)
-			if not pasi.has(urmator):
-				pasi[urmator] = int(pasi[aici]) + 1
-				coada.append(urmator)
-	return 0
+	return maxi(_pasi_intre(pornire, tinta, parcurse), 0)
 
 
 # ─────────────────────────────────────────────────────────────

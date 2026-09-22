@@ -165,6 +165,21 @@ var activ := false
 ## rândul lui CURENT — adică două locuri de schimbat la fiecare reglaj.
 var terminat := false
 
+## Stă figurina pe nodul ăsta? (vezi `figurina.gd`)
+##
+## A treia întrebare independentă, după stare și `terminat`, și tot dintr-un
+## motiv de rol: ea nu spune nimic despre nod, spune ce se întâmplă DEASUPRA
+## lui. Un nod acoperit nu mai desenează nici aura, nici simbolul tipului —
+## primul fiindcă figurina răspunde deja la „unde sunt acum" mai bine decât o
+## pată de lumină, al doilea fiindcă ar rămâne oricum sub soclul ei, iar un
+## simbol pe jumătate ascuns arată a greșeală de desen. Rămâne X-ul, care e
+## lat cât nodul și se vede de jur împrejurul tălpii.
+##
+## Nu e „starea CURENT face asta". E răspunsul hărții la o întrebare de
+## FIȘIERE: dacă PNG-ul figurinei lipsește, nimeni nu acoperă nimic și nodul
+## curent se desenează exact ca înainte, cu aură și cu sabia lui.
+var acoperit := false
+
 ## ─────────────────────────────────────────────────────────────
 ## IMAGINI, CU DESENUL DIN COD CA PLASĂ
 ##
@@ -231,6 +246,24 @@ const MARIMI := {
 	Expeditie.Nod.ODIHNA: 0.9,
 }
 
+## CÂT DE MULT POATE SĂ DIFERE UN NOD DE FRATELE LUI, ca fracțiune: 0.12 = ±12%.
+##
+## Ierarhia din `MARIMI` spune „bossul e mai important decât o luptă". Asta e
+## altceva, și e singurul scop: o hartă pe care toate Luptele sunt milimetric
+## identice arată ȘTAMPILATĂ, nu desenată. Douăsprezece săbii de aceeași
+## mărime, la aceeași distanță, sunt o grilă oricât de șerpuit ar fi drumul
+## dintre ele.
+##
+## ±12% e pragul la care ochiul simte neregularitatea fără s-o poată măsura.
+## Sub 8% nu se vede deloc; peste 20% începi să crezi că mărimea ÎNSEAMNĂ ceva
+## — iar dacă ar însemna, ar contrazice `MARIMI`, care e singurul loc unde
+## mărimea chiar spune ceva.
+##
+## Vine din sămânța nodului, nu dintr-un zar proaspăt: aceeași expediție
+## reluată arată la fel, iar o captură de ecran dintr-un bug raportat se poate
+## reproduce. Regula întregii hărți, ținută și aici.
+const VARIATIE_MARIME := 0.12
+
 ## Texturile încărcate, ținute pe CLASĂ, nu pe nod: paisprezece noduri pe
 ## hartă ar fi însemnat paisprezece încărcări ale aceluiași fișier. `static
 ## var` = o singură copie pentru toți. Cheia e tipul, valoarea e textura sau
@@ -296,17 +329,18 @@ static func _textura(tip_cerut: int) -> Texture2D:
 ## `samanta` vine din nodul de hartă și face două lucruri, amândouă pentru
 ## aceeași senzație de „desenat de mână": înclină simbolul cu câteva grade și
 ## decalează pornirea pulsului, ca nodurile să nu respire la unison.
-## `terminat` vine ultimul și cu valoare implicită fiindcă e informație EN
-## PLUS, nu una de care desenul are neapărat nevoie: un apel vechi, cu patru
-## argumente, se comportă exact ca înainte.
+## `terminat` și `acoperit` vin ultimele și cu valori implicite fiindcă sunt
+## informație EN PLUS, nu una de care desenul are neapărat nevoie: un apel
+## vechi, cu patru argumente, se comportă exact ca înainte.
 func configureaza(
 	id_nou: int, tip_nou: int, stare_noua: Stare, samanta: int,
-	terminat_nou := false
+	terminat_nou := false, acoperit_nou := false
 ) -> void:
 	id = id_nou
 	tip = tip_nou
 	stare = stare_noua
 	terminat = terminat_nou
+	acoperit = acoperit_nou
 	activ = stare == Stare.ACCESIBIL
 
 	var infatisare: Dictionary = INFATISARI[stare]
@@ -325,15 +359,27 @@ func configureaza(
 	rng.seed = samanta
 	inclinare = rng.randf_range(-8.0, 8.0)
 	decalaj = rng.randf_range(0.0, durata_respiratie)
+	# Al TREILEA zar, și e trecut ultimul dinadins: fiecare `randf_range` mută
+	# generatorul mai departe, deci o extragere strecurată înaintea celorlalte
+	# le-ar fi schimbat și pe ele. Adăugat la coadă, înclinările și decalajele
+	# de până acum rămân bit cu bit aceleași — harta e doar mai puțin regulată,
+	# nu alta.
+	scara_fixa = rng.randf_range(1.0 - VARIATIE_MARIME, 1.0 + VARIATIE_MARIME)
 
 	mouse_default_cursor_shape = (
 		Control.CURSOR_POINTING_HAND if activ else Control.CURSOR_ARROW
 	)
 
+	# Un nod acoperit nu desenează decât un X. Un X care pulsează sub o
+	# figurină nemișcată nu arată a nod viu, arată a eroare de desen — și, pe
+	# deasupra, l-ar redesena de 60 de ori pe secundă degeaba.
+	if acoperit:
+		amplitudine = 0.0
+
 	# Un nod care nu pulsează n-are ce căuta în `_process`. Zece noduri care
 	# se redesenează degeaba de 60 de ori pe secundă nu se văd azi, dar e
 	# fix genul de risipă care se adună.
-	set_process(amplitudine > 0.0 or stare == Stare.CURENT)
+	set_process(amplitudine > 0.0 or (stare == Stare.CURENT and not acoperit))
 	queue_redraw()
 
 
@@ -344,7 +390,23 @@ func configureaza(
 ## Suprascrie metoda goală din `Silueta`. Ea a pregătit deja caseta, pivotul și
 ## scara de respirație — aici desenăm doar, în ordinea în care se așază
 ## straturile: aura, halo-ul, simbolul, bararea.
+##
+## Dacă nodul e ACOPERIT de figurină, primele trei sar cu totul și rămâne doar
+## bararea. Un singur `if`, în jurul straturilor care s-ar fi desenat sub talpa
+## ei — motivul întreg e la `acoperit`, sus.
 func _deseneaza_silueta() -> void:
+	if not acoperit:
+		_deseneaza_straturile()
+
+	# X-ul nu ține de stare, ci de „s-a consumat nodul ăsta?". PARCURS e
+	# consumat prin definiție; CURENT numai dacă harta ne-a spus-o. Așa nodul
+	# pe care stai apare ca în referință: tăiat, cu figurina peste tăietură.
+	if stare == Stare.PARCURS or (stare == Stare.CURENT and terminat):
+		_deseneaza_taietura()
+
+
+## Aura, halo-ul și simbolul tipului — tot ce ar fi rămas ascuns sub o figurină.
+func _deseneaza_straturile() -> void:
 	var infatisare: Dictionary = INFATISARI[stare]
 	var spor := SPOR_HOVER if _hover else 0.0
 
@@ -389,12 +451,6 @@ func _deseneaza_silueta() -> void:
 		_deseneaza_imaginea(textura, cerneala.a)
 	elif _desene.has(tip):
 		_desene[tip].call(cerneala)
-
-	# X-ul nu ține de stare, ci de „s-a consumat nodul ăsta?". PARCURS e
-	# consumat prin definiție; CURENT numai dacă harta ne-a spus-o. Așa nodul
-	# pe care stai apare ca în referință: și cu aură, și tăiat.
-	if stare == Stare.PARCURS or (stare == Stare.CURENT and terminat):
-		_deseneaza_taietura()
 
 
 ## Imaginea nodului, pusă în casetă ca un poligon cu textură.
