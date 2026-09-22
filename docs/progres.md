@@ -30,6 +30,66 @@ restul rămâne placeholder. Bucla de luptă e în continuare cea validată, nu 
 
 ---
 
+## DRUMUL AJUNGE LA ICOANĂ (23 septembrie 2026) — tăiat pe alfa, nu pe o rază
+
+Plângerea: între capătul liniei punctate și simbolul nodului rămânea un gol.
+Cel mai vizibil la săbii — subțiri și în diagonală — unde arăta ca și cum
+drumul nici nu ducea acolo.
+
+### De ce apărea
+
+Nu din marginile transparente ale PNG-urilor (bounding box-ul alfa e strâns:
+29–483 din 512) și nu din tiparul de liniuțe. Din `OPRIRE_LA_NOD := 56`:
+**o rază fixă, aceeași în toate direcțiile.** O rază fixă presupune că fiecare
+simbol e un DISC. Niciunul nu e. Măsurat, cerneala de la centru spre afară:
+
+| icoană | pe orizontală | în diagonală | oprirea veche |
+|---|---|---|---|
+| săbii | 8 px | 42 px | 56 px |
+| coroană (boss) | 30 px | 42 px | 56 px |
+| craniu | 23 px | 40 px | 56 px |
+| foc de tabără | 18 px | 32 px | 56 px |
+
+La săbii, pe orizontală: **48 px de gol.** Exact ce se vedea.
+
+### Ce s-a schimbat
+
+Drumul se taie acum la **ultimul pixel de cerneală al icoanei**, citit din
+imagine:
+
+- `Silueta.pregateste_caseta()` — aritmetica de casetă și pivot a ieșit din
+  `_draw()` ca s-o poată chema și altcineva. Aceeași formulă, un singur loc.
+- `SimbolNod.are_cerneala(punct_local)` — merge PE DOS prin
+  `_deseneaza_imaginea()`: din pixel pe ecran înapoi în alfa din PNG, desfăcând
+  respirația (luată la maxim, ca drumul să nu intre sub simbol când pulsează) și
+  înclinarea. `Image` cache-uit pe clasă, cu `decompress()`.
+- `Harta._taiat_la_simboluri()` — pipăie drumul din centru spre afară, din
+  pixel în pixel, **pe curbă**, pe o bandă lată cât liniuța, și ține ULTIMUL
+  „da" (nu primul „nu": simbolurile au goluri — focul, coroana). Plus
+  `RESPIRO_DRUM := 3`, singurul număr de reglat. Se calculează **o dată**, la
+  reașezarea hărții.
+- `panza.gd` — nu mai primește `"oprire"` și n-o mai folosește: primește drumul
+  gata tăiat. În plus, tiparul de liniuțe nu mai curge cu `fmod`, ci se
+  distribuie: `n` liniuțe de 15 px fix, cu pauzele întinse ca să umple exact
+  drumul, deci **fiecare drum începe ȘI se termină cu o trăsătură plină**.
+
+`OPRIRE_LA_NOD` rămâne, dar doar ca plasă: nodurile fără PNG (desenate din
+poligoane) n-au alfa de citit. E folosită și în verificatoarele din `tools/`,
+unde e zona de lângă nod în care încrucișările nu se numără.
+
+Măsurat pe harta `harta_01.json`: tăieturile variază acum între **7,8 și 45,9 px**
+per capăt, după icoană și direcție, față de 56 uniform. Amândouă verificatoarele
+headless trec neschimbate.
+
+### De reținut
+
+Tăierea e literal „unde se termină cerneala PE DIRECȚIA AIA". La o icoană
+concavă, ca săbiile încrucișate, asta înseamnă că linia poate intra în cutia
+simbolului și se poate opri aproape de centru — acolo chiar nu e desen. Dacă
+vreodată pare că drumul trece prin icoană, `RESPIRO_DRUM` e butonul.
+
+---
+
 ## HARTA UMPLE PERGAMENTUL (23 septembrie 2026) — pânza ia toată pagina
 
 Plângerea era simplă și se vedea dintr-o privire: nodurile stăteau înghesuite

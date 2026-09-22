@@ -537,10 +537,29 @@ const AMESTEC_LINIAR := 0.7
 const GROSIME_DRUM := 6.0
 const GROSIME_DRUM_ALES := 11.0
 
-## Unde se OPRESC liniuțele, în jurul centrului unui nod. Mai mare decât
-## jumătatea nodului (46), ca drumul să se termine VIZIBIL înainte de simbol:
-## o liniuță care atinge haloul pare că trece prin nod, nu că ajunge la el.
+## Unde se OPRESC liniuțele în jurul centrului unui nod, CÂND nu se poate afla
+## altfel. E plasa de siguranță, nu regula: se folosește doar la nodurile
+## desenate din poligoane (PNG lipsă), unde nu există imagine de citit.
+##
+## Regula adevărată e `_cerneala_pana_unde()`: drumul se taie la ultimul pixel
+## de cerneală al simbolului. Motivul întreg e acolo; pe scurt, o rază fixă
+## presupune că fiecare simbol e un cerc, iar săbiile sunt un X subțire —
+## cerneala lor se termină la 8 px de centru pe orizontală, deci cifra de mai
+## jos lăsa un gol de aproape jumătate de nod.
+##
+## Rămâne folosită și de verificatoarele din `tools/`, ca zonă de lângă nod în
+## care încrucișările nu se numără. Acolo o valoare generoasă e ce trebuie:
+## drumurile care pleacă din același nod se apropie oricum lângă el.
 const OPRIRE_LA_NOD := 56.0
+
+## Câți pixeli de hârtie goală rămân între cerneala simbolului și prima
+## liniuță de drum. Ăsta e numărul de reglat dacă drumul pare prea lipit (sau
+## prea depărtat) de icoane — singurul.
+const RESPIRO_DRUM := 3.0
+
+## Din cât în cât se pipăie drumul când se caută capătul cernelii. Un pixel:
+## mai fin n-are ce arăta pe un ecran, mai grosolan ar rata vârful unei săbii.
+const PAS_CERNEALA := 1.0
 
 ## Culorile drumurilor, în tonuri de CERNEALĂ. Trei stări, trei nuanțe:
 ##   parcurs   — pe unde ai fost deja. Cerneală spălată: e istorie, nu opțiune.
@@ -1809,16 +1828,210 @@ func _muchii(drumuri: Dictionary) -> Array[Dictionary]:
 				culoare = CULOARE_DRUM_DESCHIS
 				grosime = GROSIME_DRUM_ALES
 
+			# Drumul ajunge TĂIAT la pânză, nu întreg cu o instrucțiune de
+			# „lasă atâta liber la capete". Motivul e același cu al despărțirii
+			# de dinainte, dus un pas mai departe: cât de departe începe
+			# cerneala unui simbol e o întrebare despre NODURI, iar pânza nu
+			# știe ce e un nod. Înainte îi trimiteam un număr; acum îi trimitem
+			# exact linia pe care o are de desenat, iar ea n-o mai scurtează
+			# deloc. Un desenator care nu mai are nicio părere despre capete.
 			muchii.append({
-				"puncte": drumuri[id][urmator],
+				"puncte": _taiat_la_simboluri(
+					drumuri[id][urmator], id, urmator, grosime),
 				"culoare": culoare,
 				"grosime": grosime,
-				# Unde se opresc liniuțele la capete. Trimisă tot de AICI, nu
-				# ghicită în pânză: harta e singura care știe cât de mare e un
-				# nod, iar pânza nu are de ce să afle ce e un nod.
-				"oprire": OPRIRE_LA_NOD,
 			})
 	return muchii
+
+
+# ─────────────────────────────────────────────────────────────
+# TĂIEREA DRUMULUI LA MARGINEA SIMBOLULUI
+#
+# Problema, în cuvinte simple: drumul punctat pleacă din CENTRUL nodului, deci
+# prima lui bucată trece pe sub simbol. Trebuie tăiată. Întrebarea e unde.
+#
+# Răspunsul de dinainte era „la 56 de pixeli de centru, oricare ar fi nodul".
+# Merge dacă toate simbolurile umplu caseta ca un disc. Niciunul nu o umple,
+# iar săbiile — două lame subțiri în diagonală — n-au cerneală decât până la
+# 8 px de centru pe orizontală. Drumul se oprea la 56. Restul de 48 era golul.
+#
+# Răspunsul de acum: mergem pe drum din centru spre afară, din pixel în pixel,
+# și întrebăm imaginea nodului „aici mai ești tu?". Ultimul „da" e locul unde
+# se termină simbolul PE DIRECȚIA AIA. Adăugăm `RESPIRO_DRUM` și tăiem.
+#
+# Trei lucruri fără de care n-ar merge:
+#
+#   • ULTIMUL da, nu primul nu. Simbolurile au goluri (aerul dintre limbile de
+#     flacără, spațiile dintre vârfurile coroanei). „Primul transparent" s-ar
+#     opri la primul gol și am fi înapoi de unde am plecat.
+#
+#   • Se merge PE DRUM, nu pe coarda dintre capete. Drumurile sunt curbe pe
+#     panglică; o dreaptă dusă din centru ar ieși din curbă exact acolo unde ne
+#     trebuie precizie, adică lângă nod.
+#
+#   • Se pipăie o BANDĂ lată cât drumul, nu un fir. O liniuță are 6-11 px
+#     grosime; dacă am întreba doar linia din mijloc, un gol de 4 px din simbol
+#     ar fi declarat „hârtie liberă", iar liniuța ar intra sub cerneală cu
+#     marginile ei.
+#
+# Se calculează O SINGURĂ DATĂ, la reașezarea hărții: `_muchii()` e chemată
+# doar din `_aseaza_nodurile()`, nu la fiecare cadru.
+# ─────────────────────────────────────────────────────────────
+
+## Drumul, scurtat la amândouă capetele până la marginea vizibilă a simbolului.
+func _taiat_la_simboluri(
+	puncte: PackedVector2Array, id_a: int, id_b: int, grosime: float
+) -> PackedVector2Array:
+	if puncte.size() < 2:
+		return puncte
+	return _scurtat(
+		puncte,
+		_oprirea_la(puncte, id_a, true, grosime),
+		_oprirea_la(puncte, id_b, false, grosime))
+
+
+## Cât trebuie tăiat la un capăt: până unde ține cerneala, plus respiro.
+##
+## Dacă nodul n-are imagine (e desenat din poligoane), nu există alfa de citit
+## și ne întoarcem la raza fixă. Plasa asta e singurul motiv pentru care
+## `OPRIRE_LA_NOD` mai e folosită la desen.
+func _oprirea_la(
+	puncte: PackedVector2Array, id_nod: int, de_la_inceput: bool, grosime: float
+) -> float:
+	if not simboluri_nod.has(id_nod):
+		return OPRIRE_LA_NOD
+	var simbol: SimbolNod = simboluri_nod[id_nod]
+	if not simbol.are_imagine():
+		return OPRIRE_LA_NOD
+	return _cerneala_pana_unde(puncte, simbol, de_la_inceput, grosime) + RESPIRO_DRUM
+
+
+## Ultimul punct de cerneală, mergând pe drum dinspre nod spre afară.
+##
+## Întoarce distanța MĂSURATĂ PE DRUM (nu în linie dreaptă) de la capătul dat.
+## Zero înseamnă „nici măcar sub centru nu e cerneală" — s-ar putea întâmpla la
+## o imagine cu gaură fix în mijloc, și atunci drumul pornește de la respiro.
+func _cerneala_pana_unde(
+	puncte: PackedVector2Array, simbol: SimbolNod, de_la_inceput: bool,
+	grosime: float
+) -> float:
+	var raza := simbol.raza_cernelii()
+	# Punctele sunt în coordonatele PÂNZEI, iar simbolul e copilul ei: scăzând
+	# colțul lui din stânga-sus ajungem în coordonatele LUI, cele în care își
+	# desenează imaginea.
+	var coltul: Vector2 = simbol.position
+	var n := puncte.size()
+
+	var ultima := 0.0
+	var parcurs := 0.0
+	var i := 0
+	while parcurs < raza:
+		# Mergem pe segmente, în ordinea dinspre capătul care ne interesează.
+		var a: Vector2
+		var b: Vector2
+		if de_la_inceput:
+			if i + 1 >= n:
+				break
+			a = puncte[i]
+			b = puncte[i + 1]
+		else:
+			if n - 2 - i < 0:
+				break
+			a = puncte[n - 1 - i]
+			b = puncte[n - 2 - i]
+		i += 1
+
+		var lungime := a.distance_to(b)
+		if lungime < 0.0001:
+			continue
+		var directie := (b - a) / lungime
+		# Perpendiculara pe drum: pe ea se pipăie lățimea liniuței.
+		var normala := Vector2(-directie.y, directie.x)
+
+		var s := 0.0
+		while s <= lungime and parcurs + s < raza:
+			if _acoperit(simbol, a + directie * s - coltul, normala, grosime):
+				ultima = parcurs + s
+			s += PAS_CERNEALA
+		parcurs += lungime
+
+	return ultima
+
+
+## Atinge liniuța cerneala simbolului, undeva pe lățimea ei?
+##
+## Trei sonde: mijlocul și cele două margini. Mai multe n-ar schimba nimic la
+## grosimile pe care le avem; una singură ar rata golurile înguste.
+func _acoperit(
+	simbol: SimbolNod, punct_local: Vector2, normala: Vector2, grosime: float
+) -> bool:
+	var jumatate := normala * grosime * 0.5
+	return (
+		simbol.are_cerneala(punct_local)
+		or simbol.are_cerneala(punct_local + jumatate)
+		or simbol.are_cerneala(punct_local - jumatate)
+	)
+
+
+## Drumul fără primii `de_la` și ultimii `pana_la` pixeli de lungime.
+##
+## Tăietura se face PE CURBĂ: punctul nou de capăt se interpolează în segmentul
+## în care cade tăietura, deci drumul scurtat merge exact pe unde mergea cel
+## întreg — nu se îndreaptă la capete.
+##
+## Dacă cele două tăieturi ar mânca tot drumul (două noduri apropiate, cu
+## simboluri mari), se micșorează amândouă proporțional până rămâne `RAMAS_MINIM`
+## de desenat. Mai bine un drum scurt decât unul care dispare: un drum lipsă se
+## citește ca „nu poți merge acolo", adică o minciună despre hartă.
+func _scurtat(
+	puncte: PackedVector2Array, de_la: float, pana_la: float
+) -> PackedVector2Array:
+	const RAMAS_MINIM := 12.0
+
+	# Lungimea cumulată până la fiecare punct. O singură trecere prin drum,
+	# folosită pe urmă de trei ori — și de tăiere, și de cele două interpolări.
+	var lungimi := PackedFloat32Array()
+	var total := 0.0
+	lungimi.append(0.0)
+	for i in range(1, puncte.size()):
+		total += puncte[i - 1].distance_to(puncte[i])
+		lungimi.append(total)
+
+	de_la = maxf(de_la, 0.0)
+	pana_la = maxf(pana_la, 0.0)
+	var cerut := de_la + pana_la
+	if cerut > total - RAMAS_MINIM and cerut > 0.0:
+		var factor := maxf(total - RAMAS_MINIM, 0.0) / cerut
+		de_la *= factor
+		pana_la *= factor
+
+	var start := de_la
+	var stop := total - pana_la
+	if stop <= start:
+		return PackedVector2Array()
+
+	var rezultat := PackedVector2Array()
+	rezultat.append(_punct_la(puncte, lungimi, start))
+	for i in range(puncte.size()):
+		if lungimi[i] > start and lungimi[i] < stop:
+			rezultat.append(puncte[i])
+	rezultat.append(_punct_la(puncte, lungimi, stop))
+	return rezultat
+
+
+## Punctul aflat la distanța `unde`, măsurată pe drum de la început.
+func _punct_la(
+	puncte: PackedVector2Array, lungimi: PackedFloat32Array, unde: float
+) -> Vector2:
+	if unde <= 0.0:
+		return puncte[0]
+	for i in range(1, puncte.size()):
+		if lungimi[i] >= unde:
+			var bucata := lungimi[i] - lungimi[i - 1]
+			if bucata < 0.0001:
+				return puncte[i]
+			return puncte[i - 1].lerp(puncte[i], (unde - lungimi[i - 1]) / bucata)
+	return puncte[puncte.size() - 1]
 
 
 ## Au fost nodurile astea două, una după alta, chiar pe drumul meu?

@@ -75,6 +75,21 @@ func _process(delta: float) -> void:
 ## Godot cheamă `_draw()`. Noi pregătim aici caseta și pivotul, apoi lăsăm
 ## fiecare siluetă să-și deseneze forma. Așa nimeni nu poate uita pregătirea.
 func _draw() -> void:
+	pregateste_caseta()
+	_deseneaza_silueta()
+
+
+## Caseta și pivotul, recalculate din mărimea de ACUM.
+##
+## Aritmetica asta stătea în `_draw()`. A ieșit afară fiindcă i-a apărut un al
+## doilea client: harta are nevoie să știe unde cade cerneala unui simbol
+## ÎNAINTE ca simbolul să fi apucat să se deseneze măcar o dată (vezi
+## `SimbolNod.are_cerneala()` și tăierea drumurilor din `harta.gd`).
+##
+## Aceeași formulă chemată din două locuri e mai bună decât aceeași formulă
+## SCRISĂ în două locuri: în varianta a doua, ziua în care schimbi proporția
+## siluetei o schimbi doar într-una dintre copii și afli abia din desen.
+func pregateste_caseta() -> void:
 	var inaltime := size.y
 	var latime := inaltime * proportie
 	if latime > size.x:            # cutia e mai îngustă decât proporția cerută
@@ -82,7 +97,6 @@ func _draw() -> void:
 		inaltime = latime / proportie
 	_caseta = Rect2((size.x - latime) * 0.5, (size.y - inaltime) * 0.5, latime, inaltime)
 	_pivot = _caseta.position + Vector2(_caseta.size.x * 0.5, _caseta.size.y * ancora_y)
-	_deseneaza_silueta()
 
 
 ## Suprascrisă de fiecare siluetă. Goală aici, intenționat.

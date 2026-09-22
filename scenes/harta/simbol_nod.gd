@@ -289,6 +289,132 @@ static func _textura(tip_cerut: int) -> Texture2D:
 	return textura
 
 
+# ─────────────────────────────────────────────────────────────
+# UNDE SE TERMINĂ CERNEALA SIMBOLULUI
+#
+# Întrebarea vine de la hartă: „până unde am voie să duc drumul punctat?".
+# Răspunsul de dinainte era o RAZĂ FIXĂ (`OPRIRE_LA_NOD`, 56 px), aceeași în
+# toate direcțiile. Pe un craniu, care umple caseta, mergea. Pe SĂBII, care
+# sunt un X subțire, nu: măsurat pe imagine, cerneala sabiei se termină la 8 px
+# de centru pe orizontală — deci drumul se oprea cu 48 de pixeli mai devreme
+# decât trebuia, și se vedea un gol cât jumătate de nod.
+#
+# Raza fixă e greșită din principiu, nu doar prost reglată: ea presupune că
+# simbolul e un CERC. Niciunul nu e. Singurul lucru care știe cu adevărat unde
+# se termină un simbol e imaginea lui, deci o întrebăm pe ea, pixel cu pixel.
+#
+# De ce „ultimul pixel opac dinspre centru spre afară", și nu „primul pixel
+# transparent": fiindcă simbolurile au GĂURI. Focul de tabără are aer între
+# limbi de flacără, coroana are spații între vârfuri. Cu „primul transparent",
+# drumul s-ar opri la prima gaură și golul ar reveni, mai rău. Cu „ultimul
+# opac", găurile din interior sunt sărite, exact cum le sare și ochiul.
+# ─────────────────────────────────────────────────────────────
+
+## De la ce opacitate în sus un pixel din imagine se pune la socoteală drept
+## cerneală. Nu 0: marginile desenelor au un halou de antialiasing de câțiva
+## pixeli, aproape invizibil, care ar întinde simbolul cu o margine falsă.
+const PRAG_CERNEALA := 0.35
+
+## Imaginile (`Image`, nu `Texture2D`), ținute tot pe CLASĂ, din aceleași
+## motive ca `_texturi`, plus unul în plus: `Texture2D.get_image()` COPIAZĂ
+## textura din memoria plăcii video în memoria obișnuită. E o operație scumpă,
+## și ar fi absurd s-o facem de două ori pentru același fișier.
+static var _imagini := {}
+
+
+## Imaginea tipului dat, gata de citit pixel cu pixel, sau `null`.
+##
+## `decompress()` nu e opțional: Godot importă PNG-urile comprimate pentru
+## placa video (VRAM), iar `get_pixel()` pe o imagine comprimată ori se plânge,
+## ori întoarce gunoi. Decomprimarea o aduce înapoi la RGBA obișnuit.
+##
+## `duplicate()` înainte de decomprimare fiindcă imaginea primită poate fi
+## chiar cea ținută de textură — n-avem de ce s-o modificăm pe a altcuiva.
+static func _imagine(tip_cerut: int) -> Image:
+	if _imagini.has(tip_cerut):
+		return _imagini[tip_cerut]
+
+	var imagine: Image = null
+	var textura := _textura(tip_cerut)
+	if textura != null:
+		imagine = textura.get_image()
+		if imagine != null and imagine.is_compressed():
+			imagine = imagine.duplicate() as Image
+			if imagine.decompress() != OK:
+				print("SimbolNod: nu pot decomprima imaginea tipului %d." % tip_cerut)
+				imagine = null
+
+	_imagini[tip_cerut] = imagine
+	return imagine
+
+
+## Nodul ăsta e pictat dintr-o imagine? Dacă nu (PNG lipsă → desenul din
+## poligoane), tăierea pe alfa n-are ce citi, iar harta se întoarce la raza fixă.
+func are_imagine() -> bool:
+	return _imagine(tip) != null
+
+
+## Cea mai mare distanță de la centru la care POATE exista cerneală.
+##
+## Nu e o măsurătoare, e o limită: jumătatea diagonalei pătratului în care e
+## pusă imaginea, la respirația cea mai umflată. Dincolo de ea e sigur hârtie
+## goală, deci căutarea se poate opri — altfel ar merge pe tot drumul, până la
+## celălalt nod.
+func raza_cernelii() -> float:
+	pregateste_caseta()
+	var latura := MARIME_IMAGINE * float(MARIMI.get(tip, 1.0))
+	return latura * _caseta.size.length() * 0.5 * (1.0 + amplitudine)
+
+
+## Are simbolul cerneală în punctul ăsta?
+##
+## `punct_local` e în coordonatele nodului: (0,0) e colțul lui din stânga-sus,
+## la fel ca pentru orice desen din `_draw()`.
+##
+## Funcția merge PE DOS prin tot ce face `_deseneaza_imaginea()`: din pixel pe
+## ecran înapoi în „ce colț de imagine cade aici". Pașii sunt exact aceiași, în
+## ordine inversă — dacă vreodată se schimbă felul în care e așezată imaginea,
+## aici e locul care trebuie schimbat la fel.
+##
+## Respirația se ia la MAXIM (`1.0 + amplitudine`), nu la cea de acum. Calculul
+## se face o singură dată, la construirea hărții, iar simbolul pulsează la
+## nesfârșit după aceea: dacă am măsura la o respirație oarecare, drumul ar
+## intra sub simbol de fiecare dată când acesta se umflă. Măsurat la maxim,
+## marginea liberă doar crește când simbolul se dezumflă.
+func are_cerneala(punct_local: Vector2) -> bool:
+	var imagine := _imagine(tip)
+	if imagine == null:
+		return false
+
+	pregateste_caseta()
+
+	# 1. Desfacem respirația și înclinarea, amândouă făcute în jurul pivotului.
+	var fata_de_pivot := punct_local - _pivot
+	if not is_zero_approx(inclinare):
+		fata_de_pivot = fata_de_pivot.rotated(-deg_to_rad(inclinare))
+	fata_de_pivot /= (1.0 + amplitudine)
+	var brut := _pivot + fata_de_pivot
+
+	# 2. Din pixeli în fracțiuni de casetă (inversul lui `_punct()`).
+	if _caseta.size.x <= 0.0 or _caseta.size.y <= 0.0:
+		return false
+	var fractie := (brut - _caseta.position) / _caseta.size
+
+	# 3. Din fracțiuni de casetă în fracțiuni de IMAGINE. Imaginea nu umple
+	#    caseta: stă centrată în ea, cu latura de mai jos (vezi
+	#    `_deseneaza_imaginea`, de unde sunt copiate cele două rânduri).
+	var latura := MARIME_IMAGINE * float(MARIMI.get(tip, 1.0))
+	var jos := 0.5 - latura * 0.5
+	var uv := (fractie - Vector2(jos, jos)) / latura
+	if uv.x < 0.0 or uv.x >= 1.0 or uv.y < 0.0 or uv.y >= 1.0:
+		return false   # în afara imaginii: hârtie goală, prin definiție
+
+	# 4. În sfârșit, pixelul.
+	var x := clampi(int(uv.x * imagine.get_width()), 0, imagine.get_width() - 1)
+	var y := clampi(int(uv.y * imagine.get_height()), 0, imagine.get_height() - 1)
+	return imagine.get_pixel(x, y).a >= PRAG_CERNEALA
+
+
 ## Tot ce trebuie să știe nodul ca să se deseneze. Un singur apel, cu tot, în
 ## loc de șase proprietăți puse pe rând din afară: așa nu poate exista un nod
 ## „pe jumătate configurat" care apucă să se deseneze o dată greșit.

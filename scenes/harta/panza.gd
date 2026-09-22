@@ -55,10 +55,22 @@ extends Control
 const LUNGIME_LINIUTA := 15.0
 const PAUZA_LINIUTA := 11.0
 
-## Cât lăsăm liber la capete dacă drumul nu spune singur. Numărul adevărat vine
-## din hartă, în câmpul „oprire" al fiecărei muchii: ea știe cât de mare e un
-## nod, pânza nu. Constanta de aici e doar plasa pentru o muchie venită fără el.
-const OPRIRE_IMPLICITA := 48.0
+## ─────────────────────────────────────────────────────────────
+## PÂNZA NU MAI ȘTIE NICI UNDE SE TERMINĂ DRUMUL
+##
+## Înainte primea, pe lângă puncte, un număr: „lasă atâta liber la fiecare
+## capăt". Ea sărea liniuțele mai apropiate de capăt decât atât.
+##
+## Numărul ăla era o rază, deci presupunea că simbolul din capăt e un cerc.
+## Nu e: la săbii, cerneala se termină la 8 px de centru pe orizontală, iar
+## raza era 56 — un gol cât jumătate de nod, exact lucrul pe care drumul
+## trebuia să-l acopere.
+##
+## Acum harta trimite drumul DEJA tăiat la marginea cernelii fiecărui simbol
+## (vezi `_taiat_la_simboluri()` din `harta.gd`, unde e și explicația lungă).
+## Pânza desenează de la primul punct până la ultimul, fără nicio rezervă.
+## Ceea ce e și mai curat: un desenator care mai avea o părere despre capete
+## acum n-o mai are deloc.
 
 var muchii: Array[Dictionary] = []
 
@@ -79,6 +91,21 @@ func _draw() -> void:
 
 
 ## Un drum punctat, pe punctele primite de la hartă.
+##
+## ─────────────────────────────────────────────────────────────
+## DE CE PAUZA SE ÎNTINDE, ȘI NU LINIUȚA
+##
+## Înainte, „liniuță sau pauză?" se răspundea cu `fmod(parcurs, pas)`: tiparul
+## curgea la nesfârșit, iar drumul îl tăia unde se nimerea. Unde se nimerea
+## înseamnă, în jumătate din cazuri, PE O PAUZĂ — adică drumul se termina cu
+## aer, și părea că nu ajunge până la nod chiar și atunci când ajungea.
+##
+## Acum numărăm întâi câte liniuțe încap (`n`), apoi întindem PAUZELE ca cele
+## `n` liniuțe să umple fix drumul. Liniuța rămâne exact cât era (15 px):
+## lungimea ei e ce dă caracterul trăsăturii, deci ea nu se atinge. Pauza,
+## în schimb, nu se citește ca mărime, ci ca ritm — o abatere de un pixel sau
+## doi de la 11 nu se vede, iar în schimbul ei fiecare drum începe ȘI se
+## termină cu o trăsătură plină.
 func _deseneaza_drum(muchie: Dictionary) -> void:
 	var puncte: PackedVector2Array = muchie["puncte"]
 	if puncte.size() < 2:
@@ -86,32 +113,57 @@ func _deseneaza_drum(muchie: Dictionary) -> void:
 
 	var culoare: Color = muchie["culoare"]
 	var grosime := float(muchie["grosime"])
-	var de_la := puncte[0]
-	var la := puncte[puncte.size() - 1]
 
-	# Cât de departe de fiecare capăt începe și se termină punctatul. Trimis de
-	# hartă odată cu muchia: drumul trebuie să se OPREASCĂ vizibil înainte de
-	# simbol, altfel pare că trece pe sub el.
-	var oprire := float(muchie.get("oprire", OPRIRE_IMPLICITA))
-	# Un drum mai scurt decât cele două opriri puse cap la cap n-ar avea ce
-	# desena. Se întâmplă la două noduri apropiate de abaterea organică: fără
-	# linia asta, muchia ar dispărea cu totul și s-ar vedea ca un drum lipsă.
-	var capete := de_la.distance_to(la)
-	if capete < oprire * 2.4:
-		oprire = capete * 0.34
+	var total := 0.0
+	for i in range(1, puncte.size()):
+		total += puncte[i - 1].distance_to(puncte[i])
+	if total <= 0.0:
+		return
 
-	var pas := LUNGIME_LINIUTA + PAUZA_LINIUTA
+	# Câte liniuțe încap cel mai bine. `n` liniuțe și `n−1` pauze acoperă
+	# `n·15 + (n−1)·11`; rotunjirea alege numărul care se apropie cel mai mult
+	# de lungimea reală, în plus sau în minus.
+	var n := int(round((total + PAUZA_LINIUTA) / (LUNGIME_LINIUTA + PAUZA_LINIUTA)))
+	n = maxi(n, 1)
+	# ...dar nu mai multe decât încap FĂRĂ pauze: pe un drum foarte scurt,
+	# rotunjirea în sus ar cere liniuțe care s-ar suprapune.
+	while n > 1 and float(n) * LUNGIME_LINIUTA > total:
+		n -= 1
+
+	# Un drum atât de scurt încât nu încap două liniuțe se desenează ca o
+	# singură trăsătură, cât el. Alternativa ar fi o liniuță de 15 px într-un
+	# drum de 20, adică tocmai capătul gol pe care îl reparăm aici.
+	var liniuta := LUNGIME_LINIUTA
+	var pauza := 0.0
+	if n > 1:
+		pauza = (total - float(n) * LUNGIME_LINIUTA) / float(n - 1)
+	else:
+		liniuta = total
+
+	var pas := liniuta + pauza
+
+	# O singură trecere prin puncte. Pentru fiecare segment aflăm ce bucăți de
+	# liniuță cad în el și desenăm doar acele bucăți — așa liniuțele urmează
+	# CURBA, nu coarda: o liniuță care prinde un cot se desenează din două
+	# bucăți, câte una pe fiecare latură a cotului.
 	var parcurs := 0.0
 	for i in range(1, puncte.size()):
-		var anterior := puncte[i - 1]
-		var punct := puncte[i]
-		parcurs += anterior.distance_to(punct)
+		var a := puncte[i - 1]
+		var b := puncte[i]
+		var lungime := a.distance_to(b)
+		if lungime <= 0.0:
+			continue
+		var pana_la := parcurs + lungime
 
-		# Liniuță sau pauză? Poziția pe drum, împărțită la pas, decide singură —
-		# fără să numărăm liniuțe și fără să știm câte încap.
-		var e_liniuta := fmod(parcurs, pas) < LUNGIME_LINIUTA
-		var langa_capat := (
-			punct.distance_to(de_la) < oprire or punct.distance_to(la) < oprire
-		)
-		if e_liniuta and not langa_capat:
-			draw_line(anterior, punct, culoare, grosime, true)
+		var k := maxi(0, int(floor(parcurs / pas)))
+		while k < n and float(k) * pas < pana_la:
+			var de_la_liniuta := maxf(parcurs, float(k) * pas)
+			var la_liniuta := minf(pana_la, float(k) * pas + liniuta)
+			if la_liniuta > de_la_liniuta:
+				draw_line(
+					a.lerp(b, (de_la_liniuta - parcurs) / lungime),
+					a.lerp(b, (la_liniuta - parcurs) / lungime),
+					culoare, grosime, true)
+			k += 1
+
+		parcurs = pana_la
