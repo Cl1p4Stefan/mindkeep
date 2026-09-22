@@ -74,11 +74,21 @@ const MARIME_NOD := Vector2(92, 92)
 ## deci marginea hârtiei rămâne „la 85% din lățime” indiferent cât de mare e
 ## fereastra. În pixeli, ar fi trebuit recalculată la fiecare redimensionare.
 ##
-## Marginea din dreapta (0.838) e ALEASĂ SUB cartea din colț (care începe pe la
-## 0.845): dacă niciun nod nu trece de linia aia, cartea nu mai are cum să
-## încurce pe nimeni, iar tot codul care ocolea zona cărții a putut dispărea.
-## O regulă de așezare e mai ieftină decât o excepție de ocolit.
-const ZONA_PERGAMENT := Rect2(0.035, 0.050, 0.803, 0.890)
+## Marginea din dreapta (0.026 + 0.812 = 0.838) e ALEASĂ SUB cartea din colț
+## (care începe pe la 0.845): dacă niciun nod nu trece de linia aia, cartea nu
+## mai are cum să încurce pe nimeni, iar tot codul care ocolea zona cărții a
+## putut dispărea. O regulă de așezare e mai ieftină decât o excepție de ocolit.
+##
+## Ăsta e și motivul pentru care fâșia de hârtie din dreapta-sus rămâne goală,
+## deși acolo chiar e hârtie: zona utilă e un DREPTUNGHI, iar un dreptunghi care
+## ar ajunge până la marginea de sus-dreapta ar coborî și peste carte. Ca s-o
+## folosim, ar trebui ori o zonă în formă de L (o excepție de ocolit, exact ce
+## am scos), ori o planșă desenată mai lată — adică date, nu cod.
+##
+## CELELALTE TREI MARGINI sunt lipite de hârtie (stânga 0.026, sus 0.042, jos
+## 0.948), fiindcă din septembrie 2026 pânza ține toată pagina: antetul și
+## piciorul stau PESTE ea, nu deasupra ei. Vezi nota de la `_zona_utila()`.
+const ZONA_PERGAMENT := Rect2(0.026, 0.042, 0.812, 0.906)
 
 ## Cât lăsăm liber între nodurile de pe marginea zonei și marginea ei.
 const MARGINE_PANZA := 18.0
@@ -1721,11 +1731,29 @@ static func _potoleste_abaterea(baza: Array, abateri: Array, minim: float) -> fl
 ## Două traduceri într-una. Întâi `ZONA_PERGAMENT` (fracțiuni de ECRAN) devine
 ## pixeli și se mută în sistemul pânzei — cele două nu sunt același lucru,
 ## fiindcă fundalul se întinde peste toată fereastra, iar pânza e doar
-## dreptunghiul rămas sub antet.
+## dreptunghiul din interiorul marginilor paginii.
 ##
-## Apoi o INTERSECTĂM cu pânza: hârtia începe mai sus decât pânza (acolo e
-## antetul), deci partea aia nu ne e disponibilă oricum. Intersecția e
-## răspunsul la „unde e ȘI hârtie, ȘI loc al meu”.
+## ─────────────────────────────────────────────────────────────
+## DE CE PÂNZA ȚINE ACUM TOATĂ PAGINA (septembrie 2026)
+##
+## Înainte, pânza era ultima căsuță dintr-o coloană: antet, linia de unelte,
+## pânză, picior. Coloana îi dădea ce rămânea, adică un dreptunghi care începea
+## la 95 px de sus și se oprea la 87 px de jos. Rezultatul se vedea: harta se
+## înghesuia în mijlocul pergamentului, cu hârtie nefolosită sus, în stânga și
+## în dreapta.
+##
+## Acum pânza e suprapusă peste toată pagina, iar textul PLUTEȘTE peste ea
+## (`mouse_filter = IGNORE`, ca să treacă clicurile la noduri). Nu e un truc:
+## pe o hartă desenată, titlul și legenda SE SCRIU pe hârtie, nu lângă ea.
+## Nodurile au câștigat din asta vreo 21% pe fiecare latură — 666 × 353 px de
+## hartă au devenit 805 × 427 — iar cele mai apropiate două noduri au trecut de
+## la 103 la 125 px unul de altul, fără să fi atins nicio formulă de așezare.
+##
+## Ca să nu ajungă un simbol sub litere, linia de unelte s-a mutat sub starea
+## din dreapta-sus: acolo colțul hârtiei e oricum al textului.
+##
+## Intersecția cu pânza rămâne, fiindcă hârtia poate începe deasupra ei pe o
+## fereastră cu alte proporții. E răspunsul la „unde e ȘI hârtie, ȘI loc al meu”.
 ##
 ## La final scădem jumătate de nod din fiecare margine: `zona` e locul unde pot
 ## sta CENTRELE, iar un centru lipit de margine ar însemna un simbol pe

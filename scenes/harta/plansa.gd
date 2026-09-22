@@ -203,10 +203,18 @@ static func _citeste_capetele(plansa: Dictionary, date: Dictionary) -> String:
 ## drumurile?” — presupun că desenul n-a fost turtit.
 ##
 ## Ce se pierde: o fâșie de hârtie neatinsă, pe orizontală sau pe verticală,
-## după care dintre proporții e mai „largă”. Pe fereastra implicită, zona are
-## 797 × 397 px (raport 2,01), iar o planșă de raport 1,81 primește 717 × 397 —
-## rămân 40 px goi în stânga și 40 în dreapta. Ăsta e prețul unei forme care nu
-## minte, și e ieftin.
+## după care dintre proporții e mai „largă”. Prețul ăsta depinde de cât de
+## aproape e zona de proporția desenului, și de-aia merită ținut minte cât a
+## fost: când pânza stătea sub antet, zona avea 797 × 397 px (raport 2,01) și o
+## planșă de raport 1,81 primea 717 × 397 — 40 px goi în stânga și 40 în
+## dreapta. De când pânza ține toată pagina, zona are 805 × 459 (raport 1,75),
+## planșa primește 805 × 446, iar fâșia pierdută e de 6 px sus și 6 jos.
+##
+## Morala e mai generală decât cifrele: cutia nu se întinde niciodată, deci
+## singurul fel în care câștigi spațiu e să apropii proporția ZONEI de proporția
+## desenului. Aici s-a făcut din amândouă părțile — zona a crescut în înălțime
+## (vezi `_zona_utila()` din `harta.gd`), iar dacă vreodată e nevoie de și mai
+## mult, următorul pas e o planșă desenată mai lată, nu o scalare mincinoasă.
 static func cutie(zona: Rect2, raport: float) -> Rect2:
 	var inaltime := minf(zona.size.y, zona.size.x / maxf(raport, 0.0001))
 	var marime := Vector2(inaltime * raport, inaltime)

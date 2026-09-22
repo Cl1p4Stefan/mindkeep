@@ -44,9 +44,10 @@ const SEMINTE := 300
 ## ecran, deci am nevoie de o mărime concretă ca să obțin pixeli.
 const ECRAN := Vector2(1152.0, 648.0)
 
-## Înălțimea antetului de deasupra pânzei, în scena hărții. O aproximare bună
-## e de-ajuns: numărăm încrucișări, nu pixeli.
-const INALTIME_ANTET := 84.0
+## Marginile paginii din scena hărții (`Margini`, în `harta.tscn`): stânga,
+## sus, dreapta, jos. Pânza le umple pe toate patru — antetul și piciorul stau
+## PESTE ea, nu deasupra ei — deci aici nu mai scade nicio înălțime de antet.
+const MARGINI_PAGINA := Rect2(32.0, 20.0, 32.0, 24.0)
 
 ## Câte segmente intră într-o „bucată" de drum, la verificarea (d). Vezi nota
 ## de la `_linie_franta`.
@@ -73,6 +74,20 @@ const PAS_CURBURA := 4.0
 ## rotunjit în sus. O hartă nouă care stă peste el nu e o hartă perfectă; e o
 ## hartă care nu a stricat nimic.
 const DISTANTA_PRAG := 72.0
+
+## CÂT DE MULT ARE VOIE SĂ IASĂ CEVA DIN ZONĂ ÎNAINTE SĂ FIE UN DEFECT.
+##
+## Zero ar părea răspunsul curat, și e greșit. Traseul VAL pleacă din fracțiunea
+## 0,0 a zonei și se termină în 1,0 — adică EXACT pe marginile ei. Un punct
+## calculat prin curbă, normală și înmulțiri în virgulă mobilă nimerește marginea
+## cu o eroare de 0,0001 px, iar „> 0" o citea ca pe o ieșire din hârtie: 300 de
+## hărți picate pentru o zecime de miime de pixel.
+##
+## O zecime de pixel e sub ce poate desena ecranul, deci un defect mai mic decât
+## atât nu e un defect — e aritmetică. Regula generală e aceeași ca la
+## `DISTANTA_MINIMA_BANDA`: când compari numere în virgulă mobilă, lasă-le o
+## margine, nu le cere egalitate.
+const TOLERANTA_PIXEL := 0.1
 
 ## Ultimul strat prins cu ordinea stricată, ca text — pentru diagnostic.
 var ultim_caz_c := ""
@@ -209,7 +224,7 @@ func _masoara_traseu(nume: String, traseu: int, zona: Rect2) -> void:
 	print("    noduri ieșite din zona utilă: %d   %s"
 		% [iesite_din_zona, "OK" if iesite_din_zona == 0 else "PICAT"])
 	print("    cât ies DRUMURILE din zona utilă: %.1f px   %s"
-		% [iesire_drum, "OK" if iesire_drum <= 0.0 else "PICAT"])
+		% [iesire_drum, "OK" if iesire_drum <= TOLERANTA_PIXEL else "PICAT"])
 	print("")
 	print("Verificări vechi:")
 	print("    noduri: între %d și %d  (cerut 12-16)   %s" % [
@@ -327,7 +342,7 @@ func _cat_iese(p: Vector2, zona: Rect2) -> float:
 func _numara_iesite(asez: Dictionary, zona: Rect2) -> int:
 	var cate := 0
 	for id in asez:
-		if _cat_iese(asez[id]["centru"], zona) > 0.0:
+		if _cat_iese(asez[id]["centru"], zona) > TOLERANTA_PIXEL:
 			cate += 1
 	return cate
 
@@ -418,11 +433,15 @@ func _proba_pe_scena_adevarata() -> void:
 ## adică lucruri care există doar când jocul chiar rulează. Ce se copiază e
 ## doar traducerea „fracțiuni de ecran → pixeli", nu așezarea nodurilor.
 func _zona_de_test() -> Rect2:
+	# Pânza: toată pagina, fără marginile ei. Coordonatele de mai jos sunt ale
+	# PÂNZEI, ca în joc — de-aia se scade colțul ei din dreptunghiul de hârtie.
+	var panza := Rect2(
+		MARGINI_PAGINA.position,
+		ECRAN - MARGINI_PAGINA.position - MARGINI_PAGINA.size)
 	var hartie := Rect2(
 		Harta.ZONA_PERGAMENT.position * ECRAN, Harta.ZONA_PERGAMENT.size * ECRAN)
-	hartie.position.y -= INALTIME_ANTET
-	var zona := hartie.intersection(
-		Rect2(Vector2.ZERO, Vector2(ECRAN.x, ECRAN.y - INALTIME_ANTET)))
+	hartie.position -= panza.position
+	var zona := hartie.intersection(Rect2(Vector2.ZERO, panza.size))
 	var margine := Vector2(
 		Harta.MARIME_NOD.x * 0.5 + Harta.MARGINE_PANZA,
 		Harta.MARIME_NOD.y * 0.5 + Harta.MARGINE_PANZA)

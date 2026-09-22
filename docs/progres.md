@@ -1,6 +1,6 @@
 # MINDKEEP — Jurnal de progres
 
-*Ultima actualizare: 22 septembrie 2026*
+*Ultima actualizare: 23 septembrie 2026*
 *Atașează acest fișier la începutul fiecărei sesiuni noi, împreună cu `CLAUDE.md` și `docs/pitch-document.md`.*
 
 ---
@@ -14,7 +14,7 @@
 | 3. Trivia, ca scenă independentă | ✅ gata |
 | 4. Bucla completă a unei lupte | ✅ victorie · înfrângere · recompense (Fragmente) |
 | 5. Trei inamici manuali | ✅ Soldatul · Lăncierul (ceas) · Spadasinul (vulnerabilitate), aleși din joc |
-| 6. Harta de expediție | ✅ loadout „N din M" · **12-16 noduri**, ramificate, cu sămânță · Luptă / Elită / Odihnă / Eveniment / **Magazin** / **Boss** · **Monede + puteri temporare** · sumar de run · aspect: pergament, simboluri de cerneală, trasee punctate · **nodurile și drumurile stau pe o PANGLICĂ (curbă centrală + benzi)**, nu pe o grilă dreaptă · **patru trasee, toate verzi pe 300 de semințe** (POTCOAVĂ activă; POTCOAVA OGLINDITĂ e aceeași formă, întoarsă) · strat înclinat (forfecare) la ȘARPE · **drumuri care nu se încrucișează niciodată (0 la 300 de semințe)** · **nodul curent are și aură, și X** · **două surse de hartă: GENERATĂ (panglica) sau DESENATĂ dintr-un fișier `data/harti/*.json`** — comutatorul `Expeditie.SURSA_HARTII`; azi e pe DESENATĂ |
+| 6. Harta de expediție | ✅ loadout „N din M" · **12-16 noduri**, ramificate, cu sămânță · Luptă / Elită / Odihnă / Eveniment / **Magazin** / **Boss** · **Monede + puteri temporare** · sumar de run · aspect: pergament, simboluri de cerneală, trasee punctate · **nodurile și drumurile stau pe o PANGLICĂ (curbă centrală + benzi)**, nu pe o grilă dreaptă · **patru trasee, toate verzi pe 300 de semințe** (POTCOAVĂ activă; POTCOAVA OGLINDITĂ e aceeași formă, întoarsă) · strat înclinat (forfecare) la ȘARPE · **drumuri care nu se încrucișează niciodată (0 la 300 de semințe)** · **nodul curent are și aură, și X** · **două surse de hartă: GENERATĂ (panglica) sau DESENATĂ dintr-un fișier `data/harti/*.json`** — comutatorul `Expeditie.SURSA_HARTII`; azi e pe DESENATĂ · **harta umple pergamentul**: pânza ține toată pagina, antetul plutește peste ea (805 × 427 px de hartă, de la 666 × 353) |
 | 7. Cetatea | ❌ |
 | 8. Save/Load | 🟡 tezaurul, sacul și expediția știu toate să se serializeze (`spre_dictionar` / `din_dictionar`), pe trei straturi de durată; scrierea pe disc, nu încă |
 | 9. Celelalte discipline | 🟡 Cultură generală ✅ (135 de întrebări) · Logica ✅ (80 de categorii) · Cuvinte ✅ · toate trei fără repetiții pe expediție · celelalte 5 ❌ |
@@ -27,6 +27,94 @@ buget, generare) rămâne acolo unde era.
 Am sărit peste ordinea recomandată la pasul 12 (artă): imaginile pentru rege,
 cavaler și pentru cele trei piese de șah de pe butoane au intrat mai devreme, dar
 restul rămâne placeholder. Bucla de luptă e în continuare cea validată, nu arta.
+
+---
+
+## HARTA UMPLE PERGAMENTUL (23 septembrie 2026) — pânza ia toată pagina
+
+Plângerea era simplă și se vedea dintr-o privire: nodurile stăteau înghesuite
+în mijlocul hârtiei, cu pergament nefolosit sus, în stânga și în dreapta. Nu
+era o problemă de „mai mărește ceva cu 20%", ci de unde venea dreptunghiul în
+care încăpeau nodurile.
+
+### De unde venea strâmtoarea
+
+Trei lucruri mâncau hârtie, și doar unul se vedea:
+
+1. **Pânza stătea sub antet.** În `harta.tscn`, pânza era ultima căsuță dintr-o
+   coloană: antet, linia de unelte, pânză, picior. Coloana îi dădea ce rămânea —
+   un dreptunghi care începea la 95 px de sus și se oprea la 87 px de jos. Din
+   604 px de pagină, pânzei îi rămâneau 497.
+2. **`ZONA_PERGAMENT` era trasă mai strâns decât hârtia.** Marginile de sus,
+   stânga și jos lăsau liber mai mult decât cerea desenul fundalului.
+3. **Cutia planșei se scalează UNIFORM.** Zona avea raportul 2,01, planșa
+   1,8055 — deci planșa primea 717 din 797 px de lățime, iar 40 px rămâneau goi
+   în fiecare parte. Asta NU e o greșeală (vezi `Plansa.cutie`: o cutie întinsă
+   ar turti curbele), dar e o consecință: **cu cât zona seamănă mai puțin la
+   proporție cu desenul, cu atât se pierde mai mult.**
+
+Punctul 1 le rezolvă pe toate trei deodată, și ăsta e lucrul de reținut: o
+pânză mai ÎNALTĂ nu doar că are mai mult loc, dar are și raportul mai aproape
+de 1,8055 — deci fâșia pierdută la centrare se topește singură.
+
+### Ce s-a schimbat
+
+**Pânza ține toată pagina, iar textul plutește peste ea.** Antetul, linia de
+unelte și piciorul nu mai sunt deasupra hărții; sunt SCRISE pe hârtie, cu
+`mouse_filter = IGNORE`, ca să treacă clicurile prin ele la noduri. Pe o hartă
+desenată de mână asta e și mai corect tematic: titlul și legenda se scriu pe
+pergament, nu lângă el.
+
+**Linia de unelte s-a mutat în dreapta-sus, sub stare.** Era singurul text care
+ajungea peste un simbol după ce pânza a crescut. Colțul din dreapta-sus e
+oricum al textului, deci acolo nu deranjează pe nimeni.
+
+**`ZONA_PERGAMENT` s-a lipit de hârtie pe trei laturi:** de la
+`(0.035, 0.050, 0.803, 0.890)` la `(0.026, 0.042, 0.812, 0.906)`. Marginea din
+DREAPTA a rămas la 0.838, neatinsă — e regula veche „niciun nod nu trece de
+linia asta", care ține cartea legată în piele din colțul de jos departe de
+noduri fără nicio excepție în cod.
+
+### Cifrele, înainte și după (fereastra implicită, 1152 × 648)
+
+| | înainte | după |
+|---|---|---|
+| pânza | 1088 × 497 | 1088 × 604 |
+| zona utilă | 797 × 369 (raport 2,16) | 805 × 459 (raport 1,75) |
+| cutia hărții desenate | 666 × 353 | 805 × 427 |
+| cele mai apropiate două noduri | 103,5 px | 125,2 px |
+
+Distanța dintre noduri a crescut cu 21% **fără să fi atins vreo formulă de
+așezare**. Era cerută („vreau distanța puțin mai mare") și a ieșit din geometrie,
+nu dintr-o constantă nouă de reglat — care e întotdeauna varianta bună.
+
+### Ce s-a verificat
+
+`tools/verifica_harta.gd` a rulat pe 300 de semințe, pe toate patru traseele
+generate, după schimbare: zero muchii sărite, zero încrucișări în graf, zero
+încrucișări în desen, zero noduri ieșite din zonă. Harta GENERATĂ n-a fost
+atinsă — doar dreptunghiul în care se desenează a crescut.
+
+Verificatorul a trebuit reparat în două locuri:
+
+- **`_zona_de_test()` copia vechea așezare** (scădea o înălțime de antet).
+  Acum oglindește pagina nouă: pânza = ecranul minus marginile.
+- **Un prag de zero a devenit un prag de o zecime de pixel.** Traseul VAL
+  pleacă din fracțiunea 0,0 a zonei și se termină în 1,0 — adică exact pe
+  margini. Un punct calculat prin curbe și normale nimerește marginea cu o
+  eroare de **0,000122 px**, iar `> 0` citea asta ca ieșire din hârtie: 300 de
+  hărți „picate" pentru o zecime de miime de pixel. `TOLERANTA_PIXEL := 0.1` e
+  sub ce poate desena ecranul, deci sub ea nu mai e un defect, e aritmetică.
+  (Aceeași lecție ca la `DISTANTA_MINIMA_BANDA`: cu virgulă mobilă nu ceri
+  egalitate, lași o margine.)
+
+### Ce a rămas gol, și de ce e în regulă
+
+Fâșia de hârtie din dreapta-sus. Zona utilă e un DREPTUNGHI, iar unul care ar
+ajunge până în colțul acela ar coborî și peste carte. Ca s-o folosim ar trebui
+ori o zonă în formă de L — adică exact excepția de ocolit pe care am scos-o
+odată —, ori o planșă desenată mai lată (raport spre 2,0 în loc de 1,8055).
+A doua variantă e **date, nu cod**, deci e ieftină oricând, dacă merită.
 
 ---
 
