@@ -41,17 +41,29 @@ const SCENA_LUPTA := "res://scenes/lupta/lupta.tscn"
 # desenează drumurile între centrele lor.
 const MARIME_NOD := Vector2(92, 92)
 
-## ÎNCOTRO MERGE DRUMUL: DE LA STÂNGA LA DREAPTA.
+## ÎNCOTRO MERGE DRUMUL: PE O PANGLICĂ.
 ##
-## Înainte creștea de jos în sus, ca un munte pe care urci. Pe hârtia asta a
-## fost o greșeală, și una ușor de explicat: pergamentul e lat, nu înalt.
-## Adâncimea pusă pe verticală însemna nouă straturi înghesuite pe înălțimea
-## mică și două coloane răsfirate pe lățimea mare — adică exact pe dos față de
-## cum e forma hârtiei. Pe orizontală, cele nouă straturi au unde să respire.
+## Harta de până acum mergea în linie dreaptă de la stânga la dreapta:
+## adâncimea era „cât de departe în dreapta", coloana era „cât de sus".
+## Panglica nu schimbă ideea, o GENERALIZEAZĂ. Există o curbă, iar:
 ##
-## Nu e doar o chestiune de spațiu: „de la stânga la dreapta" e și direcția în
-## care citim. Un drum care merge încotro se uită ochiul nu mai are nevoie de
-## nicio săgeată care să explice pe unde s-o iei.
+##   ADÂNCIMEA = cât ai mers PE curbă  (lungime de arc, `s`)
+##   COLOANA   = pe ce bandă ești      (abatere perpendiculară, `dec`)
+##
+## Adică, în loc de coordonate de caiet (x, y), folosim coordonate LEGATE DE
+## DRUM: mergi înainte atât, și stai lateral atât.
+##
+## DE CE HARTA VECHE E UN CAZ PARTICULAR AL ĂSTEIA: dă-i ca traseu un singur
+## segment orizontal. Curba devine o dreaptă, tangenta e mereu (1, 0), normala
+## e mereu (0, 1), iar formula `C(s) + N(s)·dec` se citește
+## `(stânga + s, mijloc + dec)` — adică exact vechiul „x din adâncime, y din
+## coloană". Nu am înlocuit un sistem cu altul; am scos din el presupunerea
+## că tangenta e constantă. Tot ce era înainte se obține punând curba la loc
+## dreaptă, fără să ating o linie din cod.
+##
+## Drumul tot merge, în mare, încotro citim. Un drum care șerpuiește spune
+## însă și „e un TEREN pe dedesubt" — lucru pe care o linie dreaptă nu-l poate
+## spune oricâte liniuțe ai desena pe ea.
 ##
 ## ZONA UTILĂ, în FRACȚIUNI DE ECRAN (0..1). Pergamentul nu acoperă toată
 ## fereastra: are margini arse în stânga și sus, se termină pe la 85% din
@@ -71,56 +83,383 @@ const ZONA_PERGAMENT := Rect2(0.035, 0.050, 0.803, 0.890)
 ## Cât lăsăm liber între nodurile de pe marginea zonei și marginea ei.
 const MARGINE_PANZA := 18.0
 
-## Cât trebuie să rămână între două noduri de pe ACELAȘI strat, pe verticală.
+## ─────────────────────────────────────────────────────────────
+## TRASEUL PANGLICII
+##
+## Puncte de trecere în FRACȚIUNI DIN ZONA UTILĂ (0..1; 0,0 e colțul din
+## stânga-sus al hârtiei disponibile). Din ele se face o curbă netedă
+## (`Curve2D`), iar curba se măsoară DUPĂ LUNGIME, nu după x. Startul cade pe
+## primul punct, Bossul pe ultimul.
+##
+## De ce fracțiuni: același motiv ca la `ZONA_PERGAMENT` — forma traseului nu
+## are voie să depindă de mărimea ferestrei.
+##
+## De ce „după lungime" și nu „după x": pe o porțiune povârnită, un pas egal pe
+## x înseamnă un pas mult mai lung pe hârtie. Straturile ar ieși înghesuite pe
+## porțiunile drepte și răsfirate pe cele povârnite. Măsurată după lungime,
+## distanța dintre două straturi e aceeași peste tot — exact ce se aștepta
+## ochiul de la harta dreaptă.
+
+## VAL — de la stânga la dreapta, cu o ondulație și jumătate pe verticală.
+##
+## Punctele sunt un cosinus eșantionat la fiecare 45° de fază: pleacă dintr-un
+## vârf, coboară într-o vale, urcă la loc și coboară iar. Trei sferturi de
+## drum între două vârfuri înseamnă o perioadă și jumătate — adică exact
+## ondulația și jumătate cerută.
+##
+## DE CE ÎNCEPE ÎNTR-UN VÂRF ȘI NU LA MIJLOC. Prima variantă era un sinus:
+## pornea de la jumătatea înălțimii, adică din punctul cel mai POVÂRNIT al
+## undei. Acolo tangenta e înclinată cu 38°, deci normala e și ea înclinată cu
+## 38° — iar banda, care iese perpendicular pe drum, ieșea în diagonală și
+## trecea cu 43 de pixeli DINCOLO de marginea din stânga a hârtiei.
+##
+## Într-un vârf, tangenta e orizontală și normala e verticală: banda iese drept
+## în sus și în jos, unde e loc. Aceeași undă, același număr de cocoașe, aceeași
+## rază de curbură — doar începută din alt punct al ei. E genul de reparație
+## care nu costă nimic dacă te uiți la geometrie în loc să micșorezi ceva.
+##
+## Sunt treisprezece puncte, nu șapte, tot dintr-un motiv măsurabil: curba
+## netedă trasă prin puncte rare face vârfuri mai ASCUȚITE decât unda adevărată,
+## iar un vârf ascuțit are rază de curbură mică — și raza de curbură e exact ce
+## limitează lățimea panglicii.
+##
+## AMPLITUDINEA e 0,085 din înălțimea zonei (±34 px pe fereastra implicită) și
+## nu e aleasă din ochi: e cea mai mare la care toate verificările din
+## `tools/verifica_harta.gd` rămân verzi. Vezi socoteala de la
+## `LATIMI_PANGLICA` — val mai mare înseamnă cotituri mai strânse, iar
+## cotiturile strânse strivesc nodurile de pe banda dinăuntru.
+const TRASEU_VAL := [
+	Vector2(0.0000, 0.4150), Vector2(0.0833, 0.4399), Vector2(0.1667, 0.5000),
+	Vector2(0.2500, 0.5601), Vector2(0.3333, 0.5850), Vector2(0.4167, 0.5601),
+	Vector2(0.5000, 0.5000), Vector2(0.5833, 0.4399), Vector2(0.6667, 0.4150),
+	Vector2(0.7500, 0.4399), Vector2(0.8333, 0.5000), Vector2(0.9167, 0.5601),
+	Vector2(1.0000, 0.5850),
+]
+
+## ȘARPE — stânga-sus → dreapta-sus → mijloc → stânga → jos → dreapta-jos.
+##
+## Trei culoare orizontale (sus, mijloc, jos) legate prin două ÎNTOARCERI: una
+## la dreapta, una la stânga. Fiecare întoarcere e un semicerc eșantionat din
+## 45° în 45°, nu un colț — un colț ar avea rază de curbură aproape zero, iar
+## panglica s-ar întoarce pe dos exact acolo. Așa, raza întoarcerii e jumătate
+## din distanța dintre două culoare, adică tot ce se poate obține pe înălțimea
+## asta de hârtie.
+##
+## VERDICTUL, ÎN CIFRE: ȘARPELE NU ÎNCAPE PE HÂRTIA ASTA. Nu din cauza
+## cotiturilor, cum credeam, ci din cauza ÎNĂLȚIMII.
+##
+## Socoteala, pas cu pas. Ca două noduri de pe același strat să nu se atingă,
+## panglica are nevoie de cel puțin 94 px lățime. Ca un nod de pe culoarul de
+## sus să nu se atingă de unul de pe culoarul de mijloc — care trec unul pe
+## lângă altul, deși pe panglică sunt la o mie de pixeli distanță — mai trebuie
+## 92 px între culoare. Deci:
+##
+##   3 culoare × 94 px de panglică + 2 spații × 92 px = 466 px
+##   Zona utilă are                                      397 px
+##   Lipsesc                                              69 px
+##
+## Măsurat pe traseul de mai sus, cu panglica de azi (248 px): cea mai
+## apropiată pereche de noduri ajunge la 36,8 px, iar 871 de drumuri se taie pe
+## 293 de hărți din 300. Nu e o reglare fină de făcut; e o constrângere care nu
+## are soluție la mărimea asta de nod și de pergament.
+##
+## Ce ar debloca ȘARPELE, dacă vreodată o să-l vrei: un pergament mai înalt,
+## noduri mai mici, sau două culoare în loc de trei (2 × 94 + 92 = 280 px,
+## adică încape). Traseul rămâne aici, verificat și măsurat, ca să nu-l
+## redescoperi de la zero.
+const TRASEU_SARPE := [
+	# culoarul de sus, de la stânga la dreapta
+	Vector2(0.0300, 0.0945), Vector2(0.1650, 0.0945), Vector2(0.3000, 0.0945),
+	Vector2(0.4350, 0.0945), Vector2(0.5700, 0.0945), Vector2(0.7050, 0.0945),
+	Vector2(0.8400, 0.0945),
+	# cotitura din dreapta: un semicerc, din 22,5° în 22,5°
+	Vector2(0.8787, 0.1099), Vector2(0.9114, 0.1539), Vector2(0.9333, 0.2197),
+	Vector2(0.9410, 0.2973), Vector2(0.9333, 0.3748), Vector2(0.9114, 0.4406),
+	Vector2(0.8787, 0.4846),
+	# culoarul de mijloc, înapoi spre stânga
+	Vector2(0.8400, 0.5000), Vector2(0.7040, 0.5000), Vector2(0.5680, 0.5000),
+	Vector2(0.4320, 0.5000), Vector2(0.2960, 0.5000), Vector2(0.1600, 0.5000),
+	# cotitura din stânga
+	Vector2(0.1213, 0.5154), Vector2(0.0886, 0.5594), Vector2(0.0667, 0.6252),
+	Vector2(0.0590, 0.7027), Vector2(0.0667, 0.7803), Vector2(0.0886, 0.8461),
+	Vector2(0.1213, 0.8901),
+	# culoarul de jos, iar spre dreapta; Bossul e pe ultimul punct
+	Vector2(0.1600, 0.9055), Vector2(0.2950, 0.9055), Vector2(0.4300, 0.9055),
+	Vector2(0.5650, 0.9055), Vector2(0.7000, 0.9055), Vector2(0.8350, 0.9055),
+	Vector2(0.9700, 0.9055),
+]
+
+## POTCOAVĂ — stânga-sus → dreapta-sus → cotitură pe dreapta → dreapta-jos →
+## stânga-jos (Bossul).
+##
+## Două culoare în loc de trei. Socoteala de la ȘARPE, refăcută pentru două:
+##
+##   2 culoare × 94 px de panglică + 1 spațiu × 92 px = 280 px
+##   zona utilă are                                     397 px
+##   rămân libere                                       117 px
+##
+## Cei 117 px liberi se duc ÎN SPAȚIUL DINTRE CULOARE, nu într-o panglică mai
+## lată, și asta e o decizie de compoziție, nu de geometrie. O panglică lată ar
+## însemna două culoare groase, apropiate — care, la o privire, se citesc ca o
+## singură bandă gri de noduri. Culoare subțiri, depărtate, se citesc ca DOUĂ
+## RÂNDURI: dus pe sus, întors pe jos. Ochiul are nevoie de golul dintre ele ca
+## să vadă că sunt două.
+##
+## Deci panglica de aici e de 104 px (vezi `LATIMI_PANGLICA`) — aproape minimul
+## la care două noduri de pe același strat nu se ating — iar culoarele stau la
+## 250 px unul de altul, cu 118 px de hârtie goală între benzile vecine.
+##
+## Culoarele nu ajung până la marginea din dreapta: se opresc la 0,74 din
+## lățime. Restul e al cotiturii. Cotitura e un semicerc de rază 125 px (adică
+## jumătate din distanța dintre culoare — nu poate fi altfel, dacă vrei să
+## intri și să ieși orizontal), iar semicercul mai iese cu o rază spre dreapta.
+## 0,74 × 797 + 125 + 52 (jumătatea panglicii) + 14 (abaterea organică) = 781,
+## din 797 disponibili. Încape, cu 16 px de rezervă.
+##
+## Măsurat, raza cotiturii iese 101,5 px, nu 125: curba netedă trasă prin
+## puncte e ceva mai strânsă decât cercul pe care îl descriu ele. Rezerva față
+## de abaterea laterală rămâne ×1,54, deci nu e o problemă — dar e genul de
+## diferență între desen și intenție pe care o afli doar măsurând-o.
+const TRASEU_POTCOAVA := [
+	# culoarul de sus, de la stânga la dreapta
+	Vector2(0.035, 0.185), Vector2(0.176, 0.185), Vector2(0.317, 0.185),
+	Vector2(0.458, 0.185), Vector2(0.599, 0.185), Vector2(0.740, 0.185),
+	# cotitura din dreapta: un semicerc, eșantionat din 22,5° în 22,5°.
+	#
+	# Din 45° în 45° ar fi părut de-ajuns — trei puncte pentru o jumătate de
+	# cerc — și raza măsurată ieșea 79 px în loc de 125. Prima bănuială a fost
+	# că punctele sunt prea rare, ca la vârfurile VALULUI. Le-am îndesit:
+	# 79,2 → 79,0, adică nimic. Bănuiala era greșită, iar măsurătoarea a spus-o
+	# imediat: vinovat era SALTUL de densitate dintre culoar și cotitură, reparat
+	# în `panglica()` prin mânere pe măsura segmentului. După reparație, raza a
+	# sărit la 101,5.
+	#
+	# Punctele dese rămân, fiindcă acum chiar ajută (cu ele, cotitura e un cerc,
+	# nu o aproximare din trei bucăți) — dar merită ținut minte că nu ele au
+	# rezolvat problema. Prima explicație care sună bine nu e neapărat cea
+	# adevărată; de-aia se măsoară după fiecare schimbare, nu doar la sfârșit.
+	Vector2(0.800, 0.209), Vector2(0.851, 0.277), Vector2(0.885, 0.379),
+	Vector2(0.897, 0.500),
+	Vector2(0.885, 0.621), Vector2(0.851, 0.723), Vector2(0.800, 0.791),
+	# culoarul de jos, înapoi spre stânga; Bossul e pe ultimul punct
+	Vector2(0.740, 0.815), Vector2(0.599, 0.815), Vector2(0.458, 0.815),
+	Vector2(0.317, 0.815), Vector2(0.176, 0.815), Vector2(0.035, 0.815),
+]
+
+enum Traseu { VAL, SARPE, POTCOAVA }
+
+## CARE TRASEU E ÎN JOC. ← comutatorul. O singură linie de schimbat:
+##
+##     const TRASEU := Traseu.POTCOAVA   două rânduri și o cotitură (activ)
+##     const TRASEU := Traseu.VAL        ondulația
+##     const TRASEU := Traseu.SARPE      trei culoare, strat înclinat
+##
+## Salvezi fișierul, redeschizi ecranul de expediție, și harta e alta. Nu
+## trebuie repornit jocul: `_aseaza_nodurile()` reconstruiește panglica de
+## fiecare dată când pânza își schimbă mărimea.
+##
+## E o constantă, nu o setare de meniu: forma hărții e o decizie de design, nu
+## o preferință a jucătorului.
+const TRASEU := Traseu.POTCOAVA
+
+## Cât de lung e mânerul unui punct, ca fracțiune din segmentul de lângă el.
+##
+## 1/3 e valoarea care face curba Catmull-Rom — clasica „treci exact prin
+## fiecare punct, cu tangenta dată de vecinii lui". (Dacă ai văzut formula
+## scrisă cu 1/6, e aceeași: acolo mânerul se ia din vectorul dintre CEI DOI
+## vecini, care e de două ori mai lung decât un segment.) Mai mare = bucle;
+## mai mic = colțuri.
+const NETEZIRE_PANGLICA := 1.0 / 3.0
+
+## Cât de des se măsoară curba când i se calculează lungimea. Mai mic = mai
+## exact, mai multă memorie. 2 pixeli e sub pragul vizibil.
+const PAS_MASURARE := 2.0
+
+## Cât de departe unul de altul se iau cele trei puncte din care iese raza
+## cotiturii. Prea aproape și zgomotul de virgulă mobilă dă raze aiurea; prea
+## departe și o cotitură scurtă trece neobservată.
+const PAS_RAZA := 4.0
+
+## LĂȚIMEA PANGLICII: distanța dintre banda cea mai de sus și cea mai de jos.
+##
+## Benzile stau la ±LĂȚIME/2 față de curba centrală. Cu două noduri pe strat,
+## asta e chiar distanța dintre ele.
+##
+## ─────────────────────────────────────────────────────────────
+## DE CE NU POATE FI ORICÂT — TREI LIMITE, TOATE MĂSURATE ÎN
+## `tools/verifica_harta.gd`
+##
+## 1. RAZA COTITURII. Cea mai mare abatere laterală a unui nod (jumătate de
+##    lățime PLUS abaterea organică) trebuie să fie mai mică decât raza celei
+##    mai strânse cotituri. Altfel banda dinspre interiorul cotiturii se
+##    întoarce pe ea însăși: la o rază de 130 și un nod la 138 spre interior,
+##    nodul trece DINCOLO de centrul cercului, iar ordinea de pe bandă se
+##    inversează. Un drum desenat pe o bandă îndoită pe dos face o buclă.
+##    Azi: abatere maximă 138, rază minimă 167 — rezervă ×1,21.
+##
+## 2. ÎNCĂPEREA. Cât urcă și coboară traseul, plus abaterea maximă, trebuie să
+##    stea în zona utilă. Azi: 34 + 138 = 172 din 198 (jumătatea zonei).
+##
+## 3. STRÂNGEREA DIN COTITURĂ, și asta e limita care surprinde. Două noduri de
+##    pe straturi vecine sunt la vreo 120 px unul de altul MĂSURAT PE CURBA
+##    CENTRALĂ. Pe o bandă dinspre interiorul unei cotituri de rază R, aceeași
+##    bucată de drum se scurtează cu factorul (R − abatere) / R. La R = 133 și
+##    abatere 138 factorul e negativ; la R = 167 și 138 e 0,17 — adică 120 px
+##    de drum devin 20 px pe hârtie, și două noduri se suprapun.
+##
+##    Din cauza asta lățimea și amplitudinea NU se pot mări amândouă: raza
+##    scade cam invers proporțional cu amplitudinea (R ≈ 6000 / amplitudine,
+##    pe lățimea hârtiei ăsteia și cu o ondulație și jumătate), deci produsul
+##    „lățime × amplitudine" e practic fix. Vrei val mai mare ⇒ panglică mai
+##    îngustă, și invers.
+##
+## Valorile de azi ies dintr-o măsurătoare, nu dintr-o presimțire: harta
+## DREAPTĂ de dinainte avea, pe 300 de semințe, cea mai apropiată pereche de
+## noduri la 71,4 px. Panglica de acum e la 82,6 px. Adică nu doar că nu s-a
+## stricat nimic — s-a și mai aerisit puțin.
+## Lățimea e pe TRASEU, fiindcă e legată de forma lui: cât de strânse sunt
+## cotiturile, și de câtă hârtie mai rămâne după ce traseul își ia partea.
+## ȘARPELE are 50 px — de zece ori mai puțin decât pare rezonabil — și ăsta e
+## tot rostul forfecării: pe o panglică forfecată, lățimea nu mai e singura
+## sursă de distanță între două noduri de pe același strat. Vezi `FORFECARI`.
+const LATIMI_PANGLICA := {
+	Traseu.VAL: 248.0,
+	Traseu.SARPE: 50.0,
+	Traseu.POTCOAVA: 104.0,
+}
+
+## Cât din înălțimea zonei are voie să ocupe panglica pe o fereastră mică.
+## Pe fereastra implicită nu se activează: 248 din 397 înseamnă 62%.
+const PROPORTIE_MAXIMA_PANGLICA := 0.64
+
+## Cât trebuie să rămână între două noduri de pe ACELAȘI strat, măsurat
+## perpendicular pe panglică.
 ##
 ## `MARIME_NOD.y` e minimul evident: sub el, două simboluri se ating. Cei doi
 ## pixeli în plus nu se văd, dar au un rol. Fără ei, `_potoleste_abaterea`
 ## nimerea fix pe limită — 92,0000 pixeli — iar la a șaptea zecimală o scădere
-## de numere în virgulă mobilă cădea când deasupra, când dedesubtul ei. Patru
-## hărți din 300 „picau" o verificare pe care o treceau de fapt.
+## de numere în virgulă mobilă cădea când deasupra, când dedesubtul ei.
 ##
 ## Regula generală merită ținută minte: când o condiție e „cel puțin atât",
 ## țintește puțin peste, nu exact. Egalitatea e singurul loc din virgula
 ## mobilă unde nu te poți baza pe nimic.
-const DISTANTA_MINIMA_VERTICALA := MARIME_NOD.y + 2.0
+const DISTANTA_MINIMA_BANDA := MARIME_NOD.y + 2.0
 
-## ABATEREA ORGANICĂ
+## ABATEREA ORGANICĂ — TOT PE PANGLICĂ
 ##
 ## Nodurile așezate exact pe o grilă arată a tabel, oricât de frumos le-ai
-## desena. Fiecare primește deci o împingere într-o direcție oarecare, ca
-## fracțiune din celula lui — destul cât să se simtă „așezat pe un teren",
-## prea puțin cât să încurce citirea straturilor.
+## desena. Fiecare primește deci o împingere într-o direcție oarecare, destul
+## cât să se simtă „așezat pe un teren", prea puțin cât să încurce citirea.
 ##
 ## Împingerea vine din SĂMÂNȚA NODULUI, nu din `randf()`: aceeași expediție
 ## trebuie să arate identic la fiecare redesenare, altfel harta ar tresări la
 ## fiecare redimensionare de fereastră și la fiecare întoarcere din luptă.
 ##
-## Pe verticală e mai mare decât pe orizontală (0.22 față de 0.16), și asta e
-## dinadins: pe orizontală, o abatere mare ar amesteca două straturi vecine și
-## n-ai mai ști care vine după care. Pe verticală nu se poate amesteca nimic —
-## sunt doar două rânduri — deci acolo îmi permit dezordinea care face drumul
-## să arate desenat de mână.
-const ABATERE_X := 0.16
-const ABATERE_Y := 0.22
-const ABATERE_MAXIMA := Vector2(34.0, 52.0)
-
-## Cât din înălțimea zonei ocupă rândurile de noduri. 0.86 lasă sus și jos
-## câte o șapte-la-sută de hârtie liberă: fără ea, rândul de sus s-ar lipi de
-## marginea arsă a pergamentului, iar abaterea organică l-ar scoate de pe el.
-const INTINDERE_VERTICALA := 0.86
-
-## STRATURILE ALTERNATE SE STRÂNG SPRE MIJLOC.
+## Amândouă abaterile se aplică ÎN COORDONATELE PANGLICII, nu pe ecran:
 ##
-## Cu două noduri pe strat, toate ies pe două rânduri — unul sus, unul jos —
-## și rămâne o bandă goală fix pe mijlocul hârtiei. Se vedea din prima captură:
-## harta avea noduri pe margini și nimic în centru, adică exact acolo unde se
-## uită ochiul întâi.
+##   DE-A LUNGUL (`ABATERE_LUNG`) mută nodul înainte/înapoi PE curbă. Ca
+##   fracțiune din distanța dintre două straturi; mică, fiindcă o abatere mare
+##   ar amesteca două straturi vecine și n-ai mai ști care vine după care.
 ##
-## Leacul nu e să mai adaug noduri (ar însemna o expediție mai lungă ca să
-## repar un desen), ci să TRAG stratul din doi în doi mai aproape de centru.
-## Rândurile nu mai sunt două linii drepte, ci un zigzag lat — ceea ce umple
-## mijlocul ȘI face harta să arate mai puțin a tabel.
-const STRANGERE_ALTERNATA := 0.52
+##   DE-A CURMEZIȘUL (`ABATERE_LAT`) îl mută între benzi. Ca fracțiune din
+##   distanța dintre benzi. Aici nu se poate amesteca nimic — sunt doar două
+##   benzi — deci îmi permit mai multă dezordine, cu condiția de ordine ținută
+##   de `_potoleste_abaterea`.
+##
+## De ce pe panglică și nu pe ecran: o abatere „în jos" pe o porțiune unde
+## panglica coboară abrupt ar împinge nodul DE-A LUNGUL drumului, nu lateral —
+## adică ar strica exact lucrul (distanța dintre straturi) pe care abaterea nu
+## trebuie să-l atingă.
+const ABATERE_LUNG := 0.13
+const ABATERE_LAT := 0.17
+const ABATERE_MAXIMA_LUNG := 8.0
+const ABATERE_MAXIMA_LAT := 14.0
+
+## BENZILE DIN DOI ÎN DOI SE STRÂNG SPRE MIJLOCUL PANGLICII.
+##
+## Regula asta exista și pe harta dreaptă, unde straturile impare se trăgeau
+## spre centrul hârtiei. Pe panglică e ȘI MAI necesară, din două motive
+## măsurate:
+##
+##   COMPOZIȚIA. Panglica e mai îngustă decât era răsfirarea pe verticală a
+##   hărții drepte (vezi `LATIMI_PANGLICA`: lățimea e limitată de raza
+##   cotiturilor). Fără strângere, toate nodurile ar sta pe exact două linii
+##   paralele, iar hârtia ar rămâne goală între ele.
+##
+##   DISTANȚA DINTRE STRATURI VECINE. Ăsta e motivul greu. Două noduri de pe
+##   straturi vecine și de pe ACEEAȘI bandă sunt despărțite doar de cât
+##   înaintează drumul — vreo sută de pixeli, cu un nod de 92. Strângerea le
+##   pune pe benzi diferite din doi în doi, deci le mai adaugă o despărțire
+##   LATERALĂ. Exact asta ținea harta dreaptă departe de suprapuneri, și tot
+##   asta o ține și pe cea curbă.
+const STRANGERE_ALTERNATA := 0.40
+
+## FORFECAREA: STRATUL ÎNCLINAT.
+##
+## Până acum, nodurile unui strat stăteau pe NORMALA panglicii — o perpendiculară
+## curată pe drum. Cu forfecare, fiecare bandă primește și o împingere DE-A
+## LUNGUL drumului, proporțională cu cea laterală:
+##
+##     s' = s + k × dec
+##
+## Adică stratul nu mai e un segment perpendicular, ci o diagonală.
+##
+## ─────────────────────────────────────────────────────────────
+## LA CE FOLOSEȘTE: CUMPERI ÎNĂLȚIME CU LUNGIME
+##
+## Două noduri de pe același strat trebuie să fie la 92 px unul de altul. Fără
+## forfecare, toți cei 92 se plătesc din LĂȚIMEA panglicii, adică din
+## înălțimea hârtiei — care la ȘARPE e exact ce lipsește (trei culoare nu
+## încăpeau, lipseau 69 px).
+##
+## Cu forfecare, cele două noduri sunt despărțite și lateral (dec), și
+## de-a lungul (k × dec). Distanța dintre ele devine
+##
+##     lățime × √(1 + k²)
+##
+## deci aceeași distanță se obține cu o panglică de √(1 + k²) ori mai îngustă.
+## La k = 2,0 factorul e 2,24: o panglică de 50 px ține nodurile la 112 px.
+## Cei 92 px se plătesc acum din lungimea drumului, unde ȘARPELE are de unde —
+## 2340 px de panglică pentru nouă straturi.
+##
+## ─────────────────────────────────────────────────────────────
+## DE CE FORFECAREA NU POATE CREA ÎNCRUCIȘĂRI
+##
+## Fiindcă e aplicată pe TOT drumul, nu doar pe capete — vezi `puncte_drum()`.
+## Un drum se calculează întâi în coordonatele nepieptănate (s, dec), exact ca
+## înainte, și abia la final fiecare punct e mutat cu `s → s + k·dec`.
+##
+## Transformarea asta, Φ(s, dec) = (s + k·dec, dec), e o FORFECARE a planului:
+## liniară, cu determinantul 1, deci inversabilă. O aplicație inversabilă și
+## continuă a planului duce curbe care nu se taie tot în curbe care nu se taie
+## — dacă imaginile s-ar intersecta într-un punct, ar face-o și originalele în
+## punctul de dinainte de transformare, fiindcă Φ are un singur invers.
+##
+## Deci argumentul vechi rămâne valabil întreg: două drumuri între aceleași
+## straturi au același `s` la același `t` și diferă doar prin `dec`; dacă unul
+## e lateral deasupra celuilalt la plecare ȘI la sosire, rămâne deasupra pe tot
+## drumul. Forfecarea nu atinge `dec` — doar strâmbă `s` — deci nu poate
+## schimba nicio ordine laterală.
+##
+## Singura condiție care rămâne e cea dinainte: trecerea din (s, dec) pe ecran
+## trebuie să fie și ea inversabilă, adică abaterea laterală să nu treacă de
+## raza cotiturii (verificarea (1)). Forfecarea nu schimbă `dec`, deci nu
+## schimbă nici condiția asta.
+const FORFECARI := {
+	Traseu.SARPE: 2.0,
+}
+
+
+## CÂT DE REPEDE SE DESPART DOUĂ DRUMURI CARE PLEACĂ DIN ACELAȘI NOD.
+##
+## Trecerea de la banda nodului de plecare la banda celui de sosire nu e
+## liniară: e un amestec între liniar și `smoothstep`. `smoothstep` singur ar
+## pleca din nod cu panta zero — două drumuri spre benzi diferite ar rămâne
+## lipite o bună bucată și abia apoi s-ar despărți, ceea ce arată a mănunchi,
+## nu a bifurcație. Amestecul cu liniar le dă o pantă nenulă din prima clipă,
+## deci se despart imediat, dar tot intră lin în nodul de sosire.
+const AMESTEC_LINIAR := 0.7
+
 
 # ── DRUMURILE ─────────────────────────────────────────────────
 # Erau gri-deschise și subțiri, adică invizibile: pe un pergament maro, o linie
@@ -525,35 +864,402 @@ func _aseaza_nodurile() -> void:
 	if zona.size.x <= 0.0 or zona.size.y <= 0.0:
 		return   # încă nu s-a așezat nimic; semnalul `resized` ne mai cheamă o dată
 
-	var centre := centre_noduri(Expeditie.harta, zona)
+	# Panglica se face O SINGURĂ DATĂ și se dă mai departe și nodurilor, și
+	# drumurilor. Dacă fiecare și-ar face-o pe a lui, două curbe construite din
+	# aceleași puncte ar fi egale azi și diferite în ziua în care cineva strecoară
+	# un zar în construcție — iar drumurile n-ar mai porni exact din noduri.
+	var pang := panglica(zona)
+	var asez := asezare(
+		Expeditie.harta, pang, latime_panglica(zona), forfecare())
 
-	for id_nod in centre:
+	for id_nod in asez:
 		var id := int(id_nod)
 		if not simboluri_nod.has(id):
 			continue
 		var simbol: Control = simboluri_nod[id]
-		simbol.position = centre[id] - MARIME_NOD * 0.5
+		simbol.position = asez[id]["centru"] - MARIME_NOD * 0.5
 		simbol.size = MARIME_NOD
 
-	panza.arata(_muchii(centre))
+	panza.arata(_muchii(asez, pang, forfecare()))
 
 
-## GEOMETRIA PURĂ: „unde cade centrul fiecărui nod, pe dreptunghiul ăsta".
+## PANGLICA MĂSURATĂ — curba centrală, plus tot ce trebuie ca s-o poți folosi
+## ca sistem de coordonate.
 ##
-## E `static` și nu atinge niciun nod de interfață dintr-un motiv practic: așa
-## se poate CHEMA DINTR-UN TEST, fără să pornești jocul, fără fereastră, fără
-## scenă. Verificarea din `tools/verifica_harta.gd` măsoară exact codul ăsta,
-## nu o copie a lui — iar o copie a lui ar fi fost cel mai sigur mod de a
-## repara desenul în test și de a-l lăsa stricat în joc.
+## E o clasă, nu doar un `Curve2D`, pentru un motiv de viteză pe care l-am
+## aflat măsurând. `Curve2D.sample_baked()` face o CĂUTARE la fiecare apel (ca
+## să afle între ce două bucățele cade lungimea cerută). Un singur drum are
+## peste o sută de puncte, iar fiecare punct are nevoie de trei apeluri: el
+## însuși și cei doi vecini din care iese tangenta. Pe o hartă întreagă ies
+## zeci de mii de căutări, iar la verificarea pe 300 de semințe, milioane.
 ##
-## Primește harta ca parametru (nu citește `Expeditie.harta` singură) din
-## același motiv: o funcție căreia îi dai tot ce-i trebuie se poate chema cu o
-## hartă inventată, dintr-o sămânță oarecare.
-static func centre_noduri(harta: Array, zona: Rect2) -> Dictionary:
+## Calculate O DATĂ, la pași egali de lungime, și ținute în două șiruri, toate
+## întrebările de mai târziu devin „ia elementul i și interpolează spre i+1".
+## Asta e o idee generală, nu un truc: când aceeași funcție scumpă e chemată de
+## multe ori pe același domeniu, o tabelezi.
+class Panglica:
+	extends RefCounted
+
+	## Punctele curbei centrale, la `pas` pixeli de arc unul de altul.
+	var puncte := PackedVector2Array()
+	## Normala în fiecare din punctele de mai sus. Vezi `_normale()`.
+	var normale := PackedVector2Array()
+	## Lungimea totală a curbei, în pixeli.
+	var lungime := 0.0
+	## Distanța (de arc) dintre două elemente ale șirurilor.
+	var pas := 1.0
+
+	## Porțiunile pe care au voie să stea noduri: perechi (început, sfârșit), în
+	## pixeli de arc. Vezi `_afla_portiunile()`.
+	var portiuni: Array[Vector2] = []
+	## Lungimea lor însumată — „drumul folosibil".
+	var lungime_utila := 0.0
+
+	func _init(curba: Curve2D, pas_cerut: float, raza_minima := 0.0, marja := 0.0) -> void:
+		lungime = curba.get_baked_length()
+		var cate := maxi(2, int(ceil(lungime / maxf(pas_cerut, 0.5))) + 1)
+		# Pasul se recalculează după ce știm câte puncte intră: așa ultimul
+		# punct cade EXACT pe capătul curbei, iar împărțirea `s / pas` de mai
+		# jos e valabilă peste tot, fără un caz special la sfârșit.
+		pas = lungime / float(cate - 1)
+		for i in range(cate):
+			puncte.append(curba.sample_baked(pas * float(i), true))
+		_normale(cate)
+		_afla_portiunile(raza_minima, marja)
+
+	## RAZA CERCULUI care trece prin trei puncte de pe curbă, luate la `PAS_RAZA`
+	## unul de altul. E măsura „cât de strânsă e cotitura aici".
+	##
+	## Trei puncte pe o dreaptă dau un triunghi de suprafață zero, adică rază
+	## infinită — exact ce vrei pe porțiunile drepte. Formula e cea clasică:
+	## raza cercului circumscris = produsul laturilor / (4 × aria).
+	func raza(s: float) -> float:
+		var a := centru(s - PAS_RAZA)
+		var b := centru(s)
+		var c := centru(s + PAS_RAZA)
+		var arie: float = absf((b - a).cross(c - a)) * 0.5
+		if arie < 0.000001:
+			return INF
+		return (a.distance_to(b) * b.distance_to(c) * c.distance_to(a)) / (4.0 * arie)
+
+	## UNDE AU VOIE SĂ STEA NODURILE: porțiunile aproape drepte.
+	##
+	## Se merge din pas în pas pe curbă și se strâng laolaltă bucățile unde raza
+	## cotiturii e destul de mare. Apoi fiecare bucată se scurtează cu `marja` la
+	## capetele care dau într-o cotitură — fiindcă abaterea de-a lungul și
+	## forfecarea mai mută nodul înainte-înapoi, iar un nod care iese din bucată
+	## ar cădea exact în cotitura pe care încercăm s-o ocolim.
+	##
+	## Capetele PANGLICII (s = 0 și s = lungime) nu se scurtează: acolo nu e
+	## nicio cotitură, iar Startul și Bossul trebuie să rămână fix pe ele.
+	##
+	## `raza_minima` = 0 înseamnă „toată panglica e bună" — cazul VALULUI și al
+	## POTCOAVEI, unde nu există cotitură prea strânsă. Atunci iese o singură
+	## porțiune, [0, lungime], iar așezarea e identică cu cea de dinainte.
+	func _afla_portiunile(raza_minima: float, marja: float) -> void:
+		portiuni.clear()
+		var inceput := -1.0
+		var s := 0.0
+		while s <= lungime:
+			var buna := raza_minima <= 0.0 or raza(s) >= raza_minima
+			if buna and inceput < 0.0:
+				inceput = s
+			elif not buna and inceput >= 0.0:
+				_adauga_portiune(inceput, s - pas, marja)
+				inceput = -1.0
+			s += pas
+		if inceput >= 0.0:
+			_adauga_portiune(inceput, lungime, marja)
+
+		if portiuni.is_empty():
+			# PLASA, și una care trebuie să se audă. Se ajunge aici doar dacă
+			# pragul de rază e mai mare decât orice loc de pe panglică — adică
+			# panglica e prea îngustă pentru forfecarea cerută, și nicio bucată
+			# de drum nu e destul de dreaptă. Harta tot se desenează (jocul nu
+			# are voie să rămână fără hartă), dar nodurile ajung și în cotituri,
+			# unde se vor înghesui.
+			#
+			# M-a costat o măsurătoare: la k = 1,9 pe o panglică de 50 px,
+			# `raza_minima_noduri` iese infinit, plasa se activa în tăcere, iar
+			# raportul arăta „o porțiune, toată panglica" — care seamănă leit cu
+			# „totul e în regulă". De-aia scrie acum în consolă.
+			push_warning("Panglica: nicio porțiune destul de dreaptă. "
+				+ "Panglica e prea îngustă pentru forfecarea cerută.")
+			portiuni.append(Vector2(0.0, lungime))
+
+		lungime_utila = 0.0
+		for portiune in portiuni:
+			lungime_utila += portiune.y - portiune.x
+
+	func _adauga_portiune(de_la: float, pana_la: float, marja: float) -> void:
+		if de_la > 0.0:
+			de_la += marja
+		if pana_la < lungime:
+			pana_la -= marja
+		if pana_la - de_la > 1.0:
+			portiuni.append(Vector2(de_la, pana_la))
+
+	## LUNGIMEA UTILĂ, ca sistem de coordonate: `f` de la 0 la 1 înseamnă „atât
+	## din drumul pe care se poate sta", iar cotiturile nu se pun la socoteală.
+	##
+	## Efectul e exact cel cerut: straturile se împart între drepte PROPORȚIONAL
+	## CU LUNGIMEA lor, fără să fie nevoie să numeri tu câte pui pe fiecare. O
+	## dreaptă de două ori mai lungă primește de două ori mai multe straturi,
+	## fiindcă ocupă de două ori mai mult din scara asta.
+	func s_la_fractie(f: float) -> float:
+		var tinta := clampf(f, 0.0, 1.0) * lungime_utila
+		for portiune in portiuni:
+			var cat: float = portiune.y - portiune.x
+			if tinta <= cat:
+				return portiune.x + tinta
+			tinta -= cat
+		return portiuni[portiuni.size() - 1].y
+
+	## NORMALA: tangenta rotită cu 90°, MEREU ÎN ACELAȘI SENS.
+	##
+	## „Mereu în același sens" e singurul lucru care contează aici. Dacă normala
+	## s-ar întoarce undeva pe drum, banda de sus ar deveni banda de jos fix în
+	## punctul ăla, iar toate drumurile care trec pe acolo s-ar încrucișa.
+	## Rotind întotdeauna cu +90° (în 2D, cu y în jos, asta înseamnă „spre
+	## dreapta drumului"), sensul nu are cum să se schimbe.
+	##
+	## Tangenta se măsoară prin DIFERENȚĂ FINITĂ: încotro se duce curba dacă mai
+	## fac un pas mic? E metoda pe care ai folosi-o cu creionul, și e de-ajuns —
+	## derivata analitică a unei Bézier n-ar schimba nimic vizibil.
+	func _normale(cate: int) -> void:
+		for i in range(cate):
+			var a: Vector2 = puncte[maxi(i - 1, 0)]
+			var b: Vector2 = puncte[mini(i + 1, cate - 1)]
+			var tangenta := b - a
+			if tangenta.length() < 0.00001:
+				normale.append(Vector2.DOWN)
+			else:
+				normale.append(tangenta.normalized().rotated(PI * 0.5))
+
+	## Punctul de pe curba centrală, la `s` pixeli de la început.
+	func centru(s: float) -> Vector2:
+		return _citeste(puncte, s)
+
+	## Normala la `s`. Re-normalizată fiindcă media a două direcții vecine e
+	## puțin mai scurtă decât 1 — nu contează la desen, contează la înmulțit cu
+	## o lățime de bandă.
+	func normala(s: float) -> Vector2:
+		return _citeste(normale, s).normalized()
+
+	## COORDONATELE HĂRȚII, într-o singură funcție: mergi `s` pixeli pe curbă,
+	## apoi ieși `dec` pixeli în lateral.
+	func punct(s: float, dec: float) -> Vector2:
+		return centru(s) + normala(s) * dec
+
+	## Același lucru, dar cu stratul înclinat: cu cât ieși mai în lateral, cu
+	## atât ai mers și mai departe pe drum. O singură linie, și e SINGURUL loc
+	## din tot codul unde se aplică forfecarea — și nodurile, și drumurile trec
+	## pe aici. Vezi `FORFECARI` pentru de ce asta nu poate crea încrucișări.
+	func punct_forfecat(s: float, dec: float, k: float) -> Vector2:
+		return punct(s + k * dec, dec)
+
+	func _citeste(sir: PackedVector2Array, s: float) -> Vector2:
+		var f := clampf(s, 0.0, lungime) / pas
+		var i := clampi(int(f), 0, sir.size() - 1)
+		var j := mini(i + 1, sir.size() - 1)
+		return sir[i].lerp(sir[j], f - float(i))
+
+
+## Construiește panglica pe zona dată.
+##
+## Tangentele punctelor de trecere se calculează Catmull-Rom: mânerul din
+## punctul `i` arată de la vecinul dinainte spre vecinul de după, scurtat la a
+## șasea parte. La capete nu există un vecin, deci se folosește punctul însuși —
+## ceea ce face curba să intre și să iasă drept, nu strâmb.
+##
+## E `static` fiindcă nu atinge niciun nod de interfață: aceeași funcție poate
+## fi chemată dintr-un test headless, fără fereastră și fără scenă.
+##
+## `traseu` are o valoare implicită ca să nu fie nevoie s-o dea nimeni din joc:
+## acolo e mereu `TRASEU`. Verificarea headless o dă explicit, fiindcă ea
+## trebuie să măsoare amândouă traseele în aceeași rulare.
+static func panglica(zona: Rect2, traseu := TRASEU) -> Panglica:
+	var repere: Array = TRASEU_VAL
+	if traseu == Traseu.SARPE:
+		repere = TRASEU_SARPE
+	elif traseu == Traseu.POTCOAVA:
+		repere = TRASEU_POTCOAVA
+
+	var puncte := []
+	for reper in repere:
+		puncte.append(zona.position + Vector2(reper) * zona.size)
+
+	var curba := Curve2D.new()
+	curba.bake_interval = PAS_MASURARE
+	for i in range(puncte.size()):
+		var aici: Vector2 = puncte[i]
+		var inainte: Vector2 = puncte[maxi(i - 1, 0)]
+		var dupa: Vector2 = puncte[mini(i + 1, puncte.size() - 1)]
+
+		# DIRECȚIA tangentei: de la vecinul dinainte spre cel de după.
+		var directie := dupa - inainte
+		if directie.length() < 0.00001:
+			directie = Vector2.RIGHT
+		directie = directie.normalized()
+
+		# LUNGIMEA mânerelor: proporțională cu segmentul de lângă fiecare, nu
+		# aceeași în ambele părți.
+		#
+		# Varianta simplă (un singur mâner, `(dupa - inainte) / 6`) merge cât
+		# timp punctele sunt răsfirate egal. La POTCOAVĂ nu sunt: culoarele au
+		# puncte din 112 în 112 px, iar cotitura din 49 în 49. Fix la trecerea
+		# dintre ele, mânerul scurt al cotiturii trebuia să ducă o schimbare de
+		# direcție de-a lungul unui segment lung — iar un mâner scurt care
+		# trebuie să întoarcă mult înseamnă o cotitură strânsă. Raza măsurată
+		# acolo ieșea 79 px în loc de 125, și nu se repara îndesind cotitura
+		# (am încercat: 79,2 → 79,0), fiindcă problema nu era cotitura, ci
+		# SALTUL de densitate dintre ea și culoar.
+		#
+		# Cu mânere pe măsura fiecărui segment, saltul dispare: partea dinspre
+		# culoar primește mâner lung, partea dinspre cotitură mâner scurt, iar
+		# curbura trece lin dintr-una în alta. Când segmentele sunt egale,
+		# formula dă exact ce dădea cea veche — deci e o generalizare, nu o
+		# schimbare de formă.
+		var spre_inapoi := aici.distance_to(inainte) * NETEZIRE_PANGLICA
+		var spre_inainte := aici.distance_to(dupa) * NETEZIRE_PANGLICA
+		curba.add_point(aici, -directie * spre_inapoi, directie * spre_inainte)
+
+	# Cât de departe de locul lui „de manual" poate ajunge un nod pe lungime:
+	# abaterea organică plus cât îl mută forfecarea. Cu atât se scurtează
+	# porțiunile drepte la capetele dinspre cotituri.
+	var latime := latime_panglica(zona, traseu)
+	var k := forfecare(traseu)
+	var marja := ABATERE_MAXIMA_LUNG + k * abatere_maxima_dec(latime)
+	return Panglica.new(curba, PAS_MASURARE, raza_minima_noduri(latime, k), marja)
+
+
+## Cât de lată are voie să fie panglica pe zona asta.
+##
+## Lățimea e în pixeli (ține de mărimea unui nod), iar traseul e în fracțiuni
+## (ține de forma hârtiei). Pe o fereastră mică, fracțiunile se strâng singure,
+## pixelii nu — deci benzile ar ieși de pe hârtie. Limita de mai jos e plasa: pe
+## fereastra implicită nu se activează (148 din 397 înseamnă 37%), pe una mică
+## strânge panglica în loc s-o lase să dea pe afară.
+static func latime_panglica(zona: Rect2, traseu := TRASEU) -> float:
+	var ceruta: float = LATIMI_PANGLICA.get(traseu, 148.0)
+	return minf(ceruta, zona.size.y * PROPORTIE_MAXIMA_PANGLICA)
+
+
+## Cât de tare e înclinat stratul pe traseul ăsta. 0 = perpendicular, ca înainte.
+static func forfecare(traseu := TRASEU) -> float:
+	return float(FORFECARI.get(traseu, 0.0))
+
+
+## CÂT TREBUIE SĂ RĂMÂNĂ ÎNTRE DOUĂ BENZI, ca nodurile lor să nu se atingă.
+##
+## Fără forfecare răspunsul e simplu: `DISTANTA_MINIMA_BANDA`, adică o înălțime
+## de nod. Cu forfecare, o parte din distanță vine din LUNGIME, deci lateral e
+## nevoie de mai puțin — dar cu cât mai puțin, exact?
+##
+## Două noduri de pe același strat, despărțite lateral de `x`, sunt despărțite
+## de-a lungul de `k·x` din forfecare. Numai că fiecare primește și o abatere
+## organică DE-A LUNGUL, independentă de a celuilalt (±`ABATERE_MAXIMA_LUNG`),
+## iar în cel mai rău caz cele două abateri se apropie una de alta și MĂNÂNCĂ
+## din despărțirea dată de forfecare — până la `2 × ABATERE_MAXIMA_LUNG`.
+##
+## Deci partea de-a lungul, în cel mai rău caz, e `k·x − 2a` (și zero dacă
+## abaterile o pot anula cu totul), iar condiția e
+##
+##     (k·x − 2a)² + x² ≥ minim²
+##
+## o ecuație de gradul doi în `x`, rezolvată mai jos. Pentru `k = 0` iese exact
+## `x ≥ minim`, adică fix regula dinainte — deci traseele neforfecate nu simt
+## nimic din codul ăsta.
+##
+## `c` e cât se scurtează partea de-a lungul din cauza cotiturii (1 pe dreaptă);
+## vezi `raza_minima_noduri()`, care folosește aceeași formulă pe dos.
+##
+## Costul abaterii de-a lungul, în cifre: la ȘARPE, fără ea `k` ar fi putut
+## rămâne 1,6; cu ea, trebuie 2,0. Am păstrat-o, fiindcă altfel toate nodurile
+## unui strat ar sta pe o diagonală perfectă și s-ar vedea rigla.
+static func dec_minim(k: float, c := 1.0) -> float:
+	var a := 2.0 * ABATERE_MAXIMA_LUNG
+	var d := DISTANTA_MINIMA_BANDA
+	var kc := k * c
+	if kc <= 0.0:
+		return d
+	# Sub discriminant nu se poate ajunge negativ: `d² > 0` face termenul
+	# `(kc² + 1)(a² − d²)` negativ ori de câte ori `a < d`, iar `a` e de
+	# șaisprezece pixeli, `d` de nouăzeci și patru.
+	var sub := kc * kc * a * a - (kc * kc + 1.0) * (a * a - d * d)
+	var x := (kc * a + sqrt(maxf(sub, 0.0))) / (kc * kc + 1.0)
+	# Dacă forfecarea e prea slabă ca să depășească abaterea, nu ajută deloc.
+	if kc * x <= a:
+		return d
+	return x
+
+
+## SUB CE RAZĂ DE COTITURĂ NU SE AȘAZĂ NODURI.
+##
+## Nu e o constantă ghicită, ci pragul CALCULAT din cât de mult se sprijină
+## traseul pe forfecare. Merită urmărit raționamentul, fiindcă prima variantă
+## (un 90 pus cu ochiul) trecea toate verificările în afară de una — și exact
+## aia spunea adevărul.
+##
+## Într-o cotitură de rază R, banda dinspre interior are raza R − dec, deci
+## orice bucată de drum de pe ea se scurtează cu factorul c = (R − dec) / R.
+## Partea LATERALĂ nu se scurtează, partea DE-A LUNGUL da — iar forfecarea își
+## ține toată contribuția în partea de-a lungul. Cu alte cuvinte: cu cât
+## cotitura e mai strânsă, cu atât forfecarea ajută mai puțin.
+##
+## Aici se rezolvă `dec_minim(k, c) = lățime` pentru `c`, apoi `c` pentru `R`.
+## Două lucruri bune ies pe gratis:
+##
+##   Un traseu FĂRĂ forfecare (k = 0) are `lățime ≥ minim` prin construcție,
+##   condiția e adevărată oricare ar fi R, iar pragul iese 0: toată panglica e
+##   folosibilă. VALUL și POTCOAVA se așază exact ca înainte, fără nicio
+##   excepție scrisă undeva pentru ele.
+##
+##   Un traseu care se sprijină TARE pe forfecare cere, singur, drepte tot mai
+##   lungi. Nu trebuie reglat de mână pe fiecare traseu: cere exact cât are
+##   nevoie, și cu asta se așază doar pe drepte.
+static func raza_minima_noduri(latime: float, k: float) -> float:
+	if k <= 0.0 or latime >= DISTANTA_MINIMA_BANDA:
+		return 0.0
+	var a := 2.0 * ABATERE_MAXIMA_LUNG
+	var d := DISTANTA_MINIMA_BANDA
+	# Cât trebuie să dea partea de-a lungul, ca împreună cu `lățime` să ajungă
+	# la `d`. Din (k·c·lățime − a)² + lățime² = d².
+	var de_a_lungul := a + sqrt(d * d - latime * latime)
+	var c_minim := de_a_lungul / (k * latime)
+	if c_minim >= 1.0:
+		return INF   # nici pe dreaptă nu ajunge: niciun loc nu e bun
+	return abatere_maxima_dec(latime) / (1.0 - c_minim)
+
+
+## CEA MAI MARE ABATERE LATERALĂ la care poate ajunge un nod: banda plus
+## organicul.
+##
+## Un singur loc care o calculează, fiindcă trei lucruri au nevoie de ea și ar
+## fi trei ocazii să se dezacordeze: cât de departe de curbă poate ajunge un
+## nod (verificarea de fold-over), cât de mult poate muta forfecarea un nod pe
+## lungime, și cât spațiu îi trebuie panglicii pe hârtie.
+static func abatere_maxima_dec(latime: float) -> float:
+	var pas_dec := latime / float(maxi(Expeditie.NODURI_PE_STRAT - 1, 1))
+	return latime * 0.5 + minf(pas_dec * ABATERE_LAT, ABATERE_MAXIMA_LAT)
+
+
+## AȘEZAREA: pentru fiecare nod, unde cade pe panglică.
+##
+## Întoarce „id de nod → { s, dec, centru }". Nu doar centrul, fiindcă
+## drumurile au nevoie de coordonatele PE PANGLICĂ ale capetelor: un drum se
+## desenează mergând pe curbă de la un `s` la altul, nu tăind în linie dreaptă
+## printre ele. Dacă i-aș da pânzei doar două centre, ea ar trebui să ghicească
+## panglica înapoi din ele — ceea ce nu se poate, fiindcă prin două puncte trec
+## o mie de curbe.
+##
+## Primește harta ca parametru (nu citește `Expeditie.harta` singură) ca să
+## poată fi chemată cu o hartă inventată, dintr-un test.
+static func asezare(harta: Array, pang: Panglica, latime: float, k := 0.0) -> Dictionary:
 	var straturi := 1
 	# „Cine e pe stratul ăsta", în ordinea coloanei. Am nevoie de STRATUL
-	# întreg, nu doar de câte noduri are, fiindcă abaterea pe verticală nu se
-	# mai poate hotărî nod cu nod — vezi `_potoleste_abaterea`.
+	# întreg, nu doar de câte noduri are, fiindcă abaterea laterală nu se poate
+	# hotărî nod cu nod — vezi `_potoleste_abaterea`.
 	var pe_strat := {}
 	for nod in harta:
 		var a := int(nod["adancime"])
@@ -564,12 +1270,20 @@ static func centre_noduri(harta: Array, zona: Rect2) -> Dictionary:
 	for a in pe_strat:
 		pe_strat[a].sort_custom(func(x, y): return int(x["coloana"]) < int(y["coloana"]))
 
-	# Cât spațiu revine unui strat pe orizontală și unui rând pe verticală.
-	# De aici se calculează cât are voie să bată abaterea organică: legată de
-	# distanța dintre vecini, nu de un număr fix de pixeli, ca harta să arate
-	# la fel de „așezată" și pe o fereastră mică, și pe una mare.
-	var pas_x := zona.size.x / float(maxi(straturi - 1, 1))
-	var pas_y := zona.size.y * INTINDERE_VERTICALA / float(maxi(Expeditie.NODURI_PE_STRAT - 1, 1))
+	# Cât drum revine unui strat, și cât spațiu lateral unei benzi. De aici se
+	# calculează cât are voie să bată abaterea organică: legată de distanța
+	# dintre vecini, nu de un număr fix de pixeli, ca harta să arate la fel de
+	# „așezată" și pe o fereastră mică, și pe una mare.
+	#
+	# `pas_s` se socotește din lungimea UTILĂ (fără cotituri): e distanța dintre
+	# două straturi vecine măsurată pe drumul pe care chiar stau noduri.
+	var pas_s := pang.lungime_utila / float(maxi(straturi - 1, 1))
+	var pas_dec := latime / float(maxi(Expeditie.NODURI_PE_STRAT - 1, 1))
+
+	# Cât trebuie să rămână între două benzi. Cu forfecare e mai puțin decât o
+	# înălțime de nod, fiindcă o parte din distanță vine din lungime — vezi
+	# `dec_minim()`, care face toată socoteala, abaterea de-a lungul inclusă.
+	var minim_dec := dec_minim(k)
 
 	# Un singur generator, reînsămânțat pentru fiecare nod din sămânța LUI.
 	# Dacă l-aș lăsa să curgă de la un nod la altul, abaterea nodului 5 ar
@@ -577,86 +1291,170 @@ static func centre_noduri(harta: Array, zona: Rect2) -> Dictionary:
 	# care adaug o singură aruncare de zar mai sus.
 	var rng := RandomNumberGenerator.new()
 
-	var centre := {}
+	var rezultat := {}
 	for a in pe_strat:
 		var strat: Array = pe_strat[a]
 		var cate := strat.size()
+		# Capetele panglicii nu se clatină DELOC: Startul stă fix pe primul
+		# punct de trecere și Bossul fix pe ultimul.
+		#
+		# De-a lungul, fiindcă altfel abaterea i-ar împinge dincolo de curbă și
+		# ar trebui tăiați înapoi la loc. Lateral, fiindcă la capete normala e
+		# îndreptată spre marginea hârtiei: o abatere de 25 de pixeli acolo
+		# scotea nodul de Start cu 15 pixeli în afara zonei utile, pe 293 de
+		# hărți din 300. Și, oricum, un strat cu un singur nod n-are ce să
+		# răsfire lateral — abaterea lui nu adăuga niciun pic de dezordine
+		# folositoare, doar risc.
+		var e_capat: bool = int(a) == 0 or int(a) == straturi - 1
 
 		# Întâi locurile „de manual" și abaterile dorite, separat. Nu le adun
-		# încă: ca să știu cu cât trebuie potolită abaterea, trebuie să le văd
-		# pe toate din stratul ăsta deodată.
-		var baza := []
-		var abateri := []
+		# încă: ca să știu cu cât trebuie potolită abaterea laterală, trebuie să
+		# le văd pe toate din stratul ăsta deodată.
+		var baza_dec := []
+		var abateri_dec := []
+		var s_uri := []
 		for nod in strat:
 			var coloana := int(nod["coloana"])
 
-			# ORIZONTALA: stratul 0 lipit de marginea din stânga, ultimul de cea
-			# din dreapta, restul împărțite egal între ele.
-			var fx := float(a) / float(maxi(straturi - 1, 1))
-
-			# VERTICALA: nodurile unui strat se răsfiră pe toată înălțimea utilă,
-			# nu pe mijlocul ei. Cu formula veche ((coloana + 0.5) / cate) două
-			# noduri ieșeau la 25% și 75% din înălțime, adică foloseau jumătate din
-			# hârtie și lăsau sus și jos câte un sfert gol.
-			#
-			# Un strat cu un singur nod (primul și ultimul) iese la mijloc: nu ai
+			# DE-A CURMEZIȘUL: benzile se răsfiră pe toată lățimea panglicii.
+			# Un strat cu un singur nod (primul și ultimul) stă pe mijloc — n-ai
 			# ce răsfira, iar mijlocul e locul de unde pleci și unde ajungi.
-			var fy := 0.5
+			var dec := 0.0
 			if cate > 1:
-				var intins := float(coloana) / float(cate - 1)   # 0 .. 1
-				# Straturile impare se strâng spre centru — vezi `STRANGERE_ALTERNATA`.
-				var deschidere := INTINDERE_VERTICALA
-				if a % 2 == 1:
-					deschidere *= STRANGERE_ALTERNATA
-				fy = 0.5 + (intins - 0.5) * deschidere
-
-			baza.append(zona.position + Vector2(zona.size.x * fx, zona.size.y * fy))
+				var deschidere := latime
+				if int(a) % 2 == 1:
+					# Strânge, dar NU sub minimul la care nodurile se ating.
+					# Pe o panglică lată (248) limita nu se atinge niciodată:
+					# 248 × 0,40 = 99 e peste 94. Pe una îngustă (POTCOAVA, 104)
+					# se atinge imediat — 104 × 0,40 = 42 ar lipi nodurile —
+					# și atunci strângerea se oprește singură la 94.
+					#
+					# Rezultatul e o regulă care nu trebuie reglată pe fiecare
+					# traseu: „strânge cât poți, dar nu până la suprapunere".
+					# O constantă în plus pentru fiecare traseu ar fi fost încă
+					# un loc unde se poate uita ceva.
+					deschidere = clampf(
+						latime * STRANGERE_ALTERNATA, minf(minim_dec, latime), latime)
+				dec = (float(coloana) / float(cate - 1) - 0.5) * deschidere
+			baza_dec.append(dec)
 
 			rng.seed = int(nod["samanta"])
-			abateri.append(Vector2(
-				rng.randf_range(-1.0, 1.0) * minf(pas_x * ABATERE_X, ABATERE_MAXIMA.x),
-				rng.randf_range(-1.0, 1.0) * minf(pas_y * ABATERE_Y, ABATERE_MAXIMA.y)
-			))
+			var lung := rng.randf_range(-1.0, 1.0) * minf(
+				pas_s * ABATERE_LUNG, ABATERE_MAXIMA_LUNG)
+			var lat := rng.randf_range(-1.0, 1.0) * minf(
+				pas_dec * ABATERE_LAT, ABATERE_MAXIMA_LAT)
+			if e_capat:
+				lung = 0.0
+				lat = 0.0
+			# DE-A LUNGUL: stratul 0 la începutul panglicii, ultimul la capăt,
+			# restul împărțite egal între ele — egal pe DRUMUL FOLOSIBIL, nu pe
+			# orizontală și nici măcar pe toată curba. `s_la_fractie` sare peste
+			# cotituri, deci „la jumătatea drumului" înseamnă „la jumătatea
+			# porțiunilor drepte".
+			var fractie := float(a) / float(maxi(straturi - 1, 1))
+			s_uri.append(clampf(
+				pang.s_la_fractie(fractie) + lung, 0.0, pang.lungime))
+			abateri_dec.append(lat)
 
-		var potolire := _potoleste_abaterea(baza, abateri)
+		var potolire := _potoleste_abaterea(baza_dec, abateri_dec, minim_dec)
 
 		for i in range(cate):
-			var centru: Vector2 = baza[i] + Vector2(
-				abateri[i].x, abateri[i].y * potolire)
-			# Plasa de siguranță: abaterea n-are voie să scoată un nod de pe
-			# hârtie. Aceeași plasă ține nodurile și la stânga de carte, fiindcă
-			# zona utilă se termină înaintea ei — vezi nota de la `ZONA_PERGAMENT`.
-			centre[int(strat[i]["id"])] = _in_zona(centru, zona)
+			var s: float = s_uri[i]
+			var dec: float = baza_dec[i] + abateri_dec[i] * potolire
+			rezultat[int(strat[i]["id"])] = {
+				# `s` rămâne NEFORFECAT: e locul stratului pe panglică, același
+				# pentru toate nodurile lui. Forfecarea se aplică la desen, în
+				# `punct_forfecat` — și tot acolo se aplică și drumurilor, ceea
+				# ce e singurul motiv pentru care ele nu se pot încrucișa.
+				"s": s,
+				"dec": dec,
+				"centru": pang.punct_forfecat(s, dec, k),
+			}
 
+	return rezultat
+
+
+## Doar centrele, pentru cine nu are treabă cu panglica.
+static func centre_noduri(harta: Array, zona: Rect2) -> Dictionary:
+	var asez := asezare(
+		harta, panglica(zona), latime_panglica(zona), forfecare())
+	var centre := {}
+	for id in asez:
+		centre[id] = asez[id]["centru"]
 	return centre
 
 
-## CÂT DIN ABATEREA PE VERTICALĂ ARE VOIE SĂ RĂMÂNĂ, într-un strat.
+## PUNCTELE UNUI DRUM, calculate PE PANGLICĂ.
 ##
-## Întoarce un număr între 0 și 1 cu care se înmulțesc toate abaterile pe
-## verticală din stratul ăla.
+##   P(t) = C( lerp(s_a, s_b, t) ) + N(…) · lerp(dec_a, dec_b, u)
+##
+## Două interpolări cu doi parametri diferiți, și în asta stă toată forma:
+##
+##   `t` merge LINIAR înainte pe curbă — drumul avansează uniform, deci
+##       urmează terenul în loc să taie peste el;
+##   `u` merge AMESTECAT în lateral — trecerea de pe o bandă pe alta e lină la
+##       capete, dar pornește din prima clipă (vezi `AMESTEC_LINIAR`).
+##
+## De ce nu mai e Bézier: o Bézier între două centre nu știe nimic despre
+## teren. Pe o panglică ondulată, ea ar tăia coarda, iar drumul ar trece pe
+## lângă curbă în loc să meargă pe ea — și două drumuri care taie două coarde
+## diferite se pot intersecta oriunde.
+##
+## De ce, calculate așa, nu se pot tăia: două drumuri între aceleași straturi
+## au (aproape) același `s` la același `t`, deci stau pe aceeași normală și
+## diferă doar prin `dec`. Dacă unul e lateral deasupra celuilalt la plecare ȘI
+## la sosire, `dec`-urile lor nu se pot întâlni la mijloc — ar însemna să se
+## inverseze și apoi să se inverseze la loc, adică să se taie de două ori.
+## Verificarea din `tools/verifica_harta.gd` numără exact asta, pe aceleași
+## puncte pe care le desenează jocul.
+##
+## Întoarce puncte gata calculate. Pânza desenează liniuțe pe ele și nu are de
+## unde ști — și nici de ce să știe — ce e o panglică.
+static func puncte_drum(
+	pang: Panglica, s_a: float, dec_a: float, s_b: float, dec_b: float, k := 0.0
+) -> PackedVector2Array:
+	# Cât de des măsurăm. Lungimea adevărată a drumului e între „cât înaintează"
+	# și „cât înaintează plus cât se dă lateral"; a doua e o supraestimare
+	# ieftină, adică doar câteva eșantioane în plus.
+	var aproximativ := absf(s_b - s_a) + absf(dec_b - dec_a) * (1.0 + k)
+	var esantioane := maxi(16, int(aproximativ / PAS_MASURARE))
+
+	var puncte := PackedVector2Array()
+	for i in range(esantioane + 1):
+		var t := float(i) / float(esantioane)
+		var u := lerpf(t, smoothstep(0.0, 1.0, t), AMESTEC_LINIAR)
+		var dec := lerpf(dec_a, dec_b, u)
+		# Drumul se calculează întâi NEFORFECAT — `lerpf(s_a, s_b, t)` merge
+		# între `s`-urile straturilor, nu între cele ale nodurilor — și abia
+		# punctul gata calculat e forfecat. Ordinea asta e ce face argumentul de
+		# la `FORFECARI` valabil: forfecarea se aplică drumului ÎNTREG, ca o
+		# transformare a planului, nu doar capetelor lui.
+		puncte.append(pang.punct_forfecat(lerpf(s_a, s_b, t), dec, k))
+	return puncte
+
+
+## CÂT DIN ABATEREA LATERALĂ ARE VOIE SĂ RĂMÂNĂ, într-un strat.
+##
+## Întoarce un număr între 0 și 1 cu care se înmulțesc toate abaterile laterale
+## din stratul ăla.
 ##
 ## ─────────────────────────────────────────────────────────────
 ## DE CE E NEVOIE DE EL
 ##
-## Abaterea organică se trăgea la sorți nod cu nod, ±52 de pixeli. Pe straturile
-## strânse spre mijloc (vezi `STRANGERE_ALTERNATA`), cele două noduri stau la
-## 177 de pixeli unul de altul — deci dacă cel de sus e împins în jos cu 52 și
-## cel de jos în sus cu 52, rămân 73 de pixeli între ei. Nodul are 92. Se
-## suprapun, și, mai rău, uneori se INVERSEAZĂ: cel de pe coloana 0 ajunge sub
-## cel de pe coloana 1.
+## Abaterea organică se trage la sorți nod cu nod. Dacă nodul de pe banda de
+## sus e împins spre cea de jos și cel de jos spre cea de sus, între ei rămâne
+## mai puțin decât o înălțime de nod: se suprapun și, mai rău, uneori se
+## INVERSEAZĂ — cel de pe coloana 0 ajunge dincolo de cel de pe coloana 1.
 ##
-## Asta strică tot ce am câștigat în `_leaga`: graful poate fi curat, dar dacă
-## nodurile își schimbă locurile pe hârtie, drumurile se taie la desenare.
-## S-a întâmplat pe 21 de hărți din 300.
+## Asta strică tot ce am câștigat în altă parte: graful poate fi curat, dar dacă
+## nodurile își schimbă locurile pe bandă, drumurile se taie la desenare.
 ##
 ## ─────────────────────────────────────────────────────────────
 ## DE CE ÎNMULȚIM TOT STRATUL, ÎN LOC SĂ ÎMPINGEM NODUL VINOVAT
 ##
-## „Îl mut pe cel de jos cu încă 20 de pixeli mai jos" e prima idee, și e
+## „Îl mai împing pe cel de jos cu douăzeci de pixeli" e prima idee, și e
 ## greșită: nodul mutat poate ieși de pe pergament, iar dacă îl oprim la
-## margine, se strâmbă și mai tare. Un singur nod împins strică echilibrul pe
-## care întinderea verticală tocmai l-a calculat.
+## margine se strâmbă și mai tare.
 ##
 ## Înmulțind toate abaterile stratului cu același număr, formele rămân
 ## PROPORȚIONALE — stratul arată la fel, doar mai puțin dezordonat — și niciun
@@ -664,22 +1462,21 @@ static func centre_noduri(harta: Array, zona: Rect2) -> Dictionary:
 ## abaterea doar scade.
 ##
 ## Cum se află numărul: pentru fiecare pereche de vecini avem nevoie ca
-##   (baza_jos + f·abatere_jos) − (baza_sus + f·abatere_sus) ≥ DISTANTA_MINIMA_VERTICALA
+##   (baza_jos + f·abatere_jos) − (baza_sus + f·abatere_sus) ≥ DISTANTA_MINIMA_BANDA
 ## Distanța de bază e deja destul de mare, deci singurul caz în care se strică
 ## e când abaterile se apropie una de alta. Atunci scoatem `f` din inegalitate
 ## și luăm cel mai mic `f` cerut de vreo pereche. Dacă nicio pereche nu se
-## plânge, `f` rămâne 1 și nu s-a schimbat nimic — ceea ce se întâmplă pe 279
-## de hărți din 300.
-static func _potoleste_abaterea(baza: Array, abateri: Array) -> float:
+## plânge, `f` rămâne 1 și nu s-a schimbat nimic.
+static func _potoleste_abaterea(baza: Array, abateri: Array, minim: float) -> float:
 	var factor := 1.0
 	for i in range(baza.size() - 1):
-		var loc: float = baza[i + 1].y - baza[i].y
-		var strangere: float = abateri[i].y - abateri[i + 1].y   # cât apropie abaterea
+		var loc: float = baza[i + 1] - baza[i]
+		var strangere: float = abateri[i] - abateri[i + 1]   # cât apropie abaterea
 		if strangere <= 0.0:
 			continue   # abaterile depărtează nodurile; n-are cum să strice
-		if loc <= DISTANTA_MINIMA_VERTICALA:
+		if loc <= minim:
 			return 0.0   # nici fără abatere nu încap: n-o lăsa să mai strice ceva
-		factor = minf(factor, (loc - DISTANTA_MINIMA_VERTICALA) / strangere)
+		factor = minf(factor, (loc - minim) / strangere)
 	return clampf(factor, 0.0, 1.0)
 
 
@@ -720,7 +1517,7 @@ static func _in_zona(punct: Vector2, zona: Rect2) -> Vector2:
 
 ## Liniile, cu starea lor. Se construiesc din aceleași date ca butoanele, deci
 ## nu pot ajunge să arate un drum care nu există.
-func _muchii(centre: Dictionary) -> Array[Dictionary]:
+func _muchii(asez: Dictionary, pang: Panglica, k: float) -> Array[Dictionary]:
 	var accesibile := Expeditie.accesibile()
 	var muchii: Array[Dictionary] = []
 
@@ -728,7 +1525,7 @@ func _muchii(centre: Dictionary) -> Array[Dictionary]:
 		var id := int(nod["id"])
 		for id_urmator in nod["spre"]:
 			var urmator := int(id_urmator)
-			if not (centre.has(id) and centre.has(urmator)):
+			if not (asez.has(id) and asez.has(urmator)):
 				continue
 
 			# Drumul e „parcurs" doar dacă AMÂNDOUĂ capetele sunt în urma ta ȘI
@@ -745,12 +1542,15 @@ func _muchii(centre: Dictionary) -> Array[Dictionary]:
 				culoare = CULOARE_DRUM_DESCHIS
 				grosime = GROSIME_DRUM_ALES
 
+			var a: Dictionary = asez[id]
+			var b: Dictionary = asez[urmator]
 			muchii.append({
-				"de_la": centre[id],
-				"la": centre[urmator],
+				# Drumul, ca șir de puncte. Calculat AICI, fiindcă harta e
+				# singura care știe pe ce panglică stau nodurile.
+				"puncte": puncte_drum(pang, a["s"], a["dec"], b["s"], b["dec"], k),
 				"culoare": culoare,
 				"grosime": grosime,
-				# Unde se opresc liniuțele la capete. Trimisă de AICI, nu
+				# Unde se opresc liniuțele la capete. Trimisă tot de AICI, nu
 				# ghicită în pânză: harta e singura care știe cât de mare e un
 				# nod, iar pânza nu are de ce să afle ce e un nod.
 				"oprire": OPRIRE_LA_NOD,

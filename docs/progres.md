@@ -1,6 +1,6 @@
 # MINDKEEP — Jurnal de progres
 
-*Ultima actualizare: 21 septembrie 2026*
+*Ultima actualizare: 22 septembrie 2026*
 *Atașează acest fișier la începutul fiecărei sesiuni noi, împreună cu `CLAUDE.md` și `docs/pitch-document.md`.*
 
 ---
@@ -14,7 +14,7 @@
 | 3. Trivia, ca scenă independentă | ✅ gata |
 | 4. Bucla completă a unei lupte | ✅ victorie · înfrângere · recompense (Fragmente) |
 | 5. Trei inamici manuali | ✅ Soldatul · Lăncierul (ceas) · Spadasinul (vulnerabilitate), aleși din joc |
-| 6. Harta de expediție | ✅ loadout „N din M" · **12-16 noduri**, ramificate, cu sămânță · Luptă / Elită / Odihnă / Eveniment / **Magazin** / **Boss** · **Monede + puteri temporare** · sumar de run · aspect: pergament, de la stânga la dreapta, simboluri de cerneală, trasee punctate · **drumuri care nu se încrucișează niciodată (0 la 300 de semințe)** · **nodul curent are și aură, și X** |
+| 6. Harta de expediție | ✅ loadout „N din M" · **12-16 noduri**, ramificate, cu sămânță · Luptă / Elită / Odihnă / Eveniment / **Magazin** / **Boss** · **Monede + puteri temporare** · sumar de run · aspect: pergament, simboluri de cerneală, trasee punctate · **nodurile și drumurile stau pe o PANGLICĂ (curbă centrală + benzi)**, nu pe o grilă dreaptă · **trei trasee, toate verzi pe 300 de semințe** (POTCOAVĂ activă) · strat înclinat (forfecare) la ȘARPE · **drumuri care nu se încrucișează niciodată (0 la 300 de semințe)** · **nodul curent are și aură, și X** |
 | 7. Cetatea | ❌ |
 | 8. Save/Load | 🟡 tezaurul, sacul și expediția știu toate să se serializeze (`spre_dictionar` / `din_dictionar`), pe trei straturi de durată; scrierea pe disc, nu încă |
 | 9. Celelalte discipline | 🟡 Cultură generală ✅ (135 de întrebări) · Logica ✅ (80 de categorii) · Cuvinte ✅ · toate trei fără repetiții pe expediție · celelalte 5 ❌ |
@@ -27,6 +27,271 @@ buget, generare) rămâne acolo unde era.
 Am sărit peste ordinea recomandată la pasul 12 (artă): imaginile pentru rege,
 cavaler și pentru cele trei piese de șah de pe butoane au intrat mai devreme, dar
 restul rămâne placeholder. Bucla de luptă e în continuare cea validată, nu arta.
+
+---
+
+## Sesiunea stratului înclinat (21–22 septembrie 2026) — ȘARPELE încape
+
+Sesiunea trecută ȘARPELE pica: trei culoare cereau 466 px de înălțime, hârtia
+are 397, lipseau 69. Acum trece tot, fără să se micșoreze niciun nod.
+
+### Ideea: cumperi înălțime cu lungime
+
+Nodurile unui strat nu mai stau pe normala panglicii, ci pe o DIAGONALĂ. Fiecare
+bandă primește și un decalaj de-a lungul drumului, proporțional cu cel lateral:
+
+    s' = s + k × dec
+
+Două noduri de pe același strat sunt atunci despărțite și lateral (`lățime`), și
+de-a lungul (`k × lățime`), deci distanța dintre ele e `lățime × √(1 + k²)`.
+Aceiași 92 px se obțin cu o panglică de √(1 + k²) ori mai îngustă. La k = 2,0
+factorul e 2,24: **o panglică de 50 px ține nodurile la 112 px.** Cei 92 px se
+plătesc acum din lungimea drumului — unde ȘARPELE are 2339 px pentru 9 straturi.
+
+Cu panglica de 50 în loc de 248, cele trei culoare încap la 161 px unul de
+altul, cu 94 px de hârtie goală între benzile vecine.
+
+### De ce forfecarea nu poate crea încrucișări
+
+Fiindcă se aplică pe TOT drumul, nu doar pe capete. Un drum se calculează întâi
+în coordonatele nepieptănate (s, dec), exact ca înainte, și abia punctul gata
+calculat e mutat cu `s → s + k·dec`.
+
+Transformarea Φ(s, dec) = (s + k·dec, dec) e o forfecare a planului: liniară, cu
+determinantul 1, deci inversabilă. O aplicație inversabilă și continuă duce
+curbe care nu se taie tot în curbe care nu se taie — dacă imaginile s-ar
+intersecta, ar face-o și originalele în punctul de dinainte de transformare.
+
+Deci argumentul vechi rămâne întreg: două drumuri între aceleași straturi au
+același `s` la același `t` și diferă doar prin `dec`; ordinea laterală nu se
+poate inversa. **Forfecarea nu atinge `dec`** — doar strâmbă `s`.
+
+### Nodurile stau doar pe drepte
+
+Cotiturile rămân drum curat. Pragul nu e o constantă pusă cu ochiul, ci se
+CALCULEAZĂ: într-o cotitură de rază R, banda dinspre interior se scurtează cu
+(R − dec)/R, iar scurtarea lovește exact partea de-a lungul, adică tocmai
+contribuția forfecării. Din condiția „distanța rămâne ≥ 92" iese raza minimă.
+
+Pentru un traseu fără forfecare pragul iese 0 — toată panglica e bună, deci VAL
+și POTCOAVA se așază exact ca înainte, fără nicio excepție scrisă pentru ele.
+Pentru ȘARPE iese 761 px, deci rămân doar cele trei culoare:
+**[0–555] [989–1350] [1784–2339]**, iar straturile se împart între ele
+proporțional cu lungimea, prin `s_la_fractie()`.
+
+### Cifrele, 300 de semințe, 1152 × 648
+
+| | VAL | POTCOAVĂ *(activ)* | **ȘARPE** |
+|---|---|---|---|
+| lățimea panglicii | 248 px | 104 px | **50 px** |
+| forfecarea k | 0 | 0 | **2,0** |
+| **încrucișări în desen** | **0** | **0** | **0** |
+| cea mai apropiată pereche (prag 72) | 82,8 | 84,2 | **78,5** |
+| pe același strat (cerut 92) | 94,0 | 94,0 | **94,8** |
+| noduri / drumuri ieșite din zonă | 0 / 0 | 0 / 0 | **0 / 0** |
+| rază peste abatere | ×1,26 | ×1,54 | **×2,05** |
+| distanța medie între straturi | 119,7 px | 219,4 px | **212,8 px** |
+
+VAL și POTCOAVA au exact aceleași cifre ca înainte — forfecarea e 0 la ele, deci
+tot codul nou trece pe lângă.
+
+### De ce k = 2,0 și nu mai puțin
+
+Măsurat pe 300 de semințe, fereastra e îngustă: **sub 1,9 cade distanța pe
+strat, peste 2,2 cade distanța dintre straturi** (forfecarea prea mare trage un
+nod de pe un strat lângă vecinul de pe altul).
+
+1,9 părea că merge într-o primă măsurătoare, dar nu merge: la k = 1,9 raza
+cerută iese INFINIT — panglica de 50 px e prea îngustă chiar și pe o dreaptă
+perfectă — nicio porțiune nu se califică, intră plasa „folosește toată
+panglica", iar nodurile ajung înapoi în cotituri. Raportul arăta atunci
+„o porțiune, toată panglica", care seamănă leit cu „totul e în regulă".
+
+**Plasa scrie acum un avertisment**, iar raportul spune explicit ce rază s-a
+cerut. O plasă tăcută care ascunde o configurare greșită e mai rea decât lipsa
+ei.
+
+### Ce a costat abaterea organică de-a lungul
+
+Cele două noduri ale unui strat primesc abateri de-a lungul INDEPENDENTE, iar în
+cel mai rău caz ele se apropie și mănâncă până la 2 × 8 = 16 px din despărțirea
+dată de forfecare. Condiția corectă nu e `lățime × √(1 + k²) ≥ 92`, ci
+
+    (k·x − 16)² + x² ≥ 94²
+
+Fără abaterea de-a lungul, k ar fi putut rămâne 1,6. Cu ea, trebuie 2,0. Am
+păstrat-o: altfel toate nodurile unui strat ar sta pe o diagonală perfectă și
+s-ar vedea rigla.
+
+---
+
+## Sesiunea potcoavei (21 septembrie 2026) — al treilea traseu, și o bănuială greșită
+
+### POTCOAVA
+
+Stânga-sus → dreapta-sus → cotitură pe dreapta → dreapta-jos → stânga-jos
+(Bossul). Două culoare în loc de trei, deci socoteala de la ȘARPE se schimbă:
+
+    2 culoare × 94 px de panglică + 1 spațiu × 92 px = 280 px
+    zona utilă are                                     397 px
+    rămân libere                                       117 px
+
+Cei 117 px liberi s-au dus **în spațiul dintre culoare**, nu într-o panglică mai
+lată. O panglică lată ar fi însemnat două culoare groase și apropiate, care la o
+privire se citesc ca o singură bandă de noduri. Așa, panglica e de 104 px
+(aproape minimul la care două noduri de pe același strat nu se ating), culoarele
+stau la 250 px unul de altul, și rămân **118 px de hârtie goală** între benzile
+vecine. Se văd ca două rânduri.
+
+### Cifrele (aceleași 300 de semințe, zonă utilă 797 × 397 px)
+
+| | VAL *(activ)* | POTCOAVĂ | ȘARPE |
+|---|---|---|---|
+| lățimea panglicii | 248 px | 104 px | 248 px |
+| lungimea panglicii | 827 px | 1517 px | 2390 px |
+| raza celei mai strânse cotituri | 174,5 px | 101,5 px | 65,1 px |
+| abatere laterală maximă | 138 px → **×1,26** | 66 px → **×1,54** | 138 px → ×0,47 |
+| fâșia încape în zonă | colțuri, 19,9 px | **DA** | NU, 105 px |
+| **încrucișări în desen** | **0** | **0** | 500 (pe 245 hărți) |
+| distanța medie între straturi | 119,7 px | **219,4 px** | 343,7 px |
+| cea mai apropiată pereche (prag 72) | **82,8** | **84,2** | 40,7 |
+| noduri / drumuri ieșite din zonă | 0 / 0 | **0 / 0** | 1105 / 104 px |
+
+POTCOAVA e verde peste tot, și are cel mai mult aer dintre toate: 219 px între
+straturi, față de 120 la VAL.
+
+### Cum se comută
+
+O singură linie, în `scenes/harta/harta.gd`:
+
+```gdscript
+const TRASEU := Traseu.VAL        # ondulația — cea activă acum
+const TRASEU := Traseu.POTCOAVA   # două rânduri și o cotitură
+const TRASEU := Traseu.SARPE      # trei culoare — nu încape, vezi nota lui
+```
+
+Salvezi, redeschizi ecranul de expediție, gata. Nu trebuie repornit jocul:
+`_aseaza_nodurile()` reconstruiește panglica de fiecare dată când pânza își
+schimbă mărimea.
+
+### Bănuiala greșită, ținută minte dinadins
+
+La prima măsurătoare, cotitura POTCOAVEI avea raza 79 px în loc de 125 cât o
+desenasem. Explicația care suna bine: punctele cotiturii sunt prea rare (din 45°
+în 45°), iar curba netedă taie colțurile — exact ce pățiseră vârfurile VALULUI.
+Le-am îndesit la 22,5°. Rezultat: **79,2 → 79,0**. Adică nimic.
+
+Adevăratul vinovat era altul: **saltul de densitate** dintre culoar (puncte din
+112 în 112 px) și cotitură (din 49 în 49). Formula Catmull-Rom folosită atunci
+dădea ambelor capete ale unui punct același mâner; la trecerea dintre ele,
+mânerul scurt al cotiturii trebuia să ducă o schimbare mare de direcție — și un
+mâner scurt care întoarce mult înseamnă o cotitură strânsă.
+
+Reparația e în `panglica()`: **mânerele se scalează după segmentul de lângă
+fiecare**, separat pe stânga și pe dreapta. Când segmentele sunt egale, formula
+dă exact ce dădea cea veche — deci e o generalizare, nu o schimbare de formă.
+Ce s-a câștigat peste tot:
+
+| | înainte | după |
+|---|---|---|
+| raza VAL | 166,9 px | **174,5 px** |
+| raza POTCOAVĂ | 79,0 px | **101,5 px** |
+| raza ȘARPE | 10,1 px | **65,1 px** |
+| încrucișări ȘARPE | 871 | 500 |
+
+Lecția: prima explicație care sună bine nu e neapărat cea adevărată, iar
+verificarea headless costă patru minute și spune care e. Dacă aș fi îndesit
+punctele și aș fi trecut mai departe fără să remăsor, aș fi rămas cu o reparație
+care nu repara nimic — și cu convingerea că am înțeles problema.
+
+---
+
+## Sesiunea panglicii (21 septembrie 2026) — harta nu mai e o grilă
+
+### Ce s-a schimbat, în două propoziții
+
+Nodurile nu se mai așază pe o grilă dreaptă (x din adâncime, y din coloană), ci
+pe o **panglică**: o curbă centrală care șerpuiește pe pergament, plus două
+benzi paralele cu ea. Adâncimea = cât ai mers pe curbă (lungime de arc);
+coloana = pe ce bandă ești.
+
+### De ce harta veche era un caz particular
+
+Dă-i panglicii ca traseu un singur segment orizontal: curba devine o dreaptă,
+tangenta e mereu (1, 0), normala mereu (0, 1), iar formula `C(s) + N(s)·dec` se
+citește `(stânga + s, mijloc + dec)` — exact vechiul „x din adâncime, y din
+coloană". Nu s-a înlocuit un sistem cu altul; s-a scos din el presupunerea că
+tangenta e constantă.
+
+### Cine face ce acum
+
+| Fișier | Ce știe |
+|---|---|
+| `harta.gd` | panglica, benzile, punctele fiecărui drum |
+| `panza.gd` | primește un șir de puncte și desenează liniuțe pe el. Cuvântul „panglică" nu mai apare în el decât într-un comentariu |
+| `tools/verifica_harta.gd` | măsoară AMÂNDOUĂ traseele, pe 300 de semințe |
+
+Drumurile nu mai sunt Bézier între două centre. O Bézier nu știe nimic despre
+teren: pe o panglică ondulată ar tăia coarda. Acum drumul merge PE curbă, cu
+`P(t) = C(lerp(s_a, s_b, t)) + N · lerp(dec_a, dec_b, u)`, unde `u` amestecă
+liniar cu `smoothstep` ca două drumuri care pleacă din același nod să se
+despartă din prima clipă.
+
+### Cifrele (fereastra implicită, zonă utilă 797 × 397 px)
+
+**VAL** — de la stânga la dreapta, o ondulație și jumătate. **Tot verde:**
+
+| Măsură | Valoare |
+|---|---|
+| lungimea panglicii | 827 px |
+| raza celei mai strânse cotituri | 166,9 px |
+| cea mai mare abatere laterală (bandă 124 + organic 14) | 138 px → rezervă ×1,21 |
+| distanța medie între straturi, pe panglică | 119,7 px |
+| încrucișări în desen, 300 de semințe | **0** |
+| cea mai apropiată pereche de noduri | **82,6 px** (harta dreaptă de dinainte: 71,4) |
+| noduri / drumuri ieșite din zona utilă | 0 / 0 px |
+
+**ȘARPE** — trei culoare legate prin două întoarceri. **Nu încape, și se știe
+de ce:** nu din cauza cotiturilor, ci a înălțimii hârtiei.
+
+    3 culoare × 94 px de panglică + 2 spații × 92 px = 466 px
+    zona utilă are                                     397 px
+    lipsesc                                             69 px
+
+Măsurat: distanța medie între straturi 345,7 px (loc berechet), dar cea mai
+apropiată pereche de noduri ajunge la 36,8 px și 871 de drumuri se taie pe 293
+de hărți din 300. Traseul rămâne în cod, verificat, ca să nu fie redescoperit de
+la zero: l-ar debloca un pergament mai înalt, noduri mai mici, sau două culoare
+în loc de trei (2 × 94 + 92 = 280 px, adică ar încăpea).
+
+### Ce am învățat și merită ținut minte
+
+**Lățimea panglicii și amplitudinea valului nu pot crește amândouă.** Raza
+cotiturii scade cam invers proporțional cu amplitudinea (R ≈ 6000 / amplitudine,
+pe lățimea hârtiei ăsteia, cu o ondulație și jumătate), iar pe banda dinspre
+interiorul cotiturii drumul se scurtează cu (R − abatere) / R. La R = 167 și o
+abatere de 138, 120 px de drum devin 20 px de hârtie — și două noduri se
+suprapun. Produsul „lățime × amplitudine" e practic fix.
+
+**Pragul de distanță dintre noduri nu e 92, ci 72.** 92 ar fi cifra evidentă
+(două casete care se ating), dar harta dreaptă, pe care panglica o înlocuiește,
+n-o trecea nici ea: cea mai apropiată pereche de pe ea era la 71,4 px, și arăta
+bine — fiindcă imaginea ocupă 0,78 din casetă. Pragul corect nu e „cât de mari
+sunt casetele", ci „cât de aproape ajungeau nodurile pe harta de dinainte".
+
+**Strângerea alternată a benzilor nu e cosmetică.** Două noduri de pe straturi
+vecine și de pe aceeași bandă sunt despărțite doar de cât înaintează drumul.
+Strângând benzile din doi în doi, straturile vecine ajung pe benzi diferite,
+deci se mai adaugă o despărțire laterală. Fără ea, minimul cădea la 29,9 px.
+
+### Datorie tehnică deschisă aici
+
+- Verificarea „fâșia plină încape în zonă" iese cu 19 px la cele două capete ale
+  panglicii, unde banda iese în diagonală peste marginea hârtiei. Nu se vede
+  nimic acolo: primul și ultimul strat au un singur nod, pe mijlocul panglicii,
+  iar drumurile pleacă tot de pe mijloc. Verdictul care contează („ies
+  DRUMURILE?") e 0 px. De curățat doar dacă vreodată un strat de capăt primește
+  mai mult de un nod.
 
 ---
 
