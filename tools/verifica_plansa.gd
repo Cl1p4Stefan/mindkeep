@@ -32,6 +32,7 @@ extends Node
 ##   (2) din orice nod se poate ajunge la Boss
 ##   (3) nu există cicluri
 ##   (4) niciun nod fără ieșire, în afară de Boss
+##   (9) orice nod în afară de Start și Boss are cel puțin doi VECINI
 ##
 ## DESENUL — poate fi greșit chiar dacă graful e curat:
 ##   (5) capetele drumurilor cad pe centrele nodurilor
@@ -131,6 +132,7 @@ func _verifica(cale: String, zona: Rect2) -> bool:
 	var topologic := _ordine_topologica(plansa)
 	bun = _fara_cicluri(plansa, topologic) and bun
 	bun = _fara_fundaturi(plansa) and bun
+	bun = _toti_au_doi_vecini(plansa) and bun
 
 	print("")
 	print("  DESENUL")
@@ -289,6 +291,47 @@ func _fara_fundaturi(plansa: Dictionary) -> bool:
 		fundaturi.append("(Bossul ARE ieșire, deși n-ar trebui)")
 	return _verdict("(4) fără fundături, în afară de Boss", fundaturi.is_empty(),
 		"" if fundaturi.is_empty() else ", ".join(fundaturi))
+
+
+## (9) Orice nod în afară de Start și Boss are cel puțin DOI vecini.
+##
+## Verificarea (4) de mai sus numără IEȘIRILE, adică drumurile citite cu sensul
+## lor. Asta numără VECINII — aceleași drumuri, citite în amândouă sensurile, așa
+## cum le citește jocul (`Expeditie.vecini`). Sunt două întrebări diferite, și un
+## nod poate s-o treacă pe una și s-o pice pe cealaltă: un nod în care intră trei
+## drumuri și din care nu pleacă niciunul are trei vecini și zero ieșiri.
+##
+## Ce prinde regula asta: nodul cu UN SINGUR vecin. În el intri și din el te
+## întorci pe unde ai venit — numai că nodul din care ai venit e deja parcurs,
+## deci `accesibile()` nu ți-l va oferi. L-ai desenat frumos pe pergament și e
+## mort.
+##
+## Startul și Bossul sunt scutiți, fiindcă la ei regula n-are sens: unul e locul
+## pe unde intri, celălalt e capătul. Un Boss cu un singur vecin e chiar forma
+## normală — vezi `harta_01`, unde la B se ajunge numai prin W1.
+##
+## Pe harta GENERATĂ aceeași regulă se verifică în
+## `Expeditie._verifica_structura()`, fiindcă acolo nu există niciun fișier de
+## citit înainte de joc. Aceeași regulă, două unelte, după cine desenează harta.
+func _toti_au_doi_vecini(plansa: Dictionary) -> bool:
+	# Vecinii, în amândouă sensurile: reper → mulțime de repere.
+	var vecini := {}
+	for reper in plansa["ordine"]:
+		vecini[reper] = {}
+	for reper in plansa["ordine"]:
+		for spre in plansa["spre"][reper]:
+			vecini[reper][spre] = true
+			vecini[spre][reper] = true
+
+	var singuratice: Array[String] = []
+	for reper in plansa["ordine"]:
+		if reper == plansa["start"] or reper == plansa["boss"]:
+			continue
+		if vecini[reper].size() < 2:
+			singuratice.append("%s (%d)" % [reper, vecini[reper].size()])
+	return _verdict("(9) toate nodurile au cel puțin doi vecini",
+		singuratice.is_empty(),
+		"" if singuratice.is_empty() else "sub doi: %s" % ", ".join(singuratice))
 
 
 # ─────────────────────────────────────────────────────────────

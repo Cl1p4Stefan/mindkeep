@@ -14,7 +14,7 @@
 | 3. Trivia, ca scenă independentă | ✅ gata |
 | 4. Bucla completă a unei lupte | ✅ victorie · înfrângere · recompense (Fragmente) |
 | 5. Trei inamici manuali | ✅ Soldatul · Lăncierul (ceas) · Spadasinul (vulnerabilitate), aleși din joc |
-| 6. Harta de expediție | ✅ loadout „N din M" · **12-16 noduri**, ramificate, cu sămânță · Luptă / Elită / Odihnă / Eveniment / **Magazin** / **Boss** · **Monede + puteri temporare** · sumar de run · aspect: pergament, simboluri de cerneală, trasee punctate · **nodurile și drumurile stau pe o PANGLICĂ (curbă centrală + benzi)**, nu pe o grilă dreaptă · **patru trasee, toate verzi pe 300 de semințe** (POTCOAVĂ activă; POTCOAVA OGLINDITĂ e aceeași formă, întoarsă) · strat înclinat (forfecare) la ȘARPE · **drumuri care nu se încrucișează niciodată (0 la 300 de semințe)** · **nodul curent are și aură, și X** · **două surse de hartă: GENERATĂ (panglica) sau DESENATĂ dintr-un fișier `data/harti/*.json`** — comutatorul `Expeditie.SURSA_HARTII`; azi e pe DESENATĂ · **harta umple pergamentul**: pânza ține toată pagina, antetul plutește peste ea (805 × 427 px de hartă, de la 666 × 353) · **drumurile merg în amândouă sensurile**, cu nodul parcurs tăiat definitiv și cu garanția, verificată pe 16 000 de expediții simulate, că nu te poți înfunda · **figurina sare, cade ca un slam și zguduie ecranul la aterizare**, cu un răgaz de 0,5 s înainte să se deschidă nodul |
+| 6. Harta de expediție | ✅ loadout „N din M" · **12-16 noduri**, ramificate, cu sămânță · Luptă / Elită / Odihnă / Eveniment / **Magazin** / **Boss** · **Monede + puteri temporare** · sumar de run · aspect: pergament, simboluri de cerneală, trasee punctate · **nodurile și drumurile stau pe o PANGLICĂ (curbă centrală + benzi)**, nu pe o grilă dreaptă · **patru trasee, toate verzi pe 300 de semințe** (POTCOAVĂ activă; POTCOAVA OGLINDITĂ e aceeași formă, întoarsă) · strat înclinat (forfecare) la ȘARPE · **drumuri care nu se încrucișează niciodată (0 la 300 de semințe)** · **nodul curent are și aură, și X** · **două surse de hartă: GENERATĂ (panglica) sau DESENATĂ dintr-un fișier `data/harti/*.json`** — comutatorul `Expeditie.SURSA_HARTII`; azi e pe DESENATĂ · **harta umple pergamentul**: pânza ține toată pagina, antetul plutește peste ea (805 × 427 px de hartă, de la 666 × 353) · **drumurile merg în amândouă sensurile**, cu nodul parcurs tăiat definitiv și cu garanția, verificată pe 16 000 de expediții simulate, că nu te poți înfunda · **figurina sare, cade ca un slam și zguduie ecranul la aterizare**, cu un răgaz de 0,5 s înainte să se deschidă nodul · **tipurile nodurilor se împart după o REȚETĂ fixă, nu se trag cu zarul**: 9 reguli de vecinătate și de început, plasare conștientă de reguli, verificare completă și reîncercare cu sub-sămânță (0 eșecuri pe 500 de semințe × 3 surse de hartă) · rețeta se **plafonează după forma hărții**, nu după numărul de noduri |
 | 7. Cetatea | ❌ |
 | 8. Save/Load | 🟡 tezaurul, sacul și expediția știu toate să se serializeze (`spre_dictionar` / `din_dictionar`), pe trei straturi de durată; scrierea pe disc, nu încă |
 | 9. Celelalte discipline | 🟡 Cultură generală ✅ (135 de întrebări) · Logica ✅ (80 de categorii) · Cuvinte ✅ · toate trei fără repetiții pe expediție · celelalte 5 ❌ |
@@ -27,6 +27,157 @@ buget, generare) rămâne acolo unde era.
 Am sărit peste ordinea recomandată la pasul 12 (artă): imaginile pentru rege,
 cavaler și pentru cele trei piese de șah de pe butoane au intrat mai devreme, dar
 restul rămâne placeholder. Bucla de luptă e în continuare cea validată, nu arta.
+
+---
+
+## TIPURILE NU MAI SE TRAG CU ZARUL (23 septembrie 2026) — rețetă, reguli, reîncercare
+
+**Plângerea:** Magazin după o singură luptă, două Odihne una lângă alta, două
+Elite una lângă alta.
+
+**Cauza, și de ce nu era o reglare greșită.** Tipurile veneau din `PONDERI_NOD`:
+un tabel de probabilități din care fiecare nod își trăgea tipul singur, cu o
+aruncare de zar, fără să știe nimic despre vecinii lui. Ponderile erau reglate
+frumos pe adâncime — Elita creștea spre final, Odihna la fel.
+
+Numai că o pondere răspunde la o singură întrebare: „cât de des vreau tipul
+ăsta?". Toate cele trei plângeri sunt despre cu totul altceva — „ce are voie să
+stea LÂNGĂ ce?" și „câte ies în total?". Niciuna nu poate fi pusă unui zar
+aruncat per nod: zarul n-are nici vecini, nici memorie. **Era genul greșit de
+unealtă, nu o cifră prost aleasă.**
+
+### Ce a luat locul ponderilor
+
+Patru etape, în `autoload/expeditie.gd`:
+
+| etapă | funcția | ce face |
+|---|---|---|
+| împarte | `proportii()` + `reteta()` | câte noduri din fiecare tip. Fix, din constante. Sămânța n-are niciun cuvânt |
+| plasează | `_o_incercare()` | le așază, de la tipul cel mai constrâns la cel mai liber |
+| verifică | `_reguli_picate()` | toate cele nouă reguli, peste harta gata |
+| reîncearcă | `_pune_tipurile()` | altă sub-sămânță, până la 200 de ori |
+
+Cele nouă reguli sunt nouă funcții mici, fiecare cu numele ei. **Nu un `if`
+mare**, fiindcă atunci când rețeta se ceartă cu regulile — și s-a certat de două
+ori în sesiunea asta — singurul lucru folositor e NUMELE regulii vinovate.
+
+Toate se verifică pe PERECHI DE VECINI, în orice sens. Drumurile se merg în
+amândouă sensurile, deci „la rând" nu înseamnă „după", ci „lipite". O regulă
+scrisă pe `spre` ar fi fost adevărată pe desen și falsă în joc.
+
+### Prima ceartă: „Elită după 3 lupte" n-avea nicio soluție
+
+Cerută: o Elită apare abia după trei noduri de bătaie. Am căutat **exhaustiv**
+înainte s-o scriu:
+
+| | harta_01 (14 noduri) | harta_02 (16) |
+|---|---|---|
+| aranjamente posibile | 1.663.200 | 25.225.200 |
+| cu pragul 3 | **0** | **0** |
+| cu pragul 2 | 28 | 734 |
+
+Zero. Nu rar — imposibil. Și e o proprietate a FORMEI, nu a cifrei: Startul e
+Luptă, vecinii lui sunt Lupte, iar imediat după ei harta se despică în două
+brațe, amândouă la exact 2 lupte minime. Ca să urci un nod la 3, trebuie un al
+treilea nod de bătaie pe FIECARE drum care ajunge la el — iar rețeta lasă 4
+Lupte libere.
+
+**Decizie: pragul Elitei coboară la 2.** Consecința de acceptat: o Elită poate
+cădea al treilea nod al expediției. Dacă vreodată revrem 3, prețul nu e cifra, ci
+rețeta — Evenimentele trebuie să scadă de la 3 la 1 ca Luptele să urce la 6.
+
+### A doua descoperire: amestecarea la întâmplare nu funcționează deloc
+
+Planul era „pune tipurile într-un sac, amestecă, împarte, verifică, reîncearcă".
+Măsurat înainte de scris: din 1.663.200 de aranjări ale rețetei pe `harta_01`,
+doar **28** trec toate regulile. O șansă la ~59.000 — în 200 de încercări n-ai
+nimeri niciodată.
+
+Deci plasarea e conștientă de reguli: fiecare tip se pune DOAR pe pozițiile pe
+care regula LUI le permite, iar restricțiile de vecinătate se verifică în clipa
+așezării. Verificarea completă rămâne pe urmă, ca plasă — plasarea e lacomă,
+deci produce aranjări pe care nu le-a văzut venind.
+
+**Ordinea tipurilor contează, și a fost măsurată.** Odihna e cel mai greu de
+plasat (trei bucăți, două reguli de vecinătate peste ele) și merge prima;
+Magazinul e printre cele mai ușoare și merge aproape ultimul. Cu ordinea inversă,
+`harta_02` eșua pe 11 semințe din 500. Aceleași reguli, aceeași rețetă, doar altă
+ordine. **Regula generală, dacă mai apare un tip: cel mai constrâns, primul.**
+
+### A treia ceartă: rețeta nu încăpea pe panglică
+
+Panglica generată de 14 noduri pica pe 29% din semințe. Diagnostic: cu 2 Odihne
+în loc de 3, rata cade la 0%; dacă scot în schimb regula „doi de același fel la
+același vecin", rămâne la 30%. Deci vinovat e „fără două Odihne vecine" pe o
+panglică lată de doar 2 noduri — Odihnele au voie doar în straturile 3–6, una e
+fixată lângă Boss, iar a treia n-are unde sta.
+
+**Reparația nu e o cifră, e un plafon măsurat.** `reteta()` întreabă harta din
+față: care sunt pozițiile pe care tipul ăsta are voie să stea, și câte din ele se
+pot alege deodată fără să se calce pe reguli. Nicio plasare, oricât de norocoasă,
+nu poate pune mai multe. Ce se taie se dă Luptelor — ele sunt DISTANȚIERELE.
+
+Varianta ieftină era „la 14 noduri, două Odihne". Ar fi mers azi și ar fi mințit
+mâine: cifra 2 n-ar fi fost o regulă, ci amprenta unei forme anume. Prima planșă
+nouă de 14 noduri, mai lată, ar fi primit două fără ca nimeni să știe de ce.
+
+`harta_01` are tot 14 noduri și își păstrează cele 3 Odihne — fiindcă e mai
+ramificată decât panglica. Plafonul se uită la formă, nu la numărul de noduri.
+
+### Cifrele finale, pe 500 de semințe
+
+| sursă | media încercărilor | maxim | semințe eșuate |
+|---|---|---|---|
+| `harta_01.json` (cea jucată) | **1,37** | 7 din 200 | **0 / 500** |
+| `harta_02.json` | **2,86** | 18 din 200 | **0 / 500** |
+| panglica generată (12/14/16) | **4,52** | 60 din 200 | **0 / 500** |
+
+Aceeași sămânță dă aceeași hartă, verificată pe toate trei sursele, comparând
+tot ce se salvează despre fiecare nod — nu doar tipurile. Un generator care dă
+hărți bune, dar de fiecare dată altele, face imposibil orice raport de bug.
+
+### Ce s-a mai curățat pe drum
+
+- **`_asigura_magazin()` a dispărut.** Era cârpitul care transforma un nod în
+  Magazin dacă zarurile nu scoseseră niciunul. Cu proporții fixe, Magazinul e
+  garantat prin construcție — nu mai e nimic de cârpit.
+- **Formula bugetului avea trei case** (cele două generatoare și cârpitorul), și
+  exact de-aia al treilea o putuse uita în tăcere. Acum are un nume,
+  `_buget()`, și o singură casă. Aceeași lecție ca la cardul care mințea.
+- **`vecini()` are acum un frate static, `vecinii_din()`.** Regulile se sprijină
+  toate pe „cine e vecin cu cine"; dacă generatorul ar fi avut citirea lui
+  proprie a lui `spre`, ar fi existat două definiții ale cuvântului „vecin" în
+  același fișier. Una s-ar fi schimbat într-o zi, cealaltă nu — iar harta ar fi
+  trecut o verificare pe care jocul n-o respectă.
+- **Scalarea proporțiilor se face cu rest**, nu rotunjind fiecare tip separat.
+  Rotunjirea pe rând urca fiecare tip special la „.5" în sus, iar Luptele —
+  singurele fără cifră proprie — plăteau toată nota. La 12 noduri ieșeau 8
+  noduri speciale din 10 în loc de 7.
+
+### Unelte
+
+- **`tools/verifica_tipuri.gd`** (nou) — 500 de semințe × toate sursele. Media
+  și maximul încercărilor, de câte ori a picat fiecare regulă, semințele care au
+  atins limita, și proba că aceeași sămânță dă aceeași hartă. Avertizează singur
+  când o regulă pică în peste jumătate din încercări: aia nu mai e o regulă
+  strictă, e una care se ceartă cu altceva.
+- **`tools/verifica_plansa.gd`** — verificare nouă (9): orice nod în afară de
+  Start și Boss are cel puțin doi VECINI. Verificarea (4) de dinainte număra
+  IEȘIRILE (drumurile cu sensul lor); asta numără vecinii, cum îi citește jocul.
+  Distanța minimă dintre noduri era deja acolo, verificarea (7).
+
+### Datorie tehnică deschisă
+
+`Plansa.adancimi()` merge numai pe sensul scris al drumurilor, deși jucătorul
+merge în amândouă. Nu e o scăpare — adâncimea e „a câta treaptă a vrut
+desenatorul", iar bugetul se socotește din ea. Dar regulile noi folosesc
+`_pasi_de_la()`, care merge în amândouă sensurile, fiindcă ele vorbesc despre cât
+de departe e nodul PENTRU JUCĂTOR. Două măsuri, două scopuri, amândouă
+documentate — dar merită reverificat când se atinge bugetul de dificultate
+(pasul 10).
+
+Fișiere atinse: `autoload/expeditie.gd`, `tools/verifica_plansa.gd`,
+`tools/verifica_tipuri.gd` (nou), `tools/verifica_tipuri.tscn` (nou).
 
 ---
 
