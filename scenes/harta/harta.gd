@@ -33,6 +33,48 @@ extends Control
 
 const SCENA_LUPTA := "res://scenes/lupta/lupta.tscn"
 
+# ── RĂGAZUL DE DUPĂ ATERIZARE ─────────────────────────────────
+## Cât se ține harta pe ecran DUPĂ ce piesa a aterizat, înainte să se deschidă
+## nodul (lupta, odihna, magazinul).
+##
+## Fără pauza asta, ultimul cadru al săriturii și primul cadru al luptei sunt
+## unul lângă altul: piesa atinge nodul și ecranul e deja altul. Mutarea se
+## joacă degeaba, fiindcă n-ai apucat s-o VEZI încheiată — ochiul are nevoie de
+## o clipă pe imaginea finală ca să înregistreze „am ajuns AICI", nu doar „ceva
+## s-a mișcat".
+##
+## O jumătate de secundă e cât ține și zguduitul de la impact plus puțin după
+## el: apuci să vezi harta așezându-se la loc, apoi pleci. Mai scurt și
+## zguduitul ar fi tăiat la mijloc (și-ar continua efectul în scena următoare,
+## unde n-are ce căuta); mai lung și devine o așteptare, la zeci de noduri pe
+## expediție.
+const PAUZA_DUPA_ATERIZARE := 0.5
+
+# ── ZGUDUITUL DE LA IMPACT ────────────────────────────────────
+# Piesa cade greu pe nod (vezi `DURATA_SLAM` în `figurina_harta.gd`); dacă
+# harta de sub ea n-ar simți nimic, slam-ul ar rămâne o animație a piesei, nu o
+# lovitură dată hârtiei. Zguduitul e ce transformă „a coborât repede" în „a
+# aterizat".
+#
+# E același efect ca `impact.gd` din luptă, și scris la fel dinadins: un
+# cronometru care se scurge, un `sin` care oscilează și o stingere liniară.
+# N-am refolosit fișierul de acolo fiindcă acela e un ÎNVELIȘ (un nod care ține
+# o figură înăuntru și o clatină), iar aici n-avem ce înveli: zguduim straturi
+# care există deja, fiecare cu locul lui în scenă.
+
+## Cât ține, în secunde. Scurt: e o lovitură, nu un cutremur.
+const DURATA_ZGUDUIT := 0.26
+
+## Cât de tare clatină la început, în pixeli.
+##
+## Pe verticală, fiindcă asta e direcția din care a venit lovitura. Orizontala
+## primește o fracțiune (vezi `_process`) — fără ea zguduitul arată mecanic, ca
+## un lift; cu ea, ca ceva scuturat.
+const AMPLITUDINE_ZGUDUIT := 7.0
+
+## Cât de repede oscilează. Mai mare = mai nervos.
+const FRECVENTA_ZGUDUIT := 44.0
+
 # ── GEOMETRIA HĂRȚII ──────────────────────────────────────────
 # Nodurile NU stau într-un container. Un VBox/HBox le-ar așeza în rânduri
 # drepte, dar o hartă are nevoie ca nodul 3 de pe coloana 2 să fie EXACT în
@@ -695,6 +737,23 @@ var figurina: FigurinaHarta = null
 ## secunde, dar codul e același.
 var _sare := false
 
+## Cât a mai rămas din zguduitul de la impact, în secunde. 0 = harta stă
+## liniștită, iar `_process` e oprit.
+var _timp_zguduit := 0.0
+
+## Ce se clatină, și de unde a plecat fiecare.
+##
+## Straturile se adună o dată, la începutul fiecărui zguduit, nu la `_ready`:
+## poziția lor de bază se schimbă la redimensionarea ferestrei, iar un tabel
+## strâns o singură dată la pornire ar readuce harta, după zguduit, exact unde
+## era înainte de redimensionare.
+##
+## Scriem poziția ABSOLUT (bază + abatere), nu adunăm la ea: dacă efectul ar fi
+## întrerupt la mijloc, o adunare ar lăsa harta mutată cu câțiva pixeli pe veci,
+## iar zguduitul următor ar pleca de acolo.
+var _straturi_zguduite: Array[Control] = []
+var _pozitii_de_baza: Array[Vector2] = []
+
 ## Eticheta care apare sub nodul survolat. UNA singură, ținută de ecran, nu
 ## câte una în fiecare nod: zece etichete permanente ar acoperi harta, iar zece
 ## etichete ascunse s-ar putea suprapune între ele în clipa în care apar două.
@@ -722,6 +781,10 @@ func _ready() -> void:
 	panou_sumar.visible = false
 	panou_mesaj.visible = false
 	panou_magazin.visible = false
+
+	# `_process` stă oprit cât nu se zguduie nimic: o hartă liniștită n-are de
+	# ce să consume un cadru. `_zguduie()` îl pornește, el se oprește singur.
+	set_process(false)
 
 	Muzica.reda(Muzica.Piesa.HARTA)
 
@@ -2470,6 +2533,78 @@ func _sunt_vecini_in_drum(a: int, b: int) -> bool:
 
 
 # ─────────────────────────────────────────────────────────────
+# ZGUDUITUL ECRANULUI
+# ─────────────────────────────────────────────────────────────
+
+## Clatină harta. Se cheamă la aterizarea piesei — vezi `_sari_pe()`.
+##
+## Nu blochează pe nimeni: pune un cronometru și se întoarce imediat. Cine a
+## chemat-o merge mai departe (la noi: așteaptă pauza de după aterizare), iar
+## clătinatul se joacă singur, în `_process`.
+##
+## Chemat din nou cât timp unul e în curs, îl ia de la capăt — la fel ca
+## `loveste()` din `impact.gd`. Nu se întâmplă azi (harta e înghețată cât ține
+## mutarea), dar un efect care se poate reporni curat e un efect pe care poți
+## să-l chemi de oriunde fără să te întrebi ce se întâmplă dacă.
+func _zguduie() -> void:
+	_straturi_zguduite.clear()
+	_pozitii_de_baza.clear()
+
+	# TOȚI copiii ecranului, MAI PUȚIN fundalul.
+	#
+	# Fundalul e singurul care trebuie să stea pe loc, și e un amănunt care se
+	# vede imediat dacă greșești: el acoperă exact ecranul, deci clătinat odată
+	# cu restul ar lăsa, la fiecare oscilație, o dungă de câțiva pixeli pe
+	# margine prin care se vede culoarea cu care Godot șterge fereastra. Ținut
+	# nemișcat, dunga aia e chiar fundalul — adică nu se vede nimic.
+	#
+	# Nu e o listă scrisă de mână („pergamentul, pânza, marginile") dinadins:
+	# panoul următor adăugat în scenă se va clătina și el, fără ca cineva să
+	# țină minte să-l treacă pe aici.
+	for copil in get_children():
+		var strat := copil as Control
+		if strat == null or strat.name == "Fundal":
+			continue
+		_straturi_zguduite.append(strat)
+		_pozitii_de_baza.append(strat.position)
+
+	_timp_zguduit = DURATA_ZGUDUIT
+	set_process(true)
+
+
+func _process(delta: float) -> void:
+	_timp_zguduit = maxf(_timp_zguduit - delta, 0.0)
+
+	# `t` merge de la 1 (chiar acum) spre 0 (gata) și STINGE oscilația. Fără el,
+	# clătinatul s-ar opri brusc la mijlocul unei oscilații — adică harta ar
+	# rămâne o fracțiune de secundă strâmbă, apoi ar sări la loc.
+	var t := _timp_zguduit / DURATA_ZGUDUIT
+	var amplitudine := AMPLITUDINE_ZGUDUIT * t
+
+	# Două oscilații cu frecvențe diferite (0,63 e ales doar ca să nu fie un
+	# raport simplu ca 1/2, care ar da o figură care se repetă): pe verticală
+	# toată amplitudinea, pe orizontală o treime. Rezultatul nu e o linie
+	# dreaptă înainte-înapoi, ci un traseu care nu trece de două ori prin
+	# același loc — de-aia se citește ca un impact, nu ca o vibrație.
+	var abatere := Vector2(
+		sin(_timp_zguduit * FRECVENTA_ZGUDUIT * 0.63) * amplitudine * 0.34,
+		sin(_timp_zguduit * FRECVENTA_ZGUDUIT) * amplitudine
+	)
+
+	if _timp_zguduit == 0.0:
+		abatere = Vector2.ZERO
+		set_process(false)
+
+	for i in range(_straturi_zguduite.size()):
+		var strat := _straturi_zguduite[i]
+		# Un strat poate dispărea între două cadre (o scenă schimbată sub noi).
+		# `is_instance_valid` întreabă „mai există obiectul ăsta?" — fără el,
+		# ultimul cadru al zguduitului ar putea scrie într-un nod deja șters.
+		if is_instance_valid(strat):
+			strat.position = _pozitii_de_baza[i] + abatere
+
+
+# ─────────────────────────────────────────────────────────────
 # INTRAREA ÎNTR-UN NOD
 # ─────────────────────────────────────────────────────────────
 
@@ -2549,6 +2684,23 @@ func _sari_pe(id: int) -> void:
 	else:
 		figurina.coboara_pe(tinta)
 	await figurina.salt_terminat
+
+	# IMPACTUL. Piesa a atins nodul chiar acum; harta simte lovitura.
+	# `_zguduie()` nu așteaptă nimic — clătinatul se joacă în paralel cu pauza
+	# de mai jos, deci cele 0,26 secunde ale lui încap în cele 0,5 ale ei și
+	# apuci să vezi harta așezându-se la loc înainte să plece ecranul.
+	_zguduie()
+
+	# RĂGAZUL. Vezi `PAUZA_DUPA_ATERIZARE`: o clipă pe imaginea finală, înainte
+	# să se deschidă nodul.
+	#
+	# Steagul `_sare` rămâne RIDICAT cât ține pauza, deși piesa nu mai e în aer,
+	# și asta e dinadins: în jumătatea asta de secundă harta e încă pe ecran și
+	# nodurile ar primi clicuri. Fără el, două clicuri repezi ar porni două
+	# mutări — a doua peste rezultatul primeia, care încă nu s-a întâmplat.
+	# `_sare` nu înseamnă „e în aer", înseamnă „ecranul nu primește comenzi";
+	# de-aia poate acoperi și mișcarea, și răgazul de după ea.
+	await get_tree().create_timer(PAUZA_DUPA_ATERIZARE).timeout
 
 	_sare = false
 

@@ -60,12 +60,17 @@ const CALE_IMAGINE := "res://assets/art/campaign_token.png"
 ## fel peste tot, fără să depindă de rezoluție. Dacă mâine nodurile se măresc,
 ## piesa se mărește odată cu ele, fără să umble nimeni aici.
 ##
-## 1,45 e măsurat în referință: acolo piesa are 118 px, iar semnul de sub ea
-## 81 — deci piesa e cu aproape jumătate mai înaltă decât locul pe care stă.
-## Sub 1,3 nu mai domină semnul și redevine „încă un simbol"; peste 1,5 începe
-## să ajungă peste nodul de deasupra, fiindcă două noduri vecine au între ele
-## cam 125 px.
-const INALTIME_FATA_DE_NOD := 1.45
+## 1,09 e 1,45 (măsura din referință) micșorat cu un sfert, cerut dinadins.
+## Referința desena piesa mai înaltă decât nodul cu aproape jumătate — bine ca
+## să domine semnul, dar pe harta noastră nodurile stau mai des decât acolo, iar
+## o piesă atât de mare intra cu umbra peste vecina de deasupra. La 1,09 piesa
+## rămâne puțin mai înaltă decât nodul (deci tot se citește ca un OBIECT pus pe
+## semn, nu ca încă un simbol), dar nu mai atinge nimic în jur.
+##
+## Marginile rămân cele măsurate atunci: sub 1,0 piesa intră în silueta nodului
+## și redevine simbol; peste 1,5 ajunge peste nodul de deasupra, fiindcă două
+## noduri vecine au între ele cam 125 px.
+const INALTIME_FATA_DE_NOD := 1.09
 
 ## CÂT DE ADÂNC INTRĂ TALPA ÎN NOD, tot ca fracțiune din latura lui.
 ##
@@ -92,16 +97,59 @@ const ADANCIME_TALPA := 0.20
 # Are și un rost practic, dincolo de „juice": la un nod de luptă, ecranul e
 # înlocuit cu totul. Fără săritură, ultimul cadru de hartă pe care-l vezi e cel
 # de DINAINTE de mutare — pleci în luptă fără să fi văzut niciodată piesa pe nodul
-# ales. Cele 0,35 secunde sunt exact răgazul în care ochiul leagă clicul de
-# rezultatul lui.
+# ales. Cele câteva zecimi de secundă sunt exact răgazul în care ochiul leagă
+# clicul de rezultatul lui.
+#
+# ─────────────────────────────────────────────────────────
+# DE CE SĂRITURA NU E SIMETRICĂ
+#
+# Prima variantă urca și cobora la fel: un `sin` pe toată durata, adică un arc
+# perfect, cu aceeași viteză la plecare și la sosire. Arăta corect și nu se
+# simțea nimic — fiindcă o mișcare cu viteză constantă n-are moment. Ochiul
+# vede un obiect plutind dintr-un loc în altul, nu o piesă trântită pe masă.
+#
+# Acum mișcarea are DOUĂ jumătăți cu caractere diferite:
+#
+#   URCAREA — lungă (0,30 s) și încetinind spre vârf, ca orice lucru aruncat în
+#             sus. Tot aici se face aproape tot drumul pe ORIZONTALĂ: până în
+#             vârf piesa e deja aproape deasupra nodului țintă.
+#   CĂDEREA — scurtă (0,09 s) și accelerând, aproape pe verticală. Aceeași
+#             înălțime străbătută în a treia parte din timp înseamnă de vreo
+#             trei ori viteza — și exact raportul ăsta se citește ca un SLAM.
+#
+# Suma lor (0,39 s) e aproape cât dura săritura veche, deci expediția nu s-a
+# lungit; doar timpul s-a împărțit altfel înăuntru.
+#
+# Aterizarea e momentul în care harta zguduie ecranul (vezi `_zguduie()` în
+# `harta.gd`). Zguduitul nu stă aici dinadins: piesa nu știe că e un ecran în
+# jurul ei, așa că semnalează „am ajuns" și cine ascultă hotărăște ce face cu
+# informația — la fel ca la deschiderea nodului.
 # ─────────────────────────────────────────────────────────
 
-## Cât ține săritura, în secunde.
+## Cât ține URCAREA, în secunde — de la nodul de plecare până în vârful arcului.
 ##
 ## Sub 0,25 nu se citește ca o mișcare, ci ca o tresărire. Peste 0,5 devine ceva
 ## ce AȘTEPȚI — iar o expediție are zeci de mutări, deci fiecare zecime se
 ## plătește de zeci de ori.
-const DURATA_SALT := 0.35
+const DURATA_URCARE := 0.30
+
+## Cât ține CĂDEREA. E scurtă dinadins: viteza slam-ului nu vine din altă
+## formulă, ci din faptul că aceeași distanță se face în mai puțin timp.
+##
+## Sub 0,06 cade sub un cadru-două la 60 FPS și dispare pur și simplu: ai piesa
+## sus, apoi jos, fără nimic între. Peste 0,15 raportul față de urcare scade sub
+## dublu și redevine o coborâre obișnuită.
+const DURATA_SLAM := 0.09
+
+## Cât din drumul pe ORIZONTALĂ e gata în vârful arcului (0–1).
+##
+## 0,5 ar însemna un arc simetric — adică vechiul `sin`, doar scris în două
+## bucăți. 0,88 împinge aproape tot mersul înainte în urcare, ca să rămână de
+## făcut, la cădere, aproape numai verticala: piesa cade ÎN nod, nu spre el.
+##
+## Peste 0,95 începe să arate ca o oprire în aer urmată de o cădere separată —
+## două mișcări, nu una.
+const PARTE_ORIZONTALA_LA_URCARE := 0.88
 
 ## Cât de sus se ridică piesa, ca fracțiune din distanța dintre cele două noduri.
 ##
@@ -125,6 +173,14 @@ const INALTIME_SALT_MAXIMA := 110.0
 ## pe care săritura vine să-l scoată. Așa, intră în joc căzând pe nodul ales:
 ## aceeași aterizare, doar că venind de sus.
 const INALTIME_COBORARE := 2.6
+
+## Cât ține coborârea de la prima alegere.
+##
+## Nu e `DURATA_SLAM`, deși amândouă sunt căderi: de acolo de sus, 0,09 s ar
+## însemna o viteză de câteva mii de pixeli pe secundă — piesa n-ar fi văzută
+## venind, ar apărea direct aterizată. Drum mai lung, timp mai lung, aceeași
+## accelerație la ochi.
+const DURATA_COBORARE := 0.32
 
 # ─────────────────────────────────────────────────────────────
 # IMAGINEA, ȚINUTĂ PE CLASĂ
@@ -250,14 +306,21 @@ func aseaza_la(centru_nod: Vector2) -> void:
 ## SARE de pe nodul de acum pe cel dat, și strigă `salt_terminat` la aterizare.
 ##
 ## Mișcarea e desfăcută în două, exact ca o săritură adevărată: pe ORIZONTALĂ
-## piesa înaintează uniform de la un centru la altul, pe VERTICALĂ descrie un arc
-## care pleacă de la zero, urcă la mijlocul drumului și se închide tot la zero.
-## De-aia `sin`, și nu un `EASE_OUT` pus pe poziție: ăla ar face-o să LUNECE
-## dintr-un nod în altul. Arcul e tot ce deosebește „se mută" de „sare".
+## piesa înaintează de la un centru la altul, pe VERTICALĂ se ridică și cade.
+## Ce le leagă nu mai e un arc simetric, ci două etape puse cap la cap — vezi
+## nota lungă de la `DURATA_URCARE` pentru de ce.
 ##
-## Un singur `tween_method` pe un progres de la 0 la 1, nu două tween-uri
-## paralele pe x și pe y: cele două ar fi două ceasuri pentru aceeași mișcare,
-## iar în ziua în care unul primește altă durată piesa ar ateriza pe lângă nod.
+## Tween-ul are AICI două `tween_method` la rând, nu paralele: puse unul după
+## altul, al doilea pornește exact când primul s-a terminat, deci nu există
+## nicio clipă în care două formule să tragă aceeași piesă. Fiecare etapă își
+## primește propria „personalitate" (`set_ease` / `set_trans`) pe tweener-ul ei,
+## nu pe tween: pe tween ar fi fost o singură curbă pentru amândouă, adică fix
+## simetria pe care vrem s-o rupem.
+##
+## Ce NU s-a schimbat: în fiecare etapă, poziția și înălțimea se mișcă dintr-un
+## SINGUR progres de la 0 la 1. Două tween-uri paralele pe x și pe y ar fi două
+## ceasuri pentru aceeași mișcare, iar în ziua în care unul primește altă durată
+## piesa ar ateriza pe lângă nod.
 func sare_la(centru_nod: Vector2) -> void:
 	_opreste_saltul()
 
@@ -275,12 +338,30 @@ func sare_la(centru_nod: Vector2) -> void:
 	var inaltime := clampf(
 		distanta * INALTIME_SALT, INALTIME_SALT_MINIMA, INALTIME_SALT_MAXIMA)
 
-	# `bind` lipește de funcție cele trei lucruri care nu se schimbă în timpul
-	# săriturii (de unde, până unde, cât de sus). Tween-ul dă progresul ca PRIM
-	# argument, iar ce e legat cu `bind` vine după el.
+	# Punctul din pergament peste care e piesa în vârful arcului. Nu e la
+	# jumătatea drumului: e aproape deasupra nodului țintă, ca să rămână de
+	# făcut la cădere aproape numai verticala.
+	var varf := plecare.lerp(centru_nod, PARTE_ORIZONTALA_LA_URCARE)
+
+	# `bind` lipește de funcție lucrurile care nu se schimbă în timpul etapei
+	# (de unde, până unde, cât de sus). Tween-ul dă progresul ca PRIM argument,
+	# iar ce e legat cu `bind` vine după el.
 	_salt = create_tween()
+
+	# URCAREA. `EASE_OUT` = pornește repede și încetinește — un obiect aruncat
+	# în sus își pierde viteza pe măsură ce urcă. `TRANS_QUAD` fiindcă asta e
+	# chiar forma căderii libere (distanța crește cu pătratul timpului).
 	_salt.tween_method(
-		_pe_pas_salt.bind(plecare, centru_nod, inaltime), 0.0, 1.0, DURATA_SALT)
+		_pe_pas_urcare.bind(plecare, varf, inaltime), 0.0, 1.0, DURATA_URCARE
+	).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD)
+
+	# CĂDEREA. Aceeași curbă citită invers: `EASE_IN` = pornește moale și se
+	# grăbește. Pe o durată de trei ori mai scurtă, ultimii pixeli de dinainte
+	# de impact sunt parcurși cu o viteză care se vede.
+	_salt.tween_method(
+		_pe_pas_cadere.bind(varf, centru_nod, inaltime), 0.0, 1.0, DURATA_SLAM
+	).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_QUAD)
+
 	_salt.finished.connect(_pe_salt_terminat)
 
 
@@ -304,16 +385,33 @@ func coboara_pe(centru_nod: Vector2) -> void:
 
 	_salt = create_tween()
 	_salt.set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_QUAD)
-	_salt.tween_method(_pe_pas_coborare, de_sus, 0.0, DURATA_SALT)
+	_salt.tween_method(_pe_pas_coborare, de_sus, 0.0, DURATA_COBORARE)
 	_salt.finished.connect(_pe_salt_terminat)
 
 
-## Un cadru din săritură. `pas` merge de la 0 (plecare) la 1 (sosire).
-func _pe_pas_salt(
-	pas: float, plecare: Vector2, sosire: Vector2, inaltime: float
+## Un cadru din URCARE. `pas` merge de la 0 (nodul de plecare, pe pergament) la
+## 1 (vârful arcului, ridicat cu `inaltime`).
+##
+## Înălțimea urcă LINIAR în `pas`, nu după vreo formulă proprie: curba e deja în
+## tween (`EASE_OUT`), care nu dă progresul uniform, ci încetinind. Dacă am pune
+## o a doua curbă aici, s-ar înmulți cu prima și n-am mai ști din ce iese
+## mișcarea pe care o vedem pe ecran.
+func _pe_pas_urcare(
+	pas: float, plecare: Vector2, varf: Vector2, inaltime: float
 ) -> void:
-	ancora = plecare.lerp(sosire, pas)
-	_ridicare = sin(pas * PI) * inaltime
+	ancora = plecare.lerp(varf, pas)
+	_ridicare = pas * inaltime
+	_repoziteaza()
+
+
+## Un cadru din CĂDERE. `pas` merge de la 0 (vârful) la 1 (talpa pe nod).
+## Restul de drum pe orizontală e mic — vezi `PARTE_ORIZONTALA_LA_URCARE` —
+## deci ce se vede aici e aproape numai coborârea.
+func _pe_pas_cadere(
+	pas: float, varf: Vector2, sosire: Vector2, inaltime: float
+) -> void:
+	ancora = varf.lerp(sosire, pas)
+	_ridicare = (1.0 - pas) * inaltime
 	_repoziteaza()
 
 

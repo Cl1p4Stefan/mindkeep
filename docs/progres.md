@@ -14,7 +14,7 @@
 | 3. Trivia, ca scenă independentă | ✅ gata |
 | 4. Bucla completă a unei lupte | ✅ victorie · înfrângere · recompense (Fragmente) |
 | 5. Trei inamici manuali | ✅ Soldatul · Lăncierul (ceas) · Spadasinul (vulnerabilitate), aleși din joc |
-| 6. Harta de expediție | ✅ loadout „N din M" · **12-16 noduri**, ramificate, cu sămânță · Luptă / Elită / Odihnă / Eveniment / **Magazin** / **Boss** · **Monede + puteri temporare** · sumar de run · aspect: pergament, simboluri de cerneală, trasee punctate · **nodurile și drumurile stau pe o PANGLICĂ (curbă centrală + benzi)**, nu pe o grilă dreaptă · **patru trasee, toate verzi pe 300 de semințe** (POTCOAVĂ activă; POTCOAVA OGLINDITĂ e aceeași formă, întoarsă) · strat înclinat (forfecare) la ȘARPE · **drumuri care nu se încrucișează niciodată (0 la 300 de semințe)** · **nodul curent are și aură, și X** · **două surse de hartă: GENERATĂ (panglica) sau DESENATĂ dintr-un fișier `data/harti/*.json`** — comutatorul `Expeditie.SURSA_HARTII`; azi e pe DESENATĂ · **harta umple pergamentul**: pânza ține toată pagina, antetul plutește peste ea (805 × 427 px de hartă, de la 666 × 353) · **drumurile merg în amândouă sensurile**, cu nodul parcurs tăiat definitiv și cu garanția, verificată pe 16 000 de expediții simulate, că nu te poți înfunda |
+| 6. Harta de expediție | ✅ loadout „N din M" · **12-16 noduri**, ramificate, cu sămânță · Luptă / Elită / Odihnă / Eveniment / **Magazin** / **Boss** · **Monede + puteri temporare** · sumar de run · aspect: pergament, simboluri de cerneală, trasee punctate · **nodurile și drumurile stau pe o PANGLICĂ (curbă centrală + benzi)**, nu pe o grilă dreaptă · **patru trasee, toate verzi pe 300 de semințe** (POTCOAVĂ activă; POTCOAVA OGLINDITĂ e aceeași formă, întoarsă) · strat înclinat (forfecare) la ȘARPE · **drumuri care nu se încrucișează niciodată (0 la 300 de semințe)** · **nodul curent are și aură, și X** · **două surse de hartă: GENERATĂ (panglica) sau DESENATĂ dintr-un fișier `data/harti/*.json`** — comutatorul `Expeditie.SURSA_HARTII`; azi e pe DESENATĂ · **harta umple pergamentul**: pânza ține toată pagina, antetul plutește peste ea (805 × 427 px de hartă, de la 666 × 353) · **drumurile merg în amândouă sensurile**, cu nodul parcurs tăiat definitiv și cu garanția, verificată pe 16 000 de expediții simulate, că nu te poți înfunda · **figurina sare, cade ca un slam și zguduie ecranul la aterizare**, cu un răgaz de 0,5 s înainte să se deschidă nodul |
 | 7. Cetatea | ❌ |
 | 8. Save/Load | 🟡 tezaurul, sacul și expediția știu toate să se serializeze (`spre_dictionar` / `din_dictionar`), pe trei straturi de durată; scrierea pe disc, nu încă |
 | 9. Celelalte discipline | 🟡 Cultură generală ✅ (135 de întrebări) · Logica ✅ (80 de categorii) · Cuvinte ✅ · toate trei fără repetiții pe expediție · celelalte 5 ❌ |
@@ -27,6 +27,149 @@ buget, generare) rămâne acolo unde era.
 Am sărit peste ordinea recomandată la pasul 12 (artă): imaginile pentru rege,
 cavaler și pentru cele trei piese de șah de pe butoane au intrat mai devreme, dar
 restul rămâne placeholder. Bucla de luptă e în continuare cea validată, nu arta.
+
+---
+
+## ATERIZAREA ARE GREUTATE (23 septembrie 2026) — slam, zguduit, răgaz
+
+Patru reglaje mici, toate pe același moment: clipa în care figurina atinge nodul
+ales. Trei erau plângeri („piesa e prea mare", „întrebările apar prea repede",
+„bara verde se umple la început"), a patra o cerere („să arate ca un slam").
+Le-am ținut într-o singură sesiune fiindcă primele trei sunt exact ce strica
+momentul pe care a patra vrea să-l scoată în evidență.
+
+### 1. Figurina, cu un sfert mai mică
+
+`FigurinaHarta.INALTIME_FATA_DE_NOD`: **1,45 → 1,09**.
+
+Un singur număr, fiindcă e un RAPORT față de latura nodului, nu pixeli — deci
+rămâne valabil la orice mărime de fereastră. 1,45 era măsura din harta de
+referință (acolo piesa era cu aproape jumătate mai înaltă decât semnul de sub
+ea), dar pe harta noastră nodurile stau mai des decât acolo și umbra piesei
+ajungea peste vecina de deasupra.
+
+`ADANCIME_TALPA` a rămas 0,20 și e important că a rămas: adâncimea e o fracțiune
+din NOD, nu din piesă. Talpa coboară la fel de mult sub centru ca înainte, deci
+piesa stă în continuare PESTE semn, nu lângă el — doar că acum acoperă mai puțin
+din X-ul de „parcurs". Exact ce vrei: mai vezi că ai fost acolo.
+
+### 2. Săritura, desfăcută în două etape
+
+Vechea săritură era un `sin` pe toată durata: un arc perfect, cu aceeași viteză
+la plecare și la sosire. Arăta corect și nu se simțea nimic — **o mișcare cu
+viteză constantă n-are moment.** Ochiul vedea un obiect plutind dintr-un loc în
+altul, nu o piesă trântită pe masă.
+
+Acum sunt două `tween_method` puse cap la cap, fiecare cu curba LUI:
+
+| etapă | durată | curbă | ce face |
+|---|---|---|---|
+| urcare | 0,30 s | `EASE_OUT` + `TRANS_QUAD` | încetinește spre vârf, ca orice lucru aruncat în sus |
+| slam | 0,09 s | `EASE_IN` + `TRANS_QUAD` | accelerează, aproape pe verticală |
+
+Două lucruri de reținut din asta:
+
+**Viteza slam-ului nu vine din altă formulă.** Vine din faptul că aceeași
+înălțime se parcurge în a treia parte din timp. Raportul 0,30 / 0,09 ESTE
+efectul; nu e nimic „de slam" scris nicăieri în cod.
+
+**`PARTE_ORIZONTALA_LA_URCARE = 0,88`** e ce face căderea să fie „în pământ", nu
+„spre nod". 0,5 ar fi însemnat un arc simetric, adică vechiul `sin` scris în două
+bucăți. La 0,88, în vârf piesa e deja aproape deasupra țintei, deci la cădere
+rămâne de făcut aproape numai verticala. Peste 0,95 începe să arate ca o oprire
+în aer urmată de o cădere separată — două mișcări, nu una.
+
+Curbele stau pe TWEENER, nu pe tween (`.tween_method(...).set_ease(...)`). Pe
+tween ar fi fost o singură curbă pentru amândouă etapele — adică fix simetria pe
+care voiam s-o rupem.
+
+Suma (0,39 s) e aproape cât dura săritura veche: expediția nu s-a lungit, doar
+timpul s-a împărțit altfel înăuntru.
+
+### 3. Zguduitul — și de ce NU stă în figurină
+
+Piesa cade greu; dacă harta de sub ea nu simte nimic, slam-ul rămâne o animație
+a piesei, nu o lovitură dată hârtiei.
+
+`_zguduie()` e în `harta.gd`, nu în `figurina_harta.gd`, și ăsta e același
+principiu ca peste tot: **piesa nu știe că e un ecran în jurul ei.** Ea
+semnalează „am ajuns" (`salt_terminat`), iar cine ascultă hotărăște ce face cu
+informația — la fel ca la deschiderea nodului.
+
+E scris ca `impact.gd` din luptă (cronometru + `sin` + stingere liniară), dar
+n-am refolosit fișierul de acolo: acela e un ÎNVELIȘ, un nod care ține o figură
+înăuntru și o clatină. Aici n-avem ce înveli — zguduim straturi care există deja.
+
+Cifrele: 0,26 s, 7 px pe verticală (direcția loviturii) plus o treime din asta pe
+orizontală, cu frecvențe în raport 1 : 0,63 ca traseul să nu treacă de două ori
+prin același loc.
+
+**Amănuntul care se vede imediat dacă îl greșești:** se clatină toți copiii
+ecranului MAI PUȚIN `Fundal`. Fundalul acoperă exact fereastra, deci clătinat
+odată cu restul ar lăsa la fiecare oscilație o dungă de câțiva pixeli pe margine,
+prin care se vede culoarea cu care Godot șterge fereastra. Ținut nemișcat, dunga
+aia ESTE fundalul — adică nu se vede nimic.
+
+Și nu e o listă scrisă de mână („pergamentul, pânza, marginile"): e `get_children()`
+minus fundalul, deci panoul următor adăugat în scenă se va clătina singur.
+
+Pozițiile de bază se strâng la ÎNCEPUTUL fiecărui zguduit, nu la `_ready()` —
+altfel o redimensionare de fereastră ar fi readus harta, după zguduit, exact unde
+era înainte de ea. Poziția se scrie absolut (bază + abatere), niciodată adunând:
+un efect întrerupt la mijloc ar fi lăsat harta mutată pe veci.
+
+### 4. Răgazul de după aterizare
+
+`PAUZA_DUPA_ATERIZARE := 0,5` în `harta.gd`, așteptat în `_sari_pe()` după
+`salt_terminat`.
+
+Fără el, ultimul cadru al săriturii și primul cadru al luptei erau unul lângă
+altul: mutarea se juca degeaba, fiindcă n-apucai s-o vezi ÎNCHEIATĂ. Cele 0,26 s
+ale zguduitului încap în cele 0,5 ale pauzei, deci apuci să vezi harta așezându-se
+la loc înainte să plece ecranul.
+
+**`_sare` și-a schimbat înțelesul, și e scris în cod.** Rămâne ridicat și în
+timpul pauzei, deși piesa nu mai e în aer: în jumătatea aia de secundă harta e
+încă pe ecran și nodurile ar primi clicuri, iar două clicuri repezi ar porni două
+mutări — a doua peste un rezultat care încă nu s-a întâmplat. Acum nu mai
+înseamnă „piesa e în aer", înseamnă „ecranul nu primește comenzi".
+
+### 5. Barele de la începutul luptei
+
+Bara verde de PV se umplea vizibil în prima fracțiune de secundă a luptei — ca și
+cum jocul tocmai îți dăduse viață, exact înainte de prima întrebare.
+
+Cauza n-a fost o animație pusă din greșeală, ci **o desincronizare între două
+momente**: `reseteaza_lupta()` punea `max_value`, dar `value` rămânea cea salvată
+în scenă (15, din editor) până la prima `actualizeaza_ui()` — iar aia ANIMEAZĂ.
+Deci bara pornea de la o stare care n-a existat niciodată și aluneca spre cea
+adevărată.
+
+Soluția e o funcție nouă, `pune_bara_acum(bara, maxim, valoare)` — perechea fără
+animație a lui `anima_bara()`. Pune maximul și valoarea ÎMPREUNĂ, într-un singur
+loc, și omoară tween-ul rămas în curs (un reset cerut din butonul de test poate
+prinde o bară încă alunecând de la lovitura dinainte).
+
+Regula generală de reținut: **alunecarea spune „s-a schimbat ceva CHIAR ACUM".**
+La începutul unei lupte nu s-a schimbat nimic — regele intră în arenă cu PV-ul cu
+care a ieșit din nodul de dinainte. O stare moștenită se PUNE, nu se animează.
+
+Aplicat la toate trei barele (PV jucător, PV inamic, ceas): inamicul avea exact
+aceeași scăpare, doar că se vedea mai puțin. Am scos și linia rămasă din
+`_ready()` care punea `bara_pv_jucator.max_value` cu `pv_max_jucator` încă 0 —
+maximul lui nu mai e o constantă de când vine din `Expeditie`.
+
+### Butoanele de reglat
+
+`DURATA_SLAM` (mai mic = mai violent; sub 0,06 cade sub un cadru-două la 60 FPS
+și dispare cu totul), `AMPLITUDINE_ZGUDUIT`, `PAUZA_DUPA_ATERIZARE`,
+`INALTIME_FATA_DE_NOD`.
+
+### Verificarea
+
+Proiectul deschis în editor headless (`--headless --editor --quit`): toate
+scripturile compilează, exit 0. Harta rulată 120 de cadre headless: fără erori de
+script (doar avertismentul știut pentru fișierele audio, care nu sunt în repo).
 
 ---
 

@@ -511,12 +511,15 @@ func _ready() -> void:
 	for figura in figuri_imagini:
 		figura.visible = FOLOSESTE_IMAGINI
 
-	# Pregătim barele o singură dată, din constante — ca să nu existe
-	# două surse de adevăr: una în editor, alta în cod.
-	# Doar bara JUCĂTORULUI se pregătește aici: maximul lui e o constantă, deci
-	# adevărat în orice luptă. Barele inamicului (PV și ceas) depind de CARE
-	# inamic e în față, deci se pun în `reseteaza_lupta()`, după ce s-a ales.
-	bara_pv_jucator.max_value = pv_max_jucator
+	# BARELE NU SE PREGĂTESC AICI. Niciuna — nici măcar a jucătorului, deși
+	# maximul lui a fost cândva o constantă. Azi vine din `Expeditie`, ca și
+	# cifrele inamicului, iar în clipa asta nu s-a citit încă nimic de acolo:
+	# o bară pusă pe `pv_max_jucator` ar primi maximul 0.
+	#
+	# Toate trei se pun într-un singur loc, în `reseteaza_lupta()` (chemată la
+	# capătul funcției ăsteia), și se pun cu tot cu valoare — vezi
+	# `pune_bara_acum()`. Un maxim pus aici și o valoare pusă acolo sunt exact
+	# felul în care bara ajunge, pentru un cadru, să arate o stare inventată.
 
 	# Punctele de PA le construim DIN COD, câte unul per PA disponibil.
 	# Dacă mâine PA_PE_RUNDA devine 4, apar patru puncte fără să atingi scena.
@@ -994,6 +997,32 @@ func anima_bara(bara: ProgressBar, valoare: float) -> void:
 	tw.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 	tw.tween_property(bara, "value", valoare, DURATA_ANIMATIE_BARA)
 	tweens_bare[bara] = tw
+
+
+## Pune o bară pe o valoare PE LOC, fără alunecare. Perechea lui `anima_bara`,
+## pentru momentele în care nu s-a întâmplat nimic de arătat.
+##
+## De ce e nevoie de ea: alunecarea spune „s-a schimbat ceva chiar acum". La
+## ÎNCEPUTUL unei lupte nu s-a schimbat nimic — regele intră în arenă cu PV-ul
+## cu care a ieșit din nodul de dinainte. Fără funcția asta, bara pornea de la
+## valoarea rămasă în scenă (15, cât era în editor) și se umplea sub ochii tăi
+## până la maximul adevărat: o fracțiune de secundă în care jocul părea că
+## tocmai ți-a DAT viață, exact înainte de prima întrebare.
+##
+## Cazul apărea fiindcă `max_value` se pune în `reseteaza_lupta()`, dar `value`
+## rămânea cea veche până la prima `actualizeaza_ui()` — iar aia animează. Două
+## momente diferite pentru aceeași bară, deci un cadru în care bara arăta o
+## stare care n-a existat niciodată.
+##
+## `kill()` pe tween-ul vechi nu e o precauție teoretică: o luptă resetată din
+## butonul de test poate prinde o bară încă alunecând de la lovitura dinainte,
+## iar tween-ul ăla ar continua să scrie în `value` peste ce punem noi aici.
+func pune_bara_acum(bara: ProgressBar, maxim: float, valoare: float) -> void:
+	if tweens_bare.has(bara) and tweens_bare[bara] != null and tweens_bare[bara].is_valid():
+		tweens_bare[bara].kill()
+	tweens_bare.erase(bara)
+	bara.max_value = maxim
+	bara.value = valoare
 
 
 ## Mai există vreun Obelisc pe care îl poți folosi acum?
@@ -1598,7 +1627,10 @@ func reseteaza_lupta() -> void:
 	# fiecare nod ar fi un meci separat și drumul n-ar mai conta.
 	pv_max_jucator = Expeditie.pv_max
 	pv_jucator = Expeditie.pv
-	bara_pv_jucator.max_value = pv_max_jucator
+	# PE LOC, nu animat: vezi `pune_bara_acum()`. Bara trebuie să fie deja
+	# corectă în PRIMUL cadru al luptei — cât PV ai e o stare moștenită, nu un
+	# lucru care se întâmplă acum.
+	pune_bara_acum(bara_pv_jucator, pv_max_jucator, pv_jucator)
 	# Inamicul ales își aduce cifrele ACUM, o singură dată. De aici încolo lupta
 	# citește variabilele, nu tabelul — deci nimic din ce se întâmplă în luptă
 	# nu poate ajunge la datele de bază și nu le poate strica.
@@ -1607,13 +1639,13 @@ func reseteaza_lupta() -> void:
 	# 0 PV ar fi deja mort, iar unul cu 0 daune n-ar fi un adversar.
 	pv_max_inamic = maxi(roundi(int(inamic()["pv"]) * _multiplicator_nod()), 1)
 	pv_inamic = pv_max_inamic
-	bara_pv_inamic.max_value = pv_max_inamic
+	pune_bara_acum(bara_pv_inamic, pv_max_inamic, pv_inamic)
 	# Ceasul are maxim doar la arhetipurile care au ceas. La celelalte punem 1,
 	# nu 0: o bară cu maximul 0 e o împărțire la zero pentru Godot. Oricum stă
 	# ascunsă (vezi `actualizeaza_ui()`), dar nu vrem un avertisment în consolă
 	# pentru un nod invizibil.
-	bara_ceas.max_value = maxi(ceas_max(), 1)
 	ceas_inamic = 0
+	pune_bara_acum(bara_ceas, maxi(ceas_max(), 1), ceas_inamic)
 	lupta_terminata = false
 	puzzle_activ = false
 	tura_se_incheie = false
