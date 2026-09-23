@@ -94,6 +94,65 @@ const ZONA_PERGAMENT := Rect2(0.026, 0.042, 0.812, 0.906)
 const MARGINE_PANZA := 18.0
 
 ## ─────────────────────────────────────────────────────────────
+## EXCEPȚIA DIN COLȚUL DE JOS-DREAPTA
+##
+## `ZONA_PERGAMENT` se oprește la 0,838 din lățime fiindcă ACOLO, jos de tot,
+## începe cartea. E o margine dreaptă trasă după cel mai îngust loc al hârtiei:
+## simplă, dar plătită peste tot. La înălțimea mijlocului, unde cotorul e abia
+## pe la 0,89, fâșia dintre 0,838 și 0,89 rămâne hârtie bună, nefolosită.
+##
+## Se vedea la un singur nod: cel mai din dreapta din jumătatea de jos se oprea
+## cu vreo 40 px în stânga Bossului, deși mai avea unde. Ochiul citește „drumul
+## se întoarce înainte să ajungă", nu „aici era marginea dreptunghiului".
+##
+## Ce urmează e o EXCEPȚIE ȚINTITĂ, nu o lărgire a zonei. Zona rămâne cum e —
+## e ce ține toate celelalte noduri departe de carte fără niciun `if`. Un
+## singur nod, ales după o descriere care nu depinde de planșă și nici de
+## sămânță, e împins la dreapta după geometrie, și tot atunci e oprit de cotor,
+## de vecini și de marginea pânzei. Vezi `impinge_nodul_de_jos_dreapta()`.
+
+## Cu cât trece nodul DINCOLO de Boss pe orizontală. Zero ar însemna „exact sub
+## el", iar o coloană perfectă arată a coincidență; câțiva pixeli în plus se
+## citesc ca „drumul chiar a ajuns până la capăt".
+const PESTE_BOSS := 24.0
+
+## COTORUL CĂRȚII, în fracțiuni din dreptunghiul `Pergament`.
+##
+## Cartea nu e un nod de scenă: e PICTATĂ în `campaign_map.jpg`, deci codul n-are
+## pe cine întreba unde e. Ce se poate face, și se face aici, e s-o măsori o
+## dată din imagine și s-o ții în FRACȚIUNI — dreptunghiul peste care se întind
+## e cel real al texturii, citit la rulare (`_pergamentul_in_panza()`), deci
+## regula se mută singură la orice mărime de fereastră. Dacă imaginea se
+## schimbă, cele două perechi de mai jos sunt tot ce e de remăsurat.
+##
+## Două puncte, nu unul, fiindcă volumul e ÎNCLINAT: cotorul se duce spre
+## dreapta pe măsură ce urcă. O verticală trasă prin punctul lui cel mai din
+## stânga ar fi aruncat degeaba spațiul de sus — adică exact greșeala pe care
+## regula asta o repară.
+##
+## Măsurate pe rândurile 0,60 și 0,85 din imagine (unde cotorul e pe la 0,905,
+## respectiv 0,855), rotunjite în favoarea cărții.
+const CARTE_SUS := Vector2(0.900, 0.600)
+const CARTE_JOS := Vector2(0.850, 0.850)
+
+## Cât aer rămâne între marginea casetei nodului și cotor.
+const MARGINE_CARTE := 26.0
+
+## Cât de aproape au voie să ajungă două centre de noduri. Același prag ca în
+## `tools/verifica_harta.gd`: 72 px e distanța la care ajungeau nodurile pe
+## harta dreaptă de dinaintea panglicii, adică pragul lui „n-am stricat nimic".
+const DISTANTA_MINIMA_NODURI := 72.0
+
+## Pe ce lungime de drum se simte mutarea nodului, măsurată de la capătul mutat.
+##
+## Drumul nu poate fi translatat întreg: celălalt capăt e lipit de un nod care
+## NU se mută. Deci se trage doar de capăt, cu o pondere care scade lin de la 1
+## la 0 pe lungimea asta. Mai scurtă = o cotitură bruscă lângă nod; mai lungă =
+## se clatină și partea de drum care n-avea niciun motiv. 260 px e cam două
+## treimi dintr-un drum obișnuit de pe planșă.
+const INFLUENTA_TRAGERII := 260.0
+
+## ─────────────────────────────────────────────────────────────
 ## TRASEUL PANGLICII
 ##
 ## Puncte de trecere în FRACȚIUNI DIN ZONA UTILĂ (0..1; 0,0 e colțul din
@@ -584,6 +643,7 @@ const LATIME_ETICHETA := 230.0
 @onready var eticheta_stare: Label = %Stare
 @onready var eticheta_loadout: Label = %Loadout
 @onready var eticheta_picior: Label = %Picior
+@onready var pergament: TextureRect = $Pergament
 @onready var panza: Control = %Panza
 
 @onready var panou_loadout: Control = %PanouLoadout
@@ -994,10 +1054,42 @@ func _aseaza_nodurile() -> void:
 ## expediție pornită pe o planșă trebuie să se deseneze pe planșa aia și după ce
 ## comutatorul a fost mutat înapoi pe „generată”.
 func _geometria(zona: Rect2) -> Dictionary:
-	if Expeditie.plansa != "":
-		return geometrie_desenata(
-			Expeditie.harta, Plansa.incarca(Expeditie.plansa), zona)
-	return geometrie_pe_panglica(Expeditie.harta, zona)
+	if Expeditie.plansa == "":
+		return geometrie_pe_panglica(Expeditie.harta, zona)
+
+	var geo := geometrie_desenata(
+		Expeditie.harta, Plansa.incarca(Expeditie.plansa), zona)
+
+	# Excepția din colțul de jos-dreapta, aplicată PESTE geometria desenată.
+	# Drumurile sunt îndreptate odată cu nodul, deci `_muchii()` de după
+	# primește forme gata mutate și le taie la cerneală ca pe oricare altele.
+	#
+	# DE CE NU ȘI PE PANGLICĂ, deși funcția n-ar avea nimic împotrivă: acolo
+	# poziția nu e o alegere, e rezultatul unui sistem cu regulile lui (benzi,
+	# ordinea lor, abaterea potolită ca să nu se inverseze). Măsurat pe 300 de
+	# semințe în `tools/verifica_coltul.gd`, regula ar împinge nodul cu până la
+	# 326 px și l-ar lipi de vecin la fix 72 px — fiindcă panglica își termină
+	# ultimul strat departe de marginea din dreapta, INTENȚIONAT. N-au ieșit
+	# încrucișări, dar un sistem care are deja un răspuns nu are nevoie de al
+	# doilea. Pe planșă nu există niciun sistem de stricat: nodurile sunt puse
+	# cu mâna, iar singurele reguli sunt cele pe care regula asta le verifică
+	# ea însăși — carte, vecini, pânză.
+	impinge_nodul_de_jos_dreapta(
+		Expeditie.harta, geo["centre"], geo["drumuri"],
+		_pergamentul_in_panza(), panza.size.x)
+	return geo
+
+
+## Dreptunghiul texturii de fundal, mutat în coordonatele PÂNZEI.
+##
+## `Pergament` se întinde peste toată fereastra și cu `STRETCH_SCALE`, deci o
+## fracțiune din imagine e aceeași fracțiune din dreptunghiul lui — de-aia
+## `CARTE_SUS` / `CARTE_JOS` se pot da în fracțiuni și rămân corecte la orice
+## mărime de fereastră, fără nicio recalculare.
+func _pergamentul_in_panza() -> Rect2:
+	var cutia := pergament.get_global_rect()
+	cutia.position -= panza.global_position
+	return cutia
 
 
 ## PANGLICA MĂSURATĂ — curba centrală, plus tot ce trebuie ca s-o poți folosi
@@ -1646,6 +1738,257 @@ static func geometrie_desenata(
 		drumuri[id][int(id_al[la])] = curba_neteda(puncte).get_baked_points()
 
 	return {"centre": centre, "drumuri": drumuri}
+
+
+## ─────────────────────────────────────────────────────────────
+## NODUL DIN JUMĂTATEA DE JOS, ÎMPINS LÂNGĂ BOSS
+##
+## Rulează DUPĂ geometrie și înaintea desenului, pe centrele gata calculate.
+## Nu atinge nimic din STRUCTURĂ: nu adaugă, nu șterge, nu releagă, nu schimbă
+## adâncimi. Se schimbă o singură coordonată x, plus drumurile care ajung în ea.
+##
+## Funcția nu întreabă din ce sursă vine harta — la nivelul ăsta o planșă și o
+## panglică au același răspuns de dat, „unde stă fiecare nod". CHEMAREA, însă,
+## se face doar pe planșă; motivul e la `_geometria()`, fiindcă acolo e locul
+## în care se știe de unde vine harta.
+##
+## ─────────────────────────────────────────────────────────────
+## CINE E „NODUL ĂLA”
+##
+## Nu un id scris de mână — ar fi legat regula de planșa de azi și ar fi murit
+## la prima hartă nouă. E o DESCRIERE: dintre nodurile aflate sub mijlocul
+## hărții, cel cu x-ul cel mai mare, Bossul nefiind la socoteală.
+##
+## Mijlocul se ia din cutia care ține toate centrele, nu din zona utilă: cutia
+## planșei se scalează uniform (vezi `Plansa.cutie()`), deci desenul aproape
+## niciodată nu umple hârtia pe verticală. „Jumătatea de jos” trebuie să fie
+## jumătatea DESENULUI, nu a hârtiei.
+##
+## ─────────────────────────────────────────────────────────────
+## CE-L POATE OPRI, în ordinea în care strâng
+##
+##   cartea  — cotorul, măsurat la marginea de SUS și la cea de JOS a casetei;
+##             e înclinat, deci cea mai strânsă dintre ele decide;
+##   pânza   — un simbol care iese din dreptunghiul care-l desenează e tăiat;
+##   vecinii — `DISTANTA_MINIMA_NODURI` față de orice alt centru.
+##
+## Dacă limitele îl țin acolo unde e deja, nodul NU se mută. E important că
+## asta e un rezultat acceptabil, nu un eșec: o hartă cu nodul la locul lui
+## vechi e corectă, una cu un nod peste carte nu e. Regula are voie să nu facă
+## nimic; n-are voie să strice.
+##
+## Întoarce o fișă cu ce s-a întâmplat, ca s-o poată tipări verificatorul:
+##   { "id", "x_vechi", "x_nou", "x_tinta", "x_maxim", "oprit_de" }
+## `id == -1` înseamnă că n-a avut pe cine alege (hartă goală, ori fără Boss).
+static func impinge_nodul_de_jos_dreapta(
+	harta: Array, centre: Dictionary, drumuri: Dictionary,
+	pergament: Rect2, latime_panza: float
+) -> Dictionary:
+	var fisa := {
+		"id": -1, "x_vechi": 0.0, "x_nou": 0.0,
+		"x_tinta": 0.0, "x_maxim": 0.0, "oprit_de": "",
+	}
+	if centre.size() < 2:
+		return fisa
+
+	var id_boss := -1
+	for nod in harta:
+		if int(nod["tip"]) == Expeditie.Nod.BOSS and centre.has(int(nod["id"])):
+			id_boss = int(nod["id"])
+	if id_boss < 0:
+		return fisa
+
+	# Mijlocul DESENULUI, pe verticală.
+	var sus := INF
+	var jos := -INF
+	for id_brut in centre:
+		var c: Vector2 = centre[id_brut]
+		sus = minf(sus, c.y)
+		jos = maxf(jos, c.y)
+	var mijloc := (sus + jos) * 0.5
+
+	var id_ales := -1
+	for id_brut in centre:
+		var id := int(id_brut)
+		if id == id_boss:
+			continue
+		var c: Vector2 = centre[id]
+		if c.y <= mijloc:
+			continue
+		if id_ales < 0 or c.x > float(centre[id_ales].x):
+			id_ales = id
+	if id_ales < 0:
+		return fisa
+
+	var centru: Vector2 = centre[id_ales]
+	var jumate := MARIME_NOD * 0.5
+	var tinta: float = float(centre[id_boss].x) + PESTE_BOSS
+
+	# Cotorul e o linie înclinată, deci caseta îl atinge întâi cu unul din
+	# colțuri. `minf` pe amândouă marginile nu presupune cu care.
+	var limita_carte := minf(
+		x_cotorului(centru.y - jumate.y, pergament),
+		x_cotorului(centru.y + jumate.y, pergament)
+	) - MARGINE_CARTE - jumate.x
+	var limita_panza := latime_panza - jumate.x - MARGINE_PANZA
+	var limita := minf(limita_carte, limita_panza)
+
+	var x := minf(tinta, limita)
+	var x_liber := _x_fara_vecini(x, centru, id_ales, centre, limita)
+	# Ultima vamă. `_x_fara_vecini` CAUTĂ, nu garantează: dacă nodul e prins
+	# între un vecin și carte, se întoarce cu ce-a găsit, iar aici se decide că
+	# „ce-a găsit” nu e bun și nu se mută nimic.
+	if x_liber > limita or not _e_liber(x_liber, centru, id_ales, centre):
+		x_liber = centru.x
+
+	fisa["id"] = id_ales
+	fisa["x_vechi"] = centru.x
+	fisa["x_tinta"] = tinta
+	fisa["x_maxim"] = limita
+	fisa["x_nou"] = maxf(x_liber, centru.x)
+
+	if float(fisa["x_nou"]) < tinta - 0.5:
+		if x >= limita - 0.5:
+			fisa["oprit_de"] = "carte" if limita_carte <= limita_panza else "pânză"
+		else:
+			fisa["oprit_de"] = "vecin"
+		if x_liber <= centru.x and x > centru.x + 0.5:
+			fisa["oprit_de"] = "vecin"
+
+	var delta := Vector2(float(fisa["x_nou"]) - centru.x, 0.0)
+	if delta.x <= 0.5:
+		fisa["x_nou"] = centru.x
+		return fisa
+
+	centre[id_ales] = centru + delta
+	_trage_drumurile(drumuri, id_ales, delta)
+	return fisa
+
+
+## Unde e cotorul cărții, pe orizontală, la înălțimea `y`.
+##
+## `CARTE_SUS` și `CARTE_JOS` sunt două puncte de pe aceeași dreaptă, deci
+## `lerpf` cu un `t` NEplafonat e răspunsul corect și în afara lor: cotorul e
+## drept, nu se oprește unde s-a întâmplat să fie măsurat.
+static func x_cotorului(y: float, pergament: Rect2) -> float:
+	var sus := pergament.position + CARTE_SUS * pergament.size
+	var jos := pergament.position + CARTE_JOS * pergament.size
+	if absf(jos.y - sus.y) < 0.0001:
+		return sus.x
+	return lerpf(sus.x, jos.x, (y - sus.y) / (jos.y - sus.y))
+
+
+## E destul de departe de toate celelalte centre un nod pus la `x`?
+static func _e_liber(
+	x: float, centru: Vector2, id_sarit: int, centre: Dictionary
+) -> bool:
+	for id_brut in centre:
+		if int(id_brut) == id_sarit:
+			continue
+		var alt: Vector2 = centre[id_brut]
+		if Vector2(x, centru.y).distance_to(alt) < DISTANTA_MINIMA_NODURI - 0.001:
+			return false
+	return true
+
+
+## Cel mai apropiat `x` de cel cerut care nu calcă pe niciun vecin.
+##
+## Nodul se mișcă doar pe orizontală, deci un vecin nu interzice un PUNCT, ci un
+## INTERVAL de x: cel în care distanța dintre centre ar scădea sub prag. Cât de
+## lat e intervalul iese dintr-un triunghi dreptunghic — cateta orizontală de
+## care e nevoie ca ipotenuza să ajungă fix la prag.
+##
+## Se încearcă întâi ieșirea prin DREAPTA vecinului (acolo mergeam oricum); dacă
+## dincolo de el nu mai e loc până la limită, se iese prin stânga, iar mutarea
+## iese mai mică sau deloc.
+static func _x_fara_vecini(
+	x: float, centru: Vector2, id_sarit: int, centre: Dictionary, x_max: float
+) -> float:
+	# Cel mult o trecere pentru fiecare vecin: fiecare ori scapă de unul, ori se
+	# oprește. Fără plafon, doi vecini apropiați ar putea trimite căutarea
+	# înainte și înapoi la nesfârșit.
+	for _pas in range(centre.size() + 1):
+		var vinovat := -1
+		var nevoie := 0.0
+		for id_brut in centre:
+			var id := int(id_brut)
+			if id == id_sarit:
+				continue
+			var alt: Vector2 = centre[id]
+			var dy := absf(alt.y - centru.y)
+			if dy >= DISTANTA_MINIMA_NODURI:
+				continue   # oricât de aproape pe x, distanța verticală ajunge
+			var cat := sqrt(
+				DISTANTA_MINIMA_NODURI * DISTANTA_MINIMA_NODURI - dy * dy)
+			if absf(x - alt.x) >= cat - 0.001:
+				continue
+			vinovat = id
+			nevoie = cat
+			break
+		if vinovat < 0:
+			return x
+		var dupa: float = float(centre[vinovat].x) + nevoie
+		x = dupa if dupa <= x_max else float(centre[vinovat].x) - nevoie
+	return x
+
+
+## Drumurile care ating nodul mutat, trase după el.
+static func _trage_drumurile(
+	drumuri: Dictionary, id_nod: int, delta: Vector2
+) -> void:
+	for id_brut in drumuri:
+		var de_la := int(id_brut)
+		for id_la_brut in drumuri[de_la]:
+			var la := int(id_la_brut)
+			if de_la == id_nod:
+				drumuri[de_la][la] = _tras_de_capat(
+					drumuri[de_la][la], true, delta)
+			elif la == id_nod:
+				drumuri[de_la][la] = _tras_de_capat(
+					drumuri[de_la][la], false, delta)
+
+
+## Un drum al cărui capăt s-a mutat cu `delta`, îndoit lin până se așază la loc.
+##
+## Ponderea scade de la 1 (chiar în capăt, ca drumul să rămână lipit de centrul
+## nodului — de-acolo îl taie `_taiat_la_simboluri` la marginea cernelii) la 0
+## după `INFLUENTA_TRAGERII` pixeli de drum. `smoothstep`, nu o scădere dreaptă:
+## o pondere liniară ar lăsa un COLȚ exact acolo unde se termină influența,
+## fiindcă panta ar sări de la ceva la zero dintr-o dată.
+##
+## Se măsoară pe lungimea de ARC, nu pe indicele punctului: punctele vin azi de
+## la `get_baked_points()`, adică la pas egal, dar un drum cules altfel n-ar
+## avea de ce să fie uniform, iar îndoitura n-are voie să depindă de asta.
+static func _tras_de_capat(
+	puncte: PackedVector2Array, la_inceput: bool, delta: Vector2
+) -> PackedVector2Array:
+	var n := puncte.size()
+	if n == 0:
+		return puncte
+
+	var lungimi := PackedFloat32Array()
+	lungimi.resize(n)
+	lungimi[0] = 0.0
+	var total := 0.0
+	for i in range(1, n):
+		total += puncte[i - 1].distance_to(puncte[i])
+		lungimi[i] = total
+
+	var raza := minf(INFLUENTA_TRAGERII, total)
+	var iesire := PackedVector2Array()
+	iesire.resize(n)
+	if raza < 0.0001:
+		# Drum de lungime zero (două noduri unul peste altul): nu e nimic de
+		# îndoit, se mută tot. Nu se vede oricum, dar nici nu rămâne agățat.
+		for i in range(n):
+			iesire[i] = puncte[i] + delta
+		return iesire
+
+	for i in range(n):
+		var d: float = lungimi[i] if la_inceput else total - lungimi[i]
+		var pondere := 1.0 - smoothstep(0.0, 1.0, clampf(d / raza, 0.0, 1.0))
+		iesire[i] = puncte[i] + delta * pondere
+	return iesire
 
 
 ## PUNCTELE UNUI DRUM, calculate PE PANGLICĂ.

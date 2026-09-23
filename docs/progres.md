@@ -30,6 +30,106 @@ restul rămâne placeholder. Bucla de luptă e în continuare cea validată, nu 
 
 ---
 
+## COLȚUL DE JOS-DREAPTA (23 septembrie 2026) — un nod împins lângă Boss
+
+Plângerea: nodul cel mai din dreapta din jumătatea de jos (la sămânța 556,
+Monedele) se oprea cu vreo 40 px în stânga Bossului, deși în dreapta lui mai
+era hârtie bună. Harta părea că se strânge la loc după ce ajunsese la capăt.
+
+### Prima descoperire: pozițiile NU depind de sămânță
+
+Bănuiala era că pozițiile se generează procedural. Nu se generează. De la
+comutarea pe `SURSA_HARTII = DESENATA`, poziția fiecărui nod vine din
+`data/harti/harta_01.json` și e **aceeași la orice sămânță** — sămânța alege
+doar TIPURILE (Monede, Luptă, Elită…). De-aia la 556 acolo sunt Monedele și la
+altă sămânță e altceva, dar mereu în același loc.
+
+Nodul are în fișier `poz = [0.9475, 0.7157]`, Bossul `[1.0, 0.1546]`. Deci
+diferența de 40 px nu era un jitter, nici o zonă de excludere: e chiar desenul.
+
+### A doua descoperire: ce-l ținea acolo
+
+`ZONA_PERGAMENT` se oprește la **0,838** din lățime, ales anume **sub** carte,
+ca să nu mai fie nevoie de nicio excepție care s-o ocolească. E o margine
+dreaptă trasă după cel mai îngust loc al hârtiei — și de-aia plătită peste tot.
+Cotorul cărții e înclinat: măsurat în `campaign_map.jpg`, e pe la **0,905** la
+înălțimea 0,60 și pe la **0,855** la 0,85. Fâșia dintre 0,838 și cotor e hârtie
+bună, pe care marginea dreaptă o aruncă.
+
+Pe scurt: o margine simplă, plătită cu un colț.
+
+### Ce s-a schimbat
+
+O **excepție țintită**, nu o lărgire a zonei — zona rămâne exact cum e, fiindcă
+ea e ce ține toate celelalte noduri departe de carte fără niciun `if`.
+
+`Harta.impinge_nodul_de_jos_dreapta()` rulează DUPĂ geometrie, pe centrele gata
+calculate, și mută un singur nod pe orizontală:
+
+- **cine e nodul** — o descriere, nu un id: dintre nodurile de sub mijlocul
+  DESENULUI, cel cu x-ul cel mai mare, fără Boss. Merge pe orice planșă.
+- **până unde** — `x_Boss + PESTE_BOSS` (24 px).
+- **ce-l oprește** — cotorul cărții (`CARTE_SUS` / `CARTE_JOS`, două puncte pe o
+  dreaptă, în fracțiuni din dreptunghiul REAL al texturii, deci corecte la orice
+  mărime de fereastră), marginea pânzei, și `DISTANTA_MINIMA_NODURI = 72` față
+  de orice vecin. Dacă limitele îl țin pe loc, nodul nu se mută — un nod la
+  locul lui vechi e corect, unul peste carte nu e.
+- **drumurile** — trase după el cu o pondere `smoothstep` care scade de la 1 în
+  capăt la 0 după 260 px de drum. Nu se pot translata întregi: celălalt capăt e
+  lipit de un nod care nu se mișcă. Tăierea la marginea cernelii se face după,
+  ca la orice drum — `_muchii()` nu știe că s-a mutat ceva.
+
+Structura nu se atinge: același număr de noduri, aceleași legături, aceeași
+distanță în pași până la Boss.
+
+### De ce doar pe planșă
+
+Funcția n-ar avea nimic împotriva panglicii, dar chemarea se face doar pe harta
+DESENATĂ. Măsurat pe 300 de semințe: pe panglică regula ar împinge nodul cu
+**până la 326 px** și l-ar lipi de vecin la fix 72 px, fiindcă panglica își
+termină ultimul strat departe de marginea din dreapta *cu intenție*. Încrucișări
+noi n-ar apărea (verificat, 0 din 300) — deci nu ăsta e motivul. Motivul e că
+panglica are deja un răspuns la „unde stă nodul ăsta", iar două sisteme care
+răspund la aceeași întrebare sunt un sistem și o eroare.
+
+### Verificarea
+
+`tools/verifica_coltul.gd` — rulează fără fereastră:
+
+```
+godot --headless --path . res://tools/verifica_coltul.tscn
+```
+
+Pe amândouă planșele × 7 semințe (56, 556 și 5 luate la nimereală), plus
+măsurătoarea de pe panglică. Rezultat pe `harta_01.json`, identic la toate
+semințele (cum și trebuie):
+
+| | înainte | după |
+|---|---|---|
+| x-ul nodului | 827,1 | **893,4** (Bossul: 869,4) |
+| aer până la cotor — nod | — | 39,0 px |
+| aer până la cotor — drumuri | — | 101,4 px |
+| cea mai mică distanță între noduri | 125,2 px | 125,2 px |
+| încrucișări de drumuri | 0 | 0 |
+
+Pe `harta_02.json` (nejucată azi, dar a doua formă de digerat): 715,7 → 892,4,
+aer 44,9 px, vecini 93,4 → 77,3 px (peste pragul de 72), 0 încrucișări.
+
+**Niciun caz în care nodul n-a putut fi mutat.** Fișa întoarsă de funcție are
+câmpul `oprit_de` (`carte` / `pânză` / `vecin`) tocmai pentru ziua în care va
+exista unul.
+
+### Datorie tehnică deschisă
+
+`CARTE_SUS` / `CARTE_JOS` sunt **măsurate de mână din imagine**. Cartea e
+pictată în `campaign_map.jpg`, nu e un nod de scenă, deci codul n-are pe cine
+întreba unde e. Fracțiunile se întind peste dreptunghiul real al texturii, deci
+ferestrele de alte mărimi sunt acoperite — dar **dacă se schimbă imaginea de
+fundal, cele două perechi trebuie remăsurate.** Sunt singurul lucru din regulă
+care nu se poate afla singur.
+
+---
+
 ## DRUMUL AJUNGE LA ICOANĂ (23 septembrie 2026) — tăiat pe alfa, nu pe o rază
 
 Plângerea: între capătul liniei punctate și simbolul nodului rămânea un gol.
