@@ -14,7 +14,7 @@
 | 3. Trivia, ca scenă independentă | ✅ gata |
 | 4. Bucla completă a unei lupte | ✅ victorie · înfrângere · recompense (Fragmente) |
 | 5. Trei inamici manuali | ✅ Soldatul · Lăncierul (ceas) · Spadasinul (vulnerabilitate), aleși din joc |
-| 6. Harta de expediție | ✅ loadout „N din M" · **12-16 noduri**, ramificate, cu sămânță · Luptă / Elită / Odihnă / Eveniment / **Magazin** / **Boss** · **Monede + puteri temporare** · sumar de run · aspect: pergament, simboluri de cerneală, trasee punctate · **nodurile și drumurile stau pe o PANGLICĂ (curbă centrală + benzi)**, nu pe o grilă dreaptă · **patru trasee, toate verzi pe 300 de semințe** (POTCOAVĂ activă; POTCOAVA OGLINDITĂ e aceeași formă, întoarsă) · strat înclinat (forfecare) la ȘARPE · **drumuri care nu se încrucișează niciodată (0 la 300 de semințe)** · **nodul curent are și aură, și X** · **două surse de hartă: GENERATĂ (panglica) sau DESENATĂ dintr-un fișier `data/harti/*.json`** — comutatorul `Expeditie.SURSA_HARTII`; azi e pe DESENATĂ · **harta umple pergamentul**: pânza ține toată pagina, antetul plutește peste ea (805 × 427 px de hartă, de la 666 × 353) |
+| 6. Harta de expediție | ✅ loadout „N din M" · **12-16 noduri**, ramificate, cu sămânță · Luptă / Elită / Odihnă / Eveniment / **Magazin** / **Boss** · **Monede + puteri temporare** · sumar de run · aspect: pergament, simboluri de cerneală, trasee punctate · **nodurile și drumurile stau pe o PANGLICĂ (curbă centrală + benzi)**, nu pe o grilă dreaptă · **patru trasee, toate verzi pe 300 de semințe** (POTCOAVĂ activă; POTCOAVA OGLINDITĂ e aceeași formă, întoarsă) · strat înclinat (forfecare) la ȘARPE · **drumuri care nu se încrucișează niciodată (0 la 300 de semințe)** · **nodul curent are și aură, și X** · **două surse de hartă: GENERATĂ (panglica) sau DESENATĂ dintr-un fișier `data/harti/*.json`** — comutatorul `Expeditie.SURSA_HARTII`; azi e pe DESENATĂ · **harta umple pergamentul**: pânza ține toată pagina, antetul plutește peste ea (805 × 427 px de hartă, de la 666 × 353) · **drumurile merg în amândouă sensurile**, cu nodul parcurs tăiat definitiv și cu garanția, verificată pe 16 000 de expediții simulate, că nu te poți înfunda |
 | 7. Cetatea | ❌ |
 | 8. Save/Load | 🟡 tezaurul, sacul și expediția știu toate să se serializeze (`spre_dictionar` / `din_dictionar`), pe trei straturi de durată; scrierea pe disc, nu încă |
 | 9. Celelalte discipline | 🟡 Cultură generală ✅ (135 de întrebări) · Logica ✅ (80 de categorii) · Cuvinte ✅ · toate trei fără repetiții pe expediție · celelalte 5 ❌ |
@@ -27,6 +27,115 @@ buget, generare) rămâne acolo unde era.
 Am sărit peste ordinea recomandată la pasul 12 (artă): imaginile pentru rege,
 cavaler și pentru cele trei piese de șah de pe butoane au intrat mai devreme, dar
 restul rămâne placeholder. Bucla de luptă e în continuare cea validată, nu arta.
+
+---
+
+## DRUMURILE MERG ÎN AMÂNDOUĂ SENSURILE (23 septembrie 2026)
+
+Plângerea, la sămânța 37: stând în nodul C3 se putea merge doar spre dreapta,
+deși pe pergament se vedeau limpede drumuri și spre stânga — către o Elită și
+către o Luptă. Bănuiala era corectă: `accesibile()` citea doar câmpul „spre” al
+nodului curent, iar „spre” e un graf cu UN SINGUR SENS. Un drum tras `W2 → C3`
+nu apărea ca opțiune stând în C3, deși pe desen arată identic cu unul care pleacă
+din el. Desenul nu are săgeți; datele aveau.
+
+### Ce s-a schimbat, și ce NU s-a schimbat
+
+**Formatul a rămas neatins.** „spre” se scrie mai departe cu un singur sens — așa
+îl produce generatorul, așa e scris în planșele din `data/harti/`, așa se
+salvează. Nimic din ce există pe disc nu s-a stricat.
+
+S-a schimbat doar CITIREA, și într-un singur loc: `Expeditie.vecini(id)`. Ea
+întoarce și nodurile din „spre”, și nodurile care au un „spre” către tine. Tot
+restul jocului întreabă funcția asta; nimeni nu mai citește „spre” ca să
+navigheze. Dacă vezi mâine `nod["spre"]` folosit pentru altceva decât desen sau
+generare, e un bug.
+
+### Cele două reguli din `accesibile()`
+
+1. **Un nod parcurs e tăiat definitiv.** Înainte regula era gratuită (graful
+   mergea într-un sens, deci n-aveai cum să te întorci); acum ea e singurul lucru
+   care ține harta să se consume. Fără ea, doi vecini ar fi o buclă infinită.
+
+2. **Din nodul oferit trebuie să se mai ajungă la Boss**, pe un drum care nu
+   trece prin noduri parcurse. Asta a fost partea grea și e chiar miezul
+   sesiunii.
+
+### De ce a doua regulă nu era opțională
+
+Cu mersul înapoi permis, te poți băga într-un braț al hărții a cărui singură
+ieșire e chiar nodul pe care tocmai l-ai ars. Nu e un caz de colț:
+
+| hărți | înfundări fără a doua regulă |
+|---|---|
+| `harta_01.json` | **59%** din rulări |
+| `harta_02.json` | 40% |
+| hărți generate (200 de semințe) | 48% |
+| grafuri la întâmplare (400 de forme) | 23% |
+
+Și o înfundare NU se poate repara la fața locului: când bagi de seamă că n-ai
+unde merge, mutarea greșită e cu cinci noduri în urmă. Singurul lucru pe care
+ți l-ar mai putea oferi jocul e „ai pierdut, din motive care nu țin de tine”.
+
+De-aia drumul se închide ÎNAINTE să intri pe el, nu după. Un drum refuzat din
+timp nu e o pedeapsă; e chiar felul în care harta rămâne o hartă.
+
+### Verificarea: `tools/verifica_drumuri.gd`
+
+```
+godot --headless --path . res://tools/verifica_drumuri.tscn
+```
+
+16 000 de expediții jucate cu alegeri la întâmplare, pe planșele reale, pe hărți
+generate și pe 400 de grafuri construite pe loc (cu aceleași garanții pe care
+`verifica_plansa.gd` le cere de la o planșă desenată de mână). **Zero înfundări
+cu regula din joc.**
+
+Două lucruri l-au făcut să fie o verificare, nu o părere:
+
+- **Nu-și scrie propriul `accesibile()`.** Pune harta în `Expeditie` și cheamă
+  funcțiile adevărate, exact cum face ecranul când apeși pe un nod. O simulare
+  care și-ar fi copiat regula ar fi verificat copia.
+- **Are un martor.** Fiecare hartă se joacă de două ori: o dată cu regula din
+  joc, o dată cu regula naivă („orice vecin nevizitat”). Coloana din tabelul de
+  mai sus e chiar martorul ăsta. Fără el, „zero înfundări” ar fi putut însemna
+  la fel de bine că harta n-avea cum să se înfunde.
+
+  *Martorul a avut el însuși un bug, la prima rulare:* raporta 0 înfundări peste
+  tot. Se oprea prin `la_capat()`, care întreabă `accesibile()` — adică tocmai
+  plasa pe care se prefăcea că n-o are. Un martor care se sprijină pe ce testează
+  nu e martor.
+
+Pe lângă înfundări se verifică patru invarianți la fiecare pas: nicio opțiune
+deja parcursă, fiecare opțiune chiar legată de nodul curent, distanța până la
+Boss mereu un număr real, și expediția se încheie la Boss, nu oriunde.
+
+### Ce s-a mai atins (locurile care presupuneau sens unic)
+
+- **`pasi_pana_la_boss()`** — BFS-ul merge acum prin `vecini()` și ocolește
+  nodurile parcurse. Altfel antetul ar fi răspuns la altă întrebare decât cea pe
+  care o pune jucătorul.
+- **`la_capat()`** — nu mai înseamnă „n-am unde merge”, fiindcă Bossul ARE acum
+  vecini (măcar nodul din care ai venit). Capătul se numește pe nume: ești la
+  Boss. Vechea verificare a rămas doar ca plasă pentru o hartă stricată.
+- **Desenul drumurilor (`harta.gd::_muchii`)** — „parcurs” și „deschis” se
+  întreabă în amândouă sensurile. Bucla merge pe „spre”, adică pe cine a TRAS
+  drumul, ceea ce n-are nicio legătură cu încotro l-ai mers tu.
+  `_sunt_vecini_in_drum()` a rămas cu sens (parcursul e un traseu, iar un traseu
+  are o ordine); apelantul întreabă de două ori.
+- **`verifica_plansa.gd`, regula (4)** — rămâne, dar cu alt motiv scris în
+  comentariu. Un nod fără ieșire proprie nu mai încheie expediția la jumătate; e
+  un nod din care nu se mai ajunge la Boss decât înapoi prin cel curent, deci
+  unul pe care `accesibile()` nu ți-l va oferi aproape niciodată. Desenat pe
+  hârtie și mort — cel mai supărător fel de greșeală, fiindcă arată bine.
+
+### Efectul în joc
+
+La sămânța 37, după `S → T → K → C3`, opțiunile sunt acum C4 (Luptă), W2 (Elită)
+și W3 (Eveniment) — exact cele trei drumuri care se văd pe pergament. Pe
+`harta_01`, un run poate ajunge de la 7 noduri (drumul scurt) la 14 (toată harta),
+în loc de 7–9 cât era înainte. Harta a devenit brusc mai mare fără să i se adauge
+niciun nod.
 
 ---
 

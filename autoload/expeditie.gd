@@ -323,6 +323,13 @@ var plansa := ""
 ## fi un graf de referințe încrucișate — imposibil de scris în JSON fără să-l
 ## desfaci oricum în indici.
 ##
+## „spre” E SCRIS CU UN SINGUR SENS, DAR SE CITEȘTE CU DOUĂ. Câmpul spune cine a
+## TRAS drumul, fiindcă așa îl produc și generatorul, și planșa desenată, și așa
+## se salvează. Cine POATE MERGE pe el e altă întrebare, și are alt răspuns: un
+## drum se poate lua în amândouă sensurile. Traducerea se face într-un singur
+## loc, `vecini()`, și nicăieri altundeva — dacă vezi „spre” citit direct
+## pentru navigare, e un bug.
+##
 ## „samanta” e a nodului, nu a hărții: lupta de la nodul 6 își alege inamicul
 ## din ea, deci alege ACELAȘI inamic de fiecare dată când reiei expediția —
 ## fără ca expediția să fie nevoită să știe ce e un inamic.
@@ -493,11 +500,92 @@ func nod_curent() -> Dictionary:
 	return harta[pozitie]
 
 
+## TOATE NODURILE LEGATE DE `id`, în amândouă sensurile.
+##
+## Aici se întâmplă tot ce e nou în navigare, și merită spus încet.
+##
+## „spre” e scris cu UN SINGUR SENS, și așa rămâne: generatorul îl scrie așa
+## (strat → strat), planșa îl scrie așa („de_la”/„la”), save-ul îl salvează așa.
+## Formatul nu se atinge — o planșă desenată acum șase luni și un save vechi
+## trebuie să se citească mâine la fel.
+##
+## Dar un drum DESENAT pe pergament n-are săgeată. Dacă din K pleacă o linie
+## către C3, linia aia se vede exact la fel stând în C3 — iar un jucător care o
+## vede și n-o poate lua nu descoperă o regulă, ci crede că e un bug. Și avea
+## dreptate: harta minte, nu el.
+##
+## Deci sensul unic nu se șterge din DATE, ci se ignoră la CITIRE, într-un
+## singur loc: aici. Nimic altceva din joc nu mai citește „spre” ca să
+## NAVIGHEZE — nici `accesibile()`, nici BFS-ul până la Boss.
+##
+## Desenul îl citește mai departe, dar pune altă întrebare: „ce linii există pe
+## hartă?”, la care sensul chiar e răspunsul bun — fiecare drum trebuie desenat
+## o dată, nu de două ori. Ce STARE are linia (parcursă, deschisă) se întreabă
+## acolo în amândouă sensurile; vezi `harta.gd::_muchii()`.
+func vecini(id: int) -> Array[int]:
+	var lista: Array[int] = []
+	if id < 0 or id >= harta.size():
+		return lista
+
+	for id_brut in harta[id].get("spre", []):
+		var inainte := int(id_brut)
+		if not inainte in lista:
+			lista.append(inainte)
+
+	# Al doilea sens: cine are un drum CĂTRE mine. E o căutare prin toată harta,
+	# nu un index ținut minte dinainte, și asta e o alegere: harta are
+	# paisprezece noduri, deci costul e zero, pe când un index trebuie ținut în
+	# acord cu datele la fiecare generare și la fiecare save reîncărcat. Un
+	# index desincronizat e un bug tăcut; o căutare de paisprezece pași nu e
+	# nimic.
+	for nod in harta:
+		var alt := int(nod["id"])
+		if alt == id or alt in lista:
+			continue
+		for id_brut in nod.get("spre", []):
+			if int(id_brut) == id:
+				lista.append(alt)
+				break
+
+	# Ordonată, ca lista să nu depindă de ordinea în care se nimeresc scrise
+	# drumurile în fișier. Două hărți identice ca formă trebuie să dea aceleași
+	# opțiuni, în aceeași ordine.
+	lista.sort()
+	return lista
+
+
 ## În ce noduri poți intra ACUM.
 ##
 ## La început (`pozitie == -1`) sunt toate nodurile de adâncime 0 — adică
-## intrarea pe hartă. După aceea, exact ce scrie în „spre” la nodul curent.
-## Lista goală înseamnă „ai ajuns la capăt”: vezi `la_capat()`.
+## intrarea pe hartă. Intrarea NU trece prin regulile de mai jos: dacă harta e
+## atât de stricată încât nici din Start nu se ajunge la Boss, vreau să pot
+## intra și să văd cu ochii mei ce e stricat, nu un ecran pe care nu se poate
+## apăsa nimic. Aia e treaba verificatorului de planșe, nu a jucătorului.
+##
+## După ce ai intrat, un vecin (în AMÂNDOUĂ sensurile, vezi `vecini()`) e o
+## opțiune doar dacă trece de două reguli:
+##
+##   1. NU E DEJA PARCURS. Un nod jucat e tăiat definitiv — asta e ce ține în
+##      frâu mersul înapoi. Fără regula asta, doi vecini ar fi o buclă în care
+##      te-ai putea plimba la nesfârșit; cu ea, harta tot se consumă la fiecare
+##      pas, doar că nu mai e obligatoriu să se consume spre dreapta.
+##
+##   2. DIN EL SE MAI AJUNGE LA BOSS, pe un drum care nu trece prin noduri deja
+##      parcurse. Asta e regula fără de care tot restul ar fi o capcană: cu
+##      mersul înapoi permis, te poți băga într-un braț al hărții din care
+##      singura ieșire e chiar nodul pe care tocmai l-ai ars. Pe `harta_01`,
+##      o simulare cu alegeri la întâmplare se înfunda în 59% din rulări dacă
+##      regula asta lipsea (vezi `tools/verifica_drumuri.gd`).
+##
+##      De ce se REFUZĂ opțiunea, în loc să se detecteze înfundarea când s-a
+##      produs: fiindcă o înfundare nu se poate repara. Când ai băgat de seamă
+##      că ești blocat, mutarea greșită e cu cinci noduri în urmă, iar singurul
+##      lucru pe care ți l-ar mai putea oferi jocul e „ai pierdut, din motive
+##      care nu țin de tine”. Un drum care se închide ÎNAINTE să intri pe el nu
+##      e o pedeapsă; e chiar felul în care harta rămâne o hartă.
+##
+## Bossul n-are opțiuni: acolo se termină expediția, chiar dacă drumul pe care
+## ai venit are acum și el un al doilea sens. Vezi `la_capat()`.
 func accesibile() -> Array[int]:
 	var lista: Array[int] = []
 	if pozitie < 0:
@@ -505,14 +593,36 @@ func accesibile() -> Array[int]:
 			if int(nod["adancime"]) == 0:
 				lista.append(int(nod["id"]))
 		return lista
-	for id in nod_curent().get("spre", []):
-		lista.append(int(id))
+
+	if int(nod_curent().get("tip", -1)) == Nod.BOSS:
+		return lista
+
+	for id in vecini(pozitie):
+		if id in parcurse:
+			continue
+		if _pasi_la_boss(id) < 0:
+			continue
+		lista.append(id)
 	return lista
 
 
-## Ai terminat drumul? (Ultimul nod n-are unde să ducă.)
+## Ai terminat drumul?
+##
+## Înainte întrebarea era „n-am unde merge”, și era destulă: graful mergea
+## într-un singur sens, deci singurul nod fără ieșire era Bossul. Acum Bossul
+## ARE vecini — cel puțin nodul din care ai venit — așa că „n-am unde merge” ar
+## fi devenit fals chiar în clipa victoriei, iar expediția ar fi continuat pe
+## lângă Boss.
+##
+## Deci capătul se numește pe nume: ești la Boss. Verificarea veche rămâne pe
+## urmă, ca plasă pentru o hartă stricată — dacă `accesibile()` e goală înainte
+## de Boss, expediția se încheie oricum, în loc să te lase într-un ecran mort.
 func la_capat() -> bool:
-	return pozitie >= 0 and accesibile().is_empty()
+	if pozitie < 0:
+		return false
+	if int(nod_curent().get("tip", -1)) == Nod.BOSS:
+		return true
+	return accesibile().is_empty()
 
 
 ## `adancime_maxima()` A DISPĂRUT de aici, și merită spus de ce, fiindcă e genul
@@ -554,19 +664,48 @@ func id_boss() -> int:
 ## generată dă exact numărul vechi (straturi rămase), deci nu s-a pierdut nimic
 ## din informație — s-a pierdut doar presupunerea că toate drumurile sunt egale.
 ##
-## Tot un BFS, ca la adâncimi, dar pornit din nodul CURENT. Înainte de intrarea
-## pe hartă (`pozitie == -1`) pornește din prima intrare.
+## Tot un BFS, ca la adâncimi, dar pornit din nodul CURENT și mergând prin
+## `vecini()`, nu prin „spre”: dacă poți merge înapoi pe un drum, atunci și
+## scurtătura înapoi contează la „cât mai am”. Înainte de intrarea pe hartă
+## (`pozitie == -1`) pornește din prima intrare.
 func pasi_pana_la_boss() -> int:
-	var tinta := id_boss()
-	if tinta < 0:
-		return 0
-
 	var pornire := pozitie
 	if pornire < 0:
 		var intrari := accesibile()
 		if intrari.is_empty():
 			return 0
 		pornire = intrari[0]
+	return maxi(_pasi_la_boss(pornire), 0)
+
+
+## CÂȚI PAȘI SUNT DE LA `pornire` PÂNĂ LA BOSS, ocolind nodurile deja parcurse.
+## `-1` înseamnă „nu se mai ajunge deloc” — și ăsta e răspunsul de care are
+## nevoie `accesibile()` ca să nu-ți ofere o fundătură.
+##
+## Două lucruri fac funcția asta să nu fie un BFS oarecare:
+##
+##   NODURILE PARCURSE SUNT ZIDURI, nu doar „deja văzute”. Un drum care ar trece
+##   prin ele nu se poate merge, deci nu se poate socoti. De-aia se pun în
+##   `vazut` ÎNAINTE de căutare: BFS-ul nu le va deschide niciodată.
+##
+##   `pornire` E SCUTIT de regula de sus. Nodul în care stai chiar ACUM e
+##   parcurs (`intra_in_nod()` îl pune acolo în clipa în care intri), și totuși
+##   de acolo pleci. Scutirea se face punându-l în `vazut` explicit, după
+##   ceilalți: se marchează ca deschis, nu ca zid.
+##
+## Se merge prin `vecini()`, deci în amândouă sensurile — altfel funcția ar
+## răspunde la altă întrebare decât cea pe care o pune jocul.
+func _pasi_la_boss(pornire: int) -> int:
+	var tinta := id_boss()
+	if tinta < 0 or pornire < 0 or pornire >= harta.size():
+		return -1
+	if pornire == tinta:
+		return 0
+
+	var vazut := {}
+	for id in parcurse:
+		vazut[int(id)] = true
+	vazut[pornire] = true
 
 	var pasi := {pornire: 0}
 	var coada: Array[int] = [pornire]
@@ -574,14 +713,15 @@ func pasi_pana_la_boss() -> int:
 	while i < coada.size():
 		var aici: int = coada[i]
 		i += 1
-		if aici == tinta:
-			return int(pasi[aici])
-		for id in harta[aici].get("spre", []):
-			var urmator := int(id)
-			if not pasi.has(urmator):
-				pasi[urmator] = int(pasi[aici]) + 1
-				coada.append(urmator)
-	return 0
+		for urmator in vecini(aici):
+			if vazut.has(urmator):
+				continue
+			vazut[urmator] = true
+			pasi[urmator] = int(pasi[aici]) + 1
+			if urmator == tinta:
+				return int(pasi[urmator])
+			coada.append(urmator)
+	return -1
 
 
 # ─────────────────────────────────────────────────────────────

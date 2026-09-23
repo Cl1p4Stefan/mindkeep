@@ -265,9 +265,20 @@ func _fara_cicluri(plansa: Dictionary, topologic: Array) -> bool:
 
 ## (4) Niciun nod fără ieșire, în afară de Boss.
 ##
-## Un nod fără ieșire e o fundătură: intri și expediția se termină acolo, fiindcă
-## `Expeditie.la_capat()` înseamnă chiar „n-am unde merge”. Ai câștiga runul la
-## jumătatea hărții, fără să dai de Boss.
+## Justificarea veche era că `Expeditie.la_capat()` însemna chiar „n-am unde
+## merge”, deci un nod fără ieșire ar fi încheiat expediția la jumătatea hărții.
+## De când drumurile se merg în amândouă sensurile, nu mai e așa: dintr-un nod
+## fără ieșire proprie se iese înapoi, iar capătul se numește pe nume (ești la
+## Boss). Verificarea RĂMÂNE, dar pentru altceva.
+##
+## Un nod fără ieșire e acum un nod în care se poate DOAR intra și din care se
+## poate doar ieși pe unde ai venit. Nu blochează expediția, dar `accesibile()`
+## nu ți-l va oferi aproape niciodată: din el nu se mai ajunge la Boss decât
+## trecând înapoi prin nodul curent, care e deja parcurs. Adică l-ai desenat pe
+## hârtie și e mort — cel mai supărător fel de greșeală, fiindcă arată bine.
+##
+## Regula rămâne deci ce a fost mereu: un nod pus pe hartă trebuie să ducă
+## undeva. Doar motivul s-a mutat, de la „strică finalul” la „nu se joacă”.
 func _fara_fundaturi(plansa: Dictionary) -> bool:
 	var fundaturi: Array[String] = []
 	for reper in plansa["ordine"]:

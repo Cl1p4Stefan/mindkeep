@@ -1698,9 +1698,10 @@ static func geometrie_pe_panglica(harta: Array, zona: Rect2) -> Dictionary:
 ## punctele din fișier, trecute printr-o curbă netedă ca să nu se vadă colțuri.
 ##
 ## De ce drumurile se caută în PLANȘĂ și nu în câmpul „spre” al nodurilor: ca să
-## nu existe două surse pentru aceeași informație. „spre” e graful — cine duce
-## unde — și el e adevărul pentru NAVIGARE. Punctele sunt desenul, și el e
-## adevărul pentru DESEN. Când un drum e în graf dar n-are puncte în fișier (nu
+## nu existe două surse pentru aceeași informație. „spre” e graful — cine a tras
+## drumul — și din el iese navigarea, prin `Expeditie.vecini()`, care îl citește
+## în amândouă sensurile. Punctele sunt desenul, și ele sunt adevărul pentru
+## DESEN. Desenul n-are sens de mers: aceeași linie e și dus, și întors. Când un drum e în graf dar n-are puncte în fișier (nu
 ## se poate azi: `spre` e construit chiar din lista de drumuri), pur și simplu
 ## nu se desenează — nu se inventează o linie dreaptă care ar minți.
 static func geometrie_desenata(
@@ -2160,8 +2161,18 @@ func _muchii(drumuri: Dictionary) -> Array[Dictionary]:
 			# sunt vecine în drumul efectiv mers. Fără verificarea a doua, un
 			# nod vizitat ar aprinde toate drumurile care pleacă din el, inclusiv
 			# cele pe care NU le-ai luat.
-			var parcurs := _sunt_vecini_in_drum(id, urmator)
-			var deschis := id == Expeditie.pozitie and urmator in accesibile
+			#
+			# Amândouă întrebările se pun acum în AMÂNDOUĂ SENSURILE, și dintr-un
+			# motiv simplu: bucla asta merge pe „spre”, adică pe cine a TRAS
+			# drumul, iar asta n-are nicio legătură cu încotro l-ai mers tu. Dacă
+			# planșa scrie K→C3 și tu tocmai ai venit din C3 în K, drumul e
+			# parcurs — deși perechea din `parcurse` e (C3, K), adică invers față
+			# de cum e scris. La fel pentru „deschis”: stând în C3, drumul scris
+			# K→C3 e chiar opțiunea de a te întoarce în K.
+			var parcurs := _sunt_vecini_in_drum(id, urmator) \
+				or _sunt_vecini_in_drum(urmator, id)
+			var deschis := (id == Expeditie.pozitie and urmator in accesibile) \
+				or (urmator == Expeditie.pozitie and id in accesibile)
 			var culoare := CULOARE_DRUM_INCHIS
 			if parcurs:
 				culoare = CULOARE_DRUM_PARCURS
@@ -2380,6 +2391,11 @@ func _punct_la(
 
 
 ## Au fost nodurile astea două, una după alta, chiar pe drumul meu?
+##
+## Întrebarea e cu SENS: „am mers din a în b”, nu „am trecut pe drumul dintre
+## ele”. Rămâne așa dinadins — `parcurse` e un traseu, iar un traseu are o
+## ordine. Cine vrea răspunsul fără sens întreabă de două ori, cum face
+## `_muchii()`.
 func _sunt_vecini_in_drum(a: int, b: int) -> bool:
 	for i in range(Expeditie.parcurse.size() - 1):
 		if Expeditie.parcurse[i] == a and Expeditie.parcurse[i + 1] == b:
