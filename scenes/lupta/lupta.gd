@@ -452,8 +452,12 @@ var panou_deschis := false
 # Lupta nu le atinge altfel — doar decide care se vede.
 # Învelișurile care clatină figura la lovitură. Ele stau în container;
 # figura (siluetă sau imagine) atârnă înăuntru, unde n-o mișcă nimeni.
-@onready var figura_jucator: Control = $Margini/Coloana/Arena/ZonaJucator/FiguraJucator
-@onready var figura_inamic: Control = $Margini/Coloana/Arena/ZonaInamic/FiguraInamic
+# Se caută prin `%`, nu prin cale: învelișurile s-au mutat cu un nivel mai
+# adânc (sub `ArenaJucator`/`ArenaInamic`, ca să aibă umbra unde sta ca frate),
+# iar o cale scrisă cap-coadă s-ar fi rupt la mutare. Numele unic supraviețuiește
+# oricărei rearanjări din editor.
+@onready var figura_jucator: Control = %FiguraJucator
+@onready var figura_inamic: Control = %FiguraInamic
 # Panoul in care se deschide intrebarea, intre cele doua figuri.
 @onready var zona_puzzle: PanelContainer = %ZonaPuzzle
 # Ecranul de verdict. UNUL singur, pentru amandoua finalurile: victoria si

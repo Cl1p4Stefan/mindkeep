@@ -1,6 +1,6 @@
 # MINDKEEP — Jurnal de progres
 
-*Ultima actualizare: 23 septembrie 2026*
+*Ultima actualizare: 24 septembrie 2026*
 *Atașează acest fișier la începutul fiecărei sesiuni noi, împreună cu `CLAUDE.md` și `docs/pitch-document.md`.*
 
 ---
@@ -18,7 +18,7 @@
 | 7. Cetatea | ❌ |
 | 8. Save/Load | 🟡 tezaurul, sacul și expediția știu toate să se serializeze (`spre_dictionar` / `din_dictionar`), pe trei straturi de durată; scrierea pe disc, nu încă |
 | 9. Celelalte discipline | 🟡 Cultură generală ✅ (135 de întrebări) · Logica ✅ (80 de categorii) · Cuvinte ✅ · toate trei fără repetiții pe expediție · celelalte 5 ❌ |
-| 10–13. Generator de inamici, artă, web | ❌ (artă parțial: figurile principale și piesele de pe butoanele de Obelisc au imagini reale) · Regina: **amânată**, vezi CLAUDE.md |
+| 10–13. Generator de inamici, artă, web | ❌ (artă parțial: figurile principale și piesele de pe butoanele de Obelisc au imagini reale · **arena are fundal: biblioteca gotică**, cu personajele așezate pe dalele din prim-plan, umbră de contact și lumină de sală) · Regina: **amânată**, vezi CLAUDE.md |
 
 Din pasul 10 (generatorul de inamici) s-a făcut deja partea care nu costa nimic
 azi: **identitatea inamicului e separată de arhetip**. Restul (modificatori,
@@ -27,6 +27,358 @@ buget, generare) rămâne acolo unde era.
 Am sărit peste ordinea recomandată la pasul 12 (artă): imaginile pentru rege,
 cavaler și pentru cele trei piese de șah de pe butoane au intrat mai devreme, dar
 restul rămâne placeholder. Bucla de luptă e în continuare cea validată, nu arta.
+
+---
+
+## POZIȚIA PERSONAJELOR, DOUĂ STĂRI (24 septembrie 2026) — o cifră aleasă și o regulă
+
+Până acum poziția pe orizontală era o singură cifră, folosită în amândouă
+stările. De azi sunt două lucruri de feluri diferite, și distincția e tot
+conținutul sesiunii: **poziția de bază e o alegere de compoziție**, iar
+**poziția lângă panou e o consecință măsurată**.
+
+Amândouă stau în `scenes/lupta/asezare_coloana.gd`, pus pe `ZonaJucator` și
+`ZonaInamic`.
+
+### 1. Poziția de bază: înapoi spre exterior
+
+`deplasare_de_baza` **0.20 → 0.11** din lățimea coloanei (99 → 54 px la
+1152×648, adică **45 px spre exterior** pentru fiecare, simetric).
+
+| | înainte | acum |
+|---|---|---|
+| Rege, figura desenată | 0.278–0.451 | **0.240–0.412** |
+| Soldat, figura desenată | 0.550–0.721 | **0.588–0.760** |
+| marginea mantiei | 0.301 | **0.262** |
+| aer față de pupitru | 47 px | **2 px** |
+
+**Cei 2 px trebuie citiți cu grijă, și de-aia și-au schimbat pragurile.** Cifra
+se măsoară de la cel mai din stânga punct al mantiei, **pe toată înălțimea
+figurii** — un punct care apare o singură dată, la poalele hainei. Pe captură,
+pupitrul se vede ÎNTREG: cartea, sfeșnicele de pe el, corpul de dedesubt. Nu e
+acoperit nimic. Dar marja e subțire, deci merita spus pe față, nu ascuns într-un
+„OK".
+
+Verificarea are de azi **două praguri, nu unul**: sub zero = PICAT (chiar se
+suprapun), iar între zero și 30 px trece cu mențiunea „ok, dar la limită".
+Motivul e că amestecasem două lucruri într-un singur număr: „Regele nu are voie
+să acopere pupitrul" e o limită tare, pe când „cât aer arată bine" e o
+preferință, care s-a răzgândit deja o dată. Cu un singur prag, orice reglare de
+compoziție ar fi arătat ca o regulă încălcată.
+
+**Dacă marja de 2 px se dovedește prea strânsă:** `deplasare_de_baza` 0.11 →
+0.13 dă înapoi 10 px de aer și costă 10 px de spațiu în centru.
+
+### 2. Poziția lângă panou: o limită, nu o a doua cifră
+
+Panoul de întrebare acoperea bastonul Regelui și spada Soldatului. Regula
+cerută: marginea **vizibilă** a personajului stă la marginea panoului + 12 px.
+
+Trei lucruri de apărat în implementare:
+
+**Marginea vizibilă, nu marginea nodului.** Se citește din `Image.get_used_rect()`
+pe textură — chenarul opac, nu dreptunghiul `TextureRect`-ului, între care sunt
+zeci de pixeli de aer transparent. Se calculează **o dată per textură** și se
+ține minte într-un dicționar static: `get_image()` decomprimă imaginea întreagă,
+iar funcția se cheamă la fiecare cadru al animației de deschidere.
+
+**E o LIMITĂ, nu o poziție-țintă.** „Stai unde ai fost ales, dar niciodată mai
+aproape de panou decât 12 px." Trei câștiguri față de o a doua poziție calculată:
+- **e continuă** — panoul se deschide cu o animație, de la lățime zero; o
+  poziție-țintă ar fi cerut, în prima clipă, o deplasare uriașă, deci figura ar
+  fi sărit spre centru și s-ar fi întors pe măsură ce panoul crește. Limita
+  mușcă treptat, deci figura alunecă o dată, lin, în afară.
+- **nu trebuie să știe cât de lat ajunge panoul** — se uită la cât e acum, deci
+  nu duplică `LATIME_PANOU` din `lupta.gd`.
+- **nu face nimic dacă poziția de bază e deja destul de în afară.**
+
+**Cei 12 px sunt în pixeli, nu în fracțiuni, și intenționat.** E o distanță de
+atingere între două lucruri desenate, nu o proporție de compoziție. Proiectul
+desenează într-un ecran logic fix (1152×648) pe care îl scalează la fereastră,
+deci pixelul se mărește odată cu tot restul — la 1920×1080 iese exact aceeași
+cifră.
+
+**Măsurat, pe toți trei inamicii:**
+
+| | margine vizibilă | aer până la panou |
+|---|---|---|
+| REGE | 314.0 px | **12.0 px** |
+| INAMIC | 838.8 px | **12.8 px** |
+
+Identic pentru Soldat, Lăncier și Spadasin — fiindcă **azi cei trei împart
+aceeași textură**: `INAMICI` are `colorare`, nu imagine. Verificarea trece
+oricum prin toți trei, și asta nu e timp pierdut: arată că regula nu depinde de
+cine e în arenă, și va prinde diferența în ziua în care Lăncierul își primește
+propriul desen, cu lancea lui.
+
+**Proba regulii.** Cu valorile de azi, poziția de bază nimerește singură la fix
+12 px de panou — deci măsurătoarea de mai sus ar fi trecut la fel de bine și
+dacă limita n-ar fi existat deloc. Verificarea împinge acum poziția de bază la
+0.30 și se uită dacă aerul rămâne 12. Rămâne. Fără proba asta, ziua în care
+cineva schimbă poziția de bază ar fi fost ziua în care aflu, din joc, că regula
+era decor.
+
+### 3. Bara de PV: nu se atinge, deci panoul rămâne lat
+
+Întrebarea pusă înainte de a schimba altceva: împinge regula vreun personaj
+peste bara lui de PV? **Nu, și nici nu poate, în situația de azi.** Regula
+împinge Regele spre DREAPTA și Soldatul spre STÂNGA — adică pe amândoi
+*dinspre* barele lor, nu spre ele. Barele stau la 0.028–0.050 și 0.950–0.972;
+figurile nu se apropie de ele în niciuna din stări.
+
+Deci **nu e nevoie de îngustarea panoului cu 30–40 px.** Alternativa rămâne
+valabilă dacă vreodată un inamic primește o armă atât de lată încât limita să-l
+împingă în bară — verificarea măsoară și asta și se plânge înainte să se vadă
+în joc.
+
+### Valorile de acum
+
+| Ce | Unde | Acum |
+|---|---|---|
+| poziția de bază | `ZonaJucator` / `ZonaInamic`, `deplasare_de_baza` | **0.11** din lățimea coloanei |
+| aerul lângă panou | aceleași, `aer_langa_panou` | **12.0** px logici |
+| partea pe care e panoul | `panoul_la_dreapta` | `true` la Rege, `false` la inamic |
+
+Restul (talpă, umbre, lumini, linia numelor) neschimbat față de secțiunile de
+mai jos.
+
+### Ce s-a mai învățat
+
+**Panoul deschis duce Regele peste pupitru** (mantia la 0.125, adică 156 px
+peste) și nu se poate repara din poziția figurii: coloanele se string ca să facă
+loc întrebării. Nu e o regresie și nu e o promisiune încălcată — verificarea o
+scrie ca pe o cifră informativă, cu alt cuvânt decât o cădere. Reparația, dacă
+va fi vreodată nevoie, e la panou (să se suprapună în loc să împingă).
+
+**Capturile sunt acum patru**, nu două: fiecare rezoluție, cu panoul închis și
+cu el deschis. Cea cu panoul deschis arată un panou GOL — se deschide doar
+geometria lui, nu o întrebare adevărată — și e exact ce trebuie văzut acolo:
+marginile lui față de baston și de spadă, fără conținut care să distragă.
+
+---
+
+## ARENA, TREI AJUSTĂRI FINE (24 septembrie 2026) — pupitrul, linia numelor, umbrele
+
+Trei retușuri peste sesiunea de mai jos. Valorile de aici **le înlocuiesc** pe
+cele din tabelul secțiunii următoare acolo unde se contrazic.
+
+### 1. Regele nu mai stă lipit de pupitru
+
+Mantia lui acoperea colțul din dreapta al pupitrului cu cartea deschisă. Măsurat:
+marginea dreaptă a pupitrului e la **0.2604** din lățimea ecranului, iar mantia
+începea la **0.196** — adică se suprapuneau pe 74 px.
+
+Amândouă figurile se trag spre centru cu **0.2 din lățimea coloanei lor**
+(99 px la 1152×648), simetric. Rezultatul: mantia la **0.301**, adică **47 px de
+aer** față de pupitru; figurile stau la 0.1355 de o parte și de alta a centrului
+ecranului, deci exact simetrice față de fereastră.
+
+**De ce 47 px și nu 60-80.** Mai mult decât atât împinge bastonul Regelui peste
+ancadramentul ferestrei din fund și strânge coridorul dintre cele două figuri —
+adică repară o vecinătate stricând alta. 47 px se citesc clar ca spațiu, fără să
+mute problema în altă parte.
+
+**De ce „marginea mantiei" nu e marginea desenului.** Canalul alfa al texturii
+începe la 9/379 = 0.024, dar acolo e VÂRFUL SPADEI — o lamă subțire, prezentă pe
+o singură bandă de înălțime. Masa pe care o vede ochiul (pânza) începe la
+**50/379 = 0.132**. Socotit pe marginea desenului, Regele ar fi fost tras cu încă
+30 px spre centru ca să facă loc unei lame de trei pixeli.
+
+**S-a mutat COLOANA, nu figura.** Prima încercare a mutat doar figura, prin
+ancorele ei — și a rupt altceva: eticheta cu numele a rămas centrată pe coloana
+nemișcată, deci nu mai stătea deasupra personajului. Acum `ZonaJucator` și
+`ZonaInamic` sunt `Control`-uri simple, iar înăuntrul lor stă câte un
+`ColoanaJucator` / `ColoanaInamic` (`VBoxContainer`) ancorat cu deplasarea. Se
+mută tot: nume, PV, intenție, figură, umbră.
+
+**Ce NU se poate repara așa, și de ce.** Când se deschide panoul de întrebare
+(500 px), cele două coloane se string la jumătate și figurile se dau spre
+margini: mantia Regelui ajunge la **0.144**, adică 134 px PESTE pupitru. Nu e o
+regresie — așa era și înainte — și nici nu se poate rezolva ancorând figura de
+ecran, fiindcă atunci panoul ar trece peste ea. E o compoziție care se strică
+într-o stare în care oricum te uiți la întrebare, nu la cameră. Unealta o
+măsoară și o raportează, dar NU o consideră o cădere; dacă vreodată deranjează,
+reparația e la panou (să se suprapună în loc să împingă), nu la figuri.
+
+### 2. Numele pe aceeași linie
+
+„REGELE" era cu 35 px sub „SOLDATUL", fiindcă blocul inamicului are patru
+rânduri (nume, vulnerabilitate, ceas, intenție) și amândouă blocurile se lipeau
+de JOS. Acum se lipesc de SUS: primul rând al fiecăruia pornește de la aceeași
+înălțime, indiferent câte rânduri are inamicul dedesubt. Intenția rămâne sub
+numele lui.
+
+**Capcana:** numele Regelui e un `Label`, al inamicului un `Button` (pe el se
+apasă pentru card). Butonul e mai înalt cu 8 px din marginile temei, deci
+„aceeași poziție în cutie" NU însemna „același rând pe ecran". Înălțimea se
+egalează explicit (28 px) și textul se centrează în ea. Abaterea măsurată acum:
+**0.0 px**.
+
+**A doua capcană, plătită pe loc:** am încercat să string butonul pe lățimea
+textului (`SHRINK_CENTER`), ca să nu mai prindă click pe jumătate de ecran.
+Butonul s-a strâns la 8 px — fiindcă are `clip_text`, iar `clip_text` înseamnă
+tocmai „ai voie să fii mai mic decât textul tău", deci mărimea lui minimă e
+zero. Am lăsat butonul pe toată lățimea coloanei.
+
+### 3. Umbrele, mai apăsate
+
+`opacitate` **0.50 → 0.68** la Rege, **0.50 → 0.58** la Soldat. Regele are mai
+mult fiindcă stă pe dalele luminate din stânga, unde o umbră slabă se pierde;
+Soldatul stă pe o zonă deja întunecată, cu moloz, și n-are nevoie de la fel de
+mult. Restul (lățime, turtire, culoare) neschimbat — s-a mărit doar cât de
+întunecat e miezul, nu forma.
+
+### Valorile de acum
+
+| Ce | Unde | Acum |
+|---|---|---|
+| deplasarea spre centru | `ColoanaJucator` / `ColoanaInamic`, ancorele | ±0.2 din lățimea coloanei (99 px la 1152×648) |
+| înălțimea rândului cu nume | `JucatorPV` / `InamicNume`, `custom_minimum_size.y` | 28 |
+| opacitate umbră Rege | `UmbraJucator.opacitate` | **0.68** |
+| opacitate umbră Soldat | `UmbraInamic.opacitate` | **0.58** |
+
+Restul rămâne ca în tabelul de mai jos (talpă, lățime, turtire, culoare, lumini).
+
+### Ce mai verifică unealta de acum
+
+Trei probe noi în `tools/verifica_podeaua.gd`: aerul dintre pupitru și mantie
+(în amândouă stările panoului), numele pe aceeași linie (toleranță 2 px, cu
+intenția obligatoriu sub numele inamicului) și marginile orizontale ale figurii
+desenate. Plus o curățenie: scena se eliberează înainte de ieșire, altfel Godot
+raporta la închidere „2 resources still in use" — un ERROR fals într-o unealtă a
+cărei singură treabă e să spună dacă e ceva în neregulă.
+
+---
+
+## PERSONAJELE STAU PE PODEA (24 septembrie 2026) — așezare, umbră, lumină
+
+**Plângerea:** după ce a intrat fundalul (biblioteca gotică), Regele și Soldatul
+păreau că plutesc. Măsurat, nu bănuit: linia unde peretele din fund întâlnește
+podeaua e la **0.660** din înălțimea ecranului, iar tălpile erau la **0.612** —
+adică deasupra ei. Personajele stăteau, literal, în perete, dar cu mărime de
+prim-plan. De aici impresia de decupaj lipit peste o fotografie.
+
+### Cele două variante, și de ce a câștigat una singură
+
+**(a) Mărirea fundalului, ancorat jos-centru.** Ideea e corectă: scalând imaginea
+în jurul marginii de jos, linia podelei urcă și rămâne mai multă podea în față.
+Am renunțat la ea din cauza unei coincidențe de proporții. Fundalul e 2752×1536
+(raport **1.792**), ecranul e 16:9 (**1.778**) — practic același. Nu există
+surplus de imagine pe laturi din care să tai: orice mărire cu factorul `z` urcă
+linia podelei cu `0.34·(z−1)` din înălțime, dar taie `0.5·(z−1)` din LĂȚIME, în
+fiecare parte. Ca să aduc linia de la 0.660 la 0.580 mi-ar fi trebuit `z ≈ 1.24`,
+adică **12% tăiat din fiecare margine** — pleacă sfeșnicul cu lumânări și pupitrul
+din stânga, adică exact singura sursă de lumină caldă din sală. Plătit scump,
+pentru un câștig pe care varianta (b) îl dă gratis.
+
+**(b) Coborârea personajelor — aleasă.** Nu prin împingere cu pixeli, ci prin
+schimbarea ORDINII din coloană. Numele și PV-ul (iar la inamic: numele,
+vulnerabilitatea, ceasul și intenția „sabie + 3") stăteau SUB figură și-i tăiau
+ultimii 92 px de spațiu. Le-am mutat DEASUPRA, lipite de capul figurii
+(`alignment = END`), iar figura a primit tot ce rămâne, până jos.
+
+Mutarea asta e mai bună decât o simplă coborâre din două motive care n-au de-a
+face cu podeaua: intenția inamicului se citește acum **deasupra capului lui**,
+unde o caută ochiul (aceeași convenție ca în Slay the Spire), iar textul a plecat
+de pe dalele luminate pe bolta întunecată — adică pe fundalul pe care e citibil.
+
+**Rezultatul, măsurat:** tălpile la **0.754** (Rege) și **0.746** (Soldat), adică
+**55% și 51%** din banda de podea dintre linia peretelui (0.660) și marginea de
+sus a butoanelor (0.830). Cerința era o treime; pragul e 0.717.
+
+**Mărimea personajelor n-a fost atinsă.** Cutia figurii a rămas practic la fel
+(342 → 344 px la 1152×648), fiindcă exact atâta spațiu s-a mutat de sub figură
+deasupra ei. Coborârea a fost o MUTARE, nu o micșorare — și așa trebuie să
+rămână: mărimea de prim-plan nu mai e o problemă odată ce personajul stă chiar
+în prim-plan.
+
+### Umbra de contact — `scenes/lupta/umbra_contact.gd`
+
+Nod nou, cu o singură treabă: pata turtită de sub tălpi. Ochiul nu judecă „la ce
+înălțime e personajul", ci caută unde atinge pământul.
+
+**N-am inventat o a treia tehnică de umbră.** În proiect existau două:
+`StyleBoxFlat.shadow_size` (halo-ul Obeliscurilor) și **cercuri concentrice cu
+opacitate mică** (halo-ul nodurilor de pe hartă). A doua a câștigat: prima
+desenează un dreptunghi și își umflă umbra egal în toate direcțiile, deci ar fi
+reumflat pe verticală exact ce turtisem. Cercurile se turtesc din transformarea
+de desen (`draw_set_transform` cu scară `(1, 0.25)`) — un cerc strivit e o
+elipsă exactă, deci e **literal** tehnica de pe hartă, privită dintr-un plan
+înclinat. Exact ce e și o umbră pe podea.
+
+Două decizii pe care merită să le apăr dacă se atinge cineva de ele:
+
+- **Umbra e FRATE al învelișului `impact.gd`, nu copil.** Învelișul face copiilor
+  lui două lucruri la fiecare lovitură: îi clatină pe orizontală și le înmulțește
+  `modulate` cu un alb aprins. O umbră dinăuntru ar aluneca pe podea la fiecare
+  lovitură și s-ar ALBI la fulger. Verificarea din unealtă apără fix asta.
+- **Umbra își calculează singură poziția**, din caseta în care cade efectiv
+  textura („păstrează proporția, centrat" lasă aer în cutie) și din fracțiunea
+  `talpa`, măsurată pe canalul alfa al PNG-ului: **0.985** la Rege, **0.970** la
+  Soldat. Restul e aer transparent — o umbră pusă la marginea de jos a nodului ar
+  fi căzut în fața personajului, ca o baltă din care el iese.
+
+Opacitatea pe strat NU e o constantă: se deduce din opacitatea cerută, cu
+`1 − (1 − opacitate)^(1/straturi)`. Fără formula asta, schimbarea numărului de
+straturi (o cifră de NETEZIME) ar fi schimbat și cât de întunecată e umbra (o
+cifră de CULOARE).
+
+### Lumina — discret, prin `self_modulate`
+
+Regele spre cald (`1.06, 1.00, 0.90` — stă lângă sfeșnic), Soldatul spre rece
+(`0.93, 0.98, 1.10` — stă în lumina rece a ferestrei). Variații de ±10%, cât să
+se simtă că sunt în aceeași încăpere, nu atât cât să se întunece.
+
+**De ce `self_modulate` și nu `modulate`:** `modulate` al imaginii de inamic e
+deja ocupat — `aplica_infatisarea()` îl scrie din `colorare`, culoarea
+arhetipului. `self_modulate` se înmulțește peste el și nu-l calcă. Rezultatul e
+un lanț de trei înmulțiri care se compun corect: fulgerul de la lovitură
+(învelișul) × identitatea inamicului (`modulate`) × lumina sălii
+(`self_modulate`).
+
+### Unealta: `tools/verifica_podeaua.gd`
+
+`godot --path . res://tools/verifica_podeaua.tscn` — **cu fereastră**, fiindcă
+face și capturi. Măsoară tălpile față de linia peretelui, verifică să nu se calce
+informația de luptă cu punctele de PA sau cu butoanele, urmărește sfeșnicul din
+stânga, probează că umbra nu se clatină la lovitură, și scrie câte o captură în
+`user://capturi/` pentru fiecare rezoluție.
+
+Două lucruri învățate scriind-o, care merită ținute minte:
+
+- **Proiectul e pe `canvas_items` + `expand`.** Interfața se așază MEREU într-un
+  ecran logic de 1152×648 și abia apoi se scalează. La 1920×1080 nu se
+  recalculează nimic — se mărește totul cu 1.667. Deci „merge și la altă
+  rezoluție" e garantat de modul de întindere, nu de ancorele mele; ancorele în
+  fracțiuni contează pentru ziua în care se schimbă RAPORTUL, nu mărimea.
+- **Un nod ascuns nu e așezat de container** și raportează dreptunghiul cu care a
+  plecat din editor. „Incheie tura" e ascuns la pornire (tura se încheie singură),
+  iar prima versiune a uneltei a raportat o suprapunere care nu există.
+
+### Valorile de reglat de mână
+
+| Ce | Unde | Acum |
+|---|---|---|
+| zoom fundal | `Peisaj`, ancorele | **1.0** (fără mărire; motivul e mai sus) |
+| voalul peste fundal | `Voal`, canalul A | 0.55 |
+| talpa Rege / Soldat | `UmbraJucator` / `UmbraInamic`, `talpa` | 0.985 / 0.970 |
+| lățimea umbrei | `latime` | 0.68 (Rege, cu mantia pe jos) / 0.50 (Soldat) |
+| turtirea | `turtire` | 0.25 (adică 1:4) |
+| opacitatea umbrei | `opacitate` | 0.50 |
+| culoarea umbrei | `culoare` | `(0.04, 0.04, 0.07)` — albastru foarte închis, nu negru |
+| lumina Regelui | `JucatorImagine.self_modulate` | `(1.06, 1.00, 0.90)` |
+| lumina Soldatului | `InamicImagine.self_modulate` | `(0.93, 0.98, 1.10)` |
+
+Umbra se citește discret la prima privire — podeaua e deja întunecată de voal.
+Dacă vreau contact mai apăsat, butonul e `opacitate`; peste 0.5 începe să arate
+a gaură în piatră, nu a umbră.
+
+### Rămas deschis
+
+Flacăra din marginea stângă a sfeșnicului intră pe **4.6%** din lățimea ei în
+spatele barei verzi de PV. E adevărat și înainte de sesiunea asta, deci nu e o
+regresie — dar unealta o numără de acum, fiindcă dacă bara se lățește vreodată,
+sfeșnicul dispare și colorarea caldă a Regelui rămâne fără sursă vizibilă.
 
 ---
 

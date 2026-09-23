@@ -7,6 +7,9 @@
 [ext_resource type="Script" uid="uid://dqftvq1clv26c" path="res://scenes/lupta/impact.gd" id="5_impact"]
 [ext_resource type="Texture2D" uid="uid://cd0p0tg2xv8cq" path="res://assets/art/rege.png" id="6_rege"]
 [ext_resource type="Texture2D" uid="uid://dqkst7wja0gd1" path="res://assets/art/cavaler_sters.png" id="7_cavaler"]
+[ext_resource type="Texture2D" path="res://assets/art/fight_background.jpg" id="8_peisaj"]
+[ext_resource type="Script" path="res://scenes/lupta/umbra_contact.gd" id="9_umbra"]
+[ext_resource type="Script" path="res://scenes/lupta/asezare_coloana.gd" id="10_asezare"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_puzzle"]
 bg_color = Color(0.11, 0.11, 0.15, 1)
@@ -61,6 +64,28 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.09, 0.09, 0.12, 1)
 
+[node name="Peisaj" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("8_peisaj")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Voal" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.05, 0.05, 0.08, 0.55)
+
 [node name="Margini" type="MarginContainer" parent="." unique_id=592927841]
 layout_mode = 1
 anchors_preset = 15
@@ -99,18 +124,76 @@ value = 15.0
 fill_mode = 3
 show_percentage = false
 
-[node name="ZonaJucator" type="VBoxContainer" parent="Margini/Coloana/Arena" unique_id=2050712503]
+[node name="ZonaJucator" type="Control" parent="Margini/Coloana/Arena" unique_id=2050712503]
 custom_minimum_size = Vector2(190, 0)
 layout_mode = 2
 size_flags_horizontal = 3
+mouse_filter = 2
+script = ExtResource("10_asezare")
+coloana = NodePath("ColoanaJucator")
+imagine = NodePath("ColoanaJucator/ArenaJucator/FiguraJucator/JucatorImagine")
+panou = NodePath("../ZonaPuzzle")
+panoul_la_dreapta = true
+deplasare_de_baza = 0.11
+aer_langa_panou = 12.0
+
+[node name="ColoanaJucator" type="VBoxContainer" parent="Margini/Coloana/Arena/ZonaJucator"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_constants/separation = 8
 
-[node name="FiguraJucator" type="Control" parent="Margini/Coloana/Arena/ZonaJucator" unique_id=1730462313]
+[node name="InfoJucator" type="VBoxContainer" parent="Margini/Coloana/Arena/ZonaJucator/ColoanaJucator" unique_id=1826623890]
+custom_minimum_size = Vector2(0, 84)
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="JucatorPV" type="Label" parent="Margini/Coloana/Arena/ZonaJucator/ColoanaJucator/InfoJucator" unique_id=855871665]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 28)
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "REGELE (tu)"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+
+[node name="ArenaJucator" type="Control" parent="Margini/Coloana/Arena/ZonaJucator/ColoanaJucator"]
 layout_mode = 2
 size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="UmbraJucator" type="Control" parent="Margini/Coloana/Arena/ZonaJucator/ColoanaJucator/ArenaJucator"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("9_umbra")
+imagine = NodePath("../FiguraJucator/JucatorImagine")
+talpa = 0.985
+latime = 0.68
+centru = 0.5
+turtire = 0.25
+opacitate = 0.68
+
+[node name="FiguraJucator" type="Control" parent="Margini/Coloana/Arena/ZonaJucator/ColoanaJucator/ArenaJucator" unique_id=1730462313]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
 script = ExtResource("5_impact")
 
-[node name="JucatorSilueta" type="Control" parent="Margini/Coloana/Arena/ZonaJucator/FiguraJucator" unique_id=965609832]
+[node name="JucatorSilueta" type="Control" parent="Margini/Coloana/Arena/ZonaJucator/ColoanaJucator/ArenaJucator/FiguraJucator" unique_id=965609832]
 unique_name_in_owner = true
 visible = false
 layout_mode = 1
@@ -121,8 +204,9 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("3_rege")
 
-[node name="JucatorImagine" type="TextureRect" parent="Margini/Coloana/Arena/ZonaJucator/FiguraJucator" unique_id=2076021233]
+[node name="JucatorImagine" type="TextureRect" parent="Margini/Coloana/Arena/ZonaJucator/ColoanaJucator/ArenaJucator/FiguraJucator" unique_id=2076021233]
 unique_name_in_owner = true
+self_modulate = Color(1.06, 1, 0.9, 1)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -133,19 +217,6 @@ texture = ExtResource("6_rege")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="InfoJucator" type="VBoxContainer" parent="Margini/Coloana/Arena/ZonaJucator" unique_id=1826623890]
-custom_minimum_size = Vector2(0, 84)
-layout_mode = 2
-theme_override_constants/separation = 4
-
-[node name="JucatorPV" type="Label" parent="Margini/Coloana/Arena/ZonaJucator/InfoJucator" unique_id=855871665]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_font_sizes/font_size = 14
-text = "REGELE (tu)"
-horizontal_alignment = 1
-clip_text = true
-
 [node name="ZonaPuzzle" type="PanelContainer" parent="Margini/Coloana/Arena" unique_id=149564924]
 unique_name_in_owner = true
 visible = false
@@ -153,18 +224,113 @@ clip_contents = true
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_puzzle")
 
-[node name="ZonaInamic" type="VBoxContainer" parent="Margini/Coloana/Arena" unique_id=422630560]
+[node name="ZonaInamic" type="Control" parent="Margini/Coloana/Arena" unique_id=422630560]
 custom_minimum_size = Vector2(190, 0)
 layout_mode = 2
 size_flags_horizontal = 3
+mouse_filter = 2
+script = ExtResource("10_asezare")
+coloana = NodePath("ColoanaInamic")
+imagine = NodePath("ColoanaInamic/ArenaInamic/FiguraInamic/InamicImagine")
+panou = NodePath("../ZonaPuzzle")
+panoul_la_dreapta = false
+deplasare_de_baza = 0.11
+aer_langa_panou = 12.0
+
+[node name="ColoanaInamic" type="VBoxContainer" parent="Margini/Coloana/Arena/ZonaInamic"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_constants/separation = 8
 
-[node name="FiguraInamic" type="Control" parent="Margini/Coloana/Arena/ZonaInamic" unique_id=1988581682]
+[node name="InfoInamic" type="VBoxContainer" parent="Margini/Coloana/Arena/ZonaInamic/ColoanaInamic" unique_id=751462097]
+custom_minimum_size = Vector2(0, 84)
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="InamicNume" type="Button" parent="Margini/Coloana/Arena/ZonaInamic/ColoanaInamic/InfoInamic" unique_id=711671863]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 28)
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "INAMIC"
+flat = true
+text_overrun_behavior = 3
+clip_text = true
+
+[node name="InamicVulnerabil" type="Label" parent="Margini/Coloana/Arena/ZonaInamic/ColoanaInamic/InfoInamic" unique_id=1900000001]
+unique_name_in_owner = true
+modulate = Color(1, 0.72, 0.35, 1)
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+horizontal_alignment = 1
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="InamicBaraCeas" type="ProgressBar" parent="Margini/Coloana/Arena/ZonaInamic/ColoanaInamic/InfoInamic" unique_id=2063890791]
+unique_name_in_owner = true
+modulate = Color(1, 0.75, 0.3, 1)
+custom_minimum_size = Vector2(0, 12)
+layout_mode = 2
+max_value = 3.0
+show_percentage = false
+
+[node name="RandIntentie" type="HBoxContainer" parent="Margini/Coloana/Arena/ZonaInamic/ColoanaInamic/InfoInamic" unique_id=1765292483]
+layout_mode = 2
+theme_override_constants/separation = 6
+alignment = 1
+
+[node name="IconitaSabie" type="Control" parent="Margini/Coloana/Arena/ZonaInamic/ColoanaInamic/InfoInamic/RandIntentie" unique_id=211350726]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(15, 24)
+layout_mode = 2
+size_flags_vertical = 4
+script = ExtResource("2_sabie")
+
+[node name="InamicIntentie" type="Label" parent="Margini/Coloana/Arena/ZonaInamic/ColoanaInamic/InfoInamic/RandIntentie" unique_id=1531240686]
+unique_name_in_owner = true
+modulate = Color(0.96, 0.6, 0.5, 1)
+layout_mode = 2
+theme_override_font_sizes/font_size = 19
+text = "3"
+vertical_alignment = 1
+
+[node name="ArenaInamic" type="Control" parent="Margini/Coloana/Arena/ZonaInamic/ColoanaInamic"]
 layout_mode = 2
 size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="UmbraInamic" type="Control" parent="Margini/Coloana/Arena/ZonaInamic/ColoanaInamic/ArenaInamic"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("9_umbra")
+imagine = NodePath("../FiguraInamic/InamicImagine")
+talpa = 0.97
+latime = 0.5
+centru = 0.5
+turtire = 0.25
+opacitate = 0.58
+
+[node name="FiguraInamic" type="Control" parent="Margini/Coloana/Arena/ZonaInamic/ColoanaInamic/ArenaInamic" unique_id=1988581682]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
 script = ExtResource("5_impact")
 
-[node name="InamicSilueta" type="Control" parent="Margini/Coloana/Arena/ZonaInamic/FiguraInamic" unique_id=140556803]
+[node name="InamicSilueta" type="Control" parent="Margini/Coloana/Arena/ZonaInamic/ColoanaInamic/ArenaInamic/FiguraInamic" unique_id=140556803]
 unique_name_in_owner = true
 visible = false
 layout_mode = 1
@@ -177,8 +343,9 @@ script = ExtResource("4_cavaler")
 durata_respiratie = 3.1
 decalaj = 1.3
 
-[node name="InamicImagine" type="TextureRect" parent="Margini/Coloana/Arena/ZonaInamic/FiguraInamic" unique_id=323946544]
+[node name="InamicImagine" type="TextureRect" parent="Margini/Coloana/Arena/ZonaInamic/ColoanaInamic/ArenaInamic/FiguraInamic" unique_id=323946544]
 unique_name_in_owner = true
+self_modulate = Color(0.93, 0.98, 1.1, 1)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -188,57 +355,6 @@ grow_vertical = 2
 texture = ExtResource("7_cavaler")
 expand_mode = 1
 stretch_mode = 5
-
-[node name="InfoInamic" type="VBoxContainer" parent="Margini/Coloana/Arena/ZonaInamic" unique_id=751462097]
-custom_minimum_size = Vector2(0, 84)
-layout_mode = 2
-theme_override_constants/separation = 4
-
-[node name="InamicNume" type="Button" parent="Margini/Coloana/Arena/ZonaInamic/InfoInamic" unique_id=711671863]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_font_sizes/font_size = 14
-text = "INAMIC"
-flat = true
-text_overrun_behavior = 3
-clip_text = true
-
-[node name="InamicVulnerabil" type="Label" parent="Margini/Coloana/Arena/ZonaInamic/InfoInamic" unique_id=1900000001]
-unique_name_in_owner = true
-modulate = Color(1, 0.72, 0.35, 1)
-layout_mode = 2
-theme_override_font_sizes/font_size = 12
-horizontal_alignment = 1
-clip_text = true
-text_overrun_behavior = 3
-
-[node name="InamicBaraCeas" type="ProgressBar" parent="Margini/Coloana/Arena/ZonaInamic/InfoInamic" unique_id=2063890791]
-unique_name_in_owner = true
-modulate = Color(1, 0.75, 0.3, 1)
-custom_minimum_size = Vector2(0, 12)
-layout_mode = 2
-max_value = 3.0
-show_percentage = false
-
-[node name="RandIntentie" type="HBoxContainer" parent="Margini/Coloana/Arena/ZonaInamic/InfoInamic" unique_id=1765292483]
-layout_mode = 2
-theme_override_constants/separation = 6
-alignment = 1
-
-[node name="IconitaSabie" type="Control" parent="Margini/Coloana/Arena/ZonaInamic/InfoInamic/RandIntentie" unique_id=211350726]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(15, 24)
-layout_mode = 2
-size_flags_vertical = 4
-script = ExtResource("2_sabie")
-
-[node name="InamicIntentie" type="Label" parent="Margini/Coloana/Arena/ZonaInamic/InfoInamic/RandIntentie" unique_id=1531240686]
-unique_name_in_owner = true
-modulate = Color(0.96, 0.6, 0.5, 1)
-layout_mode = 2
-theme_override_font_sizes/font_size = 19
-text = "3"
-vertical_alignment = 1
 
 [node name="InamicBaraPV" type="ProgressBar" parent="Margini/Coloana/Arena" unique_id=540229722]
 unique_name_in_owner = true
