@@ -594,7 +594,6 @@ const AMESTEC_LINIAR := 0.7
 # hărțile de aventură din care ne inspirăm.
 
 const GROSIME_DRUM := 6.0
-const GROSIME_DRUM_ALES := 11.0
 
 ## Unde se OPRESC liniuțele în jurul centrului unui nod, CÂND nu se poate afla
 ## altfel. E plasa de siguranță, nu regula: se folosește doar la nodurile
@@ -2164,12 +2163,15 @@ func _muchii(drumuri: Dictionary) -> Array[Dictionary]:
 			var parcurs := _sunt_vecini_in_drum(id, urmator)
 			var deschis := id == Expeditie.pozitie and urmator in accesibile
 			var culoare := CULOARE_DRUM_INCHIS
-			var grosime := GROSIME_DRUM
 			if parcurs:
 				culoare = CULOARE_DRUM_PARCURS
 			elif deschis:
+				# Drumul deschis se deosebește doar prin CULOARE, nu prin
+				# grosime. Îngroșarea muta linia sub simboluri și făcea harta
+				# să „respire" la fiecare victorie: aceleași trasee, alt desen.
+				# Un singur semnal (cerneala vie) e destul ca să știi încotro
+				# poți merge; grosimea rămâne aceeași pe toată harta.
 				culoare = CULOARE_DRUM_DESCHIS
-				grosime = GROSIME_DRUM_ALES
 
 			# Drumul ajunge TĂIAT la pânză, nu întreg cu o instrucțiune de
 			# „lasă atâta liber la capete". Motivul e același cu al despărțirii
@@ -2180,9 +2182,9 @@ func _muchii(drumuri: Dictionary) -> Array[Dictionary]:
 			# deloc. Un desenator care nu mai are nicio părere despre capete.
 			muchii.append({
 				"puncte": _taiat_la_simboluri(
-					drumuri[id][urmator], id, urmator, grosime),
+					drumuri[id][urmator], id, urmator, GROSIME_DRUM),
 				"culoare": culoare,
-				"grosime": grosime,
+				"grosime": GROSIME_DRUM,
 			})
 	return muchii
 
