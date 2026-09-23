@@ -60,7 +60,7 @@ enum Piesa {
 const PIESE := {
 	Piesa.LUPTA: "res://assets/audio/sound_battle.ogg",
 	Piesa.CETATE: "res://assets/audio/muzica_cetate.ogg",
-	Piesa.HARTA: "res://assets/audio/muzica_harta.ogg",
+	Piesa.HARTA: "res://assets/audio/expedition_map_sound.ogg",
 }
 
 # ─────────────────────────────────────────────────────────────
