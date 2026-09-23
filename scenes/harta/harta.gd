@@ -675,6 +675,26 @@ var alese: Array[String] = []
 ## fără să reconstruiesc harta. „id de nod → SimbolNod”.
 var simboluri_nod := {}
 
+## Piesa care stă pe nodul curent. `null` înseamnă „n-avem imaginea" (vezi
+## `FigurinaHarta.creeaza()`), și atunci harta e exact harta de dinainte de ea:
+## nicăieri nu se desenează și nu se apasă nimic în plus.
+var figurina: FigurinaHarta = null
+
+## Piesa e în aer chiar acum?
+##
+## Cât timp sare, harta e ÎNGHEȚATĂ pentru orice ar putea-o contrazice: alt
+## clic (ar porni o a doua mutare peste prima), eticheta de hover (ar sta peste
+## piesa în zbor) și reașezarea nodurilor (ar smulge piesa înapoi pe nodul
+## vechi, fiindcă `aseaza_la()` taie săritura — vezi `_opreste_saltul()` în
+## `figurina_harta.gd`).
+##
+## De ce un steag și nu `figurina.este_in_aer()`: fiindcă întrebarea nu e a
+## piesei, e a ECRANULUI. Ecranul e cel care hotărăște că, în timpul unei
+## mutări, nu primește comenzi — și trebuie s-o hotărască și atunci când nu
+## există nicio piesă (imaginea lipsește), caz în care săritura durează zero
+## secunde, dar codul e același.
+var _sare := false
+
 ## Eticheta care apare sub nodul survolat. UNA singură, ținută de ecran, nu
 ## câte una în fiecare nod: zece etichete permanente ar acoperi harta, iar zece
 ## etichete ascunse s-ar putea suprapune între ele în clipa în care apar două.
@@ -874,6 +894,7 @@ func _goleste_panza() -> void:
 		panza.remove_child(copil)
 		copil.queue_free()
 	simboluri_nod.clear()
+	figurina = null   # copilul a fost deja eliberat mai sus; aici scăpăm de indicator
 	nod_survolat = -1
 
 
@@ -929,10 +950,33 @@ func _construieste_harta() -> void:
 		panza.add_child(simbol)
 		simboluri_nod[id] = simbol
 
-	# Adăugată ULTIMA, deci desenată peste toate simbolurile: un nod vecin n-are
-	# cum să treacă peste eticheta care tocmai a apărut.
+	# ORDINEA DE AICI E ORDINEA DE DESEN. Godot desenează copiii unui Control
+	# în ordinea în care i-a primit, deci cine vine mai târziu stă mai sus:
+	# drumurile (desenate de pânza însăși) → simbolurile → figurina → eticheta.
+	#
+	# Figurina e a doua de la sfârșit fiindcă e un OBIECT pus pe hartă: trebuie
+	# să stea peste semnele nodurilor, ca o piesă pusă pe tablă. Eticheta rămâne
+	# ultima fiindcă e trecătoare și e singura care trebuie CITITĂ — dacă ar
+	# trece piesa peste ea, ai afla ce te așteaptă la nodul vecin doar mutând
+	# mai întâi mouse-ul de pe piesă.
+	_creeaza_figurina()
 	_creeaza_eticheta_nod()
 	_aseaza_nodurile()
+
+
+## Piesa de pe nodul curent, dacă avem imaginea pentru ea.
+##
+## Harta n-o măsoară și n-o desenează: îi spune doar cât e un nod, iar restul
+## (proporții, talpă, cerneala din PNG) e treaba ei. Pornește ASCUNSĂ fiindcă
+## abia `_aseaza_nodurile()` știe unde sunt centrele — și fiindcă există un caz
+## real în care nu stă nicăieri: la începutul expediției (`pozitie == -1`) încă
+## n-ai intrat în niciun nod, deci n-ai pe ce sta.
+func _creeaza_figurina() -> void:
+	figurina = FigurinaHarta.creeaza(MARIME_NOD.y)
+	if figurina == null:
+		return
+	figurina.visible = false
+	panza.add_child(figurina)
 
 
 ## Eticheta de hover: numele nodului și ce te așteaptă acolo.
@@ -980,6 +1024,11 @@ func _eticheta_pe_pergament(marime: int, culoare: Color) -> Label:
 ## mă așteaptă pe drumul pe care NU-l pot lua acum" e exact informația care
 ## face alegerea de la pasul următor o decizie.
 func _pe_nod_survolat(id: int, intrat: bool) -> void:
+	# Cât timp piesa sare, eticheta tace. Altfel ar rămâne agățată sub cursor,
+	# descriind un nod pe care tocmai l-ai ales, exact peste piesa în zbor.
+	if _sare:
+		return
+
 	if not intrat:
 		# Numai dacă mouse-ul a ieșit din nodul pe care chiar îl arătam: dacă a
 		# intrat deja în altul, eticheta e a celuilalt acum.
@@ -1042,6 +1091,23 @@ func _aseaza_nodurile() -> void:
 		var simbol: Control = simboluri_nod[id]
 		simbol.position = centre[id] - MARIME_NOD * 0.5
 		simbol.size = MARIME_NOD
+
+	# Figurina se așază din ACELEAȘI centre, nu dintr-o geometrie a ei. De-aia
+	# stă aici și nu într-o funcție separată chemată de altundeva: orice alt
+	# loc ar însemna a doua socoteală a aceluiași punct, iar cele două s-ar
+	# despărți în ziua în care una din ele se schimbă. Așa, redimensionarea
+	# ferestrei o mută odată cu nodurile, gratis.
+	#
+	# Excepția: NU cât timp piesa sare. Redimensionarea ferestrei în mijlocul
+	# unei sărituri ar chema `aseaza_la()`, care taie săritura — iar `_sari_pe()`
+	# o așteaptă cu `await`, deci ar rămâne agățat și nodul nu s-ar mai deschide
+	# niciodată. Poziția se corectează oricum la aterizare: nodul se rezolvă,
+	# harta se reconstruiește, și trecem tot pe-aici.
+	if figurina != null and not _sare:
+		var are_unde := centre.has(Expeditie.pozitie)
+		figurina.visible = are_unde
+		if are_unde:
+			figurina.aseaza_la(centre[Expeditie.pozitie])
 
 	panza.arata(_muchii(geo["drumuri"]))
 
@@ -2408,6 +2474,19 @@ func _sunt_vecini_in_drum(a: int, b: int) -> bool:
 # ─────────────────────────────────────────────────────────────
 
 func _pe_nod_apasat(id: int) -> void:
+	# ORDINEA E TOT ROSTUL FUNCȚIEI ĂSTEIA. Mai întâi se vede mutarea, abia apoi
+	# se deschide ce te așteaptă la nodul nou. Invers — fereastra întâi, piesa
+	# după — animația s-ar juca sub un voal, adică degeaba; iar la o luptă nu
+	# s-ar juca deloc, fiindcă scena hărții e înlocuită cu totul.
+	#
+	# `await` face funcția asta să se întrerupă la mijloc și să se reia la
+	# aterizare. E în regulă tocmai fiindcă `_sare` ține ecranul închis între
+	# timp: nimic din ce s-ar putea întâmpla în cele 0,35 secunde nu poate
+	# schimba ce găsim aici după ce ne întoarcem.
+	if _sare:
+		return
+	await _sari_pe(id)
+
 	Expeditie.intra_in_nod(id)
 	var nod := Expeditie.nod_curent()
 
@@ -2434,6 +2513,44 @@ func _pe_nod_apasat(id: int) -> void:
 				"EVENIMENT",
 				"Aici va fi o alegere, candva. Deocamdata drumul doar trece pe langa."
 			)
+
+
+## Mută piesa pe nodul ales și se întoarce abia când a aterizat.
+##
+## Harta știe DOAR punctul: centrul nodului, citit din simbolul lui — adică
+## exact numărul cu care a fost așezat în `_aseaza_nodurile()`, nu o a doua
+## socoteală a aceluiași centru. Cum se face drumul până acolo (arc, durată,
+## cădere) e treaba figurinei.
+##
+## Două feluri de sosire, fiindcă există două situații diferite:
+##   • ai deja o piesă pe hartă  → SARE de pe nodul curent pe cel ales;
+##   • prima alegere a expediției → piesa n-a existat până acum (`pozitie == -1`,
+##     deci `_aseaza_nodurile()` a lăsat-o ascunsă) → COBOARĂ pe nod.
+##
+## Dacă imaginea piesei lipsește (`figurina == null`), funcția se întoarce pe
+## loc și harta merge exact ca înainte. `await` pe o funcție care nu așteaptă
+## nimic e legal în GDScript și costă un cadru — de-aia nu e nevoie de nicio
+## ramură „dacă avem figurină" în `_pe_nod_apasat`.
+func _sari_pe(id: int) -> void:
+	if figurina == null or not simboluri_nod.has(id):
+		return
+
+	var simbol: Control = simboluri_nod[id]
+	var tinta := simbol.position + MARIME_NOD * 0.5
+
+	_sare = true
+	# Eticheta de hover se stinge ACUM, nu când mouse-ul iese de pe nod: el nu
+	# se mișcă de unde a dat clic, deci semnalul de ieșire n-ar veni niciodată.
+	eticheta_nod.visible = false
+	nod_survolat = -1
+
+	if figurina.visible:
+		figurina.sare_la(tinta)
+	else:
+		figurina.coboara_pe(tinta)
+	await figurina.salt_terminat
+
+	_sare = false
 
 
 ## Ce se întâmplă după ce un nod s-a rezolvat pe loc (odihnă, eveniment) sau
