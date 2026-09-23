@@ -714,6 +714,18 @@ func _multiplicator_nod() -> float:
 	return float(fisa_nod["putere"])
 
 
+## O cifră din tabelul `INAMICI`, trecută prin greutatea nodului.
+##
+## Rotunjire și `maxi(..., 1)` într-un SINGUR loc: un inamic cu 0 PV ar fi deja
+## mort, unul cu 0 daune n-ar fi un adversar. Înainte, formula era scrisă de
+## două ori (o dată pentru PV, o dată pentru daune) și a treia oară era UITATĂ —
+## cardul citea `date["daune"]` direct din tabel, deci la o Elită scria „4 daune
+## in fiecare tura" despre un adversar care lovea cu 6. Cifra afișată și cifra
+## care doare trebuie să vină din aceeași funcție, altfel se despart în tăcere.
+func _cu_puterea_nodului(valoare: int) -> int:
+	return maxi(roundi(valoare * _multiplicator_nod()), 1)
+
+
 
 # ─────────────────────────────────────────────────────────────
 # BUCLA DE RUNDĂ
@@ -1637,7 +1649,7 @@ func reseteaza_lupta() -> void:
 	# Cifrele trec prin multiplicatorul nodului: același Soldat, la o Elită,
 	# are mai mult PV și lovește mai tare. `maxi(..., 1)` fiindcă un inamic cu
 	# 0 PV ar fi deja mort, iar unul cu 0 daune n-ar fi un adversar.
-	pv_max_inamic = maxi(roundi(int(inamic()["pv"]) * _multiplicator_nod()), 1)
+	pv_max_inamic = _cu_puterea_nodului(int(inamic()["pv"]))
 	pv_inamic = pv_max_inamic
 	pune_bara_acum(bara_pv_inamic, pv_max_inamic, pv_inamic)
 	# Ceasul are maxim doar la arhetipurile care au ceas. La celelalte punem 1,
@@ -1702,7 +1714,7 @@ func inamic() -> Dictionary:
 ## acum pe aici — altfel Elita ar fi lovit ca un inamic obișnuit într-unul din
 ## ele, și nu s-ar fi văzut decât ca „parcă e prea ușoară".
 func daune_inamic() -> int:
-	return maxi(roundi(int(inamic()["daune"]) * _multiplicator_nod()), 1)
+	return _cu_puterea_nodului(int(inamic()["daune"]))
 
 
 func nume_inamic() -> String:
@@ -1797,14 +1809,24 @@ func text_intentie() -> String:
 ## care întreabă „cum se poartă inamicul ăsta?" merge pe orice rând din tabel;
 ## una care întreabă „cum se poartă inamicul MEU?" ar fi cerut o a doua funcție,
 ## aproape identică, pentru panou.
+##
+## CIFRELE TREC PRIN GREUTATEA NODULUI, ca și cele de pe bara de PV și ca cea de
+## lângă sabie. Aici era o minciună: textul citea `date["daune"]` de-a dreptul
+## din tabel, deci Spadasinul de la o Elită se prezenta cu „4 daune in fiecare
+## tura" și lovea cu 6. Un card care spune altceva decât face lupta e mai rău
+## decât niciun card — pe baza lui îți faci socoteala câte runde mai ai de trăit.
+##
+## Ceasul NU se înmulțește, fiindcă nici `ceas_max()` nu-l înmulțește: o Elită
+## Grabnică lovește mai tare, nu mai des.
 func text_comportament(index: int) -> String:
 	var date: Dictionary = INAMICI[index]
+	var daune := _cu_puterea_nodului(int(date["daune"]))
 	match date["arhetip"]:
 		Arhetip.ATAC_CONSTANT:
-			return "%d daune in fiecare tura" % date["daune"]
+			return "%d daune in fiecare tura" % daune
 		Arhetip.GRABNIC:
 			return "Ceasul se umple in %d runde; la %d/%d loveste %d, apoi o ia de la capat" % [
-				date["ceas"], date["ceas"], date["ceas"], date["daune"]
+				date["ceas"], date["ceas"], date["ceas"], daune
 			]
 	return "—"
 

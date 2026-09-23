@@ -30,6 +30,37 @@ restul rămâne placeholder. Bucla de luptă e în continuare cea validată, nu 
 
 ---
 
+## CARDUL NU MAI MINTE (23 septembrie 2026) — cifra afișată = cifra care doare
+
+**Plângerea:** la nodul de Elită, fereastra de info a Spadasinului scria „4 daune
+in fiecare tura", dar el lovea cu 6.
+
+**Cauza.** Greutatea nodului (`DATE_NOD[...]["putere"]`, 1,6 la Elită, 2,3 la
+Boss) se aplica în două locuri — PV-ul inamicului și `daune_inamic()` (cifra de
+lângă sabie și lovitura reală) — dar `text_comportament()`, care scrie rândul
+„Comportament" din card, citea `date["daune"]` DIRECT din tabelul `INAMICI`.
+Deci cardul raporta cifra de bază: 4. Lupta folosea 4 × 1,6 = 6.
+
+**Reparația.** O funcție nouă, `_cu_puterea_nodului(valoare)`, care face
+înmulțirea, rotunjirea și `maxi(..., 1)` într-un singur loc. Toate trei locurile
+trec acum prin ea: PV-ul, `daune_inamic()` și textul cardului.
+
+**Lecția, fiindcă e o lecție și nu un typo:** formula era scrisă de două ori, și
+exact de-aia al treilea loc a putut s-o uite în tăcere. Când o cifră se
+TRANSFORMĂ înainte de a fi folosită, transformarea trebuie să aibă un nume și o
+singură casă — altfel fiecare consumator nou o reimplementează sau o sare, iar
+bug-ul nu arată ca un bug, arată ca un dezechilibru („parcă Elita lovește prea
+tare"). Același argument pentru care `inamic()` există în locul lui
+`INAMICI[inamic_curent]`.
+
+**Ceasul NU se înmulțește** — nici înainte, nici acum. `ceas_max()` întoarce
+cifra din tabel neatinsă, deci o Elită Grabnică lovește mai tare, nu mai des.
+Textul cardului respectă asta.
+
+Fișier atins: `scenes/lupta/lupta.gd`.
+
+---
+
 ## ATERIZAREA ARE GREUTATE (23 septembrie 2026) — slam, zguduit, răgaz
 
 Patru reglaje mici, toate pe același moment: clipa în care figurina atinge nodul
