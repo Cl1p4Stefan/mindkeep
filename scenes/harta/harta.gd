@@ -2689,6 +2689,16 @@ func _sari_pe(id: int) -> void:
 	# `_zguduie()` nu așteaptă nimic — clătinatul se joacă în paralel cu pauza
 	# de mai jos, deci cele 0,26 secunde ale lui încap în cele 0,5 ale ei și
 	# apuci să vezi harta așezându-se la loc înainte să plece ecranul.
+	#
+	# Sunetul stă lipit de zguduit, în ACELAȘI cadru, și nu e o alăturare
+	# întâmplătoare: bufnitura și clătinatul sunt un singur eveniment — lovitura —
+	# spus în două limbi. Despărțite fie și cu un cadru, creierul le-ar citi ca
+	# două lucruri, iar impactul s-ar subția.
+	#
+	# `Sunet` are difuzoarele LUI, separate de cel al muzicii, deci bufnitura
+	# NU întrerupe piesa hărții: cele două sunete se suprapun, exact ca
+	# „corect"-ul peste muzica de luptă. De-aia nici n-atingem `Muzica` aici.
+	Sunet.reda(Sunet.Efect.ATERIZARE)
 	_zguduie()
 
 	# RĂGAZUL. Vezi `PAUZA_DUPA_ATERIZARE`: o clipă pe imaginea finală, înainte

@@ -78,6 +78,26 @@ const VOLUM_CRITIC_DB := -4.0
 ## de schimbat. Nu umbla la `VOLUM_DB` pentru el.
 const VOLUM_TICAIT_DB := -16.0
 
+## Volumul ATERIZĂRII figurinei pe hartă, în decibeli. Al treilea reglaj de
+## volum din rotație, după `VOLUM_DB` și `VOLUM_CRITIC_DB`.
+##
+## De ce iar un număr propriu, și nu `VOLUM_DB`: sunetele din catalog se împart
+## în două feluri, după ce ÎNSEAMNĂ, nu după cât durează. „Corect"/„greșit" sunt
+## VERDICTE — îți spun ceva ce nu știai, deci au voie să fie cel mai tare lucru
+## de pe ecran. Aterizarea e MATERIE: nu te informează despre nimic (vezi deja
+## piesa căzând), doar dă greutate unei mișcări pe care oricum o urmărești.
+## Un sunet care confirmă ochiul trebuie să stea SUB unul care corectează mintea.
+##
+## Și e des: o expediție are zeci de mutări, fiecare cu bufnitura ei. Un sunet
+## care se repetă atât de mult obosește la același volum la care unul rar încă
+## place — același motiv pentru care ticăitul stă și mai jos.
+##
+## -9 dB e cu 3 sub restul efectelor: cam trei sferturi din putere. Se simte ca
+## o lovitură în masă, nu ca un anunț. Dacă bufnitura te face să tresari la
+## fiecare nod, ĂSTA e singurul număr de schimbat — nu `VOLUM_DB`, care ar trage
+## și verdictele din luptă după el.
+const VOLUM_ATERIZARE_DB := -9.0
+
 ## Fișierul ticăitului. Nu stă în catalogul `EFECTE` de mai jos, și nu e o
 ## scăpare: catalogul ăla e pentru sunete de UNICĂ FOLOSINȚĂ, aruncate pe
 ## prima voce liberă și uitate. Ticăitul e opusul — e UNUL singur, ține cât
@@ -121,12 +141,18 @@ enum Efect {
 	CORECT,
 	GRESIT,
 	CRITIC,
+	ATERIZARE,
 }
 
 const EFECTE := {
 	Efect.CORECT: "res://assets/audio/correct_answer.ogg",
 	Efect.GRESIT: "res://assets/audio/incorrect_answer.ogg",
 	Efect.CRITIC: "res://assets/audio/critical_thunder.ogg",
+	# Bufnitura figurinei pe nodul ales. Intră în catalogul ăsta, și nu pe un
+	# difuzor cu nume ca ticăitul sau verdictele, fiindcă e „dă-i drumul și uită
+	# de el": nimeni n-o să vrea vreodată s-o OPREASCĂ la mijloc. Durează cât
+	# durează și se stinge singură — exact profilul unei voci din rotație.
+	Efect.ATERIZARE: "res://assets/audio/figurine_land_sound.ogg",
 }
 
 ## EXCEPȚIILE DE VOLUM. Un efect care nu apare aici cântă la `VOLUM_DB`; unul
@@ -140,6 +166,7 @@ const EFECTE := {
 ## unde ar deveni un număr rătăcit prin cod de joc.
 const VOLUM_EFECT := {
 	Efect.CRITIC: VOLUM_CRITIC_DB,
+	Efect.ATERIZARE: VOLUM_ATERIZARE_DB,
 }
 
 ## VERDICTELE FINALE — sfârșitul unei lupte, într-un sunet.
