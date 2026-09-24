@@ -21,79 +21,108 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="Margini" type="MarginContainer" parent="."]
+[node name="Platou" type="Node2D" parent="."]
+unique_name_in_owner = true
+
+[node name="Halou" type="Sprite2D" parent="Platou"]
+unique_name_in_owner = true
+
+[node name="Benzi" type="Node2D" parent="Platou"]
+unique_name_in_owner = true
+
+[node name="Cufar" type="Sprite2D" parent="Platou"]
+unique_name_in_owner = true
+centered = false
+
+[node name="Litere" type="Node2D" parent="Platou"]
+unique_name_in_owner = true
+
+[node name="Stralucire" type="Sprite2D" parent="Platou"]
+unique_name_in_owner = true
+centered = false
+
+[node name="Interfata" type="Control" parent="."]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 34
-theme_override_constants/margin_top = 22
-theme_override_constants/margin_right = 34
-theme_override_constants/margin_bottom = 20
+mouse_filter = 2
 
-[node name="Coloana" type="VBoxContainer" parent="Margini"]
-layout_mode = 2
-theme_override_constants/separation = 10
+[node name="Panou" type="Panel" parent="Interfata"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -384.0
+offset_top = 16.0
+offset_right = -12.0
+offset_bottom = -12.0
+grow_horizontal = 0
+grow_vertical = 2
+mouse_filter = 2
 
-[node name="Titlu" type="Label" parent="Margini/Coloana"]
+[node name="Coloana" type="VBoxContainer" parent="Interfata"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -364.0
+offset_top = 34.0
+offset_right = -28.0
+offset_bottom = -26.0
+grow_horizontal = 0
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 12
+
+[node name="Titlu" type="Label" parent="Interfata/Coloana"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "LACĂTUL"
-horizontal_alignment = 1
 
-[node name="Subtitlu" type="Label" parent="Margini/Coloana"]
+[node name="Subtitlu" type="Label" parent="Interfata/Coloana"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Cifrul nu e scris nicăieri. E scris în indicii."
-horizontal_alignment = 1
 autowrap_mode = 3
 
-[node name="Roti" type="HBoxContainer" parent="Margini/Coloana"]
+[node name="Indicii" type="VBoxContainer" parent="Interfata/Coloana"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 176)
-layout_mode = 2
-theme_override_constants/separation = 16
-alignment = 1
-
-[node name="ZonaIndicii" type="CenterContainer" parent="Margini/Coloana"]
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_constants/separation = 8
 
-[node name="Indicii" type="VBoxContainer" parent="Margini/Coloana/ZonaIndicii"]
+[node name="Incercari" type="Label" parent="Interfata/Coloana"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_constants/separation = 4
 
-[node name="Mesaj" type="Label" parent="Margini/Coloana"]
+[node name="Deschide" type="Button" parent="Interfata/Coloana"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 26)
-layout_mode = 2
-horizontal_alignment = 1
-autowrap_mode = 3
-
-[node name="RandJos" type="HBoxContainer" parent="Margini/Coloana"]
-layout_mode = 2
-theme_override_constants/separation = 14
-
-[node name="Incercari" type="Label" parent="Margini/Coloana/RandJos"]
-unique_name_in_owner = true
-layout_mode = 2
-vertical_alignment = 1
-
-[node name="Spatiu" type="Control" parent="Margini/Coloana/RandJos"]
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-
-[node name="Cronometru" type="Label" parent="Margini/Coloana/RandJos"]
-unique_name_in_owner = true
-layout_mode = 2
-vertical_alignment = 1
-
-[node name="Deschide" type="Button" parent="Margini/Coloana/RandJos"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(150, 40)
+custom_minimum_size = Vector2(0, 46)
 layout_mode = 2
 text = "Deschide"
+
+[node name="Mesaj" type="Label" parent="Interfata"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 40.0
+offset_top = -84.0
+offset_right = -390.0
+offset_bottom = -34.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3

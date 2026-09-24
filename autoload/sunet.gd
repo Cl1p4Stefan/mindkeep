@@ -78,6 +78,16 @@ const VOLUM_CRITIC_DB := -4.0
 ## de schimbat. Nu umbla la `VOLUM_DB` pentru el.
 const VOLUM_TICAIT_DB := -16.0
 
+## Volumul CLICULUI de roată, în decibeli. Al treilea reglaj propriu, din exact
+## motivul ticăitului: e un sunet care se REPETĂ. O roată trasă cu mouse-ul
+## poate trece peste douăzeci de cifre într-o secundă, iar un sunet des la
+## volumul unui verdict ar transforma reglarea lacătului într-o morișcă.
+##
+## Sub ticăit (-16 dB) fiindcă ticăitul e informație — îți spune că mai ai cinci
+## secunde —, pe când clicul e doar confirmarea tactilă a unui gest pe care îl
+## faci tu și îl vezi pe ecran. Trebuie simțit, nu ascultat.
+const VOLUM_CLIC_DB := -19.0
+
 ## Volumul ATERIZĂRII figurinei pe hartă, în decibeli. Al treilea reglaj de
 ## volum din rotație, după `VOLUM_DB` și `VOLUM_CRITIC_DB`.
 ##
@@ -142,6 +152,8 @@ enum Efect {
 	GRESIT,
 	CRITIC,
 	ATERIZARE,
+	CLIC_ROATA,
+	CAPAC,
 }
 
 const EFECTE := {
@@ -153,6 +165,18 @@ const EFECTE := {
 	# de el": nimeni n-o să vrea vreodată s-o OPREASCĂ la mijloc. Durează cât
 	# durează și se stinge singură — exact profilul unei voci din rotație.
 	Efect.ATERIZARE: "res://assets/audio/figurine_land_sound.ogg",
+	# CELE DOUĂ DE MAI JOS N-AU ÎNCĂ FIȘIER, și e în regulă: `_incarca_efectele()`
+	# avertizează o dată la pornire și lasă efectul mut, iar Lacătul merge mai
+	# departe fără el. Rândurile stau aici de pe acum ca ziua în care fișierele
+	# apar în dosar să fie o copiere, nu o sesiune de programare.
+	#
+	#   `dial_click`  — 50-120 ms, metalic și uscat, clicul unei roți de cifru
+	#                   care trece peste o cifră. Caută „combination lock dial
+	#                   click", „ratchet click", „cog tick".
+	#   `chest_open`  — 1-2 s, balamale care scârțâie și capac care se oprește.
+	#                   Caută „wooden chest lid open creak", „treasure chest open".
+	Efect.CLIC_ROATA: "res://assets/audio/dial_click.ogg",
+	Efect.CAPAC: "res://assets/audio/chest_open.ogg",
 }
 
 ## EXCEPȚIILE DE VOLUM. Un efect care nu apare aici cântă la `VOLUM_DB`; unul
@@ -167,6 +191,7 @@ const EFECTE := {
 const VOLUM_EFECT := {
 	Efect.CRITIC: VOLUM_CRITIC_DB,
 	Efect.ATERIZARE: VOLUM_ATERIZARE_DB,
+	Efect.CLIC_ROATA: VOLUM_CLIC_DB,
 }
 
 ## VERDICTELE FINALE — sfârșitul unei lupte, într-un sunet.

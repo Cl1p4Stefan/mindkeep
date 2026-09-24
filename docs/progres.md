@@ -20,9 +20,11 @@
 | 9. Celelalte discipline | 🟡 Cultură generală ✅ (135 de întrebări) · Logica ✅ (80 de categorii) · Cuvinte ✅ · toate trei fără repetiții pe expediție · celelalte 5 ❌ |
 | 10–13. Generator de inamici, artă, web | ❌ (artă parțial: figurile principale și piesele de pe butoanele de Obelisc au imagini reale · **arena are fundal: biblioteca gotică**, cu personajele așezate pe dalele din prim-plan, umbră de contact și lumină de sală) · Regina: **amânată**, vezi CLAUDE.md |
 
-Nodul de **Eveniment** are, de azi, primul lui conținut: **Lacătul** — un cifru
-dedus din indicii, cu generator verificat pe 1500 de puzzle-uri. Scena trăiește
-deocamdată singură (F6); legarea de hartă e sesiunea următoare.
+Nodul de **Eveniment** are, de azi, primul lui conținut: **Lacătul** — un cufăr
+cu cifru, dedus din indicii, cu generator verificat pe 1500 de puzzle-uri și cu
+artă adevărată (roți care se învârt în spatele ferestrelor, cufăr care se
+deschide). Scena trăiește deocamdată singură (F6); legarea de hartă e sesiunea
+următoare.
 
 Din pasul 10 (generatorul de inamici) s-a făcut deja partea care nu costa nimic
 azi: **identitatea inamicului e separată de arhetip**. Restul (modificatori,
@@ -34,7 +36,247 @@ restul rămâne placeholder. Bucla de luptă e în continuare cea validată, nu 
 
 ---
 
+## CUFĂRUL (24 septembrie 2026) — Lacătul nu mai e un desen, e un obiect
+
+Lacătul are de azi artă adevărată: două imagini de cufăr (închis și deschis),
+cu **ferestrele tăiate ca găuri transparente** în placa de metal. Toată scena
+s-a rescris în jurul lor. Contractul a rămas neatins: `porneste(nivel, samanta)`
+și `rezolvat(succes)`.
+
+`assets/art/cifru/` — `cufar_inchis.png`, `cufar_deschis.png` (1990 × 1529,
+încadrate identic la pixel) și `ferestre.json`, cu pozițiile celor patru
+ferestre. Pozițiile se CITESC din JSON; niciun număr de artă nu e scris în cod.
+Dacă arta se redesenează, fișierul vine odată cu ea și codul nu află niciodată.
+
+### Straturile, și de ce ordinea lor e tot desenul
+
+```
+Cifru (Control)
+├─ Fundal                        o culoare caldă, întunecată
+├─ Platou (Node2D)  ← CAMERA: tot ce e aici se apropie împreună
+│   ├─ Halou                     pată de lumină caldă, sub cufăr
+│   ├─ Benzi (4 × BandaCifre)    cifrele, desenate din cod
+│   ├─ Cufar (Sprite2D)          IMAGINEA, cu ferestrele transparente
+│   ├─ Litere (A B C D)          peste placă, sub ferestre
+│   └─ Stralucire (Sprite2D)     a doua copie a imaginii: fulgerul
+└─ Interfata (Control)           indicii, încercări, buton — nemișcate
+```
+
+**POZA E MASCA.** Banda de cifre se desenează ÎNAINTE de imaginea cufărului,
+deci imaginea se așază peste ea. Poza e opacă peste tot în afară de cele patru
+ferestre, care sunt găuri adevărate în PNG — așa că ce se vede din bandă e exact
+ce lasă gaura să treacă. N-am tăiat nimic și n-am scris nicio mască.
+
+Singura grijă care rămâne: banda n-are voie să crească mai mare decât placa de
+metal din jurul ferestrei, fiindcă dincolo de marginile cufărului poza e iar
+transparentă și cifrele ar ieși în aer. De-aia desenează doar cinci cifre în
+jurul celei curente, nu toate nouă. Și tot de-aia banda își pictează ÎNTÂI un
+fond întunecat: altfel s-ar vedea prin gaură fundalul scenei, și ai avea un
+lacăt cu ferestre spre nicăieri.
+
+### Camera, din două cifre
+
+`Platou` e un `Node2D` căruia i se schimbă `position` și `scale`. **Nu**
+`Camera2D`: aia nu mișcă un obiect, ci pânza întregului viewport — iar Lacătul
+o să fie deschis din nodul de Eveniment, adică PESTE hartă, și ar trage
+pergamentul după el. Cauza ar fi de negăsit dintr-un fișier care nici nu
+pomenește harta.
+
+Tot calculul iese din două constante: cât de lată vrei o fereastră pe ecran
+(`LATIME_FEREASTRA_TINTA = 80`) și în ce punct al ecranului vrei centrul celor
+patru (`TINTA_APROAPE = 0.33, 0.42` — stânga de centru, ca să rămână loc de
+indicii în dreapta). Scara iese din prima, poziția din a doua. Măsurat: o
+fereastră ajunge la **78,9 px** pe un ecran de 1152 × 648, iar placa ocupă cam
+două treimi din lățime.
+
+La pornire se vede cufărul ÎNTREG, o jumătate de secundă (`RAGAZ_DEPARTE`), și
+abia apoi se apropie. Răgazul nu e decor: prima versiune pleca direct în
+apropiere și, cu o mișcare care începe repede, cufărul întreg se vedea două
+cadre — adică deloc. Primul lucru pe care trebuie să-l pricepi e CE e obiectul;
+abia al doilea, la ce te uiți din el. Roțile se pot atinge doar după ce
+apropierea s-a terminat.
+
+### Roțile: o bandă fără capete
+
+`banda_cifre.gd` desenează o panglică de cifre care se repetă la infinit
+(`posmod` peste numărul treptei: treapta −1 e tot o cifră bună), cu cifra
+curentă întreagă în mijloc și câte o jumătate din vecine. Peste cifre, un
+degrade întunecat sus și jos — fără el banda arată ca o listă care alunecă; cu
+el, ca o suprafață care se curbează și fuge din fața ochiului.
+
+Controlul:
+
+- **tragi** — banda urmărește mouse-ul 1:1. Pixelii de ecran se împart la scara
+  camerei ca să devină pixeli de imagine: altfel tragerea ar fi de trei ori mai
+  „grea" când placa domină ecranul;
+- **la eliberare** — inerție cu frânare exponențială (`exp(-k·dt)`, ca să nu
+  depindă de câte cadre pe secundă merge jocul), apoi așezare lină exact pe o
+  cifră;
+- **rotița și tastatura** — un pas animat; tastarea unei cifre o duce pe drumul
+  cel mai scurt (de la 9 la 1 e o treaptă în sus, nu opt în jos);
+- **un clic** la fiecare cifră peste care trece centrul ferestrei.
+
+Toate numerele de senzație — `FRECARE`, `VITEZA_DE_ASEZARE`, `ASEZARE`,
+`VITEZA_MAXIMA`, `PAS_CIFRA`, `DURATA_UNUI_PAS` — sunt constante cu nume, sus în
+fișier, cu explicația în ce direcție să le muți.
+
+### Deschiderea, și cum ascunde fulgerul înlocuirea imaginii
+
+Cinci mișcări, ≈2,6 s în total, fiecare cu constanta ei:
+
+1. roțile se aprind pe rând, stânga → dreapta, cu câte un clic (0,12 s fiecare);
+2. camera se retrage la cufărul întreg (0,7 s);
+3. cufărul tresare scurt (0,18 s);
+4. **fulgerul urcă (0,16 s), iar ÎN VÂRFUL lui se schimbă textura** închis →
+   deschis;
+5. lumina se stinge (0,55 s), cufărul rămâne deschis, pauză, `rezolvat(true)`.
+
+**De ce funcționează.** Ochiul nu vede „o imagine", vede DIFERENȚE. Când ecranul
+e acoperit de o lumină care aproape îneacă desenul, nu mai are ce compara între
+cadrul de dinainte și cel de după — iar când lumina scade, primește un cufăr
+deschis și presupune că s-a deschis SUB lumină. Trucul nu e lumina, e clipa
+aleasă: schimbarea se face fix în vârf, nu la urcare și nu la coborâre.
+
+Merge doar fiindcă cele două poze sunt încadrate identic, la pixel. Dacă lacătul
+ar sări cu cinci pixeli, l-ai prinde chiar și prin fulger: **mișcarea se vede
+prin lumină, culoarea nu.**
+
+Fulgerul e din două lumini, nu una. Prima e o A DOUA COPIE a imaginii, desenată
+peste prima cu amestecare prin ADUNARE (`BLEND_MODE_ADD`): fiecare pixel al ei
+se adaugă la ce e dedesubt, deci lumina aprinde exact silueta cufărului — lemn,
+fier și alamă, fiecare de la culoarea lui în sus. O pată albă peste tot ar fi
+arătat ca un cearșaf. A doua e haloul din jur, și el e cel care acoperă
+CONTURUL: capacul deschis are altă siluetă decât cel închis, iar fără o lumină
+care se revarsă dincolo de margini s-ar vedea cum sare marginea.
+
+### Eșecul
+
+După trei greșeli, roțile se rotesc singure până la codul corect, decalat, cu o
+tură întreagă înainte de aterizare (altfel o roată deja pe cifra bună n-ar face
+nimic și dezvăluirea ar arăta a defecțiune). Cufărul rămâne închis. Fără tremur,
+fără sunet dur: e un eveniment, nu o pedeapsă. Pleci știind cifrul, nu doar că
+ai greșit.
+
+### Regulile s-au mutat după artă
+
+| Nivel | Roți | Cifre | Indicii, cel mult | Ce dă gratis |
+|---|---|---|---|---|
+| 1 | 4 | 1–9 | 6 | **o roată sudată pe cifra corectă** |
+| 2 | 4 | 1–9 | 6 | — |
+| 3 | 4 | 1–9 | **3** | — |
+
+Toate nivelurile au acum 4 roți cu cifre 1–9, fiindcă arta are patru ferestre:
+un lacăt de 3 roți ar fi însemnat o fereastră goală. Diferența dintre niveluri
+s-a mutat în altă parte: nivelul 1 îți dă o roată (rămân 3 cifre de dedus dintr-un
+spațiu de 729 de coduri în loc de 6561), iar nivelul 3 are cel mult **3 indicii**
+— mai puține indicii nu înseamnă mai puțin de gândit, ci invers: cu 3 rânduri
+pentru 4 necunoscute nu există niciun indiciu de rezervă pe care să te sprijini
+dacă unul ți-a scăpat.
+
+**Roata blocată a adus o capcană pe care merită s-o știi.** Cu o roată sudată pe
+5, indiciul „A e cu 2 mai mare decât roata aia" DICTEAZĂ cifra lui A — deși e
+scris ca o relație. Verificarea „niciun indiciu nu dă direct o cifră" se face
+deci pe mulțimea RESTRÂNSĂ de roata blocată... dar acolo roata blocată are, prin
+definiție, o singură valoare posibilă, deci ar reclama absolut orice indiciu.
+Poziția blocată se exclude explicit din verificare. Nu e o excepție
+convenabilă — e chiar distincția dintre „ți se dictează o cifră" și „ți se ARATĂ
+o cifră, iar tu deduci restul".
+
+Din același motiv, toată socoteala (unicitate, alegere lacomă, curățare) se face
+în universul restrâns: altfel generatorul ar adăuga indicii ca să excludă coduri
+pe care jucătorul le-a exclus deja uitându-se la cufăr.
+
+### O optimizare care nu slăbește nicio garanție
+
+Alegerea lacomă își CÂNTĂREȘTE de azi candidații pe o **sondă** de 1500 de
+coduri (luate din k în k din mulțimea încă posibilă), nu pe toată mulțimea.
+Diferența dintre „taie 5900" și „taie 5880" nu schimbă nicio decizie, iar prima
+rundă era partea cea mai scumpă din tot generatorul.
+
+Nimic din ce garantează puzzle-ul nu trece pe acolo: tăierea, curățarea și
+unicitatea se fac tot pe mulțimea întreagă. Sonda poate cel mult să facă
+alegerea lacomă să ia al doilea cel mai bun candidat — adică exact greșeala pe
+care metoda lacomă o face oricum, prin natura ei, și pe care o repară pasul de
+curățare. Rezultat: o generare de nivel 3 a scăzut de la ~985 ms la ~480 ms,
+cu aceleași puzzle-uri ca înainte ca formă și lungime.
+
+### Verificarea: 500 de semințe × 3 niveluri
+
+`godot --headless --path . res://tools/verifica_cifru.tscn`. Verificatorul știe
+acum de roata blocată (cere unicitatea în universul restrâns) și raportează, pe
+lângă ce raporta, **media indiciilor** și **timpul unei generări**.
+
+**Rezultatul: verde peste tot, zero probleme pe toate cele 1500 de puzzle-uri.**
+
+| | nivel 1 | nivel 2 | nivel 3 |
+|---|---|---|---|
+| **media indiciilor** | **2,84** | **3,75** | **3,00** |
+| **o generare** | **46 ms** | **150 ms** | **469 ms** |
+| indicii, cel mai des | 3 (419/500) | 4 (371/500) | 3 (488/500) |
+| reîncercări, media | 1,00 | 1,00 | 3,27 |
+| reîncercări, maximul | 1 | 2 | 12 (plafonul) |
+| durata verificării | 50 s | 175 s | 486 s |
+
+Nivelul 1 iese cu 2,84 indicii în loc de 3,75 — exact ce face roata sudată: îți
+dă o cifră, deci nu mai trebuie indicii ca s-o deducă. Roata blocată cade
+uniform pe cele patru poziții (117 / 125 / 135 / 123 din 500), deci lacătele de
+nivel 1 nu au toate aceeași formă. Nivelul 3 are 3,00 fix,
+adică plafonul lui, la 488 din 500 de semințe.
+
+**Șapte semințe din 500 (1,4%) au ieșit pe ușa din dos** cu 4 indicii în loc de
+3, după 12 încercări — cu avertisment în consolă. Verificatorul le-a controlat
+ca pe toate celelalte: unice, fără indicii redundante, fără dictare. Asta e
+fix schimbul pentru care am strâns `INCERCARI_MAXIME` de la 30 la 12: la 30,
+cea mai nefericită sămânță din 500 cerea 25 de încercări, adică aproape trei
+secunde de ecran înghețat pentru un singur indiciu în minus.
+
+Distribuția tipurilor a rămas cea de dinainte (≈72% `DIFERENTA` + `SUMA_DOUA`):
+alegerea lacomă ia mereu indiciul care taie cel mai mult, iar cele aritmetice
+taie cel mai mult. Pentru un joc de antrenament mental e pe temă, nu pe lângă
+ea; butonul de reglat, dacă se simte monoton, rămâne `CANDIDATI`.
+
+### Sunete de căutat
+
+Două rânduri noi în catalogul lui `Sunet`, fără fișiere: `_incarca_efectele()`
+avertizează o dată la pornire și lasă efectul mut, iar Lacătul merge mai departe
+fără el. Când fișierele apar în dosar, merg singure.
+
+- **`assets/audio/dial_click.ogg`** — 50-120 ms, metalic și uscat, clicul unei
+  roți care trece peste o cifră. Caută „combination lock dial click", „ratchet
+  click", „cog tick". Volum propriu (`VOLUM_CLIC_DB = -19`), sub ticăit: e un
+  sunet care se repetă de zeci de ori pe secundă când tragi de-o roată.
+- **`assets/audio/chest_open.ogg`** — 1-2 s, balamale care scârțâie și capac
+  care se oprește. Caută „wooden chest lid open creak", „treasure chest open".
+
+### Fișiere
+
+Nou: `scenes/cifru/banda_cifre.gd`. Rescrise: `cifru.gd`, `cifru.tscn`. Atinse:
+`generator_cifru.gd` (tabelul, roata blocată, sonda), `tools/verifica_cifru.gd`,
+`autoload/sunet.gd` (două rânduri în catalog). Șters: `roata_cifra.gd` —
+plăcuțele desenate n-au ce căuta peste o poză reală; e în Git dacă va fi nevoie.
+**Neatinse:** contractul, `autoload/expeditie.gd`, `scenes/harta/`.
+
+### Ce urmează, și două lucruri de ținut minte
+
+1. **Legarea de nodul de Eveniment** — sămânța cifrului derivată din a
+   expediției plus id-ul nodului, nivelul din adâncime, recompensă la succes.
+2. **Generarea de nivel 3 costă ~0,47 s** (cel mult ~1,5 s, fiindcă bugetul de
+   12 încercări o mărginește). Azi se întâmplă în `porneste()`, adică într-o
+   clipă în care ecranul e deja pe loc. Când Lacătul se leagă de hartă, momentul
+   bun e în timpul tranziției de la hartă, nu după ea.
+3. **Cele două PNG-uri au ~5 MB fiecare** și ocupă ~12 MB de memorie video
+   fiecare. Pentru desktop e irelevant; pentru exportul web de la pasul 14 vor
+   vrea o versiune la ~1000 px.
+
+---
+
 ## LACĂTUL (24 septembrie 2026) — un cifru care se deduce, nu se ghicește
+
+*Secțiunea asta descrie PRIMA versiune, cu roți desenate pe pergament. Sesiunea
+„CUFĂRUL", de mai sus, a înlocuit scena întreagă și tabelul de dificultate
+(acum: 4 roți cu cifre 1–9 la toate nivelurile). Algoritmul generatorului —
+alegerea lacomă, curățarea, forța brută — a rămas cel de aici, plus roata
+blocată și sonda.*
 
 Primul conținut al nodului de **Eveniment**: un cufăr cu cifru, al cărui cod nu
 e scris nicăieri. Îl afli din indicii („D e cu 3 mai mare decât C", „suma

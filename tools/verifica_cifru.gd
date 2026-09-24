@@ -101,12 +101,21 @@ func _verifica(nivel: int) -> bool:
 	var incercari: Array[int] = []
 	var la_limita: Array[int] = []
 	var goale := 0
+	# Pe ce poziție a căzut roata blocată: pozitie → de câte ori. Gol la
+	# nivelurile fără roată blocată. E o verificare de împrăștiere, nu de
+	# corectitudine: dacă ar ieși mereu roata A, puzzle-urile ar avea toate
+	# aceeași formă fără ca vreo altă verificare să se plângă.
+	var blocate := {}
+	# Cât a durat DOAR generarea, fără verificări. Microsecunde, adunate.
+	var timp_generare := 0
 
 	var start := Time.get_ticks_msec()
 
 	for i in range(SEMINTE):
 		var samanta := PRIMA_SAMANTA + i
+		var pornit := Time.get_ticks_usec()
 		var puzzle: Dictionary = GeneratorCifru.genereaza(nivel, samanta)
+		timp_generare += Time.get_ticks_usec() - pornit
 
 		if puzzle.is_empty():
 			# Generatorul a strigat deja în consolă; aici doar numărăm.
@@ -116,6 +125,14 @@ func _verifica(nivel: int) -> bool:
 
 		var indicii: Array = puzzle["indicii"]
 		var cod: Array = puzzle["cod"]
+		var blocata := int(puzzle["blocata"])
+
+		# UNIVERSUL: codurile pe care puzzle-ul trebuie să le deosebească. Cu o
+		# roată blocată sunt doar cele care se potrivesc cu ea. Cerut de la
+		# generator, nu construit aici: două definiții ale aceleiași mulțimi ar
+		# însemna un verificator care, într-o zi, declară stricate puzzle-uri
+		# perfect bune — sau, mai rău, invers.
+		var universul: Array = GeneratorCifru.universul(toate, cod, blocata)
 		incercari.append(int(puzzle["incercari"]))
 		if bool(puzzle["la_limita"]):
 			la_limita.append(samanta)
@@ -130,7 +147,7 @@ func _verifica(nivel: int) -> bool:
 				break
 
 		# ── 2. Soluția e unică ────────────────────────────────
-		var solutii: int = GeneratorCifru.cate_solutii_pentru(indicii, toate, 2)
+		var solutii: int = GeneratorCifru.cate_solutii_pentru(indicii, universul, 2)
 		if solutii != 1:
 			_noteaza(probleme, "soluția NU e unică" if solutii > 1 else "puzzle fără soluție",
 				samanta)
@@ -141,13 +158,26 @@ func _verifica(nivel: int) -> bool:
 		for k in indicii.size():
 			var fara := indicii.duplicate()
 			fara.remove_at(k)
-			if GeneratorCifru.cate_solutii_pentru(fara, toate, 2) == 1:
+			if GeneratorCifru.cate_solutii_pentru(fara, universul, 2) == 1:
 				_noteaza(probleme, "indiciu redundant", samanta)
 				break
 
 		# ── 4. Niciun indiciu nu dă direct o cifră ────────────
-		if GeneratorCifru.indiciu_care_da_o_cifra(puzzle) != -1:
+		# Tot pe univers, și cu roata blocată scoasă din socoteală: acolo ea are
+		# o singură valoare posibilă prin definiție, deci ar face orice indiciu
+		# să pară că dictează o cifră.
+		if GeneratorCifru.indiciu_care_da_o_cifra(indicii, universul, blocata) != -1:
 			_noteaza(probleme, "un indiciu fixează singur o cifră", samanta)
+
+		# ── 4b. Roata blocată e cea promisă de tabel ──────────
+		var trebuie_blocata := int(spec.get("blocate", 0)) > 0
+		if trebuie_blocata != (blocata >= 0):
+			_noteaza(probleme, "roata blocată nu se potrivește cu nivelul", samanta)
+		elif blocata >= 0:
+			if blocata >= cod.size():
+				_noteaza(probleme, "roata blocată e în afara codului", samanta)
+			else:
+				_numara(blocate, blocata)
 
 		# ── 5. Fiecare indiciu are o propoziție ───────────────
 		for indiciu: Dictionary in indicii:
@@ -172,10 +202,24 @@ func _verifica(nivel: int) -> bool:
 	print("  Câte indicii are un puzzle:")
 	var marimi := cate_indicii.keys()
 	marimi.sort()
+	var suma_indicii := 0
+	var cate_puzzle := 0
 	for marime in marimi:
 		var cate: int = cate_indicii[marime]
+		suma_indicii += int(marime) * cate
+		cate_puzzle += cate
 		print("    %d indicii: %4d puzzle-uri (%s)" % [
 			marime, cate, _bara(cate, SEMINTE)])
+	print("    MEDIA: %.2f indicii pe puzzle." % [
+		float(suma_indicii) / maxi(cate_puzzle, 1)])
+
+	if not blocate.is_empty():
+		var pozitii := blocate.keys()
+		pozitii.sort()
+		var linii := PackedStringArray()
+		for poz in pozitii:
+			linii.append("%s: %d" % [GeneratorCifru.litera(int(poz)), blocate[poz]])
+		print("  Roata blocată, pe poziții — %s" % [", ".join(linii)])
 
 	print("")
 	print("  Ce tipuri de indiciu apar:")
@@ -202,6 +246,8 @@ func _verifica(nivel: int) -> bool:
 	if not la_limita.is_empty():
 		print("  ATENȚIE: %d semințe au ieșit peste maximul de indicii: %s" % [
 			la_limita.size(), _primele(la_limita)])
+	print("  O GENERARE: %.1f ms în medie (doar generatorul, fără verificări)." % [
+		timp_generare / 1000.0 / maxi(SEMINTE, 1)])
 	print("  Durata: %.1f s pentru %d puzzle-uri (plus încă %d, pentru determinism)."
 		% [durata, SEMINTE, SEMINTE])
 
