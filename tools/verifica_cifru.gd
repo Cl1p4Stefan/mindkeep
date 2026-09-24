@@ -1,0 +1,246 @@
+extends Node
+## VERIFICAREA CIFRURILOR — bate generatorul de lacăte pe multe semințe.
+##
+## Se cheamă din afara jocului, fără fereastră:
+##   godot --headless --path . res://tools/verifica_cifru.tscn
+##
+## ─────────────────────────────────────────────────────────────
+## DE CE ARE NEVOIE LACĂTUL DE O UNEALTĂ A LUI
+##
+## Restul verificatoarelor întreabă lucruri despre DESEN sau despre DRUMURI.
+## Ăsta întreabă singurul lucru care contează la un puzzle de deducție: se
+## poate rezolva, și se poate rezolva ÎNTR-UN SINGUR FEL?
+##
+## E o întrebare care nu se poate testa jucând. Un cifru cu două soluții arată
+## perfect normal: indiciile se citesc, deducția pare să meargă, iar jucătorul
+## tastează un cod care respectă TOATE indiciile — și lacătul refuză să se
+## deschidă. Nu ai raporta asta ca bug, ai crede că ai greșit tu. De-aia
+## unicitatea trebuie dovedită pe mii de puzzle-uri, mecanic, înainte ca vreunul
+## să ajungă în fața ta.
+##
+## ─────────────────────────────────────────────────────────────
+## CE VERIFICĂ, ȘI DE CE FIECARE
+##
+##   UNICITATEA — există exact un cod care respectă toate indiciile. Dovedită
+##   prin forță brută peste TOATE codurile posibile (vezi comentariul mare din
+##   `generator_cifru.gd`), nu prin eșantion.
+##
+##   CODUL RESPECTĂ INDICIILE — soluția anunțată e chiar o soluție. Pare de la
+##   sine înțeles (indiciile se nasc citind codul), dar e exact genul de lucru
+##   care se strică tăcut când adaugi un tip nou și `evalueaza()` îl înțelege
+##   altfel decât îl scria `_candidati()`.
+##
+##   NICIUN INDICIU REDUNDANT — scoate-l și puzzle-ul devine ambiguu; dacă nu
+##   devine, indiciul ăla era decor. Un rând care nu servește la nimic îl pune
+##   pe jucător să caute ce aduce nou, și nu aduce nimic.
+##
+##   NICIUN INDICIU CARE DĂ DIRECT O CIFRĂ — regula de design a Lacătului. Nu
+##   se verifică după numele tipului, ci după efect: dacă toate codurile care
+##   respectă un indiciu au aceeași cifră pe o poziție, indiciul ăla dictează.
+##
+##   ACEEAȘI SĂMÂNȚĂ → ACELAȘI PUZZLE — cea mai ușor de uitat și cea mai
+##   scumpă când lipsește: fără ea, „evenimentul din expediția 12345 are un
+##   lacăt imposibil" nu se poate reproduce niciodată.
+##
+##   FIECARE INDICIU ARE O PROPOZIȚIE — prinde tipul adăugat în `evalueaza()`
+##   și uitat în `text()`. Fără verificarea asta, l-ai găsi pe ecran, în joc.
+##
+## Plus profilul care se citește ca un raport de design: câte indicii are un
+## puzzle, ce tipuri apar și cât de des, câte reîncercări cere o sămânță.
+
+## Câte semințe pe nivel. 500 × 3 niveluri = 1500 de puzzle-uri.
+##
+## Durează câteva minute, și e în regulă: unealta se cheamă când umbli la
+## generator, nu la fiecare pornire a jocului. Nivelul 3 ia partea leului —
+## are 10000 de coduri de parcurs la fiecare întrebare pusă.
+const SEMINTE := 500
+
+## De la ce sămânță pornim. Nu de la 0, din același motiv ca la celelalte
+## unelte: `_sub_samanta()` înmulțește, iar sămânța 0 ar da aceeași sub-sămânță
+## pentru toate încercările ei.
+const PRIMA_SAMANTA := 1000
+
+
+func _ready() -> void:
+	print("VERIFICAREA CIFRURILOR (Lacătul)")
+	print("Semințe: %d pe nivel, pornind de la %d. Limita de încercări: %d."
+		% [SEMINTE, PRIMA_SAMANTA, GeneratorCifru.INCERCARI_MAXIME])
+
+	var toate_bune := true
+	for nivel in range(1, GeneratorCifru.NIVELURI.size() + 1):
+		toate_bune = _verifica(nivel) and toate_bune
+
+	print("")
+	print("═══════════════════════════════════════════")
+	print("VERDICT: %s" % [
+		"cifrurile ies bine" if toate_bune else "CEVA E STRICAT"])
+	get_tree().quit(0 if toate_bune else 1)
+
+
+# ─────────────────────────────────────────────────────────────
+# UN NIVEL, PE TOATE SEMINȚELE
+# ─────────────────────────────────────────────────────────────
+
+func _verifica(nivel: int) -> bool:
+	var spec: Dictionary = GeneratorCifru.specificatie(nivel)
+	print("")
+	print("═══ NIVELUL %d — %d roți, cifre %d-%d, cel mult %d indicii ═══" % [
+		nivel, spec["cifre"], spec["minim"], spec["maxim"], spec["indicii_maxime"]])
+
+	# Toate codurile, o singură dată pentru tot nivelul. Verificările de mai jos
+	# le parcurg de zeci de mii de ori; reconstruite la fiecare sămânță, ele
+	# singure ar dubla durata uneltei.
+	var toate: Array = GeneratorCifru.toate_codurile(spec)
+
+	# Ce s-a stricat: nume de problemă → lista semințelor vinovate.
+	var probleme := {}
+	# Câte indicii are puzzle-ul: număr de indicii → de câte ori.
+	var cate_indicii := {}
+	# Tipurile: nume → de câte ori apare, peste toate puzzle-urile.
+	var tipuri := {}
+	var incercari: Array[int] = []
+	var la_limita: Array[int] = []
+	var goale := 0
+
+	var start := Time.get_ticks_msec()
+
+	for i in range(SEMINTE):
+		var samanta := PRIMA_SAMANTA + i
+		var puzzle: Dictionary = GeneratorCifru.genereaza(nivel, samanta)
+
+		if puzzle.is_empty():
+			# Generatorul a strigat deja în consolă; aici doar numărăm.
+			goale += 1
+			_noteaza(probleme, "niciun puzzle generat", samanta)
+			continue
+
+		var indicii: Array = puzzle["indicii"]
+		var cod: Array = puzzle["cod"]
+		incercari.append(int(puzzle["incercari"]))
+		if bool(puzzle["la_limita"]):
+			la_limita.append(samanta)
+		_numara(cate_indicii, indicii.size())
+		for indiciu: Dictionary in indicii:
+			_numara(tipuri, String(indiciu["tip"]))
+
+		# ── 1. Codul anunțat respectă toate indiciile ─────────
+		for k in indicii.size():
+			if not GeneratorCifru.evalueaza(indicii[k], cod):
+				_noteaza(probleme, "codul își încalcă propriul indiciu", samanta)
+				break
+
+		# ── 2. Soluția e unică ────────────────────────────────
+		var solutii: int = GeneratorCifru.cate_solutii_pentru(indicii, toate, 2)
+		if solutii != 1:
+			_noteaza(probleme, "soluția NU e unică" if solutii > 1 else "puzzle fără soluție",
+				samanta)
+
+		# ── 3. Niciun indiciu redundant ───────────────────────
+		# Scoatem pe rând câte unul: dacă soluția rămâne unică fără el, indiciul
+		# nu ținea nimic în picioare.
+		for k in indicii.size():
+			var fara := indicii.duplicate()
+			fara.remove_at(k)
+			if GeneratorCifru.cate_solutii_pentru(fara, toate, 2) == 1:
+				_noteaza(probleme, "indiciu redundant", samanta)
+				break
+
+		# ── 4. Niciun indiciu nu dă direct o cifră ────────────
+		if GeneratorCifru.indiciu_care_da_o_cifra(puzzle) != -1:
+			_noteaza(probleme, "un indiciu fixează singur o cifră", samanta)
+
+		# ── 5. Fiecare indiciu are o propoziție ───────────────
+		for indiciu: Dictionary in indicii:
+			var propozitie: String = GeneratorCifru.text(indiciu)
+			if propozitie.is_empty() or propozitie.begins_with("(indiciu"):
+				_noteaza(probleme, "indiciu fără text", samanta)
+				break
+
+		# ── 6. Aceeași sămânță, de două ori ───────────────────
+		# Comparăm prin JSON, nu cu `==`: JSON compară pe conținut, la orice
+		# adâncime, și e exact forma în care puzzle-ul ar ajunge într-un save.
+		# Deci verificarea asta spune, pe lângă „e reproductibil", și „încape
+		# în JSON fără traducător" — regula de save din CLAUDE.md.
+		var din_nou: Dictionary = GeneratorCifru.genereaza(nivel, samanta)
+		if JSON.stringify(din_nou) != JSON.stringify(puzzle):
+			_noteaza(probleme, "aceeași sămânță dă alt puzzle", samanta)
+
+	var durata := (Time.get_ticks_msec() - start) / 1000.0
+
+	# ── RAPORTUL ──────────────────────────────────────────────
+	print("")
+	print("  Câte indicii are un puzzle:")
+	var marimi := cate_indicii.keys()
+	marimi.sort()
+	for marime in marimi:
+		var cate: int = cate_indicii[marime]
+		print("    %d indicii: %4d puzzle-uri (%s)" % [
+			marime, cate, _bara(cate, SEMINTE)])
+
+	print("")
+	print("  Ce tipuri de indiciu apar:")
+	var total_indicii := 0
+	for nume in tipuri:
+		total_indicii += int(tipuri[nume])
+	var nume_tipuri := tipuri.keys()
+	nume_tipuri.sort()
+	for nume in nume_tipuri:
+		var cate: int = tipuri[nume]
+		print("    %-16s %5d  (%4.1f%% din indicii)" % [
+			nume, cate, 100.0 * cate / maxi(total_indicii, 1)])
+
+	var medie := 0.0
+	var maxim := 0
+	for c in incercari:
+		medie += c
+		maxim = maxi(maxim, c)
+	if not incercari.is_empty():
+		medie /= incercari.size()
+	print("")
+	print("  Reîncercări: media %.2f, maximul %d (din %d permise)." % [
+		medie, maxim, GeneratorCifru.INCERCARI_MAXIME])
+	if not la_limita.is_empty():
+		print("  ATENȚIE: %d semințe au ieșit peste maximul de indicii: %s" % [
+			la_limita.size(), _primele(la_limita)])
+	print("  Durata: %.1f s pentru %d puzzle-uri (plus încă %d, pentru determinism)."
+		% [durata, SEMINTE, SEMINTE])
+
+	if probleme.is_empty():
+		print("  ✔ Nicio problemă.")
+		return true
+
+	print("")
+	for nume in probleme:
+		var lista: Array = probleme[nume]
+		print("  ✘ %s — %d semințe: %s" % [nume, lista.size(), _primele(lista)])
+	return false
+
+
+# ─────────────────────────────────────────────────────────────
+# MĂRUNȚIȘURI DE RAPORT
+# ─────────────────────────────────────────────────────────────
+
+func _noteaza(unde: Dictionary, problema: String, samanta: int) -> void:
+	if not unde.has(problema):
+		unde[problema] = []
+	unde[problema].append(samanta)
+
+
+func _numara(unde: Dictionary, cheie) -> void:
+	unde[cheie] = int(unde.get(cheie, 0)) + 1
+
+
+## Primele câteva semințe dintr-o listă. Lista întreagă ar umple ecranul, iar
+## pentru reprodus îți trebuie una singură.
+func _primele(lista: Array, cate := 6) -> String:
+	var scurta := lista.slice(0, cate)
+	var text := ", ".join(scurta.map(func(s): return str(s)))
+	if lista.size() > cate:
+		text += ", …"
+	return text
+
+
+## O bară de text, ca distribuția să se vadă dintr-o privire.
+func _bara(cate: int, din: int, latime := 28) -> String:
+	var plin := int(round(latime * float(cate) / maxi(din, 1)))
+	return "█".repeat(plin) + "·".repeat(latime - plin)

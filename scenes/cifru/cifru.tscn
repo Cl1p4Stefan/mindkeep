@@ -1,0 +1,99 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scenes/cifru/cifru.gd" id="1_cifru"]
+
+[node name="Cifru" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_cifru")
+
+[node name="Fundal" type="ColorRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Margini" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 34
+theme_override_constants/margin_top = 22
+theme_override_constants/margin_right = 34
+theme_override_constants/margin_bottom = 20
+
+[node name="Coloana" type="VBoxContainer" parent="Margini"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Titlu" type="Label" parent="Margini/Coloana"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "LACĂTUL"
+horizontal_alignment = 1
+
+[node name="Subtitlu" type="Label" parent="Margini/Coloana"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Cifrul nu e scris nicăieri. E scris în indicii."
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Roti" type="HBoxContainer" parent="Margini/Coloana"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 176)
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="ZonaIndicii" type="CenterContainer" parent="Margini/Coloana"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Indicii" type="VBoxContainer" parent="Margini/Coloana/ZonaIndicii"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Mesaj" type="Label" parent="Margini/Coloana"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 26)
+layout_mode = 2
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="RandJos" type="HBoxContainer" parent="Margini/Coloana"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="Incercari" type="Label" parent="Margini/Coloana/RandJos"]
+unique_name_in_owner = true
+layout_mode = 2
+vertical_alignment = 1
+
+[node name="Spatiu" type="Control" parent="Margini/Coloana/RandJos"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="Cronometru" type="Label" parent="Margini/Coloana/RandJos"]
+unique_name_in_owner = true
+layout_mode = 2
+vertical_alignment = 1
+
+[node name="Deschide" type="Button" parent="Margini/Coloana/RandJos"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(150, 40)
+layout_mode = 2
+text = "Deschide"

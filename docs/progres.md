@@ -20,6 +20,10 @@
 | 9. Celelalte discipline | 🟡 Cultură generală ✅ (135 de întrebări) · Logica ✅ (80 de categorii) · Cuvinte ✅ · toate trei fără repetiții pe expediție · celelalte 5 ❌ |
 | 10–13. Generator de inamici, artă, web | ❌ (artă parțial: figurile principale și piesele de pe butoanele de Obelisc au imagini reale · **arena are fundal: biblioteca gotică**, cu personajele așezate pe dalele din prim-plan, umbră de contact și lumină de sală) · Regina: **amânată**, vezi CLAUDE.md |
 
+Nodul de **Eveniment** are, de azi, primul lui conținut: **Lacătul** — un cifru
+dedus din indicii, cu generator verificat pe 1500 de puzzle-uri. Scena trăiește
+deocamdată singură (F6); legarea de hartă e sesiunea următoare.
+
 Din pasul 10 (generatorul de inamici) s-a făcut deja partea care nu costa nimic
 azi: **identitatea inamicului e separată de arhetip**. Restul (modificatori,
 buget, generare) rămâne acolo unde era.
@@ -27,6 +31,215 @@ buget, generare) rămâne acolo unde era.
 Am sărit peste ordinea recomandată la pasul 12 (artă): imaginile pentru rege,
 cavaler și pentru cele trei piese de șah de pe butoane au intrat mai devreme, dar
 restul rămâne placeholder. Bucla de luptă e în continuare cea validată, nu arta.
+
+---
+
+## LACĂTUL (24 septembrie 2026) — un cifru care se deduce, nu se ghicește
+
+Primul conținut al nodului de **Eveniment**: un cufăr cu cifru, al cărui cod nu
+e scris nicăieri. Îl afli din indicii („D e cu 3 mai mare decât C", „suma
+tuturor cifrelor e exact 13"), potrivești roțile și deschizi. Trei încercări.
+
+**Nu e legat încă de hartă.** Sesiunea asta a construit piesa și i-a dovedit
+corectitudinea; legarea de nodul de Eveniment (și sămânța derivată din a
+expediției) e sesiunea următoare. `autoload/expeditie.gd` și `scenes/harta/` **nu
+au fost atinse**. Scena se rulează singură cu F6, ca orice disciplină.
+
+### Trei fișiere, trei treburi
+
+| Fișier | Ce face | Ce NU știe |
+|---|---|---|
+| `scenes/cifru/generator_cifru.gd` (`GeneratorCifru`) | logică pură, statică: naște puzzle-ul, evaluează un indiciu, îl scrie în românește | nimic despre noduri, scene, pixeli |
+| `scenes/cifru/roata_cifra.gd` (`RoataCifra`) | o roată desenată din cod: literă, cifră, săgeți, vecine | nimic despre cifruri, indicii, încercări |
+| `scenes/cifru/cifru.gd` + `.tscn` | ecranul: roțile, lista de indicii, cele trei încercări, verdictul | nimic despre cum se naște un puzzle |
+
+Plus `tools/verifica_cifru.gd` + `.tscn`, headless, ca celelalte verificatoare.
+
+### Cum se naște un cifru
+
+Ideea, în cinci rânduri. „Deduci un cod din indicii" înseamnă, pentru
+calculator: există o mulțime de coduri posibile, fiecare indiciu o TAIE, iar
+puzzle-ul e bun când rămâne exact unul.
+
+1. **Alege un cod la întâmplare** — ăsta e răspunsul.
+2. **Fabrică afirmații adevărate despre el.** Nu „inventează și verifică": CITEȘTE
+   codul și scrie ce vede în el. De-aia nu poate ieși niciodată un puzzle
+   contradictoriu — afirmații adevărate despre același cod nu se pot contrazice.
+3. **Alege lacom:** la fiecare pas, indiciul care lasă cele mai puține coduri în
+   picioare, până rămâne unul singur.
+4. **Curăță:** scoate pe rând fiecare indiciu; dacă soluția rămâne unică fără el,
+   era redundant.
+5. **Dacă a ieșit mai lung decât încape pe ecran,** ia-o de la capăt cu altă
+   sub-sămânță (cel mult 30 de încercări).
+
+**De ce „lacom" (greedy) e sigur aici.** Metoda e miopă prin definiție: ia
+mușcătura cea mai mare disponibilă ACUM, fără să se uite înainte. Poate deci să
+producă un puzzle mai LUNG decât ar fi fost nevoie (două indicii medii s-ar fi
+completat mai bine decât unul tare urmat de unul care repetă aceeași
+informație) — dar nu poate produce unul ambiguu sau fără soluție, fiindcă se
+oprește doar când a rămas un singur cod, iar acel cod e obligatoriu al nostru:
+toate indiciile sunt adevărate despre el, deci supraviețuiește oricărei tăieri.
+Alegerea optimă („cele mai puține indicii posibile") e o rudă a problemei
+acoperirii de mulțimi, pentru care nimeni nu știe o metodă rapidă și exactă;
+n-avem nevoie de optim, avem nevoie de scurt, rapid și de încredere.
+
+**Pasul 4 repară fix miopia pasului 3.** Un indiciu luat devreme tăia mult
+ATUNCI; după alte două tăieri, se poate ca tot ce tăia el să fie deja tăiat de
+ceilalți. E ca și cum ai da patru indicații de drum, iar a doua să fie „nu o lua
+spre nord" — adevărată, dar inutilă, fiindcă a patra spunea deja „mergi spre
+sud". Un rând inutil pe ecran nu e doar zgomot: jucătorul presupune (pe drept)
+că fiecare indiciu e acolo ca să fie folosit, și pierde timp căutând ce aduce
+nou unul care nu aduce nimic.
+
+**De ce forța brută e metoda corectă aici.** Unicitatea se verifică încercând
+TOATE codurile, unul câte unul. E metoda cea mai proastă din lume în general, și
+cea mai bună aici:
+
+- **mulțimea e minusculă** — cel mai mare lacăt are 4 roți × 10 cifre = 10 000
+  de coduri (un lacăt de 6 roți ar avea un milion; de-aia tabelul de dificultate
+  e o listă scurtă, nu o invitație la orice);
+- **e o dovadă, nu un eșantion** — nu „n-am găsit altă soluție în o mie de
+  încercări", ci „le-am încercat pe toate". Un al doilea cod valid ar însemna un
+  jucător care deduce corect, tastează corect și pierde o încercare;
+- **folosește exact regula jocului** — numărătoarea trece prin `evalueaza()`,
+  aceeași funcție pe care o cheamă scena. Un verificator „mai deștept" ar fi a
+  doua implementare a acelorași reguli, iar două implementări se despart mereu.
+
+### Dificultatea, ca tabel
+
+| Nivel | Roți | Cifre | Indicii, cel mult | Coduri posibile |
+|---|---|---|---|---|
+| 1 | 3 | 1–6 | 4 | 216 |
+| 2 | 4 | 1–6 | 5 | 1 296 |
+| 3 | 4 | 0–9 | 6 | 10 000 |
+
+Maximul de indicii e o limită de **ecran și de răbdare**, nu una matematică:
+generatorul reîncearcă până intră sub ea. Lista trebuie să încapă mereu întreagă
+pe ecran, fiindcă un puzzle de deducție e o socoteală ținută în cap — orice
+indiciu pe care trebuie să-l cauți din nou e un pas de socoteală pierdut.
+
+### Șapte tipuri de indiciu, și o regulă
+
+`RELATIE` (A > C, A = C) · `DIFERENTA` (A e cu 2 mai mare decât D) ·
+`SUMA_DOUA` (A + B e exact 7 / mai mare decât 5) · `PARITATE` (B e pară) ·
+`EXTREM` (nicio cifră nu e mai mare decât B) · `FARA_REPETITIE` ·
+`SUMA_TOTALA`.
+
+**Regula: niciun indiciu nu dă direct o cifră.** „A = 7" ar transforma deducția
+în dictare. Regula nu e apărată doar prin lipsa unui tip potrivit, ci verificată
+prin EFECT: dacă toate codurile care respectă un indiciu au aceeași cifră pe o
+poziție, indiciul ăla dictează, oricum ar fi scris. „Suma tuturor cifrelor e
+exact 3", pe un lacăt de 3 roți cu minimul 1, e o propoziție despre sumă care
+spune, de fapt, „toate sunt 1". Candidații se nasc deja ocolind capcana (o
+diferență de 5 pe un interval 1–6 nici nu se generează), iar verificarea finală
+e plasa de siguranță.
+
+**Un singur `evalueaza(indiciu, cod)`.** Aceeași funcție e folosită de alegerea
+lacomă, de curățare, de verificarea unicității, de verificator ȘI de scenă, când
+colorează în roșu indiciile încălcate. Dacă scena ar avea o verificare „mai
+simplă, doar pentru feedback", ar exista două definiții ale aceleiași reguli —
+identice exact până în ziua în care una e corectată și cealaltă nu. Atunci jocul
+ți-ar spune că toate indiciile sunt respectate și ar refuza să deschidă lacătul.
+
+Din același motiv, **„corect" înseamnă „codul respectă toate indiciile"**, nu
+„codul e egal cu cel secret". Prin unicitate sunt același lucru — dar așa
+deschiderea lacătului și rândurile roșii ies din aceeași socoteală, deci starea
+absurdă „niciun indiciu roșu, dar nu se deschide" nu poate exista.
+
+**Indiciile sunt date, nu propoziții.** Un indiciu e
+`{"tip": "RELATIE", "a": 0, "b": 2, "semn": ">"}`; textul se compune la afișare.
+Textul e înfățișare: dacă ar fi salvat, în ziua în care schimbi o formulare (sau
+traduci jocul), save-urile vechi ar purta propozițiile vechi pe veci. Tot
+puzzle-ul e numai tipuri simple — regula de save din `CLAUDE.md`.
+
+### Scena: de ce NU moștenește `Puzzle`
+
+`Puzzle` e o bază foarte concretă: o întrebare, patru variante, un cronometru,
+un verdict în trei timpi, un marcaj de combo. Un `extends Puzzle` ar fi adus
+`@onready var butoane := [%Varianta1, …]` — noduri care nu există în
+`cifru.tscn`, deci scena ar fi crăpat la `_ready()`; ar fi cerut un
+`_compune_intrebare()` cu patru variante (un lacăt cu patru variante nu mai e un
+lacăt); și ar fi adus cronometrul, care acolo e obligatoriu.
+
+Moștenirea e pentru lucruri care sunt același lucru în esență. Lacătul nu e a
+patra întrebare cu variante — e altă formă de interacțiune. Le leagă doar
+**contractul**: `porneste(nivel, samanta)` și semnalul `rezolvat(succes)`,
+aceleași nume și aceeași formă ca la discipline. Cine cheamă scena nu învață
+nimic nou, dar scena nu cară o mașinărie străină. Regula, pe scurt: moștenește
+implementarea doar când chiar o refolosești; împrumută INTERFAȚA ori de câte ori
+poți.
+
+### Cum se joacă
+
+- **Roțile** se mută cu săgețile sus/jos, cu rotița mouse-ului, cu clic pe
+  săgețile desenate, sau tastând cifra direct (după care sare pe roata
+  următoare). Stânga/dreapta schimbă roata. Trec de la un capăt la altul: de la
+  9 la 0 e o apăsare, nu nouă.
+- **Literele roților** (A, B, C, D) vin din `GeneratorCifru.litera()`, aceeași
+  funcție care scrie literele din indicii. Două locuri care numără pozițiile ar
+  fi însemnat, într-o zi, indicii care vorbesc despre altă roată.
+- **Trei încercări**, cu cercuri pline/goale. La o greșeală, indiciile pe care
+  codul tău le încalcă se fac **roșii** — o încercare greșită e o măsurătoare,
+  nu o taxă. Roșul se stinge abia când clintești o roată (adică fix când a
+  încetat să fie adevărat), nu imediat.
+- **După trei greșeli**, codul corect apare **pe roți**, cu verde de cerneală. Un
+  puzzle de deducție pierdut fără să afli răspunsul nu te învață nimic — și, mai
+  rău, te lasă cu bănuiala că poate n-avea soluție.
+- **Fără cronometru.** `SECUNDE = 0` în `cifru.gd`; e un reglaj, nu o absență
+  („Lacăt cronometrat" e un modificator evident pentru mai târziu). Presiunea de
+  timp e unealta luptei; evenimentele sunt respirația dintre lupte.
+- Sunetele sunt cele existente (`Sunet.Efect.CORECT` / `GRESIT`), niciunul nou.
+- Aspectul: **cerneală pe pergament**, ca harta, fiindcă acolo va apărea. Tot
+  desenat din cod, nicio imagine nouă.
+
+### Verificatorul: 500 de semințe × 3 niveluri
+
+`godot --headless --path . res://tools/verifica_cifru.tscn` — **durează ~8
+minute** (nivelul 3 are 10 000 de coduri de parcurs la fiecare întrebare pusă) și
+verifică, pentru fiecare din cele 1500 de puzzle-uri: soluția e unică; codul
+respectă toate indiciile; niciun indiciu redundant; niciun indiciu care fixează
+singur o cifră; fiecare indiciu are o propoziție; aceeași sămânță dă același
+puzzle (comparat prin JSON, deci verifică și că puzzle-ul încape în JSON fără
+traducător).
+
+**Rezultatul: verde peste tot, 0 probleme.**
+
+| | nivel 1 | nivel 2 | nivel 3 |
+|---|---|---|---|
+| indicii, cel mai des | 3 (336/500) | 4 (255/500) | 4 (375/500) |
+| la maximul permis | 2 puzzle-uri | 3 | 2 |
+| reîncercări, media | 1,00 | 1,00 | 1,00 |
+| reîncercări, maximul | 1 | 2 | 2 |
+| durata | 8 s | 52 s | 422 s |
+
+Media de o singură încercare spune că tabelul de dificultate e larg, nu strâmt:
+limita de 30 de reîncercări nu e nici pe departe atinsă. Dacă vreodată se
+atinge des, semnul nu e că trebuie mărită, ci că `indicii_maxime` e prea strâns
+pentru nivelul ăla.
+
+**Ce arată distribuția tipurilor, și ce am ales să nu schimb.** ~75% din indicii
+sunt `DIFERENTA` + `SUMA_DOUA`, iar `FARA_REPETITIE` apare de 6 ori în 500 de
+puzzle-uri. Nu e un bug: alegerea lacomă ia mereu indiciul care taie cel mai
+mult, iar cele aritmetice taie cel mai mult. Cifrurile ies deci mai degrabă
+socoteli decât ordonări — ceea ce, pentru un joc de antrenament mental, e pe
+temă, nu pe lângă ea. Butonul de reglat, dacă vreodată se simte monoton, e
+`CANDIDATI` (câți candidați intră în concurs la o încercare) sau compoziția
+grămezii din `_candidati()` — nu algoritmul.
+
+Eșantionul ăla are, de altfel, un rost dublu: fără el, „suma tuturor cifrelor e
+exact N" (indiciul care taie cel mai brutal) ar fi fost primul indiciu în
+aproape fiecare puzzle din joc, fiindcă alegerea lacomă e deterministă.
+
+### Ce urmează, concret
+
+1. **Legarea de nodul de Eveniment** — `autoload/expeditie.gd` și
+   `scenes/harta/`: sămânța cifrului derivată din sămânța expediției plus id-ul
+   nodului (ca la tipurile de nod), nivelul din adâncimea nodului, recompensă la
+   succes, nimic (sau puțin) la eșec.
+2. **Jucat pe mână.** Nivelul 3 pare, pe hârtie, cel mai lung de dedus; cât
+   durează CHIAR o deducție de 4 indicii nu se află din statistici.
+3. Eventual **un al doilea eveniment**, ca nodul să nu însemne mereu „iar
+   lacătul".
 
 ---
 
