@@ -124,6 +124,26 @@ const RAGAZ_DEPARTE := 0.5
 const DURATA_APROPIERE := 0.85
 const DURATA_RETRAGERE := 0.7
 
+## Cât durează dispariția panoului de indicii, la retragerea camerei.
+##
+## PROBLEMA: cufărul se retrage și crește pe ecran, iar colțul lui din dreapta
+## ajunge sub panoul de indicii — care stă lipit de marginea dreaptă. Două
+## rezolvări erau posibile: să dispară panoul înainte să ajungă cufărul acolo,
+## sau să mut și să micșorez cufărul cât să încapă în stânga panoului.
+##
+## Am ales prima, din două motive. E mai simplă — un număr, aici, față de o
+## rescriere a încadrării de ansamblu (ancoră nouă, scară mai mică, plus
+## verificat din nou cum arată la pornire, unde panoul e oricum invizibil). Și e
+## mai bună: în clipa aia lacătul e deschis, deci indiciile nu mai au niciun rost
+## pe ecran, iar cufărul ÎNTREG, centrat, e singurul lucru care contează. A doua
+## variantă ar fi păstrat pe ecran, permanent, un panou cu informație moartă și
+## ar fi micșorat exact imaginea pentru care se retrage camera.
+##
+## 0,3 s: panoul e dus înainte ca retragerea (0,7 s) să apuce să crească
+## cufărul până în colț. Dacă vreodată mărești `DURATA_RETRAGERE`, ăsta poate
+## rămâne unde e — important e să fie mult mai scurt decât ea.
+const DISPARITIE_PANOU := 0.3
+
 
 # ─────────────────────────────────────────────────────────────
 # DESCHIDEREA — toate duratele, în ordinea în care se întâmplă
@@ -245,6 +265,7 @@ var _textura_deschis: Texture2D = null
 @onready var stralucire: Sprite2D = %Stralucire
 @onready var interfata: Control = %Interfata
 @onready var panou: Panel = %Panou
+@onready var coloana: VBoxContainer = %Coloana
 @onready var titlu: Label = %Titlu
 @onready var subtitlu: Label = %Subtitlu
 @onready var lista_indicii: VBoxContainer = %Indicii
@@ -419,6 +440,9 @@ func porneste(nivel: int, samanta: int) -> void:
 	stralucire.modulate = Color(CULOARE_FULGER, 0.0)
 	halou.modulate = Color(Color.WHITE, HALOU_ALFA)
 
+	panou.modulate = Color.WHITE
+	coloana.modulate = Color.WHITE
+
 	_construieste_rotile()
 	_scrie_indiciile()
 	_arata_incercarile()
@@ -531,7 +555,11 @@ func _retrage() -> void:
 	tween.tween_property(platou, "scale", Vector2(_scara_tinta, _scara_tinta),
 		DURATA_RETRAGERE)
 	tween.tween_property(platou, "position", _pozitie_tinta, DURATA_RETRAGERE)
-	tween.tween_property(interfata, "modulate", Color(Color.WHITE, 0.25), DURATA_RETRAGERE)
+	# Panoul și coloana pleacă mai repede decât camera, ca să nu stea peste
+	# colțul cufărului când acesta crește. MESAJUL rămâne: „Lacătul cedează" e
+	# singurul text care mai are ce căuta pe ecran, iar el stă jos, sub cufăr.
+	tween.tween_property(panou, "modulate:a", 0.0, DISPARITIE_PANOU)
+	tween.tween_property(coloana, "modulate:a", 0.0, DISPARITIE_PANOU)
 	await tween.finished
 
 

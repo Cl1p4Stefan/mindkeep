@@ -3,9 +3,10 @@ extends Node2D
 ## O ROATĂ A CUFĂRULUI — o bandă de cifre care se învârte la nesfârșit.
 ##
 ## Nu e un obiect rotund: e o panglică de cifre desenată de sus în jos, care se
-## repetă. Prin fereastra tăiată în placa de metal se vede o bucată din ea —
-## cifra curentă întreagă și câte o jumătate din vecine — iar umbra de sus și de
-## jos face restul: ochiul completează un cilindru care se rotește.
+## repetă. Prin fereastra tăiată în placa de metal se vede o bucată din ea — în
+## repaus, exact o cifră — iar umbra de sus și de jos face restul: ochiul
+## completează un cilindru care se rotește. Cât tragi de roată, cifrele intră și
+## ies prin fereastră, una câte una.
 ##
 ## ─────────────────────────────────────────────────────────────
 ## DE CE STĂ ÎN SPATELE IMAGINII, ȘI DE CE ASTA E TOT TRUCUL
@@ -46,13 +47,26 @@ signal asezata
 # umbli la unul singur, o să-l cauți pe celălalt imediat.
 # ─────────────────────────────────────────────────────────────
 
-## Distanța dintre două cifre, ca fracțiune din înălțimea ferestrei.
-## 0,55 înseamnă: cifra de sus și cea de jos își arată cam jumătate. Mai mic =
-## cifre înghesuite; mai mare = vecinele dispar și roata pare o casetă.
-const PAS_CIFRA := 0.55
+## Distanța dintre două cifre pe bandă, ca fracțiune din înălțimea ferestrei.
+##
+## PESTE 1 înseamnă că pasul e mai mare decât fereastra, deci ÎN REPAUS se vede
+## o singură cifră, întreagă, iar vecinele stau ascunse în spatele metalului.
+## Așa arată un cifru de cufăr adevărat: o fereastră, o cifră. Sub 1, vecinele
+## își arată o bucată permanent, iar fereastra devine o listă din care citești.
+##
+## Nu schimbă nimic la mișcare: cât tragi de roată, cifrele intră și ies prin
+## fereastră exact ca înainte, doar că trec una câte una, fără să se vadă două
+## deodată decât în treacăt.
+##
+## 1,12 lasă ~50 de pixeli de metal între cifra din fereastră și marginea
+## vecinei. Mai mic = vecinele încep să se iţească; mult mai mare = între cifre
+## apare un gol negru lung când tragi, și banda pare goală.
+const PAS_CIFRA := 1.12
 
-## Câte cifre se desenează, în total, în jurul celei curente. Cinci ajung
-## (centru + două sus + două jos) și garantează că nimic nu iese din placă.
+## Câte cifre se desenează, în total, în jurul celei curente. Cu pasul de mai
+## sus ar ajunge trei (centru + una sus + una jos); cinci e marja, și nu costă
+## nimic — cele care cad complet în afara ferestrei sunt sărite la desen, deci
+## nu pot ajunge niciodată dincolo de placa de metal.
 const CIFRE_DESENATE := 5
 
 ## Cât de tare frânează inerția, pe secundă. E un factor de amortizare
@@ -85,11 +99,26 @@ const PRAG_OPRIRE := 0.004
 
 # ── ÎNFĂȚIȘAREA ───────────────────────────────────────────────
 
-## Mărimea cifrei, în pixeli DE IMAGINE (nu de ecran). Tot ce desenează
-## fișierul ăsta lucrează în coordonatele pozei cufărului — 1990 × 1529 — iar
-## apropierea camerei scalează totul deodată. Așa, cifrele rămân potrivite cu
-## ferestrele la orice distanță, fără niciun calcul în plus.
-const MARIME_CIFRA := 116
+## CÂT DIN ÎNĂLȚIMEA FERESTREI ocupă o cifră. E o fracțiune, nu o mărime de
+## font, fiindcă asta e proprietatea care contează: o cifră trebuie să umple
+## fereastra, oricât de mare ar fi ea. Dacă arta se redesenează cu ferestre mai
+## înalte, cifrele cresc odată cu ele, singure.
+##
+## 0,70 lasă câte 15% de metal deasupra și dedesubt — destul cât cifra să pară
+## încadrată, nu înghesuită. Peste ~0,85 începe să atingă marginile.
+const INALTIME_CIFRA := 0.70
+
+## CÂT DIN MĂRIMEA FONTULUI e, efectiv, înălțimea unei cifre.
+##
+## „Mărimea fontului" nu e înălțimea literelor: e o măsură din care fiecare font
+## își croiește literele cum vrea, plus spațiul de deasupra și de dedesubt (unde
+## încap accentele și coada lui „p"). Pentru fontul implicit al motorului, o
+## cifră ocupă cam 72% din ea — măsurat pe ecran, nu citit din documentație.
+##
+## E constantă separată tocmai fiindcă e o proprietate A FONTULUI, nu o
+## preferință: în ziua în care Mindkeep primește un font propriu, ăsta e numărul
+## de re-măsurat, iar `INALTIME_CIFRA` rămâne neatins.
+const RAPORT_CIFRA := 0.72
 
 ## Fundul lacătului: metal neluminat. Se vede prin gaură, în spatele cifrelor.
 const CULOARE_FUND := Color(0.085, 0.068, 0.056)
@@ -349,15 +378,23 @@ func _draw() -> void:
 		draw_rect(caseta, Color(CULOARE_APRINSA, 0.42 * stralucire))
 
 
+## Mărimea de font care face cifra să ocupe `INALTIME_CIFRA` din fereastră.
+## Se calculează din fereastră, deci se potrivește singură la orice artă.
+func _marime_cifra() -> int:
+	return maxi(int(round(fereastra.y * INALTIME_CIFRA / RAPORT_CIFRA)), 1)
+
+
 ## Scrie o cifră CENTRATĂ pe orizontală în fereastră, cu mijlocul ei la `y`.
 ##
-## `draw_string` primește linia de bază (talpa literelor), nu mijlocul lor —
-## de-aia nu e destul să dai `y`. Scădem coada literelor („descent") din
-## jumătatea înălțimii și obținem talpa care face cifra să pară centrată.
+## `draw_string` primește linia de bază (talpa literelor), nu mijlocul lor — de
+## aia nu e destul să dai `y`. Iar centrarea se face după înălțimea CIFREI, nu
+## după înălțimea rândului: rândul include spațiul pentru accente și pentru
+## coada lui „p", pe care o cifră nu-l folosește. Centrat după rând, „7" ar sta
+## vizibil prea sus în fereastră.
 func _scrie(font: Font, y: float, text: String, culoare: Color) -> void:
 	if font == null:
 		return
-	var inaltime := font.get_height(MARIME_CIFRA)
-	var baza := y + inaltime * 0.5 - font.get_descent(MARIME_CIFRA)
+	var marime := _marime_cifra()
+	var baza := y + marime * RAPORT_CIFRA * 0.5
 	draw_string(font, Vector2(0, baza), text, HORIZONTAL_ALIGNMENT_CENTER,
-		fereastra.x, MARIME_CIFRA, culoare)
+		fereastra.x, marime, culoare)

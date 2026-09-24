@@ -99,10 +99,21 @@ apropierea s-a terminat.
 ### Roțile: o bandă fără capete
 
 `banda_cifre.gd` desenează o panglică de cifre care se repetă la infinit
-(`posmod` peste numărul treptei: treapta −1 e tot o cifră bună), cu cifra
-curentă întreagă în mijloc și câte o jumătate din vecine. Peste cifre, un
+(`posmod` peste numărul treptei: treapta −1 e tot o cifră bună). Peste cifre, un
 degrade întunecat sus și jos — fără el banda arată ca o listă care alunecă; cu
 el, ca o suprafață care se curbează și fuge din fața ochiului.
+
+**În repaus se vede exact o cifră**, întreagă, iar vecinele stau ascunse în
+spatele metalului: pasul dintre cifre (`PAS_CIFRA = 1,12`) e mai mare decât
+înălțimea ferestrei. Sub 1, vecinele își arătau permanent câte o bucată, iar
+fereastra devenea o listă din care citești, nu un cifru. Cât tragi de roată,
+cifrele intră și ies prin fereastră ca înainte, doar că trec una câte una.
+
+Mărimea cifrei nu mai e o mărime de font, ci o **fracțiune din fereastră**
+(`INALTIME_CIFRA = 0,70`), tradusă în font prin `RAPORT_CIFRA = 0,72` — cât din
+mărimea unui font ocupă efectiv o cifră. Sunt două constante, nu una, fiindcă
+prima e o preferință de compoziție, iar a doua o proprietate a fontului: în ziua
+în care Mindkeep primește un font propriu, se re-măsoară doar a doua.
 
 Controlul:
 
@@ -125,7 +136,12 @@ fișier, cu explicația în ce direcție să le muți.
 Cinci mișcări, ≈2,6 s în total, fiecare cu constanta ei:
 
 1. roțile se aprind pe rând, stânga → dreapta, cu câte un clic (0,12 s fiecare);
-2. camera se retrage la cufărul întreg (0,7 s);
+2. camera se retrage la cufărul întreg (0,7 s), iar panoul de indicii se stinge
+   în 0,3 s — mai repede decât camera, ca să fie dus înainte ca respectivul colț
+   al cufărului să crească sub el. Cealaltă rezolvare (să micșorez cufărul cât
+   să încapă în stânga panoului) era și mai complicată, și mai proastă: în
+   clipa aia lacătul e deschis, deci indiciile sunt informație moartă, iar
+   cufărul întreg e singurul lucru care contează. Mesajul rămâne pe ecran;
 3. cufărul tresare scurt (0,18 s);
 4. **fulgerul urcă (0,16 s), iar ÎN VÂRFUL lui se schimbă textura** închis →
    deschis;
