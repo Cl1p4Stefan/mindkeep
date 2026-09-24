@@ -387,6 +387,14 @@ func _imbraca() -> void:
 	panou.add_theme_stylebox_override("panel", _placa(PANOU, PANOU_CONTUR, 1))
 	# Mesajul de sub cufăr stă tot pe lemn, deci primește aceeași hârtie — doar
 	# că a lui trebuie să aibă și margini, altfel textul s-ar lipi de chenar.
+	#
+	# Fâșia se potrivește TEXTULUI, nu unei zone: eticheta stă într-un
+	# `CenterContainer` lat cât ecranul, iar un container își strânge copilul la
+	# mărimea lui minimă și îl centrează. Mărimea minimă a unei etichete fără
+	# autowrap e chiar lățimea textului — deci fâșia crește și se micșorează cu
+	# vorbele, iar centrul ei e mereu centrul ecranului. Înainte, eticheta era
+	# un dreptunghi fix care se oprea la marginea panoului: fâșia rămânea lungă
+	# și goală, iar textul apărea centrat pe jumătatea stângă a ecranului.
 	var strat := _placa(PANOU, Color(PANOU_CONTUR, 0.0), 0)
 	strat.content_margin_left = 16
 	strat.content_margin_right = 16
@@ -650,6 +658,23 @@ func _alege_roata(index: int) -> void:
 		etichete_litere[k].add_theme_color_override("font_color", culoare)
 
 
+## Nicio roată nu mai e „a ta".
+##
+## Se cheamă în clipa în care jocul nu mai acceptă input — la cod corect ȘI la a
+## treia greșeală — nu la începutul animațiilor de după. Evidențierea înseamnă
+## „aici lucrezi acum"; din secunda în care nu mai poți lucra nicăieri, e o
+## minciună, iar în timpul deschiderii ar sta chiar lângă roțile care se aprind
+## singure și ar arăta ca încă o stare a mecanismului.
+##
+## Aprinderea de la deschidere e cu totul altceva și nu trece pe aici: aia nu e
+## selecție, e mecanismul care își recunoaște cifrele, una câte una.
+func _sterge_selectia() -> void:
+	roata_curenta = -1
+	for k in etichete_litere.size():
+		etichete_litere[k].add_theme_color_override("font_color",
+			LITERA_BLOCATA if benzi[k].blocata else LITERA)
+
+
 func _clic_roata() -> void:
 	Sunet.reda(Sunet.Efect.CLIC_ROATA)
 	# Cifrele s-au schimbat, deci evidențierile roșii nu mai spun adevărul
@@ -834,7 +859,10 @@ func _incearca() -> void:
 		_termina(false)
 		return
 
-	_spune("Nu cedează. Roșu: indiciile pe care codul tău le încalcă.")
+	# Scurt dinadins: acum eticheta e centrată pe tot ecranul, iar o propoziție
+	# lungă ar ajunge cu capătul din dreapta sub panoul de indicii (și peste
+	# butonul „Deschide"). Roșul de alături spune oricum restul.
+	_spune("Nu cedează. Roșu: indiciile încălcate.")
 
 
 ## Colorează în roșu indiciile încălcate.
@@ -855,6 +883,7 @@ func _termina(succes: bool) -> void:
 	_gata = false
 	_prinsa = -1
 	buton.disabled = true
+	_sterge_selectia()
 
 	if succes:
 		await _deschide_cufarul()

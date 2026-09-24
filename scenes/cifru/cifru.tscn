@@ -109,20 +109,21 @@ custom_minimum_size = Vector2(0, 46)
 layout_mode = 2
 text = "Deschide"
 
-[node name="Mesaj" type="Label" parent="Interfata"]
-unique_name_in_owner = true
+[node name="ZonaMesaj" type="CenterContainer" parent="Interfata"]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 40.0
-offset_top = -84.0
-offset_right = -390.0
-offset_bottom = -34.0
+offset_top = -88.0
+offset_bottom = -30.0
 grow_horizontal = 2
 grow_vertical = 0
 mouse_filter = 2
+
+[node name="Mesaj" type="Label" parent="Interfata/ZonaMesaj"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
 horizontal_alignment = 1
 vertical_alignment = 1
-autowrap_mode = 3

@@ -141,7 +141,17 @@ Cinci mișcări, ≈2,6 s în total, fiecare cu constanta ei:
    al cufărului să crească sub el. Cealaltă rezolvare (să micșorez cufărul cât
    să încapă în stânga panoului) era și mai complicată, și mai proastă: în
    clipa aia lacătul e deschis, deci indiciile sunt informație moartă, iar
-   cufărul întreg e singurul lucru care contează. Mesajul rămâne pe ecran;
+   cufărul întreg e singurul lucru care contează. Mesajul rămâne pe ecran —
+   **centrat pe tot ecranul, cu fâșia întunecată strânsă pe text**: stă
+   într-un `CenterContainer` lat cât fereastra, iar un container își strânge
+   copilul la mărimea lui minimă, care pentru o etichetă fără autowrap e chiar
+   lățimea vorbelor. (Înainte era un dreptunghi fix care se oprea la marginea
+   panoului, deci fâșia rămânea lungă și goală, iar textul apărea centrat pe
+   jumătatea stângă. Din același motiv, mesajul de după o încercare greșită s-a
+   scurtat: centrat pe tot ecranul, propoziția lungă ajungea cu capătul sub
+   panou.) Tot atunci **se șterge și selecția** — din clipa în care inputul e
+   blocat, nicio literă nu mai e evidențiată, fiindcă „aici lucrezi acum" ar fi
+   o minciună; aprinderea roților de la deschidere e altceva și rămâne;
 3. cufărul tresare scurt (0,18 s);
 4. **fulgerul urcă (0,16 s), iar ÎN VÂRFUL lui se schimbă textura** închis →
    deschis;
