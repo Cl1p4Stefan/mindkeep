@@ -45,20 +45,58 @@ extends Node
 ##   FIECARE INDICIU ARE O PROPOZIȚIE — prinde tipul adăugat în `evalueaza()`
 ##   și uitat în `text()`. Fără verificarea asta, l-ai găsi pe ecran, în joc.
 ##
-## Plus profilul care se citește ca un raport de design: câte indicii are un
-## puzzle, ce tipuri apar și cât de des, câte reîncercări cere o sămânță.
-
-## Câte semințe pe nivel. 500 × 3 niveluri = 1500 de puzzle-uri.
+##   NOTA E CEA CERUTĂ DE NIVEL — de când dificultatea se măsoară cu
+##   `RezolvitorCifru`, un nivel e definit de cât de greu se deduce codul, nu de
+##   câte indicii are. Verificarea asta e singurul loc din care afli dacă
+##   tabelul de dificultate chiar livrează ce promite. Cu o nuanță: puzzle-urile
+##   ieșite pe ușa din dos (toate încercările epuizate) se numără separat și au
+##   voie până la `REZERVA_ACCEPTATA` la sută — supapa aia e proiectată, nu
+##   stricată. Nota greșită FĂRĂ ca rezerva să fi intrat în joc rămâne eroare.
 ##
-## Durează câteva minute, și e în regulă: unealta se cheamă când umbli la
-## generator, nu la fiecare pornire a jocului. Nivelul 3 ia partea leului —
-## are 10000 de coduri de parcurs la fiecare întrebare pusă.
-const SEMINTE := 500
+##   REZOLVITORUL ȘI FORȚA BRUTĂ SPUN ACELAȘI LUCRU — codul la care ajunge
+##   rezolvitorul e chiar codul puzzle-ului. E verificarea care păzește
+##   verificarea: un bug în rezolvitor n-ar crăpa nimic și n-ar da niciun
+##   simptom, ar da doar note greșite — adică un tabel de dificultate care
+##   minte, în tăcere, pentru totdeauna.
+##
+##   CEL MULT O EGALITATE LA NIVELUL 3 — regula de design a nivelului greu.
+##   Se verifică prin `GeneratorCifru.e_egalitate()`, aceeași funcție pe care o
+##   folosește generatorul; două definiții s-ar despărți la primul tip nou.
+##
+## Plus profilul care se citește ca un raport de design: distribuția notelor,
+## câte indicii are un puzzle, ce tipuri apar și cât de des, câte reîncercări
+## cere o sămânță.
+
+## Câte semințe pe nivel.
+##
+## A scăzut de la 500, și merită spus de ce: de când fiecare încercare trece și
+## prin rezolvitor, o generare de nivel 3 ia în jur de o secundă și un sfert în
+## loc de câteva zecimi. La 500 de semințe unealta ar fi durat peste o
+## jumătate de oră, iar o unealtă pe care n-o mai pornești fiindcă durează prea
+## mult nu mai apără nimic. La 200 durează vreo zece minute — destul de puțin
+## cât s-o chemi după fiecare umblătură la generator, și destul de multe
+## semințe cât o problemă de una la cincizeci să iasă la iveală.
+const SEMINTE := 200
 
 ## De la ce sămânță pornim. Nu de la 0, din același motiv ca la celelalte
 ## unelte: `_sub_samanta()` înmulțește, iar sămânța 0 ar da aceeași sub-sămânță
 ## pentru toate încercările ei.
 const PRIMA_SAMANTA := 1000
+
+## Cât la sută dintre semințe au voie să primească puzzle-ul de rezervă, cu altă
+## notă decât cea cerută de nivel.
+##
+## Nu zero, și e o alegere conștientă. Generatorul caută un puzzle de nota
+## cerută în `INCERCARI_MAXIME` încercări; când nu-l găsește, livrează cel mai
+## apropiat puzzle CORECT în loc să lase jucătorul fără lacăt. E supapa
+## documentată în `genereaza()`, și prețul ei e o treaptă de dificultate, o dată
+## la câteva sute de lacăte.
+##
+## Ce apără pragul e altceva: ca supapa să nu devină regulă. Dacă rata urcă,
+## înseamnă că nivelul cere o notă pe care generatorul n-o prea poate produce —
+## și atunci `alegere`, `egalitati_maxime` sau `candidati` sunt de reglat, nu
+## `INCERCARI_MAXIME`. Măsurat azi: 1,1% la nivelul 3, zero la celelalte.
+const REZERVA_ACCEPTATA := 2.0
 
 
 func _ready() -> void:
@@ -84,8 +122,9 @@ func _ready() -> void:
 func _verifica(nivel: int) -> bool:
 	var spec: Dictionary = GeneratorCifru.specificatie(nivel)
 	print("")
-	print("═══ NIVELUL %d — %d roți, cifre %d-%d, cel mult %d indicii ═══" % [
-		nivel, spec["cifre"], spec["minim"], spec["maxim"], spec["indicii_maxime"]])
+	print("═══ NIVELUL %d — %d roți, cifre %d-%d, cel mult %d indicii, nota %s, alegere %s ═══" % [
+		nivel, spec["cifre"], spec["minim"], spec["maxim"], spec["indicii_maxime"],
+		RezolvitorCifru.nume_nota(int(spec["nota"])), spec.get("alegere", "lacom")])
 
 	# Toate codurile, o singură dată pentru tot nivelul. Verificările de mai jos
 	# le parcurg de zeci de mii de ori; reconstruite la fiecare sămânță, ele
@@ -100,6 +139,9 @@ func _verifica(nivel: int) -> bool:
 	var tipuri := {}
 	var incercari: Array[int] = []
 	var la_limita: Array[int] = []
+	# Semințele care au primit puzzle-ul de rezerva, cu alta nota decat cea
+	# ceruta. Asteptat si rar; devine problema doar peste `REZERVA_ACCEPTATA`.
+	var pe_rezerva: Array[int] = []
 	var goale := 0
 	# Pe ce poziție a căzut roata blocată: pozitie → de câte ori. Gol la
 	# nivelurile fără roată blocată. E o verificare de împrăștiere, nu de
@@ -108,6 +150,13 @@ func _verifica(nivel: int) -> bool:
 	var blocate := {}
 	# Cât a durat DOAR generarea, fără verificări. Microsecunde, adunate.
 	var timp_generare := 0
+	# Notele livrate: nota → de câte ori. La un nivel sănătos, un singur rând.
+	var note := {}
+	# Cât a durat DOAR notarea unui puzzle gata făcut. Nu e timpul din
+	# generator (acolo se notează zeci de puzzle-uri respinse pentru unul bun),
+	# dar spune cât costă o notare, ceea ce e numărul de care ai nevoie când te
+	# întrebi de ce generarea a devenit lentă.
+	var timp_notare := 0
 
 	var start := Time.get_ticks_msec()
 
@@ -138,7 +187,7 @@ func _verifica(nivel: int) -> bool:
 			la_limita.append(samanta)
 		_numara(cate_indicii, indicii.size())
 		for indiciu: Dictionary in indicii:
-			_numara(tipuri, String(indiciu["tip"]))
+			_numara(tipuri, GeneratorCifru.eticheta(indiciu))
 
 		# ── 1. Codul anunțat respectă toate indiciile ─────────
 		for k in indicii.size():
@@ -186,7 +235,65 @@ func _verifica(nivel: int) -> bool:
 				_noteaza(probleme, "indiciu fără text", samanta)
 				break
 
-		# ── 6. Aceeași sămânță, de două ori ───────────────────
+		# ── 6. Dificultatea e cea cerută de nivel ─────────────
+		# Notăm din nou puzzle-ul livrat, nu ne încredem în ce scrie în el:
+		# `nota` e pusă de generator, iar dacă generatorul a uitat s-o pună (sau
+		# a pus-o greșit), o verificare care citește cheia n-ar afla niciodată.
+		var pornit_notare := Time.get_ticks_usec()
+		var raport: Dictionary = RezolvitorCifru.noteaza(puzzle)
+		timp_notare += Time.get_ticks_usec() - pornit_notare
+
+		_numara(note, int(raport["nota"]) if bool(raport["rezolvat"]) else -1)
+
+		if bool(raport["contrazis"]):
+			_noteaza(probleme, "indiciile se contrazic între ele", samanta)
+		elif not bool(raport["rezolvat"]):
+			# Are soluție (punctul 2 a dovedit-o), dar nu există drum către ea
+			# cu T1-T3: jucătorul ar ajunge să ghicească.
+			_noteaza(probleme, "codul nu se poate DEDUCE, doar ghici", samanta)
+		else:
+			# PĂZITORUL REZOLVITORULUI. Dacă rezolvitorul ajunge la alt cod
+			# decât cel adevărat, notele lui sunt gunoi — și nimic altceva
+			# n-ar semnala asta, fiindcă un puzzle cu notă greșită arată perfect
+			# normal. E singura verificare de aici care apără o VERIFICARE, nu
+			# jocul.
+			if JSON.stringify(raport["cod"]) != JSON.stringify(cod):
+				_noteaza(probleme, "rezolvitorul ajunge la alt cod decât cel adevărat",
+					samanta)
+			if int(raport["nota"]) != int(spec["nota"]):
+				# DOUĂ LUCRURI DIFERITE, care nu se pun în aceeași găleată.
+				#
+				# Dacă puzzle-ul a ieșit pe UȘA DIN DOS (`la_limita`), generatorul
+				# a căutat cinstit toate încercările permise, n-a găsit nota
+				# cerută și a livrat cel mai apropiat puzzle corect, cu un
+				# avertisment în consolă. Ăsta e comportamentul PROIECTAT: mai
+				# bine un lacăt cu o treaptă mai jos decât un joc care se oprește
+				# din mers. Se numără, ca să știm cât de des, dar nu e o
+				# defecțiune.
+				#
+				# Dacă nota e greșită FĂRĂ ca rezerva să fi intrat în joc,
+				# generatorul a acceptat un puzzle pe care trebuia să-l respingă.
+				# Aia e o defecțiune, și e gravă: filtrul de dificultate nu-și
+				# face treaba.
+				if bool(puzzle["la_limita"]):
+					pe_rezerva.append(samanta)
+				else:
+					_noteaza(probleme, "nota greșită, deși rezerva n-a intrat în joc",
+						samanta)
+			if int(puzzle.get("nota", 0)) != int(raport["nota"]):
+				_noteaza(probleme, "nota scrisă în puzzle nu e nota reală", samanta)
+
+		# ── 7. Cel mult atâtea egalități câte permite nivelul ─
+		var plafon_egalitati := int(spec.get("egalitati_maxime", -1))
+		if plafon_egalitati >= 0:
+			var egalitati := 0
+			for indiciu: Dictionary in indicii:
+				if GeneratorCifru.e_egalitate(indiciu):
+					egalitati += 1
+			if egalitati > plafon_egalitati:
+				_noteaza(probleme, "prea multe egalități pentru nivel", samanta)
+
+		# ── 8. Aceeași sămânță, de două ori ───────────────────
 		# Comparăm prin JSON, nu cu `==`: JSON compară pe conținut, la orice
 		# adâncime, și e exact forma în care puzzle-ul ar ajunge într-un save.
 		# Deci verificarea asta spune, pe lângă „e reproductibil", și „încape
@@ -198,6 +305,15 @@ func _verifica(nivel: int) -> bool:
 	var durata := (Time.get_ticks_msec() - start) / 1000.0
 
 	# ── RAPORTUL ──────────────────────────────────────────────
+	print("")
+	print("  Cât de greu se deduce codul (nota = cea mai grea tehnică cerută):")
+	var chei_note := note.keys()
+	chei_note.sort()
+	for nota in chei_note:
+		var cate: int = note[nota]
+		var nume := "NEDEDUCTIBIL" if int(nota) < 0 else RezolvitorCifru.nume_nota(int(nota))
+		print("    %-12s %4d puzzle-uri (%s)" % [nume, cate, _bara(cate, SEMINTE)])
+
 	print("")
 	print("  Câte indicii are un puzzle:")
 	var marimi := cate_indicii.keys()
@@ -244,12 +360,25 @@ func _verifica(nivel: int) -> bool:
 	print("  Reîncercări: media %.2f, maximul %d (din %d permise)." % [
 		medie, maxim, GeneratorCifru.INCERCARI_MAXIME])
 	if not la_limita.is_empty():
-		print("  ATENȚIE: %d semințe au ieșit peste maximul de indicii: %s" % [
-			la_limita.size(), _primele(la_limita)])
+		print("  Pe ușa din dos (toate încercările epuizate): %d semințe (%.1f%%): %s" % [
+			la_limita.size(), 100.0 * la_limita.size() / maxi(SEMINTE, 1),
+			_primele(la_limita)])
 	print("  O GENERARE: %.1f ms în medie (doar generatorul, fără verificări)." % [
 		timp_generare / 1000.0 / maxi(SEMINTE, 1)])
+	print("  O NOTARE:   %.1f ms în medie (rezolvitorul, pe un puzzle gata făcut)." % [
+		timp_notare / 1000.0 / maxi(SEMINTE, 1)])
 	print("  Durata: %.1f s pentru %d puzzle-uri (plus încă %d, pentru determinism)."
 		% [durata, SEMINTE, SEMINTE])
+
+	# Rezerva are voie să intre în joc, dar rar. Peste prag, nu mai e o supapă —
+	# e semn că nivelul cere ceva ce generatorul nu prea poate livra, iar
+	# jucătorul primește des altceva decât scrie în tabel.
+	var rata := 100.0 * pe_rezerva.size() / maxi(SEMINTE, 1)
+	if not pe_rezerva.is_empty():
+		print("  Rezerva, cu altă notă decât cea cerută: %d semințe (%.1f%%, prag %.1f%%): %s"
+			% [pe_rezerva.size(), rata, REZERVA_ACCEPTATA, _primele(pe_rezerva)])
+	if rata > REZERVA_ACCEPTATA:
+		_noteaza(probleme, "rezerva intră în joc prea des", pe_rezerva[0])
 
 	if probleme.is_empty():
 		print("  ✔ Nicio problemă.")

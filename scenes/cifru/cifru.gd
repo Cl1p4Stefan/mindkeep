@@ -253,6 +253,9 @@ var _aproape := false
 var _are_rosu := false
 var timp_ramas := 0.0
 
+## Unde lasă firul separat puzzle-ul proaspăt generat. Vezi `_compune_pe_fir()`.
+var _puzzle_din_fir := {}
+
 var _textura_inchis: Texture2D = null
 var _textura_deschis: Texture2D = null
 
@@ -438,11 +441,25 @@ func porneste(nivel: int, samanta: int) -> void:
 	_gata = false
 	incercari_ramase = INCERCARI
 	_are_rosu = false
+	_sterge_lacatul_vechi()
 
-	puzzle = GeneratorCifru.genereaza(nivel, samanta)
-	if puzzle.is_empty():
-		_fara_puzzle()
-		return
+	# GENERAREA PLEACĂ PE UN FIR SEPARAT, ÎNAINTE DE ORICE ALTCEVA.
+	#
+	# De când dificultatea e măsurată, nu presupusă, generatorul produce zeci de
+	# puzzle-uri și le aruncă pe cele care nu sunt de nota cerută: un lacăt de
+	# nivel 3 ia în jur de o secundă și un sfert. O secundă și un sfert pe firul
+	# principal înseamnă un joc care pare că a murit — fără animație, fără
+	# mouse, fără nimic.
+	#
+	# E sigur să meargă acolo fiindcă `GeneratorCifru` e LOGICĂ PURĂ: nu atinge
+	# niciun nod, niciun `Tween`, nicio textură, și își are propriul
+	# `RandomNumberGenerator` în loc să tragă din cel global. Firul nu are ce
+	# strica, fiindcă nu are la ce ajunge. (Ăsta e exact dividendul regulii
+	# „cine calculează nu desenează" din capul fișierului de generator —
+	# separarea aia, făcută din curățenie, e ce face mutarea asta posibilă în
+	# zece rânduri.)
+	_puzzle_din_fir = {}
+	var sarcina := WorkerThreadPool.add_task(_compune_pe_fir.bind(nivel, samanta))
 
 	_pune_textura(_textura_inchis)
 	stralucire.modulate = Color(CULOARE_FULGER, 0.0)
@@ -450,11 +467,6 @@ func porneste(nivel: int, samanta: int) -> void:
 
 	panou.modulate = Color.WHITE
 	coloana.modulate = Color.WHITE
-
-	_construieste_rotile()
-	_scrie_indiciile()
-	_arata_incercarile()
-	buton.disabled = false
 	_spune("")
 
 	# Camera pornește DEPARTE, ca să vezi întâi ce obiect e, și abia apoi la ce
@@ -462,11 +474,70 @@ func porneste(nivel: int, samanta: int) -> void:
 	# care începe pe un cufăr și se apropie e un loc.
 	_aseaza_camera(false, true)
 	interfata.modulate = Color(Color.WHITE, 0.0)
+
+	# AȘTEPTAREA, care e în același timp RĂGAZUL.
+	#
+	# Cele două lucruri se petrec SUPRAPUS, nu unul după altul: răgazul de o
+	# jumătate de secundă în care vezi cufărul întreg exista oricum, iar
+	# generarea se strecoară în el. La nivelurile ușoare puzzle-ul e gata mult
+	# înainte, și atunci așteptarea e exact răgazul de dinainte, neschimbat. La
+	# nivelul 3 mai durează o clipă peste el.
+	#
+	# Bucla cedează un CADRU la fiecare tur (`await ... process_frame`), în loc
+	# să cheme `wait_for_task_completion()` direct: aia ar bloca firul principal,
+	# adică fix ce încercăm să evităm. Așa jocul continuă să deseneze.
+	var arbore := get_tree()
+	var pana_cand := Time.get_ticks_msec() + int(RAGAZ_DEPARTE * 1000.0)
+	while not WorkerThreadPool.is_task_completed(sarcina) \
+			or Time.get_ticks_msec() < pana_cand:
+		await arbore.process_frame
+	# Obligatorie chiar și când sarcina e deja gata: ea eliberează sarcina din
+	# bazin. Aici nu mai blochează nimic, fiindcă am așteptat până s-a terminat.
+	WorkerThreadPool.wait_for_task_completion(sarcina)
+	if not is_inside_tree():
+		return   # scena a fost închisă cât timp se genera
+
+	puzzle = _puzzle_din_fir
+	if puzzle.is_empty():
+		_fara_puzzle()
+		return
+
+	_construieste_rotile()
+	_scrie_indiciile()
+	_arata_incercarile()
+	buton.disabled = false
 	await _apropie()
 
 	if SECUNDE > 0.0:
 		timp_ramas = SECUNDE
 		set_process(true)
+
+
+## Ce rulează pe firul separat. Nimic altceva decât generatorul — niciun nod,
+## nicio scenă, nicio proprietate de desen.
+##
+## Rezultatul se lasă într-o variabilă, nu se întoarce: `add_task()` nu are unde
+## să ducă o valoare înapoi. Nu e o cursă între fire, fiindcă firul principal o
+## citește abia DUPĂ ce a văzut sarcina terminată — iar până atunci n-o atinge.
+func _compune_pe_fir(nivel: int, samanta: int) -> void:
+	_puzzle_din_fir = GeneratorCifru.genereaza(nivel, samanta)
+
+
+## Șterge roțile și indiciile lacătului dinainte.
+##
+## Are rost de când generarea durează: între apelul lui `porneste()` și sosirea
+## puzzle-ului trec acum niște cadre, iar în cadrele alea s-ar vedea cifrele
+## lacătului trecut, stând în ferestre ca și cum ar fi ale ăstuia nou.
+func _sterge_lacatul_vechi() -> void:
+	for copil in parinte_benzi.get_children():
+		copil.queue_free()
+	for copil in parinte_litere.get_children():
+		copil.queue_free()
+	for copil in lista_indicii.get_children():
+		copil.queue_free()
+	benzi.clear()
+	etichete_litere.clear()
+	randuri_indicii.clear()
 
 
 ## EȘECUL ORDONAT, ca la discipline (`Puzzle._fara_intrebari()`): generatorul
@@ -536,8 +607,10 @@ func _centrul_ferestrelor() -> Vector2:
 
 ## Apropierea de la cufărul întreg la placă. `await`-abilă: cine o cheamă
 ## așteaptă până se termină, și abia apoi dă drumul roților.
+## Răgazul de dinaintea apropierii NU mai e aici, ci în `porneste()`, unde se
+## petrece în același timp cu generarea de pe firul separat. Pus aici, s-ar fi
+## adunat la ea, și ai fi stat degeaba cu ochii pe un cufăr nemișcat.
 func _apropie() -> void:
-	await get_tree().create_timer(RAGAZ_DEPARTE).timeout
 	_aseaza_camera(true, false)
 	var tween := create_tween()
 	tween.set_parallel(true)

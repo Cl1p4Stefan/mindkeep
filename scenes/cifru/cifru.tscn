@@ -1,8 +1,8 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene format=3 uid="uid://dnlsoywyt6bms"]
 
-[ext_resource type="Script" path="res://scenes/cifru/cifru.gd" id="1_cifru"]
+[ext_resource type="Script" uid="uid://b5i40ugvda3td" path="res://scenes/cifru/cifru.gd" id="1_cifru"]
 
-[node name="Cifru" type="Control"]
+[node name="Cifru" type="Control" unique_id=2135648307]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -11,7 +11,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_cifru")
 
-[node name="Fundal" type="ColorRect" parent="."]
+[node name="Fundal" type="ColorRect" parent="." unique_id=1014991581]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
@@ -21,27 +21,27 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="Platou" type="Node2D" parent="."]
+[node name="Platou" type="Node2D" parent="." unique_id=1323073058]
 unique_name_in_owner = true
 
-[node name="Halou" type="Sprite2D" parent="Platou"]
+[node name="Halou" type="Sprite2D" parent="Platou" unique_id=1264863402]
 unique_name_in_owner = true
 
-[node name="Benzi" type="Node2D" parent="Platou"]
+[node name="Benzi" type="Node2D" parent="Platou" unique_id=2091890127]
 unique_name_in_owner = true
 
-[node name="Cufar" type="Sprite2D" parent="Platou"]
-unique_name_in_owner = true
-centered = false
-
-[node name="Litere" type="Node2D" parent="Platou"]
-unique_name_in_owner = true
-
-[node name="Stralucire" type="Sprite2D" parent="Platou"]
+[node name="Cufar" type="Sprite2D" parent="Platou" unique_id=1347615121]
 unique_name_in_owner = true
 centered = false
 
-[node name="Interfata" type="Control" parent="."]
+[node name="Litere" type="Node2D" parent="Platou" unique_id=788131265]
+unique_name_in_owner = true
+
+[node name="Stralucire" type="Sprite2D" parent="Platou" unique_id=952434369]
+unique_name_in_owner = true
+centered = false
+
+[node name="Interfata" type="Control" parent="." unique_id=22167810]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
@@ -51,7 +51,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="Panou" type="Panel" parent="Interfata"]
+[node name="Panou" type="Panel" parent="Interfata" unique_id=1322370786]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 11
@@ -66,7 +66,7 @@ grow_horizontal = 0
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="Coloana" type="VBoxContainer" parent="Interfata"]
+[node name="Coloana" type="VBoxContainer" parent="Interfata" unique_id=827083259]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 11
@@ -82,34 +82,34 @@ grow_vertical = 2
 mouse_filter = 2
 theme_override_constants/separation = 12
 
-[node name="Titlu" type="Label" parent="Interfata/Coloana"]
+[node name="Titlu" type="Label" parent="Interfata/Coloana" unique_id=1897652804]
 unique_name_in_owner = true
 layout_mode = 2
 text = "LACĂTUL"
 
-[node name="Subtitlu" type="Label" parent="Interfata/Coloana"]
+[node name="Subtitlu" type="Label" parent="Interfata/Coloana" unique_id=428781557]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Cifrul nu e scris nicăieri. E scris în indicii."
 autowrap_mode = 3
 
-[node name="Indicii" type="VBoxContainer" parent="Interfata/Coloana"]
+[node name="Indicii" type="VBoxContainer" parent="Interfata/Coloana" unique_id=1605455821]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 8
 
-[node name="Incercari" type="Label" parent="Interfata/Coloana"]
+[node name="Incercari" type="Label" parent="Interfata/Coloana" unique_id=1368666622]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Deschide" type="Button" parent="Interfata/Coloana"]
+[node name="Deschide" type="Button" parent="Interfata/Coloana" unique_id=1125303953]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 46)
 layout_mode = 2
 text = "Deschide"
 
-[node name="ZonaMesaj" type="CenterContainer" parent="Interfata"]
+[node name="ZonaMesaj" type="CenterContainer" parent="Interfata" unique_id=125201539]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -121,9 +121,8 @@ grow_horizontal = 2
 grow_vertical = 0
 mouse_filter = 2
 
-[node name="Mesaj" type="Label" parent="Interfata/ZonaMesaj"]
+[node name="Mesaj" type="Label" parent="Interfata/ZonaMesaj" unique_id=1339916714]
 unique_name_in_owner = true
 layout_mode = 2
-mouse_filter = 2
 horizontal_alignment = 1
 vertical_alignment = 1

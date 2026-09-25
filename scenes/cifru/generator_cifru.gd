@@ -75,27 +75,65 @@ extends RefCounted
 ## cifra 0 a ieșit fiindcă o roată de cifru de cufăr arată 1-9; e o convenție
 ## veche și n-are rost contrazisă pentru un singur simbol în plus.
 ##
-## CE A RĂMAS SĂ DEOSEBEASCĂ NIVELURILE, atunci:
+## CE A RĂMAS SĂ DEOSEBEASCĂ NIVELURILE, atunci: **cât de greu se DEDUCE codul**.
+## Nu câte indicii are.
+##
+## Asta e o schimbare de fond față de prima versiune, și merită povestită,
+## fiindcă e o lecție de design care se repetă peste tot.
+##
+## La început, nivelurile se deosebeau prin `indicii_maxime`: nivelul 3 primea
+## cel mult 3 rânduri, pe ideea că mai puțină informație înseamnă mai mult de
+## gândit. Ideea era greșită, și se vede de ce dacă te uiți la ce face
+## `_o_incercare()`: alege de fiecare dată indiciul care taie CEL MAI MULT din
+## codurile rămase. Campionul absolut la tăiat e egalitatea („A și B sunt
+## egale") — scoate 8 din 9 coduri dintr-o lovitură. Cerându-i generatorului să
+## încapă în 3 rânduri, îl obligam să aleagă numai indicii brutale. Două
+## egalități și o sumă, și codul pica singur. Nivelul „greu" era cel mai ușor
+## dintre toate, exact din cauza plafonului pus ca să-l facă greu.
+##
+## Deci plafonul a plecat, iar dificultatea se MĂSOARĂ acum, cu
+## `RezolvitorCifru`: un rezolvitor care deduce ca un om și spune de ce tehnică
+## a avut nevoie. Trei câmpuri noi în tabel:
+##
+##   `nota`             — ce trebuie să ceară puzzle-ul ca să fie păstrat:
+##                        T1 (fiecare rând se storce singur), T2 (trebuie
+##                        combinate două rânduri), T3 (trebuie să presupui o
+##                        cifră și să dai de contradicție). Un puzzle cu altă
+##                        notă e aruncat și se încearcă altul.
+##   `alegere`          — cum alege `_o_incercare()` următorul indiciu:
+##                        "lacom" ia mușcătura cea mai mare (puzzle-uri scurte
+##                        și tari), "cumpatat" ia unul la întâmplare dintre
+##                        cele care mai taie ceva (puzzle-uri mai lungi și mai
+##                        subtile). Fără "cumpatat" la nivelul 3, filtrul de
+##                        notă ar respinge aproape tot: alegerea lacomă produce
+##                        din construcție puzzle-uri de nota T1.
+##   `egalitati_maxime` — câte indicii „exacte" (orice semn „=", plus
+##                        DIFERENTA) încap în concurs. −1 = fără limită.
+##                        Egalitățile sunt utile, dar două dintre ele aproape
+##                        că dictează codul.
 ##
 ##   nivelul 1 — o roată e deja pusă și SUDATĂ. Rămân 3 cifre de dedus dintr-un
-##               spațiu de 729 de coduri (în loc de 6561). E lacătul „de
-##               învățat cum funcționează".
-##   nivelul 2 — toate patru de dedus, cu până la 6 indicii. Puzzle-ul obișnuit.
-##   nivelul 3 — toate patru, dar cu CEL MULT 3 indicii. Mai puține indicii nu
-##               înseamnă mai puțin de gândit, ci invers: cu 3 rânduri pentru 4
-##               necunoscute nu există niciun indiciu de rezervă pe care să te
-##               sprijini dacă unul ți-a scăpat. Fiecare trebuie stors complet.
+##               spațiu de 729 de coduri (în loc de 6561), și fiecare rând se
+##               storce de unul singur. E lacătul „de învățat cum funcționează".
+##   nivelul 2 — toate patru de dedus. Undeva pe drum va trebui să pui două
+##               rânduri cap la cap; niciunul singur nu te mai duce mai departe.
+##   nivelul 3 — toate patru, și cel puțin o dată rămâi complet blocat: ai
+##               stors fiecare rând, le-ai combinat două câte două, și tot nu
+##               poți continua. Acolo trebuie să presupui o cifră pe hârtie și
+##               să vezi unde se rupe socoteala.
 ##
-## Plafonul mic al nivelului 3 e singura cifră care dă bătăi de cap
-## generatorului: cere în medie 3,3 încercări, față de 1,0 la celelalte niveluri
-## (măsurat cu `tools/verifica_cifru.gd` pe 500 de semințe). Dacă îl strângi mai
-## tare — 2 indicii — reîncercările explodează și o parte din semințe ies pe ușa
-## din dos, cu un indiciu în plus. Ăsta e numărul de mișcat când vrei alt
-## echilibru, nu `INCERCARI_MAXIME`, care e doar bugetul de timp al căutării.
+## `indicii_maxime` a rămas, dar și-a recăpătat înțelesul onest: e o limită de
+## ECRAN și de răbdare (câte rânduri încap fără să devină o pagină de citit),
+## nu o pârghie de dificultate. Pârghiile de dificultate sunt `nota` și
+## `alegere`.
 const NIVELURI := [
-	{"cifre": 4, "minim": 1, "maxim": 9, "indicii_maxime": 6, "blocate": 1},
-	{"cifre": 4, "minim": 1, "maxim": 9, "indicii_maxime": 6, "blocate": 0},
-	{"cifre": 4, "minim": 1, "maxim": 9, "indicii_maxime": 3, "blocate": 0},
+	{"cifre": 4, "minim": 1, "maxim": 9, "indicii_maxime": 6, "blocate": 1,
+		"nota": RezolvitorCifru.T1, "alegere": "lacom", "egalitati_maxime": -1},
+	{"cifre": 4, "minim": 1, "maxim": 9, "indicii_maxime": 6, "blocate": 0,
+		"nota": RezolvitorCifru.T2, "alegere": "lacom", "egalitati_maxime": -1},
+	{"cifre": 4, "minim": 1, "maxim": 9, "indicii_maxime": 8, "blocate": 0,
+		"nota": RezolvitorCifru.T3, "alegere": "cumpatat", "egalitati_maxime": 1,
+		"candidati": 55, "deschidere_lacoma": 2},
 ]
 
 ## Numele roților, în ordine. Jucătorul nu vede „poziția 0" — vede „A".
@@ -116,31 +154,44 @@ const LITERE := "ABCDEFGH"
 ##   mereu — iar puzzle-urile nu mai seamănă între ele.
 ##
 ##   TIMPUL. Prima rundă a alegerii lacome întreabă fiecare candidat despre
-##   fiecare cod încă posibil: 20 × 6561 la nivelurile fără roată blocată. Cu
-##   45 de candidați, verificatorul de 1500 de puzzle-uri ar dura de două ori
-##   mai mult fără să producă puzzle-uri mai bune.
+##   fiecare cod din sondă. Cu toată grămada în concurs, verificatorul ar dura
+##   de două ori mai mult fără să producă puzzle-uri mai bune.
+##
+## E o VALOARE IMPLICITĂ: un nivel o poate rescrie prin câmpul `candidati` din
+## tabel. Nivelul 3 o rescrie, fiindcă alegerea „cumpătată" arde candidați mult
+## mai repede decât cea lacomă — ia indicii slabe, deci are nevoie de mai multe
+## ca să ajungă la un singur cod. Cu doar 20, majoritatea încercărilor de nivel
+## 3 rămâneau fără candidați înainte să izoleze codul și se aruncau degeaba.
 const CANDIDATI := 20
+
+## CÂTE PRAGURI DIFERITE se nasc pentru aceeași sumă (vezi `_candidati()`).
+## Trei, fiindcă e diferența dintre un pool de vreo 40 de afirmații și unul de
+## vreo 70 — iar nivelul 3, unde egalitățile sunt plafonate, trăiește din ele.
+## Mai multe n-ar strica, dar ar umple eșantionul cu variații ale aceleiași
+## sume în loc de idei diferite.
+const PRAGURI_PE_SUMA := 3
 
 ## De câte ori reîncercăm până ne mulțumim cu ce avem.
 ##
-## O încercare poate să nu iasă din două motive cinstite: eșantionul de
-## candidați nu conține destulă informație cât să izoleze un singur cod, sau
-## izolează, dar cu prea multe indicii. Amândouă se rezolvă cu alt eșantion,
+## O încercare poate să nu iasă din trei motive cinstite: eșantionul de
+## candidați nu conține destulă informație cât să izoleze un singur cod;
+## izolează, dar cu prea multe indicii; sau iese un puzzle corect, doar că de
+## altă dificultate decât cere nivelul. Toate trei se rezolvă cu alt eșantion,
 ## deci cu altă sub-sămânță.
 ##
-## DE CE 12, ȘI NU 30. Numărul ăsta nu e o măsură de siguranță, e un BUGET DE
-## TIMP. Nivelurile 1 și 2 nimeresc din prima încercare aproape mereu (media
-## măsurată: 1,00), deci pentru ele n-are nicio importanță. Nivelul 3, cu
-## plafonul lui strâns de 3 indicii, cere în medie 3,3 încercări — iar la 30 de
-## încercări permise, cea mai nefericită sămânță din 500 a cerut 25, adică
-## aproape trei secunde de calcul. Trei secunde de ecran înghețat, pentru un
-## singur indiciu în minus.
+## Al treilea motiv e cel nou, și e și cel scump: la nivelul 3 cerem T3, iar un
+## puzzle care chiar te blochează nu iese la fiecare aruncare de zar. De-aia
+## numărul a urcat de la 12 la 60 — nu fiindcă generatorul ar fi devenit
+## nesigur, ci fiindcă acum are un examen de trecut, nu doar o formă de
+## respectat.
 ##
-## La 12, sămânța aia primește în schimb un puzzle cu 4 indicii în loc de 3 —
-## corect, unic, doar cu un rând în plus — și un avertisment în consolă. Se
-## întâmplă la vreo 1-2% din semințe. E schimbul bun: mai bine un lacăt puțin
-## mai darnic decât un joc care se oprește o clipă din mers.
-const INCERCARI_MAXIME := 12
+## Numărul ăsta rămâne totuși un BUGET DE TIMP, nu o măsură de siguranță. Dacă
+## îl ridici și mai mult, semințele nefericite vor primi puzzle-ul potrivit, dar
+## vor sta și mai mult la generat — iar generarea se face pe un fir separat
+## tocmai fiindcă poate dura. Dacă vezi că se atinge des maximul, semn că
+## `alegere` sau `egalitati_maxime` sunt prost reglate pentru nota cerută; nu
+## numărul ăsta e de vină.
+const INCERCARI_MAXIME := 60
 
 
 # ─────────────────────────────────────────────────────────────
@@ -165,8 +216,20 @@ const RELATIE := "RELATIE"
 ## `{a, b, valoare}` — cod[a] − cod[b] == valoare (valoare > 0 mereu).
 const DIFERENTA := "DIFERENTA"
 
-## `{a, b, semn, valoare}` — suma a două cifre, comparată cu un număr.
-const SUMA_DOUA := "SUMA_DOUA"
+## `{pozitii, semn, valoare}` — suma cifrelor de pe pozițiile date, comparată
+## cu un număr: „A + C + D e mai mică decât 17".
+##
+## DE CE UN SINGUR TIP PENTRU TOATE SUMELE. Au fost, la început, două tipuri
+## separate: suma a două roți și suma tuturor. Când a apărut nevoia de sume de
+## TREI (indiciile cele mai bune pentru nivelul 3: vorbesc despre trei roți, dar
+## îți spun implicit ceva și despre a patra), al treilea tip ar fi însemnat a
+## treia copie a aceleiași idei — în `evalueaza()`, în `text()`, în
+## `_candidati()`. Iar un lacăt de 5 roți ar fi cerut a patra.
+##
+## Cu `pozitii` ca listă, „suma a k roți" e o BUCLĂ, nu un tip. E aceeași regulă
+## ca la discipline, din CLAUDE.md: ceva nou trebuie să fie un rând în date, nu
+## o ramură nouă în cod.
+const SUMA := "SUMA"
 
 ## `{a, para}` — cifra de pe poziția `a` e pară (sau impară).
 const PARITATE := "PARITATE"
@@ -178,9 +241,6 @@ const EXTREM := "EXTREM"
 
 ## `{}` — toate cifrele sunt diferite. Singurul tip fără parametri.
 const FARA_REPETITIE := "FARA_REPETITIE"
-
-## `{semn, valoare}` — suma tuturor cifrelor, comparată cu un număr.
-const SUMA_TOTALA := "SUMA_TOTALA"
 
 
 # ─────────────────────────────────────────────────────────────
@@ -263,26 +323,76 @@ static func genereaza(nivel: int, samanta: int) -> Dictionary:
 
 		var puzzle := _puzzle(spec, nivel, samanta, cod, indicii, blocata,
 			incercare + 1, false)
-		if indicii.size() <= int(spec["indicii_maxime"]):
+
+		# ── EXAMENUL DE DIFICULTATE ───────────────────────────
+		#
+		# Puzzle-ul e deja corect: unic, fără indicii de prisos, fără vreun rând
+		# care să dicteze o cifră. Întrebarea care a mai rămas e singura care
+		# contează pentru jucător: cât de greu se deduce?
+		#
+		# Rezolvitorul îl rezolvă ca un om și spune de ce tehnică a avut nevoie.
+		# Dacă nota nu e cea cerută de nivel, puzzle-ul e perfect bun — doar că
+		# nu e bun AICI. Se aruncă și se încearcă altul.
+		#
+		# `rezolvat == false` înseamnă că un om care gândește cu T1-T3 rămâne
+		# blocat. Puzzle-ul are soluție (forța brută a dovedit-o), dar n-are
+		# DRUM către ea — ai ajunge să ghicești. Ăla nu e un lacăt greu, e un
+		# lacăt nedrept, și se aruncă fără să ajungă nici măcar rezervă.
+		var raport := RezolvitorCifru.noteaza(puzzle)
+		if not bool(raport["rezolvat"]):
+			continue
+		puzzle["nota"] = int(raport["nota"])
+
+		if int(raport["nota"]) == int(spec["nota"]) \
+				and indicii.size() <= int(spec["indicii_maxime"]):
 			return puzzle
-		if rezerva.is_empty() or indicii.size() < rezerva["indicii"].size():
+
+		# REZERVA: cel mai bun rezultat de până acum, dacă nimic n-a trecut
+		# examenul. Se preferă puzzle-ul cu nota cea mai apropiată de cea
+		# cerută, iar la note egale cel mai scurt. Un lacăt corect de altă
+		# dificultate e infinit mai bun decât niciun lacăt — jucătorul pierde o
+		# nuanță de reglaj, nu evenimentul.
+		if rezerva.is_empty() or _mai_bun(puzzle, rezerva, int(spec["nota"]),
+				int(spec["indicii_maxime"])):
 			rezerva = puzzle
 
 	if rezerva.is_empty():
-		# N-a ieșit NIMIC în 30 de încercări. Nu e ghinion — e semn că tabelul
+		# N-a ieșit NIMIC în toate încercările. Nu e ghinion — e semn că tabelul
 		# de dificultate cere ceva imposibil (un interval de o singură cifră, de
 		# pildă). Mesajul din consolă e tot ce ajută atunci.
 		push_error("GeneratorCifru: niciun cifru bun in %d incercari (nivel %d, samanta %d)."
 			% [INCERCARI_MAXIME, nivel, samanta])
 		return {}
 
-	push_warning(("GeneratorCifru: nivel %d, samanta %d — cel mai scurt cifru are %d indicii, "
-		+ "peste maximul de %d. Se joaca asa. Daca vezi des avertismentul, "
-		+ "maximul e prea strans; nu semintele sunt de vina.")
-		% [nivel, samanta, rezerva["indicii"].size(), spec["indicii_maxime"]])
+	push_warning(("GeneratorCifru: nivel %d, samanta %d — n-a iesit un cifru de nota %s "
+		+ "sub %d indicii. Se joaca cel mai apropiat: nota %s, %d indicii. Daca vezi des "
+		+ "avertismentul, `alegere` sau `egalitati_maxime` sunt prost reglate pentru nota "
+		+ "ceruta; nu semintele sunt de vina.")
+		% [nivel, samanta, RezolvitorCifru.nume_nota(int(spec["nota"])),
+			int(spec["indicii_maxime"]),
+			RezolvitorCifru.nume_nota(int(rezerva.get("nota", 0))),
+			rezerva["indicii"].size()])
 	rezerva["la_limita"] = true
 	rezerva["incercari"] = INCERCARI_MAXIME
 	return rezerva
+
+
+## Care dintre două puzzle-uri respinse e mai aproape de ce cerea nivelul?
+##
+## Întâi nota: distanța până la nota cerută (o notă alăturată e o nuanță, două
+## note mai jos e alt joc). La note la fel de apropiate, cel mai scurt — fiindcă
+## acolo criteriul care mai contează e să încapă pe ecran.
+static func _mai_bun(candidat: Dictionary, actual: Dictionary, nota_ceruta: int,
+		indicii_maxime: int) -> bool:
+	var d_candidat: int = absi(int(candidat.get("nota", 0)) - nota_ceruta)
+	var d_actual: int = absi(int(actual.get("nota", 0)) - nota_ceruta)
+	if d_candidat != d_actual:
+		return d_candidat < d_actual
+	# La note egale, contează doar dacă încape pe ecran; dincolo de maxim, mai
+	# scurt e mai bine.
+	var l_candidat: int = maxi(candidat["indicii"].size() - indicii_maxime, 0)
+	var l_actual: int = maxi(actual["indicii"].size() - indicii_maxime, 0)
+	return l_candidat < l_actual
 
 
 ## Forma finală a puzzle-ului. Un singur loc care o construiește, ca să nu
@@ -301,6 +411,11 @@ static func _puzzle(spec: Dictionary, nivel: int, samanta: int, cod: Array,
 		# `cod[blocata]` — nu se salvează separat, fiindcă ar fi același adevăr
 		# scris de două ori, cu șansa ca cele două să se despartă.
 		"blocata": blocata,
+		# Cea mai grea tehnică de care are nevoie deducția (vezi
+		# `RezolvitorCifru`). Se completează imediat după, în `genereaza()`;
+		# cheia e declarată aici ca forma dicționarului să fie aceeași de
+		# fiecare dată, indiferent pe ce drum a ieșit puzzle-ul.
+		"nota": RezolvitorCifru.NIMIC,
 		# Câte încercări a cerut. Nu e folosit în joc — e pentru verificator,
 		# care măsoară cât de strâmt e tabelul de dificultate.
 		"incercari": incercari,
@@ -352,44 +467,131 @@ static func _sub_samanta(samanta: int, nivel: int, incercare: int) -> int:
 ## „lacom" poate produce un puzzle mai lung decât ar fi trebuit; niciodată unul
 ## ambiguu sau fără soluție.
 ##
+## ─────────────────────────────────────────────────────────────
+## „CUMPĂTAT": DE CE ALEGEREA LACOMĂ NU POATE FACE PUZZLE-URI GRELE
+##
+## Tot ce scrie mai sus e adevărat și rămâne — dar are un efect secundar pe care
+## nu-l vezi până nu măsori dificultatea: alegerea lacomă produce, din
+## construcție, puzzle-uri UȘOARE.
+##
+## Gândește-te ce înseamnă „indiciul care taie cel mai mult". Un indiciu care
+## reduce 6561 de coduri la 700 e un indiciu care spune aproape totul despre o
+## roată. Trei la rând, și fiecare roată are un rând al ei care o rezolvă
+## singură — adică exact definiția lui T1, cea mai ușoară tehnică. Nu ai cum să
+## rămâi blocat într-un puzzle în care fiecare rând îți dă un răspuns.
+##
+## Un puzzle care te blochează are nevoie de contrariul: indicii SLABE, care
+## fiecare taie puțin și niciunul nu decide nimic singur. De-aia există al
+## doilea mod:
+##
+##   "lacom"    — ia mușcătura cea mai mare. Puzzle-uri scurte, tari, T1/T2.
+##   "cumpatat" — merge printr-o ordine trasă la sorți, sărind doar peste
+##                indiciile care nu mai taie nimic. Puzzle-uri mai lungi, cu
+##                rânduri care se sprijină unul pe altul. Aici crește T3.
+##
+## Singura condiție păstrată în amândouă modurile e „să taie ceva": un indiciu
+## care nu elimină niciun cod ar fi redundant din start, iar `_curata()` l-ar
+## scoate oricum la final.
+##
+## CE NU DEPINDE DE MOD, și de-aia „cumpătat" e o schimbare fără risc: toate
+## garanțiile puzzle-ului — soluție unică, niciun indiciu de prisos, niciun rând
+## care dictează o cifră — ies din faptul că ne oprim abia când a rămas UN
+## SINGUR COD, și din pașii de după. Nu din felul în care alegem. „Cumpătat"
+## poate produce un puzzle mai lung sau mai greu; nu poate produce unul stricat.
+##
 ## Întoarce un Array gol dacă eșantionul de candidați nu izolează codul.
 static func _o_incercare(cod: Array, universul: Array, spec: Dictionary,
 		rng: RandomNumberGenerator, blocata := -1) -> Array:
 	var candidati := _candidati(cod, spec, rng, universul, blocata)
+	var cumpatat := String(spec.get("alegere", "lacom")) == "cumpatat"
+	var deschidere := int(spec.get("deschidere_lacoma", 0))
+	# Ordinea în care modul cumpătat consumă candidații: o singură amestecare,
+	# la început. Vezi `_urmatorul()`.
+	var ordine := []
+	for k in candidati.size():
+		ordine.append(k)
+	_amesteca(ordine, rng)
 	var folositi := {}
 	var posibile := universul
 	var alese := []
 
 	while posibile.size() > 1:
-		var cel_mai_bun := -1
 		# CÂNTĂRIREA SE FACE PE O SONDĂ, nu pe toată mulțimea (vezi `_sonda()`).
 		# Tăierea de mai jos rămâne exactă; doar COMPARAȚIA dintre candidați e
 		# făcută pe un eșantion.
 		var sonda := _sonda(posibile)
-		# Pragul pornește de la câte coduri are sonda: un candidat care lasă tot
-		# atâtea nu taie nimic, deci nu merită ales. Așa, o singură comparație
-		# („mai mic decât pragul") înseamnă și „cel mai bun de până acum", și
-		# „chiar taie ceva".
-		var cate_ramane := sonda.size()
-		for k in candidati.size():
-			if folositi.has(k):
-				continue
-			var cate := _cate_trec(candidati[k], sonda)
-			if cate < cate_ramane:
-				cate_ramane = cate
-				cel_mai_bun = k
+		# DESCHIDEREA LACOMĂ: primele câteva tăieturi se iau cu mușcătura cea
+		# mai mare chiar și în modul cumpătat. Nicăieri nu stă dificultatea în
+		# prima tăietură — oricum ai lua-o, rămâi cu sute de coduri posibile și
+		# nicio roată hotărâtă. Ce câștigi în schimb e enorm: fără ea, plimbarea
+		# cumpătată pornea de la 6561 de coduri cu mușcături mici și aduna
+		# 30-40 de indicii până să izoleze codul, iar curățarea de după trebuia
+		# să-i cearnă pe toți. Cu două tăieturi lacome la început, plimbarea
+		# pornește de la câteva sute și se termină în 6-8 indicii.
+		var acum_lacom := not cumpatat or alese.size() < deschidere
+		var ales := _alege_lacom(candidati, folositi, sonda) if acum_lacom \
+			else _urmatorul(candidati, ordine, folositi, sonda)
 
-		if cel_mai_bun == -1:
+		if ales == -1:
 			# Niciun candidat rămas nu mai taie nimic: codurile care au
 			# supraviețuit sunt, pentru eșantionul ăsta, de nedeosebit între ele.
 			# Nu e o eroare — e un eșantion sărac. Altă sub-sămânță.
 			return []
 
-		alese.append(candidati[cel_mai_bun])
-		folositi[cel_mai_bun] = true
-		posibile = _filtreaza(candidati[cel_mai_bun], posibile)
+		alese.append(candidati[ales])
+		folositi[ales] = true
+		posibile = _filtreaza(candidati[ales], posibile)
 
 	return _curata(alese, universul)
+
+
+## Alegerea LACOMĂ: candidatul care lasă cele mai puține coduri în picioare.
+##
+## Pragul pornește de la câte coduri are sonda: un candidat care lasă tot atâtea
+## nu taie nimic, deci nu merită ales. Așa, o singură comparație („mai mic decât
+## pragul") înseamnă și „cel mai bun de până acum", și „chiar taie ceva".
+static func _alege_lacom(candidati: Array, folositi: Dictionary, sonda: Array) -> int:
+	var cel_mai_bun := -1
+	var cate_ramane := sonda.size()
+	for k in candidati.size():
+		if folositi.has(k):
+			continue
+		var cate := _cate_trec(candidati[k], sonda)
+		if cate < cate_ramane:
+			cate_ramane = cate
+			cel_mai_bun = k
+	return cel_mai_bun
+
+
+## Alegerea CUMPĂTATĂ: următorul candidat nefolosit CARE MAI TAIE CEVA, dintr-o
+## ordine trasă la sorți o singură dată, la începutul încercării.
+##
+## Nu cântărește candidații ca să-l aleagă pe cel mai bun — ăsta e tot rostul
+## modului. Îi cere doar să nu fie inutil, și pentru asta îl măsoară O SINGURĂ
+## DATĂ în toată încercarea: un indiciu care nu taie nimic ACUM nu va tăia nimic
+## nici mai târziu, fiindcă mulțimea codurilor posibile doar se micșorează de
+## aici înainte. Deci îl scoatem din joc pe loc, nu-l mai întrebăm la runda
+## următoare.
+##
+## Fără condiția asta, plimbarea aduna cincizeci de indicii înainte de curățare
+## — iar `_curata()`, care le încearcă pe fiecare pe rând, ajungea la cinci
+## secunde de o singură chemare. Cu ea, lista rămâne pe la zece.
+##
+## Măsurătoarea e pe SONDĂ, adică pe un eșantion (vezi `_sonda()`), deci teoretic
+## un indiciu ar putea tăia un cod pe care sonda nu-l conține și să fie scos pe
+## nedrept. În practică nu se întâmplă: sonda e mulțimea întreagă de îndată ce
+## au rămas sub 1500 de coduri, iar modul cumpătat intră în joc abia după
+## deschiderea lacomă, care coboară mult sub pragul ăsta. Iar dacă totuși s-ar
+## întâmpla, cel mai rău lucru posibil e o încercare aruncată.
+static func _urmatorul(candidati: Array, ordine: Array, folositi: Dictionary,
+		sonda: Array) -> int:
+	for k in ordine:
+		if folositi.has(k):
+			continue
+		if _cate_trec(candidati[k], sonda) < sonda.size():
+			return k
+		folositi[k] = true
+	return -1
 
 
 ## CURĂȚAREA — scoate indiciile care, la final, nu mai contează.
@@ -411,16 +613,53 @@ static func _o_incercare(cod: Array, universul: Array, spec: Dictionary,
 ## reluăm de la capăt după fiecare scoatere. Motivul e că scoaterea unui indiciu
 ## nu poate face redundant un altul — dimpotrivă, îi crește importanța. Deci o
 ## singură trecere ajunge; a doua n-ar mai găsi nimic.
+##
+## ─────────────────────────────────────────────────────────────
+## LANȚUL DE PREFIXE, sau cum să nu faci de zece ori aceeași muncă
+##
+## Varianta simplă a funcției ăsteia scotea indiciul `i` și număra soluțiile de
+## la zero, pornind de fiecare dată de la toate cele 6561 de coduri. Adică
+## refăcea, pentru fiecare `i`, filtrarea cu indiciile dinaintea lui — care era
+## exact aceeași de fiecare dată.
+##
+## `prefix[k]` ține codurile care trec de PRIMELE `k` indicii. E un lanț:
+## `prefix[0]` e universul întreg, iar fiecare verigă se naște filtrând-o pe
+## cea dinainte. Ca să încercăm scoaterea indiciului `i`, pornim direct de la
+## `prefix[i]` (deja calculat, și deja mic) și mai filtrăm doar cu indiciile de
+## DUPĂ el.
+##
+## Când un indiciu chiar se scoate, verigile de dinaintea lui rămân valabile —
+## ele nu știu nimic despre ce vine după. Se aruncă doar coada lanțului.
+##
+## Curățarea era, înainte de asta, aproape trei sferturi din timpul de generare
+## al nivelului 3.
 static func _curata(alese: Array, universul: Array) -> Array:
 	var rezultat := alese.duplicate()
+	# Lanțul, construit leneș: `prefix[k]` apare abia când ajungem la el.
+	var prefix := [universul]
 	var i := 0
+
 	while i < rezultat.size():
-		var proba := rezultat.duplicate()
-		proba.remove_at(i)
-		if cate_solutii_pentru(proba, universul, 2) == 1:
-			rezultat = proba   # era redundant: nu creștem `i`, lista s-a scurtat
+		# Codurile care trec de TOATE indiciile în afară de al `i`-lea: pornim
+		# din veriga `i` a lanțului și filtrăm cu cele de după.
+		var ramase: Array = prefix[i]
+		for k in range(i + 1, rezultat.size()):
+			ramase = _filtreaza(rezultat[k], ramase)
+			if ramase.size() < 2:
+				break   # a rămas un singur cod: știm deja răspunsul
+
+		if ramase.size() == 1:
+			# Soluția rămâne unică fără el: era decor. Nu creștem `i` — lista
+			# s-a scurtat, iar pe poziția asta e acum indiciul următor. Coada
+			# lanțului nu mai corespunde, deci o tăiem.
+			rezultat.remove_at(i)
+			prefix.resize(i + 1)
 		else:
+			# Rămâne. Mergem mai departe și lungim lanțul cu o verigă.
+			if prefix.size() <= i + 1:
+				prefix.append(_filtreaza(rezultat[i], prefix[i]))
 			i += 1
+
 	return rezultat
 
 
@@ -469,20 +708,49 @@ static func _candidati(cod: Array, spec: Dictionary, rng: RandomNumberGenerator,
 			if d > 0 and d < maxim - minim:
 				pool.append({"tip": DIFERENTA, "a": i, "b": j, "valoare": d})
 
-	# ── Suma a două roți ──────────────────────────────────────
-	for i in n:
-		for j in range(i + 1, n):
-			var s: int = int(cod[i]) + int(cod[j])
-			# Suma exactă, dar nu la capetele intervalului: „A + B e exact 2" pe
-			# un lacăt 1-6 înseamnă că amândouă sunt 1, adică două cifre dictate.
-			if s > 2 * minim and s < 2 * maxim:
-				pool.append({"tip": SUMA_DOUA, "a": i, "b": j, "semn": "=", "valoare": s})
-			var inegalitate := _prag(rng, s, 2 * minim, 2 * maxim)
-			if not inegalitate.is_empty():
-				inegalitate["tip"] = SUMA_DOUA
-				inegalitate["a"] = i
-				inegalitate["b"] = j
-				pool.append(inegalitate)
+	# ── Sumele: de două, de trei, de toate roțile ─────────────
+	#
+	# O singură buclă peste TOATE submulțimile de cel puțin două roți. Pentru
+	# lacătul de 4 roți asta înseamnă 6 perechi + 4 triplete + 1 total = 11
+	# submulțimi, fiecare cu până la două afirmații (una exactă, una cu prag).
+	#
+	# Tripletele sunt aici pentru nivelul 3, și sunt cele mai frumoase indicii
+	# din tot lacătul: „A + C + D e mai mică decât 17" nu-ți spune nimic despre
+	# nicio roată anume, dar te obligă să ții minte ceva despre TREI deodată —
+	# și, pe ocolite, îți spune ceva și despre a patra.
+	for pozitii: Array in _submultimi(n):
+		var s := 0
+		for p in pozitii:
+			s += int(cod[int(p)])
+		var k := pozitii.size()
+		# Suma exactă, dar nu la capetele intervalului: „A + B e exact 2" pe un
+		# lacăt 1-6 înseamnă că amândouă sunt 1, adică două cifre dictate.
+		if s > k * minim and s < k * maxim:
+			pool.append({"tip": SUMA, "pozitii": pozitii.duplicate(),
+				"semn": "=", "valoare": s})
+		# MAI MULTE PRAGURI PE ACEEAȘI SUMĂ, nu unul singur.
+		#
+		# „A + C + D e mai mică decât 19" și „A + C + D e mai mare decât 12"
+		# sunt două afirmații diferite despre aceeași sumă, cu puteri diferite,
+		# și amândouă adevărate. Un singur prag tras cu zarul lăsa poolul
+		# nivelului 3 înfometat: acolo egalitățile sunt plafonate, deci
+		# inegalitățile sunt aproape tot ce rămâne, iar cu una pe sumă
+		# majoritatea încercărilor nu izolau niciun cod și se aruncau.
+		#
+		# Pragurile duplicate se sar: același prag de două ori ar fi același
+		# rând scris de două ori pe ecran.
+		var vazute_praguri := {}
+		for incercare in PRAGURI_PE_SUMA:
+			var inegalitate := _prag(rng, s, k * minim, k * maxim)
+			if inegalitate.is_empty():
+				break
+			var cheie := "%s%d" % [inegalitate["semn"], inegalitate["valoare"]]
+			if vazute_praguri.has(cheie):
+				continue
+			vazute_praguri[cheie] = true
+			inegalitate["tip"] = SUMA
+			inegalitate["pozitii"] = pozitii.duplicate()
+			pool.append(inegalitate)
 
 	# ── Paritatea unei roți ───────────────────────────────────
 	for i in n:
@@ -507,17 +775,6 @@ static func _candidati(cod: Array, spec: Dictionary, rng: RandomNumberGenerator,
 	if distincte.size() == n:
 		pool.append({"tip": FARA_REPETITIE})
 
-	# ── Suma tuturor cifrelor ─────────────────────────────────
-	var total := 0
-	for c in cod:
-		total += int(c)
-	if total > n * minim and total < n * maxim:
-		pool.append({"tip": SUMA_TOTALA, "semn": "=", "valoare": total})
-	var ineg_total := _prag(rng, total, n * minim, n * maxim)
-	if not ineg_total.is_empty():
-		ineg_total["tip"] = SUMA_TOTALA
-		pool.append(ineg_total)
-
 	_amesteca(pool, rng)
 
 	# VAMA: niciun candidat care, de unul singur, fixează o cifră.
@@ -532,14 +789,77 @@ static func _candidati(cod: Array, spec: Dictionary, rng: RandomNumberGenerator,
 	# puțin: `da_o_cifra()` se oprește la primul cod care arată că fiecare
 	# poziție are cel puțin două valori posibile, ceea ce se întâmplă, pentru un
 	# indiciu cinstit, în câteva zeci de coduri.
+	# A DOUA VAMĂ: câte indicii „exacte" au voie în concurs.
+	#
+	# O egalitate e o afirmație care leagă două lucruri cu semnul „=": „A și B
+	# sunt egale", „A + C e exact 11", „A e cu 2 mai mare decât D". Toate taie
+	# brutal — și tocmai de-aia alegerea lacomă le adoră. Două dintre ele
+	# ajung aproape să dicteze codul, iar puzzle-ul devine o socoteală, nu o
+	# deducție.
+	#
+	# Limita se aplică după SEMN, nu după tipul indiciului: un „=" e un „="
+	# indiferent dacă vorbește despre o relație sau despre o sumă, iar
+	# DIFERENTA e o ecuație exactă chiar dacă n-are semnul scris în ea.
+	# Verificarea după tip ar fi o listă de nume care rămâne în urmă la primul
+	# tip nou; verificarea după semn ține de la sine.
+	#
+	# `egalitati_maxime == -1` înseamnă „fără limită" (nivelurile 1 și 2).
+	# Limita e pe CANDIDAȚI, nu pe puzzle-ul final: dacă intră în concurs cel
+	# mult una, în puzzle nu poate ajunge mai mult de una. Se apără la intrare,
+	# nu la ieșire — la ieșire ar însemna să arunci o încercare bună.
+	var plafon_egalitati := int(spec.get("egalitati_maxime", -1))
+	var cati := int(spec.get("candidati", CANDIDATI))
+	var egalitati := 0
+
 	var alesi := []
 	for indiciu: Dictionary in pool:
-		if alesi.size() >= CANDIDATI:
+		if alesi.size() >= cati:
 			break
 		if da_o_cifra(indiciu, universul, blocata):
 			continue
+		if e_egalitate(indiciu):
+			if plafon_egalitati >= 0 and egalitati >= plafon_egalitati:
+				continue
+			egalitati += 1
 		alesi.append(indiciu)
 	return alesi
+
+
+## TOATE SUBMULȚIMILE DE CEL PUȚIN DOUĂ ROȚI, în ordine fixă.
+##
+## Numărăm în binar de la 0 la 2ⁿ−1 și citim fiecare număr ca pe un set de
+## întrerupătoare: bitul `i` aprins înseamnă „roata `i` face parte". E cel mai
+## scurt mod de a le enumera pe toate, o singură dată fiecare, fără
+## recursivitate — și e DETERMINIST, ceea ce contează aici la fel de mult ca
+## peste tot în fișier.
+##
+## Submulțimile de 0 și de 1 element se sar: „suma cifrei A e 6" ar fi exact
+## indiciul care dictează o cifră, adică singura regulă de design pe care
+## lacătul n-o încalcă.
+static func _submultimi(n: int) -> Array:
+	var rezultat := []
+	for masca in range(1, 1 << n):
+		var pozitii := []
+		for i in n:
+			if masca & (1 << i) != 0:
+				pozitii.append(i)
+		if pozitii.size() >= 2:
+			rezultat.append(pozitii)
+	return rezultat
+
+
+## E indiciul o EGALITATE — adică o afirmație exactă, nu una cu joc în ea?
+##
+## Două forme: orice indiciu cu semnul „=" (relație, sumă) și DIFERENTA, care e
+## o ecuație („A − D = 2") chiar dacă nu poartă semnul scris.
+##
+## Publică fiindcă verificatorul are nevoie de EXACT aceeași definiție. Dacă
+## și-ar scrie-o pe a lui, în ziua în care apare un tip nou cele două s-ar
+## despărți, iar raportul ar declara curate niveluri care nu mai sunt.
+static func e_egalitate(indiciu: Dictionary) -> bool:
+	if String(indiciu.get("tip", "")) == DIFERENTA:
+		return true
+	return String(indiciu.get("semn", "")) == "="
 
 
 ## Un prag pentru o inegalitate adevărată despre `valoare`, tras cu zarul.
@@ -660,7 +980,18 @@ static func toate_codurile(spec: Dictionary) -> Array:
 ## trebuie doar să nu fie multiplu de 3: cifrele merg de la 1 la 9, iar un pas
 ## divizibil cu 3 ar atinge mereu aceleași resturi, deci ar vedea numai o parte
 ## din valorile ultimei roți.
-const ESANTION_ALEGERE := 1500
+## DE CE A SCĂZUT DE LA 1500 LA 400. Prima rundă a alegerii lacome întreabă
+## fiecare candidat despre fiecare cod din sondă, iar nivelul 3 pune în concurs
+## 55 de candidați: 55 × 1500 de verificări, într-o singură rundă, repetate la
+## fiecare încercare. Era jumătate din timpul de generare.
+##
+## Iar precizia pe care o plăteam acolo nu cumpăra nimic. Întrebarea e „care
+## candidat taie cel mai mult?", și pe 200 de coduri luate din loc în loc
+## ordinea iese practic aceeași ca pe 1500. Singura urmare posibilă e ca
+## alegerea lacomă să ia al doilea cel mai bun candidat în loc de primul — adică
+## exact greșeala pe care metoda lacomă o face oricum, prin natura ei, și pe
+## care o repară pasul de curățare.
+const ESANTION_ALEGERE := 200
 
 static func _sonda(lista: Array) -> Array:
 	if lista.size() <= ESANTION_ALEGERE:
@@ -696,19 +1027,29 @@ static func _filtreaza(indiciu: Dictionary, lista: Array) -> Array:
 ## Câte coduri respectă TOATE indiciile. Se oprește la `plafon`, fiindcă
 ## întrebarea reală nu e „câte", ci „una sau mai multe?" — iar diferența dintre
 ## 2 și 300 nu schimbă nicio decizie.
+##
+## DE CE FILTREAZĂ ÎN LANȚ, ȘI NU CU DOUĂ BUCLE ÎNCRUCIȘATE.
+##
+## Varianta evidentă e „pentru fiecare cod, verifică fiecare indiciu". E
+## corectă, și a fost aici mult timp — dar face aceeași muncă de n ori: fiecare
+## dintre cele 6561 de coduri e întrebat despre TOATE indiciile.
+##
+## Varianta de aici taie mulțimea pas cu pas: primul indiciu vede toate cele
+## 6561 de coduri, dar lasă în urmă vreo 700; al doilea vede doar acele 700 și
+## lasă 90; al treilea vede 90. Suma muncii e ~7400 de verificări în loc de
+## ~30000, și diferența crește cu numărul de indicii.
+##
+## Nu e o subtilitate de performanță de dragul performanței. Funcția asta e
+## chemată de `_curata()` o dată pentru FIECARE indiciu al FIECĂREI încercări,
+## iar de când nivelul 3 generează puzzle-uri lungi înainte de curățare, ea
+## singură era jumătate din timpul de generare.
 static func cate_solutii_pentru(indicii: Array, toate: Array, plafon := 2) -> int:
-	var cate := 0
-	for cod in toate:
-		var bun := true
-		for indiciu: Dictionary in indicii:
-			if not evalueaza(indiciu, cod):
-				bun = false
-				break
-		if bun:
-			cate += 1
-			if cate >= plafon:
-				return cate
-	return cate
+	var ramase := toate
+	for indiciu: Dictionary in indicii:
+		ramase = _filtreaza(indiciu, ramase)
+		if ramase.is_empty():
+			return 0
+	return mini(ramase.size(), plafon)
 
 
 ## Câte soluții are un puzzle întreg. Pentru verificator; în joc nu e nevoie de
@@ -766,7 +1107,27 @@ static func universul(toate: Array, cod: Array, blocata: int) -> Array:
 ## singură valoare posibilă prin definiție. Nu e o excepție convenabilă — e
 ## chiar distincția dintre „ți se dictează o cifră" și „ți se ARATĂ o cifră,
 ## iar tu deduci restul".
+## DE CE PARCURGE UNIVERSUL ÎN SALTURI, ȘI NU DE LA CAP LA COADĂ.
+##
+## Funcția răspunde „nu" imediat ce a văzut două valori diferite pe fiecare
+## poziție — și asta e ieșirea care o face ieftină, fiindcă majoritatea
+## indiciilor sunt cinstite și se dovedesc cinstite din câteva zeci de coduri.
+##
+## Numai că lista de coduri e construită ca un CONTOR (vezi `toate_codurile()`):
+## prima roată se schimbă la fiecare pas, ultima o dată la 729 de pași. Citită
+## în ordine, ieșirea devreme nu se putea declanșa niciodată înainte de al
+## 730-lea cod — iar pentru un indiciu restrictiv, ca „A + B + C + D e exact
+## 21", codurile care trec sunt rare, așa că se ajungea să se parcurgă tot
+## universul. De aproape 30 de ori pe încercare. Asta singură făcea o generare
+## de nivel 3 să dureze 18 secunde.
+##
+## Cu un pas mare, PRIM FAȚĂ DE mărimea listei, sărim prin listă atingând
+## fiecare cod exact o dată (deci răspunsul rămâne la fel de sigur), dar
+## întâlnim valori variate pe toate roțile din primele zeci de coduri. Ordinea
+## nu poate schimba rezultatul: „indiciul dictează o cifră" e o proprietate a
+## întregii mulțimi, nu a drumului prin ea.
 static func da_o_cifra(indiciu: Dictionary, universul: Array, ignorata := -1) -> bool:
+	var total := universul.size()
 	var cifre: int = universul[0].size()
 	# Pentru fiecare poziție, ce valori apar printre codurile care trec.
 	var vazute := []
@@ -775,7 +1136,11 @@ static func da_o_cifra(indiciu: Dictionary, universul: Array, ignorata := -1) ->
 	# Câte poziții au deja cel puțin două valori diferite. Roata blocată n-are
 	# cum să ajungă acolo, deci pornește numărătoarea de la 1 pentru ea.
 	var libere := 1 if ignorata >= 0 else 0
-	for cod in universul:
+	var pas := _pas_prin(total)
+	var unde := 0
+	for n in total:
+		var cod: Array = universul[unde]
+		unde = (unde + pas) % total
 		if not evalueaza(indiciu, cod):
 			continue
 		for i in cifre:
@@ -789,6 +1154,33 @@ static func da_o_cifra(indiciu: Dictionary, universul: Array, ignorata := -1) ->
 		if libere == cifre:
 			return false   # toate pozițiile au scăpat: indiciul e curat
 	return true
+
+
+## Un pas care, adunat mereu la sine modulo `total`, atinge fiecare poziție din
+## listă exact o dată.
+##
+## Condiția e ca pasul și mărimea listei să nu aibă niciun divizor comun în
+## afară de 1 (să fie „prime între ele"). Dacă ar avea unul — să zicem 3 —
+## saltul s-ar învârti la nesfârșit printr-o treime din listă și n-ar vedea
+## restul niciodată. Pornim de la un număr mare și prim, și urcăm până dăm de
+## unul care se potrivește cu lista asta.
+static func _pas_prin(total: int) -> int:
+	if total <= 2:
+		return 1
+	var pas := 1237
+	while _cmmdc(pas, total) != 1:
+		pas += 1
+	return pas
+
+
+## Cel mai mare divizor comun, prin algoritmul lui Euclid: împarți, păstrezi
+## restul, repeți până restul e zero.
+static func _cmmdc(a: int, b: int) -> int:
+	while b != 0:
+		var rest := a % b
+		a = b
+		b = rest
+	return a
 
 
 ## Primul indiciu din listă care fixează singur o cifră, sau −1 dacă toate sunt
@@ -831,8 +1223,10 @@ static func evalueaza(indiciu: Dictionary, cod: Array) -> bool:
 					return a == b
 		DIFERENTA:
 			return int(cod[int(indiciu["a"])]) - int(cod[int(indiciu["b"])]) == int(indiciu["valoare"])
-		SUMA_DOUA:
-			var s := int(cod[int(indiciu["a"])]) + int(cod[int(indiciu["b"])])
+		SUMA:
+			var s := 0
+			for p in indiciu["pozitii"]:
+				s += int(cod[int(p)])
 			return _compara(s, String(indiciu["semn"]), int(indiciu["valoare"]))
 		PARITATE:
 			return (int(cod[int(indiciu["a"])]) % 2 == 0) == bool(indiciu["para"])
@@ -852,11 +1246,6 @@ static func evalueaza(indiciu: Dictionary, cod: Array) -> bool:
 					return false
 				vazute[c] = true
 			return true
-		SUMA_TOTALA:
-			var total := 0
-			for c in cod:
-				total += int(c)
-			return _compara(total, String(indiciu["semn"]), int(indiciu["valoare"]))
 	push_error("GeneratorCifru: indiciu de tip necunoscut: %s" % [indiciu])
 	return false
 
@@ -913,15 +1302,23 @@ static func text(indiciu: Dictionary) -> String:
 		DIFERENTA:
 			return "%s e cu %d mai mare decât %s." % [
 				litera(int(indiciu["a"])), int(indiciu["valoare"]), litera(int(indiciu["b"]))]
-		SUMA_DOUA:
-			var pereche := "%s + %s" % [litera(int(indiciu["a"])), litera(int(indiciu["b"]))]
+		SUMA:
+			# „A + C + D", oricâte roți ar fi. Forma asta a înlocuit vechiul
+			# „Suma tuturor cifrelor e…" pentru suma completă: e cu câteva
+			# litere mai lungă, dar toate sumele arată acum la fel, iar
+			# jucătorul nu mai are de recunoscut două formulări pentru aceeași
+			# idee.
+			var nume := PackedStringArray()
+			for p in indiciu["pozitii"]:
+				nume.append(litera(int(p)))
+			var suma := " + ".join(nume)
 			match String(indiciu["semn"]):
 				">":
-					return "%s e mai mare decât %d." % [pereche, int(indiciu["valoare"])]
+					return "%s e mai mare decât %d." % [suma, int(indiciu["valoare"])]
 				"<":
-					return "%s e mai mică decât %d." % [pereche, int(indiciu["valoare"])]
+					return "%s e mai mică decât %d." % [suma, int(indiciu["valoare"])]
 				_:
-					return "%s e exact %d." % [pereche, int(indiciu["valoare"])]
+					return "%s e exact %d." % [suma, int(indiciu["valoare"])]
 		PARITATE:
 			return "%s e %s." % [
 				litera(int(indiciu["a"])), "pară" if bool(indiciu["para"]) else "impară"]
@@ -931,16 +1328,32 @@ static func text(indiciu: Dictionary) -> String:
 			return "Nicio cifră nu e mai mică decât %s." % litera(int(indiciu["a"]))
 		FARA_REPETITIE:
 			return "Nicio cifră nu se repetă."
-		SUMA_TOTALA:
-			match String(indiciu["semn"]):
-				">":
-					return "Suma tuturor cifrelor e mai mare decât %d." % int(indiciu["valoare"])
-				"<":
-					return "Suma tuturor cifrelor e mai mică decât %d." % int(indiciu["valoare"])
-				_:
-					return "Suma tuturor cifrelor e exact %d." % int(indiciu["valoare"])
 	# Un tip fără propoziție e o scăpare de programator, nu o stare de joc: se
 	# întâmplă doar dacă ai adăugat un tip și ai uitat un rând aici. Textul
 	# întors e vizibil urât, ca să nu treacă neobservat prin testare.
 	push_error("GeneratorCifru: indiciu fara text: %s" % [indiciu])
 	return "(indiciu necunoscut)"
+
+
+## ETICHETA unui indiciu pentru rapoarte: numele lui, plus ce-l deosebește de
+## frații lui de același tip.
+##
+## Fără ea, raportul verificatorului ar spune doar „SUMA: 1200" — adevărat și
+## complet nefolositor, fiindcă exact ăsta e tipul care s-a unificat. Nu vrei
+## să știi dacă generatorul alege sume; vrei să știi dacă alege sume de TREI
+## (indiciile subtile, cele bune pentru nivelul 3) sau sume exacte de două
+## (indiciile brutale), și în ce proporție. „SUMA-3 <" și „SUMA-2 =" sunt două
+## unelte diferite, cu același nume de tip.
+##
+## Trăiește aici, nu în verificator, ca să fie o singură definiție: orice unealtă
+## viitoare care raportează indicii vede aceleași etichete.
+static func eticheta(indiciu: Dictionary) -> String:
+	var tip := String(indiciu.get("tip", "?"))
+	match tip:
+		SUMA:
+			return "SUMA-%d %s" % [indiciu["pozitii"].size(), String(indiciu["semn"])]
+		RELATIE:
+			return "RELATIE %s" % String(indiciu["semn"])
+		EXTREM:
+			return "EXTREM %s" % ["max" if bool(indiciu["maxim"]) else "min"]
+	return tip

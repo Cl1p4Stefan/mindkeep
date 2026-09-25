@@ -1,6 +1,6 @@
 # MINDKEEP — Jurnal de progres
 
-*Ultima actualizare: 24 septembrie 2026*
+*Ultima actualizare: 25 septembrie 2026*
 *Atașează acest fișier la începutul fiecărei sesiuni noi, împreună cu `CLAUDE.md` și `docs/pitch-document.md`.*
 
 ---
@@ -20,11 +20,14 @@
 | 9. Celelalte discipline | 🟡 Cultură generală ✅ (135 de întrebări) · Logica ✅ (80 de categorii) · Cuvinte ✅ · toate trei fără repetiții pe expediție · celelalte 5 ❌ |
 | 10–13. Generator de inamici, artă, web | ❌ (artă parțial: figurile principale și piesele de pe butoanele de Obelisc au imagini reale · **arena are fundal: biblioteca gotică**, cu personajele așezate pe dalele din prim-plan, umbră de contact și lumină de sală) · Regina: **amânată**, vezi CLAUDE.md |
 
-Nodul de **Eveniment** are, de azi, primul lui conținut: **Lacătul** — un cufăr
-cu cifru, dedus din indicii, cu generator verificat pe 1500 de puzzle-uri și cu
-artă adevărată (roți care se învârt în spatele ferestrelor, cufăr care se
-deschide). Scena trăiește deocamdată singură (F6); legarea de hartă e sesiunea
-următoare.
+Nodul de **Eveniment** are primul lui conținut: **Lacătul** — un cufăr cu cifru,
+dedus din indicii, cu artă adevărată (roți care se învârt în spatele
+ferestrelor, cufăr care se deschide). De azi, dificultatea lui nu mai e
+presupusă, ci **măsurată**: un rezolvitor separat deduce codul ca un om și spune
+de ce tehnică a fost nevoie, iar generatorul păstrează doar puzzle-urile cu nota
+cerută de nivel. Verificat pe 180 de puzzle-uri, **60/60 pe fiecare nivel
+nimeresc nota**. Scena trăiește deocamdată singură (F6); legarea de hartă e
+sesiunea următoare.
 
 Din pasul 10 (generatorul de inamici) s-a făcut deja partea care nu costa nimic
 azi: **identitatea inamicului e separată de arhetip**. Restul (modificatori,
@@ -33,6 +36,165 @@ buget, generare) rămâne acolo unde era.
 Am sărit peste ordinea recomandată la pasul 12 (artă): imaginile pentru rege,
 cavaler și pentru cele trei piese de șah de pe butoane au intrat mai devreme, dar
 restul rămâne placeholder. Bucla de luptă e în continuare cea validată, nu arta.
+
+---
+
+## DIFICULTATEA SE MĂSOARĂ (25 septembrie 2026) — un rezolvitor care gândește ca un om
+
+Toate cele trei niveluri ale Lacătului erau prea ușoare, nivelul 3 inclusiv.
+Cauza nu era în tabelul de dificultate, era în **alegerea lacomă**: la fiecare
+pas, generatorul lua indiciul care taie cele mai multe coduri, iar campionul
+absolut la tăiat e egalitatea („A și B sunt egale") — scoate 8 din 9 coduri
+dintr-o lovitură. Două egalități și o sumă, și codul pica singur.
+
+Și, ironia întreagă: **plafonul de 3 indicii pus ca să facă nivelul 3 greu era
+exact ce-l făcea ușor.** Cerându-i generatorului să încapă în trei rânduri, îl
+obligam să aleagă numai indicii brutale.
+
+Deci dificultatea nu se mai reglează din numărul de indicii. Se **măsoară**.
+
+### `RezolvitorCifru` — deduce, nu caută
+
+Fișier nou, lângă generator. Nu verifică unicitatea (aia rămâne dovedită prin
+forță brută, unde ai nevoie de certitudine, nu de imitarea unui om). Singurul
+lui rost e să dea o NOTĂ.
+
+Ține, pentru fiecare roată, lista cifrelor încă posibile — „domeniul" — exact ca
+un om cu creionul. Are trei unelte, încercate mereu de la ieftin la scump:
+
+| | ce face |
+|---|---|
+| **T1** | un singur indiciu, stors de unul singur: taie cifrele pentru care nu mai există nicio completare a celorlalte roți |
+| **T2** | două indicii cerute simultan; perechile fără roată comună se sar, fiindcă acolo n-ai afla nimic peste T1 |
+| **T3** | presupui o cifră, propagi cu T1/T2, iar dacă ajungi la o roată fără nicio cifră posibilă, presupunerea era falsă — o elimini și te întorci la T1 |
+
+**Nota = cea mai grea unealtă de care a fost nevoie.** Ordinea contează enorm:
+dacă ar sări direct la T3, toate puzzle-urile ar primi nota 3. „Nota 3" înseamnă
+„a existat un moment în care nimic mai simplu nu mai mergea".
+
+T3 nu rezolvă puzzle-ul, îl **deblochează**: se oprește după prima eliminare și
+urcă înapoi la T1, fiindcă de obicei tăietura repornește o cascadă de deducții
+simple. E ranga, nu ciocanul. Și e o tehnică cinstită, nu ghicit, pentru că nu
+păstrăm niciodată o presupunere care a MERS — doar concluzii negative obținute
+din contradicție.
+
+### Tabelul de dificultate, rescris
+
+| nivel | nota | alegere | egalități | indicii |
+|---|---|---|---|---|
+| 1 | T1 | lacom | fără limită | ≤ 6 |
+| 2 | T2 | lacom | fără limită | ≤ 6 |
+| 3 | **T3** | **cumpătat** | **cel mult 1** | ≤ 8 |
+
+Puzzle-ul se generează ca înainte, apoi trece prin rezolvitor; dacă nota nu e cea
+cerută, se aruncă și se încearcă altul. Plafonul de 3 indicii de la nivelul 3 a
+dispărut — `indicii_maxime` și-a recăpătat înțelesul onest de limită de ECRAN
+(coloana are loc de vreo 13 rânduri; 8 e prudent).
+
+**„Cumpătat"** e reglajul care contează: alegerea nu mai ia mușcătura cea mai
+mare, ci merge printr-o ordine trasă la sorți. Cu două excepții, amândouă
+descoperite măsurând:
+
+- **deschidere lacomă de 2 indicii** — nicăieri nu stă dificultatea în prima
+  tăietură. Fără ea, plimbarea pornea de la 6561 de coduri cu mușcături mici și
+  aduna 40 de indicii până să izoleze codul;
+- **se sare peste indiciile care nu mai taie nimic**, definitiv — un indiciu care
+  nu taie acum nu va tăia nici mai târziu, fiindcă mulțimea doar se micșorează.
+
+Limita de egalități se aplică **după semn, nu după tip**: orice „=" plus
+DIFERENTA. O listă de nume de tipuri ar rămâne în urmă la primul tip nou.
+
+### Un singur tip `SUMA`
+
+`SUMA_DOUA` și `SUMA_TOTALA` s-au contopit în `SUMA {pozitii, semn, valoare}`.
+Nevoia a venit din **sumele de trei** — cele mai bune indicii pentru nivelul 3,
+fiindcă vorbesc despre trei roți și îți spun pe ocolite ceva și despre a patra.
+Ca tip separat, ar fi fost a treia copie a aceleiași idei în `evalueaza()`, în
+`text()` și în `_candidati()`, iar un lacăt de 5 roți ar fi cerut a patra. Acum
+„suma a k roți" e o buclă peste submulțimi, nu un tip.
+
+Textul e uniform: „A + C + D e mai mică decât 17", inclusiv pentru suma completă
+(a înlocuit „Suma tuturor cifrelor e…"). Mai lung cu câteva litere, dar toate
+sumele arată la fel.
+
+### Ce a costat, și cum s-a plătit
+
+O generare de nivel 3 a ajuns, în prima variantă care mergea, la **18,7
+secunde**. Profilarea pe faze (candidați / plimbare / curățare / notare) a arătat
+patru cauze, toate ascunse:
+
+1. **`da_o_cifra()` parcurgea universul în ordine de contor**, iar ultima roată
+   stă neschimbată 729 de coduri la rând — ieșirea devreme nu se declanșa
+   niciodată. Acum sare cu un pas prim față de mărimea listei: atinge fiecare cod
+   exact o dată, dar vede valori variate din primele zeci.
+2. **`egalitati_maxime: 1` înfometa poolul.** Scoțând sumele exacte ȘI
+   diferențele, rămâneau ordine, paritate, extreme și o inegalitate pe sumă —
+   de multe ori pur și simplu insuficient ca să izolezi un cod. 95% din încercări
+   se aruncau. Rezolvat cu **trei praguri diferite pe aceeași sumă** în loc de
+   unul: „A + C + D > 12" și „A + C + D < 19" sunt afirmații diferite, amândouă
+   adevărate.
+3. **`_curata()` refăcea de zece ori aceeași filtrare.** Acum ține un **lanț de
+   prefixe**: `prefix[k]` = codurile care trec de primele `k` indicii, iar proba
+   pentru indiciul `i` pornește din veriga `i`, nu de la 6561.
+4. **Sonda de alegere era de 1500 de coduri**, pentru o întrebare care n-are
+   nevoie de precizie („care candidat taie cel mai mult?"). Coborâtă la 200.
+
+Rezultat: **18,7 s → 1,24 s** în medie la nivelul 3 (64 ms la nivelul 1, 104 ms
+la nivelul 2).
+
+### Firul separat
+
+1,24 s pe firul principal înseamnă un joc care pare mort. Generarea pleacă acum
+pe `WorkerThreadPool` în prima linie din `porneste()`, iar așteptarea se
+**suprapune peste răgazul de o jumătate de secundă** în care vezi cufărul întreg
+— răgaz care exista oricum. Bucla cedează un cadru la fiecare tur în loc să
+cheme `wait_for_task_completion()` direct, ca jocul să continue să deseneze.
+
+E sigur fiindcă `GeneratorCifru` e logică pură: niciun nod, niciun `Tween`, RNG
+propriu. Ăsta e dividendul regulii „cine calculează nu desenează" — separarea
+făcută din curățenie e ce face mutarea posibilă în zece rânduri.
+
+Măsurat în joc: 2,06 s de la `porneste()` la apropiere pe o sămânță nefericită
+de nivel 3, cu jocul viu tot timpul. La nivelurile 1 și 2, puzzle-ul e gata mult
+înainte, deci așteptarea e exact răgazul de dinainte, neschimbat.
+
+### Verificatorul raportează dificultate, nu doar corectitudine
+
+Pe fiecare nivel: **distribuția notelor**, tipurile de indiciu (cu `SUMA`
+desfăcută pe număr de poziții și semn — `SUMA-3 <` și `SUMA-2 =` sunt unelte
+diferite cu același nume de tip), media indiciilor, timpul unei generări și al
+unei notări. Plus trei verificări noi:
+
+- **nota livrată e cea cerută de nivel**;
+- **rezolvitorul și forța brută ajung la același cod** — păzitorul păzitorului: un
+  bug în rezolvitor n-ar crăpa nimic și n-ar da niciun simptom, ar da doar note
+  greșite, adică un tabel de dificultate care minte în tăcere;
+- **cel mult o egalitate la nivelul 3**, prin aceeași funcție pe care o folosește
+  generatorul.
+
+Cu o nuanță care a ieșit din prima rulare mare: puzzle-urile care ies pe **ușa
+din dos** (toate cele 60 de încercări epuizate, se livrează cel mai apropiat
+puzzle corect) se numără SEPARAT și au voie până la 2%. Supapa aia e proiectată,
+nu stricată — mai bine un lacăt cu o treaptă mai jos decât un joc care se oprește
+din mers. Ce rămâne eroare e nota greșită FĂRĂ ca rezerva să fi intrat în joc:
+aia ar însemna că filtrul de dificultate a acceptat ceva ce trebuia să respingă.
+
+`SEMINTE` a scăzut de la 500 la 200: la o secundă și un sfert pe generare, 500 ar
+fi însemnat peste o jumătate de oră, iar o unealtă pe care n-o mai pornești nu
+mai apără nimic.
+
+**Rezultatul pe 600 de puzzle-uri (200 pe nivel):**
+
+| nivel | nota livrată | indicii | o generare |
+|---|---|---|---|
+| 1 | T1 **200/200** | 3,00 | 68 ms |
+| 2 | T2 **200/200** | 3,98 | 116 ms |
+| 3 | T3 **199/200** | 6,70 | 1387 ms |
+
+Singura excepție de la nivelul 3 e o sămânță din 200 (0,5%) care a epuizat
+încercările și a primit un puzzle T2 — supapa, în limitele ei. Distribuția de
+tipuri de la nivelul 3 e exact pe brief: paritate 20%, inegalități de sumă 37%,
+extreme 12%, relații de ordine 13%, egalități sub 8%.
 
 ---
 
