@@ -1,0 +1,94 @@
+[
+	{
+		"id": "zidul_berlinului",
+		"nota": "Zidul Berlinului a căzut pe 9 noiembrie 1989, după ce despărțise orașul timp de 28 de ani. Câteva săptămâni mai târziu, în decembrie, a urmat Revoluția Română.",
+		"surse": [],
+		"verificat": false
+	},
+	{
+		"id": "stefan_cel_mare",
+		"nota": "Ștefan cel Mare a domnit în Moldova 47 de ani, între 1457 și 1504. În 1475 a învins oastea otomană la Vaslui, iar mormântul lui se află la Putna, mănăstirea pe care a ctitorit-o.",
+		"surse": [],
+		"verificat": false,
+		"etichete": ["romania"]
+	},
+	{
+		"id": "constantinopol",
+		"nota": "Constantin cel Mare a inaugurat în anul 330 noua capitală, pe locul vechiului Bizanț, iar orașul i-a primit numele: Constantinopol, azi Istanbul. A rămas capitala Imperiului Roman de Răsărit până în 1453, când l-au cucerit otomanii.",
+		"surse": [],
+		"verificat": false
+	},
+	{
+		"id": "dambovita",
+		"nota": "Dâmbovița străbate centrul Bucureștiului. Dunărea, mult mai mare, curge la aproximativ 60 de kilometri sud de oraș.",
+		"surse": [],
+		"verificat": false,
+		"etichete": ["romania"]
+	},
+	{
+		"id": "canberra",
+		"nota": "Capitala Australiei e Canberra, nu Sydney. Orașul a fost ales la începutul secolului XX ca un compromis între Sydney și Melbourne, care își disputau amândouă titlul.",
+		"surse": [],
+		"verificat": false
+	},
+	{
+		"id": "congo",
+		"nota": "Fluviul Congo traversează Ecuatorul de două ori, într-un arc larg prin Africa Centrală. Este al doilea fluviu din lume ca debit, după Amazon.",
+		"surse": [],
+		"verificat": false
+	},
+	{
+		"id": "paianjen",
+		"nota": "Păianjenii au opt picioare, deci nu sunt insecte, care au șase. Fac parte din arahnide, alături de scorpioni și căpușe.",
+		"surse": [],
+		"verificat": false
+	},
+	{
+		"id": "mitocondria",
+		"nota": "Mitocondriile produc cea mai mare parte a energiei de care are nevoie celula. Au propriul lor ADN, semn că strămoșii lor au fost, cel mai probabil, bacterii care trăiau independent.",
+		"surse": [],
+		"verificat": false
+	},
+	{
+		"id": "aur",
+		"nota": "Aurul are numărul atomic 79. Simbolul lui, Au, vine din latinescul „aurum”, la fel cum Ag, simbolul argintului, vine din „argentum”.",
+		"surse": [],
+		"verificat": false
+	},
+	{
+		"id": "impresionism",
+		"nota": "„Impresie, răsărit de soare” e un tablou de Claude Monet. Un critic i-a folosit titlul ca să-i ironizeze pe pictorii din jurul lui, numindu-i „impresioniști”, iar ei au adoptat numele.",
+		"surse": [],
+		"verificat": false
+	},
+	{
+		"id": "michelangelo",
+		"nota": "Michelangelo se considera mai ales sculptor: a cioplit „David” din marmură, între 1501 și 1504. A pictat totuși și tavanul Capelei Sixtine, lucrând la el între 1508 și 1512.",
+		"surse": [],
+		"verificat": false
+	},
+	{
+		"id": "ahile",
+		"nota": "Potrivit legendei, mama lui Ahile, Thetis, l-a scufundat în râul Styx ca să-l facă invulnerabil, ținându-l de călcâi. De aici vine expresia „călcâiul lui Ahile”, adică punctul slab al cuiva.",
+		"surse": [],
+		"verificat": false
+	},
+	{
+		"id": "odin",
+		"nota": "În mitologia nordică, Odin și-a dat un ochi pentru o sorbitură din fântâna lui Mimir, care dădea înțelepciune. De aceea e înfățișat de obicei cu un singur ochi.",
+		"surse": [],
+		"verificat": false
+	},
+	{
+		"id": "sonet",
+		"nota": "Sonetul are 14 versuri. În forma italiană, ele se împart în două catrene și două terține; Shakespeare le-a grupat altfel, în trei catrene și un distih final.",
+		"surse": [],
+		"verificat": false
+	},
+	{
+		"id": "micul_print",
+		"nota": "Antoine de Saint-Exupéry era pilot, iar „Micul Prinț”, apărut în 1943, pornește de la o aterizare forțată în deșert. Autorul trăise una cu adevărat, în Sahara, în 1935.",
+		"surse": [],
+		"verificat": false
+	}
+]

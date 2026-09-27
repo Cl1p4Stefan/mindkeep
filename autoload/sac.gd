@@ -203,9 +203,15 @@ func expeditie_noua() -> void:
 ## DE CE UN TEXT, ȘI NU POZIȚIA ÎN LISTĂ. Poziția pare mai ieftină, dar e
 ## legată de ordinea din fișier. Adaugi mâine o întrebare la mijlocul
 ## `intrebari_trivia.json` și toate pozițiile de după se mută cu unu — iar
-## un save vechi ar crede că a văzut cu totul alte întrebări. Textul
-## întrebării nu se mută niciodată. E aceeași decizie ca la `Tezaur`, unde
-## resursele se salvează pe chei text, nu pe numere din `enum`.
+## un save vechi ar crede că a văzut cu totul alte întrebări. E aceeași
+## decizie ca la `Tezaur`, unde resursele se salvează pe chei text, nu pe
+## numere din `enum`.
+##
+## CE text, asta alege apelantul, prin `camp_id`. Trivia dă „id" (`mana:0001`),
+## un câmp care nu înseamnă nimic pentru jucător și de-aia nu se schimbă
+## niciodată. Până la sesiunea id-urilor dădea „text", care se schimbă la
+## fiecare reformulare — adică o întrebare rescrisă părea nevăzută, deci
+## gratis. Un identificator bun e unul pe care n-ai niciun motiv să-l atingi.
 func _identitate(element, camp_id: String) -> String:
 	if camp_id != "" and element is Dictionary and element.has(camp_id):
 		return String(element[camp_id])

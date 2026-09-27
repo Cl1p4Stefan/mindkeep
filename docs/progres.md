@@ -1,6 +1,6 @@
 # MINDKEEP — Jurnal de progres
 
-*Ultima actualizare: 27 septembrie 2026*
+*Ultima actualizare: 28 septembrie 2026*
 *Atașează acest fișier la începutul fiecărei sesiuni noi, împreună cu `CLAUDE.md` și `docs/pitch-document.md`.*
 
 ---
@@ -17,7 +17,7 @@
 | 6. Harta de expediție | ✅ loadout „N din M" · **12-16 noduri**, ramificate, cu sămânță · Luptă / Elită / Odihnă / Eveniment / **Magazin** / **Boss** · **Monede + puteri temporare** · sumar de run · aspect: pergament, simboluri de cerneală, trasee punctate · **nodurile și drumurile stau pe o PANGLICĂ (curbă centrală + benzi)**, nu pe o grilă dreaptă · **patru trasee, toate verzi pe 300 de semințe** (POTCOAVĂ activă; POTCOAVA OGLINDITĂ e aceeași formă, întoarsă) · strat înclinat (forfecare) la ȘARPE · **drumuri care nu se încrucișează niciodată (0 la 300 de semințe)** · **nodul curent are și aură, și X** · **două surse de hartă: GENERATĂ (panglica) sau DESENATĂ dintr-un fișier `data/harti/*.json`** — comutatorul `Expeditie.SURSA_HARTII`; azi e pe DESENATĂ · **harta umple pergamentul**: pânza ține toată pagina, antetul plutește peste ea (805 × 427 px de hartă, de la 666 × 353) · **drumurile merg în amândouă sensurile**, cu nodul parcurs tăiat definitiv și cu garanția, verificată pe 16 000 de expediții simulate, că nu te poți înfunda · **figurina sare, cade ca un slam și zguduie ecranul la aterizare**, cu un răgaz de 0,5 s înainte să se deschidă nodul · **tipurile nodurilor se împart după o REȚETĂ fixă, nu se trag cu zarul**: 9 reguli de vecinătate și de început, plasare conștientă de reguli, verificare completă și reîncercare cu sub-sămânță (0 eșecuri pe 500 de semințe × 3 surse de hartă) · rețeta se **plafonează după forma hărții**, nu după numărul de noduri · **nodul de Eveniment deschide Lacătul** (nivel din adâncime, sămânță din nodul, 6/10/14 Monede la succes) |
 | 7. Cetatea | ❌ |
 | 8. Save/Load | 🟡 tezaurul, sacul și expediția știu toate să se serializeze (`spre_dictionar` / `din_dictionar`), pe trei straturi de durată; scrierea pe disc, nu încă |
-| 9. Celelalte discipline | 🟡 Cultură generală ✅ (135 de întrebări; **planul de creștere spre mii, notele „Află mai multe” și modul Practice sunt decise**, vezi sesiunea CONȚINUTUL) · Logica ✅ (80 de categorii) · Cuvinte ✅ · toate trei fără repetiții pe expediție · celelalte 5 ❌ |
+| 9. Celelalte discipline | 🟡 Cultură generală ✅ (135 de întrebări, fiecare cu **`id` stabil** (`mana:0001`…); **15 fapte cu note** în `data/fapte_trivia.json`, 18 întrebări legate de ele, nota intră în `explicatie` dar nu se afișează încă; **planul de creștere spre mii și modul Practice sunt decise**, vezi sesiunile CONȚINUTUL și ID ȘI FAPT) · Logica ✅ (80 de categorii) · Cuvinte ✅ · toate trei fără repetiții pe expediție, **Cultura generală după `id`, nu după text** · celelalte 5 ❌ |
 | 10–13. Generator de inamici, artă, web | ❌ (artă parțial: figurile principale și piesele de pe butoanele de Obelisc au imagini reale · **arena are fundal: biblioteca gotică**, cu personajele așezate pe dalele din prim-plan, umbră de contact și lumină de sală) · Regina: **amânată**, vezi CLAUDE.md |
 
 Nodul de **Eveniment** are primul lui conținut: **Lacătul** — un cufăr cu cifru,
@@ -37,6 +37,183 @@ buget, generare) rămâne acolo unde era.
 Am sărit peste ordinea recomandată la pasul 12 (artă): imaginile pentru rege,
 cavaler și pentru cele trei piese de șah de pe butoane au intrat mai devreme, dar
 restul rămâne placeholder. Bucla de luptă e în continuare cea validată, nu arta.
+
+---
+
+## ID ȘI FAPT (28 septembrie 2026) — o întrebare are acum un nume care nu se mișcă
+
+Pasul 3 din lista „Imediat”. Cele 135 de întrebări de Cultură generală au primit
+un `id` stabil, notele pilotului au intrat în `data/fapte_trivia.json`, iar sacul
+a trecut de la text la `id`. Nimic nu se vede în joc: e sesiunea care face
+posibile Save-ul și Practice, nu una care adaugă ceva pe ecran.
+
+### De ce „înainte de Save” nu era o vorbă în vânt
+
+Până azi, sacul recunoștea o întrebare după TEXTUL ei (`Sac.extrage(..., "text")`).
+Cât timp nimic nu se scrie pe disc, asta merge: memoria trăiește o rulare, iar
+dacă rescriu mâine o întrebare ca să sune mai bine, se pierde odată cu ea.
+
+După Save, aceeași reformulare ar fi însemnat altceva: save-ul ar fi conținut
+textul vechi, iar întrebarea rescrisă i-ar fi părut nevăzută — deci gratis, exact
+lucrul împotriva căruia există sacul. Iar la Practice, unde istoricul spune
+„învățat”, meritul a doi-trei răspunsuri corecte s-ar fi lipit de un text care se
+poate schimba oricând.
+
+**Verificat înainte de orice:** `grep` după `FileAccess.open`, `WRITE` și `user://`
+în tot codul de joc dă zero rezultate. `spre_dictionar()` există la Tezaur, Sac și
+Expediție, dar nimeni nu-l duce într-un fișier. **Deci n-a fost nevoie de nicio
+migrare** — singura fereastră în care schimbarea asta e gratuită, și e încă
+deschisă.
+
+### Scriptul: chirurgie pe text, nu reserializare
+
+`tools/da_iduri.py`, rulat cu `--scrie` (fără, e probă uscată).
+
+Varianta evidentă ar fi `json.load`, adaugi cheia, `json.dump`. **Nu e bună**: ca
+să iasă fișierul de pe disc, `json.dump` ar trebui convins să scoată taburi, nu
+spații, `variante` pe un singur rând, ghilimelele românești neescapate și cheile
+în ordinea de acum. Orice nepotrivire rescrie toate cele 965 de linii, iar în Git
+ai un diff în care câmpurile noi nu se mai văd printre 800 de linii mutate degeaba.
+
+Scriptul inserează linii într-un fișier text, imediat după acolada de deschidere.
+**Rezultatul: 153 de inserări, 0 ștergeri** — 135 de `id` plus 18 de `fapt`, și
+nicio linie existentă atinsă.
+
+Prețul e că scriptul trebuie să știe forma fișierului. De aceea e **strict**:
+orice linie pe care nu o recunoaște îl oprește cu eroare și cu numărul liniei, în
+loc s-o sară. Probat pe un câmp indentat cu un spațiu în loc de tab: „OPRIT: linia
+381: așteptam un câmp la două taburi”, fișierul neatins. Un script care sare peste
+ce nu înțelege ar da, în tăcere, 134 de id-uri din 135 — iar întrebarea fără id ar
+dispărea din joc, fiindcă încărcătorul o sare.
+
+**Idempotent prin construcție:** un obiect care are deja `id` e lăsat în pace.
+A doua rulare spune „Nimic de schimbat” și verifică fișierul de pe disc.
+
+**Legăturile cu faptele sunt după TEXTUL întrebării, nu după id-uri prezise.** Un
+tabel de forma „mana:0038 → aur” nu se poate citi cu ochiul: o cifră greșită ar
+lega întrebarea de alt fapt, iar nicio validare n-ar prinde-o (id-ul există,
+faptul există, legătura e doar falsă). Scriptul cere ca fiecare text să apară
+exact o dată în fișier, se oprește dacă un text din tabel nu se găsește, și
+tipărește la final toate cele 18 legături ca „id · fapt · întrebare”, de citit.
+
+**După scriere, scriptul își citește fișierul înapoi** cu `json.load` — același
+parser pe care-l va folosi Godot — și confirmă 135 de obiecte, fiecare cu id unic.
+A umblat pe text, deci nu are nicio altă dovadă că a scris JSON valid; e ieftin și
+e singurul lucru care prinde o virgulă pierdută.
+
+### REGULA: un `id` nu se refolosește niciodată
+
+Numărul următor se află ca „cel mai mare id din fișier, plus unu”. Corect **doar**
+cât timp nimic nu se șterge. Dacă ștergi ultima întrebare, `mana:0135` dispare,
+iar următoarea adăugată primește chiar `mana:0135`. De acolo încolo, save-ul unui
+jucător ar crede că a văzut o întrebare pe care n-a văzut-o, iar istoricul din
+Practice i-ar trece meritul unei întrebări cu totul alteia. **Nimic nu prinde
+asta:** fișierul e valid, id-urile sunt unice, jocul pornește.
+
+**Deci întrebările nu se șterg din fișier.** Una scoasă din joc se marchează
+`"retras": true` și rămâne pe loc, cu id-ul ei. Încărcătorul va învăța să sară
+peste ele **când va fi nevoie** — azi nu e nimic retras, deci nu există codul.
+Regula e scrisă în antetul lui `tools/da_iduri.py` și în antetul lui `trivia.gd`,
+fiindcă e o regulă pe care niciun cod nu o apără.
+
+### Faptele: `data/fapte_trivia.json`
+
+Cele 15 fapte din pilot (`docs/ghid-note.md`, secțiunea 5), cu notele copiate
+cuvânt cu cuvânt. Câmpuri: `id`, `nota`, `surse: []`, `verificat: false`, plus
+`etichete: ["romania"]` la `stefan_cel_mare` și `dambovita`. Restul n-au etichete:
+una pusă „ca să fie” e conținut mort care arată ca structură.
+
+Lungimile ies 115–232, media 164 — exact cifrele pe care ghidul le dă pentru
+pilot, deci notele au ajuns nemodificate. **Toate 15 sunt `verificat: false`**:
+verificarea lor e punctul 2 din „Imediat”, încă nefăcut.
+
+### Încărcătorul: cinci validări care avertizează, nu opresc
+
+Faptele se citesc **întâi**, din două motive: întrebările au nevoie de mulțimea de
+fapte ca să-și verifice legătura, iar după ce s-au citit amândouă se poate pune
+întrebarea inversă — există fapte pe care nu le cere nimeni?
+
+| Problemă | Ce face | De ce |
+|---|---|---|
+| `id` lipsă sau gol | avertisment + **sare peste întrebare** | De azi `id` e obligatoriu ca `text`. Pare dur pentru un câmp nevăzut, dar el e cel prin care sacul, save-ul și istoricul din Practice recunosc întrebarea; fără el n-ar putea intra cinstit în niciunul. Avertismentul spune chiar comanda de rulat |
+| `id` duplicat | avertisment + **sare peste a doua** | Două întrebări cu același `id` sunt, pentru sac, o singură întrebare: una n-ar mai ieși NICIODATĂ, și nu s-ar vedea ca un bug, s-ar vedea ca o bază mai săracă decât e |
+| `fapt` inexistent | avertisment, **întrebarea rămâne**, legătura cade | O legătură scrisă greșit e o scăpare de tastat; întrebarea e în continuare bună și apare fără notă, ca înainte |
+| notă peste 240 | avertisment, **nota rămâne întreagă** | 240 e limită de stil și încă nejucată (`MAX_NOTA`, de recalibrat pe popup). O notă bună nu se taie pentru o cifră provizorie |
+| fapt nefolosit | avertisment după ambele fișiere | Conținut mort. Nu strică nimic în joc și exact de-aia n-ar fi găsit niciodată altfel |
+
+Sărirea nu e o dispariție tăcută: se vede în linia de bilanț, „133 incarcate din
+135 gasite”.
+
+### Nota intră în `explicatie`
+
+Câmpul exista deja în contractul din `puzzle.gd`, gol la Trivia — vezi sesiunea
+CONȚINUTUL. Acum ia nota faptului spre care arată întrebarea, sau rămâne gol dacă
+nu e niciunul. **Nimeni nu-l afișează încă**, și e în regulă: se umple de pe acum
+fiindcă e o linie de cod și un fișier de conținut, iar conținutul e partea lentă.
+Notele se pot scrie și verifica luni de zile înainte să existe ecranul care le
+arată.
+
+### Verificarea: `tools/verifica_trivia.gd`
+
+`godot --headless --path . res://tools/verifica_trivia.tscn` — instant, fără
+fereastră. Nu deschide nicio scenă: tot ce citește stă în `static var`-uri, deci
+aparține scriptului, nu unei copii a scenei.
+
+```
+  ÎNCĂRCAREA
+    întrebări încărcate      OK   135 din 135 așteptate
+    fapte încărcate          OK   15 din 15 așteptate
+    pe niveluri                   1: 45, 2: 45, 3: 45
+  ID-URILE
+    toate au id              OK
+    id-uri unice             OK   135 distincte
+    forma 'prefix:cifre'     OK
+  NOTELE
+    întrebări cu notă        OK   18 din 18 așteptate
+    note sub limită          OK   cea mai lungă: 232 din 240
+    niciun fapt nefolosit    OK
+  SACUL (pe `id`, un ciclu întreg pe fiecare nivel)
+    nivelul 1, un ciclu      OK   45 trageri, 45 întrebări distincte
+    nivelul 1, răscrucea     OK   mana:0015 după mana:0032
+    … la fel pe nivelurile 2 și 3
+```
+
+Numerele așteptate (135, 15, 18) sunt scrise în unealtă, nu citite din fișier: o
+verificare care-și ia așteptările din lucrul verificat nu verifică nimic — „am
+găsit câte am găsit” ar trece liniștită și după ce dispar 10 întrebări. Când baza
+crește, cele trei constante se mută cu ea, dinadins.
+
+„Întrebări cu notă” NU numără câmpul `fapt`, cere nota însăși, prin același drum
+pe care-l face lupta: fapt → notă. O legătură care duce nicăieri e chiar greșeala
+de prins.
+
+### Și drumurile de eșec au fost probate
+
+O validare pe care n-ai văzut-o niciodată dând alarma e doar o intenție. Am stricat
+dinadins fișierele, pe o copie de siguranță, cu toate cinci defectele deodată:
+fiecare a dat avertismentul lui, cu numele exact al intrării, nimic n-a crăpat,
+codul de ieșire a fost 1. Întrebarea cu legătura ruptă **a rămas** (133 = 135 − 2
+sărite pentru `id`, nu 3) și a apărut fără notă: 17 în loc de 18.
+
+### Ce NU s-a făcut, dinadins
+
+- **A 19-a întrebare.** Ghidul cere, la `stefan_cel_mare`, și „În ce perioadă a
+  domnit Ștefan cel Mare?”, marcată *de adăugat*. Nu există în bază și n-am
+  scris-o: e conținut nou, nu pasul de azi. Faptul o așteaptă (nota vorbește deja
+  despre domnia 1457–1504).
+- **Sacul permanent.** Rămâne pe expediție, cum e. La Save trece în stratul
+  permanent, iar `Array.has()` din `sac.gd` devine un Dictionary folosit ca
+  mulțime — comentariul de acolo o anticipează deja.
+- **Afișarea notei.** Nimic. Primul loc va fi „Află mai multe” din Practice.
+- **`retras`.** Regula e scrisă, codul nu există: nu e nimic retras.
+
+### Fișiere
+
+Nou: `tools/da_iduri.py`, `data/fapte_trivia.json`, `tools/verifica_trivia.gd` +
+`.tscn`. Atinse: `data/intrebari_trivia.json` (+153 de linii, 0 ștergeri),
+`scenes/trivia/trivia.gd` (faptele, cele cinci validări, sacul pe `id`, nota în
+`explicatie`), `autoload/sac.gd` (doar comentariul lui `_identitate`, care încă
+dădea textul întrebării ca exemplu), `docs/progres.md`.
 
 ---
 
@@ -5375,8 +5552,8 @@ stricate, semnalează membrii duplicați și domeniile prea sărace.
 
 ### Imediat (următoarea sesiune)
 
-*Rescrisă pe 27 septembrie 2026, punctul 1 bifat în aceeași zi (sesiunea
-EVENIMENTUL DESCHIDE CUFĂRUL).*
+*Rescrisă pe 27 septembrie 2026. Punctul 1 bifat în aceeași zi (sesiunea
+EVENIMENTUL DESCHIDE CUFĂRUL), punctul 3 pe 28 septembrie (sesiunea ID ȘI FAPT).*
 
 1. **Lacătul de pe hartă, jucat pe mână.** Legarea e făcută și verificată
    headless; ce NU se poate afla din verificare e cât durează, cu ceasul pornit,
@@ -5386,10 +5563,15 @@ EVENIMENTUL DESCHIDE CUFĂRUL).*
    `generator_cifru.gd`.
 2. **Verificarea notelor din pilot** (`docs/ghid-note.md`, secțiunea 5). Fără cod,
    cam o jumătate de oră.
-3. **`id` și `fapt` pentru Cultura generală**: `id` stabil pentru cele 135 de
-   întrebări, dat o singură dată printr-un script; `data/fapte_trivia.json` cu
-   notele din pilot; validările din încărcător; sacul pe `id` în loc de text.
-   **Înainte de Save.**
+3. ~~**`id` și `fapt` pentru Cultura generală.**~~ **FĂCUT** pe 28 septembrie
+   (sesiunea ID ȘI FAPT): `tools/da_iduri.py` (idempotent, strict, +153 de linii
+   și 0 ștergeri), `data/fapte_trivia.json` cu cele 15 fapte din pilot, cinci
+   validări în încărcător, sacul pe `id`, nota în `explicatie`, verificare
+   headless cu `tools/verifica_trivia.tscn`. **Nicio migrare n-a fost nevoie** —
+   confirmat prin `grep`: nimic nu scrie pe disc. A rămas nescrisă a 19-a
+   întrebare din pilot („În ce perioadă a domnit Ștefan cel Mare?”), și **regula
+   nouă: un `id` nu se refolosește niciodată**, deci întrebările nu se șterg din
+   fișier, se marchează `"retras": true`.
 4. **Un tabel de probă din Wikidata**: un script mic, un domeniu (candidat:
    elementele chimice), 100–200 de întrebări. Scopul e să văd cum arată cele
    generate lângă cele scrise de mână, nu volumul. Rezolvă și problema de

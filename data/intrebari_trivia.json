@@ -1,5 +1,7 @@
 [
 	{
+		"id": "mana:0001",
+		"fapt": "zidul_berlinului",
 		"text": "În ce an a căzut Zidul Berlinului?",
 		"variante": ["1989", "1985", "1991", "1993"],
 		"corect": 0,
@@ -7,6 +9,7 @@
 		"categorie": "istorie"
 	},
 	{
+		"id": "mana:0002",
 		"text": "Cine a fost primul om care a pășit pe Lună?",
 		"variante": ["Buzz Aldrin", "Neil Armstrong", "Iuri Gagarin", "Michael Collins"],
 		"corect": 1,
@@ -14,6 +17,7 @@
 		"categorie": "istorie"
 	},
 	{
+		"id": "mana:0003",
 		"text": "Ce imperiu a construit Colosseumul din Roma?",
 		"variante": ["Imperiul Grec", "Imperiul Otoman", "Imperiul Roman", "Imperiul Bizantin"],
 		"corect": 2,
@@ -21,6 +25,7 @@
 		"categorie": "istorie"
 	},
 	{
+		"id": "mana:0004",
 		"text": "În ce an a început Primul Război Mondial?",
 		"variante": ["1912", "1918", "1939", "1914"],
 		"corect": 3,
@@ -28,6 +33,7 @@
 		"categorie": "istorie"
 	},
 	{
+		"id": "mana:0005",
 		"text": "Cine a fost primul președinte al Statelor Unite?",
 		"variante": ["Abraham Lincoln", "Thomas Jefferson", "George Washington", "Benjamin Franklin"],
 		"corect": 2,
@@ -35,6 +41,7 @@
 		"categorie": "istorie"
 	},
 	{
+		"id": "mana:0006",
 		"text": "Ce civilizație antică a construit piramidele de la Giza?",
 		"variante": ["Grecii antici", "Egiptenii antici", "Romanii", "Perșii"],
 		"corect": 1,
@@ -42,6 +49,7 @@
 		"categorie": "istorie"
 	},
 	{
+		"id": "mana:0007",
 		"text": "În ce an a avut loc Revoluția Română care a răsturnat regimul comunist?",
 		"variante": ["1989", "1990", "1968", "1977"],
 		"corect": 0,
@@ -49,6 +57,7 @@
 		"categorie": "istorie"
 	},
 	{
+		"id": "mana:0008",
 		"text": "Cine a condus expediția care a ajuns în America în 1492?",
 		"variante": ["Vasco da Gama", "Cristofor Columb", "Fernando Magellan", "Amerigo Vespucci"],
 		"corect": 1,
@@ -57,6 +66,7 @@
 	},
 
 	{
+		"id": "mana:0009",
 		"text": "Care este capitala Portugaliei?",
 		"variante": ["Lisabona", "Madrid", "Porto", "Barcelona"],
 		"corect": 0,
@@ -64,6 +74,7 @@
 		"categorie": "geografie"
 	},
 	{
+		"id": "mana:0010",
 		"text": "Care este cel mai mare ocean de pe Pământ?",
 		"variante": ["Oceanul Atlantic", "Oceanul Pacific", "Oceanul Indian", "Oceanul Arctic"],
 		"corect": 1,
@@ -71,6 +82,7 @@
 		"categorie": "geografie"
 	},
 	{
+		"id": "mana:0011",
 		"text": "Pe ce continent se află Egiptul?",
 		"variante": ["Asia", "Europa", "Africa", "America de Sud"],
 		"corect": 2,
@@ -78,6 +90,8 @@
 		"categorie": "geografie"
 	},
 	{
+		"id": "mana:0012",
+		"fapt": "dambovita",
 		"text": "Ce râu trece prin București?",
 		"variante": ["Dunărea", "Mureșul", "Oltul", "Dâmbovița"],
 		"corect": 3,
@@ -85,6 +99,7 @@
 		"categorie": "geografie"
 	},
 	{
+		"id": "mana:0013",
 		"text": "Care este cel mai mare deșert cald de pe Pământ?",
 		"variante": ["Gobi", "Sahara", "Kalahari", "Atacama"],
 		"corect": 1,
@@ -92,6 +107,7 @@
 		"categorie": "geografie"
 	},
 	{
+		"id": "mana:0014",
 		"text": "În ce țară se află Turnul Eiffel?",
 		"variante": ["Italia", "Spania", "Franța", "Belgia"],
 		"corect": 2,
@@ -99,6 +115,7 @@
 		"categorie": "geografie"
 	},
 	{
+		"id": "mana:0015",
 		"text": "Care este cel mai mare oraș al României?",
 		"variante": ["Cluj-Napoca", "Iași", "Timișoara", "București"],
 		"corect": 3,
@@ -106,6 +123,7 @@
 		"categorie": "geografie"
 	},
 	{
+		"id": "mana:0016",
 		"text": "Ce mare scaldă litoralul românesc?",
 		"variante": ["Marea Neagră", "Marea Mediterană", "Marea Baltică", "Marea Adriatică"],
 		"corect": 0,
@@ -114,6 +132,7 @@
 	},
 
 	{
+		"id": "mana:0017",
 		"text": "Care planetă este cea mai apropiată de Soare?",
 		"variante": ["Venus", "Marte", "Mercur", "Pământ"],
 		"corect": 2,
@@ -121,6 +140,8 @@
 		"categorie": "stiinta"
 	},
 	{
+		"id": "mana:0018",
+		"fapt": "aur",
 		"text": "Care este simbolul chimic al aurului?",
 		"variante": ["Ag", "Fe", "Cu", "Au"],
 		"corect": 3,
@@ -128,6 +149,7 @@
 		"categorie": "stiinta"
 	},
 	{
+		"id": "mana:0019",
 		"text": "Câte oase are, aproximativ, scheletul unui om adult?",
 		"variante": ["106", "206", "306", "406"],
 		"corect": 1,
@@ -135,6 +157,7 @@
 		"categorie": "stiinta"
 	},
 	{
+		"id": "mana:0020",
 		"text": "Ce gaz absorb plantele din aer pentru fotosinteză?",
 		"variante": ["Oxigen", "Azot", "Dioxid de carbon", "Hidrogen"],
 		"corect": 2,
@@ -142,6 +165,8 @@
 		"categorie": "stiinta"
 	},
 	{
+		"id": "mana:0021",
+		"fapt": "paianjen",
 		"text": "Câte picioare are un păianjen?",
 		"variante": ["Șase", "Opt", "Zece", "Doisprezece"],
 		"corect": 1,
@@ -149,6 +174,7 @@
 		"categorie": "stiinta"
 	},
 	{
+		"id": "mana:0022",
 		"text": "Ce planetă este cunoscută drept „Planeta Roșie”?",
 		"variante": ["Venus", "Jupiter", "Saturn", "Marte"],
 		"corect": 3,
@@ -156,6 +182,7 @@
 		"categorie": "stiinta"
 	},
 	{
+		"id": "mana:0023",
 		"text": "Ce organ pompează sângele prin corp?",
 		"variante": ["Ficatul", "Inima", "Plămânii", "Rinichii"],
 		"corect": 1,
@@ -163,6 +190,7 @@
 		"categorie": "stiinta"
 	},
 	{
+		"id": "mana:0024",
 		"text": "La ce temperatură fierbe apa, la nivelul mării?",
 		"variante": ["50 °C", "75 °C", "100 °C", "150 °C"],
 		"corect": 2,
@@ -171,6 +199,7 @@
 	},
 
 	{
+		"id": "mana:0025",
 		"text": "Cine a pictat „Mona Lisa”?",
 		"variante": ["Leonardo da Vinci", "Michelangelo", "Rafael", "Vincent van Gogh"],
 		"corect": 0,
@@ -178,6 +207,7 @@
 		"categorie": "arta"
 	},
 	{
+		"id": "mana:0026",
 		"text": "Ce instrument muzical are 88 de clape?",
 		"variante": ["Orga", "Acordeonul", "Pianul", "Clavecinul"],
 		"corect": 2,
@@ -185,6 +215,8 @@
 		"categorie": "arta"
 	},
 	{
+		"id": "mana:0027",
+		"fapt": "michelangelo",
 		"text": "Cine a pictat tavanul Capelei Sixtine?",
 		"variante": ["Leonardo da Vinci", "Michelangelo", "Rafael", "Donatello"],
 		"corect": 1,
@@ -192,6 +224,7 @@
 		"categorie": "arta"
 	},
 	{
+		"id": "mana:0028",
 		"text": "Câte corzi are o vioară?",
 		"variante": ["Trei", "Patru", "Cinci", "Șase"],
 		"corect": 1,
@@ -199,6 +232,7 @@
 		"categorie": "arta"
 	},
 	{
+		"id": "mana:0029",
 		"text": "Ce culoare obții dacă amesteci albastru cu galben?",
 		"variante": ["Verde", "Portocaliu", "Violet", "Maro"],
 		"corect": 0,
@@ -206,6 +240,8 @@
 		"categorie": "arta"
 	},
 	{
+		"id": "mana:0030",
+		"fapt": "michelangelo",
 		"text": "Din ce material este sculptată statuia „David” a lui Michelangelo?",
 		"variante": ["Bronz", "Marmură", "Lemn", "Granit"],
 		"corect": 1,
@@ -213,6 +249,7 @@
 		"categorie": "arta"
 	},
 	{
+		"id": "mana:0031",
 		"text": "Ce instrument cu coarde sună cel mai grav într-o orchestră?",
 		"variante": ["Vioara", "Violoncelul", "Contrabasul", "Viola"],
 		"corect": 2,
@@ -221,6 +258,7 @@
 	},
 
 	{
+		"id": "mana:0032",
 		"text": "Cine era regele zeilor în mitologia greacă?",
 		"variante": ["Apollo", "Poseidon", "Zeus", "Hades"],
 		"corect": 2,
@@ -228,6 +266,7 @@
 		"categorie": "mitologie"
 	},
 	{
+		"id": "mana:0033",
 		"text": "Ce zeu roman al războiului a dat numele unei planete?",
 		"variante": ["Marte", "Mercur", "Jupiter", "Saturn"],
 		"corect": 0,
@@ -235,6 +274,7 @@
 		"categorie": "mitologie"
 	},
 	{
+		"id": "mana:0034",
 		"text": "Ce creatură din mitologia greacă avea trup de om și cap de taur?",
 		"variante": ["Centaurul", "Minotaurul", "Satirul", "Ciclopul"],
 		"corect": 1,
@@ -242,6 +282,7 @@
 		"categorie": "mitologie"
 	},
 	{
+		"id": "mana:0035",
 		"text": "Cine era zeul tunetului în mitologia nordică?",
 		"variante": ["Odin", "Loki", "Thor", "Balder"],
 		"corect": 2,
@@ -249,6 +290,7 @@
 		"categorie": "mitologie"
 	},
 	{
+		"id": "mana:0036",
 		"text": "Ce pasăre legendară renaște din propria cenușă?",
 		"variante": ["Grifonul", "Harpia", "Pasărea Phoenix", "Sirena"],
 		"corect": 2,
@@ -256,6 +298,7 @@
 		"categorie": "mitologie"
 	},
 	{
+		"id": "mana:0037",
 		"text": "Cum se numea zeița greacă a înțelepciunii?",
 		"variante": ["Hera", "Atena", "Afrodita", "Artemis"],
 		"corect": 1,
@@ -263,6 +306,8 @@
 		"categorie": "mitologie"
 	},
 	{
+		"id": "mana:0038",
+		"fapt": "ahile",
 		"text": "Ce erou grec era invulnerabil peste tot, în afară de călcâi?",
 		"variante": ["Ulise", "Hercule", "Ahile", "Perseu"],
 		"corect": 2,
@@ -271,6 +316,7 @@
 	},
 
 	{
+		"id": "mana:0039",
 		"text": "Cine a scris poemul „Luceafărul”?",
 		"variante": ["Ion Creangă", "Mihai Eminescu", "Tudor Arghezi", "George Coșbuc"],
 		"corect": 1,
@@ -278,6 +324,7 @@
 		"categorie": "literatura"
 	},
 	{
+		"id": "mana:0040",
 		"text": "Cine a scris „Amintiri din copilărie”?",
 		"variante": ["Mihai Eminescu", "Ion Creangă", "Ioan Slavici", "Barbu Delavrancea"],
 		"corect": 1,
@@ -285,6 +332,7 @@
 		"categorie": "literatura"
 	},
 	{
+		"id": "mana:0041",
 		"text": "Cine a scris piesele „Romeo și Julieta” și „Hamlet”?",
 		"variante": ["Molière", "William Shakespeare", "Dante Alighieri", "Lord Byron"],
 		"corect": 1,
@@ -292,6 +340,7 @@
 		"categorie": "literatura"
 	},
 	{
+		"id": "mana:0042",
 		"text": "Cine a scris romanul „Robinson Crusoe”?",
 		"variante": ["Jonathan Swift", "Jules Verne", "Daniel Defoe", "Robert Louis Stevenson"],
 		"corect": 2,
@@ -299,6 +348,7 @@
 		"categorie": "literatura"
 	},
 	{
+		"id": "mana:0043",
 		"text": "Ce scriitor român a scris schița „D-l Goe...”?",
 		"variante": ["I. L. Caragiale", "Ion Creangă", "Mihail Sadoveanu", "Emil Gârleanu"],
 		"corect": 0,
@@ -306,6 +356,8 @@
 		"categorie": "literatura"
 	},
 	{
+		"id": "mana:0044",
+		"fapt": "micul_print",
 		"text": "Cine a scris „Micul Prinț”?",
 		"variante": ["Jules Verne", "Antoine de Saint-Exupéry", "Hector Malot", "Alphonse Daudet"],
 		"corect": 1,
@@ -313,6 +365,7 @@
 		"categorie": "literatura"
 	},
 	{
+		"id": "mana:0045",
 		"text": "Ce fel de operă literară este „Iliada”?",
 		"variante": ["Roman", "Epopee", "Piesă de teatru", "Nuvelă"],
 		"corect": 1,
@@ -321,6 +374,7 @@
 	},
 
 	{
+		"id": "mana:0046",
 		"text": "În ce secol a început, convențional, Renașterea italiană?",
 		"variante": ["Al XIII-lea", "Al XIV-lea", "Al XV-lea", "Al XVI-lea"],
 		"corect": 1,
@@ -328,6 +382,7 @@
 		"categorie": "istorie"
 	},
 	{
+		"id": "mana:0047",
 		"text": "Cine a fost primul domnitor al Principatelor Unite?",
 		"variante": ["Mihai Viteazul", "Carol I", "Tudor Vladimirescu", "Alexandru Ioan Cuza"],
 		"corect": 3,
@@ -335,6 +390,7 @@
 		"categorie": "istorie"
 	},
 	{
+		"id": "mana:0048",
 		"text": "Ce tratat de pace au semnat Aliații cu Germania, în 1919?",
 		"variante": ["Tratatul de la Versailles", "Tratatul de la Trianon", "Tratatul de la Saint-Germain", "Tratatul de la Neuilly"],
 		"corect": 0,
@@ -342,6 +398,7 @@
 		"categorie": "istorie"
 	},
 	{
+		"id": "mana:0049",
 		"text": "Cine a condus expediția care a realizat prima înconjurare a Pământului?",
 		"variante": ["Vasco da Gama", "Cristofor Columb", "Fernando Magellan", "Francis Drake"],
 		"corect": 2,
@@ -349,6 +406,7 @@
 		"categorie": "istorie"
 	},
 	{
+		"id": "mana:0050",
 		"text": "Ce popor a fost învins de romani în războaiele conduse de Traian?",
 		"variante": ["Dacii", "Galii", "Cartaginezii", "Parții"],
 		"corect": 0,
@@ -356,6 +414,8 @@
 		"categorie": "istorie"
 	},
 	{
+		"id": "mana:0051",
+		"fapt": "constantinopol",
 		"text": "În ce an a căzut Constantinopolul sub stăpânire otomană?",
 		"variante": ["1204", "1389", "1453", "1492"],
 		"corect": 2,
@@ -363,6 +423,7 @@
 		"categorie": "istorie"
 	},
 	{
+		"id": "mana:0052",
 		"text": "Cine a condus Franța ca împărat între 1804 și 1814?",
 		"variante": ["Ludovic al XVI-lea", "Napoleon Bonaparte", "Carol al X-lea", "Maximilien Robespierre"],
 		"corect": 1,
@@ -370,6 +431,8 @@
 		"categorie": "istorie"
 	},
 	{
+		"id": "mana:0053",
+		"fapt": "stefan_cel_mare",
 		"text": "Ce domnitor a câștigat lupta de la Vaslui, împotriva otomanilor, în 1475?",
 		"variante": ["Mihai Viteazul", "Vlad Țepeș", "Ștefan cel Mare", "Mircea cel Bătrân"],
 		"corect": 2,
@@ -378,6 +441,7 @@
 	},
 
 	{
+		"id": "mana:0054",
 		"text": "Care este cel mai lung fluviu din Africa?",
 		"variante": ["Congo", "Nil", "Zambezi", "Niger"],
 		"corect": 1,
@@ -385,6 +449,7 @@
 		"categorie": "geografie"
 	},
 	{
+		"id": "mana:0055",
 		"text": "Ce fluviu trece prin Viena?",
 		"variante": ["Dunărea", "Rinul", "Sena", "Elba"],
 		"corect": 0,
@@ -392,6 +457,7 @@
 		"categorie": "geografie"
 	},
 	{
+		"id": "mana:0056",
 		"text": "Care este cel mai înalt vârf din România?",
 		"variante": ["Vârful Omu", "Vârful Negoiu", "Vârful Parângul Mare", "Vârful Moldoveanu"],
 		"corect": 3,
@@ -399,6 +465,8 @@
 		"categorie": "geografie"
 	},
 	{
+		"id": "mana:0057",
+		"fapt": "canberra",
 		"text": "Care este capitala Australiei?",
 		"variante": ["Sydney", "Melbourne", "Canberra", "Perth"],
 		"corect": 2,
@@ -406,6 +474,7 @@
 		"categorie": "geografie"
 	},
 	{
+		"id": "mana:0058",
 		"text": "Ce strâmtoare desparte Europa de Africa, la vest?",
 		"variante": ["Bosfor", "Gibraltar", "Dardanele", "Messina"],
 		"corect": 1,
@@ -413,6 +482,7 @@
 		"categorie": "geografie"
 	},
 	{
+		"id": "mana:0059",
 		"text": "Care este cel mai mic stat din lume, ca suprafață?",
 		"variante": ["Monaco", "San Marino", "Vatican", "Liechtenstein"],
 		"corect": 2,
@@ -420,6 +490,7 @@
 		"categorie": "geografie"
 	},
 	{
+		"id": "mana:0060",
 		"text": "Ce lanț muntos e considerat granița dintre Europa și Asia?",
 		"variante": ["Munții Caucaz", "Munții Urali", "Munții Altai", "Munții Carpați"],
 		"corect": 1,
@@ -427,6 +498,7 @@
 		"categorie": "geografie"
 	},
 	{
+		"id": "mana:0061",
 		"text": "În ce țară se află orașul Marrakech?",
 		"variante": ["Egipt", "Tunisia", "Maroc", "Algeria"],
 		"corect": 2,
@@ -435,6 +507,7 @@
 	},
 
 	{
+		"id": "mana:0062",
 		"text": "Cine a formulat teoria relativității?",
 		"variante": ["Niels Bohr", "Max Planck", "Werner Heisenberg", "Albert Einstein"],
 		"corect": 3,
@@ -442,6 +515,7 @@
 		"categorie": "stiinta"
 	},
 	{
+		"id": "mana:0063",
 		"text": "Care este formula chimică a apei?",
 		"variante": ["CO2", "O2", "NaCl", "H2O"],
 		"corect": 3,
@@ -449,6 +523,8 @@
 		"categorie": "stiinta"
 	},
 	{
+		"id": "mana:0064",
+		"fapt": "mitocondria",
 		"text": "Ce organit produce energia în celulă?",
 		"variante": ["Nucleul", "Ribozomul", "Mitocondria", "Cloroplastul"],
 		"corect": 2,
@@ -456,6 +532,7 @@
 		"categorie": "stiinta"
 	},
 	{
+		"id": "mana:0065",
 		"text": "Ce lege spune că forța este egală cu masa înmulțită cu accelerația?",
 		"variante": ["Prima lege a lui Newton", "A doua lege a lui Newton", "Legea lui Ohm", "Legea lui Hooke"],
 		"corect": 1,
@@ -463,6 +540,7 @@
 		"categorie": "stiinta"
 	},
 	{
+		"id": "mana:0066",
 		"text": "Câți cromozomi are, în mod normal, o celulă umană?",
 		"variante": ["23", "46", "48", "64"],
 		"corect": 1,
@@ -470,6 +548,7 @@
 		"categorie": "stiinta"
 	},
 	{
+		"id": "mana:0067",
 		"text": "Ce tip de rocă se formează din lavă răcită?",
 		"variante": ["Sedimentară", "Metamorfică", "Magmatică", "Calcaroasă"],
 		"corect": 2,
@@ -477,6 +556,7 @@
 		"categorie": "stiinta"
 	},
 	{
+		"id": "mana:0068",
 		"text": "Cine a propus tabelul periodic al elementelor?",
 		"variante": ["Antoine Lavoisier", "Dmitri Mendeleev", "John Dalton", "Niels Bohr"],
 		"corect": 1,
@@ -484,6 +564,7 @@
 		"categorie": "stiinta"
 	},
 	{
+		"id": "mana:0069",
 		"text": "Ce forță ține planetele pe orbită în jurul Soarelui?",
 		"variante": ["Forța electromagnetică", "Gravitația", "Forța centrifugă", "Presiunea radiației"],
 		"corect": 1,
@@ -492,6 +573,7 @@
 	},
 
 	{
+		"id": "mana:0070",
 		"text": "Cine a pictat „Cina cea de Taină”?",
 		"variante": ["Rafael", "Leonardo da Vinci", "Michelangelo", "Donatello"],
 		"corect": 1,
@@ -499,6 +581,7 @@
 		"categorie": "arta"
 	},
 	{
+		"id": "mana:0071",
 		"text": "Cine a compus Simfonia a IX-a, cea care include „Oda bucuriei”?",
 		"variante": ["Mozart", "Bach", "Beethoven", "Brahms"],
 		"corect": 2,
@@ -506,6 +589,7 @@
 		"categorie": "arta"
 	},
 	{
+		"id": "mana:0072",
 		"text": "Cine a pictat „Noapte înstelată”?",
 		"variante": ["Claude Monet", "Vincent van Gogh", "Paul Cézanne", "Edvard Munch"],
 		"corect": 1,
@@ -513,6 +597,8 @@
 		"categorie": "arta"
 	},
 	{
+		"id": "mana:0073",
+		"fapt": "impresionism",
 		"text": "Ce curent artistic și-a luat numele de la tabloul „Impresie, răsărit de soare”?",
 		"variante": ["Cubismul", "Impresionismul", "Romantismul", "Expresionismul"],
 		"corect": 1,
@@ -520,6 +606,7 @@
 		"categorie": "arta"
 	},
 	{
+		"id": "mana:0074",
 		"text": "Cine a sculptat „Gânditorul”?",
 		"variante": ["Auguste Rodin", "Constantin Brâncuși", "Antonio Canova", "Donatello"],
 		"corect": 0,
@@ -527,6 +614,7 @@
 		"categorie": "arta"
 	},
 	{
+		"id": "mana:0075",
 		"text": "Câte părți are, de regulă, o simfonie clasică?",
 		"variante": ["Două", "Trei", "Patru", "Cinci"],
 		"corect": 2,
@@ -534,6 +622,7 @@
 		"categorie": "arta"
 	},
 	{
+		"id": "mana:0076",
 		"text": "Ce pictor spaniol a realizat „Guernica”?",
 		"variante": ["Salvador Dalí", "Francisco Goya", "Pablo Picasso", "Joan Miró"],
 		"corect": 2,
@@ -542,6 +631,7 @@
 	},
 
 	{
+		"id": "mana:0077",
 		"text": "Cine a fost condamnat să împingă la nesfârșit un bolovan pe deal?",
 		"variante": ["Tantal", "Sisif", "Prometeu", "Icar"],
 		"corect": 1,
@@ -549,6 +639,7 @@
 		"categorie": "mitologie"
 	},
 	{
+		"id": "mana:0078",
 		"text": "Ce erou grec a ucis-o pe Meduza?",
 		"variante": ["Tezeu", "Iason", "Perseu", "Hercule"],
 		"corect": 2,
@@ -556,6 +647,7 @@
 		"categorie": "mitologie"
 	},
 	{
+		"id": "mana:0079",
 		"text": "Cine a dat oamenilor focul și a fost pedepsit de Zeus pentru asta?",
 		"variante": ["Hefaistos", "Prometeu", "Hermes", "Dionysos"],
 		"corect": 1,
@@ -563,6 +655,7 @@
 		"categorie": "mitologie"
 	},
 	{
+		"id": "mana:0080",
 		"text": "Ce câine cu trei capete păzea intrarea în Infern?",
 		"variante": ["Cerber", "Hidra", "Chimera", "Argus"],
 		"corect": 0,
@@ -570,6 +663,7 @@
 		"categorie": "mitologie"
 	},
 	{
+		"id": "mana:0081",
 		"text": "Care este echivalentul roman al zeiței grecești Afrodita?",
 		"variante": ["Junona", "Minerva", "Venus", "Diana"],
 		"corect": 2,
@@ -577,6 +671,7 @@
 		"categorie": "mitologie"
 	},
 	{
+		"id": "mana:0082",
 		"text": "Cum se numea corabia cu care Iason a plecat după Lâna de Aur?",
 		"variante": ["Argo", "Nautilus", "Pegas", "Hesperida"],
 		"corect": 0,
@@ -584,6 +679,7 @@
 		"categorie": "mitologie"
 	},
 	{
+		"id": "mana:0083",
 		"text": "Cum se numește sfârșitul lumii în mitologia nordică?",
 		"variante": ["Valhalla", "Ragnarök", "Yggdrasil", "Midgard"],
 		"corect": 1,
@@ -592,6 +688,7 @@
 	},
 
 	{
+		"id": "mana:0084",
 		"text": "Cine a scris romanul „Ion”?",
 		"variante": ["Liviu Rebreanu", "Marin Preda", "Camil Petrescu", "Mihail Sadoveanu"],
 		"corect": 0,
@@ -599,6 +696,7 @@
 		"categorie": "literatura"
 	},
 	{
+		"id": "mana:0085",
 		"text": "Cine a scris romanul „Crimă și pedeapsă”?",
 		"variante": ["Lev Tolstoi", "Feodor Dostoievski", "Anton Cehov", "Nikolai Gogol"],
 		"corect": 1,
@@ -606,6 +704,7 @@
 		"categorie": "literatura"
 	},
 	{
+		"id": "mana:0086",
 		"text": "Cine a scris „Baltagul”?",
 		"variante": ["Liviu Rebreanu", "Mihail Sadoveanu", "Camil Petrescu", "Marin Preda"],
 		"corect": 1,
@@ -613,6 +712,7 @@
 		"categorie": "literatura"
 	},
 	{
+		"id": "mana:0087",
 		"text": "Ce poet italian a scris „Divina Comedie”?",
 		"variante": ["Francesco Petrarca", "Dante Alighieri", "Giovanni Boccaccio", "Vergiliu"],
 		"corect": 1,
@@ -620,6 +720,8 @@
 		"categorie": "literatura"
 	},
 	{
+		"id": "mana:0088",
+		"fapt": "sonet",
 		"text": "Câte versuri are un sonet?",
 		"variante": ["Douăsprezece", "Paisprezece", "Șaisprezece", "Optsprezece"],
 		"corect": 1,
@@ -627,6 +729,7 @@
 		"categorie": "literatura"
 	},
 	{
+		"id": "mana:0089",
 		"text": "Cine este autorul romanului „Moromeții”?",
 		"variante": ["Marin Preda", "Zaharia Stancu", "Augustin Buzura", "Nicolae Breban"],
 		"corect": 0,
@@ -634,6 +737,7 @@
 		"categorie": "literatura"
 	},
 	{
+		"id": "mana:0090",
 		"text": "Ce roman al lui Jules Verne pornește de la un pariu al lui Phileas Fogg?",
 		"variante": ["Insula misterioasă", "Ocolul Pământului în 80 de zile", "Cinci săptămâni în balon", "Copiii căpitanului Grant"],
 		"corect": 1,
@@ -642,6 +746,8 @@
 	},
 
 	{
+		"id": "mana:0091",
+		"fapt": "constantinopol",
 		"text": "Ce împărat roman a mutat capitala imperiului la Bizanț?",
 		"variante": ["Traian", "Constantin cel Mare", "Dioclețian", "Iustinian"],
 		"corect": 1,
@@ -649,6 +755,7 @@
 		"categorie": "istorie"
 	},
 	{
+		"id": "mana:0092",
 		"text": "În ce an s-a încheiat Războiul de Treizeci de Ani?",
 		"variante": ["1618", "1648", "1683", "1715"],
 		"corect": 1,
@@ -656,6 +763,7 @@
 		"categorie": "istorie"
 	},
 	{
+		"id": "mana:0093",
 		"text": "Ce dinastie a ridicat Marele Zid Chinezesc în forma lui de azi?",
 		"variante": ["Dinastia Han", "Dinastia Ming", "Dinastia Tang", "Dinastia Qing"],
 		"corect": 1,
@@ -663,6 +771,7 @@
 		"categorie": "istorie"
 	},
 	{
+		"id": "mana:0094",
 		"text": "Cine a fost ultimul împărat al Imperiului Bizantin?",
 		"variante": ["Constantin al XI-lea", "Ioan al VIII-lea", "Manuel al II-lea", "Mihail al VIII-lea"],
 		"corect": 0,
@@ -670,6 +779,7 @@
 		"categorie": "istorie"
 	},
 	{
+		"id": "mana:0095",
 		"text": "Ce tratat a împărțit lumea nou descoperită între Spania și Portugalia, în 1494?",
 		"variante": ["Tratatul de la Tordesillas", "Pacea de la Westfalia", "Tratatul de la Utrecht", "Bula de Aur"],
 		"corect": 0,
@@ -677,6 +787,7 @@
 		"categorie": "istorie"
 	},
 	{
+		"id": "mana:0096",
 		"text": "Cine a fost primul împărat al Chinei unificate?",
 		"variante": ["Qin Shi Huang", "Kublai Han", "Wu Zetian", "Sun Yat-sen"],
 		"corect": 0,
@@ -684,6 +795,7 @@
 		"categorie": "istorie"
 	},
 	{
+		"id": "mana:0097",
 		"text": "Ce bătălie din 1815 a pus capăt definitiv domniei lui Napoleon?",
 		"variante": ["Austerlitz", "Leipzig", "Waterloo", "Borodino"],
 		"corect": 2,
@@ -691,6 +803,7 @@
 		"categorie": "istorie"
 	},
 	{
+		"id": "mana:0098",
 		"text": "În ce an a fost adoptată Magna Carta, în Anglia?",
 		"variante": ["1066", "1215", "1348", "1415"],
 		"corect": 1,
@@ -699,6 +812,7 @@
 	},
 
 	{
+		"id": "mana:0099",
 		"text": "Care este cel mai adânc punct al oceanelor?",
 		"variante": ["Groapa Marianelor", "Groapa Tonga", "Groapa Filipinelor", "Groapa Kermadec"],
 		"corect": 0,
@@ -706,6 +820,7 @@
 		"categorie": "geografie"
 	},
 	{
+		"id": "mana:0100",
 		"text": "Care este cea mai întinsă țară din Africa?",
 		"variante": ["Sudan", "R.D. Congo", "Libia", "Algeria"],
 		"corect": 3,
@@ -713,6 +828,7 @@
 		"categorie": "geografie"
 	},
 	{
+		"id": "mana:0101",
 		"text": "Care este capitala Kazahstanului?",
 		"variante": ["Almatî", "Bișkek", "Astana", "Tașkent"],
 		"corect": 2,
@@ -720,6 +836,7 @@
 		"categorie": "geografie"
 	},
 	{
+		"id": "mana:0102",
 		"text": "Care este cel mai adânc lac din lume?",
 		"variante": ["Lacul Baikal", "Lacul Tanganyika", "Lacul Superior", "Marea Caspică"],
 		"corect": 0,
@@ -727,6 +844,7 @@
 		"categorie": "geografie"
 	},
 	{
+		"id": "mana:0103",
 		"text": "Ce curent oceanic cald încălzește vestul Europei?",
 		"variante": ["Curentul Humboldt", "Curentul Golfului", "Curentul Kuroshio", "Curentul Labradorului"],
 		"corect": 1,
@@ -734,6 +852,8 @@
 		"categorie": "geografie"
 	},
 	{
+		"id": "mana:0104",
+		"fapt": "congo",
 		"text": "Care este singurul fluviu care traversează Ecuatorul de două ori?",
 		"variante": ["Amazon", "Congo", "Nil", "Zambezi"],
 		"corect": 1,
@@ -741,6 +861,7 @@
 		"categorie": "geografie"
 	},
 	{
+		"id": "mana:0105",
 		"text": "Care este cel mai întins lac de apă dulce din lume?",
 		"variante": ["Lacul Victoria", "Lacul Superior", "Lacul Baikal", "Lacul Huron"],
 		"corect": 1,
@@ -748,6 +869,7 @@
 		"categorie": "geografie"
 	},
 	{
+		"id": "mana:0106",
 		"text": "Ce strâmtoare leagă Marea Neagră de Marea Marmara?",
 		"variante": ["Dardanele", "Bosfor", "Kerci", "Otranto"],
 		"corect": 1,
@@ -756,6 +878,7 @@
 	},
 
 	{
+		"id": "mana:0107",
 		"text": "Ce particulă a fost confirmată experimental la CERN, în 2012?",
 		"variante": ["Neutrinul", "Quarcul top", "Gluonul", "Bosonul Higgs"],
 		"corect": 3,
@@ -763,6 +886,7 @@
 		"categorie": "stiinta"
 	},
 	{
+		"id": "mana:0108",
 		"text": "Cine a formulat principiul incertitudinii din mecanica cuantică?",
 		"variante": ["Erwin Schrödinger", "Paul Dirac", "Max Born", "Werner Heisenberg"],
 		"corect": 3,
@@ -770,6 +894,8 @@
 		"categorie": "stiinta"
 	},
 	{
+		"id": "mana:0109",
+		"fapt": "aur",
 		"text": "Ce element chimic are numărul atomic 79?",
 		"variante": ["Argintul", "Aurul", "Platina", "Cuprul"],
 		"corect": 1,
@@ -777,6 +903,7 @@
 		"categorie": "stiinta"
 	},
 	{
+		"id": "mana:0110",
 		"text": "Ce enzimă transcrie ARN-ul viral în ADN?",
 		"variante": ["ADN-polimeraza", "Ligaza", "Helicaza", "Reverstranscriptaza"],
 		"corect": 3,
@@ -784,6 +911,7 @@
 		"categorie": "stiinta"
 	},
 	{
+		"id": "mana:0111",
 		"text": "Ce mărime fizică se măsoară în ohmi?",
 		"variante": ["Rezistența electrică", "Capacitatea electrică", "Inductanța", "Fluxul magnetic"],
 		"corect": 0,
@@ -791,6 +919,7 @@
 		"categorie": "stiinta"
 	},
 	{
+		"id": "mana:0112",
 		"text": "Ce proces transformă azotul din aer în compuși pe care plantele îi pot folosi?",
 		"variante": ["Nitrificarea", "Fixarea azotului", "Denitrificarea", "Amonificarea"],
 		"corect": 1,
@@ -798,6 +927,7 @@
 		"categorie": "stiinta"
 	},
 	{
+		"id": "mana:0113",
 		"text": "Cum se numește limita dincolo de care nimic nu mai poate ieși dintr-o gaură neagră?",
 		"variante": ["Limita Roche", "Orizontul evenimentelor", "Discul de acreție", "Limita Chandrasekhar"],
 		"corect": 1,
@@ -805,6 +935,7 @@
 		"categorie": "stiinta"
 	},
 	{
+		"id": "mana:0114",
 		"text": "Ce constantă leagă energia unui foton de frecvența lui?",
 		"variante": ["Constanta lui Planck", "Constanta lui Boltzmann", "Numărul lui Avogadro", "Constanta gravitațională"],
 		"corect": 0,
@@ -813,6 +944,7 @@
 	},
 
 	{
+		"id": "mana:0115",
 		"text": "Cine a compus opera „Flautul fermecat”?",
 		"variante": ["Mozart", "Beethoven", "Haydn", "Schubert"],
 		"corect": 0,
@@ -820,6 +952,7 @@
 		"categorie": "arta"
 	},
 	{
+		"id": "mana:0116",
 		"text": "Ce curent artistic au fondat Tristan Tzara și Marcel Duchamp?",
 		"variante": ["Cubismul", "Suprarealismul", "Dadaismul", "Futurismul"],
 		"corect": 2,
@@ -827,6 +960,7 @@
 		"categorie": "arta"
 	},
 	{
+		"id": "mana:0117",
 		"text": "În ce oraș se află „Coloana fără sfârșit” a lui Brâncuși?",
 		"variante": ["Craiova", "Hobița", "Târgu Jiu", "Sibiu"],
 		"corect": 2,
@@ -834,6 +968,7 @@
 		"categorie": "arta"
 	},
 	{
+		"id": "mana:0118",
 		"text": "Cum se numește tehnica picturii pe tencuială încă udă?",
 		"variante": ["Tempera", "Fresca", "Gravura", "Encaustica"],
 		"corect": 1,
@@ -841,6 +976,7 @@
 		"categorie": "arta"
 	},
 	{
+		"id": "mana:0119",
 		"text": "Ce arhitect a proiectat bazilica Sagrada Família?",
 		"variante": ["Antoni Gaudí", "Le Corbusier", "Santiago Calatrava", "Frank Lloyd Wright"],
 		"corect": 0,
@@ -848,6 +984,7 @@
 		"categorie": "arta"
 	},
 	{
+		"id": "mana:0120",
 		"text": "Ce compozitor a scris ciclul de opere „Inelul Nibelungului”?",
 		"variante": ["Giuseppe Verdi", "Richard Wagner", "Richard Strauss", "Gustav Mahler"],
 		"corect": 1,
@@ -855,6 +992,7 @@
 		"categorie": "arta"
 	},
 	{
+		"id": "mana:0121",
 		"text": "Cine a pictat „Rondul de noapte”?",
 		"variante": ["Jan Vermeer", "Rembrandt", "Peter Paul Rubens", "Frans Hals"],
 		"corect": 1,
@@ -863,6 +1001,7 @@
 	},
 
 	{
+		"id": "mana:0122",
 		"text": "Ce zeu egiptean cu cap de șacal veghea îmbălsămarea morților?",
 		"variante": ["Horus", "Anubis", "Seth", "Thoth"],
 		"corect": 1,
@@ -870,6 +1009,8 @@
 		"categorie": "mitologie"
 	},
 	{
+		"id": "mana:0123",
+		"fapt": "odin",
 		"text": "Ce a dat Odin în schimbul unei sorbituri din fântâna înțelepciunii?",
 		"variante": ["Un ochi", "O mână", "Suliță Gungnir", "Corbii lui"],
 		"corect": 0,
@@ -877,6 +1018,7 @@
 		"categorie": "mitologie"
 	},
 	{
+		"id": "mana:0124",
 		"text": "Ce erou al epopeii mesopotamiene pleacă în căutarea nemuririi?",
 		"variante": ["Enkidu", "Ghilgameș", "Utnapiștim", "Ur-Nammu"],
 		"corect": 1,
@@ -884,6 +1026,7 @@
 		"categorie": "mitologie"
 	},
 	{
+		"id": "mana:0125",
 		"text": "Ce muzician a coborât în Infern ca s-o aducă înapoi pe Euridice?",
 		"variante": ["Orfeu", "Amfion", "Linos", "Marsyas"],
 		"corect": 0,
@@ -891,6 +1034,7 @@
 		"categorie": "mitologie"
 	},
 	{
+		"id": "mana:0126",
 		"text": "Ce zeiță japoneză a Soarelui e considerată strămoașa împăraților?",
 		"variante": ["Izanami", "Amaterasu", "Inari", "Tsukuyomi"],
 		"corect": 1,
@@ -898,6 +1042,7 @@
 		"categorie": "mitologie"
 	},
 	{
+		"id": "mana:0127",
 		"text": "Cum se numesc cele trei zeițe grecești ale destinului?",
 		"variante": ["Eriniile", "Moirele", "Harpiile", "Grațiile"],
 		"corect": 1,
@@ -905,6 +1050,7 @@
 		"categorie": "mitologie"
 	},
 	{
+		"id": "mana:0128",
 		"text": "Ce șarpe uriaș din mitologia nordică înconjoară lumea, mușcându-și coada?",
 		"variante": ["Fenrir", "Jörmungandr", "Nidhogg", "Sleipnir"],
 		"corect": 1,
@@ -913,6 +1059,7 @@
 	},
 
 	{
+		"id": "mana:0129",
 		"text": "Cine a scris romanul „Ulise”, apărut în 1922?",
 		"variante": ["Virginia Woolf", "James Joyce", "Marcel Proust", "Franz Kafka"],
 		"corect": 1,
@@ -920,6 +1067,7 @@
 		"categorie": "literatura"
 	},
 	{
+		"id": "mana:0130",
 		"text": "Ce scriitor român a scris „Ultima noapte de dragoste, întâia noapte de război”?",
 		"variante": ["Camil Petrescu", "Liviu Rebreanu", "Anton Holban", "Gib Mihăescu"],
 		"corect": 0,
@@ -927,6 +1075,7 @@
 		"categorie": "literatura"
 	},
 	{
+		"id": "mana:0131",
 		"text": "Cine a scris „Un veac de singurătate”?",
 		"variante": ["Mario Vargas Llosa", "Jorge Luis Borges", "Gabriel García Márquez", "Julio Cortázar"],
 		"corect": 2,
@@ -934,6 +1083,7 @@
 		"categorie": "literatura"
 	},
 	{
+		"id": "mana:0132",
 		"text": "Ce critic literar a condus cenaclul și revista „Sburătorul”?",
 		"variante": ["Eugen Lovinescu", "Titu Maiorescu", "Garabet Ibrăileanu", "George Călinescu"],
 		"corect": 0,
@@ -941,6 +1091,7 @@
 		"categorie": "literatura"
 	},
 	{
+		"id": "mana:0133",
 		"text": "Cine a scris „Procesul” și „Metamorfoza”?",
 		"variante": ["Thomas Mann", "Hermann Hesse", "Franz Kafka", "Robert Musil"],
 		"corect": 2,
@@ -948,6 +1099,7 @@
 		"categorie": "literatura"
 	},
 	{
+		"id": "mana:0134",
 		"text": "Ce dramaturg a scris „Așteptându-l pe Godot”?",
 		"variante": ["Eugen Ionescu", "Samuel Beckett", "Harold Pinter", "Sean O'Casey"],
 		"corect": 1,
@@ -955,6 +1107,7 @@
 		"categorie": "literatura"
 	},
 	{
+		"id": "mana:0135",
 		"text": "Cine este autorul ciclului „În căutarea timpului pierdut”?",
 		"variante": ["Marcel Proust", "André Gide", "Albert Camus", "Louis-Ferdinand Céline"],
 		"corect": 0,
