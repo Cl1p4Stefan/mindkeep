@@ -53,6 +53,7 @@ Fiecare din astea a fost dezbătută și decisă conștient. Dacă propui altcev
 | **Greșeală = pierzi 1 PA, NU tura**      | Pierderea turii pedepsește ignoranța în loc s-o corecteze                                                                                                       |
 | **Desktop = „casa" progresului**         | Build-ul web e demo; save-urile nu se sincronizează automat                                                                                                     |
 
+
 ### Bucla de luptă
 
 | Decizie                                                            | Motiv                                                                                                                                                                                                                                                                                              |
@@ -64,6 +65,25 @@ Fiecare din astea a fost dezbătută și decisă conștient. Dacă propui altcev
 | **Greșeală = Obeliscul rămâne blocat până la finalul rundei**      | Înlocuiește vechea regulă „pierzi 1 PA". Cu lanțuri nelimitate, un PA nu mai e o pedeapsă reală; pierderea unei unelte pentru restul rundei te obligă să reorganizezi tura, nu doar să reîncerci imediat. Pedeapsa rămâne pe unealtă, nu pe tură — nu pierzi runda pentru că n-ai știut un răspuns |
 | **Tura se încheie automat când nu mai ai Obeliscuri utilizabile**  | Fără PA, sau cu tot ce ai blocat, butonul „Încheie tura" e un click ceremonial. Jocul nu trebuie să-mi ceară să confirm că n-am ce face                                                                                                                                                            |
 | **Facțiuni de inamic, separate de arhetip**                        | Facțiunea (Cei Șterși, Ecourile) e apartenența tematică: zero efect mecanic azi, dar e cârligul pentru zone de hartă și pentru echipament anti-facțiune. Arhetipul rămâne strict regula de comportament — două câmpuri, două scopuri                                                               |
+
+### Cultura generală: conținut și Practice
+
+Decise pe 27 septembrie 2026. Contextul complet e în sesiunea CONȚINUTUL din `progres.md`; regulile pentru note, în `docs/ghid-note.md`.
+
+| Decizie | Motiv |
+|---|---|
+| **Întrebările se fabrică offline, nu în joc** | Un script Python scrie `intrebari_trivia.json`; jocul trage în continuare dintr-o listă finită. Păstrează garanția sacului, fiecare întrebare poate fi citită și corectată, jocul nu cere internet |
+| **Surse: Wikidata pentru volum, mâna pentru restul** | Wikidata e CC0, deci se poate folosi liber, inclusiv comercial. Cultura românească și întrebările cu personalitate se scriu de mână. Frazele din Wikipedia nu se copiază (CC BY-SA) |
+| **Modelul de limbaj formulează, nu informează** | Primește fapte verificate și scrie din ele; nu e niciodată sursa unui fapt. O rată de 2% greșeli la 5000 de întrebări înseamnă 100 de fapte false predate de un joc de învățare |
+| **Nota aparține faptului, nu întrebării** | Un fapt dă mai multe întrebări și o singură notă: mai puțină muncă, nicio contradicție. Nota intră în câmpul `explicatie` din contractul `puzzle.gd` |
+| **Fiecare întrebare are un `id` stabil** | Textul se schimbă la reformulare, iar sacul, save-ul și istoricul din Practice au nevoie de o identitate care nu se mișcă. Se face înainte de Save |
+| **Ținte pe celulă (domeniu × nivel), inegale** | 500 unde domeniul le poartă; 150–250 de fapte la nivelul I din mitologie și artă. Nivelul I e plafonat de propria definiție („o știe orice adult”) |
+| **Se numără faptele, nu doar întrebările** | Cel mult 2–3 întrebări pe fapt. 500 de întrebări construite din 100 de fapte se simt ca 100 |
+| **O singură `categorie` pe întrebare, `etichete` pe fapt** | Categoria ține echilibrul din luptă și antetul de pe ecran. Filtrele transversale (ex. „romania”) vin din etichete, fără să înmulțească domeniile |
+| **În luptă: întâi domeniul, apoi întrebarea** | Conținutul generat nu iese echilibrat (Wikidata e bogată în geografie și știință). Alegerea în două trepte ține echilibrul oricum ar arăta baza, ca la Logică |
+| **Practice: alegi domeniul, nu nivelul** | Nivelul urcă singur, separat pe fiecare domeniu |
+| **Nivelul următor se deblochează la un prag fix, nu la „toate corecte”** | „Toate” e un zid la final și crește odată cu conținutul. Pragul fix (de pornire: 60 de răspunsuri corecte la întrebări distincte) nu crește. După prag, nivelurile se amestecă |
+| **Greșitele revin; „învățat” cere 2–3 răspunsuri corecte la distanță în timp** | Un singur răspuns corect poate fi ghicit (o șansă din patru). Întrebările învățate ies din joc și intră în Jurnal |
 
 ## Principii pe care vreau să le aperi
 
@@ -95,8 +115,10 @@ Fiecare din astea a fost dezbătută și decisă conștient. Dacă propui altcev
 10. **Generatorul de inamici** — arhetipuri + modificatori + buget, după ce știi că piesele merită combinate. Aici se separă identitatea inamicului (nume, descriere, facțiune) de `DATE_ARHETIP`.
 11. **Artă, VFX, „juice"** — parțial început (figurile principale au imagini reale); restul e placeholder.
 12. **Turnul Perseverenței** — al doilea mod de joc
-13. **Antrenament liber** — filtru peste baza de date
+13. **Antrenament liber (Practice)** — Cultură generală pe domeniul ales. Nivelul urcă singur, pe fiecare domeniu (prag fix, apoi amestec); „Află mai multe” afișează nota faptului; întrebările greșite revin. Are nevoie de: `id` stabil, note, istoric permanent pe întrebare (vine cu Save), conținut suficient pe celule. Detaliile sunt în sesiunea CONȚINUTUL din `progres.md`.
 14. **Export web pentru feedback**
+
+**Pe o linie paralelă (conținut, nu cod):** fabrica de întrebări de Cultură generală. După proba cu un singur tabel din Wikidata, crește câte puțin, ghidată de grila pe celule. Nu blochează ruta și nu e blocată de ea.
 
 ---
 

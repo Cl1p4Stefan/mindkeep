@@ -5,10 +5,12 @@ extends Control
 ## sămânță, cere generatorului un puzzle și te lasă să-l rezolvi: învârți cele
 ## patru roți ale cufărului, apeși „Deschide", ai trei încercări.
 ##
-## Se rulează singur cu F6. Legătura cu nodul de Eveniment (și sămânța derivată
-## din a expediției) vine separat; fișierul ăsta n-o să se schimbe atunci,
-## fiindcă tot ce trebuie să știe harta despre el e deja aici:
-## `porneste(nivel, samanta)` și semnalul `rezolvat(succes)`.
+## Se deschide din nodul de Eveniment, instanțiat PESTE hartă (vezi
+## `harta.gd::_deschide_lacatul()`), și se rulează singur cu F6. Legarea de
+## hartă n-a schimbat nicio linie din fișierul ăsta, fiindcă tot ce trebuie să
+## știe harta despre el era deja aici: `porneste(nivel, samanta)` și semnalul
+## `rezolvat(succes)`. Nivelul vine din adâncimea nodului, sămânța din sămânța
+## nodului — amândouă socotite în `Expeditie.lacat_la()`, unde le e locul.
 ##
 ## ─────────────────────────────────────────────────────────────
 ## STRATURILE, ȘI DE CE ORDINEA LOR E TOT DESENUL
@@ -93,7 +95,7 @@ const INCERCARI := 3
 const SECUNDE := 0.0
 
 ## Cu ce nivel pornește scena când o rulezi singură, cu F6.
-const NIVEL_DE_PROBA := 2
+const NIVEL_DE_PROBA := 1
 
 
 # ─────────────────────────────────────────────────────────────

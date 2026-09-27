@@ -102,7 +102,7 @@ const DATE_NOD := {
 	},
 	Nod.EVENIMENT: {
 		"cheie": "eveniment", "nume": "Eveniment",
-		"descriere": "Ceva se va intampla aici. Deocamdata, doar trecem.",
+		"descriere": "Un cufar incuiat. Cifrul nu e scris nicaieri — se deduce.",
 		"culoare": Color(0.84, 0.82, 0.96),
 		"putere": 1.0, "buget": 1.0, "monede": 0, "bonus": 0,
 	},
@@ -390,6 +390,71 @@ const PUTERI := [
 		"descriere": "+6 PV pe loc. Nimic pe termen lung.",
 	},
 ]
+
+# ─────────────────────────────────────────────────────────────
+# EVENIMENTUL: LACĂTUL
+#
+# Nodul de Eveniment deschide un cufăr cu cifru (`scenes/cifru/`). Tot ce
+# hotărăște expediția despre el e aici, în date: ce NIVEL are lacătul și cât
+# plătește. Ecranul hărții nu socotește nimic — întreabă `lacat_la()` și
+# deschide scena.
+#
+# ── DE CE MONEDE, ȘI NU FRAGMENTE
+#
+# Granița dintre cele două e scrisă mai sus: Fragmentele sunt averea care
+# rămâne după expediție, Monedele sunt ce ai pe drumul ăsta. Un lacăt care ar
+# plăti în Fragmente ar deveni o sursă de progres PERMANENT complet ruptă de
+# luptă — ai avansa în meta-joc rezolvând puzzle-uri care n-au nicio legătură
+# cu loadout-ul ales.
+#
+# Plătit în Monede, Evenimentul devine în schimb o decizie de HARTĂ: „iau
+# brațul cu cufărul, ca să-mi ajungă de Pana de otel când ajung la Magazin?”.
+# Asta e exact ce lipsea unui nod care până acum nu făcea nimic.
+#
+# ── DE CE ZERO LA EȘEC
+#
+# Orice sumă fixă pe eșec s-ar putea strânge FĂRĂ SĂ JOCI: apeși „Deschide” de
+# trei ori la întâmplare, în cinci secunde, și iei banii. Un joc de antrenament
+# mental n-are voie să aibă o recompensă a cărei cale cea mai rapidă e să nu
+# gândești.
+#
+# Iar consolarea la eșec există deja, și e cea potrivită: cufărul îți ARATĂ
+# codul pe roți. Pleci știind răspunsul. Plătești cu Monedele pe care nu le-ai
+# luat — nu cu PV, nu cu tura, nu cu timp.
+# ─────────────────────────────────────────────────────────────
+
+## Un rând pe nivel de lacăt. Nivelul e INDICELE + 1, ca în
+## `GeneratorCifru.NIVELURI` — acolo e definit ce înseamnă un nivel (ce notă
+## cere, ce alegere, câte egalități), aici doar cât plătește.
+##
+## CIFRELE, cu reperele lângă care au fost alese: o Luptă dă 8 Monede, o Elită
+## 16; la Magazin fiertura costă 9, zalele 16, pana 24.
+##
+##   nivel 1 →  6  sub o Luptă: o roată îți e dăruită, sudată pe cifra bună
+##   nivel 2 → 10  cât o Luptă și ceva — nu riști PV, dar plătești cu timp
+##   nivel 3 → 14  sub o Elită; e nodul care te poate ține chiar cinci minute
+##
+## Trei Evenimente rezolvate fac ~30 de Monede, adică o Pană, dintr-un venit
+## total de ~94 pe hartă. Deci merită să ocolești după cufere, fără să fie
+## obligatoriu — exact greutatea pe care vrei s-o aibă o alegere de drum.
+##
+## Sunt un tabel, nu trei constante, ca reglarea de după primele partide jucate
+## să fie o coloană de numere, nu o vânătoare prin fișier.
+const LACAT := [
+	{"nivel": 1, "monede": 6},
+	{"nivel": 2, "monede": 10},
+	{"nivel": 3, "monede": 14},
+]
+
+## Cu ce se amestecă sămânța nodului ca să iasă sămânța lacătului.
+##
+## De ce nu se folosește `nod["samanta"]` direct: nodul ar putea găzdui mâine
+## și un al doilea eveniment (o fântână, un altar), iar amândouă ar porni din
+## exact același număr. Un amestec cu o constantă proprie desparte lucrurile
+## acum, cât e gratis. Numerele sunt prime, ca la `_sub_samanta()` — un
+## înmulțitor cu factori comuni ar putea trimite semințe diferite în același loc.
+const AMESTEC_LACAT := 1000003
+const ADAOS_LACAT := 7919
 
 # ─────────────────────────────────────────────────────────────
 # STAREA (tot ce se salvează)
@@ -912,7 +977,7 @@ func inregistreaza_lupta(raport: Dictionary) -> void:
 	# singurul loc din tot jocul care știe ȘI că s-a câștigat o luptă, ȘI la ce
 	# fel de nod. Lupta ar fi trebuit să întrebe harta ce nod e ca să afle cât
 	# plătește — adică să repete o socoteală care se face oricum aici.
-	monede += int(date_nod(int(nod_curent().get("tip", Nod.LUPTA)))["monede"])
+	castiga_monede(int(date_nod(int(nod_curent().get("tip", Nod.LUPTA)))["monede"]))
 	s_a_schimbat.emit()
 
 
@@ -1044,6 +1109,130 @@ func puteri_pe_scurt() -> String:
 		var nume := String(putere(cheie).get("nume", cheie))
 		bucati.append(nume if cate[cheie] == 1 else "%s x%d" % [nume, cate[cheie]])
 	return ", ".join(bucati)
+
+
+# ─────────────────────────────────────────────────────────────
+# LACĂTUL UNUI NOD
+# ─────────────────────────────────────────────────────────────
+
+## TOT ce trebuie să știe cineva despre lacătul de la un nod, într-un apel:
+##   { "nivel": 2, "samanta": 88123456, "monede": 10 }
+##
+## O singură funcție, și nu trei (una pentru nivel, una pentru sămânță, una
+## pentru plată), fiindcă cele trei sunt un singur răspuns: „ce lacăt e aici?”.
+## Trei funcții ar fi însemnat trei apeluri din hartă și trei locuri în care se
+## poate uita unul.
+##
+## Dicționar gol pentru un id care nu există — apelantul verifică `is_empty()`,
+## ca la `putere()`. Nu întrebăm dacă nodul e chiar de tip Eveniment: funcția
+## răspunde la „ce lacăt ar fi aici”, iar cine deschide lacătul știe deja de ce.
+## Un `if tip == EVENIMENT` aici ar însemna că un viitor „Lacăt” pus pe alt tip
+## de nod (o Elită cu cufăr) ar primi un dicționar gol fără niciun motiv.
+func lacat_la(id: int) -> Dictionary:
+	if id < 0 or id >= harta.size():
+		return {}
+	var nod := harta[id]
+	var nivel := nivel_lacat(int(nod["adancime"]), adancimea_bossului())
+	return {
+		"nivel": nivel,
+		# Sămânța NODULUI, amestecată — vezi `AMESTEC_LACAT`. E aceeași sursă
+		# din care lupta își alege inamicul (`lupta.gd`: `rng.seed =
+		# int(nod["samanta"])`), deci jocul are UN singur mecanism pentru
+		# „de unde își ia un nod conținutul", nu două.
+		#
+		# Reproductibilitatea cerută iese de la sine: `nod["samanta"]` se trage
+		# o dată, la generarea hărții, din sămânța expediției — și se SALVEAZĂ
+		# odată cu nodul. Aceeași expediție, reluată, dă același lacăt.
+		"samanta": int(nod["samanta"]) * AMESTEC_LACAT + ADAOS_LACAT,
+		"monede": int(LACAT[nivel - 1]["monede"]),
+	}
+
+
+## CÂT DE ADÂNC E BOSSUL. `0` dacă harta n-are Boss (n-ar trebui).
+##
+## Nu e „adâncimea maximă din hartă", și diferența e chiar motivul pentru care
+## funcția asta există iar `adancime_maxima()` a fost ștearsă (vezi nota de la
+## `la_capat()`): pe o planșă desenată de mână, cel mai depărtat nod de Start și
+## capătul drumului sunt două lucruri care doar se nimeresc să coincidă.
+## Lungimea drumului e a Bossului, fiindcă drumul se termină la el.
+func adancimea_bossului() -> int:
+	var id := id_boss()
+	if id < 0:
+		return 0
+	return int(harta[id]["adancime"])
+
+
+## CE NIVEL ARE LACĂTUL DE LA ADÂNCIMEA ASTA — drumul împărțit în treimi.
+##
+## `static` și pură: primește două numere, întoarce un număr. Nu atinge harta,
+## deci se poate verifica headless pe adâncimi inventate, fără expediție.
+##
+## ── DE CE TREIMI DIN ADÂNCIMEA BOSSULUI, ȘI NU ADÂNCIMI FIXE
+##
+## „Adâncimea 4 ⇒ nivelul 3" e adevărat pe planșele de azi (Bossul stă la 6) și
+## devine fals în ziua în care desenezi o hartă mai lungă: adâncimea 4 ar fi
+## atunci mijlocul drumului, iar nivelul cel mai greu ar apărea la jumătate.
+## Fracțiunea de drum rămâne adevărată pe orice planșă.
+##
+## ── DE CE ARITMETICĂ ÎNTREAGĂ
+##
+## Comparația firească ar fi `adancime / float(boss) <= 1.0 / 3.0`. Pe Bossul de
+## la 6, adâncimea 2 dă 0,33333… în amândouă părțile — două numere care ar
+## TREBUI să fie egale, scrise cu virgulă. Uneori sunt, uneori nu, și atunci
+## nodul sare o bandă de dificultate fără ca nimeni să poată spune de ce.
+## Înmulțite, comparația e între numere întregi și răspunsul e mereu același.
+##
+## ── DE CE FIECARE MARGINE CADE SPRE AFARĂ
+##
+## Un nod care stă EXACT pe o treime intră în banda dinspre capătul de hartă cel
+## mai apropiat: cel de la o treime în banda 1, cel de la două treimi în banda 3.
+## Regula e simetrică, și nu din dragoste de simetrie — cele două benzi de la
+## capete sunt cele înguste în practică, iar marginile le lărgesc pe amândouă.
+##
+## Cât de înguste, măsurat cu `tools/verifica_eveniment.gd` pe cele două planșe:
+##
+##   BANDA 1 — adâncimea 1 e mereu o Luptă (regula „vecinii startului sunt
+##   lupte"), deci Evenimentele încep de la 2. Dacă marginea de jos ar cădea în
+##   sus, nivelul 1 — singurul cu o roată sudată, cel care te învață ce e un
+##   lacăt — n-ar apărea niciodată.
+##
+##   BANDA 3 — pe `harta_01` există UN SINGUR nod la adâncimea 5, iar acela e
+##   luat mereu de Odihna de dinaintea Bossului (`_regula_boss_cu_odihna_vecina`).
+##   Cu marginea de sus căzând în jos, nivelul 3 ieșea de 0 ori din 200 de
+##   semințe pe chiar planșa care se joacă. Cu ea căzând în sus, banda prinde și
+##   adâncimea 4, unde stau patru noduri.
+##
+## Amândouă poveștile spun același lucru: pe o hartă adevărată, capetele drumului
+## au puține noduri libere, iar mijlocul are multe. O împărțire care ar da
+## marginile mijlocului ar lăsa nivelurile de la capete fără loc.
+##
+## Cum iese pe planșele de azi (Bossul la 6) și pe una lungă (Bossul la 8):
+##
+##   boss 6:  adâncime 1,2 → nivel 1 · 3 → nivel 2 · 4,5 → nivel 3
+##   boss 8:  adâncime 1,2 → nivel 1 · 3,4,5 → nivel 2 · 6,7 → nivel 3
+static func nivel_lacat(adancime: int, adancime_boss: int) -> int:
+	# O hartă fără Boss, sau cu Bossul în Start: nu există „fracțiune de drum",
+	# deci nu ghicim. Cel mai blând nivel, și jocul merge înainte.
+	if adancime_boss <= 0:
+		return 1
+	if 3 * adancime <= adancime_boss:
+		return 1
+	if 3 * adancime >= 2 * adancime_boss:
+		return 3
+	return 2
+
+
+## Monedele câștigate în afara unei lupte (azi: un lacăt deschis).
+##
+## Trece pe aici, și nu direct pe `monede += n`, dintr-un singur motiv: semnalul.
+## Antetul hărții scrie Monedele, iar el se redesenează la `s_a_schimbat`. O
+## adunare făcută pe lângă funcția asta ar fi un număr crescut pe care nu l-ai
+## vedea crescând.
+func castiga_monede(cantitate: int) -> void:
+	if cantitate <= 0:
+		return
+	monede += cantitate
+	s_a_schimbat.emit()
 
 
 # ─────────────────────────────────────────────────────────────

@@ -33,6 +33,10 @@ extends Control
 
 const SCENA_LUPTA := "res://scenes/lupta/lupta.tscn"
 
+## Lacătul nodului de Eveniment. Se INSTANȚIAZĂ peste hartă, nu se deschide cu
+## `change_scene_to_file` ca lupta — vezi `_deschide_lacatul()` pentru de ce.
+const SCENA_CIFRU := "res://scenes/cifru/cifru.tscn"
+
 # ── RĂGAZUL DE DUPĂ ATERIZARE ─────────────────────────────────
 ## Cât se ține harta pe ecran DUPĂ ce piesa a aterizat, înainte să se deschidă
 ## nodul (lupta, odihna, magazinul).
@@ -765,6 +769,11 @@ var eticheta_nod_rol: Label
 ## eticheta când mouse-ul a ieșit dintr-un nod DUPĂ ce intrase deja în altul —
 ## semnalele vin în ordinea asta mai des decât te-ai aștepta.
 var nod_survolat := -1
+
+## Lacătul deschis acum, sau `null`. Ținut minte ca să-l pot elibera când s-a
+## terminat: o scenă instanțiată de cod nu se curăță singură, iar un cufăr uitat
+## în arbore ar rămâne peste hartă la nodul următor.
+var lacat: Control = null
 
 
 func _ready() -> void:
@@ -2642,12 +2651,7 @@ func _pe_nod_apasat(id: int) -> void:
 		Expeditie.Nod.MAGAZIN:
 			_arata_magazin()
 		Expeditie.Nod.EVENIMENT:
-			# Placeholder, și scris ca atare. Un nod care nu face nimic dar
-			# pretinde că face e mai rău decât unul care recunoaște.
-			_arata_mesaj(
-				"EVENIMENT",
-				"Aici va fi o alegere, candva. Deocamdata drumul doar trece pe langa."
-			)
+			_deschide_lacatul()
 
 
 ## Mută piesa pe nodul ales și se întoarce abia când a aterizat.
@@ -2727,6 +2731,111 @@ func _dupa_un_nod() -> void:
 		_arata_sumar()
 	else:
 		_arata_harta()
+
+
+# ─────────────────────────────────────────────────────────────
+# EVENIMENTUL: LACĂTUL
+#
+# Primul conținut al nodului de Eveniment: un cufăr cu cifru
+# (`scenes/cifru/`). Harta nu știe nicio regulă despre el — nici ce nivel are,
+# nici cât plătește, nici cum se naște un puzzle. Întreabă
+# `Expeditie.lacat_la()` și deschide scena cu cele două lucruri primite.
+#
+# ── DE CE PESTE HARTĂ, ȘI NU O SCENĂ NOUĂ CA LUPTA
+#
+# `change_scene_to_file()` DISTRUGE harta. La luptă e corect: lupta e alt LOC,
+# iar întoarcerea trece oricum prin `_ready()`, care se uită la starea
+# expediției și redeschide ecranul potrivit. Un Eveniment nu e alt loc, e o
+# oprire pe drum — ca Odihna și ca Magazinul, care sunt și ele panouri peste
+# hartă.
+#
+# Trei lucruri concrete pe care le câștigăm așa:
+#
+#   1. Lacătul nu trebuie să știe cum se cheamă fișierul hărții ca să se
+#      întoarcă. Un ecran de puzzle care ar ști despre expediții e exact
+#      legătura pe care contractul `porneste()` / `rezolvat()` o evită.
+#   2. Muzica nu repornește. `_ready()` cheamă `Muzica.reda(Piesa.HARTA)`; cu o
+#      scenă nouă, piesa ar lua-o de la zero la fiecare cufăr.
+#   3. `cifru.gd` a fost scris pentru asta. Camera lui e un `Node2D` mutat cu
+#      mâna, nu un `Camera2D`, FIINDCĂ un `Camera2D` ar trage pergamentul după
+#      el. Decizia aia se plătește abia acum.
+#
+# Nu se vede nimic din hartă pe dedesubt (fundalul Lacătului e opac), și e
+# bine: un cufăr se privește de aproape.
+# ─────────────────────────────────────────────────────────────
+
+func _deschide_lacatul() -> void:
+	var fisa := Expeditie.lacat_la(Expeditie.pozitie)
+	if fisa.is_empty():
+		# N-ar trebui să se întâmple (am intrat chiar acum în nodul ăsta), dar
+		# un Eveniment care nu-și găsește lacătul trebuie să te lase să MERGI
+		# mai departe, nu să te blocheze pe o hartă fără butoane.
+		push_warning("Harta: nodul %d n-are lacat." % Expeditie.pozitie)
+		_arata_mesaj("EVENIMENT", "Cufarul e gol. Drumul merge inainte.")
+		return
+
+	var scena := load(SCENA_CIFRU) as PackedScene
+	if scena == null:
+		push_error("Harta: nu pot incarca %s." % SCENA_CIFRU)
+		_arata_mesaj("EVENIMENT", "Cufarul e gol. Drumul merge inainte.")
+		return
+
+	lacat = scena.instantiate() as Control
+	# ADĂUGAT ULTIMUL, deci desenat peste tot restul. Ordinea copiilor e ordinea
+	# de desenare într-un `Control`; n-avem nevoie de niciun `z_index`.
+	add_child(lacat)
+
+	# TASTATURA. Lacătul citește săgețile și cifrele din `_unhandled_input()`,
+	# adică din evenimentele pe care nu le-a luat NIMENI înainte. Dacă un buton
+	# rămas de la panoul de dinainte mai are focus, el le ia primul — și ai un
+	# cufăr care nu răspunde la săgeți fără niciun motiv vizibil.
+	#
+	# Mouse-ul nu are nevoie de nimic: rădăcina scenei Lacătului e un `Control`
+	# cu `mouse_filter = STOP` întins pe tot ecranul, deci clicurile și mișcarea
+	# se opresc în ea. Nodurile de sub ea nu primesc nici clic, nici
+	# `mouse_entered`, deci nici eticheta de survolare nu poate apărea.
+	get_viewport().gui_release_focus()
+
+	# `rezolvat` e tot ce ascultăm de la el — contractul întreg, aceeași formă ca
+	# la discipline. `CONNECT_ONE_SHOT` fiindcă semnalul vine exact o dată și
+	# scena moare imediat după: fără el, ar trebui să ținem minte să deconectăm.
+	lacat.rezolvat.connect(_pe_lacat_rezolvat, CONNECT_ONE_SHOT)
+	lacat.porneste(int(fisa["nivel"]), int(fisa["samanta"]))
+
+
+## Lacătul s-a terminat, într-un fel sau altul.
+##
+## NODUL E DEJA CONSUMAT, și nu de aici: `Expeditie.intra_in_nod()` l-a pus în
+## `parcurse` înainte ca lacătul să se deschidă. Deci un cufăr ratat nu se poate
+## reîncerca — `accesibile()` sare peste nodurile parcurse, iar simbolul lui nu
+## mai e `activ`, deci nici nu primește clic. Asta e regula hărții pentru TOATE
+## nodurile („Drumul nu se poate reface"), nu o pedeapsă pusă pe lacăt.
+func _pe_lacat_rezolvat(succes: bool) -> void:
+	var fisa := Expeditie.lacat_la(Expeditie.pozitie)
+	var nivel := int(fisa.get("nivel", 1))
+	var plata := int(fisa.get("monede", 0)) if succes else 0
+
+	if lacat != null:
+		lacat.queue_free()
+		lacat = null
+
+	Expeditie.castiga_monede(plata)
+
+	# Nivelul se scrie în mesaj DINADINS: e singurul loc din care afli că
+	# lacătele nu sunt toate la fel, și de ce cel de lângă Boss ți-a luat cinci
+	# minute. Fără el, dificultatea crescătoare ar fi o bănuială.
+	if succes:
+		_arata_mesaj(
+			"CUFARUL S-A DESCHIS",
+			"Lacat de nivel %d, dedus.
++%d Monede." % [nivel, plata]
+		)
+	else:
+		_arata_mesaj(
+			"CUFARUL A RAMAS INCHIS",
+			"Lacat de nivel %d. Ai vazut cifrul pe roti — pleci stiind raspunsul,
+nu doar ca ai gresit." % nivel
+		)
 
 
 # ─────────────────────────────────────────────────────────────

@@ -1,6 +1,6 @@
 # MINDKEEP — Jurnal de progres
 
-*Ultima actualizare: 25 septembrie 2026*
+*Ultima actualizare: 27 septembrie 2026*
 *Atașează acest fișier la începutul fiecărei sesiuni noi, împreună cu `CLAUDE.md` și `docs/pitch-document.md`.*
 
 ---
@@ -14,20 +14,21 @@
 | 3. Trivia, ca scenă independentă | ✅ gata |
 | 4. Bucla completă a unei lupte | ✅ victorie · înfrângere · recompense (Fragmente) |
 | 5. Trei inamici manuali | ✅ Soldatul · Lăncierul (ceas) · Spadasinul (vulnerabilitate), aleși din joc |
-| 6. Harta de expediție | ✅ loadout „N din M" · **12-16 noduri**, ramificate, cu sămânță · Luptă / Elită / Odihnă / Eveniment / **Magazin** / **Boss** · **Monede + puteri temporare** · sumar de run · aspect: pergament, simboluri de cerneală, trasee punctate · **nodurile și drumurile stau pe o PANGLICĂ (curbă centrală + benzi)**, nu pe o grilă dreaptă · **patru trasee, toate verzi pe 300 de semințe** (POTCOAVĂ activă; POTCOAVA OGLINDITĂ e aceeași formă, întoarsă) · strat înclinat (forfecare) la ȘARPE · **drumuri care nu se încrucișează niciodată (0 la 300 de semințe)** · **nodul curent are și aură, și X** · **două surse de hartă: GENERATĂ (panglica) sau DESENATĂ dintr-un fișier `data/harti/*.json`** — comutatorul `Expeditie.SURSA_HARTII`; azi e pe DESENATĂ · **harta umple pergamentul**: pânza ține toată pagina, antetul plutește peste ea (805 × 427 px de hartă, de la 666 × 353) · **drumurile merg în amândouă sensurile**, cu nodul parcurs tăiat definitiv și cu garanția, verificată pe 16 000 de expediții simulate, că nu te poți înfunda · **figurina sare, cade ca un slam și zguduie ecranul la aterizare**, cu un răgaz de 0,5 s înainte să se deschidă nodul · **tipurile nodurilor se împart după o REȚETĂ fixă, nu se trag cu zarul**: 9 reguli de vecinătate și de început, plasare conștientă de reguli, verificare completă și reîncercare cu sub-sămânță (0 eșecuri pe 500 de semințe × 3 surse de hartă) · rețeta se **plafonează după forma hărții**, nu după numărul de noduri |
+| 6. Harta de expediție | ✅ loadout „N din M" · **12-16 noduri**, ramificate, cu sămânță · Luptă / Elită / Odihnă / Eveniment / **Magazin** / **Boss** · **Monede + puteri temporare** · sumar de run · aspect: pergament, simboluri de cerneală, trasee punctate · **nodurile și drumurile stau pe o PANGLICĂ (curbă centrală + benzi)**, nu pe o grilă dreaptă · **patru trasee, toate verzi pe 300 de semințe** (POTCOAVĂ activă; POTCOAVA OGLINDITĂ e aceeași formă, întoarsă) · strat înclinat (forfecare) la ȘARPE · **drumuri care nu se încrucișează niciodată (0 la 300 de semințe)** · **nodul curent are și aură, și X** · **două surse de hartă: GENERATĂ (panglica) sau DESENATĂ dintr-un fișier `data/harti/*.json`** — comutatorul `Expeditie.SURSA_HARTII`; azi e pe DESENATĂ · **harta umple pergamentul**: pânza ține toată pagina, antetul plutește peste ea (805 × 427 px de hartă, de la 666 × 353) · **drumurile merg în amândouă sensurile**, cu nodul parcurs tăiat definitiv și cu garanția, verificată pe 16 000 de expediții simulate, că nu te poți înfunda · **figurina sare, cade ca un slam și zguduie ecranul la aterizare**, cu un răgaz de 0,5 s înainte să se deschidă nodul · **tipurile nodurilor se împart după o REȚETĂ fixă, nu se trag cu zarul**: 9 reguli de vecinătate și de început, plasare conștientă de reguli, verificare completă și reîncercare cu sub-sămânță (0 eșecuri pe 500 de semințe × 3 surse de hartă) · rețeta se **plafonează după forma hărții**, nu după numărul de noduri · **nodul de Eveniment deschide Lacătul** (nivel din adâncime, sămânță din nodul, 6/10/14 Monede la succes) |
 | 7. Cetatea | ❌ |
 | 8. Save/Load | 🟡 tezaurul, sacul și expediția știu toate să se serializeze (`spre_dictionar` / `din_dictionar`), pe trei straturi de durată; scrierea pe disc, nu încă |
-| 9. Celelalte discipline | 🟡 Cultură generală ✅ (135 de întrebări) · Logica ✅ (80 de categorii) · Cuvinte ✅ · toate trei fără repetiții pe expediție · celelalte 5 ❌ |
+| 9. Celelalte discipline | 🟡 Cultură generală ✅ (135 de întrebări; **planul de creștere spre mii, notele „Află mai multe” și modul Practice sunt decise**, vezi sesiunea CONȚINUTUL) · Logica ✅ (80 de categorii) · Cuvinte ✅ · toate trei fără repetiții pe expediție · celelalte 5 ❌ |
 | 10–13. Generator de inamici, artă, web | ❌ (artă parțial: figurile principale și piesele de pe butoanele de Obelisc au imagini reale · **arena are fundal: biblioteca gotică**, cu personajele așezate pe dalele din prim-plan, umbră de contact și lumină de sală) · Regina: **amânată**, vezi CLAUDE.md |
 
 Nodul de **Eveniment** are primul lui conținut: **Lacătul** — un cufăr cu cifru,
 dedus din indicii, cu artă adevărată (roți care se învârt în spatele
-ferestrelor, cufăr care se deschide). De azi, dificultatea lui nu mai e
-presupusă, ci **măsurată**: un rezolvitor separat deduce codul ca un om și spune
-de ce tehnică a fost nevoie, iar generatorul păstrează doar puzzle-urile cu nota
-cerută de nivel. Verificat pe 180 de puzzle-uri, **60/60 pe fiecare nivel
-nimeresc nota**. Scena trăiește deocamdată singură (F6); legarea de hartă e
-sesiunea următoare.
+ferestrelor, cufăr care se deschide). Dificultatea lui nu e presupusă, ci
+**măsurată**: un rezolvitor separat deduce codul ca un om și spune de ce tehnică
+a fost nevoie, iar generatorul păstrează doar puzzle-urile cu nota cerută de
+nivel. Verificat pe 180 de puzzle-uri, **60/60 pe fiecare nivel nimeresc nota**.
+**De azi e legat de hartă**: nodul de Eveniment îl deschide peste pergament, cu
+nivelul din adâncimea nodului și sămânța din sămânța nodului, iar un cufăr
+deschis plătește în Monede (vezi sesiunea EVENIMENTUL DESCHIDE CUFĂRUL).
 
 Din pasul 10 (generatorul de inamici) s-a făcut deja partea care nu costa nimic
 azi: **identitatea inamicului e separată de arhetip**. Restul (modificatori,
@@ -36,6 +37,455 @@ buget, generare) rămâne acolo unde era.
 Am sărit peste ordinea recomandată la pasul 12 (artă): imaginile pentru rege,
 cavaler și pentru cele trei piese de șah de pe butoane au intrat mai devreme, dar
 restul rămâne placeholder. Bucla de luptă e în continuare cea validată, nu arta.
+
+---
+
+## EVENIMENTUL DESCHIDE CUFĂRUL (27 septembrie 2026) — Lacătul intră în expediție
+
+Lacătul nu mai trăiește singur cu F6. Nodul de Eveniment îl deschide, cu nivelul
+și sămânța luate din hartă, iar un cufăr deschis plătește. **Contractul n-a fost
+atins:** `porneste(nivel, samanta)` și `rezolvat(succes)`, exact ca înainte.
+
+Merită spus cât a costat legarea: **zero linii schimbate în `cifru.gd`**, în
+afara unui comentariu care nu mai era adevărat. Ăsta e dividendul contractului —
+scena fusese scrisă acum trei zile pentru un apelant care nu exista încă, și
+apelantul s-a potrivit din prima.
+
+### PESTE hartă, nu o scenă nouă
+
+Lupta se deschide cu `change_scene_to_file()`. Lacătul se **instanțiază peste
+harta vie**, ca panourile de Odihnă și de Magazin.
+
+Diferența nu e de gust. `change_scene_to_file()` DISTRUGE harta, iar lupta
+suportă asta fiindcă e alt LOC: întoarcerea trece prin `_ready()`, care se uită
+la starea expediției și redeschide ecranul potrivit. Un Eveniment nu e alt loc, e
+o oprire pe drum. Trei lucruri concrete, în ordinea în care m-ar fi durut:
+
+1. **Lacătul ar fi trebuit să știe cum se cheamă fișierul hărții**, ca să se
+   întoarcă. Un ecran de puzzle care știe despre expediții e exact legătura pe
+   care contractul o evită.
+2. **Muzica ar fi repornit.** `harta.gd::_ready()` cheamă
+   `Muzica.reda(Piesa.HARTA)`; cu o scenă nouă, piesa hărții ar fi luat-o de la
+   zero la fiecare cufăr.
+3. **`cifru.gd` fusese scris pentru asta.** Camera lui e un `Node2D` mutat cu
+   mâna și nu un `Camera2D`, FIINDCĂ un `Camera2D` ar trage pergamentul după el.
+   Decizia aia, luată acum trei zile „pentru mai târziu", s-a plătit azi.
+
+Nu se vede nimic din hartă pe dedesubt — fundalul Lacătului e opac — și e bine:
+un cufăr se privește de aproape.
+
+**Momentul generării nu s-a mai mutat.** Nota veche („generarea de nivel 3 costă
+~0,47 s, momentul bun e în timpul tranziției de la hartă") a fost rezolvată de
+altcineva între timp: din sesiunea DIFICULTATEA, generarea pleacă pe
+`WorkerThreadPool` în prima linie din `porneste()` și se suprapune peste răgazul
+de o jumătate de secundă în care vezi cufărul întreg. Deci `porneste()` se cheamă
+DUPĂ săritura piesei, ca la orice alt nod. S-o pornesc mai devreme ar cere
+spartul lui `porneste()` în două (calcul / desen), pentru un câștig de ~0,8 s pe
+care jocul îl umple oricum cu animație.
+
+### Sămânța: un mecanism, nu două
+
+Cerința era „sămânța expediției plus id-ul nodului". Există însă deja exact ceva
+care face asta: **fiecare nod are câmpul `samanta`**, tras la generarea hărții
+din sămânța expediției și salvat odată cu nodul. `lupta.gd` face
+`rng.seed = int(nod["samanta"])` ca să-și aleagă inamicul.
+
+Deci sămânța lacătului e sămânța nodului, amestecată:
+
+```gdscript
+samanta_lacat = int(nod["samanta"]) * AMESTEC_LACAT + ADAOS_LACAT
+```
+
+Reproductibilitatea cerută iese de la sine, iar jocul are UN singur răspuns la
+întrebarea „de unde își ia un nod conținutul", nu două. Amestecul cu o constantă
+proprie desparte lacătul de un eventual al doilea eveniment pe același nod (o
+fântână, un altar), cât despărțirea e gratis.
+
+### Nivelul: drumul împărțit în treimi
+
+`Expeditie.nivel_lacat(adancime, adancime_boss)` — funcție `static` și pură, deci
+verificabilă pe adâncimi inventate, fără nicio hartă.
+
+```gdscript
+if 3 * adancime <= adancime_boss:        return 1
+if 3 * adancime >= 2 * adancime_boss:    return 3
+return 2
+```
+
+**Fracțiune de drum, nu adâncime fixă.** „Adâncimea 4 ⇒ nivelul 3" e adevărat pe
+planșele de azi (Bossul stă la 6) și devine fals în ziua în care desenezi o hartă
+mai lungă, unde 4 e mijlocul drumului.
+
+**Raportat la adâncimea BOSSULUI, nu la cea maximă din hartă** — din motivul
+scris chiar în `expeditie.gd`, la înmormântarea lui `adancime_maxima()`: pe o
+planșă desenată de mână, „cel mai depărtat nod de Start" și „capătul drumului"
+sunt două lucruri care doar se nimeresc să coincidă.
+
+**Aritmetică întreagă, nu împărțire cu virgulă.** Comparația firească ar fi
+`adancime / float(boss) <= 1.0 / 3.0`. Pe Bossul de la 6, adâncimea 2 dă
+0,33333… în amândouă părțile — două numere care ar TREBUI să fie egale, scrise cu
+virgulă. Uneori sunt, uneori nu, și atunci nodul sare o bandă de dificultate fără
+ca nimeni să poată spune de ce. Înmulțite, răspunsul e mereu același.
+
+### Marginile cad spre AFARĂ — și de ce am aflat-o de la verificator
+
+Prima variantă avea amândouă marginile căzând spre banda mai ușoară (`<=` de două
+ori). Pare firesc, și pe hârtie era în regulă. Verificatorul a raportat, pe prima
+rulare:
+
+```
+═══ harta_01.json ═══
+    apar toate trei nivelurile    PICAT   nivel 1: 105 · nivel 2: 295 · nivel 3: 0
+```
+
+**Zero lacăte de nivel 3 pe planșa care se joacă**, din 200 de semințe. Cauza e
+în forma hărții, nu în formulă: pe `harta_01`, nivelul 3 cerea adâncimea 5, iar
+la adâncimea 5 există UN SINGUR nod — cel de dinaintea Bossului, pe care
+`_regula_boss_cu_odihna_vecina` îl face mereu Odihnă. Nivelul cel mai greu al
+Lacătului, cu tot rezolvitorul scris pentru el, era cod mort.
+
+Marginea de sus cade acum spre banda 3, deci nivelul 3 prinde și adâncimea 4,
+unde stau patru noduri. Regula e simetrică — fiecare margine cade spre capătul de
+hartă cel mai apropiat — și simetria are un motiv, nu e estetică: **pe o hartă
+adevărată, capetele drumului au puține noduri libere, iar mijlocul are multe.**
+Adâncimea 1 e mereu Luptă (regula „vecinii startului sunt lupte"), deci banda 1 e
+îngustă la fel de tare pe dedesubt; dacă marginea de jos ar fi căzut în sus,
+nivelul 1 — singurul cu roată sudată, cel care te învață ce e un lacăt — ar fi
+dispărut la rândul lui.
+
+| Bossul la | nivel 1 | nivel 2 | nivel 3 |
+|---|---|---|---|
+| 6 (planșele de azi) | adâncimea 1, 2 | 3 | 4, 5 |
+| 8 (o hartă lungă) | 1, 2 | 3, 4, 5 | 6, 7 |
+
+Merită ținut minte ce s-a întâmplat aici, fiindcă e a doua oară: **o regulă de
+design corectă în abstract poate fi goală în practică, iar diferența nu se vede
+citind codul.** Prima dată a fost `LUPTE_MINIME_ELITA` (pragul 3 dădea zero
+aranjamente valabile). Amândouă s-au aflat măsurând, nu gândind.
+
+### Recompensa: Monede, 6 / 10 / 14, zero la eșec
+
+`Expeditie.LACAT` — un rând pe nivel, ca să se regleze după primele partide:
+
+| nivel | Monede | reperul lângă care a fost aleasă cifra |
+|---|---|---|
+| 1 | 6 | sub o Luptă (8): o roată îți e dăruită, sudată pe cifra bună |
+| 2 | 10 | cât o Luptă și ceva — nu riști PV, dar plătești cu timp |
+| 3 | 14 | sub o Elită (16); e nodul care te poate ține chiar cinci minute |
+
+**De ce Monede și nu Fragmente.** Granița e scrisă în `expeditie.gd`: Fragmentele
+sunt averea care rămâne după expediție (viitoarea cetate), Monedele sunt ce ai pe
+drumul ăsta. Un lacăt plătit în Fragmente ar fi devenit o sursă de progres
+PERMANENT complet ruptă de luptă — ai fi avansat în meta-joc rezolvând puzzle-uri
+care n-au nicio legătură cu loadout-ul ales. Plătit în Monede, Evenimentul devine
+în schimb o decizie de HARTĂ: „iau brațul cu cufărul, ca să-mi ajungă de Pana de
+otel când ajung la Magazin?". Asta lipsea unui nod care până acum nu făcea nimic.
+
+**De ce zero la eșec.** Orice sumă fixă pe eșec s-ar putea strânge *fără să
+joci*: apeși „Deschide" de trei ori la întâmplare, în cinci secunde, și iei banii.
+Un joc de antrenament mental n-are voie să aibă o recompensă a cărei cale cea mai
+rapidă e să nu gândești. Iar consolarea la eșec există deja și e cea potrivită:
+cufărul îți ARATĂ codul pe roți. Pleci știind răspunsul — plătești cu Monedele pe
+care nu le-ai luat, nu cu PV, nu cu tura, nu cu timp.
+
+Cât cântărește, măsurat pe 200 de semințe: o expediție are 2–3 Evenimente, iar
+deschise toate dau **20,5 Monede pe `harta_01`** și 33,2 pe `harta_02`, dintr-un
+venit total de ~94 de pe hartă. Deci merită ocolit după cufere, fără să fie
+obligatoriu — exact greutatea pe care vrei s-o aibă o alegere de drum.
+
+### Harta de dedesubt nu reacționează deloc
+
+Cât Lacătul e deschis, harta nu primește nici clic, nici survolare, nici
+tastatură. Aproape nimic nu e scris pentru asta, și merită spus de ce:
+
+- **Mouse-ul** — rădăcina scenei Lacătului e un `Control` întins pe tot ecranul,
+  cu `mouse_filter` implicit (`STOP`). Clicurile și mișcarea se opresc în ea.
+  Tot ce e înăuntru e pe `IGNORE` (fundalul, `Interfata`, panoul, coloana),
+  singura excepție fiind butonul „Deschide" — care are nevoie de clicuri. Deci
+  nodurile de dedesubt nu primesc nici `_gui_input`, nici `mouse_entered`, deci
+  **nici eticheta de survolare nu poate apărea**.
+- **Tastatura** — `get_viewport().gui_release_focus()` se cheamă la deschidere.
+  Lacătul citește săgețile și cifrele din `_unhandled_input()`, adică din
+  evenimentele pe care nu le-a luat nimeni înainte; un buton rămas cu focus de la
+  panoul de dinainte le-ar fi luat primul, și ai fi avut un cufăr care nu
+  răspunde la săgeți fără niciun motiv vizibil. Nodurile de pe hartă nu sunt
+  `Button`, sunt `Control`-uri desenate, deci nu pot lua focus oricum.
+
+### Nodul e consumat la INTRARE, nu la verdict
+
+`Expeditie.intra_in_nod()` pune nodul în `parcurse` **înainte** ca lacătul să se
+deschidă. Deci un cufăr ratat nu se poate reîncerca: `accesibile()` sare peste
+nodurile parcurse, iar simbolul lui nu mai e `activ`, deci nici nu primește clic.
+Verificat, nu presupus (vezi proba de integrare mai jos).
+
+Asta e regula hărții pentru TOATE nodurile („Drumul nu se poate reface"), nu o
+pedeapsă pusă pe lacăt — și e și motivul pentru care eșecul nu trebuie să doară:
+nu pierzi nimic, doar nu câștigi.
+
+> **NOTĂ PENTRU PASUL 8 (SAVE).** Aici e o scurgere, ușor de închis acum și greu
+> de găsit peste trei luni. Eșecul îți ARATĂ codul pe roți, iar sămânța lacătului
+> e deterministă. Deci dacă ieși din joc pe ecranul de eșec și reiei expediția,
+> ai primi **exact același lacăt, cu codul deja știut** — trei încercări pe un
+> puzzle la care ai răspunsul scris pe hârtie.
+>
+> Regula, când save-ul se scrie: **lacătul se marchează ca folosit în clipa
+> DESCHIDERII scenei, nu la verdict.** Azi nu e o problemă, fiindcă nu există
+> salvare pe disc; nodul e consumat la intrare, iar starea trăiește doar în
+> memorie. Iar `intra_in_nod()` e deja locul care face marcarea la momentul
+> potrivit, deci soluția nu cere un câmp nou — cere doar ca save-ul să nu fie
+> scris ÎNAINTE de ea. Concret: prima scriere pe disc a unei expediții trebuie să
+> se întâmple la `intra_in_nod()`, nu la `_dupa_un_nod()`.
+
+### Verificarea headless: `tools/verifica_eveniment.gd`
+
+`godot --headless --path . res://tools/verifica_eveniment.tscn` — **sub un
+minut**, pe 200 de semințe × 3 surse de hartă.
+
+Încă o unealtă pe lângă `verifica_cifru.gd`, fiindcă pune altă întrebare.
+`verifica_cifru` întreabă dacă LACĂTUL e bun (soluție unică, nota cerută, niciun
+indiciu care dictează), cu niveluri și semințe alese de el. Asta întreabă **ce
+lacăt îți dă HARTA**: între sămânța unei expediții și `porneste()` stau trei
+socoteli — adâncime → nivel, sămânța nodului → sămânța lacătului, nivel → Monede
+— și toate trei pot fi greșite fără să strice niciun puzzle. Un lacăt perfect
+corect, dar de nivel 3 la al doilea nod, ar trece verificarea cealaltă fără o
+vorbă.
+
+Ce verifică: aceeași sămânță dă aceleași lacăte (tripleta, pe toate Evenimentele
+de pe toate semințele, PLUS puzzle-ul întreg, generat de două ori pe câte un nod
+de fiecare nivel) · marginile treimilor, pe adâncimi inventate, cu tabelul
+așteptat scris de mână · apar toate trei nivelurile · nivelul cerut există în
+tabel (`specificatie()` strânge orice număr în tăcere, deci se verifică acolo
+unde se NAȘTE) · sămânța lacătului e pozitivă · câte Evenimente are o expediție.
+
+**Rezultatul: verde peste tot.**
+
+| | harta generată | harta_01 | harta_02 |
+|---|---|---|---|
+| nivel 1 / 2 / 3, de câte ori | 100 / 182 / 179 | 105 / 165 / 130 | 136 / 170 / 294 |
+| Evenimente pe expediție | 2,31 (minim 2) | 2,00 | 3,00 |
+| Monede, dacă le deschizi pe toate | 24,6 | 20,5 | 33,2 |
+
+Generarea unui puzzle, măsurată aici din nou: 68 ms la nivelul 1, 146 ms la
+nivelul 2, 476 ms la nivelul 3.
+
+Plus o **probă de integrare** rulată o dată, pe mână (nepăstrată în `tools/`,
+fiindcă ar fi chemat funcții private ale hărții): pe sămânța 1007 a lui
+`harta_01`, nodul 10 de la adâncimea 4 a dat un lacăt de nivel 3 cu sămânța
+540420629176; nivelul și sămânța ajunse în puzzle coincid cu cele cerute,
+succesul a plătit exact 14 Monede, eșecul 0, scena s-a eliberat, iar nodul era
+deja în `parcurse` și nu mai era în `accesibile()`.
+
+### Ce să testezi pe mână
+
+Verificarea headless spune că numerele se leagă. Nu poate spune niciunul din
+lucrurile de mai jos.
+
+1. **CÂT DUREAZĂ CHIAR UN LACĂT DE NIVEL 3.** Cronometrul pornit, de la momentul
+   în care roțile devin atingibile până la „Deschide". Ăsta e singurul număr
+   pentru care s-a scris tot rezolvitorul. Reper de comparație: o luptă întreagă
+   durează 2–4 minute. Un lacăt care trece de 5 minute nu e greu, e alt joc —
+   și-atunci se umblă la `NIVELURI` din `generator_cifru.gd` (nota cerută sau
+   `indicii_maxime`), nu la recompensă. Sămânța de probă: **1007 pe `harta_01`
+   dă un nivel 3 la nodul 10.**
+2. **Cele trei niveluri, în aceeași expediție**, ca să simți diferența dintre
+   ele. Cel de nivel 1 are o roată aprinsă de la început (cea sudată); cel de
+   nivel 3 e cel de dinaintea Bossului sau cel de lângă el.
+3. **Harta de dedesubt e complet moartă cât cufărul e pe ecran.** Încearcă, în
+   ordine: clic pe unde știi că e un nod · mișcă mouse-ul peste zona hărții (nu
+   trebuie să apară eticheta de survolare) · apasă săgeți și Enter (trebuie să
+   ducă la roți, nu la altceva) · Tab, care e cel mai bun test de focus rătăcit.
+4. **Ieșirea din lacăt.** După ce se deschide (sau după a treia greșeală), apare
+   panoul cu verdictul, iar în spatele lui nodul trebuie să fie deja tăiat ca
+   parcurs. Apoi harta trebuie să te lase să mergi mai departe, și **nodul de
+   Eveniment nu mai trebuie să fie apăsabil.**
+5. **Monedele din antet** cresc cu exact cât scrie panoul, iar la eșec nu cresc.
+6. **Cât aștepți până apare cufărul.** De la clic pe nod până când roțile se pot
+   atinge trec săritura (0,35 s), răgazul de după aterizare (0,5 s), răgazul de
+   pe cufărul întreg (0,5 s) și apropierea — plus generarea, dacă e nivel 3 și
+   nu s-a terminat în răgaz. Dacă se simte lung, numărul de tăiat e
+   `PAUZA_DUPA_ATERIZARE` din `harta.gd`, fiindcă e singurul care nu arată nimic
+   nou.
+7. **Muzica hărții nu repornește** când se deschide cufărul, și nici când te
+   întorci. (E jumătate din motivul pentru care Lacătul se deschide peste hartă
+   și nu ca scenă nouă — merită auzit o dată că funcționează.)
+
+### Ce s-a atins
+
+| fișier | ce |
+|---|---|
+| `autoload/expeditie.gd` | descrierea reală a nodului de Eveniment · `LACAT`, `AMESTEC_LACAT`, `ADAOS_LACAT` · `lacat_la()`, `adancimea_bossului()`, `nivel_lacat()`, `castiga_monede()` (prin care trec de-acum și Monedele din lupte, ca semnalul să nu poată fi uitat) |
+| `scenes/harta/harta.gd` | `SCENA_CIFRU` · ramura `EVENIMENT` → `_deschide_lacatul()` · `_pe_lacat_rezolvat()` |
+| `scenes/cifru/cifru.gd` | **doar un comentariu** din antet, care nu mai era adevărat |
+| `tools/verifica_eveniment.gd` + `.tscn` | nou |
+
+Neatinse: `generator_cifru.gd`, `rezolvitor_cifru.gd`, `banda_cifre.gd`,
+`cifru.tscn`, contractul.
+
+### Ce urmează, concret
+
+1. **Jucat pe mână** — cât durează CHIAR un lacăt de nivel 3, cu ceasul pornit.
+   Din statistici nu se află: 476 ms e cât îi ia GENERATORULUI, nu mie.
+   Verificarea e verde; reglajul nu se poate face decât jucând.
+2. **Un al doilea eveniment**, ca nodul să nu însemne mereu „iar lacătul". Trei
+   Evenimente pe hartă și un singur conținut e exact felul în care un nod bun
+   devine plictisitor.
+3. **Nota pentru Save** de mai sus, când se ajunge la pasul 8.
+
+---
+
+## CONȚINUTUL (27 septembrie 2026) — de la 135 de întrebări la câteva mii
+
+**Sesiune de design, fără nicio linie de cod.** A pornit de la o problemă
+simplă: cele 135 de întrebări de Cultură generală le știu deja pe de rost. S-a
+încheiat cu un plan pentru mii de întrebări, pentru notele „Află mai multe” și
+pentru modul Practice. Deciziile stau acum și în `CLAUDE.md`, într-un tabel nou
+(„Cultura generală: conținut și Practice”).
+
+### Problema nu e doar a mea
+
+Sacul se golește la fiecare expediție nouă, deci fiecare expediție trage din
+aceleași 45 de întrebări pe nivel. Eu am ajuns primul la capăt fiindcă joc mult,
+dar cineva care joacă 15 minute pe zi ajunge acolo în câteva săptămâni. Iar o
+întrebare învățată e o întrebare gratis, exact argumentul din `sac.gd`.
+
+Nici „mai scriu 100” nu rezolvă: e o bandă rulantă. Scrii 100, le înveți, scrii
+alte 100.
+
+### Fabrica de întrebări
+
+Un script Python care rulează pe calculator, nu în joc: ia fapte din surse
+verificabile, compune întrebările, le validează și scrie un singur JSON. Jocul
+rămâne cum e, cu `trivia.gd` trăgând dintr-o listă finită, doar mai lungă.
+
+De ce nu în joc: generarea din tabele în timpul jocului (ca la Logică) ar muta
+Cultura generală de pe garanție pe reîncercare și n-aș mai putea verifica
+întrebările una câte una. Generarea cu un model de limbaj în timpul jocului e și
+mai rea: internet, cost la fiecare întrebare, întârzieri peste cronometrul de
+12 s și nicio verificare înainte să ajungă la jucător.
+
+| Sursă | Ce aduce | Atenție |
+|---|---|---|
+| Wikidata | Volumul: țări, elemente, opere, autori, planete, cu etichete în română. Numărul de ediții Wikipedia ale unui subiect dă un prim nivel automat | Subiectele fără etichetă în română probabil nu sunt cultură generală pentru un jucător român |
+| Scrise de mână | Istoria, literatura, geografia României; întrebările cu personalitate | Lente, deci rămân nucleul, nu volumul |
+| Model de limbaj | Formularea întrebărilor și a notelor, din fapte date | Niciodată sursa faptului |
+
+Ca reper: 5000 de întrebări înseamnă aproximativ 110 expediții lungi fără nicio
+repetare (o expediție lungă consumă ~15 pe nivel), adică 3–4 luni de joc zilnic.
+
+### Notele „Află mai multe”
+
+Regulile sunt în **`docs/ghid-note.md`**, cu un pilot de 15 fapte care acoperă 18
+întrebări existente. Toate notele pilotului sunt `verificat: false`.
+
+Descoperirea sesiunii: contractul din `puzzle.gd` are deja un câmp `explicatie`,
+pe care Trivia îl lasă gol și pe care nimic nu-l afișează încă. Nota e ce intră
+acolo, iar Practice va fi primul loc care arată câmpul, pentru toate
+disciplinele.
+
+Nota stă pe **fapt**, nu pe întrebare: faptul `aur` acoperă și „simbolul
+aurului” (nivelul I), și „numărul atomic 79” (nivelul III). Faptele vor sta în
+`data/fapte_trivia.json`, tot ca listă, ca să le poată citi
+`citeste_lista_json` fără nicio schimbare.
+
+### Practice (pasul 13)
+
+- Alegi **domeniul**, nu nivelul.
+- Pornești de la nivelul I. **Nivelul II se deblochează la un prag fix**: 60 de
+  răspunsuri corecte la întrebări distincte, ca cifră de pornire, reglabilă ca
+  `DISCIPLINE_IN_LOADOUT`. Nu „toate corecte”: aia ar fi fost un zid la final
+  (247 din 250, blocat de trei întrebări grele) și ar fi crescut odată cu
+  conținutul.
+- După deblocare, **nivelurile se amestecă**: majoritatea din nivelul curent,
+  plus întrebări de dedesubt nevăzute sau greșite. Nimic nu se pierde.
+- **Greșitele revin**, la orice nivel. **„Învățat”** cere 2–3 răspunsuri
+  corecte la distanță în timp; învățatele ies din joc și intră în Jurnal.
+- **Conținutul nou intră în amestec**, nu te trimite înapoi la un nivel
+  terminat.
+- **Progresul se vede** pe fiecare domeniu: „Nivel I · 42 / 60 până la nivelul
+  II”.
+- „Află mai multe” apare după greșeli și, mai discret, și după răspunsurile
+  corecte, fiindcă unul din patru poate fi ghicit.
+
+### Țintele: 500 pe celulă, dar nu peste tot
+
+6 domenii × 3 niveluri = 18 celule. Ținta e 500 de întrebări pe celulă acolo
+unde domeniul le poartă. Nivelul I e plafonat de propria definiție: din
+mitologie, un adult obișnuit știe poate 100–150 de lucruri. Umflarea lui ar
+însemna ori întrebări mai grele cu eticheta greșită, ori același fapt în multe
+formulări, adică o repetare deghizată.
+
+| Domeniu | Nivel I | Nivel II | Nivel III |
+|---|---|---|---|
+| Știință | realist | realist | realist |
+| Geografie | realist | realist | realist |
+| Istorie | la limită | realist | realist |
+| Literatură | la limită | realist | realist |
+| Artă | greu | la limită | realist |
+| Mitologie | greu | la limită | realist |
+
+Designul Practice face asta acceptabil: jucătorul stă pe nivelul I doar cât îi ia
+pragul, deci nivelul I are nevoie de 150–250 de fapte bune, nu de 500. Cele 500
+contează la nivelurile II și III, acolo unde conținutul le poate susține.
+
+Raportul fabricii arată la fiecare rulare **grila de 6 × 3, cu întrebări ȘI
+fapte** pe fiecare celulă. Cel mult 2–3 întrebări pe fapt.
+
+Efortul real e în note, nu în întrebări: 9000 de întrebări înseamnă poate
+3000–4000 de fapte, fiecare cu o notă de verificat. Chiar cu validatorul automat,
+citirea unei mostre e muncă de luni.
+
+### Decizii ieftine acum, scumpe mai târziu
+
+- **`id` stabil pe fiecare întrebare** (`mana:0001`, `wd:…`). Azi identitatea din
+  sac e textul; la prima reformulare, save-ul ar crede că e o întrebare nouă. Se
+  face **înainte de Save**, cât identitățile n-au ajuns încă pe disc.
+- **Sacul Culturii generale devine permanent**, la Save. Azi se golește la
+  fiecare expediție, deci chiar și cu mii de întrebări ar apărea repetări după
+  câteva expediții (paradoxul zilelor de naștere, între expediții). La mii de
+  elemente, `Array.has()` din `sac.gd` se înlocuiește cu un Dictionary folosit ca
+  mulțime, cum anticipează deja comentariul de acolo.
+- **În Practice, cheia sacului include filtrul** (`practice:istorie:2`).
+  Capcana: `Sac.extrage` golește tot registrul unei chei când se termină lista
+  primită. Cu cheia din luptă și o listă filtrată doar pe istorie, terminarea
+  istoriei ar șterge și memoria geografiei.
+- **`etichete` pe fapt**, opționale, de acum, chiar dacă interfața vine abia la
+  pasul 13.
+
+### Atenție la testare
+
+Cât timp știu toate răspunsurile, luptele mele nu mai spun nimic despre
+dificultatea Culturii generale: recunosc întrebarea în loc să mă gândesc la ea.
+**Nu reglez cronometrul sau daunele Culturii generale pe baza propriilor lupte**
+până nu apare conținut nou.
+
+### Rămas deschis
+
+- **Deblocarea treptată a disciplinelor** — propunere discutată, nedecisă. Ideea:
+  pornești cu puține discipline și le deblochezi pe celelalte. Recomandarea a fost
+  **două la început, nu una** (Cultură generală + Logică): cu un singur Obelisc,
+  prima greșeală îl blochează până la final de rundă, PA 2 și 3 nu mai folosesc la
+  nimic și lupta devine un quiz. Deblocarea ar veni prin clădirile Cetății, prima
+  încă din prima sesiune. Depinde de Cetate (7) și Save (8). În cod: loadout-ul
+  filtrează `CATALOG` după cele deblocate, N devine minimul dintre N și câte ai,
+  `_curata_loadout` completează doar din cele deblocate, iar alegerea inamicului
+  ține cont de ele (Spadasinul, vulnerabil la Cuvinte, nu apare înainte de
+  Cuvinte).
+- **Istoric comun între Practice și expediții, cu sacuri separate** — recomandat,
+  de confirmat la pasul 13. Altfel exersez o întrebare dimineața și o primesc
+  gratis în luptă seara.
+- **Pragul de 60** — cifră de pornire, nejucată.
+- **Lungimea notelor** — maximum 240 de caractere, de recalibrat pe popup, pe
+  telefon.
+- **`explicatie` la Logică** e numele regulii cu majuscule („FIBONACCI”). E bun ca
+  etichetă, nu ca notă; pentru „Află mai multe” va trebui o propoziție.
+- **Ce face Practice cu faptele `verificat: false`** — le refuză sau le arată fără
+  notă. Se decide când există modul.
+
+### Fișiere
+
+Nou: `docs/ghid-note.md`. Atinse: `CLAUDE.md` (tabelul de decizii, pasul 13 din
+rută), `docs/progres.md` (antetul, rândul 9, sesiunea asta, lista „Imediat”).
+Cod: niciunul.
 
 ---
 
@@ -4925,50 +5375,40 @@ stricate, semnalează membrii duplicați și domeniile prea sărace.
 
 ### Imediat (următoarea sesiune)
 
-1. **Ecran de înfrângere.** Victoria are panou, „Șah Mat" nu — se termină în
-   aceeași tăcere de dinainte. E aceeași structură, o oră de lucru.
-2. **Recompense după luptă.** Pasul 4 din rută nu e complet fără ele.
-3. **Testat pe mână — acum e blocajul principal.** Tot ce e mai sus a fost
-   verificat prin rulare automată și capturi de ecran, dar **n-am jucat efectiv o
-   luptă întreagă**. Cronometrul, ritmul lanțului și dificultatea reală se simt
-   doar jucând — iar după sesiunea de tempo din 10 septembrie sunt patru valori
-   noi care n-au fost simțite de nimeni. Un ecran de înfrângere în plus nu
-   valorează cât o luptă jucată cap-coadă.
+*Rescrisă pe 27 septembrie 2026, punctul 1 bifat în aceeași zi (sesiunea
+EVENIMENTUL DESCHIDE CUFĂRUL).*
 
-### Datorie tehnică de rezolvat înainte de disciplina a treia
+1. **Lacătul de pe hartă, jucat pe mână.** Legarea e făcută și verificată
+   headless; ce NU se poate afla din verificare e cât durează, cu ceasul pornit,
+   un lacăt de nivel 3 — și dacă nodul se simte ca o respirație între lupte sau
+   ca o temă pentru acasă. Lista de testat e în sesiunea de azi. Dacă nivelul 3 e
+   prea lung, butonul nu e `LACAT` (recompensa), ci tabelul de dificultate din
+   `generator_cifru.gd`.
+2. **Verificarea notelor din pilot** (`docs/ghid-note.md`, secțiunea 5). Fără cod,
+   cam o jumătate de oră.
+3. **`id` și `fapt` pentru Cultura generală**: `id` stabil pentru cele 135 de
+   întrebări, dat o singură dată printr-un script; `data/fapte_trivia.json` cu
+   notele din pilot; validările din încărcător; sacul pe `id` în loc de text.
+   **Înainte de Save.**
+4. **Un tabel de probă din Wikidata**: un script mic, un domeniu (candidat:
+   elementele chimice), 100–200 de întrebări. Scopul e să văd cum arată cele
+   generate lângă cele scrise de mână, nu volumul. Rezolvă și problema de
+   testare: aduce întrebări pe care nu le știu pe de rost.
+5. **Apoi înapoi pe rută: Cetatea (7), Save (8).** La Save, sacul Culturii
+   generale trece în stratul permanent, cu cheile pentru Practice gândite de la
+   început. **Și o regulă de care depinde Lacătul:** prima scriere pe disc a unei
+   expediții se face la `intra_in_nod()`, nu la `_dupa_un_nod()` — altfel, ieșit
+   din joc pe ecranul de eșec al unui cufăr, ai relua exact același lacăt cu codul
+   deja arătat pe roți. Nota întreagă e în sesiunea EVENIMENTUL DESCHIDE CUFĂRUL.
 
-**`trivia.gd` și `logica.gd` au ~180 de linii identice** — cronometrul,
-butoanele, feedback-ul, contractul, marcajul de streak cu tot cu puls și, de
-azi, marcajul de critic (`arata_combo`, `_scrie_context`, `_pulseaza_context`,
-`_arata_marcaj`, `_ascunde_marcaj` — vreo 100 de linii copiate cuvânt cu cuvânt
-în ambele fișiere). Merge acum, dar la a patra disciplină o schimbare de regulă
-de timp — sau de curbă de flash — trebuie făcută în patru locuri.
+### Datorie tehnică deschisă
 
-Sesiunea de la 10 septembrie e dovada: semnalul de critic a fost o schimbare
-de UN concept, aplicată prin script în două fișiere deodată ca să nu diveargă.
-A doua oară n-o să mai am noroc. Sesiunea verdictului (11 septembrie) a mai
-tăiat ~25 de linii duplicate din fiecare fișier, dar și ea a trebuit aplicată
-în două locuri deodată — inclusiv semnalul nou `verdict`, care e acum al
-cincilea punct de contract de ținut sincron manual.
-
-Sesiunea sunetului (13 septembrie) a adăugat un al șaselea punct de contract
-duplicat: cele două chemări `Sunet.reda()` sunt copiate identic în ambele
-fișiere. Sunt scurte, dar poziția lor în cod E regula de sincronizare — dacă
-diverg, o disciplină o să sune la alt moment decât cealaltă, și n-o să se vadă
-în niciun test.
-
-Mutarea evidentă: un `puzzle.gd` cu `class_name Puzzle`, exact ca `Silueta` la
-siluete. Baza ține cronometrul, contractul ȘI antetul (categorie + marcaj de
-streak + puls); fiecare disciplină furnizează doar „dă-mi o întrebare" (text +
-4 variante + indicele corect). Atunci Anagrama și Sudoku sunt câte ~40 de linii,
-nu 250.
-
-**`DATE_ARHETIP` amestecă două lucruri.** E indexat după arhetip, dar ține și
-nume, descriere și facțiune — care sunt proprietăți ale *inamicului*, nu ale
-*regulii lui de comportament*. Merge cât ai un inamic per arhetip. La pasul 11
-(generatorul), va trebui un al doilea tabel de identități. Comentariul din cod
-explică de ce câmpurile sunt deja separate: atunci va fi o mutare de chei, nu o
-rescriere.
+Cea de aici („`trivia.gd` și `logica.gd` au ~180 de linii identice” și
+„`DATE_ARHETIP` amestecă două lucruri”) e **rezolvată**: duplicarea a dispărut în
+sesiunea bazei comune (15 septembrie, `puzzle.gd`), iar identitatea inamicului
+s-a despărțit de arhetip în sesiunea celor trei inamici (16 septembrie,
+`INAMICI` + `NUME_ARHETIP`). Datoria tehnică încă deschisă e notată în sesiunile
+mai noi, la locul ei.
 
 ### De curățat când te decizi
 
