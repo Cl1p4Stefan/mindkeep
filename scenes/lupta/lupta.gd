@@ -47,13 +47,10 @@ const LINII_JURNAL := 80        # câte linii de istoric ținem în panoul de ju
 const MARIME_PUNCT_PA := Vector2(14, 14)
 const CULOARE_PA_PLIN := Color(0.95, 0.84, 0.5)
 const CULOARE_PA_GOL := Color(0.2, 0.2, 0.24)
-# Culorile intenției: normală, și cea de alarmă pentru lovitura devastatoare.
-const CULOARE_INTENTIE := Color(0.96, 0.6, 0.5)
-const CULOARE_INTENTIE_GREA := Color(1, 0.42, 0.3)
 # Culorile titlului din panoul de verdict. Aurul e deja limbajul lucrurilor
 # câștigate în joc (PA plin, ramele de panou); roșul stins al înfrângerii nu e
-# roșul de alarmă al intenției inamicului — acela te avertizează că URMEAZĂ
-# ceva, ăsta constată ceva ce s-a întâmplat deja. De-aia e desaturat și mai
+# roșul de alarmă cu care se scrie PV-ul inamicului — acela e o stare de acum,
+# ăsta constată ceva ce s-a întâmplat deja. De-aia e desaturat și mai
 # închis: un roșu aprins pe un titlu mare țipă, iar tonul jocului nu pedepsește.
 const CULOARE_VICTORIE := Color(1, 0.85, 0.45)
 const CULOARE_INFRANGERE := Color(0.72, 0.38, 0.38)
@@ -262,7 +259,7 @@ const MULTIPLICATOR_VULNERABILITATE := 2
 const CULOARE_ALEGERE_DETALIU := Color(0.62, 0.62, 0.72)
 
 ## Culoarea slăbiciunii: chihlimbar, nu roșu. Roșul e deja al inamicului în
-## interfața asta (bara lui de PV, intenția lui de atac) — o etichetă roșie ar
+## interfața asta (bara lui de PV, cifra lui de PV) — o etichetă roșie ar
 ## fi citită ca „pericol", când ea spune exact pe dos: „aici e deschis".
 const CULOARE_VULNERABIL := Color(1.00, 0.72, 0.35)
 
@@ -446,8 +443,42 @@ var panoul_e_pe_ecran := false
 @onready var semn_info: SemnInspectare = %InamicSemnInfo
 @onready var bara_pv_inamic: ProgressBar = %InamicBaraPV
 @onready var eticheta_vulnerabil: Label = %InamicVulnerabil
-@onready var eticheta_intentie: Label = %InamicIntentie
-@onready var iconita_sabie: Control = %IconitaSabie
+# Plăcuța inamicului, construită după aceleași reguli ca a regelui: numele mic
+# și stins deasupra, cifra de PV dedesubt — aici roșie, ca bara de lângă.
+# Simetria nu e cochetărie: două plăcuțe la fel se citesc dintr-o privire,
+# fiindcă ochiul caută cifra în același loc pe ambele coloane.
+@onready var eticheta_pv_inamic: Label = %InamicPV
+# Plăcuța regelui, pe două rânduri: numele mic și stins deasupra, cifra de PV
+# dedesubt. Înainte era un singur rând alb, „REGELE (tu) — 15/15 PV", lipit de
+# marginea de sus a coloanei, cu 56 de pixeli goi între el și figură: plutea.
+# Ce citești des (cifra) e acum mare și verde ca bara de lângă; ce citești o
+# dată (numele) e mic și stins.
+#
+# CUM STAU CELE DOUĂ PLĂCUȚE PE ACELAȘI CAIET DE DICTANDO
+# Amândouă blocurile au 84 px înălțime fixă, separare ZERO, și aceeași schemă:
+#   `Spatiu` (se întinde) → nume (30 px fix) → cifra de PV (24 px fix)
+# Golul elastic e SUS. Tot ce e informație se adună jos, lipit, chiar deasupra
+# figurii: numele și cifra sunt o singură plăcuță, nu două etichete puse în
+# aceeași coloană. Diferențele dintre coloane le înghite golul de sus.
+#
+# La inamic mai intră eticheta de vulnerabilitate, dar DEASUPRA numelui, nu
+# între nume și cifră. Locul ăsta e singurul care funcționează: e ultimul rând
+# care poate să apară și să dispară (inamicii fără slăbiciune n-o au) fără să
+# miște nimic din ce e sub el.
+#
+# Au fost două încercări greșite înainte, amândouă merită ținute minte:
+#   1. Ambele blocuri aliniate la bază (`alignment = 2`), cu vulnerabilitatea
+#      între nume și cifră. Numele inamicului urca cu un rând față de al
+#      regelui, fiindcă avea un rând în plus sub el.
+#   2. Golul elastic ÎNTRE nume și cifră. Alinia corect, dar rupea plăcuța în
+#      două: numele plutea sus, cifra jos, și nu se mai citeau ca un întreg.
+#
+# Al doilea vinovat de la încercarea 1 era mai ascuns: numele inamicului e un
+# Button, cel al regelui un Label, iar un Button își adaugă din temă vreo 8 px
+# de margini — deci nici înălțimile cutiilor nu erau egale. De aia amândouă au
+# acum `custom_minimum_size` de 30 px: e peste minimul natural al butonului,
+# deci ambele cutii ajung exact 30 și textul se centrează la fel în ele.
+@onready var eticheta_nume_jucator: Label = %JucatorNume
 @onready var eticheta_pv_jucator: Label = %JucatorPV
 @onready var bara_pv_jucator: ProgressBar = %JucatorBaraPV
 @onready var rand_pa: HBoxContainer = %PAPuncte
@@ -459,10 +490,15 @@ var panoul_e_pe_ecran := false
 @onready var eticheta_jurnal: Label = %JurnalText
 @onready var derulare_jurnal: ScrollContainer = %Derulare
 @onready var buton_inchide_jurnal: Button = %ButonInchide
-# Cardul de inamic: titlu, descriere și rândurile generate din date.
+# Cardul de inamic: titlu și rândurile generate din date.
+#
+# `descriere` NU mai ajunge aici. Era un paragraf de atmosferă care ținea
+# singur jumătate din fereastră și o umfla cât ecranul — iar în mijlocul unei
+# lupte nu deschizi cardul ca să citești cine e adversarul, ci ca să afli
+# câte daune dă și pe ce e vulnerabil. Câmpul rămâne în `INAMICI`: e
+# identitate, și își găsește locul unde chiar se citește (hartă, sumar).
 @onready var card_inamic: Control = %CardInamic
 @onready var card_titlu: Label = %CardTitlu
-@onready var card_descriere: Label = %CardDescriere
 @onready var card_randuri: VBoxContainer = %CardRanduri
 @onready var buton_inchide_card: Button = %CardInchide
 # Voalul e dreptunghiul intunecat din spatele panoului. E si suprafata
@@ -1769,9 +1805,9 @@ func arhetip() -> Arhetip:
 
 ## Are inamicul ăsta un ceas de încărcat?
 ##
-## Întrebarea asta, și nu „e Grabnic?". Diferența pare de formă, dar nu e: bara
-## de ceas și indicatorul de intenție au nevoie să știe dacă există o încărcare,
-## nu CINE o face. Când va apărea al doilea arhetip cu ceas (un bos care își
+## Întrebarea asta, și nu „e Grabnic?". Diferența pare de formă, dar nu e: cine
+## se uită la ceas — azi doar rândul „Comportament" din card — are nevoie să
+## știe dacă există o încărcare, nu CINE o face. Când va apărea al doilea arhetip cu ceas (un bos care își
 ## adună o descărcare, să zicem), interfața merge neatinsă — cu `== Arhetip.GRABNIC`
 ## scris prin patru locuri, ar fi trebuit corectată în toate patru.
 func are_ceas() -> bool:
@@ -1816,27 +1852,26 @@ func aplica_infatisarea() -> void:
 		figura.modulate = colorare
 
 
-## Lovește inamicul în tura care urmează?
-func inamicul_loveste_acum() -> bool:
-	if are_ceas():
-		return ceas_inamic + 1 >= ceas_max()
-	return true
-
-
-## E o lovitură din aia care doare? (deocamdată: doar descărcarea Grabnicului)
-func lovitura_grea() -> bool:
-	return are_ceas() and inamicul_loveste_acum()
-
-
-## Numărul de lângă sabie. Simbolul nu mai e text — e desenat, vezi
-## `iconita_sabie.gd`. Cât timp Grabnicul se încarcă, arătăm doar contorul.
-func text_intentie() -> String:
-	if are_ceas() and not inamicul_loveste_acum():
-		return "%d/%d" % [ceas_inamic, ceas_max()]
-	# Un singur „daune" pentru amândouă arhetipurile: la ATAC_CONSTANT e
-	# lovitura de fiecare tură, la GRABNIC descărcarea. Ce se schimbă e CÂND
-	# lovește, nu de unde citim cifra.
-	return str(daune_inamic())
+# ─────────────────────────────────────────────────────────────
+# INTENȚIA TELEGRAFIATĂ A IEȘIT CU TOTUL
+#
+# Aici stăteau `inamicul_loveste_acum()`, `lovitura_grea()` și
+# `text_intentie()` — trei funcții care răspundeau la o singură întrebare:
+# „ce urmează să facă inamicul runda asta?". Răspunsul se vedea mai întâi în
+# arenă (o sabie desenată și un număr), apoi, după ce sabia a ieșit, pe un rând
+# din card. Acum nu se mai vede nicăieri, deci nu mai are cine să le cheme.
+#
+# Le-am șters, nu comentat: GDScript nu se plânge de o funcție nefolosită, iar
+# o funcție care arată ca o unealtă bună și pe care n-o cheamă nimeni e mai rea
+# decât una lipsă — o citești peste trei luni și crezi că afișarea ei există.
+# Sunt în istoric, la un `git show` distanță, dacă intenția își găsește o casă
+# mai bună (un contor discret pe bara de PV, un semn pe figură).
+#
+# CE RĂMÂNE DIN EA: rândul „Comportament" din card, mai jos. Acela spune regula
+# („Ceasul se umple in 3 runde; la 3/3 loveste 6"), nu starea de acum. E mai
+# puțin ajutor în mijlocul rundei, dar nu cere să fie actualizat la fiecare
+# tură — și, spre deosebire de intenție, nu dispăruse niciodată de pe ecran.
+# ─────────────────────────────────────────────────────────────
 
 
 ## Ce face inamicul, într-o frază. Folosită doar în card.
@@ -1896,7 +1931,6 @@ func date_card_inamic() -> Array:
 		{"eticheta": "Arhetip", "valoare": NUME_ARHETIP[date["arhetip"]]},
 		{"eticheta": "Comportament", "valoare": text_comportament(inamic_curent)},
 		{"eticheta": "Puncte de viata", "valoare": "%d / %d" % [pv_inamic, pv_max_inamic]},
-		#{"eticheta": "Intentia acestei runde", "valoare": text_intentie()},
 		{"eticheta": "Modificatori", "valoare": _lista_sau_liniuta(MODIFICATORI_INAMIC)},
 		{"eticheta": "Vulnerabilitati", "valoare": text_vulnerabilitate(inamic_curent)},
 		{"eticheta": "Rezistente", "valoare": _lista_sau_liniuta(REZISTENTE_INAMIC)},
@@ -1942,11 +1976,10 @@ func _pe_voal_card_apasat(eveniment: InputEvent) -> void:
 		card_inamic.visible = false
 
 
-## Reconstruiește cardul de fiecare dată când se deschide, ca PV-ul și
-## intenția să fie cele de acum, nu cele de la începutul luptei.
+## Reconstruiește cardul de fiecare dată când se deschide, ca PV-ul să fie
+## cel de acum, nu cel de la începutul luptei.
 func construieste_card() -> void:
 	card_titlu.text = nume_inamic()
-	card_descriere.text = inamic()["descriere"]
 
 	# Ștergem rândurile vechi înainte să le desenăm pe cele noi.
 	# `queue_free()` le scoate la finalul cadrului, dar containerul le-ar mai
@@ -1966,13 +1999,19 @@ func _construieste_rand(eticheta: String, valoare: String) -> HBoxContainer:
 	var stanga := Label.new()
 	stanga.text = eticheta
 	stanga.modulate = Color(0.58, 0.58, 0.66)
+	stanga.add_theme_font_size_override("font_size", 13)
 	stanga.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 
 	var dreapta := Label.new()
 	dreapta.text = valoare
 	dreapta.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	dreapta.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	dreapta.add_theme_font_size_override("font_size", 13)
 	dreapta.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	# Valoarea primește ceva mai mult decât eticheta: „Comportament" încape pe
+	# un rând, fraza din dreptul lui nu. Fără asta, un card de 340 ar fi rupt
+	# fiecare valoare lungă în patru rânduri și ar fi crescut la loc în sus.
+	dreapta.size_flags_stretch_ratio = 1.6
 
 	rand.add_child(stanga)
 	rand.add_child(dreapta)
@@ -2002,10 +2041,11 @@ func _construieste_rand(eticheta: String, valoare: String) -> HBoxContainer:
 ## Sunt coloanele laterale strânse ca să facă loc întrebării?
 ##
 ## Panoul de puzzle se deschide ÎNTRE cele două figuri, iar `HBoxContainer`
-## ia lățimea de la ele. Ce încape lejer în arena liberă — „BOSS LANCIERUL —
-## 41/78 PV [i]" — nu mai încape acolo: textul se lățea peste panou și acoperea
-## un colț din întrebare. Atunci antetul se rezumă la singurul lucru pentru
-## care te uiți într-acolo în mijlocul unui lanț: cifra de PV.
+## ia lățimea de la ele. Ce încape lejer în arena liberă — „BOSS LANCIERUL" —
+## nu mai încape acolo: textul se lățea peste panou și acoperea un colț din
+## întrebare. Atunci plăcuța se rezumă la singurul lucru pentru care te uiți
+## într-acolo în mijlocul unui lanț: cifra de PV. Numele se ascunde, cifra
+## rămâne — pe ambele coloane, după aceeași regulă.
 ##
 ## Întrebăm `panoul_e_pe_ecran`, NU `puzzle_activ`. Cele două nu se sting în
 ## același moment: `puzzle_activ` devine `false` când se DĂ comanda de
@@ -2021,27 +2061,27 @@ func antetele_sunt_stramte() -> bool:
 func actualizeaza_ui() -> void:
 	eticheta_runda.text = "RUNDA %d" % runda
 
-	# Numele e tot un BUTON — click pe el deschide cardul —, dar nu mai poartă
-	# și indiciul. „[i]" s-a mutat pe figură (`semn_inspectare.gd`), fiindcă
-	# antetul avea de dus prea multe: nume, PV și un buton, pe un rând care se
-	# îngustează odată cu coloana. Sus au rămas PV-ul și sabia.
+	# Numele e tot un BUTON — click pe el deschide cardul —, dar acum duce DOAR
+	# numele. Nu mai poartă nici indiciul („[i]" s-a mutat pe figură, vezi
+	# `semn_inspectare.gd`), nici cifra de PV, care și-a luat rândul ei
+	# dedesubt. Un rând care se îngusta odată cu coloana avea de dus trei
+	# lucruri; acum duce unul.
 	# „ELITA" / „BOSS" în fața numelui: același adversar, altă greutate. Trebuie
 	# să se vadă în luptă, nu doar pe hartă — altfel cifrele mai mari par un bug.
 	# Prefixul vine din tabel, deci un tip de nod nou se anunță singur.
-	# Cât timp panoul de întrebări e pe ecran, antetul se rezumă la cifră —
-	# vezi `antetele_sunt_stramte()` pentru de ce.
-	if antetele_sunt_stramte():
-		buton_inamic.text = "%d/%d PV" % [pv_inamic, pv_max_inamic]
-	else:
-		var prefix := ""
-		if float(fisa_nod["putere"]) > 1.0:
-			prefix = String(fisa_nod["nume"]).to_upper() + " "
-		buton_inamic.text = "%s%s — %d/%d PV" % [
-			prefix, nume_inamic(), pv_inamic, pv_max_inamic
-		]
+	# Numele sunt scrise cu majuscule CHIAR ÎN TABEL, deci nu le mai urcăm aici:
+	# un `to_upper()` peste ceva deja majuscul ascunde de unde vine forma.
+	var prefix := ""
+	if float(fisa_nod["putere"]) > 1.0:
+		prefix = String(fisa_nod["nume"]).to_upper() + " "
+	buton_inamic.text = "%s%s" % [prefix, nume_inamic()]
+	# Cifra rămâne mereu; numele se dă la o parte când coloana se strânge —
+	# vezi `antetele_sunt_stramte()`. Exact ca la rege, mai jos.
+	buton_inamic.visible = not antetele_sunt_stramte()
+	eticheta_pv_inamic.text = "%d/%d PV" % [pv_inamic, pv_max_inamic]
 	anima_bara(bara_pv_inamic, pv_inamic)
 
-	# SLĂBICIUNEA, scrisă sub nume și lăsată acolo toată lupta.
+	# SLĂBICIUNEA, scrisă deasupra numelui și lăsată acolo toată lupta.
 	#
 	# Nu e un secret de descoperit prin încercări: cerința de design e „afișată
 	# vizibil ÎNAINTE de luptă". O vezi în panoul de alegere, o recitești în
@@ -2058,23 +2098,11 @@ func actualizeaza_ui() -> void:
 			Discipline.nume(slabiciune), MULTIPLICATOR_VULNERABILITATE
 		]
 
-	# Intenția, anunțată dinainte (ca în Slay the Spire): decizi cu informație
-	# completă, nu la noroc. Rămâne pe ecran permanent, dar minusculă:
-	# o sabie desenată și un număr.
-	eticheta_intentie.text = text_intentie()
-	# Sabia apare doar când tura asta chiar lovește. Cât timp Grabnicul își
-	# încarcă ceasul, rămâne doar contorul — n-ai ce încasa runda asta.
-	iconita_sabie.visible = inamicul_loveste_acum()
-	var culoare_intentie := CULOARE_INTENTIE_GREA if lovitura_grea() else CULOARE_INTENTIE
-	iconita_sabie.culoare = culoare_intentie
-	eticheta_intentie.modulate = culoare_intentie
-
 	# Aceeași regulă, simetric: coloana ta se îngustează odată cu cea a
-	# inamicului, deci „REGELE (tu)" iese și el din antet cât ține întrebarea.
-	if antetele_sunt_stramte():
-		eticheta_pv_jucator.text = "%d/%d PV" % [pv_jucator, pv_max_jucator]
-	else:
-		eticheta_pv_jucator.text = "REGELE (tu) — %d/%d PV" % [pv_jucator, pv_max_jucator]
+	# inamicului, deci „REGELE (TU)" se dă și el la o parte cât ține întrebarea.
+	# Cifra rămâne mereu — numele tău e informația pe care o știi deja.
+	eticheta_pv_jucator.text = "%d/%d PV" % [pv_jucator, pv_max_jucator]
+	eticheta_nume_jucator.visible = not antetele_sunt_stramte()
 	anima_bara(bara_pv_jucator, pv_jucator)
 
 	# Butoanele se sting singure când n-ai PA — feedback vizual gratuit,

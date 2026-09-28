@@ -129,9 +129,10 @@ const SCENA_LUPTA := preload("res://scenes/lupta/lupta.tscn")
 const DE_MASURAT := {
 	"bara PV jucator": "Margini/Coloana/Arena/JucatorBaraPV",
 	"bara PV inamic":  "Margini/Coloana/Arena/InamicBaraPV",
-	"nume jucator":    "Margini/Coloana/Arena/ZonaJucator/ColoanaJucator/InfoJucator/JucatorPV",
+	"nume jucator":    "Margini/Coloana/Arena/ZonaJucator/ColoanaJucator/InfoJucator/JucatorNume",
+	"PV jucator":      "Margini/Coloana/Arena/ZonaJucator/ColoanaJucator/InfoJucator/JucatorPV",
 	"nume inamic":     "Margini/Coloana/Arena/ZonaInamic/ColoanaInamic/InfoInamic/InamicNume",
-	"intentie inamic": "Margini/Coloana/Arena/ZonaInamic/ColoanaInamic/InfoInamic/RandIntentie",
+	"PV inamic":       "Margini/Coloana/Arena/ZonaInamic/ColoanaInamic/InfoInamic/InamicPV",
 	"info jucator":    "Margini/Coloana/Arena/ZonaJucator/ColoanaJucator/InfoJucator",
 	"info inamic":     "Margini/Coloana/Arena/ZonaInamic/ColoanaInamic/InfoInamic",
 	"puncte PA":       "Margini/Coloana/PAPuncte",

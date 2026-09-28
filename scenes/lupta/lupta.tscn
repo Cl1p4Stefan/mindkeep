@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://sfryvevow115"]
 
 [ext_resource type="Script" uid="uid://c4s64fjctihh7" path="res://scenes/lupta/lupta.gd" id="1_lupta"]
-[ext_resource type="Script" uid="uid://kct2n64sddtu" path="res://scenes/lupta/iconita_sabie.gd" id="2_sabie"]
 [ext_resource type="Script" uid="uid://5cjg4b6vl1bm" path="res://scenes/lupta/silueta_rege.gd" id="3_rege"]
 [ext_resource type="Script" uid="uid://b6764844xjw87" path="res://scenes/lupta/silueta_cavaler.gd" id="4_cavaler"]
 [ext_resource type="Script" uid="uid://dqftvq1clv26c" path="res://scenes/lupta/impact.gd" id="5_impact"]
@@ -39,10 +38,10 @@ corner_radius_bottom_right = 12
 corner_radius_bottom_left = 12
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rama"]
-content_margin_left = 14.0
-content_margin_top = 12.0
-content_margin_right = 14.0
-content_margin_bottom = 12.0
+content_margin_left = 9.0
+content_margin_top = 8.0
+content_margin_right = 9.0
+content_margin_bottom = 8.0
 bg_color = Color(0.17, 0.17, 0.22, 1)
 corner_radius_top_left = 10
 corner_radius_top_right = 10
@@ -152,14 +151,32 @@ theme_override_constants/separation = 8
 [node name="InfoJucator" type="VBoxContainer" parent="Margini/Coloana/Arena/ZonaJucator/ColoanaJucator" unique_id=1826623890]
 custom_minimum_size = Vector2(0, 84)
 layout_mode = 2
-theme_override_constants/separation = 4
+theme_override_constants/separation = 0
+
+[node name="Spatiu" type="Control" parent="Margini/Coloana/Arena/ZonaJucator/ColoanaJucator/InfoJucator"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="JucatorNume" type="Label" parent="Margini/Coloana/Arena/ZonaJucator/ColoanaJucator/InfoJucator" unique_id=855871666]
+unique_name_in_owner = true
+modulate = Color(0.66, 0.66, 0.76, 1)
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "REGELE (TU)"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+text_overrun_behavior = 3
 
 [node name="JucatorPV" type="Label" parent="Margini/Coloana/Arena/ZonaJucator/ColoanaJucator/InfoJucator" unique_id=855871665]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 28)
+modulate = Color(0.55, 0.88, 0.62, 1)
+custom_minimum_size = Vector2(0, 24)
 layout_mode = 2
-theme_override_font_sizes/font_size = 14
-text = "REGELE (tu)"
+theme_override_font_sizes/font_size = 19
+text = "15/15 PV"
 horizontal_alignment = 1
 vertical_alignment = 1
 clip_text = true
@@ -252,46 +269,45 @@ theme_override_constants/separation = 8
 [node name="InfoInamic" type="VBoxContainer" parent="Margini/Coloana/Arena/ZonaInamic/ColoanaInamic" unique_id=751462097]
 custom_minimum_size = Vector2(0, 84)
 layout_mode = 2
-theme_override_constants/separation = 4
+theme_override_constants/separation = 0
+
+[node name="Spatiu" type="Control" parent="Margini/Coloana/Arena/ZonaInamic/ColoanaInamic/InfoInamic"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="InamicVulnerabil" type="Label" parent="Margini/Coloana/Arena/ZonaInamic/ColoanaInamic/InfoInamic" unique_id=1900000001]
+unique_name_in_owner = true
+modulate = Color(1, 0.72, 0.35, 1)
+custom_minimum_size = Vector2(0, 18)
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+text_overrun_behavior = 3
 
 [node name="InamicNume" type="Button" parent="Margini/Coloana/Arena/ZonaInamic/ColoanaInamic/InfoInamic" unique_id=711671863]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 28)
+modulate = Color(0.76, 0.68, 0.7, 1)
+custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
-theme_override_font_sizes/font_size = 14
+theme_override_font_sizes/font_size = 12
 text = "INAMIC"
 flat = true
 text_overrun_behavior = 3
 clip_text = true
 
-[node name="InamicVulnerabil" type="Label" parent="Margini/Coloana/Arena/ZonaInamic/ColoanaInamic/InfoInamic" unique_id=1900000001]
+[node name="InamicPV" type="Label" parent="Margini/Coloana/Arena/ZonaInamic/ColoanaInamic/InfoInamic" unique_id=1765292483]
 unique_name_in_owner = true
-modulate = Color(1, 0.72, 0.35, 1)
-layout_mode = 2
-theme_override_font_sizes/font_size = 12
-horizontal_alignment = 1
-clip_text = true
-text_overrun_behavior = 3
-
-[node name="RandIntentie" type="HBoxContainer" parent="Margini/Coloana/Arena/ZonaInamic/ColoanaInamic/InfoInamic" unique_id=1765292483]
-layout_mode = 2
-theme_override_constants/separation = 6
-alignment = 1
-
-[node name="IconitaSabie" type="Control" parent="Margini/Coloana/Arena/ZonaInamic/ColoanaInamic/InfoInamic/RandIntentie" unique_id=211350726]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(15, 24)
-layout_mode = 2
-size_flags_vertical = 4
-script = ExtResource("2_sabie")
-
-[node name="InamicIntentie" type="Label" parent="Margini/Coloana/Arena/ZonaInamic/ColoanaInamic/InfoInamic/RandIntentie" unique_id=1531240686]
-unique_name_in_owner = true
-modulate = Color(0.96, 0.6, 0.5, 1)
+modulate = Color(0.93, 0.45, 0.46, 1)
+custom_minimum_size = Vector2(0, 24)
 layout_mode = 2
 theme_override_font_sizes/font_size = 19
-text = "3"
+text = "30/30 PV"
+horizontal_alignment = 1
 vertical_alignment = 1
+clip_text = true
 
 [node name="ArenaInamic" type="Control" parent="Margini/Coloana/Arena/ZonaInamic/ColoanaInamic"]
 layout_mode = 2
@@ -495,20 +511,20 @@ grow_vertical = 2
 mouse_filter = 2
 
 [node name="Panou" type="PanelContainer" parent="CardInamic/Centru" unique_id=56916785]
-custom_minimum_size = Vector2(560, 0)
+custom_minimum_size = Vector2(340, 0)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_card")
 
 [node name="Margini" type="MarginContainer" parent="CardInamic/Centru/Panou" unique_id=1698472905]
 layout_mode = 2
-theme_override_constants/margin_left = 26
-theme_override_constants/margin_top = 18
-theme_override_constants/margin_right = 26
-theme_override_constants/margin_bottom = 18
+theme_override_constants/margin_left = 18
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 18
+theme_override_constants/margin_bottom = 16
 
 [node name="Coloana" type="VBoxContainer" parent="CardInamic/Centru/Panou/Margini" unique_id=883600182]
 layout_mode = 2
-theme_override_constants/separation = 12
+theme_override_constants/separation = 9
 
 [node name="CentruPortret" type="CenterContainer" parent="CardInamic/Centru/Panou/Margini/Coloana" unique_id=1253582833]
 layout_mode = 2
@@ -520,14 +536,14 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_rama")
 [node name="PortretInamic" type="Control" parent="CardInamic/Centru/Panou/Margini/Coloana/CentruPortret/RamaPortret" unique_id=193176674]
 unique_name_in_owner = true
 visible = false
-custom_minimum_size = Vector2(96, 167)
+custom_minimum_size = Vector2(70, 122)
 layout_mode = 2
 script = ExtResource("4_cavaler")
 decalaj = 0.5
 
 [node name="PortretImagine" type="TextureRect" parent="CardInamic/Centru/Panou/Margini/Coloana/CentruPortret/RamaPortret" unique_id=1836028046]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(96, 167)
+custom_minimum_size = Vector2(70, 122)
 layout_mode = 2
 texture = ExtResource("7_cavaler")
 expand_mode = 1
@@ -536,28 +552,20 @@ stretch_mode = 5
 [node name="CardTitlu" type="Label" parent="CardInamic/Centru/Panou/Margini/Coloana" unique_id=849627248]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_font_sizes/font_size = 24
+theme_override_font_sizes/font_size = 17
 text = "INAMIC"
 horizontal_alignment = 1
-
-[node name="CardDescriere" type="Label" parent="CardInamic/Centru/Panou/Margini/Coloana" unique_id=176069679]
-unique_name_in_owner = true
-modulate = Color(0.72, 0.72, 0.8, 1)
-layout_mode = 2
-theme_override_font_sizes/font_size = 15
-text = "..."
-horizontal_alignment = 1
-autowrap_mode = 3
 
 [node name="CardRanduri" type="VBoxContainer" parent="CardInamic/Centru/Panou/Margini/Coloana" unique_id=387698499]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_constants/separation = 8
+theme_override_constants/separation = 5
 
 [node name="CardInchide" type="Button" parent="CardInamic/Centru/Panou/Margini/Coloana" unique_id=1491220876]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 44)
+custom_minimum_size = Vector2(0, 34)
 layout_mode = 2
+theme_override_font_sizes/font_size = 13
 text = "Inapoi la lupta"
 
 [node name="PanouVerdict" type="Control" parent="." unique_id=1779088395]

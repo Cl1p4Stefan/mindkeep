@@ -1,6 +1,6 @@
 # MINDKEEP — Jurnal de progres
 
-*Ultima actualizare: 28 septembrie 2026*
+*Ultima actualizare: 29 septembrie 2026*
 *Atașează acest fișier la începutul fiecărei sesiuni noi, împreună cu `CLAUDE.md` și `docs/pitch-document.md`.*
 
 ---
@@ -37,6 +37,131 @@ buget, generare) rămâne acolo unde era.
 Am sărit peste ordinea recomandată la pasul 12 (artă): imaginile pentru rege,
 cavaler și pentru cele trei piese de șah de pe butoane au intrat mai devreme, dar
 restul rămâne placeholder. Bucla de luptă e în continuare cea validată, nu arta.
+
+---
+
+## DOUĂ PLĂCUȚE ȘI UN CARD (29 septembrie 2026) — arena își strânge textul
+
+O reclamație de o frază, după o luptă: rândul alb de deasupra regelui, „REGELE
+(tu) — 15/15 PV", stătea prea sus și nu arăta a joc; iar fereastra care se
+deschidea la click pe inamic era cât tot ecranul, cu lore în ea.
+
+### Plăcuța regelui: de ce plutea
+
+Nu poziția era problema, ci golul. Blocul de informație are 84 px înălțime
+fixă, iar înăuntru era un singur rând de 28: restul de 56 rămâneau goi între
+text și figură. Un rând singur într-o cutie mare nu se citește ca un antet, se
+citește ca ceva scăpat acolo.
+
+Acum sunt două rânduri, cu roluri separate după cât de des le citești:
+
+| Rând | Mărime | Culoare | De ce |
+|---|---|---|---|
+| `REGELE (TU)` | 12 px | gri stins | îl citești o dată pe luptă |
+| `15/15 PV` | 19 px | verde `0.55/0.88/0.62` | îl citești în fiecare tură |
+
+Verdele e al barei de lângă, dar mai deschis. Motivul: o bară e o suprafață, o
+cifră e o linie subțire — la aceeași valoare de culoare, cifra se citește mai
+greu.
+
+### Plăcuța inamicului: aceeași, în roșu
+
+Inamicul a primit exact aceeași construcție (nume mic stins + cifră mare roșie
+`0.93/0.45/0.46`), fiindcă simetria nu e cochetărie: două plăcuțe la fel se
+citesc dintr-o privire, ochiul găsind cifra în același loc pe ambele coloane.
+Numele a rămas buton — click pe el deschide cardul —, dar acum duce doar numele,
+cu prefixul „ELITA" / „BOSS" înainte. Cifra de PV i s-a luat de pe umeri.
+
+### Cum se aliniază două coloane care n-au același conținut
+
+Aici au fost **trei** încercări, și merită toate ținute minte, fiindcă fiecare
+pare corectă până o vezi pe ecran:
+
+1. **Ambele blocuri aliniate la bază** (`alignment = 2`), cu eticheta de
+   vulnerabilitate între numele inamicului și cifra lui. Numele inamicului urca
+   cu un rând față de al regelui — avea un rând în plus sub el.
+2. **Un gol elastic între nume și cifră.** Alinia corect, dar rupea plăcuța în
+   două: numele plutea sus, cifra jos, nu se mai citeau ca un întreg.
+3. **Golul elastic SUS, separare zero jos.** Asta a rămas.
+
+Schema finală, identică pe ambele coloane:
+
+```
+( gol elastic )      ← aici se duce toată diferența dintre coloane
+[VULNERABIL: …]      ← doar la inamic
+nume      30 px fix  ┐ o singură plăcuță,
+PV        24 px fix  ┘ lipite, separare 0
+```
+
+Două lucruri de reținut din asta:
+
+**Vulnerabilitatea a trecut DEASUPRA numelui.** E singurul loc care merge: e un
+rând care apare și dispare (inamicii fără slăbiciune n-au eticheta), iar de sus
+poate s-o facă fără să miște nimic de sub el. Între nume și cifră ar fi împins
+numele inamicului cu un rând — exact bug-ul de la încercarea 1.
+
+**Al doilea vinovat de la încercarea 1 era ascuns:** numele inamicului e un
+`Button`, cel al regelui un `Label`, iar un Button își adaugă din temă vreo
+8 px de margini. Nici înălțimile cutiilor nu erau egale, deși fontul era
+același. De aia amândouă au acum `custom_minimum_size` de 30 px: e peste
+minimul natural al butonului, deci ambele cutii ajung exact 30 și textul se
+centrează la fel în ele.
+
+Bonus care iese gratis: când panoul de întrebări se deschide și numele se ascund
+(vezi `antetele_sunt_stramte()`), golul de sus crește și **cifrele de PV nu se
+mișcă din loc**. La fel când un inamic n-are vulnerabilitate. Înainte, orice
+rând care apărea sau dispărea împingea restul.
+
+### Sabia a ieșit din arenă
+
+Odată cu asta au dispărut sabia desenată și numărul de intenție de sub numele
+inamicului. A fost o cerere explicită („să rămână doar PV-ul deasupra siluetei"),
+dar are un cost real, scris aici ca să nu fie uitat: **intenția telegrafiată era
+informație tactică**, nu decor. La Soldat (Atac constant) pierderea e mică —
+lovește cu aceeași cifră în fiecare tură. La Lăncier (Grabnic) e reală: „2/3" îți
+spunea că mai ai o rundă până la lovitura care ia jumătate din rege.
+
+A fost mutată întâi pe un rând de card, apoi scoasă și de acolo, tot la cerere.
+Odată cu rândul au fost șterse `text_intentie()`, `lovitura_grea()` și
+`inamicul_loveste_acum()` — nu mai avea cine să le cheme. Șterse, nu comentate:
+GDScript nu se plânge de o funcție nefolosită, iar o unealtă care arată bună și
+pe care n-o cheamă nimeni e mai rea decât una lipsă. Logica de luptă nu depindea
+de ele — `_tura_grabnic()` își numără singur ceasul.
+
+Ce rămâne din informația aia: rândul **Comportament** din card („Ceasul se umple
+in 3 runde; la 3/3 loveste 6, apoi o ia de la capat"). Spune regula, nu starea de
+acum. Dacă la prima luptă cu Lăncierul se simte lipsa, varianta care nu strică
+liniștea arenei e un contor discret pe bara lui de PV sau un semn pe figură —
+nu un rând nou sub nume. `iconita_sabie.gd` a rămas în repo pentru ziua aia.
+
+### Cardul de inamic a devenit un card
+
+Fereastra era cât ecranul dintr-un motiv măsurabil: `descriere` — două-trei
+fraze de atmosferă cu autowrap — ținea singură jumătate din ea. A ieșit cu
+totul. În mijlocul unei lupte nu deschizi cardul ca să afli cine e adversarul,
+ci ca să afli câte daune dă și pe ce e vulnerabil. Câmpul rămâne în `INAMICI`:
+e identitate, și își găsește locul unde chiar se citește.
+
+| | Înainte | Acum |
+|---|---|---|
+| Lățime panou | 560 | 340 |
+| Portret | 96 × 167 | 70 × 122 |
+| Titlu | 24 px | 17 px |
+| Rânduri | 16 px (implicitul Godot) | 13 px |
+| Descriere (lore) | un paragraf | scoasă |
+| Buton de închidere | 44 px | 34 px |
+
+Un detaliu care conta la 340 px: valoarea din dreapta primește
+`size_flags_stretch_ratio = 1.6`. Fără asta, „Ceasul se umple in 3 runde…" s-ar
+fi rupt în patru rânduri și cardul ar fi crescut la loc pe verticală — cu alte
+cifre, aceeași fereastră.
+
+### Ce s-a atins
+
+`scenes/lupta/lupta.tscn` (ambele blocuri de informație, cardul),
+`scenes/lupta/lupta.gd` (afișarea, cardul, funcțiile șterse),
+`tools/verifica_podeaua.gd` (căile măsurate — `RandIntentie` nu mai există, și
+au apărut rândurile „PV jucator" și „PV inamic").
 
 ---
 
