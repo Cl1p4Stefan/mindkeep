@@ -1,0 +1,422 @@
+[
+	{
+		"id": "wd:Q556",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q556"],
+		"verificat": false
+	},
+	{
+		"id": "wd:Q560",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q560"],
+		"verificat": false
+	},
+	{
+		"id": "wd:Q568",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q568"],
+		"verificat": false
+	},
+	{
+		"id": "wd:Q623",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q623"],
+		"verificat": false
+	},
+	{
+		"id": "wd:Q629",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q629"],
+		"verificat": false
+	},
+	{
+		"id": "wd:Q654",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q654"],
+		"verificat": false
+	},
+	{
+		"id": "wd:Q660",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q660"],
+		"verificat": false
+	},
+	{
+		"id": "wd:Q663",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q663"],
+		"verificat": false
+	},
+	{
+		"id": "wd:Q670",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q670"],
+		"verificat": false
+	},
+	{
+		"id": "wd:Q682",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q682"],
+		"verificat": false
+	},
+	{
+		"id": "wd:Q688",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q688"],
+		"verificat": false
+	},
+	{
+		"id": "wd:Q706",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q706"],
+		"verificat": false
+	},
+	{
+		"id": "wd:Q716",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q716"],
+		"verificat": false
+	},
+	{
+		"id": "wd:Q744",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q744"],
+		"verificat": false
+	},
+	{
+		"id": "wd:Q753",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q753"],
+		"verificat": false
+	},
+	{
+		"id": "wd:Q758",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q758"],
+		"verificat": false
+	},
+	{
+		"id": "wd:Q1103",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q1103"],
+		"verificat": false
+	},
+	{
+		"id": "wd:Q880",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q880"],
+		"verificat": false
+	},
+	{
+		"id": "wd:Q897",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q897"],
+		"verificat": false
+	},
+	{
+		"id": "wd:Q1098",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q1098"],
+		"verificat": false
+	},
+	{
+		"id": "wd:Q569",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q569"],
+		"verificat": false
+	},
+	{
+		"id": "wd:Q618",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q618"],
+		"verificat": false
+	},
+	{
+		"id": "wd:Q627",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q627"],
+		"verificat": false
+	},
+	{
+		"id": "wd:Q650",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q650"],
+		"verificat": false
+	},
+	{
+		"id": "wd:Q658",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q658"],
+		"verificat": false
+	},
+	{
+		"id": "wd:Q674",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q674"],
+		"verificat": false
+	},
+	{
+		"id": "wd:Q696",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q696"],
+		"verificat": false
+	},
+	{
+		"id": "wd:Q703",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q703"],
+		"verificat": false
+	},
+	{
+		"id": "wd:Q725",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q725"],
+		"verificat": false
+	},
+	{
+		"id": "wd:Q731",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q731"],
+		"verificat": false
+	},
+	{
+		"id": "wd:Q677",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q677"],
+		"verificat": false
+	},
+	{
+		"id": "wd:Q740",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q740"],
+		"verificat": false
+	},
+	{
+		"id": "wd:Q871",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q871"],
+		"verificat": false
+	},
+	{
+		"id": "wd:Q876",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q876"],
+		"verificat": false
+	},
+	{
+		"id": "wd:Q879",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q879"],
+		"verificat": false
+	},
+	{
+		"id": "wd:Q888",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q888"],
+		"verificat": false
+	},
+	{
+		"id": "wd:Q1090",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q1090"],
+		"verificat": false
+	},
+	{
+		"id": "wd:Q1091",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q1091"],
+		"verificat": false
+	},
+	{
+		"id": "wd:Q1096",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q1096"],
+		"verificat": false
+	},
+	{
+		"id": "wd:Q1106",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q1106"],
+		"verificat": false
+	},
+	{
+		"id": "wd:Q1112",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q1112"],
+		"verificat": false
+	},
+	{
+		"id": "wd:Q743",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q743"],
+		"verificat": false
+	},
+	{
+		"id": "wd:Q925",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q925"],
+		"verificat": false
+	},
+	{
+		"id": "wd:Q708",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q708"],
+		"verificat": false
+	},
+	{
+		"id": "wd:Q942",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q942"],
+		"verificat": false
+	},
+	{
+		"id": "wd:Q1128",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q1128"],
+		"verificat": false
+	},
+	{
+		"id": "wd:Q713",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q713"],
+		"verificat": false
+	},
+	{
+		"id": "wd:Q861",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q861"],
+		"verificat": false
+	},
+	{
+		"id": "wd:Q867",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q867"],
+		"verificat": false
+	},
+	{
+		"id": "wd:Q895",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q895"],
+		"verificat": false
+	},
+	{
+		"id": "wd:Q938",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q938"],
+		"verificat": false
+	},
+	{
+		"id": "wd:Q1046",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q1046"],
+		"verificat": false
+	},
+	{
+		"id": "wd:Q1053",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q1053"],
+		"verificat": false
+	},
+	{
+		"id": "wd:Q1086",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q1086"],
+		"verificat": false
+	},
+	{
+		"id": "wd:Q1087",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q1087"],
+		"verificat": false
+	},
+	{
+		"id": "wd:Q1089",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q1089"],
+		"verificat": false
+	},
+	{
+		"id": "wd:Q1094",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q1094"],
+		"verificat": false
+	},
+	{
+		"id": "wd:Q1099",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q1099"],
+		"verificat": false
+	},
+	{
+		"id": "wd:Q1100",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q1100"],
+		"verificat": false
+	},
+	{
+		"id": "wd:Q1108",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q1108"],
+		"verificat": false
+	},
+	{
+		"id": "wd:Q1388",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q1388"],
+		"verificat": false
+	},
+	{
+		"id": "wd:Q1123",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q1123"],
+		"verificat": false
+	},
+	{
+		"id": "wd:Q737",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q737"],
+		"verificat": false
+	},
+	{
+		"id": "wd:Q751",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q751"],
+		"verificat": false
+	},
+	{
+		"id": "wd:Q877",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q877"],
+		"verificat": false
+	},
+	{
+		"id": "wd:Q932",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q932"],
+		"verificat": false
+	},
+	{
+		"id": "wd:Q979",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q979"],
+		"verificat": false
+	},
+	{
+		"id": "wd:Q1133",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q1133"],
+		"verificat": false
+	},
+	{
+		"id": "wd:Q1115",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q1115"],
+		"verificat": false
+	},
+	{
+		"id": "wd:Q1102",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q1102"],
+		"verificat": false
+	}
+]

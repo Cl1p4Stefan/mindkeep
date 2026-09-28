@@ -1,0 +1,1255 @@
+[
+	{
+		"id": "wd:Q556:simbol:cere_simbol",
+		"fapt": "wd:Q556",
+		"text": "Care este simbolul chimic al hidrogenului?",
+		"variante": ["He", "Hg", "H", "Cl"],
+		"corect": 2,
+		"nivel": 1,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q556:simbol:cere_nume",
+		"fapt": "wd:Q556",
+		"text": "Ce element chimic are simbolul H?",
+		"variante": ["heliu", "hidrogen", "mercur", "aluminiu"],
+		"corect": 1,
+		"nivel": 1,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q560:simbol:cere_simbol",
+		"fapt": "wd:Q560",
+		"text": "Care este simbolul chimic al heliului?",
+		"variante": ["H", "He", "Hg", "Li"],
+		"corect": 1,
+		"nivel": 1,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q560:simbol:cere_nume",
+		"fapt": "wd:Q560",
+		"text": "Ce element chimic are simbolul He?",
+		"variante": ["hidrogen", "mercur", "heliu", "oxigen"],
+		"corect": 2,
+		"nivel": 1,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q568:simbol:cere_simbol",
+		"fapt": "wd:Q568",
+		"text": "Care este simbolul chimic al litiului?",
+		"variante": ["Li", "Au", "C", "Al"],
+		"corect": 0,
+		"nivel": 1,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q568:simbol:cere_nume",
+		"fapt": "wd:Q568",
+		"text": "Ce element chimic are simbolul Li?",
+		"variante": ["litiu", "titan", "heliu", "siliciu"],
+		"corect": 0,
+		"nivel": 1,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q623:simbol:cere_simbol",
+		"fapt": "wd:Q623",
+		"text": "Care este simbolul chimic al carbonului?",
+		"variante": ["C", "Cu", "Cl", "Ca"],
+		"corect": 0,
+		"nivel": 1,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q623:simbol:cere_nume",
+		"fapt": "wd:Q623",
+		"text": "Ce element chimic are simbolul C?",
+		"variante": ["calciu", "carbon", "cupru", "clor"],
+		"corect": 1,
+		"nivel": 1,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q629:simbol:cere_simbol",
+		"fapt": "wd:Q629",
+		"text": "Care este simbolul chimic al oxigenului?",
+		"variante": ["Ca", "O", "H", "Au"],
+		"corect": 1,
+		"nivel": 1,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q629:simbol:cere_nume",
+		"fapt": "wd:Q629",
+		"text": "Ce element chimic are simbolul O?",
+		"variante": ["hidrogen", "oxigen", "carbon", "neon"],
+		"corect": 1,
+		"nivel": 1,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q654:simbol:cere_simbol",
+		"fapt": "wd:Q654",
+		"text": "Care este simbolul chimic al neonului?",
+		"variante": ["Ni", "Ne", "N", "Na"],
+		"corect": 1,
+		"nivel": 1,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q654:simbol:cere_nume",
+		"fapt": "wd:Q654",
+		"text": "Ce element chimic are simbolul Ne?",
+		"variante": ["nichel", "neon", "azot", "sodiu"],
+		"corect": 1,
+		"nivel": 1,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q660:simbol:cere_simbol",
+		"fapt": "wd:Q660",
+		"text": "Care este simbolul chimic al magneziului?",
+		"variante": ["Mn", "Mg", "Li", "Pt"],
+		"corect": 1,
+		"nivel": 1,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q660:simbol:cere_nume",
+		"fapt": "wd:Q660",
+		"text": "Ce element chimic are simbolul Mg?",
+		"variante": ["mangan", "magneziu", "mercur", "iod"],
+		"corect": 1,
+		"nivel": 1,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q663:simbol:cere_simbol",
+		"fapt": "wd:Q663",
+		"text": "Care este simbolul chimic al aluminiului?",
+		"variante": ["Al", "Au", "Ar", "As"],
+		"corect": 0,
+		"nivel": 1,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q663:simbol:cere_nume",
+		"fapt": "wd:Q663",
+		"text": "Ce element chimic are simbolul Al?",
+		"variante": ["aur", "aluminiu", "argint", "arsen"],
+		"corect": 1,
+		"nivel": 1,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q670:simbol:cere_simbol",
+		"fapt": "wd:Q670",
+		"text": "Care este simbolul chimic al siliciului?",
+		"variante": ["S", "Sn", "Se", "Si"],
+		"corect": 3,
+		"nivel": 1,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q670:simbol:cere_nume",
+		"fapt": "wd:Q670",
+		"text": "Ce element chimic are simbolul Si?",
+		"variante": ["sulf", "seleniu", "siliciu", "staniu"],
+		"corect": 2,
+		"nivel": 1,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q682:simbol:cere_simbol",
+		"fapt": "wd:Q682",
+		"text": "Care este simbolul chimic al sulfului?",
+		"variante": ["Si", "Sn", "Se", "S"],
+		"corect": 3,
+		"nivel": 1,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q682:simbol:cere_nume",
+		"fapt": "wd:Q682",
+		"text": "Ce element chimic are simbolul S?",
+		"variante": ["sulf", "siliciu", "staniu", "seleniu"],
+		"corect": 0,
+		"nivel": 1,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q688:simbol:cere_simbol",
+		"fapt": "wd:Q688",
+		"text": "Care este simbolul chimic al clorului?",
+		"variante": ["Cu", "Ca", "Cl", "C"],
+		"corect": 2,
+		"nivel": 1,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q688:simbol:cere_nume",
+		"fapt": "wd:Q688",
+		"text": "Ce element chimic are simbolul Cl?",
+		"variante": ["cupru", "carbon", "calciu", "clor"],
+		"corect": 3,
+		"nivel": 1,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q706:simbol:cere_simbol",
+		"fapt": "wd:Q706",
+		"text": "Care este simbolul chimic al calciului?",
+		"variante": ["Cu", "Cl", "Ca", "C"],
+		"corect": 2,
+		"nivel": 1,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q706:simbol:cere_nume",
+		"fapt": "wd:Q706",
+		"text": "Ce element chimic are simbolul Ca?",
+		"variante": ["cupru", "carbon", "calciu", "clor"],
+		"corect": 2,
+		"nivel": 1,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q716:simbol:cere_simbol",
+		"fapt": "wd:Q716",
+		"text": "Care este simbolul chimic al titanului?",
+		"variante": ["Au", "Cu", "Ti", "Ni"],
+		"corect": 2,
+		"nivel": 1,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q716:simbol:cere_nume",
+		"fapt": "wd:Q716",
+		"text": "Ce element chimic are simbolul Ti?",
+		"variante": ["titan", "clor", "litiu", "aluminiu"],
+		"corect": 0,
+		"nivel": 1,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q744:simbol:cere_simbol",
+		"fapt": "wd:Q744",
+		"text": "Care este simbolul chimic al nichelului?",
+		"variante": ["Ne", "Ni", "N", "Na"],
+		"corect": 1,
+		"nivel": 1,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q744:simbol:cere_nume",
+		"fapt": "wd:Q744",
+		"text": "Ce element chimic are simbolul Ni?",
+		"variante": ["neon", "sodiu", "nichel", "azot"],
+		"corect": 2,
+		"nivel": 1,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q753:simbol:cere_simbol",
+		"fapt": "wd:Q753",
+		"text": "Care este simbolul chimic al cuprului?",
+		"variante": ["C", "Cu", "Cl", "Ca"],
+		"corect": 1,
+		"nivel": 1,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q753:simbol:cere_nume",
+		"fapt": "wd:Q753",
+		"text": "Ce element chimic are simbolul Cu?",
+		"variante": ["clor", "carbon", "calciu", "cupru"],
+		"corect": 3,
+		"nivel": 1,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q758:simbol:cere_simbol",
+		"fapt": "wd:Q758",
+		"text": "Care este simbolul chimic al zincului?",
+		"variante": ["Zn", "Li", "Mg", "Al"],
+		"corect": 0,
+		"nivel": 1,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q758:simbol:cere_nume",
+		"fapt": "wd:Q758",
+		"text": "Ce element chimic are simbolul Zn?",
+		"variante": ["aluminiu", "cupru", "zinc", "titan"],
+		"corect": 2,
+		"nivel": 1,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q1103:simbol:cere_simbol",
+		"fapt": "wd:Q1103",
+		"text": "Care este simbolul chimic al iodului?",
+		"variante": ["C", "Ni", "Ne", "I"],
+		"corect": 3,
+		"nivel": 1,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q1103:simbol:cere_nume",
+		"fapt": "wd:Q1103",
+		"text": "Ce element chimic are simbolul I?",
+		"variante": ["siliciu", "iod", "sulf", "titan"],
+		"corect": 1,
+		"nivel": 1,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q880:simbol:cere_simbol",
+		"fapt": "wd:Q880",
+		"text": "Care este simbolul chimic al platinei?",
+		"variante": ["P", "Pb", "Pt", "I"],
+		"corect": 2,
+		"nivel": 1,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q880:simbol:cere_nume",
+		"fapt": "wd:Q880",
+		"text": "Ce element chimic are simbolul Pt?",
+		"variante": ["plumb", "platină", "fosfor", "potasiu"],
+		"corect": 1,
+		"nivel": 1,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q897:simbol:cere_nume",
+		"fapt": "wd:Q897",
+		"text": "Ce element chimic are simbolul Au?",
+		"variante": ["aluminiu", "argint", "aur", "argon"],
+		"corect": 2,
+		"nivel": 1,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q1098:simbol:cere_simbol",
+		"fapt": "wd:Q1098",
+		"text": "Care este simbolul chimic al uraniului?",
+		"variante": ["Cl", "U", "Cu", "H"],
+		"corect": 1,
+		"nivel": 1,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q1098:simbol:cere_nume",
+		"fapt": "wd:Q1098",
+		"text": "Ce element chimic are simbolul U?",
+		"variante": ["siliciu", "neon", "uraniu", "litiu"],
+		"corect": 2,
+		"nivel": 1,
+		"categorie": "stiinta"
+	},
+
+	{
+		"id": "wd:Q569:simbol:cere_simbol",
+		"fapt": "wd:Q569",
+		"text": "Care este simbolul chimic al beriliului?",
+		"variante": ["Bi", "Be", "B", "Br"],
+		"corect": 1,
+		"nivel": 2,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q569:simbol:cere_nume",
+		"fapt": "wd:Q569",
+		"text": "Ce element chimic are simbolul Be?",
+		"variante": ["brom", "bor", "beriliu", "bismut"],
+		"corect": 2,
+		"nivel": 2,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q618:simbol:cere_simbol",
+		"fapt": "wd:Q618",
+		"text": "Care este simbolul chimic al borului?",
+		"variante": ["Ba", "Be", "B", "Br"],
+		"corect": 2,
+		"nivel": 2,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q618:simbol:cere_nume",
+		"fapt": "wd:Q618",
+		"text": "Ce element chimic are simbolul B?",
+		"variante": ["beriliu", "bismut", "bariu", "bor"],
+		"corect": 3,
+		"nivel": 2,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q627:simbol:cere_simbol",
+		"fapt": "wd:Q627",
+		"text": "Care este simbolul chimic al azotului?",
+		"variante": ["Na", "Nd", "N", "Ni"],
+		"corect": 2,
+		"nivel": 2,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q627:simbol:cere_nume",
+		"fapt": "wd:Q627",
+		"text": "Ce element chimic are simbolul N?",
+		"variante": ["neon", "neodim", "azot", "nichel"],
+		"corect": 2,
+		"nivel": 2,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q650:simbol:cere_simbol",
+		"fapt": "wd:Q650",
+		"text": "Care este simbolul chimic al fluorului?",
+		"variante": ["F", "Fe", "Sn", "Ba"],
+		"corect": 0,
+		"nivel": 2,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q650:simbol:cere_nume",
+		"fapt": "wd:Q650",
+		"text": "Ce element chimic are simbolul F?",
+		"variante": ["fier", "fluor", "fosfor", "kripton"],
+		"corect": 1,
+		"nivel": 2,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q658:simbol:cere_simbol",
+		"fapt": "wd:Q658",
+		"text": "Care este simbolul chimic al sodiului?",
+		"variante": ["N", "Ne", "Ni", "Na"],
+		"corect": 3,
+		"nivel": 2,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q658:simbol:cere_nume",
+		"fapt": "wd:Q658",
+		"text": "Ce element chimic are simbolul Na?",
+		"variante": ["sodiu", "niobiu", "neodim", "neon"],
+		"corect": 0,
+		"nivel": 2,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q674:simbol:cere_simbol",
+		"fapt": "wd:Q674",
+		"text": "Care este simbolul chimic al fosforului?",
+		"variante": ["Pb", "Pt", "Po", "P"],
+		"corect": 3,
+		"nivel": 2,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q674:simbol:cere_nume",
+		"fapt": "wd:Q674",
+		"text": "Ce element chimic are simbolul P?",
+		"variante": ["plumb", "fosfor", "poloniu", "platină"],
+		"corect": 1,
+		"nivel": 2,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q696:simbol:cere_simbol",
+		"fapt": "wd:Q696",
+		"text": "Care este simbolul chimic al argonului?",
+		"variante": ["Ar", "Ag", "As", "Au"],
+		"corect": 0,
+		"nivel": 2,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q696:simbol:cere_nume",
+		"fapt": "wd:Q696",
+		"text": "Ce element chimic are simbolul Ar?",
+		"variante": ["argint", "arsen", "aluminiu", "argon"],
+		"corect": 3,
+		"nivel": 2,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q703:simbol:cere_simbol",
+		"fapt": "wd:Q703",
+		"text": "Care este simbolul chimic al potasiului?",
+		"variante": ["Kr", "Pb", "P", "K"],
+		"corect": 3,
+		"nivel": 2,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q703:simbol:cere_nume",
+		"fapt": "wd:Q703",
+		"text": "Ce element chimic are simbolul K?",
+		"variante": ["kripton", "fier", "wolfram", "potasiu"],
+		"corect": 3,
+		"nivel": 2,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q725:simbol:cere_simbol",
+		"fapt": "wd:Q725",
+		"text": "Care este simbolul chimic al cromului?",
+		"variante": ["Co", "Cd", "Cr", "C"],
+		"corect": 2,
+		"nivel": 2,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q725:simbol:cere_nume",
+		"fapt": "wd:Q725",
+		"text": "Ce element chimic are simbolul Cr?",
+		"variante": ["cadmiu", "cobalt", "carbon", "crom"],
+		"corect": 3,
+		"nivel": 2,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q731:simbol:cere_simbol",
+		"fapt": "wd:Q731",
+		"text": "Care este simbolul chimic al manganului?",
+		"variante": ["Mn", "Mg", "Mo", "K"],
+		"corect": 0,
+		"nivel": 2,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q731:simbol:cere_nume",
+		"fapt": "wd:Q731",
+		"text": "Ce element chimic are simbolul Mn?",
+		"variante": ["magneziu", "molibden", "mercur", "mangan"],
+		"corect": 3,
+		"nivel": 2,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q677:simbol:cere_simbol",
+		"fapt": "wd:Q677",
+		"text": "Care este simbolul chimic al fierului?",
+		"variante": ["F", "Fe", "Sn", "Bi"],
+		"corect": 1,
+		"nivel": 2,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q677:simbol:cere_nume",
+		"fapt": "wd:Q677",
+		"text": "Ce element chimic are simbolul Fe?",
+		"variante": ["fluor", "fosfor", "fier", "bor"],
+		"corect": 2,
+		"nivel": 2,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q740:simbol:cere_simbol",
+		"fapt": "wd:Q740",
+		"text": "Care este simbolul chimic al cobaltului?",
+		"variante": ["Co", "Cd", "Cr", "Cs"],
+		"corect": 0,
+		"nivel": 2,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q740:simbol:cere_nume",
+		"fapt": "wd:Q740",
+		"text": "Ce element chimic are simbolul Co?",
+		"variante": ["cadmiu", "crom", "cupru", "cobalt"],
+		"corect": 3,
+		"nivel": 2,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q871:simbol:cere_simbol",
+		"fapt": "wd:Q871",
+		"text": "Care este simbolul chimic al arsenului?",
+		"variante": ["Ag", "As", "Ar", "Al"],
+		"corect": 1,
+		"nivel": 2,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q871:simbol:cere_nume",
+		"fapt": "wd:Q871",
+		"text": "Ce element chimic are simbolul As?",
+		"variante": ["argon", "arsen", "argint", "aur"],
+		"corect": 1,
+		"nivel": 2,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q876:simbol:cere_simbol",
+		"fapt": "wd:Q876",
+		"text": "Care este simbolul chimic al seleniului?",
+		"variante": ["Sn", "S", "Se", "Si"],
+		"corect": 2,
+		"nivel": 2,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q876:simbol:cere_nume",
+		"fapt": "wd:Q876",
+		"text": "Ce element chimic are simbolul Se?",
+		"variante": ["staniu", "siliciu", "stronțiu", "seleniu"],
+		"corect": 3,
+		"nivel": 2,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q879:simbol:cere_simbol",
+		"fapt": "wd:Q879",
+		"text": "Care este simbolul chimic al bromului?",
+		"variante": ["Ba", "Bi", "B", "Br"],
+		"corect": 3,
+		"nivel": 2,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q879:simbol:cere_nume",
+		"fapt": "wd:Q879",
+		"text": "Ce element chimic are simbolul Br?",
+		"variante": ["brom", "bismut", "bariu", "bor"],
+		"corect": 0,
+		"nivel": 2,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q888:simbol:cere_simbol",
+		"fapt": "wd:Q888",
+		"text": "Care este simbolul chimic al kriptonului?",
+		"variante": ["Kr", "K", "W", "Pb"],
+		"corect": 0,
+		"nivel": 2,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q888:simbol:cere_nume",
+		"fapt": "wd:Q888",
+		"text": "Ce element chimic are simbolul Kr?",
+		"variante": ["potasiu", "kripton", "azot", "staniu"],
+		"corect": 1,
+		"nivel": 2,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q1090:simbol:cere_simbol",
+		"fapt": "wd:Q1090",
+		"text": "Care este simbolul chimic al argintului?",
+		"variante": ["Ag", "As", "Ar", "Au"],
+		"corect": 0,
+		"nivel": 2,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q1090:simbol:cere_nume",
+		"fapt": "wd:Q1090",
+		"text": "Ce element chimic are simbolul Ag?",
+		"variante": ["argon", "arsen", "argint", "aluminiu"],
+		"corect": 2,
+		"nivel": 2,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q1091:simbol:cere_simbol",
+		"fapt": "wd:Q1091",
+		"text": "Care este simbolul chimic al cadmiului?",
+		"variante": ["Cd", "Co", "Cr", "C"],
+		"corect": 0,
+		"nivel": 2,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q1091:simbol:cere_nume",
+		"fapt": "wd:Q1091",
+		"text": "Ce element chimic are simbolul Cd?",
+		"variante": ["cobalt", "crom", "calciu", "cadmiu"],
+		"corect": 3,
+		"nivel": 2,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q1096:simbol:cere_simbol",
+		"fapt": "wd:Q1096",
+		"text": "Care este simbolul chimic al staniului?",
+		"variante": ["Se", "Si", "Sr", "Sn"],
+		"corect": 3,
+		"nivel": 2,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q1096:simbol:cere_nume",
+		"fapt": "wd:Q1096",
+		"text": "Ce element chimic are simbolul Sn?",
+		"variante": ["seleniu", "staniu", "sulf", "stibiu"],
+		"corect": 1,
+		"nivel": 2,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q1106:simbol:cere_simbol",
+		"fapt": "wd:Q1106",
+		"text": "Care este simbolul chimic al xenonului?",
+		"variante": ["Sn", "Xe", "B", "Ag"],
+		"corect": 1,
+		"nivel": 2,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q1106:simbol:cere_nume",
+		"fapt": "wd:Q1106",
+		"text": "Ce element chimic are simbolul Xe?",
+		"variante": ["beriliu", "seleniu", "xenon", "argon"],
+		"corect": 2,
+		"nivel": 2,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q1112:simbol:cere_simbol",
+		"fapt": "wd:Q1112",
+		"text": "Care este simbolul chimic al bariului?",
+		"variante": ["Be", "B", "Ba", "Bi"],
+		"corect": 2,
+		"nivel": 2,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q1112:simbol:cere_nume",
+		"fapt": "wd:Q1112",
+		"text": "Ce element chimic are simbolul Ba?",
+		"variante": ["brom", "bor", "bariu", "beriliu"],
+		"corect": 2,
+		"nivel": 2,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q743:simbol:cere_simbol",
+		"fapt": "wd:Q743",
+		"text": "Care este simbolul chimic al wolframului?",
+		"variante": ["K", "W", "P", "Bi"],
+		"corect": 1,
+		"nivel": 2,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q743:simbol:cere_nume",
+		"fapt": "wd:Q743",
+		"text": "Ce element chimic are simbolul W?",
+		"variante": ["beriliu", "argon", "wolfram", "bismut"],
+		"corect": 2,
+		"nivel": 2,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q925:simbol:cere_simbol",
+		"fapt": "wd:Q925",
+		"text": "Care este simbolul chimic al mercurului?",
+		"variante": ["H", "Hg", "He", "Mn"],
+		"corect": 1,
+		"nivel": 2,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q925:simbol:cere_nume",
+		"fapt": "wd:Q925",
+		"text": "Ce element chimic are simbolul Hg?",
+		"variante": ["hidrogen", "heliu", "mercur", "wolfram"],
+		"corect": 2,
+		"nivel": 2,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q708:simbol:cere_simbol",
+		"fapt": "wd:Q708",
+		"text": "Care este simbolul chimic al plumbului?",
+		"variante": ["P", "Po", "Pu", "Pb"],
+		"corect": 3,
+		"nivel": 2,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q708:simbol:cere_nume",
+		"fapt": "wd:Q708",
+		"text": "Ce element chimic are simbolul Pb?",
+		"variante": ["poloniu", "plutoniu", "plumb", "platină"],
+		"corect": 2,
+		"nivel": 2,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q942:simbol:cere_simbol",
+		"fapt": "wd:Q942",
+		"text": "Care este simbolul chimic al bismutului?",
+		"variante": ["Bi", "B", "Ba", "Br"],
+		"corect": 0,
+		"nivel": 2,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q942:simbol:cere_nume",
+		"fapt": "wd:Q942",
+		"text": "Ce element chimic are simbolul Bi?",
+		"variante": ["bariu", "beriliu", "bismut", "bor"],
+		"corect": 2,
+		"nivel": 2,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q1128:simbol:cere_simbol",
+		"fapt": "wd:Q1128",
+		"text": "Care este simbolul chimic al radiului?",
+		"variante": ["Ru", "Rb", "Rn", "Ra"],
+		"corect": 3,
+		"nivel": 2,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q1128:simbol:cere_nume",
+		"fapt": "wd:Q1128",
+		"text": "Ce element chimic are simbolul Ra?",
+		"variante": ["rubidiu", "rodiu", "radiu", "reniu"],
+		"corect": 2,
+		"nivel": 2,
+		"categorie": "stiinta"
+	},
+
+	{
+		"id": "wd:Q713:simbol:cere_simbol",
+		"fapt": "wd:Q713",
+		"text": "Care este simbolul chimic al scandiului?",
+		"variante": ["Sb", "Sr", "Sc", "Sn"],
+		"corect": 2,
+		"nivel": 3,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q713:simbol:cere_nume",
+		"fapt": "wd:Q713",
+		"text": "Ce element chimic are simbolul Sc?",
+		"variante": ["scandiu", "stronțiu", "stibiu", "seleniu"],
+		"corect": 0,
+		"nivel": 3,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q861:simbol:cere_simbol",
+		"fapt": "wd:Q861",
+		"text": "Care este simbolul chimic al galiului?",
+		"variante": ["Ge", "Sc", "Ga", "Pu"],
+		"corect": 2,
+		"nivel": 3,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q861:simbol:cere_nume",
+		"fapt": "wd:Q861",
+		"text": "Ce element chimic are simbolul Ga?",
+		"variante": ["galiu", "germaniu", "neodim", "poloniu"],
+		"corect": 0,
+		"nivel": 3,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q867:simbol:cere_simbol",
+		"fapt": "wd:Q867",
+		"text": "Care este simbolul chimic al germaniului?",
+		"variante": ["Ge", "Ga", "Cs", "Pu"],
+		"corect": 0,
+		"nivel": 3,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q867:simbol:cere_nume",
+		"fapt": "wd:Q867",
+		"text": "Ce element chimic are simbolul Ge?",
+		"variante": ["galiu", "niobiu", "cesiu", "germaniu"],
+		"corect": 3,
+		"nivel": 3,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q895:simbol:cere_simbol",
+		"fapt": "wd:Q895",
+		"text": "Care este simbolul chimic al rubidiului?",
+		"variante": ["Rh", "Re", "Rb", "Rn"],
+		"corect": 2,
+		"nivel": 3,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q895:simbol:cere_nume",
+		"fapt": "wd:Q895",
+		"text": "Ce element chimic are simbolul Rb?",
+		"variante": ["reniu", "rodiu", "ruteniu", "rubidiu"],
+		"corect": 3,
+		"nivel": 3,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q938:simbol:cere_simbol",
+		"fapt": "wd:Q938",
+		"text": "Care este simbolul chimic al stronțiului?",
+		"variante": ["Sb", "Sr", "Sc", "Se"],
+		"corect": 1,
+		"nivel": 3,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q938:simbol:cere_nume",
+		"fapt": "wd:Q938",
+		"text": "Ce element chimic are simbolul Sr?",
+		"variante": ["stronțiu", "scandiu", "stibiu", "staniu"],
+		"corect": 0,
+		"nivel": 3,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q1046:simbol:cere_simbol",
+		"fapt": "wd:Q1046",
+		"text": "Care este simbolul chimic al niobiului?",
+		"variante": ["Nd", "Nb", "Na", "N"],
+		"corect": 1,
+		"nivel": 3,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q1046:simbol:cere_nume",
+		"fapt": "wd:Q1046",
+		"text": "Ce element chimic are simbolul Nb?",
+		"variante": ["neodim", "niobiu", "sodiu", "azot"],
+		"corect": 1,
+		"nivel": 3,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q1053:simbol:cere_simbol",
+		"fapt": "wd:Q1053",
+		"text": "Care este simbolul chimic al molibdenului?",
+		"variante": ["Mn", "Mo", "In", "Ge"],
+		"corect": 1,
+		"nivel": 3,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q1053:simbol:cere_nume",
+		"fapt": "wd:Q1053",
+		"text": "Ce element chimic are simbolul Mo?",
+		"variante": ["mangan", "molibden", "mercur", "paladiu"],
+		"corect": 1,
+		"nivel": 3,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q1086:simbol:cere_simbol",
+		"fapt": "wd:Q1086",
+		"text": "Care este simbolul chimic al ruteniului?",
+		"variante": ["Re", "Rb", "Rn", "Ru"],
+		"corect": 3,
+		"nivel": 3,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q1086:simbol:cere_nume",
+		"fapt": "wd:Q1086",
+		"text": "Ce element chimic are simbolul Ru?",
+		"variante": ["rubidiu", "reniu", "rodiu", "ruteniu"],
+		"corect": 3,
+		"nivel": 3,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q1087:simbol:cere_simbol",
+		"fapt": "wd:Q1087",
+		"text": "Care este simbolul chimic al rodiului?",
+		"variante": ["Re", "Ru", "Rn", "Rh"],
+		"corect": 3,
+		"nivel": 3,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q1087:simbol:cere_nume",
+		"fapt": "wd:Q1087",
+		"text": "Ce element chimic are simbolul Rh?",
+		"variante": ["rodiu", "ruteniu", "rubidiu", "radon"],
+		"corect": 0,
+		"nivel": 3,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q1089:simbol:cere_simbol",
+		"fapt": "wd:Q1089",
+		"text": "Care este simbolul chimic al paladiului?",
+		"variante": ["Pu", "Pd", "Po", "P"],
+		"corect": 1,
+		"nivel": 3,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q1089:simbol:cere_nume",
+		"fapt": "wd:Q1089",
+		"text": "Ce element chimic are simbolul Pd?",
+		"variante": ["plutoniu", "poloniu", "plumb", "paladiu"],
+		"corect": 3,
+		"nivel": 3,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q1094:simbol:cere_simbol",
+		"fapt": "wd:Q1094",
+		"text": "Care este simbolul chimic al indiului?",
+		"variante": ["Ir", "Nb", "Pu", "In"],
+		"corect": 3,
+		"nivel": 3,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q1094:simbol:cere_nume",
+		"fapt": "wd:Q1094",
+		"text": "Ce element chimic are simbolul In?",
+		"variante": ["indiu", "iridiu", "molibden", "paladiu"],
+		"corect": 0,
+		"nivel": 3,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q1099:simbol:cere_simbol",
+		"fapt": "wd:Q1099",
+		"text": "Care este simbolul chimic al stibiului?",
+		"variante": ["Sc", "Sr", "Sb", "Se"],
+		"corect": 2,
+		"nivel": 3,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q1099:simbol:cere_nume",
+		"fapt": "wd:Q1099",
+		"text": "Ce element chimic are simbolul Sb?",
+		"variante": ["scandiu", "stibiu", "stronțiu", "seleniu"],
+		"corect": 1,
+		"nivel": 3,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q1100:simbol:cere_simbol",
+		"fapt": "wd:Q1100",
+		"text": "Care este simbolul chimic al telurului?",
+		"variante": ["Ta", "Te", "Tl", "Th"],
+		"corect": 1,
+		"nivel": 3,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q1100:simbol:cere_nume",
+		"fapt": "wd:Q1100",
+		"text": "Ce element chimic are simbolul Te?",
+		"variante": ["toriu", "tantal", "telur", "taliu"],
+		"corect": 2,
+		"nivel": 3,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q1108:simbol:cere_simbol",
+		"fapt": "wd:Q1108",
+		"text": "Care este simbolul chimic al cesiului?",
+		"variante": ["Co", "Cr", "Cs", "Cd"],
+		"corect": 2,
+		"nivel": 3,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q1108:simbol:cere_nume",
+		"fapt": "wd:Q1108",
+		"text": "Ce element chimic are simbolul Cs?",
+		"variante": ["cesiu", "cadmiu", "crom", "cobalt"],
+		"corect": 0,
+		"nivel": 3,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q1388:simbol:cere_simbol",
+		"fapt": "wd:Q1388",
+		"text": "Care este simbolul chimic al neodimului?",
+		"variante": ["Nb", "Nd", "N", "Na"],
+		"corect": 1,
+		"nivel": 3,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q1388:simbol:cere_nume",
+		"fapt": "wd:Q1388",
+		"text": "Ce element chimic are simbolul Nd?",
+		"variante": ["niobiu", "sodiu", "azot", "neodim"],
+		"corect": 3,
+		"nivel": 3,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q1123:simbol:cere_simbol",
+		"fapt": "wd:Q1123",
+		"text": "Care este simbolul chimic al tantalului?",
+		"variante": ["Te", "Tl", "Ta", "Th"],
+		"corect": 2,
+		"nivel": 3,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q1123:simbol:cere_nume",
+		"fapt": "wd:Q1123",
+		"text": "Ce element chimic are simbolul Ta?",
+		"variante": ["toriu", "telur", "tantal", "taliu"],
+		"corect": 2,
+		"nivel": 3,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q737:simbol:cere_simbol",
+		"fapt": "wd:Q737",
+		"text": "Care este simbolul chimic al reniului?",
+		"variante": ["Rn", "Rh", "Rb", "Re"],
+		"corect": 3,
+		"nivel": 3,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q737:simbol:cere_nume",
+		"fapt": "wd:Q737",
+		"text": "Ce element chimic are simbolul Re?",
+		"variante": ["rodiu", "ruteniu", "radon", "reniu"],
+		"corect": 3,
+		"nivel": 3,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q751:simbol:cere_simbol",
+		"fapt": "wd:Q751",
+		"text": "Care este simbolul chimic al osmiului?",
+		"variante": ["Ga", "Ta", "Tl", "Os"],
+		"corect": 3,
+		"nivel": 3,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q751:simbol:cere_nume",
+		"fapt": "wd:Q751",
+		"text": "Ce element chimic are simbolul Os?",
+		"variante": ["cesiu", "telur", "germaniu", "osmiu"],
+		"corect": 3,
+		"nivel": 3,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q877:simbol:cere_simbol",
+		"fapt": "wd:Q877",
+		"text": "Care este simbolul chimic al iridiului?",
+		"variante": ["In", "Ir", "Tl", "Po"],
+		"corect": 1,
+		"nivel": 3,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q877:simbol:cere_nume",
+		"fapt": "wd:Q877",
+		"text": "Ce element chimic are simbolul Ir?",
+		"variante": ["iridiu", "indiu", "cesiu", "plutoniu"],
+		"corect": 0,
+		"nivel": 3,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q932:simbol:cere_simbol",
+		"fapt": "wd:Q932",
+		"text": "Care este simbolul chimic al taliului?",
+		"variante": ["Tl", "Te", "Ta", "Th"],
+		"corect": 0,
+		"nivel": 3,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q932:simbol:cere_nume",
+		"fapt": "wd:Q932",
+		"text": "Ce element chimic are simbolul Tl?",
+		"variante": ["toriu", "tantal", "taliu", "telur"],
+		"corect": 2,
+		"nivel": 3,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q979:simbol:cere_simbol",
+		"fapt": "wd:Q979",
+		"text": "Care este simbolul chimic al poloniului?",
+		"variante": ["Pd", "Pu", "Pb", "Po"],
+		"corect": 3,
+		"nivel": 3,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q979:simbol:cere_nume",
+		"fapt": "wd:Q979",
+		"text": "Ce element chimic are simbolul Po?",
+		"variante": ["paladiu", "plutoniu", "plumb", "poloniu"],
+		"corect": 3,
+		"nivel": 3,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q1133:simbol:cere_simbol",
+		"fapt": "wd:Q1133",
+		"text": "Care este simbolul chimic al radonului?",
+		"variante": ["Rh", "Rn", "Re", "Ru"],
+		"corect": 1,
+		"nivel": 3,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q1133:simbol:cere_nume",
+		"fapt": "wd:Q1133",
+		"text": "Ce element chimic are simbolul Rn?",
+		"variante": ["ruteniu", "radon", "rubidiu", "reniu"],
+		"corect": 1,
+		"nivel": 3,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q1115:simbol:cere_simbol",
+		"fapt": "wd:Q1115",
+		"text": "Care este simbolul chimic al toriului?",
+		"variante": ["Th", "Te", "Ta", "Tl"],
+		"corect": 0,
+		"nivel": 3,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q1115:simbol:cere_nume",
+		"fapt": "wd:Q1115",
+		"text": "Ce element chimic are simbolul Th?",
+		"variante": ["telur", "tantal", "taliu", "toriu"],
+		"corect": 3,
+		"nivel": 3,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q1102:simbol:cere_simbol",
+		"fapt": "wd:Q1102",
+		"text": "Care este simbolul chimic al plutoniului?",
+		"variante": ["Po", "Pu", "Pd", "Pb"],
+		"corect": 1,
+		"nivel": 3,
+		"categorie": "stiinta"
+	},
+	{
+		"id": "wd:Q1102:simbol:cere_nume",
+		"fapt": "wd:Q1102",
+		"text": "Ce element chimic are simbolul Pu?",
+		"variante": ["paladiu", "poloniu", "plutoniu", "plumb"],
+		"corect": 2,
+		"nivel": 3,
+		"categorie": "stiinta"
+	}
+]

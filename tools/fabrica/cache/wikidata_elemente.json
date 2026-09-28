@@ -1,0 +1,4135 @@
+{
+	"endpoint": "https://query.wikidata.org/sparql",
+	"interogare": "\nSELECT ?element ?simbol ?numar ?sitelinks ?eticheta WHERE {\n  ?element wdt:P31 wd:Q11344 .\n  ?element wdt:P246 ?simbol .\n  ?element wikibase:sitelinks ?sitelinks .\n  OPTIONAL { ?element wdt:P1086 ?numar . }\n  OPTIONAL { ?element rdfs:label ?eticheta . FILTER(lang(?eticheta) = \"ro\") }\n}\n",
+	"luat_la": "2026-09-28T09:55:52",
+	"raspuns": {
+		"head": {
+			"vars": [
+				"element",
+				"simbol",
+				"numar",
+				"sitelinks",
+				"eticheta"
+			]
+		},
+		"results": {
+			"bindings": [
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q941"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "ytriu",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "39"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Y"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "146"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q556"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "hidrogen",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "1"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "H"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "238"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q627"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "azot",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "7"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "N"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "205"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q1046"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "niobiu",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "41"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Nb"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "149"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q629"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "oxigen",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "8"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "O"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "234"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q1094"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "indiu",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "49"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "In"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "144"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q560"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "heliu",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "2"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "He"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "208"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q999"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "astatin",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "85"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "At"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "146"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q1086"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "ruteniu",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "44"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Ru"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "144"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q979"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "poloniu",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "84"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Po"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "148"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q1087"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "rodiu",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "45"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Rh"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "144"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q671"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "franciu",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "87"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Fr"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "156"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q1053"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "molibden",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "42"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Mo"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "147"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q650"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "fluor",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "9"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "F"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "175"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q568"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "litiu",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "3"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Li"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "194"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q569"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "beriliu",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "4"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Be"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "182"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q1038"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "zirconiu",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "40"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Zr"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "144"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q658"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "sodiu",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "11"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Na"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "188"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q1096"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "staniu",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "50"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Sn"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "191"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q1089"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "paladiu",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "46"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Pd"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "148"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q660"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "magneziu",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "12"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Mg"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "178"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q1090"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "argint",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "47"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Ag"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "238"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q654"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "neon",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "10"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Ne"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "180"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q674"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "fosfor",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "15"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "P"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "175"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q1091"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "cadmiu",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "48"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Cd"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "153"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q1054"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "technețiu",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "43"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Tc"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "145"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q1099"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "stibiu",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "51"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Sb"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "152"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q1098"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "uraniu",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "92"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "U"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "176"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q682"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "sulf",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "16"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "S"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "195"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q618"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "bor",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "5"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "B"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "173"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q663"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "aluminiu",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "13"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Al"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "210"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q677"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "fier",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "26"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Fe"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "253"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q623"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "carbon",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "6"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "C"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "218"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q1106"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "xenon",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "54"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Xe"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "152"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q706"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "calciu",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "20"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Ca"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "183"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q1109"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "protactiniu",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "91"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Pa"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "136"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q670"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "siliciu",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "14"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Si"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "177"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q1102"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "plutoniu",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "94"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Pu"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "149"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q1103"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "iod",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "53"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "I"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "163"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q1100"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "telur",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "52"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Te"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "146"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q708"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "plumb",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "82"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Pb"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "192"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q696"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "argon",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "18"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Ar"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "168"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q1112"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "bariu",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "56"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Ba"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "158"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q688"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "clor",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "17"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Cl"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "175"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q1115"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "toriu",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "90"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Th"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "144"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q725"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "crom",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "24"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Cr"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "164"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q1105"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "neptuniu",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "93"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Np"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "143"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q716"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "titan",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "22"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Ti"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "167"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q1119"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "hafniu",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "72"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Hf"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "146"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q737"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "reniu",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "75"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Re"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "142"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q722"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "vanadiu",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "23"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "V"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "158"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q1123"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "tantal",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "73"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Ta"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "146"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q1226"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "rutherfordiu",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "104"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Rf"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "139"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q1133"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "radon",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "86"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Rn"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "155"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q1139"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "ununennium",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "119"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Uue"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "57"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q1108"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "cesiu",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "55"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Cs"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "152"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q1252"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "hassiu",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "108"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Hs"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "139"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q703"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "potasiu",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "19"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "K"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "177"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q1146"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "unbinilium",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "120"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Ubn"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "46"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q713"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "scandiu",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "21"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Sc"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "153"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q1278"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "coperniciu",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "112"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Cn"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "130"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q1234"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "seaborgiu",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "106"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Sg"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "137"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q1301"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "nihoniu",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "113"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Nh"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "130"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q744"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "nichel",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "28"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Ni"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "161"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q1258"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "meitneriu",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "109"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Mt"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "135"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q1266"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "darmstadtiu",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "110"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Ds"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "133"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q1249"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "bohriu",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "107"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Bh"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "135"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q740"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "cobalt",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "27"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Co"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "163"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q1128"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "radiu",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "88"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Ra"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "157"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q731"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "mangan",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "25"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Mn"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "161"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q1121"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "actiniu",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "89"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Ac"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "143"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q751"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "osmiu",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "76"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Os"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "147"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q1232"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "dubniu",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "105"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Db"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "136"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q871"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "arsen",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "33"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "As"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "163"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q1303"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "moscoviu",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "115"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Mc"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "129"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q1306"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "tennessin",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "117"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Ts"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "124"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q1388"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "neodim",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "60"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Nd"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "134"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q1272"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "roentgeniu",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "111"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Rg"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "132"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q1302"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "fleroviu",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "114"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Fl"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "126"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q1843"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "disprosiu",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "66"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Dy"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "134"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q1304"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "livermoriu",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "116"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Lv"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "128"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q753"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "cupru",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "29"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Cu"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "229"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q1396"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "europiu",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "63"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Eu"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "140"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q876"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "seleniu",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "34"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Se"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "155"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q758"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "zinc",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "30"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Zn"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "180"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q880"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "platină",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "78"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Pt"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "161"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q867"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "germaniu",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "32"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Ge"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "152"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q1838"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "terbiu",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "65"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Tb"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "133"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q743"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "wolfram",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "74"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "W"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "150"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q861"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "galiu",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "31"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Ga"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "158"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q1307"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "oganesson",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "118"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Og"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "135"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q888"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "kripton",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "36"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Kr"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "159"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q895"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "rubidiu",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "37"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Rb"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "152"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q1466"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "unbiunium",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "121"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Ubu"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "41"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q942"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "bismut",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "83"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Bi"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "151"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q1801"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "lantan",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "57"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "La"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "142"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q897"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "aur",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "79"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Au"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "277"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q1857"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "lutețiu",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "71"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Lu"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "137"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q1386"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "praseodim",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "59"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Pr"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "134"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q1809"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "promețiu",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "61"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Pm"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "135"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q1819"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "samariu",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "62"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Sm"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "137"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q925"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "mercur",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "80"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Hg"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "185"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q428741"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "Unbiquadiu",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "124"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Ubq"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "32"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q428758"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "unbitriu",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "123"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Ubt"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "29"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q1832"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "gadoliniu",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "64"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Gd"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "135"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q877"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "iridiu",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "77"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Ir"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "149"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q1849"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "erbiu",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "68"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Er"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "132"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q1872"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "americiu",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "95"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Am"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "135"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q1855"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "yterbiu",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "70"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Yb"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "132"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q1853"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "tuliu",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "69"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Tm"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "128"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q932"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "taliu",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "81"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Tl"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "142"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q938"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "stronțiu",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "38"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Sr"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "153"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q1846"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "holmiu",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "67"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Ho"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "131"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q1898"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "mendeleviu",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "101"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Md"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "132"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q879"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "brom",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "35"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Br"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "156"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q1876"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "curiu",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "96"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Cm"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "133"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q869681"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "untrioctium",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "138"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Uto"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "13"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q1366419"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "Untriseptium",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "137"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Uts"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "16"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q1882"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "berkeliu",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "97"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Bk"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "133"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q1385"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "ceriu",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "58"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Ce"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "139"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q1901"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "nobeliu",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "102"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "No"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "134"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q1888"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "californiu",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "98"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Cf"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "136"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q1905"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "lawrenciu",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "103"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Lr"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "132"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q1892"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "einsteiniu",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "99"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Es"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "136"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q7425"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "unbibiu",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "122"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Ubb"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "38"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q54377"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "unbihexiu",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "126"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Ubh"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "35"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q1896"
+					},
+					"eticheta": {
+						"type": "literal",
+						"value": "fermiu",
+						"xml:lang": "ro"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "100"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Fm"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "134"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q428629"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "131"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Utu"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "14"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q428635"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "132"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Utb"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "14"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q428640"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "129"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Ube"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "16"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q428648"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "130"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Utn"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "15"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q428685"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "125"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Ubp"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "24"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q428692"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "127"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Ubs"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "24"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q428703"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "128"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Ubo"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "19"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q548592"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "139"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Ute"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "12"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q868375"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "136"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Uth"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "11"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q2399140"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "149"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Uqe"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "5"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q3029913"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "140"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Uqn"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "10"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q3551918"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "152"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Upb"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "5"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q3551919"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "150"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Upn"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "5"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q3551921"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "151"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Upu"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "5"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q3551926"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "146"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Uqh"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "5"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q3551927"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "142"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Uqb"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "7"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q3551924"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "153"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Upt"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "5"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q3551930"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "145"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Uqp"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "6"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q3551931"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "144"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Uqq"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "7"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q3551928"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "148"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Uqo"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "5"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q3551929"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "147"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Uqs"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "4"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q3551935"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "141"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Uqu"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "7"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q3551933"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "143"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Uqt"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "6"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q3552038"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "135"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Utp"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "10"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q3552040"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "134"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Utq"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "11"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q3552041"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "133"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Utt"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "10"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q11289368"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "173"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Ust"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "8"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q16307164"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "172"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Usb"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "4"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q16307168"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "168"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Uho"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "3"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q16307173"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "167"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Uhs"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "2"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q16307178"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "165"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Uhp"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "2"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q19599218"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "169"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Uhe"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "2"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q22313918"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "154"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Upq"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "4"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q22314315"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "155"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Upp"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "5"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q30929350"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "164"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Uhq"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "5"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q91655950"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "156"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Uph"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "2"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q91655961"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "157"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Ups"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "0"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q91655977"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "158"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Upo"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "0"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q91655999"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "160"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Uhn"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "0"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q92113383"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "159"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Upe"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "0"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q113084035"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "161"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Uhu"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "0"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q113084037"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "162"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Uhb"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "0"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q113084043"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "166"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Uhh"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "0"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q113084040"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "163"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Uht"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "0"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q113084046"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "170"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Usn"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "0"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q113084048"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "171"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Usu"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "0"
+					}
+				},
+				{
+					"element": {
+						"type": "uri",
+						"value": "http://www.wikidata.org/entity/Q116976565"
+					},
+					"numar": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+						"type": "literal",
+						"value": "184"
+					},
+					"simbol": {
+						"type": "literal",
+						"value": "Uoq"
+					},
+					"sitelinks": {
+						"datatype": "http://www.w3.org/2001/XMLSchema#integer",
+						"type": "literal",
+						"value": "2"
+					}
+				}
+			]
+		}
+	}
+}
