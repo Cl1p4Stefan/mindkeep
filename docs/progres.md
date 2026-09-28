@@ -40,6 +40,129 @@ restul rămâne placeholder. Bucla de luptă e în continuare cea validată, nu 
 
 ---
 
+## ARENA SE LINIȘTEȘTE (28 septembrie 2026) — antetul, panoul și podeaua
+
+Trei reclamații de pe ecran, toate din aceeași familie: lucruri care se mișcă sau
+stau unde nu trebuie în timpul luptei. Nimic nou ca sistem; trei reparații, dintre
+care una a cerut o măsurătoare ca să se vadă că nu era acolo unde credeam.
+
+### 1. Antetul nu se mai revarsă peste întrebare
+
+Când se deschide panoul de puzzle, cele două coloane se string la jumătate.
+„BOSS LĂNCIERUL — 41/78 PV [i]" nu mai încape în ce rămâne, iar textul acoperea un
+colț din întrebare.
+
+Acum, cât timp panoul e pe ecran, antetul se rezumă la cifră: `41/78 PV` la
+inamic, `15/15 PV` la Rege. Numele (și prefixul ELITĂ / BOSS) se întorc când
+panoul s-a retras de tot. Regula e într-un singur loc, `antetele_sunt_stramte()`
+din `lupta.gd`, și e citită de amândouă etichetele.
+
+**Momentul contează mai mult decât textul.** Steagul întrebat NU e `puzzle_activ`:
+acela devine `false` când se DĂ comanda de retragere, iar panoul mai ocupă loc
+încă 0,55 s după aceea. Pe el, numele ar fi reapărut peste un panou încă întins —
+exact bug-ul de reparat. Se întreabă `panoul_e_pe_ecran`, care se stinge în
+`ascunde_panou_acum()`, la capătul animației.
+
+### 2. Bara galbenă a ceasului a dispărut
+
+Ceasul Grabnicului avea două voci: o bară galbenă deasupra siluetei și contorul
+„1/3" de lângă sabie. A rămas cifra — bara era cea lată și cea care acoperea.
+Nodul a ieșit din scenă, nu doar din vedere.
+
+### 3. Figurile nu mai sar câțiva pixeli la finalul glisării
+
+Simptomul: după ce panoul se retrage lin, figurile mai fac un salt scurt.
+
+Cauza e un amănunt de `HBoxContainer`: un copil ASCUNS nu iese doar el din
+socoteală, ci iese și SPAȚIEREA de lângă el. La `visible = false` se eliberau
+dintr-un cadru în altul 16 px de separare plus chenarul panoului — ~9 px pe
+fiecare coloană, fără animație.
+
+Animația nu putea acoperi diferența: pentru un final continuu, lățimea ar fi
+trebuit să ajungă la MINUS 18, ceea ce nu există. Deci **panoul nu se mai ascunde
+niciodată**: se stinge din `modulate.a` și rămâne în așezare cu lățime zero
+(`content_margin` zero în stilul lui îi taie și lățimea minimă). Nu mai există un
+„înainte" și un „după" — există o singură lățime care merge continuu până la zero.
+
+Prețul, asumat: panoul stins ține tot timpul o spațiere de 16 px în mijlocul
+Arenei. E o constantă, nu o săritură. Opt pixeli pe coloană nu se văd; o săritură
+de opt pixeli se vede de fiecare dată.
+
+### 4. „[i]" a coborât pe figură
+
+Antetul avea de dus trei lucruri pe un rând care se îngustează: nume, PV și un
+buton. Sus au rămas PV-ul și sabia. Cardul se deschide acum de pe FIGURĂ
+(`scenes/lupta/semn_inspectare.gd`): un `Button` întins peste toată zona
+inamicului, din care se vede doar un cerc mic cu „i" în colțul din dreapta-sus al
+texturii. Numele de sus rămâne apăsabil, dar nu mai anunță nimic.
+
+Ținta de atingere și semnul nu sunt același dreptunghi, intenționat: degetul pe
+telefon n-are vârf de pixel, iar semnul vrea să fie discret.
+
+Dar nici ținta nu e tot nodul. Prima variantă lua tot dreptunghiul — de 2,5 ori
+mai lat decât cavalerul — și hover-ul se aprindea de la doi centimetri distanță
+de el: urcai mouse-ul de pe un Obelisc și figura „răspundea" fără s-o atingi.
+`_has_point()` spune acum că sunt ale noastre doar SILUETA (pixelii cu alfa peste
+0,25, citiți din textură) și cercul cu „i". Ordinea verificărilor merge de la
+ieftin la scump — cercul, apoi dreptunghiul texturii, abia apoi pixelul —, iar
+imaginile decomprimate se țin minte pe textură, ca `_CHENARE` din
+`asezare_coloana.gd`. Cercul se verifică PRIMUL fiindcă el stă peste aer
+transparent, lângă umăr: proba pe alfa l-ar fi respins tocmai pe el.
+
+**Semnul stă pe ecran tot timpul, stins.** Pe telefon nu există hover: un indiciu
+care apare doar la trecerea mouse-ului e, pe jumătate din dispozitive, un indiciu
+care nu există. La hover sau la apăsare se aprinde, pe o pantă de 0,14 s. Tasta
+**I** deschide și închide același card.
+
+A existat aici, scurt, și un chenar în jurul figurii, ca să arate cât de mare e de
+fapt ținta de click. A ieșit după o singură privire: un dreptunghi alb peste arenă
+se citește drept element de interfață selectat, nu drept personaj — iar cât de
+mare e ținta se află oricum apăsând.
+
+Poziția semnului vine din locul unde cade EFECTIV textura, nu din colțul nodului
+(între ele sunt zeci de pixeli de aer transparent). Formula era deja scrisă în
+`umbra_contact.gd`; a devenit `static func UmbraContact.caseta_desenata()`, ca să
+n-ajungem la a treia copie a ei.
+
+### 5. Umbra de contact stătea pe vârful bocancului, nu pe talpă
+
+Reclamația: „par că plutesc, e o distanță între picioare și umbră".
+
+**Întâi măsurat, apoi reparat.** O unealtă de o singură folosință a randat scena
+de două ori — o dată cu umbre, o dată cu `opacitate = 0` — iar diferența dintre
+cele două imagini e exact ce pune umbra, fără zgomotul dalelor pictate. Răspunsul:
+umbra era fix pe `talpa`, la un pixel. Deci nu era decalată; era pusă la reperul
+greșit.
+
+`talpa` era ultimul pixel opac din textură (0.9848 la Rege, 0.9697 la Soldat) —
+adică **vârful bocancului din față**. Bocancul din spate calcă cu ~20 px mai sus,
+poalele hainei și mai sus. Cu umbra centrată acolo, jumătatea ei vizibilă cădea
+toată ÎNAINTEA piciorului: o baltă din care personajul iese.
+
+Cifra corectă e MEDIANA marginii de jos a siluetei pe toată amprenta, măsurată pe
+canalul alfa coloană cu coloană: **0.9514** la Rege, **0.9454** la Soldat. Plus
+`centru = 0.462` la Soldat (amprenta lui nu e la mijlocul texturii) și opacitate
+0.85 la amândoi — vârful de întunecare era 4% din 255, prea puțin ca să lipească
+ceva; e acum 11% la Rege (podeaua de sub el e deja închisă) și 21% la Soldat.
+
+`tools/verifica_podeaua.gd` ținea o copie a cifrelor vechi; a primit și ea
+reperul nou, cu explicația de ce s-a mutat. Rulat după: **VERDICT: podeaua ține**.
+
+### 6. Personajele s-au tras spre centru
+
+`deplasare_de_baza` din `asezare_coloana.gd`: 0.11 → **0.15**, pe amândouă
+coloanele. Cam 19 px pe coloană în ecranul logic. Stăteau prea aproape de mobila
+din margini; aerul dintre mantia Regelui și pupitru a crescut de la 2 px la 21 px.
+
+Aceeași cifră pe amândouă, fiindcă `panoul_la_dreapta` îi schimbă singur semnul:
+„spre centru" înseamnă dreapta la Rege și stânga la inamic, iar arena rămâne
+simetrică fără să ții minte două numere.
+
+### Datorie deschisă
+
+- Semnul „i" ar putea pulsa o dată la prima luptă, apoi să rămână discret. Cere un
+  steag care supraviețuiește pornirii, deci așteaptă Save-ul.
+
 ## ID ȘI FAPT (28 septembrie 2026) — o întrebare are acum un nume care nu se mișcă
 
 Pasul 3 din lista „Imediat”. Cele 135 de întrebări de Cultură generală au primit

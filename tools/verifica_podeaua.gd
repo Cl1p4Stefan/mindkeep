@@ -141,12 +141,17 @@ const DE_MASURAT := {
 
 ## Figurile, ca „nume" → [coloana în care stau, numele imaginii, talpa în textură].
 ##
-## A treia cifră e cea care contează și e măsurată în PNG, nu ghicită: ambele
-## imagini au aer transparent sub tălpi (1.5% la Rege, 3.0% la Soldat), iar o
-## umbră pusă la marginea de jos a nodului ar cădea în aerul ăla.
+## A treia cifră e cea care contează și e măsurată în PNG, nu ghicită: e
+## MEDIANA marginii de jos a siluetei pe toată amprenta, coloană cu coloană pe
+## canalul alfa. Adică „unde atinge figura podeaua, în general".
+##
+## Înainte scria aici ultimul pixel opac (0.9848 și 0.9697) — vârful bocancului
+## din față. E un punct real, dar e capătul amprentei, nu mijlocul ei: umbra
+## centrată acolo cădea toată în fața piciorului, iar măsurătoarea de aici
+## raporta tălpi cu ~2% mai jos decât stau. Vezi `talpa` din `umbra_contact.gd`.
 const FIGURI := {
-	"REGE":   ["Margini/Coloana/Arena/ZonaJucator", "JucatorImagine", 0.9848],
-	"INAMIC": ["Margini/Coloana/Arena/ZonaInamic", "InamicImagine", 0.9697],
+	"REGE":   ["Margini/Coloana/Arena/ZonaJucator", "JucatorImagine", 0.9514],
+	"INAMIC": ["Margini/Coloana/Arena/ZonaInamic", "InamicImagine", 0.9454],
 }
 
 var _lupta: Control = null

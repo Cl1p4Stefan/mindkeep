@@ -406,12 +406,32 @@ var tweens_bare := {}
 var tween_panou: Tween = null
 
 # CE VREM să facă panoul, nu ce face el chiar acum. Nu e același lucru:
-# `zona_puzzle.visible` rămâne true tot timpul închiderii animate (altfel
-# figurile ar sări la loc instantaneu), deci nu poate răspunde la întrebarea
+# panoul mai ocupă loc pe tot parcursul închiderii animate (altfel figurile ar
+# sări la loc instantaneu), deci prezența lui nu poate răspunde la întrebarea
 # „e panoul deschis?". Dacă apeși un Obelisc în cele 0,55 s de închidere,
-# `visible` zice „da, e deschis" — și deschiderea nouă nu s-ar mai face,
-# iar închiderea în curs ar continua peste întrebarea abia apărută.
+# prezența zice „da, e deschis" — și deschiderea nouă nu s-ar mai face, iar
+# închiderea în curs ar continua peste întrebarea abia apărută.
 var panou_deschis := false
+
+# CE FACE panoul chiar acum: ocupă loc în Arenă sau nu. Perechea celui de sus.
+#
+# Până acum întrebarea asta se punea nodului, prin `zona_puzzle.visible` — și
+# de acolo venea saltul de la finalul închiderii. `HBoxContainer` nu doar că
+# scoate din socoteală un copil ascuns, ci scoate și SPAȚIEREA de lângă el:
+# 16 px de separare plus chenarul panoului dispăreau dintr-un cadru în
+# următorul, iar cele două coloane se lățeau brusc cu ~9 px fiecare, exact
+# după ce terminaseră de alunecat lin.
+#
+# Acum panoul nu se mai ascunde niciodată: se stinge din `modulate.a` și
+# rămâne în așezare cu lățime zero (vezi `content_margin` zero din stilul lui,
+# care îi taie și lățimea minimă). Așezarea nu se mai schimbă brusc nicăieri,
+# fiindcă nu mai există un „înainte" și un „după" — există o singură lățime
+# care merge continuu până la zero.
+#
+# Prețul: panoul stins ține în continuare o spațiere de 16 px în mijlocul
+# Arenei, tot timpul. E o constantă, nu o săritură — și o constantă de 8 px pe
+# coloană nu se vede, pe când o săritură de 8 px se vede de fiecare dată.
+var panoul_e_pe_ecran := false
 
 # ─────────────────────────────────────────────────────────────
 # REFERINȚE CĂTRE NODURI
@@ -423,11 +443,11 @@ var panou_deschis := false
 # ─────────────────────────────────────────────────────────────
 @onready var eticheta_runda: Label = %Runda
 @onready var buton_inamic: Button = %InamicNume
+@onready var semn_info: SemnInspectare = %InamicSemnInfo
 @onready var bara_pv_inamic: ProgressBar = %InamicBaraPV
 @onready var eticheta_vulnerabil: Label = %InamicVulnerabil
 @onready var eticheta_intentie: Label = %InamicIntentie
 @onready var iconita_sabie: Control = %IconitaSabie
-@onready var bara_ceas: ProgressBar = %InamicBaraCeas
 @onready var eticheta_pv_jucator: Label = %JucatorPV
 @onready var bara_pv_jucator: ProgressBar = %JucatorBaraPV
 @onready var rand_pa: HBoxContainer = %PAPuncte
@@ -499,6 +519,11 @@ func _ready() -> void:
 	buton_jurnal.pressed.connect(_pe_jurnal_apasat)
 	buton_inchide_jurnal.pressed.connect(_pe_inchide_jurnal_apasat)
 	buton_inamic.pressed.connect(_pe_card_inamic_apasat)
+	# A doua ușă spre același card: figura inamicului, cu semnul „i" pe ea.
+	# Numele de sus rămâne apăsabil — nu strică nimic și e drumul pe care
+	# îl are deja în deget cine juca înainte —, dar nu mai ANUNȚĂ nimic:
+	# „[i]"-ul care îl anunța s-a mutat pe figură.
+	semn_info.pressed.connect(_pe_card_inamic_apasat)
 	buton_inchide_card.pressed.connect(_pe_inchide_card_apasat)
 	# "gui_input" e semnalul brut de mouse/tastatura primit de un Control.
 	# Voalul nu e buton, deci nu are "pressed" — ascultam direct evenimentul.
@@ -1160,10 +1185,13 @@ func deschide_panou() -> void:
 	# Pornim de la zero DOAR dacă panoul chiar e închis. Dacă prindem o
 	# închidere la mijloc, `porneste_tween_panou()` o omoară și creștem înapoi
 	# de la lățimea de acum — fără să sară întâi la 0.
-	if not zona_puzzle.visible:
-		zona_puzzle.visible = true
+	if not panoul_e_pe_ecran:
+		panoul_e_pe_ecran = true
 		zona_puzzle.custom_minimum_size.x = 0.0
 		zona_puzzle.modulate.a = 0.0
+	# Antetele se rescriu ACUM, nu după animație: panoul deja „există" pentru
+	# container, deci coloanele au început să se îngusteze în cadrul ăsta.
+	actualizeaza_ui()
 	var tween := porneste_tween_panou()
 	tween.tween_property(zona_puzzle, "custom_minimum_size:x", LATIME_PANOU, DURATA_PANOU)
 	# `parallel()` = „pasul ăsta merge ÎN ACELAȘI TIMP cu cel dinainte",
@@ -1176,7 +1204,7 @@ func deschide_panou() -> void:
 
 
 func inchide_panou() -> void:
-	if not zona_puzzle.visible:
+	if not panoul_e_pe_ecran:
 		return
 	# Muzica urcă ÎN ACELAȘI TIMP cu retragerea panoului, nu după ea. Fade-ul
 	# ei (0,3 s) e mai scurt decât mișcarea (0,55 s), deci sunetul e înapoi la
@@ -1189,6 +1217,11 @@ func inchide_panou() -> void:
 	# Ascunderea vine ABIA la final. Dacă am ascunde acum, containerul ar
 	# scoate panoul din calcul instantaneu și figurile ar sări la loc.
 	tween.tween_callback(ascunde_panou_acum)
+	# ...și abia DUPĂ el punem numele la loc. Callback-urile se execută în
+	# ordinea în care le-ai pus, deci aici `panoul_e_pe_ecran` e deja `false`
+	# și `antetele_sunt_stramte()` răspunde „nu". Un `actualizeaza_ui()` mai
+	# devreme ar fi scris numele peste un panou care încă se retrage.
+	tween.tween_callback(actualizeaza_ui)
 
 
 ## Panoul dispare fără animație. Îl folosește resetarea luptei: acolo nu
@@ -1203,9 +1236,13 @@ func ascunde_panou_acum() -> void:
 	if tween_panou != null and tween_panou.is_valid():
 		tween_panou.kill()
 	panou_deschis = false
-	zona_puzzle.visible = false
+	panoul_e_pe_ecran = false
 	zona_puzzle.custom_minimum_size.x = 0.0
-	zona_puzzle.modulate.a = 1.0
+	# Se stinge din transparență, NU din `visible`: nodul rămâne în așezare, cu
+	# lățime zero. Vezi `panoul_e_pe_ecran` pentru de ce contează diferența.
+	# Opacitatea se pune la loc pe 1 la deschidere, nu aici — aici starea de
+	# repaus e „nu se vede".
+	zona_puzzle.modulate.a = 0.0
 
 
 ## Un tween nou, dar întâi îl omorâm pe cel vechi. Fără asta, o închidere
@@ -1656,12 +1693,10 @@ func reseteaza_lupta() -> void:
 	pv_max_inamic = _cu_puterea_nodului(int(inamic()["pv"]))
 	pv_inamic = pv_max_inamic
 	pune_bara_acum(bara_pv_inamic, pv_max_inamic, pv_inamic)
-	# Ceasul are maxim doar la arhetipurile care au ceas. La celelalte punem 1,
-	# nu 0: o bară cu maximul 0 e o împărțire la zero pentru Godot. Oricum stă
-	# ascunsă (vezi `actualizeaza_ui()`), dar nu vrem un avertisment în consolă
-	# pentru un nod invizibil.
+	# Ceasul pornește gol. Nu mai are bară de resetat: singurul lui martor pe
+	# ecran e contorul „1/3" de lângă sabie, iar acela se rescrie din
+	# `actualizeaza_ui()` ca orice alt text.
 	ceas_inamic = 0
-	pune_bara_acum(bara_ceas, maxi(ceas_max(), 1), ceas_inamic)
 	lupta_terminata = false
 	puzzle_activ = false
 	tura_se_incheie = false
@@ -1877,6 +1912,28 @@ func _pe_inchide_card_apasat() -> void:
 	card_inamic.visible = false
 
 
+## Tasta I deschide și închide cardul inamicului.
+##
+## `_unhandled_key_input` (nu `_input`): primește tasta doar dacă n-a
+## consumat-o nimeni dinainte — un câmp de text dintr-un puzzle viitor scrie
+## „i" fără să deschidă cardul peste el.
+##
+## Aceeași tastă închide: un card deschis din greșeală se închide cu degetul
+## rămas pe loc. Și cât e un puzzle pe ecran nu se deschide deloc — cardul ar
+## acoperi întrebarea al cărei cronometru curge.
+func _unhandled_key_input(eveniment: InputEvent) -> void:
+	if not (eveniment is InputEventKey and eveniment.pressed and not eveniment.echo):
+		return
+	if eveniment.keycode != KEY_I:
+		return
+	if puzzle_activ and not card_inamic.visible:
+		return
+	card_inamic.visible = not card_inamic.visible
+	if card_inamic.visible:
+		construieste_card()
+	get_viewport().set_input_as_handled()
+
+
 ## Click pe voal (adica oriunde in afara panoului) inchide cardul.
 ## Panoul e un PanelContainer, care oprește el clickurile dinauntru — asa ca
 ## aici ajung doar cele din afara lui.
@@ -1942,21 +1999,46 @@ func _construieste_rand(eticheta: String, valoare: String) -> HBoxContainer:
 # Ea schimbă doar variabilele de stare, apoi cheamă actualizeaza_ui().
 # Un singur loc care desenează = imposibil să ai bara și textul desincronizate.
 # ─────────────────────────────────────────────────────────────
+## Sunt coloanele laterale strânse ca să facă loc întrebării?
+##
+## Panoul de puzzle se deschide ÎNTRE cele două figuri, iar `HBoxContainer`
+## ia lățimea de la ele. Ce încape lejer în arena liberă — „BOSS LANCIERUL —
+## 41/78 PV [i]" — nu mai încape acolo: textul se lățea peste panou și acoperea
+## un colț din întrebare. Atunci antetul se rezumă la singurul lucru pentru
+## care te uiți într-acolo în mijlocul unui lanț: cifra de PV.
+##
+## Întrebăm `panoul_e_pe_ecran`, NU `puzzle_activ`. Cele două nu se sting în
+## același moment: `puzzle_activ` devine `false` când se DĂ comanda de
+## retragere, iar panoul mai ocupă loc încă 0,55 s după aceea. Pe steagul de
+## stare, numele ar fi reapărut peste un panou încă întins — exact bug-ul pe
+## care îl reparăm. `panoul_e_pe_ecran` se stinge abia în
+## `ascunde_panou_acum()`, deci e singurul care răspunde la întrebarea pusă:
+## „mai e panoul pe ecran?".
+func antetele_sunt_stramte() -> bool:
+	return panoul_e_pe_ecran
+
+
 func actualizeaza_ui() -> void:
 	eticheta_runda.text = "RUNDA %d" % runda
 
-	# Numele e un BUTON: click pe el deschide cardul cu detaliile inamicului.
-	# „[i]" e singurul indiciu că se poate apăsa — un buton plat, fără fundal,
-	# nu se anunță singur.
+	# Numele e tot un BUTON — click pe el deschide cardul —, dar nu mai poartă
+	# și indiciul. „[i]" s-a mutat pe figură (`semn_inspectare.gd`), fiindcă
+	# antetul avea de dus prea multe: nume, PV și un buton, pe un rând care se
+	# îngustează odată cu coloana. Sus au rămas PV-ul și sabia.
 	# „ELITA" / „BOSS" în fața numelui: același adversar, altă greutate. Trebuie
 	# să se vadă în luptă, nu doar pe hartă — altfel cifrele mai mari par un bug.
 	# Prefixul vine din tabel, deci un tip de nod nou se anunță singur.
-	var prefix := ""
-	if float(fisa_nod["putere"]) > 1.0:
-		prefix = String(fisa_nod["nume"]).to_upper() + " "
-	buton_inamic.text = "%s%s — %d/%d PV  [i]" % [
-		prefix, nume_inamic(), pv_inamic, pv_max_inamic
-	]
+	# Cât timp panoul de întrebări e pe ecran, antetul se rezumă la cifră —
+	# vezi `antetele_sunt_stramte()` pentru de ce.
+	if antetele_sunt_stramte():
+		buton_inamic.text = "%d/%d PV" % [pv_inamic, pv_max_inamic]
+	else:
+		var prefix := ""
+		if float(fisa_nod["putere"]) > 1.0:
+			prefix = String(fisa_nod["nume"]).to_upper() + " "
+		buton_inamic.text = "%s%s — %d/%d PV" % [
+			prefix, nume_inamic(), pv_inamic, pv_max_inamic
+		]
 	anima_bara(bara_pv_inamic, pv_inamic)
 
 	# SLĂBICIUNEA, scrisă sub nume și lăsată acolo toată lupta.
@@ -1986,13 +2068,13 @@ func actualizeaza_ui() -> void:
 	var culoare_intentie := CULOARE_INTENTIE_GREA if lovitura_grea() else CULOARE_INTENTIE
 	iconita_sabie.culoare = culoare_intentie
 	eticheta_intentie.modulate = culoare_intentie
-	# Bara de ceas apare doar la arhetipurile care CHIAR au ceas —
-	# altfel ar fi un element de UI care nu înseamnă nimic.
-	bara_ceas.visible = are_ceas()
-	if bara_ceas.visible:
-		anima_bara(bara_ceas, ceas_inamic)
 
-	eticheta_pv_jucator.text = "REGELE (tu) — %d/%d PV" % [pv_jucator, pv_max_jucator]
+	# Aceeași regulă, simetric: coloana ta se îngustează odată cu cea a
+	# inamicului, deci „REGELE (tu)" iese și el din antet cât ține întrebarea.
+	if antetele_sunt_stramte():
+		eticheta_pv_jucator.text = "%d/%d PV" % [pv_jucator, pv_max_jucator]
+	else:
+		eticheta_pv_jucator.text = "REGELE (tu) — %d/%d PV" % [pv_jucator, pv_max_jucator]
 	anima_bara(bara_pv_jucator, pv_jucator)
 
 	# Butoanele se sting singure când n-ai PA — feedback vizual gratuit,

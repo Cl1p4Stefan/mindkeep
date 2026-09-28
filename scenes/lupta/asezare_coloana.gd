@@ -65,7 +65,14 @@ extends Control
 ## POZIȚIA DE BAZĂ: cât se trage coloana spre centru, ca fracțiune din lățimea
 ## ei. Fracțiune, nu pixeli, ca să însemne același lucru pe orice ecran și în
 ## orice stare a panoului.
-@export var deplasare_de_baza := 0.11:
+##
+## E o cifră de COMPOZIȚIE: nu se deduce din nimic, se alege uitându-te la ecran.
+## A crescut de la 0.11 la 0.15 — cam 19 px pe coloană în ecranul logic — fiindcă
+## personajele stăteau prea aproape de mobila din margini. Se pune la fel pe
+## amândouă coloanele: `panoul_la_dreapta` îi schimbă singur semnul, deci aceeași
+## cifră înseamnă „spre centru" și la Rege, și la inamic, iar arena rămâne
+## simetrică fără să ții minte două numere.
+@export var deplasare_de_baza := 0.15:
 	set(valoare):
 		deplasare_de_baza = valoare
 		_aseaza()
@@ -125,6 +132,12 @@ func _aseaza() -> void:
 
 ## Împinge deplasarea în afară, dacă poziția cerută ar băga personajul sub panou.
 ## Întoarce deplasarea nemodificată dacă panoul e închis sau destul de departe.
+##
+## „Închis" se citește din LĂȚIME, nu din `visible`: panoul nu se mai ascunde
+## niciodată (s-ar fi schimbat brusc așezarea Arenei la finalul animației, iar
+## figurile ar fi sărit câțiva pixeli după ce terminau de alunecat). Stinge
+## din opacitate și rămâne în șir cu lățime zero — iar zero e exact cazul pe
+## care linia de mai jos îl lăsa dintotdeauna să treacă nemodificat.
 func _limiteaza(col: Control, deplasare: float) -> float:
 	var p := _panou()
 	if p == null or not p.is_visible_in_tree() or p.size.x <= 0.0:

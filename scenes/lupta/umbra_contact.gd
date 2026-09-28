@@ -52,13 +52,20 @@ extends Control
 ## Imaginea umbrită. Se dă din scenă, ca `NodePath`.
 @export var imagine: NodePath
 
-## TALPA: pe ce fracțiune din înălțimea texturii cad bocancii.
+## TALPA: pe ce fracțiune din înălțimea texturii e LINIA DE CONTACT.
 ##
-## NU e 1.0, și asta e toată grija fișierului. Ambele PNG-uri au aer
-## transparent sub tălpi (1.5% la Rege, 3.0% la Soldat, măsurat pe canalul
-## alfa). O umbră pusă la marginea de jos a texturii ar cădea în aerul ăla —
-## adică vizibil în fața personajului, ca o baltă din care el iese.
-@export var talpa := 0.985:
+## „Linia de contact" nu e marginea de jos a desenului, și aici a stat o
+## greșeală măsurabilă. Cifrele de dinainte (0.985 la Rege, 0.970 la Soldat)
+## erau ultimul pixel opac din textură — adică VÂRFUL bocancului din față.
+## Bocancul din spate calcă cu 20 de pixeli mai sus, iar poalele hainei ating
+## podeaua și mai sus de-atât. Cu umbra centrată pe vârful din față, jumătatea
+## ei vizibilă cădea toată ÎNAINTEA piciorului: o baltă din care personajul
+## iese, exact senzația de plutire pe care umbra trebuia s-o repare.
+##
+## Cifra corectă e MEDIANA marginii de jos pe toată amprenta (măsurată pe
+## canalul alfa, coloană cu coloană): 0.9514 la Rege, 0.9454 la Soldat. Adică
+## „unde atinge silueta podeaua, în general", nu „cel mai jos punct al ei".
+@export var talpa := 0.9514:
 	set(valoare):
 		talpa = valoare
 		queue_redraw()
@@ -183,8 +190,12 @@ func _imagine() -> TextureRect:
 ## tălpile fără să pornească umbra. Sunt două locuri, și asta e o datorie mică
 ## asumată: unealta trebuie să poată măsura o scenă în care umbra încă nu
 ## există, altfel n-ar mai fi o verificare independentă.
-func _caseta_desenata() -> Rect2:
-	var tinta := _imagine()
+##
+## E `static` fiindcă nu întreabă nimic despre umbră — doar despre un
+## `TextureRect`. Așa o poate folosi și `semn_inspectare.gd`, care are nevoie de
+## același răspuns pentru alt motiv (unde să pună semnul „i"), fără să ajungem
+## la o a treia copie a formulei.
+static func caseta_desenata(tinta: TextureRect) -> Rect2:
 	if tinta == null or tinta.texture == null:
 		return Rect2()
 	var cutie := tinta.get_global_rect()
@@ -193,3 +204,7 @@ func _caseta_desenata() -> Rect2:
 		return Rect2()
 	var scara := minf(cutie.size.x / tex.x, cutie.size.y / tex.y)
 	return Rect2(cutie.position + (cutie.size - tex * scara) * 0.5, tex * scara)
+
+
+func _caseta_desenata() -> Rect2:
+	return caseta_desenata(_imagine())

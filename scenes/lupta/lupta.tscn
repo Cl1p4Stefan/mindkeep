@@ -10,8 +10,11 @@
 [ext_resource type="Texture2D" path="res://assets/art/fight_background.jpg" id="8_peisaj"]
 [ext_resource type="Script" path="res://scenes/lupta/umbra_contact.gd" id="9_umbra"]
 [ext_resource type="Script" path="res://scenes/lupta/asezare_coloana.gd" id="10_asezare"]
+[ext_resource type="Script" path="res://scenes/lupta/semn_inspectare.gd" id="11_semn"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_puzzle"]
+content_margin_left = 0.0
+content_margin_right = 0.0
 bg_color = Color(0.11, 0.11, 0.15, 1)
 border_width_left = 1
 border_width_top = 1
@@ -134,7 +137,7 @@ coloana = NodePath("ColoanaJucator")
 imagine = NodePath("ColoanaJucator/ArenaJucator/FiguraJucator/JucatorImagine")
 panou = NodePath("../ZonaPuzzle")
 panoul_la_dreapta = true
-deplasare_de_baza = 0.11
+deplasare_de_baza = 0.15
 aer_langa_panou = 12.0
 
 [node name="ColoanaJucator" type="VBoxContainer" parent="Margini/Coloana/Arena/ZonaJucator"]
@@ -176,11 +179,11 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("9_umbra")
 imagine = NodePath("../FiguraJucator/JucatorImagine")
-talpa = 0.985
+talpa = 0.9514
 latime = 0.68
 centru = 0.5
 turtire = 0.25
-opacitate = 0.68
+opacitate = 0.85
 
 [node name="FiguraJucator" type="Control" parent="Margini/Coloana/Arena/ZonaJucator/ColoanaJucator/ArenaJucator" unique_id=1730462313]
 unique_name_in_owner = true
@@ -219,7 +222,7 @@ stretch_mode = 5
 
 [node name="ZonaPuzzle" type="PanelContainer" parent="Margini/Coloana/Arena" unique_id=149564924]
 unique_name_in_owner = true
-visible = false
+modulate = Color(1, 1, 1, 0)
 clip_contents = true
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_puzzle")
@@ -234,7 +237,7 @@ coloana = NodePath("ColoanaInamic")
 imagine = NodePath("ColoanaInamic/ArenaInamic/FiguraInamic/InamicImagine")
 panou = NodePath("../ZonaPuzzle")
 panoul_la_dreapta = false
-deplasare_de_baza = 0.11
+deplasare_de_baza = 0.15
 aer_langa_panou = 12.0
 
 [node name="ColoanaInamic" type="VBoxContainer" parent="Margini/Coloana/Arena/ZonaInamic"]
@@ -269,14 +272,6 @@ theme_override_font_sizes/font_size = 12
 horizontal_alignment = 1
 clip_text = true
 text_overrun_behavior = 3
-
-[node name="InamicBaraCeas" type="ProgressBar" parent="Margini/Coloana/Arena/ZonaInamic/ColoanaInamic/InfoInamic" unique_id=2063890791]
-unique_name_in_owner = true
-modulate = Color(1, 0.75, 0.3, 1)
-custom_minimum_size = Vector2(0, 12)
-layout_mode = 2
-max_value = 3.0
-show_percentage = false
 
 [node name="RandIntentie" type="HBoxContainer" parent="Margini/Coloana/Arena/ZonaInamic/ColoanaInamic/InfoInamic" unique_id=1765292483]
 layout_mode = 2
@@ -313,11 +308,11 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("9_umbra")
 imagine = NodePath("../FiguraInamic/InamicImagine")
-talpa = 0.97
+talpa = 0.9454
 latime = 0.5
-centru = 0.5
+centru = 0.462
 turtire = 0.25
-opacitate = 0.58
+opacitate = 0.85
 
 [node name="FiguraInamic" type="Control" parent="Margini/Coloana/Arena/ZonaInamic/ColoanaInamic/ArenaInamic" unique_id=1988581682]
 unique_name_in_owner = true
@@ -355,6 +350,18 @@ grow_vertical = 2
 texture = ExtResource("7_cavaler")
 expand_mode = 1
 stretch_mode = 5
+
+[node name="InamicSemnInfo" type="Button" parent="Margini/Coloana/Arena/ZonaInamic/ColoanaInamic/ArenaInamic" unique_id=1610394552]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+tooltip_text = "Cine e (I)"
+script = ExtResource("11_semn")
+imagine = NodePath("../FiguraInamic/InamicImagine")
 
 [node name="InamicBaraPV" type="ProgressBar" parent="Margini/Coloana/Arena" unique_id=540229722]
 unique_name_in_owner = true
