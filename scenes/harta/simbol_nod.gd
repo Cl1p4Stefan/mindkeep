@@ -126,8 +126,26 @@ const INFATISARI := {
 	Stare.INCHIS:    {"cerneala": 0.58, "halou": 0.55, "raza_halou": 0.34, "puls": 0.000, "aura": 0.0},
 	Stare.PARCURS:   {"cerneala": 0.62, "halou": 0.62, "raza_halou": 0.35, "puls": 0.000, "aura": 0.0},
 	Stare.ACCESIBIL: {"cerneala": 1.00, "halou": 0.95, "raza_halou": 0.41, "puls": 0.022, "aura": 0.0},
-	Stare.CURENT:    {"cerneala": 1.00, "halou": 1.00, "raza_halou": 0.43, "puls": 0.030, "aura": 1.0},
+	Stare.CURENT:    {"cerneala": 1.00, "halou": 1.00, "raza_halou": 0.43, "puls": 0.000, "aura": 1.0},
 }
+
+## DE CE NODUL CURENT NU MAI PULSEAZĂ (era 0,030)
+##
+## Pulsul are un rost: spune „aici se poate apăsa". De-aia îl au nodurile
+## ACCESIBILE. Pe nodul CURENT însă nu se poate apăsa — pe el stai deja — iar
+## acolo peste simbol e așezată figurina, care îi acoperă mijlocul și lasă
+## afară doar capetele. Un simbol care respiră sub o piesă nemișcată nu se mai
+## citește ca „nod viu": se citește ca o sabie care se zbate sub talpa piesei,
+## mai ales după o luptă, când te întorci pe hartă și ochiul cade fix acolo.
+##
+## Localizarea („unde sunt acum") rămâne în întregime pe seama AUREI, care e
+## singura lumină de pe pergament și se vede de jur împrejurul figurinei, nu pe
+## sub ea. Aura are propria ei pâlpâire (`PALPAIRE_AURA`) — deci nodul curent
+## nu devine mort, doar că mișcarea lui e lumină, nu geometrie.
+##
+## `set_process` din `configureaza()` ține cont deja de cazul ăsta: pornește
+## dacă amplitudinea e nenulă SAU dacă starea e CURENT, tocmai ca aura să-și
+## poată număra timpul chiar și cu pulsul stins.
 
 ## Câte cercuri suprapuse fac halo-ul. Godot n-are „umbră moale" la desen, dar
 ## cercuri concentrice cu opacitate mică fiecare dau exact aceeași degradare —

@@ -14,7 +14,7 @@
 | 3. Trivia, ca scenă independentă | ✅ gata |
 | 4. Bucla completă a unei lupte | ✅ victorie · înfrângere · recompense (Fragmente) |
 | 5. Trei inamici manuali | ✅ Soldatul · Lăncierul (ceas) · Spadasinul (vulnerabilitate), aleși din joc |
-| 6. Harta de expediție | ✅ loadout „N din M" · **12-16 noduri**, ramificate, cu sămânță · Luptă / Elită / Odihnă / Eveniment / **Magazin** / **Boss** · **Monede + puteri temporare** · sumar de run · aspect: pergament, simboluri de cerneală, trasee punctate · **nodurile și drumurile stau pe o PANGLICĂ (curbă centrală + benzi)**, nu pe o grilă dreaptă · **patru trasee, toate verzi pe 300 de semințe** (POTCOAVĂ activă; POTCOAVA OGLINDITĂ e aceeași formă, întoarsă) · strat înclinat (forfecare) la ȘARPE · **drumuri care nu se încrucișează niciodată (0 la 300 de semințe)** · **nodul curent are și aură, și X** · **două surse de hartă: GENERATĂ (panglica) sau DESENATĂ dintr-un fișier `data/harti/*.json`** — comutatorul `Expeditie.SURSA_HARTII`; azi e pe DESENATĂ · **harta umple pergamentul**: pânza ține toată pagina, antetul plutește peste ea (805 × 427 px de hartă, de la 666 × 353) · **drumurile merg în amândouă sensurile**, cu nodul parcurs tăiat definitiv și cu garanția, verificată pe 16 000 de expediții simulate, că nu te poți înfunda · **figurina sare, cade ca un slam și zguduie ecranul la aterizare**, cu un răgaz de 0,5 s înainte să se deschidă nodul · **tipurile nodurilor se împart după o REȚETĂ fixă, nu se trag cu zarul**: 9 reguli de vecinătate și de început, plasare conștientă de reguli, verificare completă și reîncercare cu sub-sămânță (0 eșecuri pe 500 de semințe × 3 surse de hartă) · rețeta se **plafonează după forma hărții**, nu după numărul de noduri · **nodul de Eveniment deschide Lacătul** (nivel din adâncime, sămânță din nodul, 6/10/14 Monede la succes) |
+| 6. Harta de expediție | ✅ loadout „N din M" · **12-16 noduri**, ramificate, cu sămânță · Luptă / Elită / Odihnă / Eveniment / **Magazin** / **Boss** · **Monede + puteri temporare** · sumar de run · aspect: pergament, simboluri de cerneală, trasee punctate · **nodurile și drumurile stau pe o PANGLICĂ (curbă centrală + benzi)**, nu pe o grilă dreaptă · **patru trasee, toate verzi pe 300 de semințe** (POTCOAVĂ activă; POTCOAVA OGLINDITĂ e aceeași formă, întoarsă) · strat înclinat (forfecare) la ȘARPE · **drumuri care nu se încrucișează niciodată (0 la 300 de semințe)** · **nodul curent are și aură, și X, și stă nemișcat sub figurină** · **două surse de hartă: GENERATĂ (panglica) sau DESENATĂ dintr-un fișier `data/harti/*.json`** — comutatorul `Expeditie.SURSA_HARTII`; azi e pe DESENATĂ · **harta umple pergamentul**: pânza ține toată pagina, antetul plutește peste ea (805 × 427 px de hartă, de la 666 × 353) · **drumurile merg în amândouă sensurile**, cu nodul parcurs tăiat definitiv și cu garanția, verificată pe 16 000 de expediții simulate, că nu te poți înfunda · **figurina sare, cade ca un slam și zguduie ecranul la aterizare**, cu un răgaz de 0,5 s înainte să se deschidă nodul · **tipurile nodurilor se împart după o REȚETĂ fixă, nu se trag cu zarul**: 9 reguli de vecinătate și de început, plasare conștientă de reguli, verificare completă și reîncercare cu sub-sămânță (0 eșecuri pe 500 de semințe × 3 surse de hartă) · rețeta se **plafonează după forma hărții**, nu după numărul de noduri · **nodul de Eveniment deschide Lacătul** (nivel din adâncime, sămânță din nodul, 6/10/14 Monede la succes) |
 | 7. Cetatea | ❌ |
 | 8. Save/Load | 🟡 tezaurul, sacul și expediția știu toate să se serializeze (`spre_dictionar` / `din_dictionar`), pe trei straturi de durată; scrierea pe disc, nu încă |
 | 9. Celelalte discipline | 🟡 Cultură generală ✅ (**274 de întrebări**: 135 scrise de mână (`mana:0001`…) + **139 fabricate din Wikidata** (`wd:Q897:simbol:…`), în două fișiere care nu se ating; **15 fapte cu note** + 70 de fapte fabricate fără notă; **alegerea din luptă e în două trepte** — întâi domeniul, uniform, apoi întrebarea, cu sacul pe cheie de domeniu ȘI nivel; comutator `FOLOSESTE_WIKIDATA`; vezi sesiunile CONȚINUTUL, ID ȘI FAPT și FABRICA) · Logica ✅ (80 de categorii) · Cuvinte ✅ · toate trei fără repetiții pe expediție, **Cultura generală după `id`, nu după text** · celelalte 5 ❌ |
@@ -37,6 +37,45 @@ buget, generare) rămâne acolo unde era.
 Am sărit peste ordinea recomandată la pasul 12 (artă): imaginile pentru rege,
 cavaler și pentru cele trei piese de șah de pe butoane au intrat mai devreme, dar
 restul rămâne placeholder. Bucla de luptă e în continuare cea validată, nu arta.
+
+---
+
+## SABIA NU SE MAI ZBATE (28 septembrie 2026) — pulsul nodului pe care stai
+
+O reclamație de o linie, după o luptă câștigată: sabia de sub figurină se mișca.
+Reparația e o singură cifră, dar motivul merită scris, fiindcă e o regulă de
+citire, nu o preferință.
+
+**Ce se vedea.** Te întorci din luptă, figurina stă pe nodul de Luptă, iar
+simbolul de dedesubt respira — se umfla și se dezumfla cu 3%. Cum piesa acoperă
+mijlocul simbolului și lasă afară doar capetele lamei, mișcarea nu se mai citea
+ca „nod viu": se citea ca o sabie care se zbate sub talpa figurinei.
+
+**De ce era acolo.** `INFATISARI`, tabelul de stări din `simbol_nod.gd`, dădea
+nodului CURENT `puls: 0.030`. Pulsul e moștenit de la `Silueta` (respirația
+personajelor din arenă) și are un rost precis pe hartă: spune **„aici se poate
+apăsa"**. De-aia îl au nodurile ACCESIBILE. Pe nodul curent însă nu se poate
+apăsa — pe el stai deja — deci pulsul nu comunica nimic acolo; doar se mișca.
+
+**Ce s-a schimbat.** `Stare.CURENT` are acum `puls: 0.000`. Localizarea („unde
+sunt acum") rămâne în întregime pe seama AUREI, care e oricum singura lumină de
+pe pergament și are propria ei pâlpâire (`PALPAIRE_AURA`, ciclu de 3,2 s). Nodul
+curent nu devine mort — mișcarea lui e de-acum lumină, nu geometrie.
+
+**De ce a fost de ajuns o cifră.** Scara respirației e `1.0 + sin(...) *
+amplitudine`; cu amplitudinea zero rămâne fix 1,0, iar tot ce se desenează în
+transformarea aia încremenește odată cu ea — inclusiv X-ul de „parcurs", care se
+suprapune peste sabie pe nodul unde tocmai ai luptat. Aura nu depinde de scară,
+ci de `_timp`, iar `configureaza()` pornea deja `_process` cu
+`set_process(amplitudine > 0.0 or stare == Stare.CURENT)`: condiția a doua exista
+tocmai pentru cazul ăsta, cu pulsul stins și timpul curgând mai departe pentru
+lumină. N-a trebuit atinsă.
+
+**Se aplică pe orice nod pe care stă figurina**, nu doar pe cel de Luptă — și e
+bine așa: pulsul rămâne semnul lucrului pe care poți apăsa, adică exact acolo
+unde înseamnă ceva.
+
+*Atins:* `scenes/harta/simbol_nod.gd` (un rând din `INFATISARI` + nota de ce).
 
 ---
 
