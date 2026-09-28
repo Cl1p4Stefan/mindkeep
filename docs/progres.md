@@ -17,7 +17,7 @@
 | 6. Harta de expediție | ✅ loadout „N din M" · **12-16 noduri**, ramificate, cu sămânță · Luptă / Elită / Odihnă / Eveniment / **Magazin** / **Boss** · **Monede + puteri temporare** · sumar de run · aspect: pergament, simboluri de cerneală, trasee punctate · **nodurile și drumurile stau pe o PANGLICĂ (curbă centrală + benzi)**, nu pe o grilă dreaptă · **patru trasee, toate verzi pe 300 de semințe** (POTCOAVĂ activă; POTCOAVA OGLINDITĂ e aceeași formă, întoarsă) · strat înclinat (forfecare) la ȘARPE · **drumuri care nu se încrucișează niciodată (0 la 300 de semințe)** · **nodul curent are și aură, și X** · **două surse de hartă: GENERATĂ (panglica) sau DESENATĂ dintr-un fișier `data/harti/*.json`** — comutatorul `Expeditie.SURSA_HARTII`; azi e pe DESENATĂ · **harta umple pergamentul**: pânza ține toată pagina, antetul plutește peste ea (805 × 427 px de hartă, de la 666 × 353) · **drumurile merg în amândouă sensurile**, cu nodul parcurs tăiat definitiv și cu garanția, verificată pe 16 000 de expediții simulate, că nu te poți înfunda · **figurina sare, cade ca un slam și zguduie ecranul la aterizare**, cu un răgaz de 0,5 s înainte să se deschidă nodul · **tipurile nodurilor se împart după o REȚETĂ fixă, nu se trag cu zarul**: 9 reguli de vecinătate și de început, plasare conștientă de reguli, verificare completă și reîncercare cu sub-sămânță (0 eșecuri pe 500 de semințe × 3 surse de hartă) · rețeta se **plafonează după forma hărții**, nu după numărul de noduri · **nodul de Eveniment deschide Lacătul** (nivel din adâncime, sămânță din nodul, 6/10/14 Monede la succes) |
 | 7. Cetatea | ❌ |
 | 8. Save/Load | 🟡 tezaurul, sacul și expediția știu toate să se serializeze (`spre_dictionar` / `din_dictionar`), pe trei straturi de durată; scrierea pe disc, nu încă |
-| 9. Celelalte discipline | 🟡 Cultură generală ✅ (135 de întrebări, fiecare cu **`id` stabil** (`mana:0001`…); **15 fapte cu note** în `data/fapte_trivia.json`, 18 întrebări legate de ele, nota intră în `explicatie` dar nu se afișează încă; **planul de creștere spre mii și modul Practice sunt decise**, vezi sesiunile CONȚINUTUL și ID ȘI FAPT) · Logica ✅ (80 de categorii) · Cuvinte ✅ · toate trei fără repetiții pe expediție, **Cultura generală după `id`, nu după text** · celelalte 5 ❌ |
+| 9. Celelalte discipline | 🟡 Cultură generală ✅ (**274 de întrebări**: 135 scrise de mână (`mana:0001`…) + **139 fabricate din Wikidata** (`wd:Q897:simbol:…`), în două fișiere care nu se ating; **15 fapte cu note** + 70 de fapte fabricate fără notă; **alegerea din luptă e în două trepte** — întâi domeniul, uniform, apoi întrebarea, cu sacul pe cheie de domeniu ȘI nivel; comutator `FOLOSESTE_WIKIDATA`; vezi sesiunile CONȚINUTUL, ID ȘI FAPT și FABRICA) · Logica ✅ (80 de categorii) · Cuvinte ✅ · toate trei fără repetiții pe expediție, **Cultura generală după `id`, nu după text** · celelalte 5 ❌ |
 | 10–13. Generator de inamici, artă, web | ❌ (artă parțial: figurile principale și piesele de pe butoanele de Obelisc au imagini reale · **arena are fundal: biblioteca gotică**, cu personajele așezate pe dalele din prim-plan, umbră de contact și lumină de sală) · Regina: **amânată**, vezi CLAUDE.md |
 
 Nodul de **Eveniment** are primul lui conținut: **Lacătul** — un cufăr cu cifru,
@@ -507,6 +507,303 @@ Neatinse: `generator_cifru.gd`, `rezolvitor_cifru.gd`, `banda_cifre.gd`,
    Evenimente pe hartă și un singur conținut e exact felul în care un nod bun
    devine plictisitor.
 3. **Nota pentru Save** de mai sus, când se ajunge la pasul 8.
+
+---
+
+## FABRICA (28 septembrie 2026) — primul tabel din Wikidata, elementele chimice
+
+Punctul 4 din lista „Imediat”. Scopul n-a fost volumul, a fost o întrebare: **cum
+arată întrebările generate lângă cele scrise de mână?** Răspunsul e mai bun decât
+mă așteptam, dar lecția cea mai folositoare e despre CE anume poate da un tabel de
+date și ce nu.
+
+Rezultat: **139 de întrebări** din 70 de elemente, în două sensuri („simbolul
+aurului?” și „ce element are simbolul Au?”), plus alegerea din luptă rescrisă și
+două verificări noi, amândouă probate că pot pica.
+
+### Wikidata îți dă faptul, niciodată pedagogia și niciodată gramatica
+
+Asta e concluzia sesiunii, și merită ținută minte înainte de următorul tabel.
+
+Mașina a adus: simbolul (autoritar, CC0), dovada că relația element ↔ simbol e
+unu-la-unu, distractorii, id-urile, ambele sensuri, JSON-ul. Adică relațiile și
+combinatorica.
+
+Ce a rămas de mână, și n-avea cum să fie altfel:
+
+- **CARE elemente sunt cultură generală** pentru un adult român. Wikidata știe
+  toate cele 118, plus 56 ipotetice.
+- **CE NIVEL are fiecare.** Vezi mai jos de ce măsurătoarea a picat.
+- **GRAMATICA.** „Care este simbolul chimic al aurului?” cere genitivul cu
+  articol, iar el nu se calculează din nominativ: aur→aurului, platină→platinei.
+  70 de forme, scrise de mână. Plata: întrebarea generată iese **identică** cu
+  `mana:0018`, cea scrisă de mână — care e chiar proba pe care voiam s-o dau.
+
+### Nivelul: două măsurători automate, amândouă picate
+
+Cerința era să MĂSOR înainte să aleg metoda, nu s-o presupun. Bine că așa a fost,
+fiindcă datele au ieșit altfel decât ghicisem.
+
+**Numărul de ediții Wikipedia** (`wikibase:sitelinks`) separă foarte bine ceva —
+doar că nu ce trebuie. Elementele reale stau între 124 și 277 de ediții; cele
+ipotetice, între 0 și 57. Deci măsura deosebește „element real” de „căsuță goală
+din tabelul periodic”, ceea ce numărul atomic face deja și mai bine. **Între
+elementele reale**, decila 1 și decila 9 sunt 132 și 176: o bandă de vreo 1,5×,
+pentru o diferență de dificultate care merge de la „o știe oricine” la „doar dacă
+te-a interesat”. Și ordinea se contrazice pe bucăți: radonul (nivel III) are 155
+de ediții, wolframul (nivel II) are 150; neodimul (III) are 134, molibdenul (III)
+are 147. Zgomot cu aspect de cifră.
+
+**„Simbolul se deduce din numele românesc?”** era ideea mai bună — dificultatea
+reală nu e cât de celebru e elementul, ci cât de departe e simbolul de cuvântul pe
+care-l știi (`oxigen → O` e deducție, `argint → Ag` e memorare). **N-a putut fi
+scrisă cinstit.** Testul „subșir” zice că Ag se deduce din argint (a…g, în ordine).
+Testul „prefix exact” zice că Zn NU se deduce din zinc și Mg nu se deduce din
+magneziu. Un clasificator care greșește în ambele direcții e mai rău decât nicio
+automatizare: ascunde o judecată într-o formulă care pare obiectivă.
+
+**Deci nivelul e o coloană scrisă de mână** (20 la nivelul I, 26 la II, 24 la III).
+Automat a rămas o singură verificare, îngustă și de încredere: `DIN_LATINA` —
+elementele al căror simbol vine dintr-un nume latin DIFERIT de cel românesc (Na,
+K, Fe, Ag, Hg, Pb, Sn, Sb, N) nu au voie la nivelul I, fiindcă simbolul lor nu
+poate fi dedus, doar știut. Aurul și cuprul vin și ele din latină (*aurum*,
+*cuprum*) dar COINCID cu românescul — și exact de-aia aurul e nivelul I, iar
+argintul nivelul II.
+
+### Descoperirea din date: Wikidata are 174 de elemente, nu 118
+
+Peste cele descoperite, ține și elementele **ipotetice**, cu numele lor sistematic
+(ununennium, unbinilium, unbiquadiu…). Iar **nouă dintre ele au etichetă în
+română**, deci filtrul „are etichetă română” — cel decis în sesiunea CONȚINUTUL ca
+semn de cultură generală — le-ar fi lăsat să treacă. Nu ajung în joc, fiindcă
+tabelul e scris de mână, dar exact așa arată greșeala pe care n-o vezi: într-o zi
+în care selecția ar fi mai automată, „unbiquadiu” ar intra ca element de cultură
+generală. De aceea scriptul cere acum numărul atomic de la fiecare element ales și
+refuză orice Z peste 118 (`ZMAX`).
+
+### Distractorii: regula, și garda care a fost aruncată
+
+Punctajul pornește de la cerință: la „simbolul aurului”, Ag și Al, nu Xe.
+
+| | `cere_simbol` (răspunsul e un simbol) | `cere_nume` (răspunsul e un nume) |
+|---|---|---|
+| **+100** | simbol cu aceeași primă literă ca cel corect (Au → Ag, Al, Ar, As) | element al cărui simbol începe cu litera simbolului cerut (Hg → hidrogen, heliu) |
+| **+50** | simbol care ar putea fi o prescurtare a numelui cerut (sodiu → S, Si, Sc) | nume care începe cu litera simbolului cerut |
+| **+10/5** | același nivel / nivel vecin | la fel |
+
+Egalitățile se rup cu un `blake2b` peste (QID-ul întrebării, sens, QID-ul
+candidatului) — nu pe QID crescător. Motivul: în Wikidata QID-urile mici sunt
+exact elementele celebre (hidrogenul e Q556), deci „la egalitate, QID-ul mai mic”
+punea hidrogenul și heliul ca distractori la jumătate din întrebări. „Răspunsul nu
+e niciodată hidrogenul” e o scurtătură prin care marchezi puncte fără să gândești,
+adică exact ce `_amesteca` din `trivia.gd` a fost scrisă să închidă, reapărută pe
+alt drum. `hash()` din Python n-ar fi mers: e sărat la fiecare pornire, deci ar da
+alt fișier la fiecare rulare.
+
+**Garda aruncată** merită scrisă, fiindcă e o greșeală de design pe care măsurarea
+a oprit-o. Scrisesem „dacă toți trei distractorii încep cu o literă pe care
+răspunsul n-o are, schimbă unul”. Am măsurat: tiparul „alege-l pe cel diferit”
+mergea la **4 din 139** de întrebări — iar trei dintre ele erau cele mai bune
+întrebări din tot lotul:
+
+```
+Ce element chimic are simbolul N?   neon / neodim / nichel / AZOT
+Ce element chimic are simbolul Na?  niobiu / neodim / neon / SODIU
+Ce element chimic are simbolul P?   plumb / poloniu / platină / FOSFOR
+```
+
+Grupul de „n”-uri **este** lecția (N e azotul, nu neonul), iar tiparul duce
+DEPARTE de răspuns, deci cine se ia după el greșește. Sunt exact elementele din
+`DIN_LATINA`. Garda le-ar fi stricat pe toate trei.
+
+A patra era însă un accident curat: `Care este simbolul chimic al uraniului? Cl /
+Cu / C / U` — trei simboluri de carbon în jurul uraniului, ieșite din ruperea
+egalităților, fiindcă uraniul n-are niciun frate pe litera U.
+
+**Deci regula finală nu e „nu lăsa un grup de litere”, e: un grup e LEGITIM dacă
+litera lui e despre întrebare** — prima literă a simbolului cerut sau a numelui
+cerut. Altfel e o coincidență și se rupe. A schimbat exact o întrebare din 139 și
+n-a atins niciuna din cele trei bune.
+
+Cât de des ies distractori cu aceeași literă: **91 din 139** au toți trei, 18 n-au
+niciunul (elementele singure pe litera lor — Li, O, U, Zn, Xe, W, Ti, I, Os). La
+alea distractorii sunt metale plauzibile, fără confuzie de litere; sunt întrebări
+cinstite, doar mai puțin elegante.
+
+### Fișiere și unelte
+
+`tools/fabrica/elemente.py`, în Python, **numai cu biblioteca standard**:
+
+| comandă | ce face |
+|---|---|
+| `--masoara` | interoghează (sau citește cache-ul), verifică relația, tipărește distribuția sitelinks și etichetele lipsă. Nu scrie nimic în `data/` |
+| (fără flag) | probă uscată: raportul întreg, grila și 15 mostre, fără să scrie |
+| `--scrie` | scrie cele două fișiere din `data/` |
+| `--reincarca` | reia din rețea și rescrie cache-ul |
+| `--seed=N` | fixează sămânța mostrelor, ca să poți reciti exact aceleași 15 |
+
+**Cache comis în Git** (`tools/fabrica/cache/wikidata_elemente.json`), cu data și
+interogarea alături de răspuns. Wikidata se editează; vreau să văd diferența CÂND
+O CER, nu să apară singură într-un diff din `data/`. Un generator care depinde de o
+sursă vie și n-o îngheață nu e un generator, e o rulare norocoasă.
+
+**Contactul pentru User-Agent nu stă în cod.** Wikimedia cere un User-Agent
+descriptiv cu un om de contact; scriptul îl citește din `MINDKEEP_CONTACT` sau din
+`tools/fabrica/contact.txt` (în `.gitignore`), și se oprește cu un mesaj clar dacă
+lipsește — dar **numai când atinge rețeaua**. O rulare din cache nu-l cere, deci
+scriptul merge pe orice mașină care are cache-ul.
+
+**Opririle stricte**, în spiritul lui `da_iduri.py`:
+
+- relația element ↔ simbol, verificată unu-la-unu pe toate cele 174;
+- fiecare simbol din tabel trebuie să existe, iar eticheta română de la Wikidata
+  trebuie să se potrivească cu numele scris de mână (toate neconcordanțele se adună
+  și se arată dintr-o dată, nu prima);
+- numărul atomic între 1 și 118;
+- `DIN_LATINA` la nivelul I;
+- **dublurile**, în ambele sensuri: o întrebare scrisă de mână care se suprapune și
+  nu e declarată în `DUBLURI` oprește scriptul, dar și o declarație din `DUBLURI`
+  care nu se mai găsește în fișier. Prima prinde ziua în care scriu de mână
+  „simbolul chimic al fierului” și uit să vin aici; a doua prinde o întrebare bună
+  scoasă din joc degeaba.
+
+Azi e o singură dublură: `Au / cere_simbol ← mana:0018`. („Ce element chimic are
+numărul atomic 79?” nu e dublură — e altă relație, chiar dacă răspunsul e tot
+aurul.)
+
+Fișierul generat se scrie în **același format** ca cel scris de mână (taburi,
+`variante` pe un singur rând, linii goale între niveluri), nu cu `json.dump`. Nu e
+cochetărie: `json.dump` ar pune fiecare variantă pe rândul ei, iar fișierul ar sări
+de la 1200 la 2000 de linii, cu diff-uri pe care nu le mai poți citi când adaugi
+patru elemente.
+
+### În joc: alegerea în două trepte
+
+Datele **nu mai sunt echilibrate** și nu pot fi: știința are 47/60/56 de întrebări
+pe nivel, mitologia 7/7/7. Dacă alegerea ar fi rămas „trage din tot nivelul”,
+știința ar fi luat 55–62% din întrebări (măsurat) și „Cultură generală” ar fi
+devenit „Chimie, cu accidente”.
+
+Deci **echilibrul s-a mutat din date în ALEGERE**, unde nu depinde de cât de mare
+crește un domeniu: întâi domeniul, uniform între cele prezente la nivelul cerut,
+apoi întrebarea. Aceeași formă ca la Logică, unde alegerea în două trepte e chiar
+ce împiedică „Fibonacci” să apară cât toate celelalte la un loc.
+
+Alegerea a ieșit din `_compune_intrebare` într-o funcție **statică**,
+`trage_intrebarea(nivel)`, ca s-o poată chema verificarea headless. Altfel
+verificarea ar fi trebuit să rescrie alegerea la ea, și ar fi probat copia, nu
+codul.
+
+**Capcana sacului, cea despre care eram avertizat.** `Sac.extrage` golește tot
+registrul unei chei când lista primită se epuizează. Alegerea în două trepte îi dă
+o listă filtrată pe UN domeniu, deci cu cheia veche `cultura_generala:1` epuizarea
+științei ar fi șters și memoria geografiei, a istoriei și a celorlalte de pe același
+nivel. Cheia e acum `cultura_generala:<domeniu>:<nivel>`, compusă într-un singur
+loc (`cheia_sacului`), ca verificarea să folosească exact cheia luptei. Efect
+secundar bun: garanția devine „nicio repetiție ÎN CADRUL unui domeniu”, care e mai
+tare, nu mai slabă.
+
+**Comutatorul** e o singură constantă: `FOLOSESTE_WIKIDATA` în `trivia.gd`. `false`
+și jocul nu mai vede nici întrebările fabricate, nici faptele lor.
+
+### Cifra pe care vreau s-o am sub ochi
+
+Știința e acum ~85% chimie la fiecare nivel. Cu alegerea uniformă pe domenii,
+știința ia o șesime din întrebări, deci **cam 1 din 7 întrebări de luptă e
+„element ↔ simbol”**. Pentru un pilot e bine — le vezi destul ca să-ți formezi o
+părere. Dacă se simte prea mult, pârghia NU e o a treia treaptă de alegere
+(mașinărie care ascunde problema), e lățimea conținutului. Sau comutatorul.
+
+Alt lucru de urmărit pe mână: la nivelul I s-a format un **cvartet închis** —
+`C / Ca / Cl / Cu` apar ca aceleași patru butoane la opt întrebări (carbon,
+calciu, clor, cupru, în ambele sensuri). Ca exercițiu de discriminare e bun; ca
+senzație într-o luptă, poate părea că baza e subțire. De văzut jucând.
+
+### Verificatorul: două verificări noi, amândouă probate că pot pica
+
+`tools/verifica_trivia.gd` are acum șase secțiuni. Cele noi:
+
+**ECHILIBRUL PE DOMENII** — 6000 de trageri pe fiecare nivel, prin chiar
+`TRIVIA.trage_intrebarea`, cu cerința ca fiecare domeniu să iasă la 1/N ± 20%.
+Ținta e 1/N, nu 1/6: dacă un nivel n-are mitologie, celelalte cinci împart tot.
+Rezultat: abatere maximă 5,3%.
+
+**SACURILE NU SE AMESTECĂ** — se golește complet știința de nivelul I, apoi se
+întreabă arta dacă își mai ține minte biletele.
+
+Amândouă au fost **probate rupând codul intenționat**, fiindcă un test care nu
+poate pica nu verifică nimic:
+
+| ce am rupt | ce a picat |
+|---|---|
+| scos treapta domeniului din alegere | echilibrul: știința 3294 din 6000 la nivelul I, abatere 229% |
+| scos domeniul din cheia sacului | „arta își ține minte”: `mana:0029` a ieșit de două ori într-un ciclu |
+
+Și un rezultat care justifică singur testul țintit: **cu cheia ruptă, secțiunea
+SACUL a trecut liniștită** („18 chei fără nicio repetiție”). Fiecare buclă de acolo
+trage exact cât are lista ei, deci nu ajunge niciodată la reciclare. Doar testul
+care golește un domeniu și întreabă altul prinde greșeala.
+
+Celelalte schimbări din verificator:
+
+- `CATE_INTREBARI` a devenit `CATE_INTREBARI_MANA` (135). Pentru fișierul fabricat
+  nu se scrie nicio cifră: crește de câte ori adaug un element, iar o cifră aici ar
+  fi o a doua editare la fiecare schimbare de conținut — adică exact felul de
+  verificare pe care începi s-o actualizezi mecanic. Pentru el se cere
+  **invarianta**: încărcate == găsite (274 din 274).
+- **forma id-ului e acum pe prefix.** Verificarea veche cerea „prefix, două puncte,
+  cifre” pentru orice id, scrisă dinadins ca să nu depindă de prefix — și a fost
+  picată de chiar primul prefix nou: `wd:Q897:simbol:cere_nume` are patru bucăți și
+  niciuna nu e un număr. Acum `mana:` cere cifre, `wd:` cere `Q<cifre>:relație:sens`,
+  iar un prefix necunoscut **cade dinadins**: dacă apare o fabrică nouă, vreau să
+  vin să scriu ce formă are.
+- SACUL probează 18 chei (domeniu × nivel), nu 3, și **sare peste sacurile cu o
+  singură întrebare** la proba răscrucii: acolo regula nu se poate respecta, iar
+  `sac.gd` o încalcă dinadins.
+
+### Regula care trebuie scrisă acum, ca să nu se piardă
+
+`data/fapte_trivia_wd.json` se **rescrie întreg** la fiecare rulare. Deci
+**notele pentru faptele `wd:` NU pot sta în el** — prima regenerare le-ar șterge.
+Când vor exista note, ele vor sta într-unul din două locuri:
+
+1. în `data/fapte_trivia.json`, cel scris de mână, cu `id`-ul `wd:Q897` — generarea
+   nu-l atinge niciodată; **sau**
+2. scriptul învață să PĂSTREZE `nota`, `surse` și `verificat` pentru id-urile care
+   există deja în fișierul generat, și rescrie doar restul.
+
+Nu s-a implementat nimic azi, dinadins: cele 70 de fapte au nota goală și n-are ce
+să se piardă. Dar decizia trebuie luată **înainte** de prima notă scrisă.
+
+Fișierul de fapte fabricate există dintr-un motiv mai mic și mai practic: fără el,
+jocul ar porni cu 139 de avertismente „faptul `wd:Q897` nu există”, iar de-acolo
+încolo consola nu mai e un loc unde se citește ceva.
+
+### Verificat
+
+- `--masoara`: relația unu-la-unu pe 174 de elemente, 118 reale, 118 cu etichetă
+  română, 9 ipotetice care trec prin filtrul de etichetă.
+- `--scrie`: 139 de întrebări, 70 de fapte, JSON valid citit înapoi, id-uri unice
+  în fișier și peste cel scris de mână (135 + 139).
+- Citite cu ochiul toate cele 139 de întrebări, în ambele sensuri.
+- Verificarea headless: **TOTUL E BUN**, 15 verdicte OK.
+- Ambele verificări noi, probate rupând codul (tabelul de mai sus).
+
+### Ce NU s-a făcut
+
+- **Nicio notă.** Cele 70 de fapte fabricate au `nota: ""`.
+- **Nicio partidă jucată** cu conținutul nou. Cifra de 1 din 7 și cvartetul
+  `C/Ca/Cl/Cu` sunt de simțit, nu de calculat.
+- **Verificarea notelor din pilot** (punctul 2 din „Imediat”) rămâne nefăcută.
+
+### Fișiere
+
+Nou: `tools/fabrica/elemente.py`, `tools/fabrica/cache/wikidata_elemente.json`,
+`data/intrebari_trivia_wd.json`, `data/fapte_trivia_wd.json`.
+Atinse: `scenes/trivia/trivia.gd` (comutator, al doilea fișier, `trage_intrebarea`
+și `cheia_sacului` scoase ca funcții statice, `_incarca_fisier`, `_incarca_fapte`
+pe cale), `tools/verifica_trivia.gd` (șase secțiuni), `.gitignore`
+(`tools/fabrica/contact.txt`), `docs/progres.md`.
 
 ---
 
@@ -5572,10 +5869,16 @@ EVENIMENTUL DESCHIDE CUFĂRUL), punctul 3 pe 28 septembrie (sesiunea ID ȘI FAPT
    întrebare din pilot („În ce perioadă a domnit Ștefan cel Mare?”), și **regula
    nouă: un `id` nu se refolosește niciodată**, deci întrebările nu se șterg din
    fișier, se marchează `"retras": true`.
-4. **Un tabel de probă din Wikidata**: un script mic, un domeniu (candidat:
-   elementele chimice), 100–200 de întrebări. Scopul e să văd cum arată cele
-   generate lângă cele scrise de mână, nu volumul. Rezolvă și problema de
-   testare: aduce întrebări pe care nu le știu pe de rost.
+4. ~~**Un tabel de probă din Wikidata.**~~ **FĂCUT** pe 28 septembrie (sesiunea
+   FABRICA): `tools/fabrica/elemente.py`, 139 de întrebări din 70 de elemente,
+   alegerea din luptă în două trepte, sacul pe cheie de domeniu, două verificări
+   noi probate rupând codul. **Ce a rămas de aici:**
+   - **jucat pe mână**, ca să văd dacă „1 din 7 întrebări de luptă e element ↔
+     simbol” se simte mult, și dacă cvartetul `C / Ca / Cl / Cu` de la nivelul I
+     pare exercițiu sau conținut subțire. Pârghia e `FOLOSESTE_WIKIDATA`.
+   - **decizia despre notele `wd:`**, ÎNAINTE de prima notă scrisă: fișierul
+     generat se rescrie întreg, deci notele nu pot sta în el. Cele două variante
+     sunt în sesiunea FABRICA, la „Regula care trebuie scrisă acum”.
 5. **Apoi înapoi pe rută: Cetatea (7), Save (8).** La Save, sacul Culturii
    generale trece în stratul permanent, cu cheile pentru Practice gândite de la
    început. **Și o regulă de care depinde Lacătul:** prima scriere pe disc a unei

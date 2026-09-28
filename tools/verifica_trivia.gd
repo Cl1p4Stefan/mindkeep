@@ -8,10 +8,14 @@ extends Node
 ## DE CE O UNEALTĂ, ȘI NU O PARTIDĂ
 ##
 ## Conținutul Culturii generale nu se poate proba jucând. Ca să vezi în luptă că
-## `mana:0088` are notă, trebuie să pici pe ea: una din 45, pe un nivel, cu
-## Obeliscul potrivit. Ca să vezi că sacul nu repetă, ar trebui să tragi toate
-## cele 45 și să ții minte care au ieșit. Cu 135 de întrebări ar fi obositor; cu
-## mii (ținta din sesiunea CONȚINUTUL) e imposibil.
+## `mana:0088` are notă, trebuie să pici pe ea: una din câteva zeci, pe un nivel,
+## cu Obeliscul potrivit. Ca să vezi că sacul nu repetă, ar trebui să le tragi pe
+## toate și să ții minte care au ieșit. Cu 135 de întrebări ar fi obositor; cu 274
+## (de când există conținut fabricat) nu se mai poate; cu mii, e de neînchipuit.
+##
+## Iar de azi se verifică și lucruri care nu sunt „conținut": ECHILIBRUL pe domenii
+## la alegerea din luptă e o probabilitate, nu o listă. O probabilitate strâmbă nu
+## se vede la o partidă, se vede la o mie.
 ##
 ## Aici totul se citește dintr-un foc, fără fereastră și fără cronometru.
 ##
@@ -41,12 +45,23 @@ extends Node
 ##   NICIUN FAPT NEFOLOSIT. Conținut mort. Nu strică nimic în joc și exact de-aia
 ##   n-ar fi găsit niciodată altfel.
 ##
-##   SACUL NU REPETĂ PE UN CICLU. Cea mai importantă, fiindcă e o GARANȚIE, nu o
-##   probabilitate, și fiindcă e singura care s-a schimbat azi: sacul recunoaște
-##   întrebările după `id` în loc de text. Se trage un nivel întreg și se numără
-##   id-urile distincte — trebuie să iasă exact câte întrebări are nivelul. Apoi
-##   încă o tragere, prima din ciclul nou, care nu trebuie s-o repete pe ultima
-##   din ciclul vechi (regula de la răscruce din `sac.gd`).
+##   ECHILIBRUL PE DOMENII, la alegerea din luptă. Datele nu mai sunt echilibrate
+##   (știința are ~160 de întrebări, mitologia 21); echilibrul stă acum în
+##   ALEGERE, în două trepte. Se trag câteva mii de întrebări pe fiecare nivel,
+##   prin chiar funcția pe care o folosește lupta, și se cere ca fiecare domeniu
+##   să iasă pe la 1/N. Verificarea asta e cea mai greu de înlocuit cu ochiul.
+##
+##   SACUL NU REPETĂ PE UN CICLU. E o GARANȚIE, nu o probabilitate: se trage un
+##   sac întreg și se numără id-urile distincte — trebuie să iasă exact câte
+##   întrebări are. Apoi încă o tragere, prima din ciclul nou, care nu trebuie
+##   s-o repete pe ultima din ciclul vechi (regula de la răscruce din `sac.gd`).
+##   Cheile sunt pe DOMENIU și nivel, deci se probează 18 sacuri, nu 3.
+##
+##   SACURILE NU SE AMESTECĂ ÎNTRE DOMENII. Cea mai țintită: se golește complet un
+##   domeniu și se întreabă altul dacă își mai ține minte biletele. `Sac.extrage`
+##   golește registrul unei chei când lista se epuizează, deci o cheie care n-ar
+##   cuprinde domeniul ar șterge memoria tuturor celorlalte. Nu s-ar fi văzut ca
+##   un bug — s-ar fi văzut ca „parcă se repetă ceva, uneori".
 ##
 ## Ce NU verifică: nimic despre CE SCRIE în note. Că un an e corect sau că nota
 ## se înțelege singură se citește cu ochiul, după `docs/ghid-note.md` — niciun
@@ -59,13 +74,29 @@ extends Node
 # pornește niciun cronometru și nu se sună niciun sunet.
 const TRIVIA := preload("res://scenes/trivia/trivia.gd")
 
-# Câte întrebări ar trebui să fie în fișier, și câte fapte. Scrise aici, nu
-# citite din fișier, fiindcă o verificare care-și ia așteptările din lucrul
-# verificat nu verifică nimic: dacă mâine dispar 10 întrebări, „am găsit câte am
-# găsit" ar trece liniștită.
-const CATE_INTREBARI := 135
+# Câte întrebări ar trebui să fie în FIȘIERUL SCRIS DE MÂNĂ, și câte fapte cu
+# notă. Scrise aici, nu citite din fișier, fiindcă o verificare care-și ia
+# așteptările din lucrul verificat nu verifică nimic: dacă mâine dispar 10
+# întrebări, „am găsit câte am găsit" ar trece liniștită.
+#
+# DE CE NUMAI PENTRU CELE SCRISE DE MÂNĂ. Fișierul fabricat crește de câte ori
+# adaug un element în tabelul din `tools/fabrica/elemente.py`, deci o cifră scrisă
+# aici ar fi o a doua editare, într-un alt fișier, la fiecare schimbare de
+# conținut — adică exact felul de verificare pe care începi s-o actualizezi
+# mecanic, fără s-o mai citești. Pentru cele fabricate se verifică INVARIANTA:
+# câte s-au încărcat = câte s-au găsit. Aia nu se schimbă niciodată, oricât crește
+# fișierul, și e chiar ce vrei să afli (o întrebare stricată e sărită în tăcere).
+const CATE_INTREBARI_MANA := 135
 const CATE_FAPTE := 15
 const CATE_CU_NOTA := 18
+
+# Câte trageri se fac ca să se măsoare echilibrul pe domenii. Destule ca abaterea
+# întâmplătoare să scadă sub ce ne interesează: la 6000 de trageri și 6 domenii,
+# fiecare ar trebui să iasă pe la 1000, iar împrăștierea normală e de vreo ±30.
+# Toleranța de mai jos e cu mult peste ea, deci verificarea pică doar dacă
+# alegerea e într-adevăr strâmbă, nu dacă zarul a avut o zi.
+const TRAGERI_ECHILIBRU := 6000
+const TOLERANTA_ECHILIBRU := 0.20
 
 
 func _ready() -> void:
@@ -80,7 +111,9 @@ func _ready() -> void:
 	tot_bun = _incarcarea(intrebari, fapte) and tot_bun
 	tot_bun = _identitatile(intrebari) and tot_bun
 	tot_bun = _notele(intrebari, fapte) and tot_bun
+	tot_bun = _echilibrul(intrebari) and tot_bun
 	tot_bun = _sacul(intrebari) and tot_bun
+	tot_bun = _sacurile_nu_se_amesteca(intrebari) and tot_bun
 
 	print("\n══ %s ══\n" % ("TOTUL E BUN" if tot_bun else "SUNT PROBLEME, vezi mai sus"))
 	# Codul de ieșire, ca verificarea să poată fi pusă într-un script care
@@ -95,10 +128,34 @@ func _ready() -> void:
 func _incarcarea(intrebari: Array, fapte: Dictionary) -> bool:
 	print("  ÎNCĂRCAREA")
 	var tot_bun := true
-	tot_bun = _verdict("întrebări încărcate", intrebari.size() == CATE_INTREBARI,
-		"%d din %d așteptate" % [intrebari.size(), CATE_INTREBARI]) and tot_bun
-	tot_bun = _verdict("fapte încărcate", fapte.size() == CATE_FAPTE,
-		"%d din %d așteptate" % [fapte.size(), CATE_FAPTE]) and tot_bun
+
+	# Fișierele, citite A DOUA OARĂ, direct de pe disc. Pare risipă, dar e chiar
+	# ce face verificarea posibilă: `intrebari` de mai sus e ce a TRECUT, iar
+	# singurul lucru care ne interesează aici e dacă s-a pierdut ceva pe drum.
+	# Fără numărul brut n-am cu ce compara.
+	var brute_mana := Puzzle.citeste_lista_json(TRIVIA.CALE_INTREBARI, "Verificare")
+	var brute_wd: Array = []
+	if TRIVIA.FOLOSESTE_WIKIDATA:
+		brute_wd = Puzzle.citeste_lista_json(TRIVIA.CALE_INTREBARI_WD, "Verificare")
+
+	# Fișierul scris de mână are o cifră așteptată, fiindcă nu crește decât când
+	# scriu o întrebare. Cel fabricat nu are — vezi comentariul de la constante.
+	tot_bun = _verdict("fișierul scris de mână", brute_mana.size() == CATE_INTREBARI_MANA,
+		"%d din %d așteptate" % [brute_mana.size(), CATE_INTREBARI_MANA]) and tot_bun
+
+	# INVARIANTA, și cea mai importantă verificare din secțiune: încărcătorul SARE
+	# peste intrările stricate, cu un `push_warning` care nu oprește nimic și se
+	# pierde ușor într-o consolă plină. „274 încărcate din 274 găsite" e singurul
+	# loc unde o întrebare pierdută se vede ca un număr.
+	var gasite := brute_mana.size() + brute_wd.size()
+	tot_bun = _verdict("toate întrebările au trecut", intrebari.size() == gasite,
+		"%d încărcate din %d găsite" % [intrebari.size(), gasite]) and tot_bun
+
+	print("    %-42s %d de mână + %d fabricate" % [
+		"din ce fișiere", brute_mana.size(), brute_wd.size()])
+
+	tot_bun = _verdict("fapte încărcate (ambele fișiere)", fapte.size() >= CATE_FAPTE,
+		"%d, dintre care cel puțin %d scrise de mână" % [fapte.size(), CATE_FAPTE]) and tot_bun
 
 	# Echilibrul pe niveluri. Nu e o regulă de cod, e o regulă de conținut
 	# (`trivia.gd`, antet): un nivel mai sărac decât celelalte se golește mai
@@ -114,6 +171,25 @@ func _incarcarea(intrebari: Array, fapte: Dictionary) -> bool:
 	for nivel in niveluri:
 		bucati.append("%d: %d" % [nivel, pe_nivel[nivel]])
 	print("    %-42s %s" % ["pe niveluri", ", ".join(bucati)])
+
+	# Și pe domenii, ca să se VADĂ dezechilibrul din date — cel pe care alegerea
+	# în două trepte îl face să nu mai conteze. Nu e un verdict: un domeniu de
+	# patru ori mai mare decât altul nu mai e o greșeală, de când echilibrul stă
+	# în alegere. Dar e o cifră pe care vreau s-o am sub ochi.
+	for nivel in range(1, 4):
+		var pe_domenii := {}
+		for q in intrebari:
+			if int(q["nivel"]) != nivel:
+				continue
+			var d := String(q["categorie"])
+			pe_domenii[d] = int(pe_domenii.get(d, 0)) + 1
+		var domenii: Array = pe_domenii.keys()
+		domenii.sort()
+		var b: Array[String] = []
+		for d in domenii:
+			b.append("%s %d" % [d, pe_domenii[d]])
+		print("    %-42s %s" % ["  nivelul %d, pe domenii" % nivel, ", ".join(b)])
+
 	return tot_bun
 
 
@@ -137,12 +213,7 @@ func _identitatile(intrebari: Array) -> bool:
 			duplicate.append(id_intrebare)
 		vazute[id_intrebare] = true
 
-		# Forma așteptată: un prefix, două puncte, și cifre. Prefixul spune din ce
-		# fabrică vine întrebarea (`mana:` = scrisă de mână, `wd:` = din Wikidata),
-		# deci verificăm forma, nu prefixul: un prefix nou nu trebuie să picheze
-		# verificarea asta.
-		var bucati := id_intrebare.split(":")
-		if bucati.size() != 2 or bucati[0] == "" or not bucati[1].is_valid_int():
+		if not _forma_buna(id_intrebare):
 			forme_ciudate.append(id_intrebare)
 
 	var tot_bun := true
@@ -151,9 +222,55 @@ func _identitatile(intrebari: Array) -> bool:
 	tot_bun = _verdict("id-uri unice", duplicate.is_empty(),
 		"%d distincte" % vazute.size() if duplicate.is_empty()
 		else "duplicate: %s" % _primele(duplicate, 5)) and tot_bun
-	tot_bun = _verdict("forma 'prefix:cifre'", forme_ciudate.is_empty(),
+	tot_bun = _verdict("forma id-ului, pe prefix", forme_ciudate.is_empty(),
 		"" if forme_ciudate.is_empty() else _primele(forme_ciudate, 5)) and tot_bun
+
+	# Câte din fiecare fabrică. Nu e un verdict, e o cifră de citit: dacă mâine
+	# `FOLOSESTE_WIKIDATA` e stins fără să-mi amintesc, se vede aici imediat.
+	var pe_prefix := {}
+	for id_intrebare in vazute:
+		# Tipul scris pe față, nu dedus: cheile unui Dictionary vin ca Variant, iar
+		# `split()` pe un Variant nu-i spune nimic lui Godot despre ce iese.
+		var prefix: String = String(id_intrebare).split(":")[0]
+		pe_prefix[prefix] = int(pe_prefix.get(prefix, 0)) + 1
+	var prefixe: Array = pe_prefix.keys()
+	prefixe.sort()
+	var b: Array[String] = []
+	for prefix in prefixe:
+		b.append("%s: %d" % [prefix, pe_prefix[prefix]])
+	print("    %-42s %s" % ["pe fabrică", ", ".join(b)])
 	return tot_bun
+
+
+## Are id-ul forma cuvenită pentru prefixul lui?
+##
+## Verificarea de dinainte cerea „prefix, două puncte, cifre" pentru ORICE id, și
+## era scrisă dinadins ca să nu depindă de prefix — „un prefix nou nu trebuie să
+## picheze verificarea asta". A picat-o chiar primul prefix nou:
+## `wd:Q897:simbol:cere_nume` are patru bucăți și niciuna nu e un număr.
+##
+## Deci regula se leagă de prefix, nu se mai generalizează. E mai mult cod, dar e
+## cod care spune ceva: fiecare fabrică are o formă, iar o formă greșită înseamnă
+## că un generator a scăpat ceva. Un prefix necunoscut cade, dinadins — dacă apare
+## o fabrică nouă, vreau să vin aici să scriu ce formă are, nu să treacă în tăcere.
+func _forma_buna(id_intrebare: String) -> bool:
+	var bucati := id_intrebare.split(":")
+	if bucati.size() < 2 or bucati[0] == "":
+		return false
+	match bucati[0]:
+		# `mana:0001` — prefix și un număr, dat de `tools/da_iduri.py`.
+		"mana":
+			return bucati.size() == 2 and bucati[1].is_valid_int()
+		# `wd:Q897:simbol:cere_nume` — QID, relația, sensul. Scris de
+		# `tools/fabrica/elemente.py`.
+		"wd":
+			if bucati.size() != 4:
+				return false
+			if not bucati[1].begins_with("Q") or not bucati[1].substr(1).is_valid_int():
+				return false
+			return bucati[2] != "" and bucati[3] != ""
+		_:
+			return false
 
 
 # ─────────────────────────────────────────────────────────────
@@ -200,54 +317,223 @@ func _notele(intrebari: Array, fapte: Dictionary) -> bool:
 	return tot_bun
 
 
-# ─────────────────────────────────────────────────────────────
-# 4. SACUL
-# ─────────────────────────────────────────────────────────────
+# ───────────────────────────────────────────────────────────
+# 4. ECHILIBRUL LA ALEGEREA DIN LUPTĂ
+#
+# Verificarea care n-avea de ce să existe înainte de conținutul fabricat, și care
+# e acum cea mai greu de înlocuit cu ochiul.
+#
+# Datele NU mai sunt echilibrate: știința are ~160 de întrebări, mitologia 21.
+# Echilibrul s-a mutat în ALEGERE (`trage_intrebarea`, în două trepte). Numai că o
+# alegere e o probabilitate, iar o probabilitate nu se vede jucând: ca să bagi de
+# seamă cu ochiul că știința iese de patru ori mai des decât ar trebui, ar trebui
+# să ții socoteala câtorva sute de lupte. Aici se trag câteva mii dintr-un foc.
+#
+# Se cheamă chiar `TRIVIA.trage_intrebarea`, nu o copie a ei scrisă aici. Dacă
+# alegerea se rescrie vreodată și uită treapta domeniului, verificarea asta cade —
+# ceea ce e chiar rostul ei. O copie ar fi trecut liniștită.
+# ───────────────────────────────────────────────────────────
 
-func _sacul(intrebari: Array) -> bool:
-	print("\n  SACUL (pe `id`, un ciclu întreg pe fiecare nivel)")
+func _echilibrul(intrebari: Array) -> bool:
+	print("\n  ECHILIBRUL PE DOMENII, la %d trageri pe nivel" % TRAGERI_ECHILIBRU)
 	var tot_bun := true
 
 	for nivel in range(1, 4):
-		var pool: Array = intrebari.filter(func(q): return int(q["nivel"]) == nivel)
-		if pool.is_empty():
+		# Câte domenii SUNT la nivelul ăsta. Ținta nu e „1/6", e „1/N": dacă un
+		# nivel n-are întrebări de mitologie, celelalte cinci trebuie să împartă
+		# tot, iar verificarea n-are de ce să ceară șasea parte pentru nimic.
+		var prezente := {}
+		for q in intrebari:
+			if int(q["nivel"]) == nivel:
+				prezente[String(q["categorie"])] = true
+		if prezente.is_empty():
 			tot_bun = _verdict("nivelul %d" % nivel, false, "nicio întrebare") and tot_bun
 			continue
 
-		# Cheie proprie verificării, ca să nu se amestece cu nimic: sacul e un
-		# autoload, deci trăiește tot atât cât rularea asta.
-		var cheie := "verificare:%d" % nivel
-		var vazute := {}
-		var repetari := 0
-		var ultima_id := ""
-
-		# Exact atâtea trageri câte întrebări are nivelul: un ciclu întreg, până
-		# la ultimul bilet din sac.
-		for _i in range(pool.size()):
-			var tras = Sac.extrage(cheie, pool, "id")
-			if tras == null:
+		var tinta := float(TRAGERI_ECHILIBRU) / float(prezente.size())
+		var numarate := {}
+		for _i in range(TRAGERI_ECHILIBRU):
+			var q := TRIVIA.trage_intrebarea(nivel)
+			if q.is_empty():
 				break
-			ultima_id = String(tras["id"])
-			if vazute.has(ultima_id):
-				repetari += 1
-			vazute[ultima_id] = true
+			var d := String(q["categorie"])
+			numarate[d] = int(numarate.get(d, 0)) + 1
 
-		tot_bun = _verdict("nivelul %d, un ciclu" % nivel,
-			repetari == 0 and vazute.size() == pool.size(),
-			"%d trageri, %d întrebări distincte" % [pool.size(), vazute.size()]
-			) and tot_bun
+		# Cel mai depărtat domeniu de țintă. Un singur număr, fiindcă ce ne
+		# interesează e cazul cel mai rău, nu media — o medie ar ascunde exact
+		# domeniul care iese de patru ori prea des.
+		var cea_mai_mare_abatere := 0.0
+		var vinovat := ""
+		var domenii: Array = prezente.keys()
+		domenii.sort()
+		var bucati: Array[String] = []
+		for d in domenii:
+			var cate := int(numarate.get(d, 0))
+			var abatere: float = absf(float(cate) - tinta) / tinta
+			if abatere > cea_mai_mare_abatere:
+				cea_mai_mare_abatere = abatere
+				vinovat = d
+			bucati.append("%s %d" % [d.substr(0, 4), cate])
 
-		# Răscrucea dintre cicluri. Sacul s-a golit la tragerea de mai sus, deci
-		# următoarea deschide un ciclu nou — și singurul lucru care n-are voie să
-		# iasă din el e chiar ultimul bilet al ciclului vechi, fiindcă aceeași
-		# întrebare de două ori LA RÂND e cazul care se simte cel mai prost.
-		var prima_din_ciclu_nou = Sac.extrage(cheie, pool, "id")
-		var id_nou := String(prima_din_ciclu_nou["id"]) if prima_din_ciclu_nou != null else ""
-		tot_bun = _verdict("nivelul %d, răscrucea" % nivel,
-			id_nou != "" and id_nou != ultima_id,
-			"%s după %s" % [id_nou, ultima_id]) and tot_bun
+		print("    %-42s %s" % ["  nivelul %d (țintă %d)" % [nivel, int(tinta)],
+			", ".join(bucati)])
+		tot_bun = _verdict("nivelul %d, uniform pe domenii" % nivel,
+			cea_mai_mare_abatere <= TOLERANTA_ECHILIBRU,
+			"abaterea maximă %.1f%% (%s), limita %.0f%%" % [
+				cea_mai_mare_abatere * 100.0, vinovat, TOLERANTA_ECHILIBRU * 100.0
+			]) and tot_bun
+
+		# Tragerile de mai sus au umplut sacurile. Le golim, ca secțiunile de mai
+		# jos să pornească de la zero — altfel ar măsura un sac deja pe jumătate
+		# consumat și ar pica pe drept, dar din vina noastră.
+		Sac.expeditie_noua()
 
 	return tot_bun
+
+
+# ───────────────────────────────────────────────────────────
+# 5. SACUL
+# ───────────────────────────────────────────────────────────
+
+func _sacul(intrebari: Array) -> bool:
+	print("\n  SACUL (pe `id`, un ciclu întreg pe fiecare domeniu × nivel)")
+	var tot_bun := true
+
+	# Cheile sunt acum pe DOMENIU și nivel, nu doar pe nivel — deci se probează 18
+	# sacuri, nu 3. Merită numărate toate: dacă o cheie se compune greșit, se vede
+	# doar pe una din ele, iar aia s-ar pierde într-un raport care măsoară media.
+	var chei_picate: Array[String] = []
+	var chei_bune := 0
+	var rascruci_picate: Array[String] = []
+
+	for nivel in range(1, 4):
+		var domenii := {}
+		for q in intrebari:
+			if int(q["nivel"]) == nivel:
+				if not domenii.has(String(q["categorie"])):
+					domenii[String(q["categorie"])] = []
+				domenii[String(q["categorie"])].append(q)
+
+		var nume: Array = domenii.keys()
+		nume.sort()
+		for domeniu in nume:
+			var pool: Array = domenii[domeniu]
+
+			# ACEEAȘI CHEIE pe care o folosește lupta, luată din `trivia.gd`, nu
+			# scrisă din nou aici. Dacă forma cheii se schimbă vreodată, se schimbă
+			# într-un singur loc — altfel verificarea ar proba un sac pe care jocul
+			# nu-l folosește, și ar trece în vreme ce lupta repetă întrebări.
+			var cheie := TRIVIA.cheia_sacului(domeniu, nivel)
+			var vazute := {}
+			var repetari := 0
+			var ultima_id := ""
+
+			# Exact atâtea trageri câte întrebări are sacul: un ciclu întreg, până
+			# la ultimul bilet.
+			for _i in range(pool.size()):
+				var tras = Sac.extrage(cheie, pool, "id")
+				if tras == null:
+					break
+				ultima_id = String(tras["id"])
+				if vazute.has(ultima_id):
+					repetari += 1
+				vazute[ultima_id] = true
+
+			if repetari == 0 and vazute.size() == pool.size():
+				chei_bune += 1
+			else:
+				chei_picate.append("%s (%d din %d)" % [cheie, vazute.size(), pool.size()])
+
+			# Răscrucea dintre cicluri. Sacul s-a golit la tragerile de mai sus, deci
+			# următoarea deschide un ciclu nou — și singurul lucru care n-are voie să
+			# iasă din el e chiar ultimul bilet al ciclului vechi, fiindcă aceeași
+			# întrebare de două ori LA RÂND e cazul care se simte cel mai prost.
+			#
+			# Se sare peste sacurile cu o singură întrebare: acolo regula nu se POATE
+			# respecta, iar `sac.gd` o încalcă dinadins („mai bine s-o încalci decât
+			# să întorci null"). O verificare care ar cere-o oricum ar pica pe un
+			# comportament corect.
+			if pool.size() > 1:
+				var prima = Sac.extrage(cheie, pool, "id")
+				var id_nou := String(prima["id"]) if prima != null else ""
+				if id_nou == "" or id_nou == ultima_id:
+					rascruci_picate.append(cheie)
+
+	tot_bun = _verdict("un ciclu întreg, pe fiecare cheie", chei_picate.is_empty(),
+		"%d chei fără nicio repetiție" % chei_bune if chei_picate.is_empty()
+		else _primele(chei_picate, 4)) and tot_bun
+	tot_bun = _verdict("răscrucea dintre cicluri", rascruci_picate.is_empty(),
+		"" if rascruci_picate.is_empty() else _primele(rascruci_picate, 4)) and tot_bun
+
+	Sac.expeditie_noua()
+	return tot_bun
+
+
+# ───────────────────────────────────────────────────────────
+# 6. SACURILE NU SE AMESTECĂ ÎNTRE DOMENII
+#
+# Verificarea cea mai țintită din fișier, scrisă pentru O SINGURĂ greșeală, pe
+# care nimic altceva n-ar prinde-o.
+#
+# `Sac.extrage` golește tot registrul unei chei când lista primită se epuizează
+# („sacul s-a golit → ciclu nou"). Alegerea în două trepte îi dă o listă filtrată
+# pe UN domeniu. Dacă cheia n-ar cuprinde domeniul, atunci în clipa în care se
+# termină întrebările de știință de nivelul I, sacul ar șterge și memoria
+# geografiei, a istoriei și a celorlalte de pe același nivel.
+#
+# CE S-AR FI VĂZUT: nimic. Niciun avertisment, niciun crash. Doar „parcă se
+# repetă ceva, uneori" — și, cu sacul devenit permanent la Save, repetări într-o
+# expediție de peste o săptămână. Exact felul de bug pe care nu-l găsești
+# niciodată jucând.
+#
+# Deci: se GOLEȘTE complet un domeniu, apoi se întreabă altul dacă își mai ține
+# minte biletele.
+# ───────────────────────────────────────────────────────────
+
+func _sacurile_nu_se_amesteca(intrebari: Array) -> bool:
+	print("\n  SACURILE NU SE AMESTECĂ (se epuizează un domeniu, se întreabă altul)")
+
+	var nivel := 1
+	var pe_domenii := {}
+	for q in intrebari:
+		if int(q["nivel"]) == nivel:
+			if not pe_domenii.has(String(q["categorie"])):
+				pe_domenii[String(q["categorie"])] = []
+			pe_domenii[String(q["categorie"])].append(q)
+
+	if pe_domenii.size() < 2:
+		return _verdict("nivelul %d are cel puțin două domenii" % nivel, false,
+			"%d domenii" % pe_domenii.size())
+
+	var nume: Array = pe_domenii.keys()
+	nume.sort()
+	var martor: String = String(nume[0])                  # cel care trebuie să-și țină minte
+	var epuizat: String = String(nume[nume.size() - 1])   # cel pe care-l golim
+
+	# O tragere din martor: de acum are un bilet pus deoparte.
+	var pool_martor: Array = pe_domenii[martor]
+	var tras_martor = Sac.extrage(TRIVIA.cheia_sacului(martor, nivel), pool_martor, "id")
+	var id_martor := String(tras_martor["id"]) if tras_martor != null else ""
+
+	# Golim celălalt domeniu de tot, plus o tragere peste, ca să declanșăm chiar
+	# reciclarea. Aia e clipa în care un sac cu cheie comună ar șterge tot.
+	var pool_epuizat: Array = pe_domenii[epuizat]
+	for _i in range(pool_epuizat.size() + 1):
+		Sac.extrage(TRIVIA.cheia_sacului(epuizat, nivel), pool_epuizat, "id")
+
+	# Martorul: dacă memoria lui a supraviețuit, biletul tras la început NU poate
+	# ieși din nou cât mai există altele nevăzute.
+	var repetat := false
+	for _i in range(pool_martor.size() - 1):
+		var tras = Sac.extrage(TRIVIA.cheia_sacului(martor, nivel), pool_martor, "id")
+		if tras != null and String(tras["id"]) == id_martor:
+			repetat = true
+			break
+
+	Sac.expeditie_noua()
+	return _verdict("%s își ține minte după ce %s s-a golit" % [martor, epuizat],
+		not repetat,
+		"" if not repetat else "%s a ieșit de două ori într-un ciclu" % id_martor)
 
 
 # ─────────────────────────────────────────────────────────────
