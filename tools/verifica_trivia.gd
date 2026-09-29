@@ -110,6 +110,7 @@ func _ready() -> void:
 	var tot_bun := true
 	tot_bun = _incarcarea(intrebari, fapte) and tot_bun
 	tot_bun = _identitatile(intrebari) and tot_bun
+	tot_bun = _textele(intrebari) and tot_bun
 	tot_bun = _notele(intrebari, fapte) and tot_bun
 	tot_bun = _echilibrul(intrebari) and tot_bun
 	tot_bun = _sacul(intrebari) and tot_bun
@@ -135,8 +136,14 @@ func _incarcarea(intrebari: Array, fapte: Dictionary) -> bool:
 	# Fără numărul brut n-am cu ce compara.
 	var brute_mana := Puzzle.citeste_lista_json(TRIVIA.CALE_INTREBARI, "Verificare")
 	var brute_wd: Array = []
+	var fisiere_gen: Array[String] = []
 	if TRIVIA.FOLOSESTE_WIKIDATA:
-		brute_wd = Puzzle.citeste_lista_json(TRIVIA.CALE_INTREBARI_WD, "Verificare")
+		# DOSARUL, nu un fișier: de când fabrica are mai multe tabele, verificarea
+		# trebuie să citească exact ce citește și jocul — altfel un tabel nou intră
+		# în joc fără ca nimic să-l fi numărat vreodată.
+		fisiere_gen = TRIVIA.fisierele_generate("_intrebari.json")
+		for cale in fisiere_gen:
+			brute_wd.append_array(Puzzle.citeste_lista_json(cale, "Verificare"))
 
 	# Fișierul scris de mână are o cifră așteptată, fiindcă nu crește decât când
 	# scriu o întrebare. Cel fabricat nu are — vezi comentariul de la constante.
@@ -151,6 +158,17 @@ func _incarcarea(intrebari: Array, fapte: Dictionary) -> bool:
 	tot_bun = _verdict("toate întrebările au trecut", intrebari.size() == gasite,
 		"%d încărcate din %d găsite" % [intrebari.size(), gasite]) and tot_bun
 
+	# DOSARUL NU E GOL. Într-un build exportat, fișierele care nu sunt resurse
+	# Godot ajung în pachet doar dacă presetul le prinde în filtru; altfel
+	# `DirAccess` vede un dosar gol și jocul pornește cu jumătate din conținut,
+	# fără niciun semn. E o verificare care azi trece banal și care, într-o zi,
+	# va fi singurul lucru care spune de ce lipsesc 300 de întrebări.
+	if TRIVIA.FOLOSESTE_WIKIDATA:
+		tot_bun = _verdict("dosarul fabricat are fișiere", not fisiere_gen.is_empty(),
+			"%d fișiere în %s" % [fisiere_gen.size(), TRIVIA.DOSAR_GEN]) and tot_bun
+		for cale in fisiere_gen:
+			print("    %-42s %d" % ["  " + cale.get_file(),
+				Puzzle.citeste_lista_json(cale, "Verificare").size()])
 	print("    %-42s %d de mână + %d fabricate" % [
 		"din ce fișiere", brute_mana.size(), brute_wd.size()])
 
@@ -274,7 +292,45 @@ func _forma_buna(id_intrebare: String) -> bool:
 
 
 # ─────────────────────────────────────────────────────────────
-# 3. NOTELE
+# 3. TEXTELE
+# ─────────────────────────────────────────────────────────────
+
+## Două întrebări nu pot avea același text.
+##
+## DE CE E UN VERDICT, NU O CIFRĂ. Mecanic, două întrebări cu același text nu
+## strică nimic: au `id`-uri diferite, deci sacul le tratează ca pe două bilete.
+## Exact asta e problema — sacul NU te apără de ele, iar în joc se văd ca o
+## repetiție, adică fix lucrul pentru care există sacul.
+##
+## Verificarea a apărut odată cu al doilea tabel al fabricii, și are un caz
+## concret în minte. Relația „operă → autor" e mulți-la-unu, deci sensul invers
+## („Care dintre aceste opere a fost scrisă de X?") NU poate fi generat per
+## operă: un autor cu cinci opere alese ar da cinci întrebări cu exact același
+## text și cinci răspunsuri corecte diferite. `tools/fabrica/opere.py` îl
+## generează per AUTOR tocmai de-aia — iar verificarea asta e plasa de dedesubt,
+## pentru ziua în care cineva (eu, peste un an) „simplifică" bucla aia.
+##
+## Azi trece: toate textele sunt distincte, deci verdictul poate fi strict de la
+## bun început. Un prag („cel mult 3 repetate") ar fi fost o poartă deschisă.
+func _textele(intrebari: Array) -> bool:
+	print("
+  TEXTELE")
+	var vazute := {}
+	var repetate: Array[String] = []
+	for q in intrebari:
+		var text := String(q.get("text", ""))
+		if text == "":
+			continue
+		if vazute.has(text):
+			repetate.append(text)
+		vazute[text] = true
+	return _verdict("texte unice", repetate.is_empty(),
+		"%d distincte" % vazute.size() if repetate.is_empty()
+		else "%d repetate: %s" % [repetate.size(), _primele(repetate, 3)])
+
+
+# ─────────────────────────────────────────────────────────────
+# 4. NOTELE
 # ─────────────────────────────────────────────────────────────
 
 func _notele(intrebari: Array, fapte: Dictionary) -> bool:
@@ -318,7 +374,7 @@ func _notele(intrebari: Array, fapte: Dictionary) -> bool:
 
 
 # ───────────────────────────────────────────────────────────
-# 4. ECHILIBRUL LA ALEGEREA DIN LUPTĂ
+# 5. ECHILIBRUL LA ALEGEREA DIN LUPTĂ
 #
 # Verificarea care n-avea de ce să existe înainte de conținutul fabricat, și care
 # e acum cea mai greu de înlocuit cu ochiul.
@@ -392,7 +448,7 @@ func _echilibrul(intrebari: Array) -> bool:
 
 
 # ───────────────────────────────────────────────────────────
-# 5. SACUL
+# 6. SACUL
 # ───────────────────────────────────────────────────────────
 
 func _sacul(intrebari: Array) -> bool:
@@ -470,7 +526,7 @@ func _sacul(intrebari: Array) -> bool:
 
 
 # ───────────────────────────────────────────────────────────
-# 6. SACURILE NU SE AMESTECĂ ÎNTRE DOMENII
+# 7. SACURILE NU SE AMESTECĂ ÎNTRE DOMENII
 #
 # Verificarea cea mai țintită din fișier, scrisă pentru O SINGURĂ greșeală, pe
 # care nimic altceva n-ar prinde-o.

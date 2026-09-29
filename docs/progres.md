@@ -17,7 +17,7 @@
 | 6. Harta de expediție | ✅ loadout „N din M" · **12-16 noduri**, ramificate, cu sămânță · Luptă / Elită / Odihnă / Eveniment / **Magazin** / **Boss** · **Monede + puteri temporare** · sumar de run · aspect: pergament, simboluri de cerneală, trasee punctate · **nodurile și drumurile stau pe o PANGLICĂ (curbă centrală + benzi)**, nu pe o grilă dreaptă · **patru trasee, toate verzi pe 300 de semințe** (POTCOAVĂ activă; POTCOAVA OGLINDITĂ e aceeași formă, întoarsă) · strat înclinat (forfecare) la ȘARPE · **drumuri care nu se încrucișează niciodată (0 la 300 de semințe)** · **nodul curent are și aură, și X, și stă nemișcat sub figurină** · **două surse de hartă: GENERATĂ (panglica) sau DESENATĂ dintr-un fișier `data/harti/*.json`** — comutatorul `Expeditie.SURSA_HARTII`; azi e pe DESENATĂ · **harta umple pergamentul**: pânza ține toată pagina, antetul plutește peste ea (805 × 427 px de hartă, de la 666 × 353) · **drumurile merg în amândouă sensurile**, cu nodul parcurs tăiat definitiv și cu garanția, verificată pe 16 000 de expediții simulate, că nu te poți înfunda · **figurina sare, cade ca un slam și zguduie ecranul la aterizare**, cu un răgaz de 0,5 s înainte să se deschidă nodul · **tipurile nodurilor se împart după o REȚETĂ fixă, nu se trag cu zarul**: 9 reguli de vecinătate și de început, plasare conștientă de reguli, verificare completă și reîncercare cu sub-sămânță (0 eșecuri pe 500 de semințe × 3 surse de hartă) · rețeta se **plafonează după forma hărții**, nu după numărul de noduri · **nodul de Eveniment deschide Lacătul** (nivel din adâncime, sămânță din nodul, 6/10/14 Monede la succes) |
 | 7. Cetatea | ❌ |
 | 8. Save/Load | 🟡 tezaurul, sacul și expediția știu toate să se serializeze (`spre_dictionar` / `din_dictionar`), pe trei straturi de durată; scrierea pe disc, nu încă |
-| 9. Celelalte discipline | 🟡 Cultură generală ✅ (**274 de întrebări**: 135 scrise de mână (`mana:0001`…) + **139 fabricate din Wikidata** (`wd:Q897:simbol:…`), în două fișiere care nu se ating; **15 fapte cu note** + 70 de fapte fabricate fără notă; **alegerea din luptă e în două trepte** — întâi domeniul, uniform, apoi întrebarea, cu sacul pe cheie de domeniu ȘI nivel; comutator `FOLOSESTE_WIKIDATA`; vezi sesiunile CONȚINUTUL, ID ȘI FAPT și FABRICA) · Logica ✅ (80 de categorii) · Cuvinte ✅ · toate trei fără repetiții pe expediție, **Cultura generală după `id`, nu după text** · celelalte 5 ❌ |
+| 9. Celelalte discipline | 🟡 Cultură generală ✅ (**434 de întrebări în joc**: 135 scrise de mână (`mana:0001`…) + **139 fabricate din Wikidata, elemente chimice** (`wd:Q897:simbol:…`) + **160 fabricate, operă → autor** (`wd:Q12730777:autor:…`) — **al doilea tabel al fabricii, confirmat parțial**: 135 din 163 de opere, 28 rămân ciorne pentru o trecere viitoare · **conținutul fabricat stă într-un DOSAR**, `data/trivia_gen/`, citit întreg de încărcător: un tabel nou = două fișiere, zero linii de cod · **18 fapte cu note** + 245 de fapte fabricate fără notă; **alegerea din luptă e în două trepte** — întâi domeniul, uniform, apoi întrebarea, cu sacul pe cheie de domeniu ȘI nivel; comutator `FOLOSESTE_WIKIDATA`; vezi sesiunile CONȚINUTUL, ID ȘI FAPT, FABRICA și AL DOILEA TABEL) · Logica ✅ (80 de categorii) · Cuvinte ✅ · toate trei fără repetiții pe expediție, **Cultura generală după `id`, nu după text** · celelalte 5 ❌ |
 | 10–13. Generator de inamici, artă, web | ❌ (artă parțial: figurile principale și piesele de pe butoanele de Obelisc au imagini reale · **arena are fundal: biblioteca gotică**, cu personajele așezate pe dalele din prim-plan, umbră de contact și lumină de sală) · Regina: **amânată**, vezi CLAUDE.md |
 
 Nodul de **Eveniment** are primul lui conținut: **Lacătul** — un cufăr cu cifru,
@@ -37,6 +37,456 @@ buget, generare) rămâne acolo unde era.
 Am sărit peste ordinea recomandată la pasul 12 (artă): imaginile pentru rege,
 cavaler și pentru cele trei piese de șah de pe butoane au intrat mai devreme, dar
 restul rămâne placeholder. Bucla de luptă e în continuare cea validată, nu arta.
+
+---
+
+## AL DOILEA TABEL (29 septembrie 2026) — operă → autor, și șase lecții din date
+
+Al doilea tabel al fabricii: **operele literare și autorii lor**, pentru domeniul
+`literatura`. Rezultat: **188 de întrebări din 163 de opere și 41 de autori**, în
+ambele sensuri — plus `data/trivia_gen/`, dosarul pe care încărcătorul îl citește
+întreg, plus mecanismul de **ciorne**, care ține conținutul nou afară din joc
+până îl confirm eu, rând cu rând.
+
+Scris inițial cu toate cele 163 de rânduri ca ciorne — nimic nu intra în joc
+până nu le confirmam cu ochiul. **Confirmarea s-a făcut chiar în aceeași zi**:
+135 din 163 au trecut, 28 au rămas ciorne pentru altă dată. Vezi „CONFIRMAREA",
+mai jos, pentru ce s-a scris efectiv și ce a picat la prima trecere.
+
+### Ce e altfel față de elemente, și de ce
+
+Nu din gust — din relația însăși.
+
+**1. Relația e mulți-la-unu, deci sensurile nu sunt simetrice.** O operă are un
+autor; un autor are mai multe opere. Sensul direct („Cine a scris «Ion»?") e o
+întrebare **per operă**. Sensul invers nu poate fi: Shakespeare cu 10 opere alese
+ar da **10 întrebări cu exact același text** și 10 răspunsuri corecte diferite.
+Măsurat pe tabelul de azi: per operă ar fi ieșit 163 de întrebări inverse cu doar
+**41 de texte distincte**, dintre care 36 repetate. Nu sunt greșite — dar în joc
+se văd ca o repetiție, iar **sacul nu te apără**: pentru el sunt `id`-uri
+diferite. Deci sensul invers e o întrebare **per AUTOR**, cu răspunsul pus pe
+opera lui cea mai recognoscibilă și cu toate celelalte opere ale lui scoase din
+distractori.
+
+| | entitate | `id` | câte |
+|---|---|---|---|
+| `cere_autor` | opera | `wd:Q12730777:autor:cere_autor` | 148 |
+| `cere_opera` | autorul | `wd:Q462220:autor:cere_opera` | 40 |
+
+**2. Zero coloane de gramatică.** La elemente au fost 70 de genitive scrise de
+mână (`aur→aurului`, `platină→platinei`). Aici titlul stă între ghilimele,
+neflexionat, iar „Care dintre aceste opere a fost **scrisă** de X?" are subiectul
+„care (dintre opere)", mereu feminin singular. Relația asta pur și simplu nu cere
+gramatică.
+
+**3. Nu se spune felul operei** („Cine a scris **romanul** «Ion»?"), deși sună
+mai bine și deși întrebările mele de mână o fac. Ar trebui să vină din `P31`, iar
+`P31` măsurat arată de ce nu: 2044 „operă literară", 300 „ediție", 180 „lucrare
+scrisă", 100 „novella in the Decameron", 66 „capitol"… plus **123 de opere cu mai
+multe tipuri deodată** și 11 fără niciunul. Un cuvânt de fel greșit nu e o
+stângăcie, e o **greșeală de fapt** predată de un joc de învățare.
+
+**4. QID-urile nu se scriu de mână, dar cheia nu mai e citibilă.** La elemente
+cheia era simbolul, tocmai ca să nu scrii 70 de `Q897`. Titlurile nu sunt unice
+în Wikidata, deci cheia e QID-ul — dar nu-l scriu eu: îl scrie `--propune`, eu
+copiez rândul. `titlu` și `autor_nume` rămân **afirmații verificate** la fiecare
+rulare împotriva etichetei române.
+
+### Cele patru surprize din date
+
+Toate patru au oprit scriptul sau au stricat conținutul înainte să le găsesc.
+Merită scrise, fiindcă niciuna nu se putea ghici.
+
+**a) Wikidata mută etichetele în limba `mul`.** Victor Hugo n-are etichetă „en"
+și n-are etichetă „ro": are una singură, `mul` — limba specială pentru numele
+care se scriu la fel peste tot. Scriptul a răspuns „Victor Hugo: niciun om cu
+numele ăsta". Deci `mul` nu e o lipsă, e **afirmația explicită** că eticheta e
+aceeași și în română, și se ia ca atare (Shakespeare la fel).
+
+**b) Homer nu e `P31 = om`.** E `Q21070568`, „om care poate fi ficțional". Ai
+spus-o singur când ai adăugat numele: atribuirea tradițională se spune în notă,
+nu în întrebare. Wikidata e de acord, și de-aia filtrul acceptă acum amândouă
+felurile de om.
+
+**c) Autorul „necunoscut" vine ca nod anonim.** O operă poate avea la `P50` o
+valoare de tip „există, dar nu se știe care", iar SPARQL o întoarce ca
+`…/.well-known/genid/1986ff00…`. Scriptul s-a oprit cu „URI pe care nu-l
+recunosc" — cel mai bun lucru care se putea întâmpla, fiindcă **exact ăsta e
+cazul operelor anonime**, pe care regula le scoate. Acum nodul anonim se numără
+ca autor, deci o carte scrisă de cineva cunoscut împreună cu un anonim are doi
+autori și pică regula unui singur autor, cum se cuvine.
+
+**d) „Ion" al lui Rebreanu e catalogat ca EDIȚIE, nu ca operă.** Prima versiune
+avea `FILTER NOT EXISTS { ?opera wdt:P31 wd:Q3331189 }`, ca să nu apară „Ion
+(ediția din 1920)" ca operă separată. Filtrul a șters „Ion" **cu totul**:
+articolul de pe ro.wikipedia e legat de un item catalogat ca ediție
+(`Q12730777`), iar itemul-operă ori nu există, ori n-are autor. Nu e o excepție —
+multe articole de literatură română de pe ro.wikipedia stau așa. Regula corectă:
+o ediție se scoate **doar dacă e ediția unei opere pe care o avem deja** (`P629`
+duce la un QID din mulțime). O ediție care stă singură e singura reprezentare a
+cărții.
+
+### Cea mai importantă: edițiile Wikipedia măsoară răspândirea, nu celebritatea
+
+Pragul de propunere a fost întâi **5 ediții Wikipedia**. Cu el, cei 41 de autori
+au dat 459 de propuneri, din care literatura română a rămas cu **nouă**. „Ion",
+„Amintiri din copilărie", „Moromeții", tot Arghezi, tot Blaga, tot Coșbuc, tot
+Călinescu, tot Stănescu — dispăruseră. Nu fiindcă ar fi obscure: un roman
+românesc are articol în două-trei ediții Wikipedia, iar „Inferno, cântul VIII"
+are în șase.
+
+**`wikibase:sitelinks` măsoară răspândirea internațională, nu celebritatea în
+România.** Pentru un joc scris în română, un prag pe el nu e o curățenie, e o
+ștergere — și taie exact conținutul care contează cel mai mult. Aceeași formă ca
+lecția de la elemente (unde cifra separa „real" de „ipotetic", nu „ușor" de
+„greu"): **cifra separă ceva, dar nu ce credeai.**
+
+Pragul a rămas la 1 („există măcar un articol undeva"). Tăierea o face
+`CATE_PROPUNERI`, care ia cele mai cunoscute 20 ale **fiecărui** autor — deci nu
+compară niciodată un poet român cu Shakespeare.
+
+### Nivelul: măsurat, și de data asta cifra chiar spune ceva
+
+Măsurătoarea cerută înainte de metodă, în două trepte.
+
+**Distribuția, pe toate cele 2969 de opere aduse:** min 1, median 2, maxim 181;
+decila 1 = 1, decila 9 = 23. **O bandă de 23×**, față de ~1,5× la elemente. Deci
+aici cifra chiar separă ceva, fiindcă nu există boți care să genereze un articol
+pe operă pe fiecare wiki mic.
+
+**Față de nivelul pus de mână, pe cele 163 alese:**
+
+| nivel | opere | min | median | maxim |
+|---|---|---|---|---|
+| I | 22 | 4 | 99 | 181 |
+| II | 42 | 1 | 68 | 131 |
+| III | 99 | 1 | 25 | 72 |
+
+Ordinea e corectă — medianele scad frumos. Dar suprapunerea e mare, și **cel mai
+bun prag automat posibil** (căutat exhaustiv, deci o limită superioară, nu o
+încercare) **ar greși 36 din 163, adică 22%**. Pentru comparație, a ghici mereu
+nivelul cel mai des greșește 39%. Deci cifra aduce ceva, dar nu destul: un sfert
+din tabel ar fi etichetat greșit, iar `min = 1` la nivelurile I și II sunt exact
+operele românești.
+
+**Concluzie: nivelul rămâne coloană de mână**, dar acum știm *cât* de bună ar fi
+automatizarea, nu doar că n-a mers.
+
+### Distractorii: regula, și cele trei lucruri care au stricat-o
+
+Punctajul, pentru „la «Ion», alți romancieri români din aceeași perioadă, nu
+Shakespeare":
+
+| | |
+|---|---|
+| **+100** | aceeași limbă |
+| **+60 / +30 / +15 / +8** | la cel mult 50 / 100 / 200 / 400 de ani distanță |
+| **+10 / +5** | același nivel / nivel vecin |
+
+Treptele largi (200, 400) nu spun că 400 de ani e „aceeași perioadă" — ele **rup
+egalitățile cu sens**. Fără ele, la „Cine a scris «Decameronul»?" al treilea
+distractor ieșea Goethe, ales de zar dintr-o duzină de autori cu același punctaj.
+Cu ele, se duce la Molière sau Voltaire.
+
+**Prima greșeală: banda de nivel se centra pe nivelul ÎNTREBĂRII, nu al
+OPȚIUNILOR.** „Cine a scris «Jucătorul»?" e o întrebare de nivel III, dar
+butoanele arată autori — iar Tolstoi e un autor de nivel I, deci ieșea din bandă.
+Rezultatul: singurul alt rus posibil nu putea fi distractor, și în locul lui
+veneau doi români. Banda apără o disparitate între **opțiuni**; atunci trebuie
+măsurată pe opțiuni.
+
+**A doua: Wikidata are patru cutii pentru engleză.** Dickens și Orwell scriu în
+„engleza britanică" (Q7979), Twain în „American English" (Q7976), Shakespeare în
+„engleza modernă timpurie" (Q1472196), Austen și Christie în „engleză" (Q1860).
+Din cauza asta, „Cine a scris «Persuasiune»?" primea un distractor român. Există
+acum un tabel mic, `LIMBI_INRUDITE`, care contopește **variantele aceleiași
+limbi** (nu limbi înrudite: portugheza nu devine spaniolă), și `LIMBI_INVENTATE`,
+care scoate novlimba, quenya și sindarina — limbile din cărți, nu ale autorilor.
+
+**A treia, mai subtilă: limba unui autor se numără, nu se citește.** `P6886`
+(„limba în care scrie") e o listă: Eminescu are acolo germană și română, Twain
+engleză și germană, Tolstoi franceză și rusă. Din egalitatea asta ieșea „Cine a
+scris «Faust»?" cu Twain printre distractori. Cărțile rezolvă fără să judece
+nimeni: Twain are 72 de cărți în engleză și niciuna în germană. Deci limba
+autorului e cea a **majorității operelor lui** din Wikidata, cu variantele
+contopite întâi; `P6886` și `P103` rămân rezervă. Rezultat: o singură limbă
+curată pentru 39 din 41 de autori.
+
+Cei doi rămași sunt **Arghezi și Blaga**: Wikidata n-are pentru ei nici `P6886`,
+nici `P103`, iar operele lor n-au limbă. Nu primesc niciodată bonusul de limbă —
+și e cinstit așa: mai bine o întrebare fără o însușire decât o însușire
+inventată. (În practică epoca îi salvează: „Cine a scris «Testament»?" iese
+Coșbuc / Arghezi / Blaga / Stănescu.)
+
+**Garda de limbă a fost scrisă și apoi ștearsă.** Planul avea una: „dacă toți
+trei distractorii sunt de altă limbă decât răspunsul, schimbă unul". Spre
+deosebire de garda de la elemente (aruncată fiindcă tiparul ducea *departe* de
+răspuns), aici tiparul duce *spre* el — dacă la „Baltagul" distractorii sunt
+Kafka, Camus și Márquez, alegi singurul român fără să știi nimic. Am scris-o, am
+rulat-o: **a pornit de 0 ori din 188.** Nu din noroc — e imposibil să pornească.
+Un candidat de aceeași limbă ia cel puțin 105 puncte, unul de altă limbă cel mult
+70, deci orice candidat de aceeași limbă e deja în primii trei. Dacă nu e acolo,
+nu există. Garda nu repara nimic, doar **dădea impresia că cineva e de pază**.
+În locul ei se numără: **11 întrebări din 188 (6%) n-au niciun distractor de
+aceeași limbă** — autori singuri pe limba lor în `autori.json`, iar leacul e un
+autor în plus acolo, nu cod.
+
+### Ciornele
+
+Un rând din `opere.json` cu `"ciorna": true` e o propunere neconfirmată.
+
+- rularea de probă îl ia în seamă: grilă, mostre, **toate** verificările;
+- `--scrie` îl lasă afară și raportează câte au mai rămas.
+
+Amănuntul care nu e evident: **ciornele se scot înainte de construirea
+întrebărilor, nu la sfârșit.** Distractorii se aleg dintre operele alese, deci o
+ciornă lăsată în listă ar ajunge distractor într-o întrebare scrisă în `data/`.
+Raportul de probă și fișierul scris pot să difere — ăsta **e** înțelesul lor:
+proba arată ce-ai avea dacă ai confirma tot.
+
+Un caz care a ieșit la iveală chiar în prima rulare cu `--scrie`: **dublurile se
+caută pe tabelul întreg, ciorne incluse.** Prima versiune le căuta pe lista
+filtrată; cu tot tabelul în ciornă lista era goală, nu se găsea nicio dublură, și
+toate cele 16 declarate au ieșit „fantome". Verificarea fantomelor și-a făcut
+treaba: a arătat că întrebam lucrul greșit. Suprapunerea cu fișierul de mână e o
+însușire a **tabelului**, nu a ce s-a confirmat azi.
+
+### Titlul de mână
+
+Eticheta română de la Wikidata nu e mereu titlul sub care e cunoscută opera.
+Atunci rândul primește `"titlu_de_mana": true`, iar titlul e crezut pe cuvânt în
+loc să fie verificat. Nu e o portiță: rândurile astea se **tipăresc toate la
+fiecare rulare**, cu ce spune Wikidata alături. Azi e unul singur: „Hanul
+Ancuței", unde Wikidata scrie „Hanul Ancuței (operă literară)" — dezambiguizarea
+de pe wiki, intrată în etichetă.
+
+### Dublurile: 16, dintre care una inversă
+
+Regula e mai precisă decât la elemente, fiindcă se uită la **răspuns**, nu doar
+la text:
+
+- **dublură de sens direct** — răspunsul corect e numele unui autor ales, iar în
+  text apare, între ghilimele, titlul unei opere alese;
+- **dublură de sens invers** — răspunsul corect e titlul unei opere alese, iar în
+  text apare numele unui autor ales.
+
+A prins toate cele 15 directe (inclusiv `mana:0041` și `mana:0133`, care citează
+câte **două** titluri) și una inversă: `mana:0090`, „Ce roman al lui Jules Verne
+pornește de la un pariu al lui Phileas Fogg?" — în fond „care operă e a lui
+Verne?", cu un indiciu în plus. Verne rămâne fără întrebare inversă generată, și
+e bine: cea scrisă de mână e mai bună.
+
+Potrivirea e **fără majuscule**, în amândouă direcțiile. `mana:0044` scrie „Micul
+Prinț", titlul de la Wikidata e „Micul prinț": aceeași carte, un P mare
+diferență. Cu potrivire sensibilă la majuscule, dublura ar fi trecut.
+
+Ce NU prinde regula, dinadins: „Ce fel de operă literară este «Iliada»?" are
+răspunsul „Epopee", deci nici una, nici alta — și corect, e **altă relație**,
+exact ca „numărul atomic 79" față de „simbolul aurului". Iar pentru cazurile de
+la limită există o listă **„de citit cu ochiul"**, care nu oprește nimic: azi
+arată `mana:0043`, unde răspunsul e Caragiale și textul citează „D-l Goe...",
+care nu e printre operele alese. Dacă mâine adaug „D-l Goe" cu altă ortografie,
+lista îmi spune să mă uit.
+
+### `data/trivia_gen/`: un dosar, nu o constantă pe fișier
+
+```
+data/trivia_gen/elemente_intrebari.json   ← mutat din data/intrebari_trivia_wd.json
+data/trivia_gen/elemente_fapte.json       ← mutat din data/fapte_trivia_wd.json
+data/trivia_gen/opere_intrebari.json      nou (azi gol: totul e ciornă)
+data/trivia_gen/opere_fapte.json          nou (azi gol)
+```
+
+Convenția: `<tabel>_intrebari.json` și `<tabel>_fapte.json`. `trivia.gd` citește
+**tot dosarul**, sortat pe nume, și n-are nicio constantă per fișier. Cu o
+constantă pe fișier, fiecare tabel nou ar fi însemnat o linie în `trivia.gd`, una
+în încărcător și una în verificator — exact ce spune `CLAUDE.md` că n-are voie să
+se întâmple. Acum un tabel nou e două fișiere puse acolo și **nicio linie de
+cod**.
+
+`FOLOSESTE_WIKIDATA` stinge dosarul întreg, ca înainte. **`id`-urile nu s-au
+schimbat** (se calculează din QID, nu din numele fișierului): rescrierea
+fișierului elementelor la calea nouă a dat **diff gol, octet cu octet**.
+
+Sortarea pe nume nu e cochetărie: ordinea în care sistemul de fișiere enumeră un
+dosar nu e garantată, iar de la ea depinde ordinea din `intrebari`. Costă un
+`sort()` și scoate din joc o familie întreagă de „la mine merge".
+
+**Plasă pentru export, pusă acum:** într-un build exportat, fișierele care nu
+sunt resurse Godot ajung în pachet doar dacă presetul le prinde în filtrul de
+resurse ne-Godot (`*.json`). Dacă nu, `DirAccess` vede un dosar gol și jocul
+pornește cu jumătate din conținut, fără niciun semn. Încărcătorul spune asta cu
+tot cu cauza probabilă, iar verificatorul o cere ca verdict.
+
+### Fluxul de lucru
+
+Două fișiere de mână, în `tools/fabrica/date/` — sub `tools/`, nu sub `data/`,
+fiindcă sunt **intrări ale fabricii**, nu conținut de joc.
+
+| comandă | ce face |
+|---|---|
+| `--propune` | pentru fiecare autor, cele mai cunoscute 20 de opere **care nu sunt deja în `opere.json`**, cu tip, an, ediții. Scrie **doar** `date/opere_propuse.json` |
+| `--masoara` | autorii, etichetele, tipurile, distribuția edițiilor, nivelul față de ediții. Nu scrie nimic în `data/` |
+| (fără flag) | probă uscată: raport, grilă, 15 mostre, **cu tot cu ciorne** |
+| `--scrie` | scrie perechea din `data/trivia_gen/`, **fără ciorne** |
+| `--reincarca` | reia din rețea și rescrie cache-ul |
+| `--seed=N` | fixează sămânța mostrelor |
+
+**Scriptul nu scrie niciodată în `opere.json`.** Un script care fuzionează în
+fișierul unde stă judecata omului e un script care într-o zi i-o șterge.
+
+**Autorii se rezolvă din nume**, în două treceri: întâi etichetele (ieftin),
+apoi alias-urile, doar pentru numele rămase. Prima variantă le cerea pe amândouă
+într-un `UNION`, pentru toate cele 41 de nume deodată — Wikidata a răspuns **504
+Gateway Timeout**. Azi un singur nume are nevoie de alias: „Feodor Dostoievski"
+(eticheta oficială e altă transliterare). Un nume ambiguu sau negăsit **oprește
+scriptul**: n-am voie să aleg „cel mai probabil", fiindcă un QID greșit leagă
+întrebarea de alt om și nicio validare n-ar prinde-o.
+
+**Cache-ul** (`tools/fabrica/cache/wikidata_opere.json`, 3,5 MB, comis în Git)
+ține și **pentru ce** a fost luat: lista de nume și pragul de ediții. Adaugi un
+autor și uiți `--reincarca` → scriptul se oprește, în loc să genereze în tăcere
+fără el.
+
+Două lucruri l-au ținut la 3,5 MB în loc de 8,6: `GROUP_CONCAT` în loc de rânduri
+simple (o carte cu 2 autori, 3 tipuri și 2 ani venea pe 12 rânduri identice în
+rest), și cererea explicită de **măcar o etichetă** ro/mul/en (fără ea veneau
+8700 de itemi fără nicio etichetă, pe care nici nu-i poți citi ca să-i judeci).
+
+### Ce s-a măsurat la final
+
+```
+în opere.json: 163 opere  (nivel I: 22, II: 42, III: 99) — toate ciorne
+generate:      188 întrebări (148 directe, 40 inverse), 188 fapte
+```
+
+Grila, cu ciornele confirmate ipotetic:
+
+| | nivelul I | nivelul II | nivelul III | total |
+|---|---|---|---|---|
+| istorie | 8+0 (1) | 8+0 (2) | 8+0 (1) | 24 (3) |
+| geografie | 8+0 (1) | 8+0 (1) | 8+0 (1) | 24 (3) |
+| stiinta | 8+39 (2+20) | 8+52 (1+26) | 8+48 (1+24) | 163 (73) |
+| arta | 7+0 (1) | 7+0 (1) | 7+0 (0) | 21 (2) |
+| mitologie | 7+0 (1) | 7+0 (0) | 7+0 (1) | 21 (2) |
+| **literatura** | **7+31 (1+31)** | **7+54 (1+54)** | **7+103 (0+103)** | **209 (190)** |
+
+**462 de întrebări în total**, de la 274. Literatura devine 82–94% „operă ↔
+autor", ca știința care e ~85% chimie. Cu alegerea uniformă pe domenii, asta
+înseamnă **cam 1 din 7 întrebări de luptă „operă ↔ autor"**, peste cea care e
+deja „element ↔ simbol": **27–30% din întrebările de luptă ar fi fabricate**, de
+la 14%. Cifra merită ținută sub ochi — dar pârghia rămâne lățimea conținutului,
+nu o treaptă de alegere în plus.
+
+Un lucru de simțit, nu de calculat: **190 de fapte distincte la literatură**,
+toate cu nota goală. Cele 188 de întrebări vin din 163 de opere + 40 de autori,
+deci raportul e ~1 întrebare pe fapt — sub plafonul de 2–3 din decizia
+CONȚINUTUL, dar înseamnă și 190 de note de scris când se ajunge acolo.
+
+### Verificatorul: o secțiune nouă și un verdict nou, amândouă probate
+
+`tools/verifica_trivia.gd` are acum **șapte secțiuni**.
+
+- **ÎNCĂRCAREA** citește **dosarul**, nu un fișier, și tipărește câte întrebări
+  are fiecare fișier din el. Verdict nou: **dosarul fabricat are fișiere**.
+- **TEXTELE** (nouă): două întrebări nu pot avea același text. Mecanic nu strică
+  nimic — au `id`-uri diferite — și exact asta e problema: sacul nu te apără, iar
+  în joc se văd ca o repetiție. E plasa de dedesubt pentru ziua în care cineva
+  (eu, peste un an) „simplifică" sensul invers la per operă. Azi toate 274 sunt
+  distincte, deci verdictul e strict de la bun început; un prag („cel mult 3
+  repetate") ar fi fost o poartă deschisă.
+- **forma `id`-ului**: nimic de schimbat. `wd:Q462220:autor:cere_opera` trece
+  prin regula scrisă pentru `wd:Q897:simbol:cere_nume` — patru bucăți, QID,
+  relație, sens. Prima dată când o regulă scrisă pentru un tabel a ținut la
+  următorul fără nicio atingere.
+
+Amândouă probate rupând codul intenționat:
+
+| ce am rupt | ce a picat |
+|---|---|
+| o întrebare în plus cu text copiat (alt `id`) | `texte unice` → PICAT, 1 repetat: „Care este simbolul chimic al hidrogenului?" |
+| dosarul `data/trivia_gen/` redenumit | `dosarul fabricat are fișiere` → PICAT, 0 fișiere; plus avertismentul cu cauza probabilă |
+
+Rezultat final: **TOTUL E BUN**, 16 verdicte OK.
+
+### Verificat
+
+- `--masoara`: 41 de autori din 41 de nume, fiecare cu un singur om; 2969 de
+  opere; 32% cu etichetă română; 60% cu an; distribuția edițiilor și pragul
+  automat posibil (22% eroare).
+- Probă uscată: 188 de întrebări, „exact una din patru e corectă" verificat pe
+  toate, pe mulțimea completă de autori de la Wikidata.
+- `--scrie`: două fișiere goale (totul e ciornă), JSON valid citit înapoi,
+  id-uri și **texte** unice peste tot conținutul, 163 de ciorne raportate.
+- `elemente.py --scrie` la calea nouă: **diff gol**.
+- Verificarea headless: TOTUL E BUN.
+- Citite cu ochiul toate cele 188 de întrebări generate.
+
+### Ce NU s-a făcut
+
+- ~~Nimic n-a intrat în joc~~ — confirmat ulterior aceeași zi, vezi CONFIRMAREA
+  mai jos. 28 de rânduri rămân ciorne.
+- **Nicio notă.** Cele 190 de fapte ar avea `nota: ""`.
+- **Modulul comun** al fabricii. `elemente.py` și `opere.py` repetă acum `zar`,
+  scrierea JSON-ului, cache-ul, contactul, grila și `citeste_dosarul_generat`.
+  Duplicare **cunoscută și acceptată**, nu uitată: se unifică la al treilea
+  tabel, odată cu mutarea coloanelor elementelor din cod în `tools/fabrica/date/`.
+- **Nicio partidă jucată** cu conținutul nou.
+
+### Ce urmează, concret
+
+1. **Restul de 28 de ciorne**, când e vremea — Camus, Kafka, Goethe, Hugo,
+   Rebreanu, Sadoveanu și alții. Aceiași pași: șterge `"ciorna": true`, rulează
+   `--scrie`, verifică headless.
+2. **Autori pentru limbile singuratice.** Cele 11 întrebări fără distractor de
+   aceeași limbă sunt Dante și Boccaccio (singurii italieni), Cervantes și
+   Márquez (singurii spanioli), Goethe și Kafka (singurii germani), Homer
+   (singurul grec). Un al treilea italian sau german ar rezolva mai mult decât
+   orice cod.
+3. **Al treilea tabel = modulul comun.** Nu mai devreme: două exemple arată ce se
+   repetă, unul singur ar fi ghicit.
+
+### Fișiere
+
+Nou: `tools/fabrica/opere.py`, `tools/fabrica/date/autori.json`,
+`tools/fabrica/date/opere.json`, `tools/fabrica/date/opere_propuse.json`,
+`tools/fabrica/cache/wikidata_opere.json`, `data/trivia_gen/opere_intrebari.json`,
+`data/trivia_gen/opere_fapte.json`.
+Mutate: `data/intrebari_trivia_wd.json` → `data/trivia_gen/elemente_intrebari.json`,
+`data/fapte_trivia_wd.json` → `data/trivia_gen/elemente_fapte.json`.
+Atinse: `scenes/trivia/trivia.gd` (`DOSAR_GEN` în locul celor două constante,
+`fisierele_generate()`, încărcarea pe dosar), `tools/verifica_trivia.gd`
+(secțiunea TEXTELE, dosarul, renumerotare), `tools/fabrica/elemente.py` (căile
+noi, grila peste tot dosarul), `.gitignore` (`__pycache__`), `docs/progres.md`.
+
+### CONFIRMAREA (tot 29 septembrie 2026, a doua trecere)
+
+135 din cele 163 de rânduri au fost confirmate cu ochiul (`"ciorna": true` șters),
+28 au rămas ciorne. `python tools/fabrica/opere.py --scrie` a scris cele 135 în
+`data/trivia_gen/opere_intrebari.json` — **160 de întrebări** (148 directe + 40
+inverse, minus 28 din dubluri cu fișierul de mână care nu generează).
+
+**Un rând s-a stricat la editare, și scriptul l-a prins.** „Divina Comedie" a
+pierdut nu doar `"ciorna": true`, ci și `"nivel": 2` — probabil ștergerea a luat
+o bucată mai mare decât marcajul. `leaga_tabelul` cere câmpul, deci proba uscată
+ar fi picat cu un mesaj clar dacă n-aș fi verificat manual înainte; l-am prins
+citind fișierul cu Python, nu din eroarea scriptului. De reținut pentru viitor:
+**verific fișierul cu un script mic înainte de `--scrie`**, nu doar cu ochiul pe
+diff — un JSON care încă parsează, dar cu un câmp lipsă, nu sare în ochi la o
+citire rapidă.
+
+Verificarea headless, după scriere: **TOTUL E BUN**, 16 verdicte OK. Jocul are
+acum **434 de întrebări** de Cultură generală (135 mână + 139 elemente + 160
+opere), de la 274 înainte de sesiune. Grila pe literatură, la nivelul confirmat:
+
+```
+nivelul 1: 36 întrebări de literatură (7 mână + 29 fabricate)
+nivelul 2: 67 întrebări de literatură (7 mână + 60 fabricate)
+nivelul 3: 106 întrebări de literatură (7 mână + 99 fabricate)
+```
+
+Cele 28 rămase ciorne (Camus, Kafka, Goethe, Hugo, Rebreanu, Sadoveanu și alții)
+așteaptă o trecere viitoare — nimic nu s-a pierdut, sunt încă în `opere.json`.
 
 ---
 
@@ -1166,6 +1616,41 @@ aurului” (nivelul I), și „numărul atomic 79” (nivelul III). Faptele vor 
   II”.
 - „Află mai multe” apare după greșeli și, mai discret, și după răspunsurile
   corecte, fiindcă unul din patru poate fi ghicit.
+
+### Imagini la „Află mai multe” (decis 29 septembrie 2026)
+
+Pe lângă notă, un fapt poate ține o **imagine**, tot ca **câmp opțional**: unde
+nu există, popup-ul arată exact ce arăta și înainte. Motivul: unele fapte se
+înțeleg dintr-o privire, nu din 240 de caractere — unde e Bolivia, cum arată
+„Coloana fără sfârșit”, în ce ordine vin trei domnitori.
+
+Două feluri, cu costuri complet diferite:
+
+**1. Desenate de joc, din date.** Hărțile se desenează în Godot din contururi
+vectoriale în domeniul public (Natural Earth), în stilul jocului: pergament,
+cerneală, culorile hărții de expediție. Faptul nu ține o poză, ține doar **ce se
+desenează** (ex. codul țării), iar același desenator servește toate faptele de
+geografie. Aceeași unealtă poate da **axe ale timpului** pentru întrebările cu
+date istorice — o linie, un semn, un an. Avantajul: nicio licență de urmărit,
+aproape nicio greutate (contururi simplificate, nu imagini) și arată a joc, nu a
+captură de ecran.
+
+**2. Imagini reale**, pentru ce nu se poate desena: tablouri, portrete,
+monumente. Sursa e **Wikimedia Commons, prin Wikidata** — imaginea stă ca
+proprietate pe entitate, deci vine în aceeași interogare cu faptul. Fiecare
+imagine salvează **autorul și licența**, fabrica **refuză orice imagine fără
+licență clară** (aceeași regulă ca la frazele din Wikipedia: nu se ia ce nu se
+poate da mai departe), iar jocul **arată creditul** lângă imagine. **Arta
+modernă protejată nu intră**: un tablou din 1950 rămâne sub drepturi chiar dacă
+fotografia lui stă pe Commons.
+
+Constrângerea care le ține pe amândouă cinstite: **mici (~400 px) și doar unde
+adaugă ceva**. Build-ul web e demo, iar câteva mii de fapte cu câte o poză ar
+cântări mai mult decât tot restul jocului. O imagine care doar însoțește textul e
+greutate; una care răspunde la „unde?” sau „cum arăta?” e conținut.
+
+Se implementează la **pasul 13**, odată cu Practice — mai devreme n-ar avea unde
+să se vadă.
 
 ### Țintele: 500 pe celulă, dar nu peste tot
 

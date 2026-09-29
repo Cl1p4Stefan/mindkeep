@@ -84,6 +84,9 @@ Decise pe 27 septembrie 2026. Contextul complet e în sesiunea CONȚINUTUL din `
 | **Practice: alegi domeniul, nu nivelul** | Nivelul urcă singur, separat pe fiecare domeniu |
 | **Nivelul următor se deblochează la un prag fix, nu la „toate corecte”** | „Toate” e un zid la final și crește odată cu conținutul. Pragul fix (de pornire: 60 de răspunsuri corecte la întrebări distincte) nu crește. După prag, nivelurile se amestecă |
 | **Greșitele revin; „învățat” cere 2–3 răspunsuri corecte la distanță în timp** | Un singur răspuns corect poate fi ghicit (o șansă din patru). Întrebările învățate ies din joc și intră în Jurnal |
+| **„Află mai multe” poate arăta și o imagine, câmp opțional ca nota** | Unde e Bolivia sau cum arată un monument se înțelege dintr-o privire, nu din 240 de caractere. Unde imaginea lipsește, popup-ul rămâne cum era |
+| **Două feluri de imagini: desenate din date sau reale, cu licență** | Hărțile le desenează jocul din contururi în domeniul public (Natural Earth), în stilul lui: faptul ține doar ce se desenează (ex. codul țării), fără licențe și aproape fără greutate — la fel, axe ale timpului pentru datele istorice. Imaginile reale (tablouri, portrete, monumente) vin din Wikimedia Commons prin Wikidata, cu autor și licență salvate și creditul afișat în joc; fabrica refuză orice imagine fără licență clară, iar arta modernă protejată nu intră |
+| **Mici (~400 px) și doar unde adaugă ceva** | Greutatea contează la exportul web: câteva mii de fapte cu câte o poză ar cântări mai mult decât tot restul jocului. Se implementează la pasul 13 |
 
 ## Principii pe care vreau să le aperi
 
@@ -115,7 +118,7 @@ Decise pe 27 septembrie 2026. Contextul complet e în sesiunea CONȚINUTUL din `
 10. **Generatorul de inamici** — arhetipuri + modificatori + buget, după ce știi că piesele merită combinate. Aici se separă identitatea inamicului (nume, descriere, facțiune) de `DATE_ARHETIP`.
 11. **Artă, VFX, „juice"** — parțial început (figurile principale au imagini reale); restul e placeholder.
 12. **Turnul Perseverenței** — al doilea mod de joc
-13. **Antrenament liber (Practice)** — Cultură generală pe domeniul ales. Nivelul urcă singur, pe fiecare domeniu (prag fix, apoi amestec); „Află mai multe” afișează nota faptului; întrebările greșite revin. Are nevoie de: `id` stabil, note, istoric permanent pe întrebare (vine cu Save), conținut suficient pe celule. Detaliile sunt în sesiunea CONȚINUTUL din `progres.md`.
+13. **Antrenament liber (Practice)** — Cultură generală pe domeniul ales. Nivelul urcă singur, pe fiecare domeniu (prag fix, apoi amestec); „Află mai multe” afișează nota faptului și, opțional, o imagine (hartă desenată din date sau imagine reală cu licență); întrebările greșite revin. Are nevoie de: `id` stabil, note, istoric permanent pe întrebare (vine cu Save), conținut suficient pe celule. Detaliile sunt în sesiunea CONȚINUTUL din `progres.md`.
 14. **Export web pentru feedback**
 
 **Pe o linie paralelă (conținut, nu cod):** fabrica de întrebări de Cultură generală. După proba cu un singur tabel din Wikidata, crește câte puțin, ghidată de grila pe celule. Nu blochează ruta și nu e blocată de ea.

@@ -1,0 +1,205 @@
+[
+	{"qid": "Q8275", "titlu": "Iliada", "autor_nume": "Homer", "nivel": 1},
+	{"qid": "Q35160", "titlu": "Odiseea", "autor_nume": "Homer", "nivel": 1},
+	{"qid": "Q329342", "titlu": "Imnuri homerice", "autor_nume": "Homer", "nivel": 3, "ciorna": true},
+
+	{"qid": "Q40185", "titlu": "Divina Comedie", "autor_nume": "Dante Alighieri", "nivel": 2},
+	{"qid": "Q4509219", "titlu": "Infernul", "autor_nume": "Dante Alighieri", "nivel": 3},
+
+	{"qid": "Q16438", "titlu": "Decameronul", "autor_nume": "Giovanni Boccaccio", "nivel": 2},
+
+	{"qid": "Q41567", "titlu": "Hamlet", "autor_nume": "William Shakespeare", "nivel": 1},
+	{"qid": "Q83186", "titlu": "Romeo și Julieta", "autor_nume": "William Shakespeare", "nivel": 1},
+	{"qid": "Q130283", "titlu": "Macbeth", "autor_nume": "William Shakespeare", "nivel": 2},
+	{"qid": "Q26833", "titlu": "Othello", "autor_nume": "William Shakespeare", "nivel": 2},
+	{"qid": "Q181598", "titlu": "Regele Lear", "autor_nume": "William Shakespeare", "nivel": 2},
+	{"qid": "Q104871", "titlu": "Visul unei nopți de vară", "autor_nume": "William Shakespeare", "nivel": 2},
+	{"qid": "Q86440", "titlu": "Furtuna", "autor_nume": "William Shakespeare", "nivel": 3, "ciorna": true},
+	{"qid": "Q215750", "titlu": "Iulius Caesar", "autor_nume": "William Shakespeare", "nivel": 3},
+	{"qid": "Q130851", "titlu": "Mult zgomot pentru nimic", "autor_nume": "William Shakespeare", "nivel": 3, "ciorna": true},
+	{"qid": "Q206400", "titlu": "Neguțătorul din Veneția", "autor_nume": "William Shakespeare", "nivel": 3},
+
+	{"qid": "Q480", "titlu": "Don Quijote", "autor_nume": "Miguel de Cervantes", "nivel": 2},
+
+	{"qid": "Q389933", "titlu": "Avarul", "autor_nume": "Molière", "nivel": 2},
+	{"qid": "Q205875", "titlu": "Tartuffe", "autor_nume": "Molière", "nivel": 2},
+	{"qid": "Q588161", "titlu": "Bolnavul închipuit", "autor_nume": "Molière", "nivel": 3},
+	{"qid": "Q1054372", "titlu": "Burghezul gentilom", "autor_nume": "Molière", "nivel": 3},
+	{"qid": "Q1053387", "titlu": "Mizantropul", "autor_nume": "Molière", "nivel": 3},
+	{"qid": "Q937443", "titlu": "Școala nevestelor", "autor_nume": "Molière", "nivel": 3},
+
+	{"qid": "Q181488", "titlu": "Călătoriile lui Gulliver", "autor_nume": "Jonathan Swift", "nivel": 2},
+
+	{"qid": "Q483034", "titlu": "Robinson Crusoe", "autor_nume": "Daniel Defoe", "nivel": 1},
+	{"qid": "Q1215399", "titlu": "Jurnal din anul ciumei", "autor_nume": "Daniel Defoe", "nivel": 3},
+
+	{"qid": "Q215894", "titlu": "Candid", "autor_nume": "Voltaire", "nivel": 2},
+
+	{"qid": "Q29478", "titlu": "Faust", "autor_nume": "Johann Wolfgang von Goethe", "nivel": 2},
+	{"qid": "Q684469", "titlu": "Craiul ielelor", "autor_nume": "Johann Wolfgang von Goethe", "nivel": 3, "ciorna": true},
+	{"qid": "Q151883", "titlu": "Suferințele tânărului Werther", "autor_nume": "Johann Wolfgang von Goethe", "nivel": 3},
+	{"qid": "Q260514", "titlu": "Ucenicul vrăjitor", "autor_nume": "Johann Wolfgang von Goethe", "nivel": 3, "ciorna": true},
+
+	{"qid": "Q170583", "titlu": "Mândrie și prejudecată", "autor_nume": "Jane Austen", "nivel": 2},
+	{"qid": "Q223880", "titlu": "Emma", "autor_nume": "Jane Austen", "nivel": 3, "ciorna": true},
+	{"qid": "Q469690", "titlu": "Parcul Mansfield", "autor_nume": "Jane Austen", "nivel": 3, "ciorna": true},
+	{"qid": "Q333179", "titlu": "Persuasiune", "autor_nume": "Jane Austen", "nivel": 3},
+	{"qid": "Q274744", "titlu": "Rațiune și Simțire", "autor_nume": "Jane Austen", "nivel": 3},
+
+	{"qid": "Q180736", "titlu": "Mizerabilii", "autor_nume": "Victor Hugo", "nivel": 1},
+	{"qid": "Q191380", "titlu": "Notre-Dame de Paris", "autor_nume": "Victor Hugo", "nivel": 2},
+	{"qid": "Q199940", "titlu": "Anul 93", "autor_nume": "Victor Hugo", "nivel": 3, "ciorna": true},
+	{"qid": "Q1211109", "titlu": "Oamenii mării", "autor_nume": "Victor Hugo", "nivel": 3},
+	{"qid": "Q865211", "titlu": "Omul care râde", "autor_nume": "Victor Hugo", "nivel": 3, "ciorna": true},
+	{"qid": "Q1199417", "titlu": "Ultima zi a unui condamnat la moarte", "autor_nume": "Victor Hugo", "nivel": 3},
+
+	{"qid": "Q140527", "titlu": "Cei trei muschetari", "autor_nume": "Alexandre Dumas", "nivel": 1},
+	{"qid": "Q191838", "titlu": "Contele de Monte-Cristo", "autor_nume": "Alexandre Dumas", "nivel": 1},
+	{"qid": "Q1639633", "titlu": "După douăzeci de ani", "autor_nume": "Alexandre Dumas", "nivel": 3, "ciorna": true},
+	{"qid": "Q2020094", "titlu": "Regina Margot", "autor_nume": "Alexandre Dumas", "nivel": 3},
+
+	{"qid": "Q62879", "titlu": "Colind de Crăciun", "autor_nume": "Charles Dickens", "nivel": 2},
+	{"qid": "Q189811", "titlu": "David Copperfield", "autor_nume": "Charles Dickens", "nivel": 2},
+	{"qid": "Q164974", "titlu": "Oliver Twist", "autor_nume": "Charles Dickens", "nivel": 2},
+	{"qid": "Q219552", "titlu": "Marile speranțe", "autor_nume": "Charles Dickens", "nivel": 3, "ciorna": true},
+	{"qid": "Q308918", "titlu": "Poveste despre două orașe", "autor_nume": "Charles Dickens", "nivel": 3, "ciorna": true},
+
+	{"qid": "Q183565", "titlu": "Douăzeci de mii de leghe sub mări", "autor_nume": "Jules Verne", "nivel": 1},
+	{"qid": "Q1219561", "titlu": "Ocolul Pământului în 80 de zile", "autor_nume": "Jules Verne", "nivel": 1},
+	{"qid": "Q471005", "titlu": "Insula misterioasă", "autor_nume": "Jules Verne", "nivel": 2},
+	{"qid": "Q219457", "titlu": "O călătorie spre centrul Pământului", "autor_nume": "Jules Verne", "nivel": 2},
+	{"qid": "Q768605", "titlu": "Castelul din Carpați", "autor_nume": "Jules Verne", "nivel": 3},
+	{"qid": "Q1213902", "titlu": "Copiii căpitanului Grant", "autor_nume": "Jules Verne", "nivel": 3},
+	{"qid": "Q53592", "titlu": "De la Pământ la Lună", "autor_nume": "Jules Verne", "nivel": 3, "ciorna": true},
+	{"qid": "Q1121567", "titlu": "Mihail Strogoff", "autor_nume": "Jules Verne", "nivel": 3, "ciorna": true},
+
+	{"qid": "Q147787", "titlu": "Anna Karenina", "autor_nume": "Lev Tolstoi", "nivel": 1},
+	{"qid": "Q161531", "titlu": "Război și pace", "autor_nume": "Lev Tolstoi", "nivel": 1},
+	{"qid": "Q396602", "titlu": "Moartea lui Ivan Ilici", "autor_nume": "Lev Tolstoi", "nivel": 3},
+	{"qid": "Q146866", "titlu": "Învierea", "autor_nume": "Lev Tolstoi", "nivel": 3, "ciorna": true},
+
+	{"qid": "Q165318", "titlu": "Crimă și pedeapsă", "autor_nume": "Feodor Dostoievski", "nivel": 2},
+	{"qid": "Q183157", "titlu": "Frații Karamazov", "autor_nume": "Feodor Dostoievski", "nivel": 2},
+	{"qid": "Q329989", "titlu": "Demonii", "autor_nume": "Feodor Dostoievski", "nivel": 3},
+	{"qid": "Q210784", "titlu": "Idiotul", "autor_nume": "Feodor Dostoievski", "nivel": 3},
+	{"qid": "Q223688", "titlu": "Jucătorul", "autor_nume": "Feodor Dostoievski", "nivel": 3},
+
+	{"qid": "Q326914", "titlu": "Aventurile lui Tom Sawyer", "autor_nume": "Mark Twain", "nivel": 1},
+	{"qid": "Q215410", "titlu": "Aventurile lui Huckleberry Finn", "autor_nume": "Mark Twain", "nivel": 2},
+	{"qid": "Q869725", "titlu": "Prinț și cerșetor", "autor_nume": "Mark Twain", "nivel": 3},
+	{"qid": "Q848612", "titlu": "Un yankeu la curtea regelui Arthur", "autor_nume": "Mark Twain", "nivel": 3},
+
+	{"qid": "Q184222", "titlu": "Metamorfoza", "autor_nume": "Franz Kafka", "nivel": 2},
+	{"qid": "Q36097", "titlu": "Procesul", "autor_nume": "Franz Kafka", "nivel": 2},
+	{"qid": "Q48229", "titlu": "America", "autor_nume": "Franz Kafka", "nivel": 3, "ciorna": true},
+	{"qid": "Q682733", "titlu": "Castelul", "autor_nume": "Franz Kafka", "nivel": 3, "ciorna": true},
+
+	{"qid": "Q845889", "titlu": "Crima din Orient Express", "autor_nume": "Agatha Christie", "nivel": 2},
+	{"qid": "Q214132", "titlu": "Zece negri mititei", "autor_nume": "Agatha Christie", "nivel": 2},
+	{"qid": "Q224078", "titlu": "Cine l-a ucis pe Roger Ackroyd", "autor_nume": "Agatha Christie", "nivel": 3},
+	{"qid": "Q381756", "titlu": "Moarte pe Nil", "autor_nume": "Agatha Christie", "nivel": 3},
+	{"qid": "Q727861", "titlu": "Ucigașul ABC", "autor_nume": "Agatha Christie", "nivel": 3},
+
+	{"qid": "Q74287", "titlu": "Hobbitul", "autor_nume": "J. R. R. Tolkien", "nivel": 1},
+	{"qid": "Q15228", "titlu": "Stăpânul inelelor", "autor_nume": "J. R. R. Tolkien", "nivel": 1},
+	{"qid": "Q79762", "titlu": "Silmarillion", "autor_nume": "J. R. R. Tolkien", "nivel": 3},
+
+	{"qid": "Q26505", "titlu": "Bătrânul și marea", "autor_nume": "Ernest Hemingway", "nivel": 2},
+	{"qid": "Q235795", "titlu": "Adio arme", "autor_nume": "Ernest Hemingway", "nivel": 3},
+	{"qid": "Q501351", "titlu": "Fiesta", "autor_nume": "Ernest Hemingway", "nivel": 3, "ciorna": true},
+	{"qid": "Q200920", "titlu": "Pentru cine bat clopotele", "autor_nume": "Ernest Hemingway", "nivel": 3},
+
+	{"qid": "Q25338", "titlu": "Micul prinț", "autor_nume": "Antoine de Saint-Exupéry", "nivel": 1},
+
+	{"qid": "Q208460", "titlu": "1984", "autor_nume": "George Orwell", "nivel": 1},
+	{"qid": "Q1396889", "titlu": "Ferma Animalelor", "autor_nume": "George Orwell", "nivel": 2},
+	{"qid": "Q514694", "titlu": "Omagiu Cataloniei", "autor_nume": "George Orwell", "nivel": 3, "ciorna": true},
+	{"qid": "Q1762079", "titlu": "Zile birmaneze", "autor_nume": "George Orwell", "nivel": 3, "ciorna": true},
+
+	{"qid": "Q320372", "titlu": "Ciuma", "autor_nume": "Albert Camus", "nivel": 2},
+	{"qid": "Q163297", "titlu": "Străinul", "autor_nume": "Albert Camus", "nivel": 2, "ciorna": true},
+	{"qid": "Q690362", "titlu": "Căderea", "autor_nume": "Albert Camus", "nivel": 3, "ciorna": true},
+	{"qid": "Q1125903", "titlu": "Mitul lui Sisif", "autor_nume": "Albert Camus", "nivel": 3, "ciorna": true},
+
+	{"qid": "Q178869", "titlu": "Un veac de singurătate", "autor_nume": "Gabriel García Márquez", "nivel": 2},
+	{"qid": "Q499396", "titlu": "Dragostea în vremea holerei", "autor_nume": "Gabriel García Márquez", "nivel": 3},
+
+	{"qid": "Q1627839", "titlu": "Hora Unirii", "autor_nume": "Vasile Alecsandri", "nivel": 2},
+	{"qid": "Q12724010", "titlu": "Chirița în Iași", "autor_nume": "Vasile Alecsandri", "nivel": 3},
+
+	{"qid": "Q1586176", "titlu": "Luceafărul", "autor_nume": "Mihai Eminescu", "nivel": 1},
+	{"qid": "Q18540186", "titlu": "Floare albastră", "autor_nume": "Mihai Eminescu", "nivel": 2},
+	{"qid": "Q22978765", "titlu": "Doina", "autor_nume": "Mihai Eminescu", "nivel": 3},
+	{"qid": "Q12729385", "titlu": "Glossă", "autor_nume": "Mihai Eminescu", "nivel": 3},
+	{"qid": "Q12734726", "titlu": "Mai am un singur dor", "autor_nume": "Mihai Eminescu", "nivel": 3},
+	{"qid": "Q12741851", "titlu": "Sărmanul Dionis", "autor_nume": "Mihai Eminescu", "nivel": 3},
+	{"qid": "Q17322709", "titlu": "Împărat și proletar", "autor_nume": "Mihai Eminescu", "nivel": 3},
+
+	{"qid": "Q3817660", "titlu": "Amintiri din copilărie", "autor_nume": "Ion Creangă", "nivel": 1},
+	{"qid": "Q7736883", "titlu": "Capra cu trei iezi", "autor_nume": "Ion Creangă", "nivel": 2},
+	{"qid": "Q104841346", "titlu": "Harap-Alb", "autor_nume": "Ion Creangă", "nivel": 2},
+	{"qid": "Q5320494", "titlu": "Dănilă Prepeleac", "autor_nume": "Ion Creangă", "nivel": 3},
+	{"qid": "Q29907330", "titlu": "Fata babei și fata moșneagului", "autor_nume": "Ion Creangă", "nivel": 3},
+	{"qid": "Q16386432", "titlu": "Ivan Turbincă", "autor_nume": "Ion Creangă", "nivel": 3},
+
+	{"qid": "Q11267910", "titlu": "O scrisoare pierdută", "autor_nume": "Ion Luca Caragiale", "nivel": 1},
+	{"qid": "Q12736975", "titlu": "O noapte furtunoasă", "autor_nume": "Ion Luca Caragiale", "nivel": 2},
+	{"qid": "Q12726230", "titlu": "D-ale carnavalului", "autor_nume": "Ion Luca Caragiale", "nivel": 3},
+	{"qid": "Q6414727", "titlu": "Kir Ianulea", "autor_nume": "Ion Luca Caragiale", "nivel": 3},
+	{"qid": "Q12731815", "titlu": "La hanul lui Mânjoală", "autor_nume": "Ion Luca Caragiale", "nivel": 3},
+	{"qid": "Q12736963", "titlu": "Năpasta", "autor_nume": "Ion Luca Caragiale", "nivel": 3},
+	{"qid": "Q18544474", "titlu": "O făclie de Paște", "autor_nume": "Ion Luca Caragiale", "nivel": 3},
+
+	{"qid": "Q12735813", "titlu": "Moara cu noroc", "autor_nume": "Ioan Slavici", "nivel": 2},
+	{"qid": "Q12734809", "titlu": "Mara", "autor_nume": "Ioan Slavici", "nivel": 3},
+	{"qid": "Q12738346", "titlu": "Popa Tanda", "autor_nume": "Ioan Slavici", "nivel": 3},
+	{"qid": "Q18547232", "titlu": "Pădureanca", "autor_nume": "Ioan Slavici", "nivel": 3},
+
+	{"qid": "Q12730220", "titlu": "Iarna pe uliță", "autor_nume": "George Coșbuc", "nivel": 1},
+	{"qid": "Q12736847", "titlu": "Noapte de vară", "autor_nume": "George Coșbuc", "nivel": 3},
+	{"qid": "Q15649004", "titlu": "Noi vrem pământ!", "autor_nume": "George Coșbuc", "nivel": 3},
+	{"qid": "Q12736941", "titlu": "Nunta Zamfirei", "autor_nume": "George Coșbuc", "nivel": 3},
+
+	{"qid": "Q12730777", "titlu": "Ion", "autor_nume": "Liviu Rebreanu", "nivel": 2},
+	{"qid": "Q15731603", "titlu": "Pădurea spânzuraților", "autor_nume": "Liviu Rebreanu", "nivel": 2},
+	{"qid": "Q98000186", "titlu": "Ciuleandra", "autor_nume": "Liviu Rebreanu", "nivel": 3},
+	{"qid": "Q12726037", "titlu": "Crăișorul", "autor_nume": "Liviu Rebreanu", "nivel": 3, "ciorna": true},
+	{"qid": "Q12729450", "titlu": "Gorila", "autor_nume": "Liviu Rebreanu", "nivel": 3, "ciorna": true},
+
+	{"qid": "Q1439597", "titlu": "Baltagul", "autor_nume": "Mihail Sadoveanu", "nivel": 2},
+	{"qid": "Q12725887", "titlu": "Creanga de aur", "autor_nume": "Mihail Sadoveanu", "nivel": 3, "ciorna": true},
+	{"qid": "Q18540692", "titlu": "Hanul Ancuței", "autor_nume": "Mihail Sadoveanu", "nivel": 3, "titlu_de_mana": true},
+	{"qid": "Q18544278", "titlu": "Neamul Șoimăreștilor", "autor_nume": "Mihail Sadoveanu", "nivel": 3},
+	{"qid": "Q12736580", "titlu": "Nicoară Potcoavă", "autor_nume": "Mihail Sadoveanu", "nivel": 3},
+
+	{"qid": "Q18540201", "titlu": "Flori de mucigai", "autor_nume": "Tudor Arghezi", "nivel": 3},
+	{"qid": "Q12742158", "titlu": "Testament", "autor_nume": "Tudor Arghezi", "nivel": 3},
+
+	{"qid": "Q12727790", "titlu": "Eu nu strivesc corola de minuni a lumii", "autor_nume": "Lucian Blaga", "nivel": 2},
+	{"qid": "Q12738254", "titlu": "Poemele luminii", "autor_nume": "Lucian Blaga", "nivel": 3, "ciorna": true},
+	{"qid": "Q134928190", "titlu": "Spațiul mioritic", "autor_nume": "Lucian Blaga", "nivel": 3, "ciorna": true},
+
+	{"qid": "Q12742796", "titlu": "Ultima noapte de dragoste, întâia noapte de război", "autor_nume": "Camil Petrescu", "nivel": 2},
+	{"qid": "Q25465610", "titlu": "Jocul ielelor", "autor_nume": "Camil Petrescu", "nivel": 3},
+	{"qid": "Q23831177", "titlu": "Patul lui Procust", "autor_nume": "Camil Petrescu", "nivel": 3},
+
+	{"qid": "Q12727660", "titlu": "Enigma Otiliei", "autor_nume": "George Călinescu", "nivel": 2},
+	{"qid": "Q46587290", "titlu": "Bietul Ioanide", "autor_nume": "George Călinescu", "nivel": 3},
+	{"qid": "Q12723500", "titlu": "Cartea nunții", "autor_nume": "George Călinescu", "nivel": 3},
+
+	{"qid": "Q2018068", "titlu": "Maitreyi", "autor_nume": "Mircea Eliade", "nivel": 2},
+	{"qid": "Q16387038", "titlu": "Domnișoara Christina", "autor_nume": "Mircea Eliade", "nivel": 3},
+	{"qid": "Q12731814", "titlu": "La țigănci", "autor_nume": "Mircea Eliade", "nivel": 3},
+	{"qid": "Q3224928", "titlu": "Mitul eternei reîntoarceri", "autor_nume": "Mircea Eliade", "nivel": 3},
+	{"qid": "Q14594692", "titlu": "Noaptea de Sânziene", "autor_nume": "Mircea Eliade", "nivel": 3},
+
+	{"qid": "Q6913228", "titlu": "Moromeții", "autor_nume": "Marin Preda", "nivel": 2},
+	{"qid": "Q5057413", "titlu": "Cel mai iubit dintre pământeni", "autor_nume": "Marin Preda", "nivel": 3},
+	{"qid": "Q114864021", "titlu": "Delirul", "autor_nume": "Marin Preda", "nivel": 3},
+	{"qid": "Q7924557", "titlu": "Viața ca o pradă", "autor_nume": "Marin Preda", "nivel": 3},
+
+	{"qid": "Q12719719", "titlu": "11 elegii", "autor_nume": "Nichita Stănescu", "nivel": 3},
+	{"qid": "Q119246277", "titlu": "Clar de inimă", "autor_nume": "Nichita Stănescu", "nivel": 3},
+	{"qid": "Q12732090", "titlu": "Leoaică tânără, iubirea", "autor_nume": "Nichita Stănescu", "nivel": 3},
+	{"qid": "Q7451156", "titlu": "Sensul iubirii", "autor_nume": "Nichita Stănescu", "nivel": 3}
+]

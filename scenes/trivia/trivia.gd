@@ -48,11 +48,9 @@ extends Puzzle
 ## să cuprindă domeniul e scris la `SAC`, și e o capcană care nu s-ar fi văzut
 ## niciodată jucând.
 ##
-## ── PATRU FIȘIERE, DOUĂ FELURI DE CONȚINUT ────────────────────
-## Întrebări:  `intrebari_trivia.json` (scris de mână)
-##             `intrebari_trivia_wd.json` (fabricat, vezi `CALE_INTREBARI_WD`)
-## Note:       `fapte_trivia.json` (scris de mână)
-##             `fapte_trivia_wd.json` (fabricat, toate notele goale deocamdată)
+## ── DOUĂ FELURI DE CONȚINUT, UN FIȘIER ȘI UN DOSAR ────────────
+## Scris de mână:  `data/intrebari_trivia.json` + `data/fapte_trivia.json`
+## Fabricat:       tot ce e în `data/trivia_gen/` (vezi `DOSAR_GEN`)
 ##
 ## Nota stă pe FAPT, nu pe întrebare, iar întrebarea arată spre fapt printr-un
 ## câmp `fapt`. Regulile de scris ale unei note sunt în `docs/ghid-note.md`.
@@ -72,28 +70,40 @@ extends Puzzle
 const CALE_INTREBARI := "res://data/intrebari_trivia.json"
 
 # ─────────────────────────────────────────────────────────────
-# AL DOILEA FIȘIER DE ÎNTREBĂRI: CELE FABRICATE
+# DOSARUL CU CONȚINUT FABRICAT
 #
-# `intrebari_trivia.json` e scris de mână, întrebare cu întrebare.
-# `intrebari_trivia_wd.json` e SCRIS DE UN SCRIPT (`tools/fabrica/elemente.py`),
-# din date luate de la Wikidata, și se rescrie ÎNTREG la fiecare rulare a
-# scriptului. Nu se editează de mână: orice corectură pusă direct în el dispare
-# la prima regenerare. Ce se editează e tabelul din script.
+# `intrebari_trivia.json` e scris de mână, întrebare cu întrebare. Tot ce e în
+# `data/trivia_gen/` e SCRIS DE SCRIPTURILE din `tools/fabrica/`, din date luate
+# de la Wikidata, și se rescrie ÎNTREG la fiecare rulare a scriptului care l-a
+# produs. Nu se editează de mână: orice corectură pusă direct în el dispare la
+# prima regenerare. Ce se editează e tabelul scriptului.
 #
-# De ce două fișiere și nu unul: ca fișierul scris de mână să nu fie NICIODATĂ
-# atins de un script. 135 de întrebări scrise una câte una sunt câteva săptămâni
-# de muncă; un generator cu un bug care le rescrie e o pierdere din care nu te
-# mai întorci. Despărțirea nu e curățenie, e o asigurare.
-const CALE_INTREBARI_WD := "res://data/intrebari_trivia_wd.json"
+# De ce despărțit de fișierul scris de mână: ca acela să nu fie NICIODATĂ atins
+# de un script. 135 de întrebări scrise una câte una sunt câteva săptămâni de
+# muncă; un generator cu un bug care le rescrie e o pierdere din care nu te mai
+# întorci. Despărțirea nu e curățenie, e o asigurare.
+#
+# DE CE UN DOSAR ȘI NU O CONSTANTĂ PE FIȘIER. Fabrica are azi două tabele
+# (elementele chimice, operele literare) și va avea mai multe. Cu o constantă pe
+# fișier, fiecare tabel nou ar însemna o linie în `trivia.gd`, una în încărcător
+# și una în verificator — adică exact ce spune CLAUDE.md că n-are voie să se
+# întâmple: „o disciplină nouă trebuie să fie un rând în tabel, nu o ramură nouă
+# în cod". Cu un dosar, un tabel nou e două fișiere puse acolo și nicio linie de
+# cod, nicăieri.
+#
+# Convenția de nume, pe care se sprijină citirea:
+#   <tabel>_intrebari.json   întrebările
+#   <tabel>_fapte.json       faptele lor
+const DOSAR_GEN := "res://data/trivia_gen"
 
-# COMUTATORUL. `false` și jocul nu mai vede niciuna din întrebările fabricate,
-# fără să se atingă nimic altceva.
+# COMUTATORUL. `false` și jocul nu mai vede NIMIC din dosarul fabricat — nici
+# întrebările, nici faptele — fără să se atingă nimic altceva.
 #
-# Există fiindcă pilotul poate să nu-mi placă. Cele 139 de întrebări generate
-# intră toate în știință, iar la fiecare nivel știința devine ~85% chimie. În
-# luptă asta înseamnă cam 1 din 7 întrebări despre „element ↔ simbol" — mult
-# pentru o singură relație. Dacă se simte prea mult, se stinge de aici, iar
-# leacul adevărat nu e o treaptă de alegere în plus, e lățimea conținutului.
+# Există fiindcă conținutul fabricat poate să nu-mi placă. Azi sunt două relații
+# („element ↔ simbol" în știință, „operă ↔ autor" în literatură), fiecare
+# umplând ~85-90% din domeniul ei. În luptă asta înseamnă cam 2 din 7 întrebări
+# fabricate. Dacă se simte prea mult, se stinge de aici, iar leacul adevărat nu
+# e o treaptă de alegere în plus, e lățimea conținutului.
 const FOLOSESTE_WIKIDATA := true
 
 # FAPTELE. Un „fapt" e un lucru despre lume care poate fi întrebat în mai multe
@@ -106,18 +116,17 @@ const FOLOSESTE_WIKIDATA := true
 # lucru ajung, într-o zi, să se contrazică.
 const CALE_FAPTE := "res://data/fapte_trivia.json"
 
-# Faptele întrebărilor fabricate. Tot generat, tot rescris întreg.
+# Faptele fabricate stau tot în `DOSAR_GEN`, în fișierele `*_fapte.json`.
 #
-# Toate au NOTA GOALĂ, deocamdată, deci nu aduc nimic pe ecran. Fișierul există
+# Toate au NOTA GOALĂ, deocamdată, deci nu aduc nimic pe ecran. Fișierele există
 # dintr-un motiv mai mic și mai practic: fiecare întrebare fabricată arată spre
 # un `fapt` (`wd:Q897`), iar `_intrebare_valida` se plânge, cu drept, pentru un
-# `fapt` care nu duce nicăieri. Fără fișierul ăsta, jocul ar porni cu 139 de
+# `fapt` care nu duce nicăieri. Fără ele, jocul ar porni cu peste 300 de
 # avertismente — iar de-acolo încolo consola nu mai e un loc unde se citește ceva.
 #
-# ATENȚIE, e scris și în `docs/progres.md`: fiindcă fișierul se REscrie întreg,
-# notele pentru faptele `wd:` NU pot sta în el. Când vor exista, vor sta într-un
+# ATENȚIE, e scris și în `docs/progres.md`: fiindcă fișierele se REscriu întregi,
+# notele pentru faptele `wd:` NU pot sta în ele. Când vor exista, vor sta într-un
 # loc pe care generarea nu-l atinge.
-const CALE_FAPTE_WD := "res://data/fapte_trivia_wd.json"
 
 # Lungimea maximă a unei note, în caractere. Cifră PROVIZORIE: se reglează când
 # există popup-ul din Practice și se vede pe telefon câte rânduri încap fără
@@ -308,7 +317,7 @@ static func cheia_sacului(domeniu: String, nivel: int) -> String:
 ## Ce fișier să cauți dacă ecranul de eroare apare vreodată în luptă.
 func _descriere_sursa() -> String:
 	if FOLOSESTE_WIKIDATA:
-		return "%s + %s" % [CALE_INTREBARI, CALE_INTREBARI_WD]
+		return "%s + %s/" % [CALE_INTREBARI, DOSAR_GEN]
 	return CALE_INTREBARI
 
 
@@ -386,13 +395,14 @@ static func incarca_intrebari() -> void:
 
 	_incarca_fapte(CALE_FAPTE)
 	if FOLOSESTE_WIKIDATA:
-		_incarca_fapte(CALE_FAPTE_WD)
+		for cale in fisierele_generate("_fapte.json"):
+			_incarca_fapte(cale)
 
 	# `folosite` strânge, cât trec întrebările, faptele de care se agață măcar una.
 	# `id_uri` prinde duplicatele: două întrebări cu același `id` sunt, pentru sac,
 	# o singură întrebare — una din ele n-ar mai ieși NICIODATĂ, fără niciun semn.
 	#
-	# Amândouă trec prin cele DOUĂ fișiere, nu se iau de la capăt la al doilea.
+	# Amândouă trec prin TOATE fișierele, nu se iau de la capăt la fiecare.
 	# `id_uri` mai ales: dacă o întrebare fabricată ar avea același `id` ca una
 	# scrisă de mână, sacul le-ar crede una singură. Prefixele (`mana:`, `wd:`) fac
 	# ciocnirea aproape imposibilă, dar verificarea nu se sprijină pe asta —
@@ -402,7 +412,8 @@ static func incarca_intrebari() -> void:
 
 	var cate_gasite := _incarca_fisier(CALE_INTREBARI, folosite, id_uri)
 	if FOLOSESTE_WIKIDATA:
-		cate_gasite += _incarca_fisier(CALE_INTREBARI_WD, folosite, id_uri)
+		for cale in fisierele_generate("_intrebari.json"):
+			cate_gasite += _incarca_fisier(cale, folosite, id_uri)
 
 	print("Trivia: %d intrebari incarcate (din %d gasite)." % [intrebari.size(), cate_gasite])
 
@@ -411,12 +422,42 @@ static func incarca_intrebari() -> void:
 	# niciodată la un jucător, iar la mii de fapte n-ai cum s-o mai găsești.
 	#
 	# Merge și peste faptele fabricate, dinadins: dacă stingi comutatorul
-	# `FOLOSESTE_WIKIDATA`, nu se mai încarcă NICIUNUL din cele două fișiere
-	# fabricate, deci nici faptele lor nu rămân orfane. Cele două `if`-uri de mai
-	# sus trebuie să rămână împreună — altfel verificarea asta ar țipa de 70 de ori.
+	# `FOLOSESTE_WIKIDATA`, nu se mai încarcă NIMIC din dosarul fabricat, deci nici
+	# faptele lui nu rămân orfane. Cele două `if`-uri de mai sus trebuie să rămână
+	# împreună — altfel verificarea asta ar țipa de câteva sute de ori.
 	for id_fapt in fapte:
 		if not folosite.has(id_fapt):
 			push_warning("Trivia: faptul '%s' nu e folosit de nicio intrebare." % id_fapt)
+
+
+## Fișierele din `DOSAR_GEN` care se termină cu sufixul dat, sortate pe nume.
+##
+## SORTATE, nu în ordinea de pe disc. Ordinea în care sistemul de fișiere
+## enumeră un dosar nu e garantată, iar de la ea depinde ordinea din `intrebari`
+## — deci și ce se întâmplă la o egalitate oriunde mai încolo. O ordine stabilă
+## costă un `sort()` și scoate din joc o întreagă familie de „la mine merge".
+##
+## DOSARUL GOL E UN AVERTISMENT, NU O TĂCERE. Într-un joc EXPORTAT, fișierele
+## care nu sunt resurse Godot ajung în pachet doar dacă presetul de export le
+## prinde în filtrul lui (`*.json`). Dacă nu, `DirAccess` vede un dosar gol, iar
+## jocul ar porni cu jumătate din conținut și fără niciun semn. De-aia lipsa e
+## spusă, cu tot cu cauza probabilă: e genul de problemă care apare o singură
+## dată, la primul export, și mănâncă o oră dacă nu ți-o spune nimeni.
+static func fisierele_generate(sufix: String) -> Array[String]:
+	var gasite: Array[String] = []
+	var dosar := DirAccess.open(DOSAR_GEN)
+	if dosar == null:
+		push_warning("Trivia: nu pot deschide %s. Continui doar cu ce e scris de mana." % DOSAR_GEN)
+		return gasite
+	for nume in dosar.get_files():
+		if nume.ends_with(sufix):
+			gasite.append("%s/%s" % [DOSAR_GEN, nume])
+	gasite.sort()
+	if gasite.is_empty():
+		push_warning(("Trivia: %s nu are niciun fisier '*%s'. Intr-un build exportat, " +
+			"asta inseamna de obicei ca presetul de export nu include '*.json' in " +
+			"filtrul de resurse ne-Godot.") % [DOSAR_GEN, sufix])
+	return gasite
 
 
 ## Citește UN fișier de întrebări, validează fiecare intrare și adaugă cele bune

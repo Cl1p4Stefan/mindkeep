@@ -1,0 +1,1444 @@
+[
+	{
+		"id": "wd:Q11267910:autor:cere_autor",
+		"fapt": "wd:Q11267910",
+		"text": "Cine a scris „O scrisoare pierdută”?",
+		"variante": ["George Coșbuc", "Mihai Eminescu", "Ion Luca Caragiale", "Ion Creangă"],
+		"corect": 2,
+		"nivel": 1,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q1219561:autor:cere_autor",
+		"fapt": "wd:Q1219561",
+		"text": "Cine a scris „Ocolul Pământului în 80 de zile”?",
+		"variante": ["Jules Verne", "Alexandre Dumas", "Victor Hugo", "Antoine de Saint-Exupéry"],
+		"corect": 0,
+		"nivel": 1,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q12730220:autor:cere_autor",
+		"fapt": "wd:Q12730220",
+		"text": "Cine a scris „Iarna pe uliță”?",
+		"variante": ["Ion Luca Caragiale", "Ion Creangă", "Mihai Eminescu", "George Coșbuc"],
+		"corect": 3,
+		"nivel": 1,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q140527:autor:cere_autor",
+		"fapt": "wd:Q140527",
+		"text": "Cine a scris „Cei trei muschetari”?",
+		"variante": ["Victor Hugo", "Alexandre Dumas", "Jules Verne", "Antoine de Saint-Exupéry"],
+		"corect": 1,
+		"nivel": 1,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q147787:autor:cere_autor",
+		"fapt": "wd:Q147787",
+		"text": "Cine a scris „Anna Karenina”?",
+		"variante": ["Feodor Dostoievski", "Antoine de Saint-Exupéry", "Lev Tolstoi", "Ion Luca Caragiale"],
+		"corect": 2,
+		"nivel": 1,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q15228:autor:cere_autor",
+		"fapt": "wd:Q15228",
+		"text": "Cine a scris „Stăpânul inelelor”?",
+		"variante": ["George Orwell", "J. R. R. Tolkien", "Ernest Hemingway", "Agatha Christie"],
+		"corect": 1,
+		"nivel": 1,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q161531:autor:cere_autor",
+		"fapt": "wd:Q161531",
+		"text": "Cine a scris „Război și pace”?",
+		"variante": ["Lev Tolstoi", "Feodor Dostoievski", "Ion Luca Caragiale", "Ion Creangă"],
+		"corect": 0,
+		"nivel": 1,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q180736:autor:cere_autor",
+		"fapt": "wd:Q180736",
+		"text": "Cine a scris „Mizerabilii”?",
+		"variante": ["Alexandre Dumas", "Victor Hugo", "Jules Verne", "Antoine de Saint-Exupéry"],
+		"corect": 1,
+		"nivel": 1,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q183565:autor:cere_autor",
+		"fapt": "wd:Q183565",
+		"text": "Cine a scris „Douăzeci de mii de leghe sub mări”?",
+		"variante": ["Alexandre Dumas", "Victor Hugo", "Jules Verne", "Antoine de Saint-Exupéry"],
+		"corect": 2,
+		"nivel": 1,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q184935:autor:cere_opera",
+		"fapt": "wd:Q184935",
+		"text": "Care dintre aceste opere a fost scrisă de Mihai Eminescu?",
+		"variante": ["Luceafărul", "Amintiri din copilărie", "O scrisoare pierdută", "Ultima noapte de dragoste, întâia noapte de război"],
+		"corect": 0,
+		"nivel": 1,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q191838:autor:cere_autor",
+		"fapt": "wd:Q191838",
+		"text": "Cine a scris „Contele de Monte-Cristo”?",
+		"variante": ["Jules Verne", "Alexandre Dumas", "Victor Hugo", "Antoine de Saint-Exupéry"],
+		"corect": 1,
+		"nivel": 1,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q204810:autor:cere_opera",
+		"fapt": "wd:Q204810",
+		"text": "Care dintre aceste opere a fost scrisă de Ion Creangă?",
+		"variante": ["Amintiri din copilărie", "O scrisoare pierdută", "Luceafărul", "Hora Unirii"],
+		"corect": 0,
+		"nivel": 1,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q208460:autor:cere_autor",
+		"fapt": "wd:Q208460",
+		"text": "Cine a scris „1984”?",
+		"variante": ["J. R. R. Tolkien", "Agatha Christie", "George Orwell", "Ernest Hemingway"],
+		"corect": 2,
+		"nivel": 1,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q2908:autor:cere_opera",
+		"fapt": "wd:Q2908",
+		"text": "Care dintre aceste opere a fost scrisă de Antoine de Saint-Exupéry?",
+		"variante": ["Ciuma", "Contele de Monte-Cristo", "Micul prinț", "Mizerabilii"],
+		"corect": 2,
+		"nivel": 1,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q315132:autor:cere_opera",
+		"fapt": "wd:Q315132",
+		"text": "Care dintre aceste opere a fost scrisă de Ion Luca Caragiale?",
+		"variante": ["Luceafărul", "Amintiri din copilărie", "Capra cu trei iezi", "O scrisoare pierdută"],
+		"corect": 3,
+		"nivel": 1,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q326914:autor:cere_autor",
+		"fapt": "wd:Q326914",
+		"text": "Cine a scris „Aventurile lui Tom Sawyer”?",
+		"variante": ["Mark Twain", "George Orwell", "Charles Dickens", "J. R. R. Tolkien"],
+		"corect": 0,
+		"nivel": 1,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q3335:autor:cere_opera",
+		"fapt": "wd:Q3335",
+		"text": "Care dintre aceste opere a fost scrisă de George Orwell?",
+		"variante": ["Stăpânul inelelor", "Hobbitul", "1984", "Bătrânul și marea"],
+		"corect": 2,
+		"nivel": 1,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q35160:autor:cere_autor",
+		"fapt": "wd:Q35160",
+		"text": "Cine a scris „Odiseea”?",
+		"variante": ["Homer", "George Orwell", "William Shakespeare", "Mihai Eminescu"],
+		"corect": 0,
+		"nivel": 1,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q38337:autor:cere_opera",
+		"fapt": "wd:Q38337",
+		"text": "Care dintre aceste opere a fost scrisă de Alexandre Dumas?",
+		"variante": ["Cei trei muschetari", "Douăzeci de mii de leghe sub mări", "Ocolul Pământului în 80 de zile", "Mizerabilii"],
+		"corect": 0,
+		"nivel": 1,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q40946:autor:cere_opera",
+		"fapt": "wd:Q40946",
+		"text": "Care dintre aceste opere a fost scrisă de Daniel Defoe?",
+		"variante": ["Călătoriile lui Gulliver", "Robinson Crusoe", "Macbeth", "Mândrie și prejudecată"],
+		"corect": 1,
+		"nivel": 1,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q473257:autor:cere_opera",
+		"fapt": "wd:Q473257",
+		"text": "Care dintre aceste opere a fost scrisă de George Coșbuc?",
+		"variante": ["O scrisoare pierdută", "Amintiri din copilărie", "Iarna pe uliță", "Luceafărul"],
+		"corect": 2,
+		"nivel": 1,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q535:autor:cere_opera",
+		"fapt": "wd:Q535",
+		"text": "Care dintre aceste opere a fost scrisă de Victor Hugo?",
+		"variante": ["Mizerabilii", "Cei trei muschetari", "Contele de Monte-Cristo", "Ocolul Pământului în 80 de zile"],
+		"corect": 0,
+		"nivel": 1,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q6691:autor:cere_opera",
+		"fapt": "wd:Q6691",
+		"text": "Care dintre aceste opere a fost scrisă de Homer?",
+		"variante": ["Iliada", "Robinson Crusoe", "Cei trei muschetari", "1984"],
+		"corect": 0,
+		"nivel": 1,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q692:autor:cere_opera",
+		"fapt": "wd:Q692",
+		"text": "Care dintre aceste opere a fost scrisă de William Shakespeare?",
+		"variante": ["Hamlet", "Robinson Crusoe", "Călătoriile lui Gulliver", "Aventurile lui Tom Sawyer"],
+		"corect": 0,
+		"nivel": 1,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q7243:autor:cere_opera",
+		"fapt": "wd:Q7243",
+		"text": "Care dintre aceste opere a fost scrisă de Lev Tolstoi?",
+		"variante": ["Frații Karamazov", "Anna Karenina", "Crimă și pedeapsă", "Mizerabilii"],
+		"corect": 1,
+		"nivel": 1,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q7245:autor:cere_opera",
+		"fapt": "wd:Q7245",
+		"text": "Care dintre aceste opere a fost scrisă de Mark Twain?",
+		"variante": ["David Copperfield", "Aventurile lui Tom Sawyer", "Oliver Twist", "Colind de Crăciun"],
+		"corect": 1,
+		"nivel": 1,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q74287:autor:cere_autor",
+		"fapt": "wd:Q74287",
+		"text": "Cine a scris „Hobbitul”?",
+		"variante": ["George Orwell", "J. R. R. Tolkien", "Ernest Hemingway", "Agatha Christie"],
+		"corect": 1,
+		"nivel": 1,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q8275:autor:cere_autor",
+		"fapt": "wd:Q8275",
+		"text": "Cine a scris „Iliada”?",
+		"variante": ["George Orwell", "Antoine de Saint-Exupéry", "Homer", "Ion Luca Caragiale"],
+		"corect": 2,
+		"nivel": 1,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q892:autor:cere_opera",
+		"fapt": "wd:Q892",
+		"text": "Care dintre aceste opere a fost scrisă de J. R. R. Tolkien?",
+		"variante": ["Stăpânul inelelor", "1984", "Crima din Orient Express", "Bătrânul și marea"],
+		"corect": 0,
+		"nivel": 1,
+		"categorie": "literatura"
+	},
+
+	{
+		"id": "wd:Q104841346:autor:cere_autor",
+		"fapt": "wd:Q104841346",
+		"text": "Cine a scris „Harap-Alb”?",
+		"variante": ["Mihai Eminescu", "George Coșbuc", "Ion Luca Caragiale", "Ion Creangă"],
+		"corect": 3,
+		"nivel": 2,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q104871:autor:cere_autor",
+		"fapt": "wd:Q104871",
+		"text": "Cine a scris „Visul unei nopți de vară”?",
+		"variante": ["Daniel Defoe", "William Shakespeare", "Jonathan Swift", "Jane Austen"],
+		"corect": 1,
+		"nivel": 2,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q1067:autor:cere_opera",
+		"fapt": "wd:Q1067",
+		"text": "Care dintre aceste opere a fost scrisă de Dante Alighieri?",
+		"variante": ["Divina Comedie", "Decameronul", "Don Quijote", "Visul unei nopți de vară"],
+		"corect": 0,
+		"nivel": 2,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q12727660:autor:cere_autor",
+		"fapt": "wd:Q12727660",
+		"text": "Cine a scris „Enigma Otiliei”?",
+		"variante": ["Liviu Rebreanu", "Marin Preda", "Camil Petrescu", "George Călinescu"],
+		"corect": 3,
+		"nivel": 2,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q12727790:autor:cere_autor",
+		"fapt": "wd:Q12727790",
+		"text": "Cine a scris „Eu nu strivesc corola de minuni a lumii”?",
+		"variante": ["Liviu Rebreanu", "Lucian Blaga", "Ernest Hemingway", "Mihail Sadoveanu"],
+		"corect": 1,
+		"nivel": 2,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q12735813:autor:cere_autor",
+		"fapt": "wd:Q12735813",
+		"text": "Cine a scris „Moara cu noroc”?",
+		"variante": ["Liviu Rebreanu", "Mihail Sadoveanu", "Ioan Slavici", "Camil Petrescu"],
+		"corect": 2,
+		"nivel": 2,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q12736975:autor:cere_autor",
+		"fapt": "wd:Q12736975",
+		"text": "Cine a scris „O noapte furtunoasă”?",
+		"variante": ["Ion Luca Caragiale", "Mihai Eminescu", "Ion Creangă", "George Coșbuc"],
+		"corect": 0,
+		"nivel": 2,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q130283:autor:cere_autor",
+		"fapt": "wd:Q130283",
+		"text": "Cine a scris „Macbeth”?",
+		"variante": ["William Shakespeare", "Daniel Defoe", "Jonathan Swift", "Jane Austen"],
+		"corect": 0,
+		"nivel": 2,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q1360145:autor:cere_opera",
+		"fapt": "wd:Q1360145",
+		"text": "Care dintre aceste opere a fost scrisă de Marin Preda?",
+		"variante": ["Ultima noapte de dragoste, întâia noapte de război", "Ion", "Maitreyi", "Moromeții"],
+		"corect": 3,
+		"nivel": 2,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q1396889:autor:cere_autor",
+		"fapt": "wd:Q1396889",
+		"text": "Cine a scris „Ferma Animalelor”?",
+		"variante": ["George Orwell", "J. R. R. Tolkien", "Ernest Hemingway", "Agatha Christie"],
+		"corect": 0,
+		"nivel": 2,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q1402:autor:cere_opera",
+		"fapt": "wd:Q1402",
+		"text": "Care dintre aceste opere a fost scrisă de Giovanni Boccaccio?",
+		"variante": ["Infernul", "Divina Comedie", "Decameronul", "Don Quijote"],
+		"corect": 2,
+		"nivel": 2,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q15731603:autor:cere_autor",
+		"fapt": "wd:Q15731603",
+		"text": "Cine a scris „Pădurea spânzuraților”?",
+		"variante": ["Ioan Slavici", "George Călinescu", "Mihail Sadoveanu", "Liviu Rebreanu"],
+		"corect": 3,
+		"nivel": 2,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q1627839:autor:cere_autor",
+		"fapt": "wd:Q1627839",
+		"text": "Cine a scris „Hora Unirii”?",
+		"variante": ["Vasile Alecsandri", "Ioan Slavici", "Ion Luca Caragiale", "George Coșbuc"],
+		"corect": 0,
+		"nivel": 2,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q16438:autor:cere_autor",
+		"fapt": "wd:Q16438",
+		"text": "Cine a scris „Decameronul”?",
+		"variante": ["Giovanni Boccaccio", "Dante Alighieri", "Miguel de Cervantes", "Jonathan Swift"],
+		"corect": 0,
+		"nivel": 2,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q164974:autor:cere_autor",
+		"fapt": "wd:Q164974",
+		"text": "Cine a scris „Oliver Twist”?",
+		"variante": ["Jane Austen", "Charles Dickens", "Mark Twain", "Agatha Christie"],
+		"corect": 1,
+		"nivel": 2,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q170583:autor:cere_autor",
+		"fapt": "wd:Q170583",
+		"text": "Cine a scris „Mândrie și prejudecată”?",
+		"variante": ["Charles Dickens", "Mark Twain", "Ernest Hemingway", "Jane Austen"],
+		"corect": 3,
+		"nivel": 2,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q181488:autor:cere_autor",
+		"fapt": "wd:Q181488",
+		"text": "Cine a scris „Călătoriile lui Gulliver”?",
+		"variante": ["Daniel Defoe", "Jane Austen", "Jonathan Swift", "Charles Dickens"],
+		"corect": 2,
+		"nivel": 2,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q181598:autor:cere_autor",
+		"fapt": "wd:Q181598",
+		"text": "Cine a scris „Regele Lear”?",
+		"variante": ["William Shakespeare", "Daniel Defoe", "Jonathan Swift", "Jane Austen"],
+		"corect": 0,
+		"nivel": 2,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q183157:autor:cere_autor",
+		"fapt": "wd:Q183157",
+		"text": "Cine a scris „Frații Karamazov”?",
+		"variante": ["Feodor Dostoievski", "Lev Tolstoi", "Vasile Alecsandri", "Ernest Hemingway"],
+		"corect": 0,
+		"nivel": 2,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q18540186:autor:cere_autor",
+		"fapt": "wd:Q18540186",
+		"text": "Cine a scris „Floare albastră”?",
+		"variante": ["Mihai Eminescu", "Ion Luca Caragiale", "Ion Creangă", "George Coșbuc"],
+		"corect": 0,
+		"nivel": 2,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q189811:autor:cere_autor",
+		"fapt": "wd:Q189811",
+		"text": "Cine a scris „David Copperfield”?",
+		"variante": ["Mark Twain", "Agatha Christie", "Ernest Hemingway", "Charles Dickens"],
+		"corect": 3,
+		"nivel": 2,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q191380:autor:cere_autor",
+		"fapt": "wd:Q191380",
+		"text": "Cine a scris „Notre-Dame de Paris”?",
+		"variante": ["Alexandre Dumas", "Jules Verne", "Victor Hugo", "Antoine de Saint-Exupéry"],
+		"corect": 2,
+		"nivel": 2,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q2018068:autor:cere_autor",
+		"fapt": "wd:Q2018068",
+		"text": "Cine a scris „Maitreyi”?",
+		"variante": ["Mihail Sadoveanu", "Mircea Eliade", "George Călinescu", "Ioan Slavici"],
+		"corect": 1,
+		"nivel": 2,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q205875:autor:cere_autor",
+		"fapt": "wd:Q205875",
+		"text": "Cine a scris „Tartuffe”?",
+		"variante": ["Voltaire", "Victor Hugo", "Molière", "Alexandre Dumas"],
+		"corect": 2,
+		"nivel": 2,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q214132:autor:cere_autor",
+		"fapt": "wd:Q214132",
+		"text": "Cine a scris „Zece negri mititei”?",
+		"variante": ["Ernest Hemingway", "Agatha Christie", "George Orwell", "J. R. R. Tolkien"],
+		"corect": 1,
+		"nivel": 2,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q215410:autor:cere_autor",
+		"fapt": "wd:Q215410",
+		"text": "Cine a scris „Aventurile lui Huckleberry Finn”?",
+		"variante": ["Mark Twain", "J. R. R. Tolkien", "George Orwell", "Charles Dickens"],
+		"corect": 0,
+		"nivel": 2,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q215894:autor:cere_autor",
+		"fapt": "wd:Q215894",
+		"text": "Cine a scris „Candid”?",
+		"variante": ["Victor Hugo", "Alexandre Dumas", "Albert Camus", "Voltaire"],
+		"corect": 3,
+		"nivel": 2,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q219457:autor:cere_autor",
+		"fapt": "wd:Q219457",
+		"text": "Cine a scris „O călătorie spre centrul Pământului”?",
+		"variante": ["Jules Verne", "Alexandre Dumas", "Victor Hugo", "Antoine de Saint-Exupéry"],
+		"corect": 0,
+		"nivel": 2,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q23434:autor:cere_opera",
+		"fapt": "wd:Q23434",
+		"text": "Care dintre aceste opere a fost scrisă de Ernest Hemingway?",
+		"variante": ["Bătrânul și marea", "Ferma Animalelor", "Crima din Orient Express", "Zece negri mititei"],
+		"corect": 0,
+		"nivel": 2,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q26505:autor:cere_autor",
+		"fapt": "wd:Q26505",
+		"text": "Cine a scris „Bătrânul și marea”?",
+		"variante": ["Agatha Christie", "J. R. R. Tolkien", "Ernest Hemingway", "George Orwell"],
+		"corect": 2,
+		"nivel": 2,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q26833:autor:cere_autor",
+		"fapt": "wd:Q26833",
+		"text": "Cine a scris „Othello”?",
+		"variante": ["Daniel Defoe", "William Shakespeare", "Jonathan Swift", "Jane Austen"],
+		"corect": 1,
+		"nivel": 2,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q29478:autor:cere_autor",
+		"fapt": "wd:Q29478",
+		"text": "Cine a scris „Faust”?",
+		"variante": ["Franz Kafka", "Jane Austen", "Vasile Alecsandri", "Johann Wolfgang von Goethe"],
+		"corect": 3,
+		"nivel": 2,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q2988829:autor:cere_opera",
+		"fapt": "wd:Q2988829",
+		"text": "Care dintre aceste opere a fost scrisă de George Călinescu?",
+		"variante": ["Enigma Otiliei", "Ion", "Pădurea spânzuraților", "Maitreyi"],
+		"corect": 0,
+		"nivel": 2,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q320372:autor:cere_autor",
+		"fapt": "wd:Q320372",
+		"text": "Cine a scris „Ciuma”?",
+		"variante": ["Antoine de Saint-Exupéry", "Albert Camus", "Jules Verne", "Alexandre Dumas"],
+		"corect": 1,
+		"nivel": 2,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q34670:autor:cere_opera",
+		"fapt": "wd:Q34670",
+		"text": "Care dintre aceste opere a fost scrisă de Albert Camus?",
+		"variante": ["Micul prinț", "Ciuma", "O călătorie spre centrul Pământului", "Insula misterioasă"],
+		"corect": 1,
+		"nivel": 2,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q35064:autor:cere_opera",
+		"fapt": "wd:Q35064",
+		"text": "Care dintre aceste opere a fost scrisă de Agatha Christie?",
+		"variante": ["Ferma Animalelor", "Zece negri mititei", "Bătrânul și marea", "Adio arme"],
+		"corect": 1,
+		"nivel": 2,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q352004:autor:cere_opera",
+		"fapt": "wd:Q352004",
+		"text": "Care dintre aceste opere a fost scrisă de Vasile Alecsandri?",
+		"variante": ["Hora Unirii", "Moara cu noroc", "Floare albastră", "O noapte furtunoasă"],
+		"corect": 0,
+		"nivel": 2,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q36322:autor:cere_opera",
+		"fapt": "wd:Q36322",
+		"text": "Care dintre aceste opere a fost scrisă de Jane Austen?",
+		"variante": ["David Copperfield", "Colind de Crăciun", "Oliver Twist", "Mândrie și prejudecată"],
+		"corect": 3,
+		"nivel": 2,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q381256:autor:cere_opera",
+		"fapt": "wd:Q381256",
+		"text": "Care dintre aceste opere a fost scrisă de Lucian Blaga?",
+		"variante": ["Ion", "Eu nu strivesc corola de minuni a lumii", "Aventurile lui Huckleberry Finn", "Ciuma"],
+		"corect": 1,
+		"nivel": 2,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q389933:autor:cere_autor",
+		"fapt": "wd:Q389933",
+		"text": "Cine a scris „Avarul”?",
+		"variante": ["Voltaire", "Victor Hugo", "Alexandre Dumas", "Molière"],
+		"corect": 3,
+		"nivel": 2,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q41166:autor:cere_opera",
+		"fapt": "wd:Q41166",
+		"text": "Care dintre aceste opere a fost scrisă de Jonathan Swift?",
+		"variante": ["Jurnal din anul ciumei", "Călătoriile lui Gulliver", "Robinson Crusoe", "Mândrie și prejudecată"],
+		"corect": 1,
+		"nivel": 2,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q41590:autor:cere_opera",
+		"fapt": "wd:Q41590",
+		"text": "Care dintre aceste opere a fost scrisă de Mircea Eliade?",
+		"variante": ["Maitreyi", "Pădurea spânzuraților", "Ion", "Baltagul"],
+		"corect": 0,
+		"nivel": 2,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q462220:autor:cere_opera",
+		"fapt": "wd:Q462220",
+		"text": "Care dintre aceste opere a fost scrisă de Liviu Rebreanu?",
+		"variante": ["Floare albastră", "Moara cu noroc", "Baltagul", "Pădurea spânzuraților"],
+		"corect": 3,
+		"nivel": 2,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q471005:autor:cere_autor",
+		"fapt": "wd:Q471005",
+		"text": "Cine a scris „Insula misterioasă”?",
+		"variante": ["Jules Verne", "Victor Hugo", "Antoine de Saint-Exupéry", "Albert Camus"],
+		"corect": 0,
+		"nivel": 2,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q480:autor:cere_autor",
+		"fapt": "wd:Q480",
+		"text": "Cine a scris „Don Quijote”?",
+		"variante": ["Gabriel García Márquez", "Molière", "Miguel de Cervantes", "William Shakespeare"],
+		"corect": 2,
+		"nivel": 2,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q526518:autor:cere_opera",
+		"fapt": "wd:Q526518",
+		"text": "Care dintre aceste opere a fost scrisă de Mihail Sadoveanu?",
+		"variante": ["Moara cu noroc", "Baltagul", "Maitreyi", "Moromeții"],
+		"corect": 1,
+		"nivel": 2,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q5682:autor:cere_opera",
+		"fapt": "wd:Q5682",
+		"text": "Care dintre aceste opere a fost scrisă de Miguel de Cervantes?",
+		"variante": ["Un veac de singurătate", "Dragostea în vremea holerei", "Visul unei nopți de vară", "Don Quijote"],
+		"corect": 3,
+		"nivel": 2,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q5686:autor:cere_opera",
+		"fapt": "wd:Q5686",
+		"text": "Care dintre aceste opere a fost scrisă de Charles Dickens?",
+		"variante": ["Oliver Twist", "Mândrie și prejudecată", "Aventurile lui Huckleberry Finn", "Persuasiune"],
+		"corect": 0,
+		"nivel": 2,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q5878:autor:cere_opera",
+		"fapt": "wd:Q5878",
+		"text": "Care dintre aceste opere a fost scrisă de Gabriel García Márquez?",
+		"variante": ["Don Quijote", "Pădurea spânzuraților", "Un veac de singurătate", "Procesul"],
+		"corect": 2,
+		"nivel": 2,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q5879:autor:cere_opera",
+		"fapt": "wd:Q5879",
+		"text": "Care dintre aceste opere a fost scrisă de Johann Wolfgang von Goethe?",
+		"variante": ["Faust", "Procesul", "Metamorfoza", "Notre-Dame de Paris"],
+		"corect": 0,
+		"nivel": 2,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q62879:autor:cere_autor",
+		"fapt": "wd:Q62879",
+		"text": "Cine a scris „Colind de Crăciun”?",
+		"variante": ["Charles Dickens", "Jane Austen", "Mark Twain", "Ernest Hemingway"],
+		"corect": 0,
+		"nivel": 2,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q687:autor:cere_opera",
+		"fapt": "wd:Q687",
+		"text": "Care dintre aceste opere a fost scrisă de Molière?",
+		"variante": ["Candid", "O călătorie spre centrul Pământului", "Notre-Dame de Paris", "Tartuffe"],
+		"corect": 3,
+		"nivel": 2,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q7736883:autor:cere_autor",
+		"fapt": "wd:Q7736883",
+		"text": "Cine a scris „Capra cu trei iezi”?",
+		"variante": ["Ion Creangă", "Ion Luca Caragiale", "George Coșbuc", "Mihai Eminescu"],
+		"corect": 0,
+		"nivel": 2,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q845889:autor:cere_autor",
+		"fapt": "wd:Q845889",
+		"text": "Cine a scris „Crima din Orient Express”?",
+		"variante": ["Agatha Christie", "Ernest Hemingway", "George Orwell", "J. R. R. Tolkien"],
+		"corect": 0,
+		"nivel": 2,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q857714:autor:cere_opera",
+		"fapt": "wd:Q857714",
+		"text": "Care dintre aceste opere a fost scrisă de Camil Petrescu?",
+		"variante": ["Moromeții", "Maitreyi", "Ultima noapte de dragoste, întâia noapte de război", "Moara cu noroc"],
+		"corect": 2,
+		"nivel": 2,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q905:autor:cere_opera",
+		"fapt": "wd:Q905",
+		"text": "Care dintre aceste opere a fost scrisă de Franz Kafka?",
+		"variante": ["Faust", "Suferințele tânărului Werther", "Bătrânul și marea", "Metamorfoza"],
+		"corect": 3,
+		"nivel": 2,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q9068:autor:cere_opera",
+		"fapt": "wd:Q9068",
+		"text": "Care dintre aceste opere a fost scrisă de Voltaire?",
+		"variante": ["Avarul", "Tartuffe", "Candid", "Notre-Dame de Paris"],
+		"corect": 2,
+		"nivel": 2,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q961107:autor:cere_opera",
+		"fapt": "wd:Q961107",
+		"text": "Care dintre aceste opere a fost scrisă de Ioan Slavici?",
+		"variante": ["O noapte furtunoasă", "Ion", "Hora Unirii", "Moara cu noroc"],
+		"corect": 3,
+		"nivel": 2,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q991:autor:cere_opera",
+		"fapt": "wd:Q991",
+		"text": "Care dintre aceste opere a fost scrisă de Feodor Dostoievski?",
+		"variante": ["Crimă și pedeapsă", "Război și pace", "Anna Karenina", "Moartea lui Ivan Ilici"],
+		"corect": 0,
+		"nivel": 2,
+		"categorie": "literatura"
+	},
+
+	{
+		"id": "wd:Q1053387:autor:cere_autor",
+		"fapt": "wd:Q1053387",
+		"text": "Cine a scris „Mizantropul”?",
+		"variante": ["Molière", "Voltaire", "Victor Hugo", "Jules Verne"],
+		"corect": 0,
+		"nivel": 3,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q1054372:autor:cere_autor",
+		"fapt": "wd:Q1054372",
+		"text": "Cine a scris „Burghezul gentilom”?",
+		"variante": ["Molière", "Voltaire", "Alexandre Dumas", "Jules Verne"],
+		"corect": 0,
+		"nivel": 3,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q114864021:autor:cere_autor",
+		"fapt": "wd:Q114864021",
+		"text": "Cine a scris „Delirul”?",
+		"variante": ["George Călinescu", "Mircea Eliade", "Camil Petrescu", "Marin Preda"],
+		"corect": 3,
+		"nivel": 3,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q119246277:autor:cere_autor",
+		"fapt": "wd:Q119246277",
+		"text": "Cine a scris „Clar de inimă”?",
+		"variante": ["Mircea Eliade", "Camil Petrescu", "George Călinescu", "Nichita Stănescu"],
+		"corect": 3,
+		"nivel": 3,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q1199417:autor:cere_autor",
+		"fapt": "wd:Q1199417",
+		"text": "Cine a scris „Ultima zi a unui condamnat la moarte”?",
+		"variante": ["Victor Hugo", "Alexandre Dumas", "Jules Verne", "Antoine de Saint-Exupéry"],
+		"corect": 0,
+		"nivel": 3,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q1211109:autor:cere_autor",
+		"fapt": "wd:Q1211109",
+		"text": "Cine a scris „Oamenii mării”?",
+		"variante": ["Alexandre Dumas", "Jules Verne", "Antoine de Saint-Exupéry", "Victor Hugo"],
+		"corect": 3,
+		"nivel": 3,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q1213902:autor:cere_autor",
+		"fapt": "wd:Q1213902",
+		"text": "Cine a scris „Copiii căpitanului Grant”?",
+		"variante": ["Alexandre Dumas", "Victor Hugo", "Antoine de Saint-Exupéry", "Jules Verne"],
+		"corect": 3,
+		"nivel": 3,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q1215399:autor:cere_autor",
+		"fapt": "wd:Q1215399",
+		"text": "Cine a scris „Jurnal din anul ciumei”?",
+		"variante": ["Jonathan Swift", "Jane Austen", "William Shakespeare", "Daniel Defoe"],
+		"corect": 3,
+		"nivel": 3,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q1261307:autor:cere_opera",
+		"fapt": "wd:Q1261307",
+		"text": "Care dintre aceste opere a fost scrisă de Nichita Stănescu?",
+		"variante": ["Mitul eternei reîntoarceri", "Sensul iubirii", "Domnișoara Christina", "Cartea nunții"],
+		"corect": 1,
+		"nivel": 3,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q12719719:autor:cere_autor",
+		"fapt": "wd:Q12719719",
+		"text": "Cine a scris „11 elegii”?",
+		"variante": ["Camil Petrescu", "Marin Preda", "Nichita Stănescu", "Mircea Eliade"],
+		"corect": 2,
+		"nivel": 3,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q12723500:autor:cere_autor",
+		"fapt": "wd:Q12723500",
+		"text": "Cine a scris „Cartea nunții”?",
+		"variante": ["George Călinescu", "Mircea Eliade", "Ioan Slavici", "Camil Petrescu"],
+		"corect": 0,
+		"nivel": 3,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q12724010:autor:cere_autor",
+		"fapt": "wd:Q12724010",
+		"text": "Cine a scris „Chirița în Iași”?",
+		"variante": ["Ioan Slavici", "Vasile Alecsandri", "George Coșbuc", "Mihai Eminescu"],
+		"corect": 1,
+		"nivel": 3,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q12726230:autor:cere_autor",
+		"fapt": "wd:Q12726230",
+		"text": "Cine a scris „D-ale carnavalului”?",
+		"variante": ["Ion Luca Caragiale", "Ion Creangă", "Mihai Eminescu", "George Coșbuc"],
+		"corect": 0,
+		"nivel": 3,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q12729385:autor:cere_autor",
+		"fapt": "wd:Q12729385",
+		"text": "Cine a scris „Glossă”?",
+		"variante": ["Mihai Eminescu", "Ion Creangă", "George Coșbuc", "Ion Luca Caragiale"],
+		"corect": 0,
+		"nivel": 3,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q12731814:autor:cere_autor",
+		"fapt": "wd:Q12731814",
+		"text": "Cine a scris „La țigănci”?",
+		"variante": ["Mircea Eliade", "Liviu Rebreanu", "Marin Preda", "Mihail Sadoveanu"],
+		"corect": 0,
+		"nivel": 3,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q12731815:autor:cere_autor",
+		"fapt": "wd:Q12731815",
+		"text": "Cine a scris „La hanul lui Mânjoală”?",
+		"variante": ["Ion Creangă", "Ion Luca Caragiale", "George Coșbuc", "Mihai Eminescu"],
+		"corect": 1,
+		"nivel": 3,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q12732090:autor:cere_autor",
+		"fapt": "wd:Q12732090",
+		"text": "Cine a scris „Leoaică tânără, iubirea”?",
+		"variante": ["Nichita Stănescu", "Mircea Eliade", "George Călinescu", "Liviu Rebreanu"],
+		"corect": 0,
+		"nivel": 3,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q12734726:autor:cere_autor",
+		"fapt": "wd:Q12734726",
+		"text": "Cine a scris „Mai am un singur dor”?",
+		"variante": ["Ion Luca Caragiale", "Ion Creangă", "George Coșbuc", "Mihai Eminescu"],
+		"corect": 3,
+		"nivel": 3,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q12734809:autor:cere_autor",
+		"fapt": "wd:Q12734809",
+		"text": "Cine a scris „Mara”?",
+		"variante": ["Ioan Slavici", "George Călinescu", "Vasile Alecsandri", "Liviu Rebreanu"],
+		"corect": 0,
+		"nivel": 3,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q12736580:autor:cere_autor",
+		"fapt": "wd:Q12736580",
+		"text": "Cine a scris „Nicoară Potcoavă”?",
+		"variante": ["Camil Petrescu", "Liviu Rebreanu", "Mihail Sadoveanu", "George Călinescu"],
+		"corect": 2,
+		"nivel": 3,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q12736847:autor:cere_autor",
+		"fapt": "wd:Q12736847",
+		"text": "Cine a scris „Noapte de vară”?",
+		"variante": ["Ion Luca Caragiale", "George Coșbuc", "Mihai Eminescu", "Ion Creangă"],
+		"corect": 1,
+		"nivel": 3,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q12736941:autor:cere_autor",
+		"fapt": "wd:Q12736941",
+		"text": "Cine a scris „Nunta Zamfirei”?",
+		"variante": ["Mihai Eminescu", "Ion Creangă", "George Coșbuc", "Ion Luca Caragiale"],
+		"corect": 2,
+		"nivel": 3,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q12736963:autor:cere_autor",
+		"fapt": "wd:Q12736963",
+		"text": "Cine a scris „Năpasta”?",
+		"variante": ["Ion Luca Caragiale", "George Coșbuc", "Ion Creangă", "Mihai Eminescu"],
+		"corect": 0,
+		"nivel": 3,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q12738346:autor:cere_autor",
+		"fapt": "wd:Q12738346",
+		"text": "Cine a scris „Popa Tanda”?",
+		"variante": ["Mihail Sadoveanu", "Vasile Alecsandri", "Camil Petrescu", "Ioan Slavici"],
+		"corect": 3,
+		"nivel": 3,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q12741851:autor:cere_autor",
+		"fapt": "wd:Q12741851",
+		"text": "Cine a scris „Sărmanul Dionis”?",
+		"variante": ["Ion Luca Caragiale", "Mihai Eminescu", "Ion Creangă", "George Coșbuc"],
+		"corect": 1,
+		"nivel": 3,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q12742158:autor:cere_autor",
+		"fapt": "wd:Q12742158",
+		"text": "Cine a scris „Testament”?",
+		"variante": ["Nichita Stănescu", "Tudor Arghezi", "Albert Camus", "George Călinescu"],
+		"corect": 1,
+		"nivel": 3,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q14594692:autor:cere_autor",
+		"fapt": "wd:Q14594692",
+		"text": "Cine a scris „Noaptea de Sânziene”?",
+		"variante": ["Liviu Rebreanu", "Marin Preda", "Mircea Eliade", "Camil Petrescu"],
+		"corect": 2,
+		"nivel": 3,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q151883:autor:cere_autor",
+		"fapt": "wd:Q151883",
+		"text": "Cine a scris „Suferințele tânărului Werther”?",
+		"variante": ["Franz Kafka", "Johann Wolfgang von Goethe", "Voltaire", "Jane Austen"],
+		"corect": 1,
+		"nivel": 3,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q15649004:autor:cere_autor",
+		"fapt": "wd:Q15649004",
+		"text": "Cine a scris „Noi vrem pământ!”?",
+		"variante": ["Ion Luca Caragiale", "George Coșbuc", "Ion Creangă", "Mihai Eminescu"],
+		"corect": 1,
+		"nivel": 3,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q16386432:autor:cere_autor",
+		"fapt": "wd:Q16386432",
+		"text": "Cine a scris „Ivan Turbincă”?",
+		"variante": ["Ion Luca Caragiale", "George Coșbuc", "Ion Creangă", "Mihai Eminescu"],
+		"corect": 2,
+		"nivel": 3,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q16387038:autor:cere_autor",
+		"fapt": "wd:Q16387038",
+		"text": "Cine a scris „Domnișoara Christina”?",
+		"variante": ["Mircea Eliade", "Camil Petrescu", "Liviu Rebreanu", "George Călinescu"],
+		"corect": 0,
+		"nivel": 3,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q17322709:autor:cere_autor",
+		"fapt": "wd:Q17322709",
+		"text": "Cine a scris „Împărat și proletar”?",
+		"variante": ["George Coșbuc", "Mihai Eminescu", "Ion Luca Caragiale", "Ion Creangă"],
+		"corect": 1,
+		"nivel": 3,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q18540201:autor:cere_autor",
+		"fapt": "wd:Q18540201",
+		"text": "Cine a scris „Flori de mucigai”?",
+		"variante": ["Tudor Arghezi", "Nichita Stănescu", "Camil Petrescu", "George Călinescu"],
+		"corect": 0,
+		"nivel": 3,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q18540692:autor:cere_autor",
+		"fapt": "wd:Q18540692",
+		"text": "Cine a scris „Hanul Ancuței”?",
+		"variante": ["Mircea Eliade", "Mihail Sadoveanu", "Liviu Rebreanu", "Marin Preda"],
+		"corect": 1,
+		"nivel": 3,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q18544278:autor:cere_autor",
+		"fapt": "wd:Q18544278",
+		"text": "Cine a scris „Neamul Șoimăreștilor”?",
+		"variante": ["Camil Petrescu", "George Călinescu", "Marin Preda", "Mihail Sadoveanu"],
+		"corect": 3,
+		"nivel": 3,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q18544474:autor:cere_autor",
+		"fapt": "wd:Q18544474",
+		"text": "Cine a scris „O făclie de Paște”?",
+		"variante": ["George Coșbuc", "Ion Luca Caragiale", "Ion Creangă", "Mihai Eminescu"],
+		"corect": 1,
+		"nivel": 3,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q18547232:autor:cere_autor",
+		"fapt": "wd:Q18547232",
+		"text": "Cine a scris „Pădureanca”?",
+		"variante": ["Mihail Sadoveanu", "Liviu Rebreanu", "Vasile Alecsandri", "Ioan Slavici"],
+		"corect": 3,
+		"nivel": 3,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q200920:autor:cere_autor",
+		"fapt": "wd:Q200920",
+		"text": "Cine a scris „Pentru cine bat clopotele”?",
+		"variante": ["Agatha Christie", "Ernest Hemingway", "George Orwell", "J. R. R. Tolkien"],
+		"corect": 1,
+		"nivel": 3,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q2020094:autor:cere_autor",
+		"fapt": "wd:Q2020094",
+		"text": "Cine a scris „Regina Margot”?",
+		"variante": ["Jules Verne", "Alexandre Dumas", "Victor Hugo", "Antoine de Saint-Exupéry"],
+		"corect": 1,
+		"nivel": 3,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q206400:autor:cere_autor",
+		"fapt": "wd:Q206400",
+		"text": "Cine a scris „Neguțătorul din Veneția”?",
+		"variante": ["Daniel Defoe", "Jonathan Swift", "Jane Austen", "William Shakespeare"],
+		"corect": 3,
+		"nivel": 3,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q210784:autor:cere_autor",
+		"fapt": "wd:Q210784",
+		"text": "Cine a scris „Idiotul”?",
+		"variante": ["Feodor Dostoievski", "Lev Tolstoi", "Ioan Slavici", "Vasile Alecsandri"],
+		"corect": 0,
+		"nivel": 3,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q215750:autor:cere_autor",
+		"fapt": "wd:Q215750",
+		"text": "Cine a scris „Iulius Caesar”?",
+		"variante": ["Daniel Defoe", "Jonathan Swift", "J. R. R. Tolkien", "William Shakespeare"],
+		"corect": 3,
+		"nivel": 3,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q223688:autor:cere_autor",
+		"fapt": "wd:Q223688",
+		"text": "Cine a scris „Jucătorul”?",
+		"variante": ["Lev Tolstoi", "Feodor Dostoievski", "Franz Kafka", "Liviu Rebreanu"],
+		"corect": 1,
+		"nivel": 3,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q224078:autor:cere_autor",
+		"fapt": "wd:Q224078",
+		"text": "Cine a scris „Cine l-a ucis pe Roger Ackroyd”?",
+		"variante": ["Ernest Hemingway", "J. R. R. Tolkien", "George Orwell", "Agatha Christie"],
+		"corect": 3,
+		"nivel": 3,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q22978765:autor:cere_autor",
+		"fapt": "wd:Q22978765",
+		"text": "Cine a scris „Doina”?",
+		"variante": ["Mihai Eminescu", "Ion Creangă", "Ion Luca Caragiale", "George Coșbuc"],
+		"corect": 0,
+		"nivel": 3,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q235795:autor:cere_autor",
+		"fapt": "wd:Q235795",
+		"text": "Cine a scris „Adio arme”?",
+		"variante": ["Agatha Christie", "George Orwell", "Ernest Hemingway", "J. R. R. Tolkien"],
+		"corect": 2,
+		"nivel": 3,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q23831177:autor:cere_autor",
+		"fapt": "wd:Q23831177",
+		"text": "Cine a scris „Patul lui Procust”?",
+		"variante": ["Mircea Eliade", "George Călinescu", "Mihail Sadoveanu", "Camil Petrescu"],
+		"corect": 3,
+		"nivel": 3,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q25465610:autor:cere_autor",
+		"fapt": "wd:Q25465610",
+		"text": "Cine a scris „Jocul ielelor”?",
+		"variante": ["Mihail Sadoveanu", "George Călinescu", "Marin Preda", "Camil Petrescu"],
+		"corect": 3,
+		"nivel": 3,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q274744:autor:cere_autor",
+		"fapt": "wd:Q274744",
+		"text": "Cine a scris „Rațiune și Simțire”?",
+		"variante": ["Charles Dickens", "Jane Austen", "Mark Twain", "Agatha Christie"],
+		"corect": 1,
+		"nivel": 3,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q29907330:autor:cere_autor",
+		"fapt": "wd:Q29907330",
+		"text": "Cine a scris „Fata babei și fata moșneagului”?",
+		"variante": ["George Coșbuc", "Ion Luca Caragiale", "Mihai Eminescu", "Ion Creangă"],
+		"corect": 3,
+		"nivel": 3,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q3224928:autor:cere_autor",
+		"fapt": "wd:Q3224928",
+		"text": "Cine a scris „Mitul eternei reîntoarceri”?",
+		"variante": ["Mircea Eliade", "Mihail Sadoveanu", "George Călinescu", "Marin Preda"],
+		"corect": 0,
+		"nivel": 3,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q329989:autor:cere_autor",
+		"fapt": "wd:Q329989",
+		"text": "Cine a scris „Demonii”?",
+		"variante": ["Lev Tolstoi", "Feodor Dostoievski", "Mihail Sadoveanu", "Liviu Rebreanu"],
+		"corect": 1,
+		"nivel": 3,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q333179:autor:cere_autor",
+		"fapt": "wd:Q333179",
+		"text": "Cine a scris „Persuasiune”?",
+		"variante": ["Charles Dickens", "Mark Twain", "Jane Austen", "Ernest Hemingway"],
+		"corect": 2,
+		"nivel": 3,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q381756:autor:cere_autor",
+		"fapt": "wd:Q381756",
+		"text": "Cine a scris „Moarte pe Nil”?",
+		"variante": ["Ernest Hemingway", "J. R. R. Tolkien", "George Orwell", "Agatha Christie"],
+		"corect": 3,
+		"nivel": 3,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q396602:autor:cere_autor",
+		"fapt": "wd:Q396602",
+		"text": "Cine a scris „Moartea lui Ivan Ilici”?",
+		"variante": ["Feodor Dostoievski", "J. R. R. Tolkien", "Ion Creangă", "Lev Tolstoi"],
+		"corect": 3,
+		"nivel": 3,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q435755:autor:cere_opera",
+		"fapt": "wd:Q435755",
+		"text": "Care dintre aceste opere a fost scrisă de Tudor Arghezi?",
+		"variante": ["Bietul Ioanide", "Glossă", "Testament", "Mitul eternei reîntoarceri"],
+		"corect": 2,
+		"nivel": 3,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q4509219:autor:cere_autor",
+		"fapt": "wd:Q4509219",
+		"text": "Cine a scris „Infernul”?",
+		"variante": ["Giovanni Boccaccio", "Dante Alighieri", "Molière", "Miguel de Cervantes"],
+		"corect": 1,
+		"nivel": 3,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q46587290:autor:cere_autor",
+		"fapt": "wd:Q46587290",
+		"text": "Cine a scris „Bietul Ioanide”?",
+		"variante": ["Liviu Rebreanu", "George Călinescu", "Mircea Eliade", "Mihail Sadoveanu"],
+		"corect": 1,
+		"nivel": 3,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q499396:autor:cere_autor",
+		"fapt": "wd:Q499396",
+		"text": "Cine a scris „Dragostea în vremea holerei”?",
+		"variante": ["Miguel de Cervantes", "Mircea Eliade", "Gabriel García Márquez", "Marin Preda"],
+		"corect": 2,
+		"nivel": 3,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q5057413:autor:cere_autor",
+		"fapt": "wd:Q5057413",
+		"text": "Cine a scris „Cel mai iubit dintre pământeni”?",
+		"variante": ["George Călinescu", "Mircea Eliade", "Marin Preda", "Nichita Stănescu"],
+		"corect": 2,
+		"nivel": 3,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q5320494:autor:cere_autor",
+		"fapt": "wd:Q5320494",
+		"text": "Cine a scris „Dănilă Prepeleac”?",
+		"variante": ["Ion Luca Caragiale", "George Coșbuc", "Ion Creangă", "Mihai Eminescu"],
+		"corect": 2,
+		"nivel": 3,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q588161:autor:cere_autor",
+		"fapt": "wd:Q588161",
+		"text": "Cine a scris „Bolnavul închipuit”?",
+		"variante": ["Voltaire", "Jules Verne", "Molière", "Victor Hugo"],
+		"corect": 2,
+		"nivel": 3,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q6414727:autor:cere_autor",
+		"fapt": "wd:Q6414727",
+		"text": "Cine a scris „Kir Ianulea”?",
+		"variante": ["Mihai Eminescu", "Ion Luca Caragiale", "George Coșbuc", "Ion Creangă"],
+		"corect": 1,
+		"nivel": 3,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q727861:autor:cere_autor",
+		"fapt": "wd:Q727861",
+		"text": "Cine a scris „Ucigașul ABC”?",
+		"variante": ["Agatha Christie", "Ernest Hemingway", "George Orwell", "J. R. R. Tolkien"],
+		"corect": 0,
+		"nivel": 3,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q7451156:autor:cere_autor",
+		"fapt": "wd:Q7451156",
+		"text": "Cine a scris „Sensul iubirii”?",
+		"variante": ["Nichita Stănescu", "Liviu Rebreanu", "George Călinescu", "Marin Preda"],
+		"corect": 0,
+		"nivel": 3,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q768605:autor:cere_autor",
+		"fapt": "wd:Q768605",
+		"text": "Cine a scris „Castelul din Carpați”?",
+		"variante": ["Antoine de Saint-Exupéry", "Jules Verne", "Victor Hugo", "Albert Camus"],
+		"corect": 1,
+		"nivel": 3,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q7924557:autor:cere_autor",
+		"fapt": "wd:Q7924557",
+		"text": "Cine a scris „Viața ca o pradă”?",
+		"variante": ["Mircea Eliade", "George Călinescu", "Nichita Stănescu", "Marin Preda"],
+		"corect": 3,
+		"nivel": 3,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q79762:autor:cere_autor",
+		"fapt": "wd:Q79762",
+		"text": "Cine a scris „Silmarillion”?",
+		"variante": ["Ernest Hemingway", "J. R. R. Tolkien", "Agatha Christie", "George Orwell"],
+		"corect": 1,
+		"nivel": 3,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q848612:autor:cere_autor",
+		"fapt": "wd:Q848612",
+		"text": "Cine a scris „Un yankeu la curtea regelui Arthur”?",
+		"variante": ["J. R. R. Tolkien", "Mark Twain", "George Orwell", "Agatha Christie"],
+		"corect": 1,
+		"nivel": 3,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q869725:autor:cere_autor",
+		"fapt": "wd:Q869725",
+		"text": "Cine a scris „Prinț și cerșetor”?",
+		"variante": ["George Orwell", "Ernest Hemingway", "Mark Twain", "Charles Dickens"],
+		"corect": 2,
+		"nivel": 3,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q937443:autor:cere_autor",
+		"fapt": "wd:Q937443",
+		"text": "Cine a scris „Școala nevestelor”?",
+		"variante": ["Molière", "Voltaire", "Victor Hugo", "Alexandre Dumas"],
+		"corect": 0,
+		"nivel": 3,
+		"categorie": "literatura"
+	},
+	{
+		"id": "wd:Q98000186:autor:cere_autor",
+		"fapt": "wd:Q98000186",
+		"text": "Cine a scris „Ciuleandra”?",
+		"variante": ["George Călinescu", "Liviu Rebreanu", "Ioan Slavici", "Marin Preda"],
+		"corect": 1,
+		"nivel": 3,
+		"categorie": "literatura"
+	}
+]

@@ -10,8 +10,12 @@
 
 Produce două fișiere, rescrise ÎNTREGI la fiecare rulare:
 
-    data/intrebari_trivia_wd.json   întrebările
-    data/fapte_trivia_wd.json       faptele, deocamdată cu note goale
+    data/trivia_gen/elemente_intrebari.json   întrebările
+    data/trivia_gen/elemente_fapte.json       faptele, deocamdată cu note goale
+
+Dosarul `data/trivia_gen/` ține câte o pereche pentru fiecare tabel al fabricii,
+iar `trivia.gd` îl citește ÎNTREG. Un tabel nou înseamnă două fișiere puse acolo,
+nu o constantă în plus în joc.
 
 Fișierul scris de mână (`data/intrebari_trivia.json`) nu se atinge niciodată. E
 citit, ca să se poată număra grila și ca să se prindă dublurile, și atât.
@@ -108,8 +112,9 @@ CALE_CONTACT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "contact
 
 CALE_MANA = os.path.join(RADACINA, "data", "intrebari_trivia.json")
 CALE_FAPTE_MANA = os.path.join(RADACINA, "data", "fapte_trivia.json")
-CALE_WD = os.path.join(RADACINA, "data", "intrebari_trivia_wd.json")
-CALE_FAPTE_WD = os.path.join(RADACINA, "data", "fapte_trivia_wd.json")
+DOSAR_GEN = os.path.join(RADACINA, "data", "trivia_gen")
+CALE_WD = os.path.join(DOSAR_GEN, "elemente_intrebari.json")
+CALE_FAPTE_WD = os.path.join(DOSAR_GEN, "elemente_fapte.json")
 
 # Aceleași șase, în aceeași ordine ca `CATEGORII` din `trivia.gd`. Scrise aici,
 # nu citite din cod: raportul trebuie să arate o celulă GOALĂ dacă un domeniu
@@ -923,6 +928,25 @@ def verifica_inapoi(cale, cate_asteptate):
 # RAPORTUL
 # ─────────────────────────────────────────────────────────────
 
+def citeste_dosarul_generat(fara):
+	"""Toate întrebările din `data/trivia_gen/`, în afară de fișierul dat.
+
+	Fișierul propriu se scoate și se înlocuiește cu ce s-a construit în memorie —
+	altfel raportul ar arăta versiunea de pe disc, cea dinaintea rulării.
+	"""
+	altele = []
+	if not os.path.isdir(DOSAR_GEN):
+		return altele
+	for nume in sorted(os.listdir(DOSAR_GEN)):
+		if not nume.endswith("_intrebari.json"):
+			continue
+		cale = os.path.join(DOSAR_GEN, nume)
+		if os.path.abspath(cale) == os.path.abspath(fara):
+			continue
+		altele.extend(citeste_lista(cale))
+	return altele
+
+
 def grila(intrebari_mana, intrebari_wd):
 	"""Grila de 6 domenii × 3 niveluri, cu întrebări ȘI fapte.
 
@@ -1034,7 +1058,12 @@ def main():
 	print("    generate: %d întrebări, %d fapte (toate cu nota goală)"
 	      % (len(intrebari), len(fapte)))
 
-	grila(intrebari_mana, intrebari)
+	# Grila arată TOT conținutul din joc, nu doar tabelul rulat acum: de când sunt
+	# două fabrici, un raport care se uită doar la el însuși minte cu jumătăți de
+	# adevăr. (Duplicare cunoscută cu `opere.py`; se unifică la al treilea tabel,
+	# odată cu modulul comun.)
+	celelalte_gen = citeste_dosarul_generat(CALE_WD)
+	grila(intrebari_mana, celelalte_gen + intrebari)
 	mostre(intrebari, 15, samanta)
 
 	if not scrie:
@@ -1054,12 +1083,12 @@ def main():
 
 	# Și unicitatea PESTE cele două fișiere de întrebări. `mana:` și `wd:` nu se
 	# pot ciocni, dar verificarea nu costă nimic și nu se sprijină pe asta.
-	toate = {str(q.get("id", "")) for q in intrebari_mana}
+	toate = {str(q.get("id", "")) for q in intrebari_mana + celelalte_gen}
 	ciocniri = sorted(toate & {q["id"] for q in intrebari})
 	if ciocniri:
 		raise Eroare("id-uri folosite în amândouă fișierele: %s" % ", ".join(ciocniri))
-	print("  Id-uri unice și peste fișierul scris de mână (%d + %d)."
-	      % (len(intrebari_mana), len(intrebari)))
+	print("  Id-uri unice și peste restul conținutului (%d + %d + %d)."
+	      % (len(intrebari_mana), len(celelalte_gen), len(intrebari)))
 
 	print("\n══ GATA ══\n")
 	return 0
