@@ -8,6 +8,9 @@
     python tools/fabrica/elemente.py --scrie       scrie fișierele din data/
     python tools/fabrica/elemente.py --reincarca   reia din rețea și rescrie cache-ul
 
+Coloanele scrise de mână stau în `tools/fabrica/date/elemente.json`, iar ce e comun
+cu celelalte tabele ale fabricii în `tools/fabrica/comun.py`.
+
 Produce două fișiere, rescrise ÎNTREGI la fiecare rulare:
 
     data/trivia_gen/elemente_intrebari.json   întrebările
@@ -27,7 +30,8 @@ Mașina aduce simbolul (din Wikidata, CC0, deci se poate folosi liber), dovedeș
 că relația element ↔ simbol e unu-la-unu, alege distractorii, dă id-urile, scoate
 ambele sensuri ale relației și scrie JSON-ul.
 
-Ce NU poate aduce, și de-aia sunt scrise de mână în `ALESE`, mai jos:
+Ce NU poate aduce, și de-aia sunt scrise de mână în
+`tools/fabrica/date/elemente.json`:
 
   CARE elemente sunt cultură generală pentru un adult român. Wikidata știe toate
   cele 118, inclusiv oganesson, din care s-au făcut vreo cinci atomi în total.
@@ -71,8 +75,8 @@ ca să nu le mai încerce nimeni:
    rău decât nicio automatizare: ascunde o judecată într-o formulă care pare
    obiectivă.
 
-Deci nivelul e o coloană din `ALESE`, pusă de mână. Automat rămâne o singură
-verificare, îngustă și de încredere: `DIN_LATINA`.
+Deci nivelul e o coloană din `date/elemente.json`, pusă de mână. Automat rămâne o
+singură verificare, îngustă și de încredere: `DIN_LATINA`.
 
 ─────────────────────────────────────────────────────────────
 ACELEAȘI DOUĂ REGULI CA LA `da_iduri.py`
@@ -84,49 +88,37 @@ răspunsuri corecte — și n-o mai găsești niciodată între câteva mii.
 UN `id` NU SE REFOLOSEȘTE NICIODATĂ. Aici e ușor: id-ul se calculează din QID-ul
 elementului și din sensul relației (`wd:Q897:simbol:cere_nume`), deci e același
 la fiecare rulare și nu depinde de ordinea din fișier. Dar înseamnă și că un
-element SCOS din `ALESE` își ia id-urile cu el. Dacă îl pui înapoi mai târziu,
+element SCOS din tabel își ia id-urile cu el. Dacă îl pui înapoi mai târziu,
 primește exact aceleași id-uri — ceea ce e corect, fiindcă e aceeași întrebare.
 Ce n-ai voie e să schimbi forma id-ului: aia rupe legătura cu orice save.
 """
 
-import hashlib
-import io
-import json
 import os
-import random
 import re
-import sys
-import time
-import urllib.error
-import urllib.parse
-import urllib.request
 
-# Consola Windows nu e pe UTF-8 din oficiu, iar tot ce tipărim are diacritice.
-if hasattr(sys.stdout, "reconfigure"):
-	sys.stdout.reconfigure(encoding="utf-8")
+import comun
+from comun import Eroare
 
-RADACINA = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-CALE_CACHE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "cache",
-                          "wikidata_elemente.json")
-CALE_CONTACT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "contact.txt")
+comun.consola_pe_utf8()
 
-CALE_MANA = os.path.join(RADACINA, "data", "intrebari_trivia.json")
-CALE_FAPTE_MANA = os.path.join(RADACINA, "data", "fapte_trivia.json")
-DOSAR_GEN = os.path.join(RADACINA, "data", "trivia_gen")
-CALE_WD = os.path.join(DOSAR_GEN, "elemente_intrebari.json")
-CALE_FAPTE_WD = os.path.join(DOSAR_GEN, "elemente_fapte.json")
+CALE_CACHE = os.path.join(comun.DOSAR_CACHE, "wikidata_elemente.json")
 
-# Aceleași șase, în aceeași ordine ca `CATEGORII` din `trivia.gd`. Scrise aici,
-# nu citite din cod: raportul trebuie să arate o celulă GOALĂ dacă un domeniu
-# rămâne fără întrebări, iar un raport care-și ia lista din date n-o poate face.
-DOMENII = ["istorie", "geografie", "stiinta", "arta", "mitologie", "literatura"]
+# Coloanele scrise de mână. Au stat până la al treilea tabel al fabricii într-o
+# listă de tuple, aici în cod; acum stau în date, ca la opere și la capitale.
+# Sunt o INTRARE A FABRICII, nu conținut de joc — de-aia sub `tools/`, nu sub
+# `data/`.
+CALE_ALESE = os.path.join(comun.DOSAR_DATE, "elemente.json")
+
+CALE_WD = os.path.join(comun.DOSAR_GEN, "elemente_intrebari.json")
+CALE_FAPTE_WD = os.path.join(comun.DOSAR_GEN, "elemente_fapte.json")
 
 # Domeniul în care intră tot ce fabricăm aici. O singură `categorie` pe
 # întrebare, ca în decizia din CLAUDE.md; filtrele transversale vor veni din
 # `etichete`, pe fapt.
 DOMENIU = "stiinta"
 
-ENDPOINT = "https://query.wikidata.org/sparql"
+# Relația, din care se compune `id`-ul: `wd:Q897:simbol:cere_nume`.
+RELATIE = "simbol"
 
 # Cel mai mare număr atomic al unui element DESCOPERIT (oganesson, 118).
 #
@@ -136,7 +128,7 @@ ENDPOINT = "https://query.wikidata.org/sparql"
 # umplut. Iar nouă dintre ele AU etichetă în română, deci filtrul „are etichetă
 # română" le-ar fi lăsat să treacă.
 #
-# Nu ajung în joc oricum, fiindcă tabelul `ALESE` e scris de mână. Dar exact
+# Nu ajung în joc oricum, fiindcă tabelul e scris de mână. Dar exact
 # ăsta e felul de greșeală pe care n-o vezi: într-o zi în care aș extinde
 # selecția mai automat, „unbiquadiu" ar intra ca element de cultură generală.
 # Deci se cere numărul atomic de la fiecare element ales, și se cere aici.
@@ -168,7 +160,7 @@ SENSURI = ["cere_simbol", "cere_nume"]
 
 
 # ─────────────────────────────────────────────────────────────
-# ELEMENTELE ALESE — (simbol, nume, genitiv, nivel)
+# ELEMENTELE ALESE — `tools/fabrica/date/elemente.json`
 #
 # CHEIA E SIMBOLUL, NU QID-UL. N-am vrut să scriu 70 de `Q897` de mână: o cifră
 # greșită ar lega întrebarea de alt element, iar nicio validare n-ar prinde-o
@@ -184,85 +176,14 @@ SENSURI = ["cere_simbol", "cere_nume"]
 #   I   — o știe orice adult, fără să fi studiat ceva anume
 #   II  — s-a predat la școală; îți amintești dacă ai fost atent
 #   III — o știi doar dacă domeniul te-a interesat dincolo de școală
+#
+# DE CE AU IEȘIT DIN COD, la al treilea tabel. Cât timp fabrica avea un singur
+# tabel, o listă de tuple în script era cel mai scurt drum. Cu trei tabele, un
+# fișier de date e ce pot deschide, sorta și tăia fără să deschid un fișier de
+# cod — și, mai important, e ce face ca `ciorna` să însemne același lucru la toate
+# trei. Un câmp de date nu poate trăi într-o listă de tuple.
 # ─────────────────────────────────────────────────────────────
-ALESE = [
-	# ── NIVELUL I: cuvântul e cunoscut ȘI simbolul se citește din el ──
-	("H",  "hidrogen",  "hidrogenului",  1),
-	("He", "heliu",     "heliului",      1),
-	("Li", "litiu",     "litiului",      1),
-	("C",  "carbon",    "carbonului",    1),
-	("O",  "oxigen",    "oxigenului",    1),
-	("Ne", "neon",      "neonului",      1),
-	("Mg", "magneziu",  "magneziului",   1),
-	("Al", "aluminiu",  "aluminiului",   1),
-	("Si", "siliciu",   "siliciului",    1),
-	("S",  "sulf",      "sulfului",      1),
-	("Cl", "clor",      "clorului",      1),
-	("Ca", "calciu",    "calciului",     1),
-	("Ti", "titan",     "titanului",     1),
-	("Ni", "nichel",    "nichelului",    1),
-	("Cu", "cupru",     "cuprului",      1),
-	("Zn", "zinc",      "zincului",      1),
-	("I",  "iod",       "iodului",       1),
-	("Pt", "platină",   "platinei",      1),
-	("Au", "aur",       "aurului",       1),
-	("U",  "uraniu",    "uraniului",     1),
-
-	# ── NIVELUL II: s-a predat la școală, SAU element celebru cu simbol
-	#    care trebuie știut (toate cele din DIN_LATINA sunt aici) ──
-	("Be", "beriliu",   "beriliului",    2),
-	("B",  "bor",       "borului",       2),
-	("N",  "azot",      "azotului",      2),
-	("F",  "fluor",     "fluorului",     2),
-	("Na", "sodiu",     "sodiului",      2),
-	("P",  "fosfor",    "fosforului",    2),
-	("Ar", "argon",     "argonului",     2),
-	("K",  "potasiu",   "potasiului",    2),
-	("Cr", "crom",      "cromului",      2),
-	("Mn", "mangan",    "manganului",    2),
-	("Fe", "fier",      "fierului",      2),
-	("Co", "cobalt",    "cobaltului",    2),
-	("As", "arsen",     "arsenului",     2),
-	("Se", "seleniu",   "seleniului",    2),
-	("Br", "brom",      "bromului",      2),
-	("Kr", "kripton",   "kriptonului",   2),
-	("Cd", "cadmiu",    "cadmiului",     2),
-	("Sn", "staniu",    "staniului",     2),
-	("Xe", "xenon",     "xenonului",     2),
-	("Ba", "bariu",     "bariului",      2),
-	("W",  "wolfram",   "wolframului",   2),
-	("Hg", "mercur",    "mercurului",    2),
-	("Pb", "plumb",     "plumbului",     2),
-	("Bi", "bismut",    "bismutului",    2),
-	("Ra", "radiu",     "radiului",      2),
-	("Ag", "argint",    "argintului",    2),
-
-	# ── NIVELUL III: numele însuși cere să te fi interesat domeniul ──
-	("Sc", "scandiu",   "scandiului",    3),
-	("Ga", "galiu",     "galiului",      3),
-	("Ge", "germaniu",  "germaniului",   3),
-	("Rb", "rubidiu",   "rubidiului",    3),
-	("Sr", "stronțiu",  "stronțiului",   3),
-	("Nb", "niobiu",    "niobiului",     3),
-	("Mo", "molibden",  "molibdenului",  3),
-	("Ru", "ruteniu",   "ruteniului",    3),
-	("Rh", "rodiu",     "rodiului",      3),
-	("Pd", "paladiu",   "paladiului",    3),
-	("In", "indiu",     "indiului",      3),
-	("Sb", "stibiu",    "stibiului",     3),
-	("Te", "telur",     "telurului",     3),
-	("Cs", "cesiu",     "cesiului",      3),
-	("Nd", "neodim",    "neodimului",    3),
-	("Ta", "tantal",    "tantalului",    3),
-	("Re", "reniu",     "reniului",      3),
-	("Os", "osmiu",     "osmiului",      3),
-	("Ir", "iridiu",    "iridiului",     3),
-	("Tl", "taliu",     "taliului",      3),
-	("Po", "poloniu",   "poloniului",    3),
-	("Rn", "radon",     "radonului",     3),
-	("Th", "toriu",     "toriului",      3),
-	("Pu", "plutoniu",  "plutoniului",   3),
-]
+CAMPURI = {"simbol", "nume", "genitiv", "nivel", "ciorna"}
 
 
 # Interogarea. `wdt:P31 wd:Q11344` = „instanță de element chimic", `P246` =
@@ -285,104 +206,25 @@ SELECT ?element ?simbol ?numar ?sitelinks ?eticheta WHERE {
 """
 
 
-class Eroare(Exception):
-	"""Ceva ce scriptul nu recunoaște. Oprește tot, nu se sare peste."""
-
-
 # ─────────────────────────────────────────────────────────────
 # REȚEAUA
 # ─────────────────────────────────────────────────────────────
 
-def contactul():
-	"""Adresa de contact pentru User-Agent. NU stă în cod.
-
-	Wikimedia cere un User-Agent descriptiv, cu un om de contact, ca să poată
-	scrie cuiva dacă un script le face rău. Corect — dar adresa nu are ce căuta
-	într-un fișier comis în Git, deci se citește din afară:
-
-	    MINDKEEP_CONTACT=cineva@exemplu.ro python tools/fabrica/elemente.py --reincarca
-
-	sau, mai comod, se scrie o dată în `tools/fabrica/contact.txt`, care e în
-	`.gitignore`.
-
-	Cerută DOAR când se atinge rețeaua. O rulare din cache nu are nevoie de
-	nimic, deci scriptul merge pe orice mașină care are cache-ul.
-	"""
-	din_mediu = os.environ.get("MINDKEEP_CONTACT", "").strip()
-	if din_mediu:
-		return din_mediu
-	if os.path.exists(CALE_CONTACT):
-		with io.open(CALE_CONTACT, encoding="utf-8") as f:
-			din_fisier = f.read().strip()
-		if din_fisier:
-			return din_fisier
-	raise Eroare(
-		"nu am un contact pentru User-Agent, iar Wikimedia îl cere.\n"
-		"  Pune-l într-unul din două locuri:\n"
-		"    MINDKEEP_CONTACT=adresa@ta  (variabilă de mediu)\n"
-		"    %s  (o singură linie; e în .gitignore)\n"
-		"  Cache-ul existent se folosește fără contact — doar --reincarca are nevoie de el."
-		% os.path.relpath(CALE_CONTACT, RADACINA)
-	)
-
-
-def interogheaza():
-	"""O cerere la Wikidata. Întoarce răspunsul brut, ca dicționar."""
-	contact = contactul()
-	antet = "Mindkeep-fabrica/0.1 (%s) Python-urllib" % contact
-
-	cerere = urllib.request.Request(
-		ENDPOINT,
-		data=urllib.parse.urlencode({"query": INTEROGARE}).encode("utf-8"),
-		headers={
-			"User-Agent": antet,
-			"Accept": "application/sparql-results+json",
-			"Content-Type": "application/x-www-form-urlencoded",
-		},
-		method="POST",
-	)
-	print("  Întreb Wikidata (User-Agent: %s)…" % antet)
-	try:
-		with urllib.request.urlopen(cerere, timeout=120) as raspuns:
-			return json.loads(raspuns.read().decode("utf-8"))
-	except urllib.error.HTTPError as e:
-		# 403 și 429 de la Wikimedia înseamnă aproape mereu User-Agent, nu
-		# interogare — merită spus, altfel cauți o oră în SPARQL.
-		detaliu = ""
-		if e.code in (403, 429):
-			detaliu = ("\n  Codul %d de la Wikimedia e aproape mereu despre User-Agent "
-			           "sau despre prea multe cereri, nu despre interogare." % e.code)
-		raise Eroare("Wikidata a răspuns %d %s%s" % (e.code, e.reason, detaliu))
-	except urllib.error.URLError as e:
-		raise Eroare("nu ajung la Wikidata: %s" % e.reason)
-
-
 def ia_datele(reincarca):
-	"""Răspunsul brut, din cache sau din rețea. Scrie cache-ul când îl ia."""
-	if not reincarca and os.path.exists(CALE_CACHE):
-		with io.open(CALE_CACHE, encoding="utf-8") as f:
-			pachet = json.load(f)
-		print("  Cache: %s (luat la %s)" % (
-			os.path.relpath(CALE_CACHE, RADACINA), pachet.get("luat_la", "?")))
-		return pachet["raspuns"]
+	"""Răspunsul brut, din cache sau din rețea. Scrie cache-ul când îl ia.
 
-	brut = interogheaza()
-	# Cache-ul ține și CÂND și CU CE interogare a fost luat. Fără ele, peste
-	# șase luni ai un fișier de date fără proveniență, iar dacă interogarea se
-	# schimbă n-ai cum să știi că cache-ul e din cea veche.
-	pachet = {
-		"luat_la": time.strftime("%Y-%m-%dT%H:%M:%S"),
-		"endpoint": ENDPOINT,
-		"interogare": INTEROGARE,
-		"raspuns": brut,
-	}
-	os.makedirs(os.path.dirname(CALE_CACHE), exist_ok=True)
-	with io.open(CALE_CACHE, "w", encoding="utf-8", newline="\n") as f:
-		json.dump(pachet, f, ensure_ascii=False, indent="\t", sort_keys=True)
-		f.write("\n")
-	print("  Scris cache: %s" % os.path.relpath(CALE_CACHE, RADACINA))
+	CE validează cache-ul stă aici, nu în modulul comun: pentru elemente e doar
+	interogarea însăși, fiindcă nu se cere nimic pe bucăți. La opere sunt lista de
+	autori și pragul de ediții; la capitale, criteriile de intrare.
+	"""
+	if not reincarca:
+		pachet = comun.cache_citeste(CALE_CACHE)
+		if pachet is not None:
+			return pachet["raspuns"]
+
+	brut = comun.interogheaza(INTEROGARE, "elementele chimice")
+	comun.cache_scrie(CALE_CACHE, {"interogare": INTEROGARE, "raspuns": brut})
 	return brut
-
 
 # ─────────────────────────────────────────────────────────────
 # CITIREA RĂSPUNSULUI
@@ -396,12 +238,12 @@ def desfa(brut):
 	să le poată vedea. Contopirea în tăcere ar fi exact greșeala pe care
 	verificarea unu-la-unu există ca s-o prindă.
 	"""
-	legaturi = brut.get("results", {}).get("bindings", [])
-	if not legaturi:
+	randuri = comun.legaturi(brut)
+	if not randuri:
 		raise Eroare("Wikidata n-a întors niciun rând. Interogarea sau endpointul?")
 
 	elemente = {}
-	for rand in legaturi:
+	for rand in randuri:
 		uri = rand["element"]["value"]
 		qid = uri.rsplit("/", 1)[-1]
 		if not re.fullmatch(r"Q\d+", qid):
@@ -430,7 +272,7 @@ def verifica_relatia(elemente):
 	relația asta în două locuri. La `cere_simbol`, un element cu două simboluri
 	ar da o întrebare cu două răspunsuri corecte, dintre care unul marcat
 	greșit. La `cere_nume`, un simbol purtat de două elemente ar face la fel. Și
-	mai e un al treilea loc, mai ascuns: tot tabelul `ALESE` e cheiat pe simbol,
+	mai e un al treilea loc, mai ascuns: tot tabelul de mână e cheiat pe simbol,
 	deci un simbol dublu ar însemna că nu mai știu despre CARE element vorbesc.
 
 	Niciuna dintre cele trei nu s-ar vedea în joc ca eroare. S-ar vedea ca o
@@ -463,7 +305,7 @@ def verifica_relatia(elemente):
 # MĂSURĂTOAREA
 # ─────────────────────────────────────────────────────────────
 
-def masoara(elemente, pe_simbol):
+def masoara(elemente, pe_simbol, randuri):
 	"""Ce se poate afla din date, înainte să se aleagă ceva.
 
 	Rostul funcției e să DOVEDEASCĂ, nu să presupună, de ce nivelul e scris de
@@ -524,7 +366,7 @@ def masoara(elemente, pe_simbol):
 	# Reperele: elemente despre care ȘTIU în ce nivel le-am pus, ca să se vadă
 	# dacă cifra merge în aceeași direcție cu judecata. Nu merge.
 	repere = ["O", "Au", "Fe", "Ag", "U", "Hg", "W", "Rn", "Mo", "Os", "Nd", "Re"]
-	nivel_din_tabel = {s: n for s, _, _, n in ALESE}
+	nivel_din_tabel = {str(r.get("simbol", "")): int(r.get("nivel", 0)) for r in randuri}
 	print("\n    repere (nivelul pus de mână, sitelinks):")
 	for simbol in repere:
 		qid_uri = pe_simbol.get(simbol)
@@ -542,8 +384,8 @@ def masoara(elemente, pe_simbol):
 # TABELUL, CONFRUNTAT CU WIKIDATA
 # ─────────────────────────────────────────────────────────────
 
-def leaga_tabelul(elemente, pe_simbol):
-	"""`ALESE` + datele de la Wikidata → lista de lucru. Strict la fiecare pas.
+def leaga_tabelul(randuri, elemente, pe_simbol):
+	"""`date/elemente.json` + datele de la Wikidata → lista de lucru. Strict la fiecare pas.
 
 	Adună TOATE neconcordanțele înainte să se oprească. Un script care cade la
 	prima nepotrivire de etichetă te pune să rulezi de 20 de ori ca să repari 20
@@ -551,17 +393,29 @@ def leaga_tabelul(elemente, pe_simbol):
 	"""
 	probleme = []
 
-	simboluri = [s for s, _, _, _ in ALESE]
+	simboluri = [str(r.get("simbol", "")) for r in randuri if isinstance(r, dict)]
 	if len(set(simboluri)) != len(simboluri):
 		duble = sorted({s for s in simboluri if simboluri.count(s) > 1})
-		probleme.append("simboluri repetate în ALESE: %s" % ", ".join(duble))
-	nume = [n for _, n, _, _ in ALESE]
+		probleme.append("simboluri repetate în elemente.json: %s" % ", ".join(duble))
+	nume = [str(r.get("nume", "")) for r in randuri if isinstance(r, dict)]
 	if len(set(nume)) != len(nume):
 		duble = sorted({n for n in nume if nume.count(n) > 1})
-		probleme.append("nume repetate în ALESE: %s" % ", ".join(duble))
+		probleme.append("nume repetate în elemente.json: %s" % ", ".join(duble))
 
 	lista = []
-	for simbol, nume_asteptat, genitiv, nivel in ALESE:
+	for i, rand in enumerate(randuri):
+		unde = "rândul %d din elemente.json" % (i + 1)
+		if not comun.verifica_campurile(rand, CAMPURI, unde, probleme):
+			continue
+		simbol = str(rand.get("simbol", "")).strip()
+		nume_asteptat = str(rand.get("nume", "")).strip()
+		genitiv = str(rand.get("genitiv", "")).strip()
+		nivel = rand.get("nivel")
+		ciorna = bool(rand.get("ciorna", False))
+
+		if not simbol or not nume_asteptat or not genitiv:
+			probleme.append("%s: simbol, nume sau genitiv gol" % unde)
+			continue
 		if nivel not in (1, 2, 3):
 			probleme.append("%s: nivelul %r nu e 1, 2 sau 3" % (simbol, nivel))
 			continue
@@ -601,12 +455,13 @@ def leaga_tabelul(elemente, pe_simbol):
 			"nume": e["eticheta"].lower(),
 			"genitiv": genitiv,
 			"nivel": nivel,
+			"ciorna": ciorna,
 			"numar": e["numar"],
 			"sitelinks": e["sitelinks"],
 		})
 
 	if probleme:
-		raise Eroare("tabelul ALESE nu se potrivește cu Wikidata:\n  - " + "\n  - ".join(probleme))
+		raise Eroare("elemente.json nu se potrivește cu Wikidata:\n  - " + "\n  - ".join(probleme))
 
 	# Ordinea din fișier: pe nivel, apoi pe numărul atomic. Numărul atomic e
 	# ordinea în care un om se uită la tabelul periodic, deci fișierul se poate
@@ -619,14 +474,6 @@ def leaga_tabelul(elemente, pe_simbol):
 # ─────────────────────────────────────────────────────────────
 # DUBLURILE CU FIȘIERUL SCRIS DE MÂNĂ
 # ─────────────────────────────────────────────────────────────
-
-def citeste_lista(cale):
-	with io.open(cale, encoding="utf-8") as f:
-		date = json.load(f)
-	if not isinstance(date, list):
-		raise Eroare("%s nu conține o listă" % cale)
-	return date
-
 
 def verifica_dublurile(lista, intrebari_mana):
 	"""Caută în fișierul scris de mână întrebări care spun deja ce vrem să generăm.
@@ -647,58 +494,26 @@ def verifica_dublurile(lista, intrebari_mana):
 		text = str(q.get("text", ""))
 		if "simbol" not in text.lower():
 			continue
-		jos = text.lower()
 		for e in lista:
 			# Numele sau genitivul în text → întrebarea cere SIMBOLUL.
 			for forma in (e["nume"], e["genitiv"]):
-				if re.search(r"\b%s\b" % re.escape(forma), jos):
+				if comun.cuvant_in(text, forma):
 					gasite[(e["simbol"], "cere_simbol")] = str(q.get("id", "?"))
 			# Simbolul ca token în text → întrebarea cere NUMELE.
+			#
+			# Aici potrivirea rămâne SENSIBILĂ LA MAJUSCULE, singurul loc din
+			# fabrică unde e așa: „Ce element are simbolul N?" trebuie să prindă
+			# „N", dar nu fiecare „n" din text. La simboluri, majuscula e parte din
+			# simbol, nu ortografie.
 			if re.search(r"\b%s\b" % re.escape(e["simbol"]), text):
 				gasite[(e["simbol"], "cere_nume")] = str(q.get("id", "?"))
 
-	nedeclarate = sorted(k for k in gasite if k not in DUBLURI)
-	if nedeclarate:
-		raise Eroare(
-			"întrebări scrise de mână care se suprapun cu ce generăm, nedeclarate în "
-			"DUBLURI:\n  - " + "\n  - ".join(
-				"%s / %s  ← %s" % (s, sens, gasite[(s, sens)]) for s, sens in nedeclarate)
-			+ "\n  Adaugă-le în DUBLURI (sau schimbă întrebarea scrisă de mână).")
-
-	# Și invers: o declarație care nu mai corespunde nimic e la fel de rea, doar
-	# mai tăcută — scoate din joc o întrebare bună fără să spună de ce.
-	fantome = sorted(k for k in DUBLURI if k not in gasite)
-	if fantome:
-		raise Eroare(
-			"DUBLURI declară suprapuneri care nu se mai găsesc în fișierul scris de "
-			"mână:\n  - " + "\n  - ".join("%s / %s" % (s, sens) for s, sens in fantome)
-			+ "\n  Dacă întrebarea de mână s-a schimbat, șterge rândul din DUBLURI.")
-
-	return gasite
+	return comun.compara_dublurile(gasite, DUBLURI)
 
 
 # ─────────────────────────────────────────────────────────────
 # DISTRACTORII
 # ─────────────────────────────────────────────────────────────
-
-def zar(*bucati):
-	"""Un număr stabil dintr-un text: același la fiecare rulare, pe orice mașină.
-
-	`hash()` din Python NU e bun aici: e sărat la fiecare pornire a
-	interpretorului, deci ar da alt fișier la fiecare rulare.
-
-	DE CE E NEVOIE DE EL. Ruperea egalităților trebuie să fie deterministă (ca
-	fișierul să nu se schimbe degeaba), dar nu are voie să fie ORDONATĂ. Prima
-	variantă rupea egalitățile pe QID crescător, iar în Wikidata QID-urile mici
-	sunt exact elementele celebre (hidrogenul e Q556). Rezultatul: hidrogenul și
-	heliul apăreau ca distractori la jumătate din întrebări — iar un jucător
-	care observă „răspunsul nu e niciodată hidrogenul" marchează puncte fără să
-	gândească. Exact scurtătura pe care `_amesteca` din `trivia.gd` a fost
-	scrisă s-o închidă, reapărută pe alt drum.
-	"""
-	cheie = "|".join(str(b) for b in bucati).encode("utf-8")
-	return int.from_bytes(hashlib.blake2b(cheie, digest_size=8).digest(), "big")
-
 
 def punctaj(tinta, e, sens):
 	"""Cât de plauzibil e `e` ca distractor la întrebarea despre `tinta`.
@@ -749,7 +564,8 @@ def alege_distractorii(tinta, lista, sens):
 	if len(banda) < 3:
 		raise Eroare("%s: mai puțin de 3 distractori posibili" % tinta["simbol"])
 
-	banda.sort(key=lambda e: (-punctaj(tinta, e, sens), zar(tinta["qid"], sens, e["qid"])))
+	banda.sort(key=lambda e: (-punctaj(tinta, e, sens),
+	                          comun.zar(tinta["qid"], sens, e["qid"])))
 	alesi = banda[:3]
 
 	# ── SINGURA GARDĂ: GRUPUL DE LITERE CARE NU E DESPRE ÎNTREBARE ──
@@ -812,32 +628,43 @@ def construieste(lista):
 				bun = e["nume"]
 				restul = [d["nume"] for d in distractorii]
 
-			# POZIȚIA RĂSPUNSULUI BUN. `trivia.gd` amestecă variantele la fiecare
-			# apariție (`_amesteca`), deci poziția din fișier nu ajunge niciodată
-			# pe ecran. O punem totuși împrăștiată: dacă amestecarea e vreodată
-			# scoasă sau ocolită, fișierul să nu aibă răspunsul bun mereu pe
-			# primul buton. Două plase peste aceeași greșeală, niciuna scumpă.
-			#
-			# Prin `zar`, nu prin `QID % 4`. QID-ul singur ieșea grămădit
-			# (40/27/36/36 pe cele patru locuri) și dădea ambelor întrebări ale
-			# unui element același loc, fiindcă amândouă pornesc de la același
-			# QID. Sensul intră în cheie, deci cele două se despart.
-			loc = zar(e["qid"], sens, "poziție") % 4
-			variante = list(restul)
-			variante.insert(loc, bun)
+			# Poziția răspunsului bun, `id`-ul și verificarea celor patru variante
+			# distincte stau în `comun.pune_la_locul_lui` — sunt aceleași la toate
+			# tabelele fabricii, inclusiv motivul (vezi docstring-ul de acolo).
+			intrebari.append(comun.pune_la_locul_lui(
+				cheie=e["qid"],
+				relatie=RELATIE,
+				sens=sens,
+				text=text,
+				bun=bun,
+				restul=restul,
+				nivel=e["nivel"],
+				fapt="wd:%s" % e["qid"],
+				domeniu=DOMENIU,
+				eticheta=e["simbol"],
+			))
 
-			if len(set(variante)) != 4:
-				raise Eroare("%s / %s: variante identice → %s" % (e["simbol"], sens, variante))
+	# ── VERIFICAREA „EXACT UNA DIN PATRU E CORECTĂ" ──
+	# Nouă la refactor, și n-a fost o adăugire gratuită: până acum elementele se
+	# sprijineau doar pe `verifica_relatia` (relația e unu-la-unu) plus pe cele
+	# patru variante distincte. Alea apără PRESUPUNEREA; asta apără REZULTATUL.
+	# Opere o avea, elementele nu — iar un modul comun e exact locul în care o
+	# plasă scrisă pentru un tabel ajunge la toate. N-a schimbat niciun octet din
+	# fișierele scrise: a trecut din prima.
+	pe_simbol_ales = {e["simbol"]: e for e in lista}
+	pe_nume_ales = {e["nume"]: e for e in lista}
 
-			intrebari.append({
-				"id": "wd:%s:simbol:%s" % (e["qid"], sens),
-				"fapt": "wd:%s" % e["qid"],
-				"text": text,
-				"variante": variante,
-				"corect": loc,
-				"nivel": e["nivel"],
-				"categorie": DOMENIU,
-			})
+	def este_corect(q, varianta):
+		qid = q["id"].split(":")[1]
+		if q["id"].endswith("cere_simbol"):
+			# Varianta e un simbol. E al elementului întrebat?
+			gasit = pe_simbol_ales.get(varianta)
+		else:
+			# Varianta e un nume de element. E numele elementului întrebat?
+			gasit = pe_nume_ales.get(varianta)
+		return gasit is not None and gasit["qid"] == qid
+
+	comun.verifica_un_singur_raspuns(intrebari, este_corect)
 
 	# Faptele. Nota e goală: pilotul cere întrebări, nu note. Câmpul EXISTĂ
 	# fiindcă altfel încărcătorul din `trivia.gd` se plânge pentru fiecare
@@ -858,197 +685,42 @@ def construieste(lista):
 	return intrebari, fapte
 
 
-# ─────────────────────────────────────────────────────────────
-# SCRIEREA
-#
-# Nu `json.dump`. Fișierul iese în ACELAȘI format ca `intrebari_trivia.json`:
-# taburi, `variante` pe un singur rând, linii goale între niveluri. Nu e
-# cochetărie — `json.dump` ar pune fiecare variantă pe rândul ei, iar fișierul
-# ar sări de la 1200 la 2000 de linii, cu diff-uri pe care nu le mai poți citi
-# când adaugi patru elemente.
-# ─────────────────────────────────────────────────────────────
-
-def ca_json(valoare):
-	"""Un singur câmp, scris ca JSON. `ensure_ascii=False` ca diacriticele și
-	ghilimelele românești să rămână litere, nu `\\u0103`."""
-	return json.dumps(valoare, ensure_ascii=False)
-
-
-def scrie_lista(cale, obiecte, ordinea, separa_pe):
-	"""Scrie o listă de obiecte, cu câmpurile în `ordinea` dată.
-
-	`separa_pe` e un câmp: când valoarea lui se schimbă, se pune o linie goală.
-	La întrebări e `nivel`, deci fișierul se citește pe felii, ca cel scris de
-	mână, unde liniile goale despart domeniile.
-	"""
-	rand = ["["]
-	anterior = None
-	for i, ob in enumerate(obiecte):
-		if separa_pe and anterior is not None and ob[separa_pe] != anterior:
-			rand.append("")
-		anterior = ob[separa_pe] if separa_pe else None
-
-		rand.append("\t{")
-		chei = [c for c in ordinea if c in ob]
-		for j, cheie in enumerate(chei):
-			virgula = "," if j < len(chei) - 1 else ""
-			rand.append("\t\t%s: %s%s" % (ca_json(cheie), ca_json(ob[cheie]), virgula))
-		rand.append("\t}" + ("," if i < len(obiecte) - 1 else ""))
-	rand.append("]")
-	rand.append("")
-
-	os.makedirs(os.path.dirname(cale), exist_ok=True)
-	# `newline="\n"`: .gitattributes cere LF pentru tot repo-ul.
-	with io.open(cale, "w", encoding="utf-8", newline="\n") as f:
-		f.write("\n".join(rand))
-
-
-def verifica_inapoi(cale, cate_asteptate):
-	"""Scriptul a scris text, deci n-are nicio dovadă că a scris JSON valid.
-
-	Dovada se ia citind fișierul înapoi, cu același fel de parser pe care-l va
-	folosi și Godot. Ieftin, și singurul lucru care prinde o virgulă pierdută.
-	"""
-	date = citeste_lista(cale)
-	if len(date) != cate_asteptate:
-		raise Eroare("%s: am citit %d intrări, scrisesem %d"
-		             % (os.path.basename(cale), len(date), cate_asteptate))
-	vazute = set()
-	for q in date:
-		id_ = str(q.get("id", ""))
-		if not id_:
-			raise Eroare("%s: o intrare fără id" % os.path.basename(cale))
-		if id_ in vazute:
-			raise Eroare("%s: id duplicat %r" % (os.path.basename(cale), id_))
-		vazute.add(id_)
-	return date
-
-
-# ─────────────────────────────────────────────────────────────
-# RAPORTUL
-# ─────────────────────────────────────────────────────────────
-
-def citeste_dosarul_generat(fara):
-	"""Toate întrebările din `data/trivia_gen/`, în afară de fișierul dat.
-
-	Fișierul propriu se scoate și se înlocuiește cu ce s-a construit în memorie —
-	altfel raportul ar arăta versiunea de pe disc, cea dinaintea rulării.
-	"""
-	altele = []
-	if not os.path.isdir(DOSAR_GEN):
-		return altele
-	for nume in sorted(os.listdir(DOSAR_GEN)):
-		if not nume.endswith("_intrebari.json"):
-			continue
-		cale = os.path.join(DOSAR_GEN, nume)
-		if os.path.abspath(cale) == os.path.abspath(fara):
-			continue
-		altele.extend(citeste_lista(cale))
-	return altele
-
-
-def grila(intrebari_mana, intrebari_wd):
-	"""Grila de 6 domenii × 3 niveluri, cu întrebări ȘI fapte.
-
-	Faptele se numără separat fiindcă ele sunt măsura adevărată: 500 de întrebări
-	construite din 100 de fapte se simt ca 100 (decizia din sesiunea CONȚINUTUL).
-	"""
-	def strange(intrebari):
-		celule = {}
-		for q in intrebari:
-			cheie = (str(q.get("categorie", "?")), int(q.get("nivel", 0)))
-			c = celule.setdefault(cheie, {"q": 0, "fapte": set()})
-			c["q"] += 1
-			if q.get("fapt"):
-				c["fapte"].add(str(q["fapt"]))
-		return celule
-
-	mana = strange(intrebari_mana)
-	wd = strange(intrebari_wd)
-
-	print("\n  ── GRILA: întrebări (fapte) ──")
-	print("    %-12s %19s %19s %19s %13s" % (
-		"", "nivelul I", "nivelul II", "nivelul III", "total"))
-	for domeniu in DOMENII:
-		bucati = []
-		total_q = 0
-		total_f = set()
-		for nivel in (1, 2, 3):
-			m = mana.get((domeniu, nivel), {"q": 0, "fapte": set()})
-			w = wd.get((domeniu, nivel), {"q": 0, "fapte": set()})
-			total_q += m["q"] + w["q"]
-			total_f |= m["fapte"] | w["fapte"]
-			bucati.append("%3d+%-3d (%2d+%-3d)" % (
-				m["q"], w["q"], len(m["fapte"]), len(w["fapte"])))
-		bucati.append("%4d (%3d)" % (total_q, len(total_f)))
-		print("    %-12s %s" % (domeniu, " ".join("%18s" % b for b in bucati[:3])
-		                        + " %12s" % bucati[3]))
-	print("    (mână + wikidata; parantezele sunt fapte distincte)")
-
-	# Ce înseamnă asta în luptă. Alegerea din `trivia.gd` e în două trepte: întâi
-	# domeniul, uniform, apoi întrebarea — deci fiecare domeniu ia 1/6 din
-	# întrebări oricât de mare ar fi el. Ce se schimbă e ce se întâmplă ÎN
-	# știință, și cifra aia merită văzută, nu ghicită.
-	print("\n  ── CÂT DIN LUPTĂ DEVINE CHIMIE ──")
-	for nivel in (1, 2, 3):
-		m = mana.get((DOMENIU, nivel), {"q": 0})["q"]
-		w = wd.get((DOMENIU, nivel), {"q": 0})["q"]
-		if m + w == 0:
-			continue
-		print("    nivelul %d: %d din %d întrebări de știință (%.0f%%), "
-		      "adică %.0f%% din toate întrebările de luptă"
-		      % (nivel, w, m + w, 100.0 * w / (m + w), 100.0 * w / (m + w) / len(DOMENII)))
-
-
-def mostre(intrebari, cate, samanta):
-	"""Câteva întrebări generate, întregi, ca să se poată citi.
-
-	Sămânța se tipărește și se poate fixa cu `--seed`: dacă una din cele 15 pare
-	greșită, vrei să te poți uita din nou la exact aceleași 15.
-	"""
-	print("\n  ── %d ÎNTREBĂRI GENERATE, LA ÎNTÂMPLARE (sămânța %d) ──" % (cate, samanta))
-	alese = random.Random(samanta).sample(intrebari, min(cate, len(intrebari)))
-	for q in alese:
-		print("\n    [nivel %d]  %s" % (q["nivel"], q["text"]))
-		for i, v in enumerate(q["variante"]):
-			print("        %s %s" % ("→" if i == q["corect"] else " ", v))
-		print("        %s" % q["id"])
 
 
 # ─────────────────────────────────────────────────────────────
 
 def main():
-	scrie = "--scrie" in sys.argv
-	doar_masoara = "--masoara" in sys.argv
-	reincarca = "--reincarca" in sys.argv
-	samanta = random.randrange(1, 10 ** 6)
-	for arg in sys.argv[1:]:
-		if arg.startswith("--seed="):
-			samanta = int(arg.split("=", 1)[1])
+	arg = comun.argumentele()
 
 	print("\n══ FABRICA: ELEMENTELE CHIMICE ══\n")
 
-	brut = ia_datele(reincarca)
+	randuri = comun.citeste_lista(CALE_ALESE, "elementele alese")
+
+	brut = ia_datele(arg.reincarca)
 	elemente = desfa(brut)
 	pe_simbol = verifica_relatia(elemente)
 	print("  Relația element ↔ simbol: unu-la-unu, verificată pe toate cele %d."
 	      % len(elemente))
 
-	masoara(elemente, pe_simbol)
-	if doar_masoara:
+	masoara(elemente, pe_simbol, randuri)
+	if arg.masoara:
 		print("\n══ DOAR MĂSURAT. Nimic scris. ══\n")
 		return 0
 
-	lista = leaga_tabelul(elemente, pe_simbol)
-	print("\n  ── TABELUL ──")
-	print("    alese: %d elemente  (nivel I: %d, II: %d, III: %d)" % (
-		len(lista),
-		sum(1 for e in lista if e["nivel"] == 1),
-		sum(1 for e in lista if e["nivel"] == 2),
-		sum(1 for e in lista if e["nivel"] == 3)))
+	lista_toata = leaga_tabelul(randuri, elemente, pe_simbol)
 
-	intrebari_mana = citeste_lista(CALE_MANA)
-	dubluri = verifica_dublurile(lista, intrebari_mana)
+	# CIORNELE SE SCOT AICI, ÎNAINTE DE CONSTRUIRE, nu la sfârșit: distractorii se
+	# aleg dintre elementele alese, deci o ciornă lăsată în listă ar ajunge
+	# distractor într-o întrebare scrisă în `data/`. Mecanismul a venit de la opere;
+	# aici nu e nicio ciornă azi, dar înseamnă același lucru la toate trei tabelele.
+	ciorne = [e for e in lista_toata if e["ciorna"]]
+	lista = [e for e in lista_toata if not e["ciorna"]] if arg.scrie else lista_toata
+	comun.raporteaza_ciornele(lista_toata, ciorne, len(lista), arg.scrie, "elemente")
+
+	intrebari_mana = comun.citeste_lista(comun.CALE_MANA, "întrebările scrise de mână")
+	# DUBLURILE SE CAUTĂ PE TABELUL ÎNTREG, ciorne incluse: suprapunerea cu
+	# fișierul de mână e o însușire a TABELULUI, nu a ce s-a confirmat azi.
+	dubluri = verifica_dublurile(lista_toata, intrebari_mana)
 	print("    dubluri cu fișierul scris de mână: %d  (%s)" % (
 		len(dubluri),
 		", ".join("%s/%s ← %s" % (s, sens, id_) for (s, sens), id_ in sorted(dubluri.items()))
@@ -1057,46 +729,47 @@ def main():
 	intrebari, fapte = construieste(lista)
 	print("    generate: %d întrebări, %d fapte (toate cu nota goală)"
 	      % (len(intrebari), len(fapte)))
+	print("    „exact una din patru e corectă”: verificat pe toate %d" % len(intrebari))
 
 	# Grila arată TOT conținutul din joc, nu doar tabelul rulat acum: de când sunt
-	# două fabrici, un raport care se uită doar la el însuși minte cu jumătăți de
-	# adevăr. (Duplicare cunoscută cu `opere.py`; se unifică la al treilea tabel,
-	# odată cu modulul comun.)
-	celelalte_gen = citeste_dosarul_generat(CALE_WD)
-	grila(intrebari_mana, celelalte_gen + intrebari)
-	mostre(intrebari, 15, samanta)
+	# mai multe fabrici, un raport care se uită doar la el însuși minte cu jumătăți
+	# de adevăr.
+	celelalte_gen = comun.citeste_dosarul_generat(CALE_WD)
+	comun.grila(intrebari_mana, celelalte_gen + intrebari)
+	comun.cat_din_lupta(intrebari_mana, celelalte_gen + intrebari, intrebari,
+	                    DOMENIU, "„ELEMENT ↔ SIMBOL”")
+	if intrebari:
+		comun.mostre(intrebari, 15, arg.samanta)
 
-	if not scrie:
+	if not arg.scrie:
 		print("\n══ PROBĂ USCATĂ. Rulează cu --scrie ca să scrie fișierele. ══\n")
 		return 0
 
-	scrie_lista(CALE_WD, intrebari,
-	            ["id", "fapt", "text", "variante", "corect", "nivel", "categorie"], "nivel")
-	scrie_lista(CALE_FAPTE_WD, fapte, ["id", "nota", "surse", "verificat"], "")
+	comun.scrie_lista(CALE_WD, intrebari,
+	                  ["id", "fapt", "text", "variante", "corect", "nivel", "categorie"], "nivel")
+	comun.scrie_lista(CALE_FAPTE_WD, fapte, ["id", "nota", "surse", "verificat"], "")
 	print("\n  Scris:")
-	print("    %s" % os.path.relpath(CALE_WD, RADACINA))
-	print("    %s" % os.path.relpath(CALE_FAPTE_WD, RADACINA))
+	print("    %s" % comun.relativ(CALE_WD))
+	print("    %s" % comun.relativ(CALE_FAPTE_WD))
 
-	verifica_inapoi(CALE_WD, len(intrebari))
-	verifica_inapoi(CALE_FAPTE_WD, len(fapte))
+	comun.verifica_inapoi(CALE_WD, len(intrebari))
+	comun.verifica_inapoi(CALE_FAPTE_WD, len(fapte))
 	print("  Citit înapoi: JSON valid, id-uri unice în amândouă.")
 
-	# Și unicitatea PESTE cele două fișiere de întrebări. `mana:` și `wd:` nu se
-	# pot ciocni, dar verificarea nu costă nimic și nu se sprijină pe asta.
+	# Și unicitatea PESTE tot conținutul. `mana:` și `wd:` nu se pot ciocni, dar
+	# verificarea nu costă nimic și nu se sprijină pe asta.
 	toate = {str(q.get("id", "")) for q in intrebari_mana + celelalte_gen}
 	ciocniri = sorted(toate & {q["id"] for q in intrebari})
 	if ciocniri:
-		raise Eroare("id-uri folosite în amândouă fișierele: %s" % ", ".join(ciocniri))
+		raise Eroare("id-uri folosite în două fișiere: %s" % ", ".join(ciocniri))
 	print("  Id-uri unice și peste restul conținutului (%d + %d + %d)."
 	      % (len(intrebari_mana), len(celelalte_gen), len(intrebari)))
+	if ciorne:
+		print("  Rămase ciorne, neconfirmate: %d." % len(ciorne))
 
 	print("\n══ GATA ══\n")
 	return 0
 
 
 if __name__ == "__main__":
-	try:
-		sys.exit(main())
-	except Eroare as e:
-		print("\nOPRIT: %s\n" % e)
-		sys.exit(1)
+	comun.ruleaza(main)

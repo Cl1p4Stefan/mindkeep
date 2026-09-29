@@ -97,48 +97,29 @@ pentru autor), deci e același la fiecare rulare și nu depinde de ordinea din
 fișier. Ce n-ai voie e să schimbi FORMA id-ului: aia rupe legătura cu orice save.
 """
 
-import hashlib
-import io
-import json
 import os
-import random
 import re
-import sys
-import time
-import urllib.error
-import urllib.parse
-import urllib.request
 
-# Consola Windows nu e pe UTF-8 din oficiu, iar tot ce tipărim are diacritice.
-if hasattr(sys.stdout, "reconfigure"):
-	sys.stdout.reconfigure(encoding="utf-8")
+import comun
+from comun import Eroare
 
-AICI = os.path.dirname(os.path.abspath(__file__))
-RADACINA = os.path.dirname(os.path.dirname(AICI))
+comun.consola_pe_utf8()
 
-CALE_CACHE = os.path.join(AICI, "cache", "wikidata_opere.json")
-CALE_CONTACT = os.path.join(AICI, "contact.txt")
+CALE_CACHE = os.path.join(comun.DOSAR_CACHE, "wikidata_opere.json")
 
-CALE_AUTORI = os.path.join(AICI, "date", "autori.json")
-CALE_OPERE = os.path.join(AICI, "date", "opere.json")
-CALE_PROPUSE = os.path.join(AICI, "date", "opere_propuse.json")
-
-CALE_MANA = os.path.join(RADACINA, "data", "intrebari_trivia.json")
+CALE_AUTORI = os.path.join(comun.DOSAR_DATE, "autori.json")
+CALE_OPERE = os.path.join(comun.DOSAR_DATE, "opere.json")
+CALE_PROPUSE = os.path.join(comun.DOSAR_DATE, "opere_propuse.json")
 
 # DOSARUL, nu fișierul. Încărcătorul din `trivia.gd` citește tot dosarul, iar un
 # tabel nou înseamnă două fișiere puse aici, zero linii de cod în joc.
-DOSAR_GEN = os.path.join(RADACINA, "data", "trivia_gen")
-CALE_INTREBARI = os.path.join(DOSAR_GEN, "opere_intrebari.json")
-CALE_FAPTE = os.path.join(DOSAR_GEN, "opere_fapte.json")
-
-# Aceleași șase, în aceeași ordine ca `CATEGORII` din `trivia.gd`. Scrise aici,
-# nu citite din cod: raportul trebuie să arate o celulă GOALĂ dacă un domeniu
-# rămâne fără întrebări, iar un raport care-și ia lista din date n-o poate face.
-DOMENII = ["istorie", "geografie", "stiinta", "arta", "mitologie", "literatura"]
+CALE_INTREBARI = os.path.join(comun.DOSAR_GEN, "opere_intrebari.json")
+CALE_FAPTE = os.path.join(comun.DOSAR_GEN, "opere_fapte.json")
 
 DOMENIU = "literatura"
 
-ENDPOINT = "https://query.wikidata.org/sparql"
+# Relația, din care se compune `id`-ul: `wd:Q12730777:autor:cere_autor`.
+RELATIE = "autor"
 
 # Cele două sensuri. Numele spune ce se CERE.
 #   cere_autor — se arată opera, se cer autorii.  O întrebare PER OPERĂ.
@@ -257,164 +238,6 @@ def limba_curata(qiduri):
 		iesite.add(LIMBI_INRUDITE.get(q, q))
 	return iesite
 
-
-class Eroare(Exception):
-	"""Ceva ce scriptul nu recunoaște. Oprește tot, nu se sare peste."""
-
-
-# ─────────────────────────────────────────────────────────────
-# FIȘIERE
-# ─────────────────────────────────────────────────────────────
-
-def citeste_json(cale, ce):
-	if not os.path.exists(cale):
-		raise Eroare("lipsește %s (%s)" % (os.path.relpath(cale, RADACINA), ce))
-	with io.open(cale, encoding="utf-8") as f:
-		try:
-			return json.load(f)
-		except ValueError as e:
-			raise Eroare("%s nu e JSON valid: %s" % (os.path.relpath(cale, RADACINA), e))
-
-
-def citeste_lista(cale, ce="listă"):
-	date = citeste_json(cale, ce)
-	if not isinstance(date, list):
-		raise Eroare("%s nu conține o listă" % os.path.relpath(cale, RADACINA))
-	return date
-
-
-def ca_json(valoare):
-	"""Un singur câmp, scris ca JSON. `ensure_ascii=False` ca diacriticele și
-	ghilimelele românești să rămână litere, nu `\\u0103`."""
-	return json.dumps(valoare, ensure_ascii=False)
-
-
-def scrie_lista(cale, obiecte, ordinea, separa_pe):
-	"""Scrie o listă de obiecte, cu câmpurile în `ordinea` dată.
-
-	Nu `json.dump`: fișierul iese în ACELAȘI format ca `intrebari_trivia.json`
-	(taburi, `variante` pe un singur rând, linii goale între niveluri). `json.dump`
-	ar pune fiecare variantă pe rândul ei, iar fișierul ar sări de la 1200 la 2000
-	de linii, cu diff-uri pe care nu le mai poți citi.
-	"""
-	rand = ["["]
-	anterior = None
-	for i, ob in enumerate(obiecte):
-		if separa_pe and anterior is not None and ob[separa_pe] != anterior:
-			rand.append("")
-		anterior = ob[separa_pe] if separa_pe else None
-
-		rand.append("\t{")
-		chei = [c for c in ordinea if c in ob]
-		for j, cheie in enumerate(chei):
-			virgula = "," if j < len(chei) - 1 else ""
-			rand.append("\t\t%s: %s%s" % (ca_json(cheie), ca_json(ob[cheie]), virgula))
-		rand.append("\t}" + ("," if i < len(obiecte) - 1 else ""))
-	rand.append("]")
-	rand.append("")
-
-	os.makedirs(os.path.dirname(cale), exist_ok=True)
-	# `newline="\n"`: .gitattributes cere LF pentru tot repo-ul.
-	with io.open(cale, "w", encoding="utf-8", newline="\n") as f:
-		f.write("\n".join(rand))
-
-
-def scrie_pe_rand(cale, obiecte, ordinea, separa_pe=None):
-	"""Ca `scrie_lista`, dar cu UN OBIECT PE UN RÂND.
-
-	Pentru fișierele de mână și pentru propuneri. Un fișier pe care-l citește și-l
-	taie un om trebuie să se poată sorta, filtra și șterge pe rânduri; cinci rânduri
-	per operă ar face 700 de rânduri dintr-un tabel de 140.
-	"""
-	rand = ["["]
-	anterior = None
-	for i, ob in enumerate(obiecte):
-		if separa_pe and anterior is not None and ob.get(separa_pe) != anterior:
-			rand.append("")
-		anterior = ob.get(separa_pe) if separa_pe else None
-		bucati = ["%s: %s" % (ca_json(c), ca_json(ob[c])) for c in ordinea if c in ob]
-		rand.append("\t{%s}%s" % (", ".join(bucati), "," if i < len(obiecte) - 1 else ""))
-	rand.append("]")
-	rand.append("")
-	os.makedirs(os.path.dirname(cale), exist_ok=True)
-	with io.open(cale, "w", encoding="utf-8", newline="\n") as f:
-		f.write("\n".join(rand))
-
-
-# ─────────────────────────────────────────────────────────────
-# REȚEAUA
-# ─────────────────────────────────────────────────────────────
-
-def contactul():
-	"""Adresa de contact pentru User-Agent. NU stă în cod.
-
-	Wikimedia cere un User-Agent descriptiv, cu un om de contact. Corect — dar
-	adresa nu are ce căuta într-un fișier comis în Git, deci se citește din afară:
-
-	    MINDKEEP_CONTACT=cineva@exemplu.ro python tools/fabrica/opere.py --reincarca
-
-	sau se scrie o dată în `tools/fabrica/contact.txt`, care e în `.gitignore`.
-
-	Cerută DOAR când se atinge rețeaua. O rulare din cache nu are nevoie de nimic.
-	"""
-	din_mediu = os.environ.get("MINDKEEP_CONTACT", "").strip()
-	if din_mediu:
-		return din_mediu
-	if os.path.exists(CALE_CONTACT):
-		with io.open(CALE_CONTACT, encoding="utf-8") as f:
-			din_fisier = f.read().strip()
-		if din_fisier:
-			return din_fisier
-	raise Eroare(
-		"nu am un contact pentru User-Agent, iar Wikimedia îl cere.\n"
-		"  Pune-l într-unul din două locuri:\n"
-		"    MINDKEEP_CONTACT=adresa@ta  (variabilă de mediu)\n"
-		"    %s  (o singură linie; e în .gitignore)\n"
-		"  Cache-ul existent se folosește fără contact — doar --reincarca are nevoie de el."
-		% os.path.relpath(CALE_CONTACT, RADACINA)
-	)
-
-
-def interogheaza(interogare, ce):
-	"""O cerere la Wikidata. Întoarce răspunsul brut, ca dicționar."""
-	contact = contactul()
-	antet = "Mindkeep-fabrica/0.1 (%s) Python-urllib" % contact
-
-	cerere = urllib.request.Request(
-		ENDPOINT,
-		data=urllib.parse.urlencode({"query": interogare}).encode("utf-8"),
-		headers={
-			"User-Agent": antet,
-			"Accept": "application/sparql-results+json",
-			"Content-Type": "application/x-www-form-urlencoded",
-		},
-		method="POST",
-	)
-	print("    întreb Wikidata: %s…" % ce)
-	try:
-		with urllib.request.urlopen(cerere, timeout=180) as raspuns:
-			return json.loads(raspuns.read().decode("utf-8"))
-	except urllib.error.HTTPError as e:
-		# 403 și 429 de la Wikimedia înseamnă aproape mereu User-Agent, nu
-		# interogare — merită spus, altfel cauți o oră în SPARQL.
-		detaliu = ""
-		if e.code in (403, 429):
-			detaliu = ("\n  Codul %d de la Wikimedia e aproape mereu despre User-Agent "
-			           "sau despre prea multe cereri, nu despre interogare." % e.code)
-		raise Eroare("Wikidata a răspuns %d %s (%s)%s" % (e.code, e.reason, ce, detaliu))
-	except urllib.error.URLError as e:
-		raise Eroare("nu ajung la Wikidata (%s): %s" % (ce, e.reason))
-
-
-def legaturi(raspuns):
-	return raspuns.get("results", {}).get("bindings", [])
-
-
-def qid_din(uri):
-	q = uri.rsplit("/", 1)[-1]
-	if not re.fullmatch(r"Q\d+", q):
-		raise Eroare("URI pe care nu-l recunosc: %r" % uri)
-	return q
 
 
 # ─────────────────────────────────────────────────────────────
@@ -549,11 +372,11 @@ SELECT ?x ?ro ?en WHERE {
 # ─────────────────────────────────────────────────────────────
 
 def ia_datele(reincarca, nume_autori):
-	if not reincarca and os.path.exists(CALE_CACHE):
-		with io.open(CALE_CACHE, encoding="utf-8") as f:
-			pachet = json.load(f)
-		print("  Cache: %s (luat la %s)" % (
-			os.path.relpath(CALE_CACHE, RADACINA), pachet.get("luat_la", "?")))
+	pachet = None if reincarca else comun.cache_citeste(CALE_CACHE)
+	if pachet is not None:
+		# CE validează cache-ul stă aici, nu în modulul comun: pragul de ediții și
+		# lista de autori sunt judecăți despre TABELUL ăsta. Adaugi un autor și uiți
+		# `--reincarca` → scriptul se oprește, în loc să genereze în tăcere fără el.
 		if int(pachet.get("minim_editii", -1)) != MINIM_EDITII:
 			raise Eroare(
 				"cache-ul e luat cu pragul de %s ediții, iar acum MINIM_EDITII e %d.\n"
@@ -577,24 +400,24 @@ def ia_datele(reincarca, nume_autori):
 	gasite = set()
 	for i in range(0, len(nume_autori), 12):
 		grup = nume_autori[i:i + 12]
-		r = interogheaza(interogare_autori(grup, False),
+		r = comun.interogheaza(interogare_autori(grup, False),
 		                 "autorii, etichete (%d-%d)" % (i + 1, i + len(grup)))
 		raspunsuri_autori.append(r)
-		gasite |= {b["cautat"]["value"] for b in legaturi(r)}
+		gasite |= {b["cautat"]["value"] for b in comun.legaturi(r)}
 
 	# A doua trecere: alias-urile, DOAR pentru numele pe care etichetele nu le-au
 	# găsit. Scump, deci se plătește numai unde e nevoie.
 	ramase = [n for n in nume_autori if n not in gasite]
 	for i in range(0, len(ramase), 6):
 		grup = ramase[i:i + 6]
-		raspunsuri_autori.append(interogheaza(
+		raspunsuri_autori.append(comun.interogheaza(
 			interogare_autori(grup, True), "autorii, alias-uri (%s)" % ", ".join(grup)))
 
 	# Autorii rezolvați ACUM, ca să știm pentru cine cerem operele. Rezolvarea e
 	# oricum verificată mai jos, pe datele din cache — aici e doar ca să se poată
 	# compune a doua interogare.
-	qiduri = sorted({qid_din(r["autor"]["value"])
-	                 for raspuns in raspunsuri_autori for r in legaturi(raspuns)})
+	qiduri = sorted({comun.qid_din(r["autor"]["value"])
+	                 for raspuns in raspunsuri_autori for r in comun.legaturi(raspuns)})
 	if not qiduri:
 		raise Eroare("niciun autor găsit pentru lista dată. Numele sunt scrise corect?")
 
@@ -605,38 +428,28 @@ def ia_datele(reincarca, nume_autori):
 	bucati = []
 	for i in range(0, len(qiduri), 5):
 		grup = qiduri[i:i + 5]
-		bucati.append(interogheaza(interogare_opere(grup),
+		bucati.append(comun.interogheaza(interogare_opere(grup),
 		                           "operele (%d-%d din %d)" % (i + 1, i + len(grup), len(qiduri))))
 
 	# Etichetele pentru tipuri și limbi, o singură dată, pentru ce a apărut.
 	de_etichetat = set()
 	for b in bucati:
-		for r in legaturi(b):
+		for r in comun.legaturi(b):
 			for camp in ("tipuri", "limbi"):
-				de_etichetat |= {q for q in _multe(r, camp) if q != "?"}
+				de_etichetat |= {q for q in comun.multe(r, camp) if q != "?"}
 	etichete = []
 	lista_et = sorted(de_etichetat)
 	for i in range(0, len(lista_et), 300):
-		etichete.append(interogheaza(interogare_etichete(lista_et[i:i + 300]),
+		etichete.append(comun.interogheaza(interogare_etichete(lista_et[i:i + 300]),
 		                             "etichetele (%d)" % len(lista_et[i:i + 300])))
 
-	pachet = {
-		"luat_la": time.strftime("%Y-%m-%dT%H:%M:%S"),
-		"endpoint": ENDPOINT,
+	return comun.cache_scrie(CALE_CACHE, {
 		"pentru_nume": list(nume_autori),
 		"minim_editii": MINIM_EDITII,
 		"autori": raspunsuri_autori,
 		"opere": bucati,
 		"etichete": etichete,
-	}
-	os.makedirs(os.path.dirname(CALE_CACHE), exist_ok=True)
-	with io.open(CALE_CACHE, "w", encoding="utf-8", newline="\n") as f:
-		json.dump(pachet, f, ensure_ascii=False, indent="\t", sort_keys=True)
-		f.write("\n")
-	print("  Scris cache: %s (%.1f MB)" % (
-		os.path.relpath(CALE_CACHE, RADACINA),
-		os.path.getsize(CALE_CACHE) / 1048576.0))
-	return pachet
+	})
 
 
 # ─────────────────────────────────────────────────────────────
@@ -646,8 +459,8 @@ def ia_datele(reincarca, nume_autori):
 def desfa_etichetele(pachet):
 	et = {}
 	for raspuns in pachet.get("etichete", []):
-		for r in legaturi(raspuns):
-			q = qid_din(r["x"]["value"])
+		for r in comun.legaturi(raspuns):
+			q = comun.qid_din(r["x"]["value"])
 			et[q] = {
 				"ro": r["ro"]["value"] if "ro" in r else None,
 				"en": r["en"]["value"] if "en" in r else None,
@@ -666,10 +479,10 @@ def rezolva_autorii(pachet, nume_autori):
 	pe_nume = {}
 	randuri = []
 	for raspuns in pachet["autori"]:
-		randuri.extend(legaturi(raspuns))
+		randuri.extend(comun.legaturi(raspuns))
 	for r in randuri:
 		cautat = r["cautat"]["value"]
-		qid = qid_din(r["autor"]["value"])
+		qid = comun.qid_din(r["autor"]["value"])
 		a = pe_nume.setdefault(cautat, {}).setdefault(qid, {
 			"qid": qid,
 			"feluri": set(),
@@ -689,9 +502,9 @@ def rezolva_autorii(pachet, nume_autori):
 			if camp in r:
 				a[camp] = int(float(r[camp]["value"]))
 		if "limba" in r:
-			a["limbi"].add(qid_din(r["limba"]["value"]))
+			a["limbi"].add(comun.qid_din(r["limba"]["value"]))
 		if "limba_nativa" in r:
-			a["limbi_native"].add(qid_din(r["limba_nativa"]["value"]))
+			a["limbi_native"].add(comun.qid_din(r["limba_nativa"]["value"]))
 
 	probleme = []
 	autori = []
@@ -731,43 +544,6 @@ def rezolva_autorii(pachet, nume_autori):
 			"%s → %s" % (q, ", ".join(n)) for q, n in sorted(ciocniri.items())))
 
 	return autori
-
-
-def qid_sau_nimic(uri):
-	"""QID-ul dintr-un URI, sau `None` dacă e un nod anonim.
-
-	NODURILE ANONIME SUNT „VALOARE NECUNOSCUTĂ", ȘI EXACT ELE NE INTERESEAZĂ.
-	Wikidata poate spune „această operă ARE un autor, dar nu se știe cine" —
-	`somevalue` —, iar SPARQL îl întoarce ca `…/.well-known/genid/1986ff00…`.
-	Prima versiune a scriptului s-a oprit cu „URI pe care nu-l recunosc", ceea ce
-	a fost, din întâmplare, cel mai bun lucru care se putea întâmpla: e chiar
-	cazul operelor anonime și populare, pe care regula ta le scoate.
-
-	Deci nu se sare peste el în tăcere. Pentru autori se păstrează ca `?`, adică
-	„un autor, dar nu se știe care" — și așa o operă scrisă de cineva cunoscut
-	ÎMPREUNĂ cu un anonim are doi autori și pică regula unui singur autor, cum se
-	cuvine. Pentru tipuri și limbi n-are ce spune, deci se lasă deoparte.
-	"""
-	q = uri.rsplit("/", 1)[-1]
-	if re.fullmatch(r"Q\d+", q):
-		return q
-	if "/.well-known/genid/" in uri:
-		return None
-	raise Eroare("URI pe care nu-l recunosc: %r" % uri)
-
-
-def _multe(rand, camp):
-	"""Un `GROUP_CONCAT` desfăcut în QID-uri, cu nodurile anonime ca `?`."""
-	brut = rand.get(camp, {}).get("value", "").strip()
-	if not brut:
-		return set()
-	iesite = set()
-	for bucata in brut.split(" "):
-		if not bucata:
-			continue
-		q = qid_sau_nimic(bucata)
-		iesite.add(q if q else "?")
-	return iesite
 
 
 def scoate_editiile_duble(opere):
@@ -836,8 +612,8 @@ def desfa_operele(pachet):
 	"""Rândurile SPARQL → un dicționar QID → operă, cu TOȚI autorii ei."""
 	opere = {}
 	for raspuns in pachet["opere"]:
-		for r in legaturi(raspuns):
-			qid = qid_din(r["opera"]["value"])
+		for r in comun.legaturi(raspuns):
+			qid = comun.qid_din(r["opera"]["value"])
 			o = opere.setdefault(qid, {
 				"qid": qid,
 				"titlu_ro": None,
@@ -851,10 +627,10 @@ def desfa_operele(pachet):
 				"an": None,
 			})
 			o["editii"] = max(o["editii"], int(r["editii"]["value"]))
-			o["autori"] |= _multe(r, "autori")
-			o["tipuri"] |= {t for t in _multe(r, "tipuri") if t != "?"}
-			o["limbi"] |= {l for l in _multe(r, "limbi") if l != "?"}
-			o["mame"] |= {m for m in _multe(r, "mame") if m != "?"}
+			o["autori"] |= comun.multe(r, "autori")
+			o["tipuri"] |= {t for t in comun.multe(r, "tipuri") if t != "?"}
+			o["limbi"] |= {l for l in comun.multe(r, "limbi") if l != "?"}
+			o["mame"] |= {m for m in comun.multe(r, "mame") if m != "?"}
 			for camp in ("titlu_ro", "titlu_mul", "titlu_en"):
 				if camp in r and r[camp]["value"].strip():
 					o[camp] = r[camp]["value"].strip()
@@ -948,17 +724,17 @@ def propune(autori, opere, etichete, alese_deja):
 		if cate[p["autor_nume"]] <= CATE_PROPUNERI:
 			taiate.append(p)
 
-	scrie_pe_rand(CALE_PROPUSE, taiate,
+	comun.scrie_pe_rand(CALE_PROPUSE, taiate,
 	              ["qid", "titlu", "titlu_en", "autor_nume", "tip", "an", "editii", "nivel"],
 	              "autor_nume")
 	print("\n  ── PROPUNERI ──")
-	print("    scris: %s" % os.path.relpath(CALE_PROPUSE, RADACINA))
+	print("    scris: %s" % comun.relativ(CALE_PROPUSE))
 	print("    %d opere propuse, %d pe autor cel mult" % (len(taiate), CATE_PROPUNERI))
 	print("    lăsate afară: %d deja alese, %d cu mai mulți autori (sau cu autor "
 	      "necunoscut), %d fără etichetă" % (sarite["alese"], sarite["mai_multi_autori"],
 	                                         sarite["fara_eticheta"]))
 	print("    Copiază rândurile pe care le vrei în %s, pune-le nivelul (1/2/3)"
-	      % os.path.relpath(CALE_OPERE, RADACINA))
+	      % comun.relativ(CALE_OPERE))
 	print("    și marchează-le \"ciorna\": true cât timp nu sunt confirmate.")
 	return taiate
 
@@ -966,13 +742,6 @@ def propune(autori, opere, etichete, alese_deja):
 # ─────────────────────────────────────────────────────────────
 # MĂSURĂTOAREA
 # ─────────────────────────────────────────────────────────────
-
-def decile(valori):
-	v = sorted(valori)
-	if not v:
-		return "—"
-	return "  ".join("%4d" % v[min(len(v) - 1, int(len(v) * k / 10))] for k in range(10))
-
 
 def masoara(autori, opere, etichete, lista):
 	"""Ce se poate afla din date, înainte să se aleagă ceva.
@@ -1025,7 +794,7 @@ def masoara(autori, opere, etichete, lista):
 	toate = [o["editii"] for o in opere.values()]
 	print("    toate operele (%d): min %d   median %d   maxim %d" % (
 		len(toate), min(toate), sorted(toate)[len(toate) // 2], max(toate)))
-	print("      decile: %s" % decile(toate))
+	print("      decile: %s" % comun.decile(toate))
 	print("    → la elemente banda era de ~1,5× între decila 1 și decila 9, fiindcă")
 	print("      boții generaseră un articol pe element pe fiecare wiki mic. Aici")
 	print("      nu există boți, deci banda arată altfel. Cifra de sus e proba.")
@@ -1038,38 +807,7 @@ def masoara(autori, opere, etichete, lista):
 				continue
 			print("    nivelul %d (%2d opere): min %3d   median %3d   maxim %3d"
 			      % (nivel, len(v), v[0], v[len(v) // 2], v[-1]))
-		_cat_de_bun_ar_fi_un_prag(lista)
-
-
-def _cat_de_bun_ar_fi_un_prag(lista):
-	"""Cel mai bun clasificator „două praguri pe ediții" — și cât greșește.
-
-	Asta e cifra care spune cinstit dacă nivelul ar putea fi vreodată automat.
-	Caută pragurile care reproduc cel mai bine coloana de mână și raportează
-	eroarea. NU schimbă nimic: decizia rămâne a omului, oricât de frumos ar ieși.
-	"""
-	perechi = sorted((e["editii"], e["nivel"]) for e in lista)
-	valori = sorted({p[0] for p in perechi})
-	if len(valori) < 3:
-		return
-	cel_mai_bun = None
-	for i in range(len(valori)):
-		for j in range(i + 1, len(valori)):
-			a, b = valori[i], valori[j]
-			# Mai multe ediții = mai cunoscut = nivel mai mic.
-			gresite = sum(1 for ed, niv in perechi
-			              if (1 if ed > b else 2 if ed > a else 3) != niv)
-			if cel_mai_bun is None or gresite < cel_mai_bun[0]:
-				cel_mai_bun = (gresite, a, b)
-	gresite, a, b = cel_mai_bun
-	print("    cel mai bun prag automat posibil: III sub %d ediții, II sub %d, I peste"
-	      % (a + 1, b + 1))
-	print("      ar greși %d din %d (%.0f%%). Pentru comparație, a ghici mereu"
-	      % (gresite, len(perechi), 100.0 * gresite / len(perechi)))
-	celmaides = max(sum(1 for e in lista if e["nivel"] == n) for n in (1, 2, 3))
-	print("      nivelul cel mai des ar greși %d din %d (%.0f%%)."
-	      % (len(lista) - celmaides, len(lista),
-	         100.0 * (len(lista) - celmaides) / len(lista)))
+		comun.cat_de_bun_ar_fi_un_prag([(e["editii"], e["nivel"]) for e in lista])
 
 
 # ─────────────────────────────────────────────────────────────
@@ -1277,47 +1015,17 @@ def verifica_dublurile(lista, intrebari_mana):
 				aproape.append("%s  răspuns „%s\" e o operă aleasă, dar nu numește "
 				               "niciun autor ales" % (q.get("id", "?"), corect))
 
-	nedeclarate = sorted(k for k in gasite if k not in DUBLURI)
-	if nedeclarate:
-		raise Eroare(
-			"întrebări scrise de mână care se suprapun cu ce generăm, nedeclarate în "
-			"DUBLURI:\n" + "\n".join(
-				'\t("%s", "%s"): "%s",' % (k[0], k[1], gasite[k]) for k in nedeclarate)
-			+ "\n  Copiază rândurile de mai sus în DUBLURI (sau schimbă întrebarea de mână).")
-
-	# Și invers: o declarație care nu mai corespunde nimic e la fel de rea, doar
-	# mai tăcută — scoate din joc o întrebare bună fără să spună de ce.
-	fantome = sorted(k for k in DUBLURI if k not in gasite)
-	if fantome:
-		raise Eroare(
-			"DUBLURI declară suprapuneri care nu se mai găsesc în fișierul scris de "
-			"mână:\n  - " + "\n  - ".join("%s / %s" % (a, b) for a, b in fantome)
-			+ "\n  Dacă întrebarea de mână s-a schimbat, sau opera a ieșit din tabel, "
-			"șterge rândul din DUBLURI.")
-
+	# Comparația declarate ↔ găsite ↔ fantome e în modulul comun: e aceeași la
+	# toate tabelele, inclusiv lecția că o declarație rămasă fără acoperire e la
+	# fel de rea ca una lipsă, doar mai tăcută. POTRIVIREA de mai sus, cu
+	# ghilimelele și cu răspunsul, e a literaturii și rămâne aici.
+	comun.compara_dublurile(gasite, DUBLURI)
 	return gasite, aproape
 
 
 # ─────────────────────────────────────────────────────────────
 # DISTRACTORII
 # ─────────────────────────────────────────────────────────────
-
-def zar(*bucati):
-	"""Un număr stabil dintr-un text: același la fiecare rulare, pe orice mașină.
-
-	`hash()` din Python NU e bun aici: e sărat la fiecare pornire a
-	interpretorului, deci ar da alt fișier la fiecare rulare.
-
-	DE CE E NEVOIE DE EL, și de ce nu se rup egalitățile pe QID crescător: în
-	Wikidata QID-urile mici sunt exact subiectele celebre (Shakespeare e Q692).
-	„La egalitate, QID-ul mai mic" l-ar pune distractor la jumătate din întrebări,
-	iar „răspunsul nu e niciodată Shakespeare" e o scurtătură prin care marchezi
-	puncte fără să gândești — exact ce `_amesteca` din `trivia.gd` a fost scrisă
-	să închidă, reapărută pe alt drum.
-	"""
-	cheie = "|".join(str(b) for b in bucati).encode("utf-8")
-	return int.from_bytes(hashlib.blake2b(cheie, digest_size=8).digest(), "big")
-
 
 def epoca(autor, operele_lui):
 	"""Anul în jurul căruia a scris un autor.
@@ -1405,7 +1113,7 @@ def alege_distractorii(tinta, candidati, sens, cheie_zar):
 	if len(banda) < 3:
 		raise Eroare("%s / %s: mai puțin de 3 distractori posibili" % (tinta["cheie"], sens))
 
-	banda.sort(key=lambda c: (-punctaj(tinta, c, sens), zar(cheie_zar, sens, c["cheie"])))
+	banda.sort(key=lambda c: (-punctaj(tinta, c, sens), comun.zar(cheie_zar, sens, c["cheie"])))
 	alesi = banda[:3]
 	fara_frate = not any(c["limbi"] & tinta["limbi"] for c in alesi) if tinta["limbi"] else True
 	return alesi, fara_frate
@@ -1484,14 +1192,16 @@ def construieste(lista, autori):
 		if fara_frate:
 			statistici["fara_frate_de_limba"] += 1
 
-		intrebari.append(_pune_la_locul_lui(
+		intrebari.append(comun.pune_la_locul_lui(
 			cheie=e["qid"],
+			relatie=RELATIE,
 			sens="cere_autor",
 			text="Cine a scris „%s”?" % e["titlu"],
 			bun=autor_tinta["nume"],
 			restul=[d["nume"] for d in distractorii],
 			nivel=e["nivel"],
 			fapt="wd:%s" % e["qid"],
+			domeniu=DOMENIU,
 		))
 
 	# ── SENSUL INVERS: o întrebare per autor ──
@@ -1503,7 +1213,7 @@ def construieste(lista, autori):
 		# întreabă „recunoști o carte a omului ăstuia?", deci merită pusă pe cartea
 		# pe care ar recunoaște-o.
 		reprezentanta = sorted(
-			a["opere"], key=lambda o: (o["nivel"], -o["editii"], zar(o["qid"])))[0]
+			a["opere"], key=lambda o: (o["nivel"], -o["editii"], comun.zar(o["qid"])))[0]
 		# TOATE operele autorului ies din distractori, nu doar reprezentanta:
 		# altfel întrebarea ar avea două răspunsuri corecte.
 		ale_lui = {o["qid"] for o in a["opere"]}
@@ -1519,26 +1229,41 @@ def construieste(lista, autori):
 		if fara_frate:
 			statistici["fara_frate_de_limba"] += 1
 
-		intrebari.append(_pune_la_locul_lui(
+		intrebari.append(comun.pune_la_locul_lui(
 			cheie=a["qid"],
+			relatie=RELATIE,
 			sens="cere_opera",
 			text="Care dintre aceste opere a fost scrisă de %s?" % a["nume"],
 			bun=reprezentanta["titlu"],
 			restul=[d["titlu"] for d in distractorii],
 			nivel=reprezentanta["nivel"],
 			fapt="wd:%s" % a["qid"],
+			domeniu=DOMENIU,
 		))
 
 	intrebari.sort(key=lambda q: (q["nivel"], q["id"]))
 
 	# ── VERIFICAREA „EXACT UNA DIN PATRU E CORECTĂ" ──
-	# Făcută pe datele complete de la Wikidata, pe fiecare întrebare, DUPĂ ce s-a
-	# construit. Pare de prisos după opririle din `leaga_tabelul` — nu e: aceea
-	# apără presupunerea („fiecare operă are exact un autor"), asta apără
-	# REZULTATUL. Dacă mâine o schimbare în date sau în codul de mai sus ar face
-	# să iasă o întrebare cu două răspunsuri bune, aici se oprește tot, și se
-	# spune care.
-	_verifica_un_singur_raspuns(intrebari, lista, candidati_autori)
+	# Forma verificării e în modulul comun (vezi `comun.verifica_un_singur_raspuns`
+	# pentru de ce nu e de prisos după opririle din `leaga_tabelul`). Ce înseamnă
+	# „corect" e al literaturii, și stă în predicatul de mai jos: se întreabă
+	# mulțimea COMPLETĂ de autori de la Wikidata (`autori_wd`), nu coloana
+	# `autor_nume` — așa se vede, la prima `--reincarca`, dacă cineva a adăugat în
+	# Wikidata un al doilea autor la o operă aleasă.
+	pe_titlu = {e["titlu"]: e for e in lista}
+	pe_nume = {a["nume"]: a for a in candidati_autori}
+
+	def este_corect(q, varianta):
+		if q["id"].endswith("cere_autor"):
+			# Se arată o operă, se cer autorii: varianta e un nume de autor.
+			qid_opera = q["id"].split(":")[1]
+			opera = next(e for e in lista if e["qid"] == qid_opera)
+			return varianta in pe_nume and pe_nume[varianta]["qid"] in opera["autori_wd"]
+		# Se arată un autor, se cer operele: varianta e un titlu.
+		qid_autor = q["id"].split(":")[1]
+		return varianta in pe_titlu and qid_autor in pe_titlu[varianta]["autori_wd"]
+
+	comun.verifica_un_singur_raspuns(intrebari, este_corect)
 
 	# Faptele. Nota e goală: tabelul cere întrebări, nu note (aceeași decizie ca
 	# la elemente). Câmpul EXISTĂ fiindcă altfel încărcătorul din `trivia.gd` se
@@ -1564,228 +1289,18 @@ def construieste(lista, autori):
 	return intrebari, fapte, statistici
 
 
-def _pune_la_locul_lui(cheie, sens, text, bun, restul, nivel, fapt):
-	"""O întrebare gata de scris, cu răspunsul bun pus pe o poziție împrăștiată.
-
-	`trivia.gd` amestecă variantele la fiecare apariție (`_amesteca`), deci poziția
-	din fișier nu ajunge niciodată pe ecran. O punem totuși împrăștiată: dacă
-	amestecarea e vreodată scoasă sau ocolită, fișierul să nu aibă răspunsul bun
-	mereu pe primul buton. Două plase peste aceeași greșeală, niciuna scumpă.
-
-	Prin `zar`, nu prin `QID % 4`: QID-ul singur iese grămădit și dă ambelor
-	întrebări ale unei entități același loc. Sensul intră în cheie, deci se despart.
-	"""
-	loc = zar(cheie, sens, "poziție") % 4
-	variante = list(restul)
-	variante.insert(loc, bun)
-	if len(set(variante)) != 4:
-		raise Eroare("%s / %s: variante identice → %s" % (cheie, sens, variante))
-	return {
-		"id": "wd:%s:autor:%s" % (cheie, sens),
-		"fapt": fapt,
-		"text": text,
-		"variante": variante,
-		"corect": loc,
-		"nivel": nivel,
-		"categorie": DOMENIU,
-	}
 
 
-def _verifica_un_singur_raspuns(intrebari, lista, candidati_autori):
-	"""Exact una dintre cele patru variante e corectă? Pe date complete."""
-	pe_titlu = {e["titlu"]: e for e in lista}
-	pe_nume = {a["nume"]: a for a in candidati_autori}
-	probleme = []
-
-	for q in intrebari:
-		sens = q["id"].rsplit(":", 1)[-1]
-		if sens == "cere_autor":
-			# Se arată o operă, se cer autorii. Câți dintre cei patru autori afișați
-			# se află în mulțimea COMPLETĂ de autori a operei, cea de la Wikidata?
-			qid_opera = q["id"].split(":")[1]
-			opera = next(e for e in lista if e["qid"] == qid_opera)
-			corecti = [v for v in q["variante"]
-			           if v in pe_nume and pe_nume[v]["qid"] in opera["autori_wd"]]
-		else:
-			# Se arată un autor, se cer operele. Câte dintre cele patru opere afișate
-			# îl au pe el printre autori?
-			qid_autor = q["id"].split(":")[1]
-			corecti = [v for v in q["variante"]
-			           if v in pe_titlu and qid_autor in pe_titlu[v]["autori_wd"]]
-		if len(corecti) != 1:
-			probleme.append("%s — %s   variante: %s   corecte după Wikidata: %s"
-			                % (q["id"], q["text"], " / ".join(q["variante"]),
-			                   ", ".join(corecti) or "NICIUNA"))
-		elif corecti[0] != q["variante"][q["corect"]]:
-			probleme.append("%s — marcat corect %r, dar Wikidata spune %r"
-			                % (q["id"], q["variante"][q["corect"]], corecti[0]))
-
-	if probleme:
-		raise Eroare("întrebări la care nu e exact un răspuns corect:\n  - "
-		             + "\n  - ".join(probleme))
-
-
-# ─────────────────────────────────────────────────────────────
-# SCRIEREA ȘI CITIREA ÎNAPOI
-# ─────────────────────────────────────────────────────────────
-
-def verifica_inapoi(cale, cate_asteptate):
-	"""Scriptul a scris text, deci n-are nicio dovadă că a scris JSON valid.
-
-	Dovada se ia citind fișierul înapoi, cu același fel de parser pe care-l va
-	folosi și Godot. Ieftin, și singurul lucru care prinde o virgulă pierdută.
-	"""
-	date = citeste_lista(cale)
-	if len(date) != cate_asteptate:
-		raise Eroare("%s: am citit %d intrări, scrisesem %d"
-		             % (os.path.basename(cale), len(date), cate_asteptate))
-	vazute = set()
-	for q in date:
-		id_ = str(q.get("id", ""))
-		if not id_:
-			raise Eroare("%s: o intrare fără id" % os.path.basename(cale))
-		if id_ in vazute:
-			raise Eroare("%s: id duplicat %r" % (os.path.basename(cale), id_))
-		vazute.add(id_)
-	return date
-
-
-def citeste_dosarul_generat(fara):
-	"""Toate întrebările din `data/trivia_gen/`, în afară de fișierul dat.
-
-	Grila trebuie să arate ADEVĂRUL, adică tot conținutul din joc, nu doar tabelul
-	pe care-l rulez acum. Fișierul propriu se scoate și se înlocuiește cu ce s-a
-	construit în memorie — altfel raportul ar arăta versiunea de pe disc, cea
-	dinaintea rulării.
-
-	(Duplicare cunoscută: `elemente.py` are nevoie de același lucru. Se unifică la
-	al treilea tabel, odată cu modulul comun — scris și în `docs/progres.md`.)
-	"""
-	altele = []
-	if not os.path.isdir(DOSAR_GEN):
-		return altele
-	for nume in sorted(os.listdir(DOSAR_GEN)):
-		if not nume.endswith("_intrebari.json"):
-			continue
-		cale = os.path.join(DOSAR_GEN, nume)
-		if os.path.abspath(cale) == os.path.abspath(fara):
-			continue
-		altele.extend(citeste_lista(cale))
-	return altele
-
-
-# ─────────────────────────────────────────────────────────────
-# RAPORTUL
-# ─────────────────────────────────────────────────────────────
-
-def grila(intrebari_mana, intrebari_gen):
-	"""Grila de 6 domenii × 3 niveluri, cu întrebări ȘI fapte.
-
-	Faptele se numără separat fiindcă ele sunt măsura adevărată: 500 de întrebări
-	construite din 100 de fapte se simt ca 100 (decizia din sesiunea CONȚINUTUL).
-	"""
-	def strange(intrebari):
-		celule = {}
-		for q in intrebari:
-			cheie = (str(q.get("categorie", "?")), int(q.get("nivel", 0)))
-			c = celule.setdefault(cheie, {"q": 0, "fapte": set()})
-			c["q"] += 1
-			if q.get("fapt"):
-				c["fapte"].add(str(q["fapt"]))
-		return celule
-
-	mana = strange(intrebari_mana)
-	gen = strange(intrebari_gen)
-
-	print("\n  ── GRILA: întrebări (fapte) ──")
-	print("    %-12s %18s %18s %18s %13s" % (
-		"", "nivelul I", "nivelul II", "nivelul III", "total"))
-	total_general = 0
-	for domeniu in DOMENII:
-		bucati = []
-		total_q = 0
-		total_f = set()
-		for nivel in (1, 2, 3):
-			m = mana.get((domeniu, nivel), {"q": 0, "fapte": set()})
-			w = gen.get((domeniu, nivel), {"q": 0, "fapte": set()})
-			total_q += m["q"] + w["q"]
-			total_f |= m["fapte"] | w["fapte"]
-			bucati.append("%3d+%-3d (%2d+%-3d)" % (
-				m["q"], w["q"], len(m["fapte"]), len(w["fapte"])))
-		total_general += total_q
-		print("    %-12s %s %12s" % (domeniu, " ".join("%17s" % b for b in bucati),
-		                             "%4d (%3d)" % (total_q, len(total_f))))
-	print("    (mână + fabricate; parantezele sunt fapte distincte; %d întrebări în total)"
-	      % total_general)
-
-
-def cat_din_lupta(intrebari_mana, intrebari_gen, intrebarile_mele):
-	"""Ce parte din luptă devine relația asta.
-
-	Alegerea din `trivia.gd` e în două trepte: întâi domeniul, uniform, apoi
-	întrebarea — deci fiecare domeniu ia 1/6 din întrebări oricât de mare ar fi el.
-	Ce se schimbă e ce se întâmplă ÎN domeniu, și cifra aia merită văzută.
-	"""
-	print("\n  ── CÂT DIN LUPTĂ DEVINE „OPERĂ ↔ AUTOR\" ──")
-	ale_mele = {q["id"] for q in intrebarile_mele}
-	for nivel in (1, 2, 3):
-		in_domeniu = [q for q in intrebari_mana + intrebari_gen
-		              if str(q.get("categorie")) == DOMENIU and int(q.get("nivel", 0)) == nivel]
-		mele = [q for q in in_domeniu if str(q.get("id")) in ale_mele]
-		if not in_domeniu:
-			continue
-		print("    nivelul %d: %d din %d întrebări de literatură (%.0f%%), "
-		      "adică %.0f%% din toate întrebările de luptă"
-		      % (nivel, len(mele), len(in_domeniu), 100.0 * len(mele) / len(in_domeniu),
-		         100.0 * len(mele) / len(in_domeniu) / len(DOMENII)))
-
-	# Și cifra care contează cu adevărat acum, când sunt două fabrici: cât din
-	# luptă e conținut fabricat, peste tot.
-	print("\n  ── CÂT DIN LUPTĂ E CONȚINUT FABRICAT (toate tabelele) ──")
-	for nivel in (1, 2, 3):
-		parti = []
-		for domeniu in DOMENII:
-			m = sum(1 for q in intrebari_mana
-			        if str(q.get("categorie")) == domeniu and int(q.get("nivel", 0)) == nivel)
-			g = sum(1 for q in intrebari_gen
-			        if str(q.get("categorie")) == domeniu and int(q.get("nivel", 0)) == nivel)
-			if m + g:
-				parti.append(1.0 * g / (m + g))
-		if parti:
-			print("    nivelul %d: %.0f%% din întrebările de luptă sunt fabricate"
-			      % (nivel, 100.0 * sum(parti) / len(parti)))
-
-
-def mostre(intrebari, cate, samanta):
-	"""Câteva întrebări generate, întregi, ca să se poată citi.
-
-	Sămânța se tipărește și se poate fixa cu `--seed`: dacă una din cele 15 pare
-	greșită, vrei să te poți uita din nou la exact aceleași 15.
-	"""
-	print("\n  ── %d ÎNTREBĂRI GENERATE, LA ÎNTÂMPLARE (sămânța %d) ──" % (cate, samanta))
-	alese = random.Random(samanta).sample(intrebari, min(cate, len(intrebari)))
-	for q in alese:
-		print("\n    [nivel %d]  %s" % (q["nivel"], q["text"]))
-		for i, v in enumerate(q["variante"]):
-			print("        %s %s" % ("→" if i == q["corect"] else " ", v))
-		print("        %s" % q["id"])
 
 
 # ─────────────────────────────────────────────────────────────
 
 def main():
-	scrie = "--scrie" in sys.argv
-	doar_masoara = "--masoara" in sys.argv
-	doar_propune = "--propune" in sys.argv
-	reincarca = "--reincarca" in sys.argv
-	samanta = random.randrange(1, 10 ** 6)
-	for arg in sys.argv[1:]:
-		if arg.startswith("--seed="):
-			samanta = int(arg.split("=", 1)[1])
+	arg = comun.argumentele()
 
 	print("\n══ FABRICA: OPERĂ → AUTOR ══\n")
 
-	nume_autori = citeste_lista(CALE_AUTORI, "lista de autori")
+	nume_autori = comun.citeste_lista(CALE_AUTORI, "lista de autori")
 	for n in nume_autori:
 		if not isinstance(n, str) or not n.strip():
 			raise Eroare("autori.json trebuie să fie o listă de nume; am găsit %r" % n)
@@ -1793,23 +1308,23 @@ def main():
 		duble = sorted({n for n in nume_autori if nume_autori.count(n) > 1})
 		raise Eroare("nume repetate în autori.json: %s" % ", ".join(duble))
 
-	pachet = ia_datele(reincarca, nume_autori)
+	pachet = ia_datele(arg.reincarca, nume_autori)
 	autori = rezolva_autorii(pachet, nume_autori)
 	opere = desfa_operele(pachet)
 	imbogateste_limbile(autori, opere)
 	etichete = desfa_etichetele(pachet)
 	print("  Autori: %d din %d nume, fiecare cu un singur om." % (len(autori), len(nume_autori)))
 
-	alese = citeste_lista(CALE_OPERE, "operele alese") if os.path.exists(CALE_OPERE) else []
+	alese = comun.citeste_lista(CALE_OPERE, "operele alese") if os.path.exists(CALE_OPERE) else []
 
-	if doar_propune:
+	if arg.propune:
 		propune(autori, opere, etichete, {str(r.get("qid", "")) for r in alese})
 		print("\n══ DOAR PROPUS. Nimic scris în data/. ══\n")
 		return 0
 
 	lista_toata = leaga_tabelul(alese, autori, opere)
 
-	if doar_masoara:
+	if arg.masoara:
 		masoara(autori, opere, etichete, lista_toata)
 		print("\n══ DOAR MĂSURAT. Nimic scris. ══\n")
 		return 0
@@ -1820,22 +1335,12 @@ def main():
 	# fișierul scris pot să difere — ăsta E înțelesul lor: proba arată ce-ai avea
 	# dacă ai confirma tot.
 	ciorne = [e for e in lista_toata if e["ciorna"]]
-	lista = [e for e in lista_toata if not e["ciorna"]] if scrie else lista_toata
+	lista = [e for e in lista_toata if not e["ciorna"]] if arg.scrie else lista_toata
 
-	print("\n  ── TABELUL ──")
-	print("    în opere.json: %d opere  (nivel I: %d, II: %d, III: %d)" % (
-		len(lista_toata),
-		sum(1 for e in lista_toata if e["nivel"] == 1),
-		sum(1 for e in lista_toata if e["nivel"] == 2),
-		sum(1 for e in lista_toata if e["nivel"] == 3)))
-	print("    dintre care ciorne (neconfirmate): %d" % len(ciorne))
-	if scrie:
-		print("    SE SCRIU doar cele %d confirmate." % len(lista))
-	else:
-		print("    proba de mai jos le ia în seamă PE TOATE, ciornele incluse.")
+	comun.raporteaza_ciornele(lista_toata, ciorne, len(lista), arg.scrie, "opere")
 	arata_titlurile_de_mana(lista_toata)
 
-	intrebari_mana = citeste_lista(CALE_MANA, "întrebările scrise de mână")
+	intrebari_mana = comun.citeste_lista(comun.CALE_MANA, "întrebările scrise de mână")
 	# DUBLURILE SE CAUTĂ PE TABELUL ÎNTREG, CIORNE INCLUSE, chiar și la `--scrie`.
 	# Suprapunerea cu fișierul de mână e o însușire a TABELULUI, nu a ce s-a
 	# confirmat azi: o ciornă care dublează o întrebare scrisă de mână trebuie
@@ -1878,25 +1383,26 @@ def main():
 	         100.0 * statistici["fara_frate_de_limba"] / max(1, len(intrebari))))
 	print("      singuri pe limba lor în autori.json; leacul e un autor în plus, nu cod")
 
-	celelalte_gen = citeste_dosarul_generat(CALE_INTREBARI)
-	grila(intrebari_mana, celelalte_gen + intrebari)
-	cat_din_lupta(intrebari_mana, celelalte_gen + intrebari, intrebari)
+	celelalte_gen = comun.citeste_dosarul_generat(CALE_INTREBARI)
+	comun.grila(intrebari_mana, celelalte_gen + intrebari)
+	comun.cat_din_lupta(intrebari_mana, celelalte_gen + intrebari, intrebari,
+	                    DOMENIU, "„OPERĂ ↔ AUTOR”")
 	if intrebari:
-		mostre(intrebari, 15, samanta)
+		comun.mostre(intrebari, 15, arg.samanta)
 
-	if not scrie:
+	if not arg.scrie:
 		print("\n══ PROBĂ USCATĂ. Rulează cu --scrie ca să scrie fișierele. ══\n")
 		return 0
 
-	scrie_lista(CALE_INTREBARI, intrebari,
+	comun.scrie_lista(CALE_INTREBARI, intrebari,
 	            ["id", "fapt", "text", "variante", "corect", "nivel", "categorie"], "nivel")
-	scrie_lista(CALE_FAPTE, fapte, ["id", "nota", "surse", "verificat"], "")
+	comun.scrie_lista(CALE_FAPTE, fapte, ["id", "nota", "surse", "verificat"], "")
 	print("\n  Scris:")
-	print("    %s" % os.path.relpath(CALE_INTREBARI, RADACINA))
-	print("    %s" % os.path.relpath(CALE_FAPTE, RADACINA))
+	print("    %s" % comun.relativ(CALE_INTREBARI))
+	print("    %s" % comun.relativ(CALE_FAPTE))
 
-	verifica_inapoi(CALE_INTREBARI, len(intrebari))
-	verifica_inapoi(CALE_FAPTE, len(fapte))
+	comun.verifica_inapoi(CALE_INTREBARI, len(intrebari))
+	comun.verifica_inapoi(CALE_FAPTE, len(fapte))
 	print("  Citit înapoi: JSON valid, id-uri unice în amândouă.")
 
 	# Unicitatea id-urilor PESTE tot conținutul, nu doar în fișierul propriu.
@@ -1933,8 +1439,4 @@ def main():
 
 
 if __name__ == "__main__":
-	try:
-		sys.exit(main())
-	except Eroare as e:
-		print("\nOPRIT: %s\n" % e)
-		sys.exit(1)
+	comun.ruleaza(main)
