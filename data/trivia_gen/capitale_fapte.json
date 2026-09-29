@@ -1,0 +1,891 @@
+[
+	{
+		"id": "wd:Q40",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q40"],
+		"verificat": false,
+		"cod_iso": "AT"
+	},
+	{
+		"id": "wd:Q219",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q219"],
+		"verificat": false,
+		"cod_iso": "BG"
+	},
+	{
+		"id": "wd:Q213",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q213"],
+		"verificat": false,
+		"cod_iso": "CZ"
+	},
+	{
+		"id": "wd:Q148",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q148"],
+		"verificat": false,
+		"cod_iso": "CN"
+	},
+	{
+		"id": "wd:Q79",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q79"],
+		"verificat": false,
+		"cod_iso": "EG"
+	},
+	{
+		"id": "wd:Q142",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q142"],
+		"verificat": false,
+		"cod_iso": "FR"
+	},
+	{
+		"id": "wd:Q183",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q183"],
+		"verificat": false,
+		"cod_iso": "DE"
+	},
+	{
+		"id": "wd:Q41",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q41"],
+		"verificat": false,
+		"cod_iso": "GR"
+	},
+	{
+		"id": "wd:Q38",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q38"],
+		"verificat": false,
+		"cod_iso": "IT"
+	},
+	{
+		"id": "wd:Q17",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q17"],
+		"verificat": false,
+		"cod_iso": "JP"
+	},
+	{
+		"id": "wd:Q217",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q217"],
+		"verificat": false,
+		"cod_iso": "MD"
+	},
+	{
+		"id": "wd:Q36",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q36"],
+		"verificat": false,
+		"cod_iso": "PL"
+	},
+	{
+		"id": "wd:Q45",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q45"],
+		"verificat": false,
+		"cod_iso": "PT"
+	},
+	{
+		"id": "wd:Q145",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q145"],
+		"verificat": false,
+		"cod_iso": "GB"
+	},
+	{
+		"id": "wd:Q218",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q218"],
+		"verificat": false,
+		"cod_iso": "RO"
+	},
+	{
+		"id": "wd:Q159",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q159"],
+		"verificat": false,
+		"cod_iso": "RU"
+	},
+	{
+		"id": "wd:Q29",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q29"],
+		"verificat": false,
+		"cod_iso": "ES"
+	},
+	{
+		"id": "wd:Q30",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q30"],
+		"verificat": false,
+		"cod_iso": "US"
+	},
+	{
+		"id": "wd:Q212",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q212"],
+		"verificat": false,
+		"cod_iso": "UA"
+	},
+	{
+		"id": "wd:Q28",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q28"],
+		"verificat": false,
+		"cod_iso": "HU"
+	},
+	{
+		"id": "wd:Q889",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q889"],
+		"verificat": false,
+		"cod_iso": "AF"
+	},
+	{
+		"id": "wd:Q222",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q222"],
+		"verificat": false,
+		"cod_iso": "AL"
+	},
+	{
+		"id": "wd:Q851",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q851"],
+		"verificat": false,
+		"cod_iso": "SA"
+	},
+	{
+		"id": "wd:Q414",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q414"],
+		"verificat": false,
+		"cod_iso": "AR"
+	},
+	{
+		"id": "wd:Q399",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q399"],
+		"verificat": false,
+		"cod_iso": "AM"
+	},
+	{
+		"id": "wd:Q408",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q408"],
+		"verificat": false,
+		"cod_iso": "AU"
+	},
+	{
+		"id": "wd:Q227",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q227"],
+		"verificat": false,
+		"cod_iso": "AZ"
+	},
+	{
+		"id": "wd:Q184",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q184"],
+		"verificat": false,
+		"cod_iso": "BY"
+	},
+	{
+		"id": "wd:Q31",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q31"],
+		"verificat": false,
+		"cod_iso": "BE"
+	},
+	{
+		"id": "wd:Q225",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q225"],
+		"verificat": false,
+		"cod_iso": "BA"
+	},
+	{
+		"id": "wd:Q155",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q155"],
+		"verificat": false,
+		"cod_iso": "BR"
+	},
+	{
+		"id": "wd:Q16",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q16"],
+		"verificat": false,
+		"cod_iso": "CA"
+	},
+	{
+		"id": "wd:Q229",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q229"],
+		"verificat": false,
+		"cod_iso": "CY"
+	},
+	{
+		"id": "wd:Q739",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q739"],
+		"verificat": false,
+		"cod_iso": "CO"
+	},
+	{
+		"id": "wd:Q423",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q423"],
+		"verificat": false,
+		"cod_iso": "KP"
+	},
+	{
+		"id": "wd:Q884",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q884"],
+		"verificat": false,
+		"cod_iso": "KR"
+	},
+	{
+		"id": "wd:Q224",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q224"],
+		"verificat": false,
+		"cod_iso": "HR"
+	},
+	{
+		"id": "wd:Q241",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q241"],
+		"verificat": false,
+		"cod_iso": "CU"
+	},
+	{
+		"id": "wd:Q756617",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q756617"],
+		"verificat": false,
+		"cod_iso": "DK"
+	},
+	{
+		"id": "wd:Q39",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q39"],
+		"verificat": false,
+		"cod_iso": "CH"
+	},
+	{
+		"id": "wd:Q878",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q878"],
+		"verificat": false,
+		"cod_iso": "AE"
+	},
+	{
+		"id": "wd:Q191",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q191"],
+		"verificat": false,
+		"cod_iso": "EE"
+	},
+	{
+		"id": "wd:Q115",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q115"],
+		"verificat": false,
+		"cod_iso": "ET"
+	},
+	{
+		"id": "wd:Q928",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q928"],
+		"verificat": false,
+		"cod_iso": "PH"
+	},
+	{
+		"id": "wd:Q33",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q33"],
+		"verificat": false,
+		"cod_iso": "FI"
+	},
+	{
+		"id": "wd:Q230",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q230"],
+		"verificat": false,
+		"cod_iso": "GE"
+	},
+	{
+		"id": "wd:Q668",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q668"],
+		"verificat": false,
+		"cod_iso": "IN"
+	},
+	{
+		"id": "wd:Q252",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q252"],
+		"verificat": false,
+		"cod_iso": "ID"
+	},
+	{
+		"id": "wd:Q810",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q810"],
+		"verificat": false,
+		"cod_iso": "JO"
+	},
+	{
+		"id": "wd:Q796",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q796"],
+		"verificat": false,
+		"cod_iso": "IQ"
+	},
+	{
+		"id": "wd:Q794",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q794"],
+		"verificat": false,
+		"cod_iso": "IR"
+	},
+	{
+		"id": "wd:Q27",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q27"],
+		"verificat": false,
+		"cod_iso": "IE"
+	},
+	{
+		"id": "wd:Q189",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q189"],
+		"verificat": false,
+		"cod_iso": "IS"
+	},
+	{
+		"id": "wd:Q232",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q232"],
+		"verificat": false,
+		"cod_iso": "KZ"
+	},
+	{
+		"id": "wd:Q114",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q114"],
+		"verificat": false,
+		"cod_iso": "KE"
+	},
+	{
+		"id": "wd:Q211",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q211"],
+		"verificat": false,
+		"cod_iso": "LV"
+	},
+	{
+		"id": "wd:Q822",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q822"],
+		"verificat": false,
+		"cod_iso": "LB"
+	},
+	{
+		"id": "wd:Q1016",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q1016"],
+		"verificat": false,
+		"cod_iso": "LY"
+	},
+	{
+		"id": "wd:Q347",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q347"],
+		"verificat": false,
+		"cod_iso": "LI"
+	},
+	{
+		"id": "wd:Q37",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q37"],
+		"verificat": false,
+		"cod_iso": "LT"
+	},
+	{
+		"id": "wd:Q221",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q221"],
+		"verificat": false,
+		"cod_iso": "MK"
+	},
+	{
+		"id": "wd:Q233",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q233"],
+		"verificat": false,
+		"cod_iso": "MT"
+	},
+	{
+		"id": "wd:Q1028",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q1028"],
+		"verificat": false,
+		"cod_iso": "MA"
+	},
+	{
+		"id": "wd:Q236",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q236"],
+		"verificat": false,
+		"cod_iso": "ME"
+	},
+	{
+		"id": "wd:Q1033",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q1033"],
+		"verificat": false,
+		"cod_iso": "NG"
+	},
+	{
+		"id": "wd:Q20",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q20"],
+		"verificat": false,
+		"cod_iso": "NO"
+	},
+	{
+		"id": "wd:Q664",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q664"],
+		"verificat": false,
+		"cod_iso": "NZ"
+	},
+	{
+		"id": "wd:Q419",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q419"],
+		"verificat": false,
+		"cod_iso": "PE"
+	},
+	{
+		"id": "wd:Q846",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q846"],
+		"verificat": false,
+		"cod_iso": "QA"
+	},
+	{
+		"id": "wd:Q403",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q403"],
+		"verificat": false,
+		"cod_iso": "RS"
+	},
+	{
+		"id": "wd:Q858",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q858"],
+		"verificat": false,
+		"cod_iso": "SY"
+	},
+	{
+		"id": "wd:Q214",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q214"],
+		"verificat": false,
+		"cod_iso": "SK"
+	},
+	{
+		"id": "wd:Q215",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q215"],
+		"verificat": false,
+		"cod_iso": "SI"
+	},
+	{
+		"id": "wd:Q1045",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q1045"],
+		"verificat": false,
+		"cod_iso": "SO"
+	},
+	{
+		"id": "wd:Q34",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q34"],
+		"verificat": false,
+		"cod_iso": "SE"
+	},
+	{
+		"id": "wd:Q869",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q869"],
+		"verificat": false,
+		"cod_iso": "TH"
+	},
+	{
+		"id": "wd:Q43",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q43"],
+		"verificat": false,
+		"cod_iso": "TR"
+	},
+	{
+		"id": "wd:Q77",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q77"],
+		"verificat": false,
+		"cod_iso": "UY"
+	},
+	{
+		"id": "wd:Q717",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q717"],
+		"verificat": false,
+		"cod_iso": "VE"
+	},
+	{
+		"id": "wd:Q881",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q881"],
+		"verificat": false,
+		"cod_iso": "VN"
+	},
+	{
+		"id": "wd:Q29999",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q29999"],
+		"verificat": false,
+		"cod_iso": "NL"
+	},
+	{
+		"id": "wd:Q916",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q916"],
+		"verificat": false,
+		"cod_iso": "AO"
+	},
+	{
+		"id": "wd:Q398",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q398"],
+		"verificat": false,
+		"cod_iso": "BH"
+	},
+	{
+		"id": "wd:Q902",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q902"],
+		"verificat": false,
+		"cod_iso": "BD"
+	},
+	{
+		"id": "wd:Q963",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q963"],
+		"verificat": false,
+		"cod_iso": "BW"
+	},
+	{
+		"id": "wd:Q965",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q965"],
+		"verificat": false,
+		"cod_iso": "BF"
+	},
+	{
+		"id": "wd:Q424",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q424"],
+		"verificat": false,
+		"cod_iso": "KH"
+	},
+	{
+		"id": "wd:Q1009",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q1009"],
+		"verificat": false,
+		"cod_iso": "CM"
+	},
+	{
+		"id": "wd:Q657",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q657"],
+		"verificat": false,
+		"cod_iso": "TD"
+	},
+	{
+		"id": "wd:Q1008",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q1008"],
+		"verificat": false,
+		"cod_iso": "CI"
+	},
+	{
+		"id": "wd:Q800",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q800"],
+		"verificat": false,
+		"cod_iso": "CR"
+	},
+	{
+		"id": "wd:Q736",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q736"],
+		"verificat": false,
+		"cod_iso": "EC"
+	},
+	{
+		"id": "wd:Q986",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q986"],
+		"verificat": false,
+		"cod_iso": "ER"
+	},
+	{
+		"id": "wd:Q117",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q117"],
+		"verificat": false,
+		"cod_iso": "GH"
+	},
+	{
+		"id": "wd:Q1006",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q1006"],
+		"verificat": false,
+		"cod_iso": "GN"
+	},
+	{
+		"id": "wd:Q790",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q790"],
+		"verificat": false,
+		"cod_iso": "HT"
+	},
+	{
+		"id": "wd:Q783",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q783"],
+		"verificat": false,
+		"cod_iso": "HN"
+	},
+	{
+		"id": "wd:Q766",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q766"],
+		"verificat": false,
+		"cod_iso": "JM"
+	},
+	{
+		"id": "wd:Q813",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q813"],
+		"verificat": false,
+		"cod_iso": "KG"
+	},
+	{
+		"id": "wd:Q819",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q819"],
+		"verificat": false,
+		"cod_iso": "LA"
+	},
+	{
+		"id": "wd:Q1019",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q1019"],
+		"verificat": false,
+		"cod_iso": "MG"
+	},
+	{
+		"id": "wd:Q826",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q826"],
+		"verificat": false,
+		"cod_iso": "MV"
+	},
+	{
+		"id": "wd:Q912",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q912"],
+		"verificat": false,
+		"cod_iso": "ML"
+	},
+	{
+		"id": "wd:Q1025",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q1025"],
+		"verificat": false,
+		"cod_iso": "MR"
+	},
+	{
+		"id": "wd:Q711",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q711"],
+		"verificat": false,
+		"cod_iso": "MN"
+	},
+	{
+		"id": "wd:Q1029",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q1029"],
+		"verificat": false,
+		"cod_iso": "MZ"
+	},
+	{
+		"id": "wd:Q836",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q836"],
+		"verificat": false,
+		"cod_iso": "MM"
+	},
+	{
+		"id": "wd:Q1030",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q1030"],
+		"verificat": false,
+		"cod_iso": "NA"
+	},
+	{
+		"id": "wd:Q837",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q837"],
+		"verificat": false,
+		"cod_iso": "NP"
+	},
+	{
+		"id": "wd:Q811",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q811"],
+		"verificat": false,
+		"cod_iso": "NI"
+	},
+	{
+		"id": "wd:Q1032",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q1032"],
+		"verificat": false,
+		"cod_iso": "NE"
+	},
+	{
+		"id": "wd:Q842",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q842"],
+		"verificat": false,
+		"cod_iso": "OM"
+	},
+	{
+		"id": "wd:Q733",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q733"],
+		"verificat": false,
+		"cod_iso": "PY"
+	},
+	{
+		"id": "wd:Q971",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q971"],
+		"verificat": false,
+		"cod_iso": "CG"
+	},
+	{
+		"id": "wd:Q974",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q974"],
+		"verificat": false,
+		"cod_iso": "CD"
+	},
+	{
+		"id": "wd:Q786",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q786"],
+		"verificat": false,
+		"cod_iso": "DO"
+	},
+	{
+		"id": "wd:Q1037",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q1037"],
+		"verificat": false,
+		"cod_iso": "RW"
+	},
+	{
+		"id": "wd:Q1041",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q1041"],
+		"verificat": false,
+		"cod_iso": "SN"
+	},
+	{
+		"id": "wd:Q1049",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q1049"],
+		"verificat": false,
+		"cod_iso": "SD"
+	},
+	{
+		"id": "wd:Q958",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q958"],
+		"verificat": false,
+		"cod_iso": "SS"
+	},
+	{
+		"id": "wd:Q863",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q863"],
+		"verificat": false,
+		"cod_iso": "TJ"
+	},
+	{
+		"id": "wd:Q924",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q924"],
+		"verificat": false,
+		"cod_iso": "TZ"
+	},
+	{
+		"id": "wd:Q874",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q874"],
+		"verificat": false,
+		"cod_iso": "TM"
+	},
+	{
+		"id": "wd:Q1036",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q1036"],
+		"verificat": false,
+		"cod_iso": "UG"
+	},
+	{
+		"id": "wd:Q265",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q265"],
+		"verificat": false,
+		"cod_iso": "UZ"
+	},
+	{
+		"id": "wd:Q953",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q953"],
+		"verificat": false,
+		"cod_iso": "ZM"
+	},
+	{
+		"id": "wd:Q954",
+		"nota": "",
+		"surse": ["https://www.wikidata.org/wiki/Q954"],
+		"verificat": false,
+		"cod_iso": "ZW"
+	}
+]

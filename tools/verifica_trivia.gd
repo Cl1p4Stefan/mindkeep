@@ -111,6 +111,7 @@ func _ready() -> void:
 	tot_bun = _incarcarea(intrebari, fapte) and tot_bun
 	tot_bun = _identitatile(intrebari) and tot_bun
 	tot_bun = _textele(intrebari) and tot_bun
+	tot_bun = _raspunsurile(intrebari) and tot_bun
 	tot_bun = _notele(intrebari, fapte) and tot_bun
 	tot_bun = _echilibrul(intrebari) and tot_bun
 	tot_bun = _sacul(intrebari) and tot_bun
@@ -329,8 +330,87 @@ func _textele(intrebari: Array) -> bool:
 		else "%d repetate: %s" % [repetate.size(), _primele(repetate, 3)])
 
 
+
 # ─────────────────────────────────────────────────────────────
-# 4. NOTELE
+# 4. RĂSPUNSURILE NU SE AUTODEZVĂLUIE
+# ─────────────────────────────────────────────────────────────
+
+## Niciun răspuns corect nu apare în textul întrebării lui.
+##
+## DE CE E O INVARIANTĂ PESTE TOT CONȚINUTUL, nu un filtru în fabrică.
+## `tools/fabrica/capitale.py` are și el un filtru, dar acela compară NUMELE
+## țării cu NUMELE capitalei (Kuweit → Kuweit, Mexic → Ciudad de Mexico) și apară
+## doar tabelul lui. Asta se uită la textul de pe ecran, deci apară și întrebările
+## scrise de mână, și orice tabel viitor.
+##
+## SENSIBILĂ LA MAJUSCULE, și asta e întreaga subtilitate. Măsurat pe cele 434 de
+## întrebări de dinaintea capitalelor:
+##
+##   conținere brută, fără diacritice   43 pică
+##   cuvânt întreg, fără majuscule      1 pică
+##   cuvânt întreg, cu majuscule       0 pică
+##
+## Cele 43 sunt toate de forma „Care este simbolul chimic al carbonului? → C".
+## Alea NU sunt cadouri, sunt chiar lecția: simbolul SE DEDUCE din nume, și exact
+## de-aia carbonul e la nivelul I. O verificare care le-ar tăia ar cere să șterg
+## cele mai bune întrebări de nivel I din joc.
+##
+## Singura care pica la varianta fără majuscule era `Al` din „**al** aluminiului"
+## — prepoziția românească, nu simbolul. Cu majuscule, dispare: la simboluri
+## majuscula E parte din simbol, nu ortografie.
+##
+## Azi trece curat, deci verdictul e strict de la bun început. Un prag ar fi fost
+## o poartă deschisă.
+func _raspunsurile(intrebari: Array) -> bool:
+	print("\n  RĂSPUNSURILE")
+	var autodezvaluite: Array[String] = []
+	for q in intrebari:
+		var text := String(q.get("text", ""))
+		var variante: Array = q.get("variante", [])
+		var corect := int(q.get("corect", -1))
+		if corect < 0 or corect >= variante.size():
+			continue
+		var raspuns := String(variante[corect])
+		if raspuns == "" or text == "":
+			continue
+		if _apare_ca_cuvant(text, raspuns):
+			autodezvaluite.append("%s („%s”)" % [String(q.get("id", "?")), raspuns])
+	return _verdict("niciun răspuns în textul întrebării", autodezvaluite.is_empty(),
+		"%d verificate" % intrebari.size() if autodezvaluite.is_empty()
+		else "%d se autodezvăluie: %s" % [autodezvaluite.size(), _primele(autodezvaluite, 3)])
+
+
+## `ce` apare în `unde` ca CUVÎNT ÎNTREG, cu majuscule la fel?
+##
+## Pe cuvânt întreg, nu pe bucată de cuvânt: altfel „Ion" s-ar găsi în „Ion
+## Creangă" și „Mali" în „Somalia". Un caracter e parte din cuvânt dacă e literă
+## sau cifră — iar „literă" se află întrebând dacă se schimbă la schimbarea
+## mărimii, ceea ce merge și pentru diacritice, unde o listă scrisă de mine ar fi
+## uitat pe ș, ț sau â.
+func _apare_ca_cuvant(unde: String, ce: String) -> bool:
+	var de_la := 0
+	while true:
+		var la := unde.find(ce, de_la)
+		if la == -1:
+			return false
+		var inainte := unde.substr(la - 1, 1) if la > 0 else ""
+		var dupa := unde.substr(la + ce.length(), 1)
+		if not _e_din_cuvant(inainte) and not _e_din_cuvant(dupa):
+			return true
+		de_la = la + 1
+	return false
+
+
+func _e_din_cuvant(c: String) -> bool:
+	if c == "":
+		return false
+	if c.to_lower() != c.to_upper():
+		return true
+	return "0123456789".contains(c)
+
+
+# ─────────────────────────────────────────────────────────────
+# 5. NOTELE
 # ─────────────────────────────────────────────────────────────
 
 func _notele(intrebari: Array, fapte: Dictionary) -> bool:
@@ -374,7 +454,7 @@ func _notele(intrebari: Array, fapte: Dictionary) -> bool:
 
 
 # ───────────────────────────────────────────────────────────
-# 5. ECHILIBRUL LA ALEGEREA DIN LUPTĂ
+# 6. ECHILIBRUL LA ALEGEREA DIN LUPTĂ
 #
 # Verificarea care n-avea de ce să existe înainte de conținutul fabricat, și care
 # e acum cea mai greu de înlocuit cu ochiul.
@@ -448,7 +528,7 @@ func _echilibrul(intrebari: Array) -> bool:
 
 
 # ───────────────────────────────────────────────────────────
-# 6. SACUL
+# 7. SACUL
 # ───────────────────────────────────────────────────────────
 
 func _sacul(intrebari: Array) -> bool:
@@ -526,7 +606,7 @@ func _sacul(intrebari: Array) -> bool:
 
 
 # ───────────────────────────────────────────────────────────
-# 7. SACURILE NU SE AMESTECĂ ÎNTRE DOMENII
+# 8. SACURILE NU SE AMESTECĂ ÎNTRE DOMENII
 #
 # Verificarea cea mai țintită din fișier, scrisă pentru O SINGURĂ greșeală, pe
 # care nimic altceva n-ar prinde-o.

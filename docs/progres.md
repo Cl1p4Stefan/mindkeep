@@ -17,7 +17,7 @@
 | 6. Harta de expediție | ✅ loadout „N din M" · **12-16 noduri**, ramificate, cu sămânță · Luptă / Elită / Odihnă / Eveniment / **Magazin** / **Boss** · **Monede + puteri temporare** · sumar de run · aspect: pergament, simboluri de cerneală, trasee punctate · **nodurile și drumurile stau pe o PANGLICĂ (curbă centrală + benzi)**, nu pe o grilă dreaptă · **patru trasee, toate verzi pe 300 de semințe** (POTCOAVĂ activă; POTCOAVA OGLINDITĂ e aceeași formă, întoarsă) · strat înclinat (forfecare) la ȘARPE · **drumuri care nu se încrucișează niciodată (0 la 300 de semințe)** · **nodul curent are și aură, și X, și stă nemișcat sub figurină** · **două surse de hartă: GENERATĂ (panglica) sau DESENATĂ dintr-un fișier `data/harti/*.json`** — comutatorul `Expeditie.SURSA_HARTII`; azi e pe DESENATĂ · **harta umple pergamentul**: pânza ține toată pagina, antetul plutește peste ea (805 × 427 px de hartă, de la 666 × 353) · **drumurile merg în amândouă sensurile**, cu nodul parcurs tăiat definitiv și cu garanția, verificată pe 16 000 de expediții simulate, că nu te poți înfunda · **figurina sare, cade ca un slam și zguduie ecranul la aterizare**, cu un răgaz de 0,5 s înainte să se deschidă nodul · **tipurile nodurilor se împart după o REȚETĂ fixă, nu se trag cu zarul**: 9 reguli de vecinătate și de început, plasare conștientă de reguli, verificare completă și reîncercare cu sub-sămânță (0 eșecuri pe 500 de semințe × 3 surse de hartă) · rețeta se **plafonează după forma hărții**, nu după numărul de noduri · **nodul de Eveniment deschide Lacătul** (nivel din adâncime, sămânță din nodul, 6/10/14 Monede la succes) |
 | 7. Cetatea | ❌ |
 | 8. Save/Load | 🟡 tezaurul, sacul și expediția știu toate să se serializeze (`spre_dictionar` / `din_dictionar`), pe trei straturi de durată; scrierea pe disc, nu încă |
-| 9. Celelalte discipline | 🟡 Cultură generală ✅ (**434 de întrebări în joc**: 135 scrise de mână (`mana:0001`…) + **139 fabricate din Wikidata, elemente chimice** (`wd:Q897:simbol:…`) + **160 fabricate, operă → autor** (`wd:Q12730777:autor:…`) — **al doilea tabel al fabricii, confirmat parțial**: 135 din 163 de opere, 28 rămân ciorne pentru o trecere viitoare · **conținutul fabricat stă într-un DOSAR**, `data/trivia_gen/`, citit întreg de încărcător: un tabel nou = două fișiere, zero linii de cod · **18 fapte cu note** + 245 de fapte fabricate fără notă; **alegerea din luptă e în două trepte** — întâi domeniul, uniform, apoi întrebarea, cu sacul pe cheie de domeniu ȘI nivel; comutator `FOLOSESTE_WIKIDATA`; vezi sesiunile CONȚINUTUL, ID ȘI FAPT, FABRICA și AL DOILEA TABEL) · Logica ✅ (80 de categorii) · Cuvinte ✅ · toate trei fără repetiții pe expediție, **Cultura generală după `id`, nu după text** · celelalte 5 ❌ |
+| 9. Celelalte discipline | 🟡 Cultură generală ✅ (**434 de întrebări în joc**: 135 scrise de mână (`mana:0001`…) + **139 fabricate din Wikidata, elemente chimice** (`wd:Q897:simbol:…`) + **160 fabricate, operă → autor** (`wd:Q12730777:autor:…`) — **al doilea tabel al fabricii, confirmat parțial**: 135 din 163 de opere, 28 rămân ciorne pentru o trecere viitoare · **conținutul fabricat stă într-un DOSAR**, `data/trivia_gen/`, citit întreg de încărcător: un tabel nou = două fișiere, zero linii de cod · **18 fapte cu note** + 245 de fapte fabricate fără notă; **alegerea din luptă e în două trepte** — întâi domeniul, uniform, apoi întrebarea, cu sacul pe cheie de domeniu ȘI nivel; comutator `FOLOSESTE_WIKIDATA`; **al treilea tabel, țară ↔ capitală, e construit și stă întreg în ciornă** (140 de țări în `tools/fabrica/date/tari.json`, 251 de întrebări gata, 0 scrise până la confirmare) · **fabrica are un modul comun**, `tools/fabrica/comun.py`, iar coloanele de mână ale elementelor au ieșit din cod în `tools/fabrica/date/elemente.json` · vezi sesiunile CONȚINUTUL, ID ȘI FAPT, FABRICA, AL DOILEA TABEL și MODULUL COMUN) · Logica ✅ (80 de categorii) · Cuvinte ✅ · toate trei fără repetiții pe expediție, **Cultura generală după `id`, nu după text** · celelalte 5 ❌ |
 | 10–13. Generator de inamici, artă, web | ❌ (artă parțial: figurile principale și piesele de pe butoanele de Obelisc au imagini reale · **arena are fundal: biblioteca gotică**, cu personajele așezate pe dalele din prim-plan, umbră de contact și lumină de sală) · Regina: **amânată**, vezi CLAUDE.md |
 
 Nodul de **Eveniment** are primul lui conținut: **Lacătul** — un cufăr cu cifru,
@@ -37,6 +37,590 @@ buget, generare) rămâne acolo unde era.
 Am sărit peste ordinea recomandată la pasul 12 (artă): imaginile pentru rege,
 cavaler și pentru cele trei piese de șah de pe butoane au intrat mai devreme, dar
 restul rămâne placeholder. Bucla de luptă e în continuare cea validată, nu arta.
+
+---
+
+## MODULUL COMUN ȘI AL TREILEA TABEL (29 septembrie 2026) — țară ↔ capitală
+
+Două faze, în ordine. **Faza 1: modulul comun al fabricii**, fără nicio schimbare
+de conținut, cu hash-urile ca dovadă. **Faza 2: al treilea tabel**, țara și
+capitala ei, pentru domeniul `geografie`, construit pe modul — **140 de țări,
+251 de întrebări, toate în ciornă.**
+
+Momentul a fost stabilit de mine însumi, la sesiunea trecută: „al treilea tabel =
+modulul comun. Nu mai devreme: două exemple arată ce se repetă, unul singur ar fi
+ghicit." Ăsta e al treilea tabel.
+
+---
+
+### FAZA 1 — `tools/fabrica/comun.py`
+
+Regula după care s-a decis ce se mută: **se mută ce e identic, sau
+identic-cu-un-parametru; rămâne pe loc orice judecată despre un tabel anume.**
+Care entități sunt cultură generală, ce nivel are fiecare, cum se punctează
+distractorii, ce anume e o dublură — alea sunt DECIZII, iar o decizie mutată
+într-un modul „comun" devine, în șase luni, un `if tabel == "opere"`, adică
+duplicarea de azi, doar ascunsă.
+
+**Dovada că cele șapte funcții mutate erau într-adevăr aceleași** s-a luat înainte
+de mutare, cu un script care le-a extras din amândouă fișierele, a scos
+docstring-urile și comentariile, și a comparat codul rămas:
+
+```
+scrie_lista              elemente:27 opere:28   COD IDENTIC
+verifica_inapoi          elemente:24 opere:19   COD IDENTIC
+citeste_dosarul_generat  elemente:17 opere:27   COD IDENTIC
+mostre                   elemente:16 opere:16   COD IDENTIC
+contactul                elemente:31 opere:28   COD IDENTIC
+zar                      elemente:17 opere:15   COD IDENTIC
+ca_json                  elemente: 4 opere: 4   COD IDENTIC
+```
+
+Diferența de lungime e numai comentariu: `zar` avea hidrogenul ca exemplu într-un
+fișier și pe Shakespeare în celălalt. Bine de știut că *asta* era toată diferența,
+fiindcă înseamnă că extragerea e o mutare, nu o rescriere.
+
+### Cele două bucăți care au cerut gândire, nu mutare
+
+**1. „Exact una din patru e corectă" nu se putea muta ca funcție.** În `opere.py`
+știa despre `autori_wd` și despre titluri. Ce e cu adevărat comun nu e funcția, e
+**forma verificării**: numără câte dintre cele patru variante sunt corecte după
+datele complete de la Wikidata, cere exact una, cere să fie cea marcată, adună
+toate problemele, oprește tot. Deci în comun a intrat
+
+```python
+def verifica_un_singur_raspuns(intrebari, este_corect):
+```
+
+iar fiecare tabel scrie trei rânduri de predicat. Diferența dintre „a extrage o
+funcție" și „a extrage forma unei verificări" e că a doua supraviețuiește la al
+patrulea tabel.
+
+**Și a plătit imediat: elementele n-aveau verificarea asta.** Se sprijineau doar
+pe `verifica_relatia` (relația e unu-la-unu) plus pe cele patru variante
+distincte — care apără PRESUPUNEREA, nu REZULTATUL. Acum o au, și a trecut din
+prima, fără să schimbe niciun octet. Exact ce ar trebui să facă un modul comun: o
+plasă scrisă pentru un tabel ajunge la toate.
+
+**2. Dublurile.** Potrivirea rămâne a tabelului (titluri între ghilimele la opere,
+cuvinte întregi la elemente), dar comparația declarate ↔ găsite ↔ fantome e
+aceeași peste tot. La mutare, `compara_dublurile` a luat forma mai bună din cele
+două: mesajul din `opere.py`, care tipărește rândurile **gata de copiat** în tabel.
+Nu e cosmetică — la opere ieșiseră 16 deodată, iar o listă din care trebuie să
+retipărești 16 rânduri e o listă la care faci o greșeală de tipar.
+
+### Coloanele elementelor au ieșit din cod
+
+`ALESE`, 70 de tuple `(simbol, nume, genitiv, nivel)`, → `tools/fabrica/date/elemente.json`,
+un obiect pe rând, ca la opere și la capitale.
+
+Nu din simetrie: e ce face ca **`ciorna` să însemne același lucru la toate trei
+tabelele.** Un câmp de date nu poate trăi într-o listă de tuple. Azi elementele
+n-au nicio ciornă, dar mecanismul e acolo și e același.
+
+`DIN_LATINA` a **rămas în cod**, împreună cu `DUBLURI`. Amândouă nu sunt coloane,
+sunt **reguli despre tabel**: `DIN_LATINA` există ca să verifice coloana `nivel`,
+iar o regulă și verificarea ei stau în același loc.
+
+Ordinea rândurilor din JSON e exact cea din `ALESE`, deși nimic nu depinde de ea
+(egalitățile se rup pe `zar`, nu pe poziție). Motivul e despre probă, nu despre
+cod: dacă schimbam și ordinea, un hash diferit n-ar mai fi spus *ce* s-a rupt.
+
+### Dovada: hash identic, octet cu octet
+
+```
+                            înainte            după
+elemente_fapte.json        68930ada3f7d69d8   68930ada3f7d69d8   ✔
+elemente_intrebari.json    01bc69eebbbfd31f   01bc69eebbbfd31f   ✔
+opere_fapte.json           55bfd5fdf15dc7d8   55bfd5fdf15dc7d8   ✔
+opere_intrebari.json       bc0cc23492fd5279   bc0cc23492fd5279   ✔
+```
+
+`git status` nu arată nicio modificare sub `data/`. Toate comenzile probate pe
+amândouă scripturile: `--masoara`, probă uscată, `--scrie`, `--propune`.
+
+**Ce S-A schimbat, declarat dinainte:** raportul de pe ecran al lui `elemente.py`.
+`grila` unificată e cea din `opere.py` (are rândul de total), iar `cat_din_lupta`
+e una singură, cu eticheta ca parametru. Alternativa ar fi fost să păstrez două
+`grila` aproape identice — adică să nu fac refactorul.
+
+Bilanț de linii: −745 din cele două scripturi, +815 în `comun.py`. Aproape
+neutru la număr, dar diferența e că cele 815 sunt scrise o dată, citite de trei
+scripturi, și că jumătate din ele sunt docstring-uri care spun DE CE.
+
+---
+
+### FAZA 2 — `tools/fabrica/capitale.py`
+
+**Rezultat: 251 de întrebări din 140 de țări, în ambele sensuri, toate în ciornă.**
+Zero în joc până la confirmare, ca la opere.
+
+### Cine intră: stat membru ONU, nu clasa „stat suveran"
+
+Decizia e a ta, și s-a dovedit mai bună decât planul meu. `P463 = Q1065`
+(„membru al ONU") cu declarația fără dată de sfârșit.
+
+Rostul: **„suveran" e o judecată, apartenența la ONU e o chestiune de fapt.** Pe
+Wikidata, clasa „stat suveran" ar fi adus Kosovo, Taiwan, Palestina, Abhazia,
+Sahara Occidentală, Ciprul de Nord — fiecare o decizie pe care ar fi trebuit s-o
+apăr, într-o dezbatere în care un joc de brain-training n-are ce căuta. Cu ONU,
+statele cu recunoaștere parțială ies **de la sine**, nu pe o listă de excluderi.
+
+Prețul, mic și cinstit plătit: Vaticanul și Palestina sunt observatori, nu membri,
+deci nu intră — iar Vaticanul chiar e cultură generală.
+
+### Cea mai folositoare lecție: un CÂMP LIPSĂ nu e un „NU"
+
+Criteriul de mai sus, singur, a dat **203 țări, nu 193.**
+
+Cele în plus sunt state ÎNCHEIATE a căror apartenență la ONU pur și simplu n-are
+dată de sfârșit scrisă în Wikidata: Republica Populară Mongolă, Regatul Nepalului,
+Statul Islamic Afganistan, Republica Democratică Somalia, Republica Afganistan,
+Republica Congo (cea din 1960), Regatul Laosului, Republica Populară Mozambic.
+
+`FILTER NOT EXISTS { pq:P582 }` înseamnă **„nu scrie nicăieri că s-a terminat"**,
+nu „nu s-a terminat". Pe o bază editată de oameni, cele două nu sunt același
+lucru, iar diferența e exact conținutul greșit. Aceeași formă ca la ediții la
+opere: cifra (sau lipsa ei) separă ceva, dar nu ce credeai.
+
+Leacul, măsurat înainte de a fi adoptat: două semne în plus, `P576` (data
+desființării) și „instanță de țară istorică". **Cad pe EXACT aceleași 8
+entități**, deci sunt de acord între ele, și niciuna dintre cele 8 n-are cod ISO,
+deci nu se pierde nimic. 203 − 8 = 195.
+
+### Codul ISO se raportează, nu se cere — și de ce, în trei rânduri: Danemarca
+
+Prima idee a fost să cer `P297` (ISO 3166-1 alpha-2) ca filtru de intrare. E
+frumos: îl au 192 din 203, și cele 11 care nu-l au sunt exact suspecții. Măsurat,
+zero coduri duble.
+
+**Dar pierde Danemarca.** Membrul ONU e „Regatul Danemarcei" (`Q756617`), care
+n-are cod ISO; codul DK stă pe „Danemarca" (`Q35`), care nu e membru. Aceeași
+poveste la Țările de Jos, doar că acolo codul stă pe Regat (`Q29999`, cu NL) — și
+de-aia Țările de Jos n-au apărut niciodată în lista celor cu capitală multiplă:
+entitatea-Regat are doar Amsterdam.
+
+Deci ISO-ul e **raportat, nu cerut**: absența lui înseamnă doar „țara asta nu va
+putea avea hartă la pasul 13", ceea ce nu e un motiv să nu fie întrebată. Cele
+două entități fără ISO care mai rămân după filtrul de stat istoric (`Q17765809` și
+„Regatul Coroanei", cu 2 ediții Wikipedia) n-au nici etichetă română, iar numele e
+o afirmație verificată — deci nu pot intra în tăcere.
+
+Ambele intrate în tabel cu `tara_de_mana`: „Danemarca" în loc de „Regatul
+Danemarcei", „Țările de Jos" în loc de „Regatul Țărilor de Jos".
+
+### Capitala actuală: prin nodul de declarație, nu prin scurtătură
+
+Capitalele se cer prin `p:P36` → `ps:P36`, nu prin `wdt:P36`.
+
+„Fără dată de sfârșit" e o însușire a **declarației**, nu a valorii. Cu `wdt:P36`,
+Kazahstanul ar fi venit cu Astana ȘI cu Almatî, iar scriptul n-ar fi avut de unde
+să știe care e care. Cu nodul de declarație, `pq:P582` se poate întreba, iar
+fostele capitale cad singure.
+
+Măsurat: **187 de țări au o capitală actuală, 7 au două, una are trei.**
+
+```
+Africa de Sud   Pretoria, Cape Town, Bloemfontein
+Benin           Cotonou, Porto Novo
+Bolivia         La Paz, Sucre
+Eswatini        Mbabane, Lobamba
+Malaezia        Kuala Lumpur, Putrajaya
+Pakistan        Islamabad, Rawalpindi
+Sri Lanka       Sri Jayewardanapura Kotte, Colombo
+Yemen           Sana'a, Aden
+```
+
+**Scriptul nu alege niciodată prima.** Se oprește și le tipărește, fiindcă „mai
+multe capitale actuale" nu e o eroare în date, e un fapt despre țară. Ieșirea e a
+omului: ori scoți rândul, ori pui `"capitala_qid"` și alegerea e scrisă, deci se
+vede în diff. Probat pe Bolivia: cu `"capitala_qid": "Q2907"` intră cu Sucre, iar
+La Paz nu apare nicăieri.
+
+Niciuna din cele 8 nu e în ciorna de azi.
+
+### Gramatica: iar de mână, iar o coloană
+
+Sensul direct cere genitivul („Care este capitala **Franței**?"), iar el nu se
+calculează: Franței, Japoniei, Egiptului, Statelor Unite ale Americii, Țărilor de
+Jos, Coastei de Fildeș. La elemente erau substantive comune cu vreo trei tipare;
+aici sunt nume proprii, fiecare cu forma lui. 140 de genitive propuse de mine, de
+verificat de tine.
+
+Sensul invers **nu cere nicio declinare**: „Canberra este capitala cărei țări?"
+— „cărei țări" ține toată gramatica, iar capitala stă la nominativ.
+
+Relația e unu-la-unu după filtrare, deci **ambele sensuri sunt per țară**. La
+opere, sensul invers a trebuit să fie per autor, ca să nu iasă întrebări cu text
+repetat; aici problema nu poate apărea, și tocmai filtrul de capitală actuală e ce
+face relația unu-la-unu în primul rând.
+
+### Strictețea a prins două lucruri la prima rulare
+
+Oslo (`Q585`) și Abuja (`Q3787`) **n-au etichetă română în Wikidata.** Numele e
+același în română, deci `"capitala_de_mana": true` e marcajul potrivit — și, ca la
+`titlu_de_mana` de la opere, rândurile astea se **tipăresc la fiecare rulare**, cu
+ce spune Wikidata alături. Un câmp care ocolește o verificare trebuie să fie
+zgomotos, altfel devine în trei luni felul comod de a face o greșeală de tipar să
+dispară.
+
+### Întrebările care se răspund singure: 13, și o regulă venită din mostre
+
+Prima regulă, cea din plan: **conținere, în ambele direcții**, fără diacritice și
+fără majuscule. Kuweit → Orașul Kuweit, Mexic → Ciudad de México, Tunisia → Tunis,
+Algeria → Alger, Monaco, Singapore, Luxemburg, San Marino, Andorra, Chile,
+Guatemala, Panama. **12 sărite.**
+
+A doua regulă **n-a fost planificată, a ieșit din mostre**: „San Salvador este
+capitala cărei țări?" cu răspunsul „El Salvador" printre Honduras, Nicaragua și
+Haiti. Niciunul nu-l conține pe celălalt, deci prima regulă o rata — dar cuvântul
+„Salvador" **e chiar răspunsul, scris în întrebare.**
+
+Deci: **un cuvânt întreg împărțit, de cel puțin 4 litere.** Măsurată pe tabelul
+întreg, prinde **exact un caz nou și niciun fals pozitiv**. Sub 4 litere,
+potrivirile devin articole („de", „la", „san"), pe care multe capitale le au fără
+să dea nimic de gol.
+
+Și cele două se completează, niciuna nu o înlocuiește: Mexic ↔ Ciudad de México,
+Tunisia ↔ Tunis și Algeria ↔ Alger **nu împart niciun cuvânt întreg**, deci prima
+rămâne necesară.
+
+Ce nu prinde niciuna: **Brazilia → Brasília**, unde ochiul îl vede pe loc. Pentru
+alea e lista **„de citit cu ochiul"** (asemănare `difflib`, nu oprește nimic): azi
+arată Brazilia/Brasília, Kazahstan/Astana, Maldive/Malé, Nicaragua/Managua. Prima
+e reală, celelalte trei sunt zgomot — și e bine așa, fiindcă **lista aia a
+schimbat o regulă**: El Salvador a ieșit din ea. O listă de citit care schimbă o
+regulă și-a plătit locul.
+
+Perechile sărite **rămân în tabel** și rămân distractori. Nu generează întrebări,
+dar Luxemburg și Monaco sunt butoane bune la o întrebare despre Belgia.
+
+### Nivelul: a treia măsurătoare, al treilea eșec — și era de așteptat
+
+```
+toate cele 195 de țări:   min 2   median 319   maxim 428
+decile:  2  265  287  301  309  319  331  348  361  387
+```
+
+Decila 1 e „Regatul Coroanei" cu 2 ediții; între țările adevărate banda e
+**265–387, adică vreo 1,5×** — exact cifra de la elemente, și din același motiv:
+fiecare stat membru ONU are articol pe fiecare wiki, fiindcă boții l-au scris.
+
+Față de coloana de mână (20 / 70 / 50):
+
+| nivel | țări | min | median | maxim |
+|---|---|---|---|---|
+| I | 20 | 348 | 391 | 428 |
+| II | 70 | 107 | 336 | 425 |
+| III | 50 | 235 | 302 | 349 |
+
+Medianele scad, deci cifra nu e pe dos. Dar suprapunerea e aproape totală, iar
+`min = 107` la nivelul II e Regatul Țărilor de Jos, care n-are legătură cu
+dificultatea.
+
+**Deci nivelul rămâne coloană de mână**, a treia oară din trei. Meritul
+măsurătorii nu e că a găsit ceva, e că știu *cât* de bună ar fi automatizarea, în
+loc să presupun.
+
+### Distractorii: punctajul, și cifra pe care am ales s-o NUMĂR în loc s-o repar
+
+| | |
+|---|---|
+| **+100** | același continent (`P30`) |
+| **+40** | vecin de graniță (`P47`) |
+| **+10 / +5** | același nivel / nivel vecin |
+
+O singură funcție pentru ambele sensuri, spre deosebire de elemente, unde
+punctajul depindea de sens: aici opțiunile sunt mereu de același fel ca entitatea
+întrebată (capitale lângă capitale, țări lângă țări), iar toate însușirile
+punctate stau pe **pereche**, nu pe una din cele două fețe.
+
+Ce ies: „Care este capitala Elveției? Viena / Berlin / Vaduz / **Berna**",
+„Skopje este capitala cărei țări? Albania / Serbia / Grecia / **Macedonia de
+Nord**". Banda de nivel (±1) e aceeași plasă ca la celelalte două tabele.
+
+**Slăbiciunea, găsită în mostre și apoi măsurată.** „Care este capitala Libanului?
+Damasc / **Beirut** / Pyongyang / New Delhi" — continentul e prea gros pentru
+Asia, care ține Libanul, Coreea de Nord și India în aceeași cutie. Măsurat cu
+coordonatele (`P625`): **15 din 251 de întrebări (6%) au un distractor la peste
+5000 km.**
+
+O bandă de distanță ar repara-o și ar fi ieftină. **N-am scris-o**, fiindcă
+măsurătoarea arată că nu e în principal o problemă de punctaj: cele trei cele mai
+rele sunt Australia și Noua Zeelandă, singurele două țări din Oceania din tabel —
+pentru ele **nu EXISTĂ** un distractor apropiat, oricât de fin ar fi punctajul.
+E exact forma lecției de la opere, unde 11 din 188 de întrebări n-aveau niciun
+distractor de aceeași limbă fiindcă autorul era singur pe limba lui: **leacul e un
+rând în plus în tabel, nu cod.**
+
+Deci cifra a intrat în raport, sub ochi, ca `fara_frate_de_limba`. Dacă după
+revizuirea tabelului rămâne pe la 6% și restul nu mai e Oceania, ATUNCI banda de
+distanță merită scrisă — cu o măsurătoare care s-o ceară, nu cu o presimțire.
+
+Și un lucru pe care măsurătoarea NU-l vede, ca să nu fie citită ca mai tare decât
+e: distanța se ia între **centrele țărilor**, nu între capitale. Centrul Rusiei e
+în Siberia, deci „Care este capitala Rusiei? Beijing / Tokyo / **Moscova** / Kiev"
+nu apare în listă, deși Moscova e la 5800 km de Beijing.
+
+### Garda pe care am păstrat-o deși pornește de 0 ori
+
+„Nicio capitală a țării întrebate nu are voie ca distractor", pe **QID-ul
+capitalei**, nu pe numele afișat. Diferența contează exact când o țară are mai
+multe capitale actuale: a doua n-ar fi un distractor nefericit, ar fi **un al
+doilea răspuns corect**.
+
+Măsurat: pornește de **0 ori din 16 256 de perechi** de candidați, fiindcă niciuna
+dintre cele 8 țări cu mai multe capitale nu e în ciorna de azi.
+
+Și totuși rămâne — spre deosebire de garda de limbă de la opere, care a fost
+**ștearsă** tot după ce s-a măsurat că pornește de 0 ori. Diferența e ce apără:
+aceea era o euristică de calitate (un distractor mai puțin potrivit), asta e o
+**gardă de corectitudine** (o întrebare cu două răspunsuri bune). O gardă care
+costă o intersecție de mulțimi și previne un răspuns greșit nu are nevoie să
+pornească des ca să merite. Probată pe Bolivia, cu `capitala_qid` pus.
+
+### Israelul, exclus de mână, cu motivul scris lângă `DUBLURI`
+
+```python
+EXCLUSE = {
+	"Q801": "Israel — capitala e contestată internațional (Ierusalim / Tel Aviv). "
+	        "Un joc de învățare n-are voie să prezinte un răspuns disputat ca pe un "
+	        "fapt simplu, cu un singur buton verde.",
+}
+```
+
+Stă lângă `DUBLURI` dinadins, ca să se vadă că e o **decizie, nu o scăpare**: un
+rând lipsă dintr-un tabel de 140 nu se observă niciodată, iar o excludere scrisă,
+cu motivul ei, se citește la fiecare deschidere a fișierului.
+
+Și **oprește**: dacă `Q801` apare totuși în `tari.json`, scriptul se opune cu
+motivul întreg. Altfel excluderea ar fi fost o părere într-un comentariu, iar
+Israelul ar fi reintrat în ziua în care copiez un rând din propuneri fără să mă
+uit. Probat.
+
+### `cod_iso_de_mana`: un câmp care ADUCE o valoare, nu unul care ocolește o verificare
+
+Măsurat: din cele 140 de țări, **una singură n-are cod ISO în Wikidata** —
+Danemarca, din motivul de mai sus (codul DK stă pe `Q35`, membrul ONU e `Q756617`).
+Deci `"cod_iso_de_mana": "DK"` se scrie pe un singur rând.
+
+**De ce ține o VALOARE, nu un `true`**, spre deosebire de `tara_de_mana` și
+`capitala_de_mana`. Alea sunt marcaje care spun „nu verifica afirmația mea
+împotriva etichetei": valoarea există deja în rând, iar marcajul doar oprește
+comparația. Aici Wikidata nu dă NIMIC de comparat, deci un `true` n-ar avea ce să
+ocolească — câmpul trebuie să aducă el codul.
+
+Restul urmează modelul: se tipărește la fiecare rulare, alături de ce spune
+Wikidata, fiindcă un câmp pus de mână trebuie să fie ZGOMOTOS.
+
+```
+  ── PUSE DE MÂNĂ (4 rânduri) ──
+    țară      Danemarca                   Wikidata: Regatul Danemarcei
+    capitală  Abuja                       Wikidata: Abuja
+    capitală  Oslo                        Wikidata: Oslo
+    țară      Țările de Jos               Wikidata: Regatul Țărilor de Jos
+    cod ISO   DK   (Danemarca           ) Wikidata: — (fără cod)
+```
+
+Și o listă nouă, **FĂRĂ COD ISO**, tot la fiecare rulare: țările care așteaptă
+un cod. Nu oprește nimic — codul e pentru hărțile de la pasul 13, iar o țară fără
+hartă e tot o țară bună de întrebat — dar se vede, ca lista să se scurteze, nu să
+se uite.
+
+**Două opriri, și a doua e cea care contă peste șase luni:**
+
+1. Un cod care nu arată a cod (două litere mari) oprește. `"dk"` sau `"DNK"` ar
+   ajunge tăcut în fapt, iar desenatorul de hărți ar căuta un contur care nu
+   există — eroarea ar apărea la o întrebare, nu aici.
+2. Un cod scris de mână pentru care Wikidata a ÎNCEPUT să dea unul oprește și el,
+   **chiar dacă cele două coincid.** E aceeași regulă ca „fantomele" din `DUBLURI`:
+   o declarație care nu mai e necesară e la fel de rea ca una lipsă, doar mai
+   tăcută. Fără ea, `tari.json` ar strânge în câteva luni coduri de mână pe care
+   nimeni nu le mai folosește, iar ziua în care unul ar contrazice Wikidata n-ar
+   mai fi de găsit.
+
+Toate trei drumurile probate:
+
+| ce am pus | ce a ieșit |
+|---|---|
+| `"cod_iso_de_mana": "DK"` pe Danemarca | tipărit în „PUSE DE MÂNĂ", cu „Wikidata: — (fără cod)" alături; faptul `wd:Q756617` iese cu `"cod_iso": "DK"` |
+| `"dnk"` | OPRIT — „nu arată a cod ISO 3166-1 alpha-2" |
+| `"FR"` pe Franța, unde Wikidata dă deja FR | OPRIT — „Wikidata dă acum codul 'FR', deci cod_iso_de_mana nu mai e necesar" |
+
+Cu codul completat, **toate cele 127 de fapte au `cod_iso`**, de la 126.
+
+### Capitalele mutate recent: de citit cu ochiul, fără oprire
+
+Orice capitală a cărei declarație are dată de început după 2000 se tipărește
+separat. Azi: **Myanmar → Naypyidaw, din 2005.**
+
+Indonezia (Jakarta / Nusantara) **nu apare**, fiindcă Wikidata încă n-are
+Nusantara ca declarație de capitală fără dată de sfârșit — deci pentru joc
+capitala Indoneziei e Jakarta. Rămâne rândul pe care îl verifici tu de mână
+înainte să-l confirmi.
+
+O oprire aici ar fi fost greșită: m-ar fi obligat să declar o excepție pentru
+fiecare mutare, iar excepțiile declarate mecanic nu se mai citesc.
+
+### Dublurile cu fișierul scris de mână: 3, toate de sens direct
+
+```
+cere_capitala  Portugalia   ← mana:0009
+cere_capitala  Australia    ← mana:0057
+cere_capitala  Kazahstan    ← mana:0101
+```
+
+Se caută doar prin întrebările de mână care conțin cuvântul „capital", ca la
+elemente cu „simbol": altfel „Care este cel mai mare oraș al României?" ar fi
+părut dublură, deși e **altă relație**, chiar dacă răspunsul e tot Bucureștiul.
+
+Se blochează **doar sensul care se suprapune**, ca la opere: Portugalia rămâne
+fără „Care este capitala Portugaliei?", dar păstrează „Lisabona este capitala
+cărei țări?".
+
+Și se caută pe **tabelul întreg, ciorne incluse** — lecția de la opere, unde prima
+versiune căuta pe lista filtrată și, cu tot tabelul în ciornă, a raportat toate
+cele 16 declarate ca fantome.
+
+### Codul ISO în fapt, pentru o zi care n-a venit încă
+
+```json
+{"id": "wd:Q142", "nota": "", "surse": ["…"], "verificat": false, "cod_iso": "FR"}
+```
+
+**Un fapt pe țară**, folosit de amândouă sensurile: relația e unu-la-unu, deci e
+chiar același fapt („capitala Franței e Parisul"). La opere erau două feluri de
+fapte fiindcă entitățile celor două sensuri erau două, opera și autorul.
+
+`cod_iso` nu se folosește azi. E cheia pentru **hărțile desenate din date** de la
+pasul 13, iar motivul pentru care intră ACUM e că altfel ar fi însemnat, peste
+trei luni, o rulare `--reincarca` pe tot tabelul ca să recuperez un câmp care era
+deja sub mână. Verificat că nu strică nimic: `_incarca_fapte` din `trivia.gd` cere
+doar `id` și `nota`, și ignoră restul câmpurilor.
+
+---
+
+### Verificatorul: o secțiune nouă, probată că pică
+
+`tools/verifica_trivia.gd` are acum **opt secțiuni**. Cea nouă, a patra:
+**RĂSPUNSURILE NU SE AUTODEZVĂLUIE** — niciun răspuns corect nu apare în textul
+întrebării lui, peste tot conținutul, inclusiv cel scris de mână.
+
+**Sensibilitatea la majuscule e întreaga subtilitate**, și s-a decis prin
+măsurătoare, pe cele 434 de întrebări de dinaintea capitalelor:
+
+| varianta | câte pică |
+|---|---|
+| conținere brută, fără diacritice | **43** |
+| cuvânt întreg, fără majuscule | **1** |
+| **cuvânt întreg, cu majuscule** | **0** |
+
+Cele 43 sunt toate de forma „Care este simbolul chimic al carbonului? → C". Alea
+**nu sunt cadouri, sunt chiar lecția**: simbolul SE DEDUCE din nume, și exact
+de-aia carbonul e la nivelul I. O verificare care le-ar fi tăiat ar fi cerut să
+șterg cele mai bune întrebări de nivel I din joc.
+
+Singura care pica la varianta fără majuscule era `Al` din „**al** aluminiului" —
+prepoziția românească, nu simbolul. La simboluri, majuscula E parte din simbol, nu
+ortografie.
+
+Deci verdictul e strict de la bun început, ca la TEXTELE. Un prag ar fi fost o
+poartă deschisă.
+
+**Cum se află dacă un caracter e literă**, fără o listă scrisă de mine: prin
+`c.to_lower() != c.to_upper()`. Merge și pentru ș, ț, â — unde o listă scrisă de
+mână ar fi uitat pe una din ele.
+
+Probată rupând codul dinadins:
+
+| ce am pus | ce a picat |
+|---|---|
+| o întrebare „Care este capitala Kuweitului, adică Orașul Kuweit?" | `niciun răspuns în textul întrebării` → PICAT, 1 se autodezvăluie: `wd:Q817:capitala:cere_capitala` („Orașul Kuweit") |
+
+Și de reținut de ce filtrul din `capitale.py` **nu** o înlocuiește: acela compară
+numele țării cu numele capitalei și apără doar tabelul lui. Verdictul din
+verificator se uită la **textul de pe ecran**, deci apără și întrebările scrise de
+mână, și orice tabel viitor.
+
+`forma id-ului` n-a cerut nimic: `wd:Q142:capitala:cere_capitala` trece prin
+regula scrisă pentru `wd:Q897:simbol:cere_nume`. **A doua dată** când o regulă
+scrisă pentru un tabel ține la următorul fără nicio atingere.
+
+---
+
+### Cele 15 mostre (sămânța 4242)
+
+Puse în răspunsul sesiunii. Câteva, ca reper pentru ce se simte bine:
+
+```
+Care este capitala Elveției?      Viena / Berlin / Vaduz / BERNA
+Skopje este capitala cărei țări?  Albania / Serbia / Grecia / MACEDONIA DE NORD
+Naypyidaw este capitala cărei?    MYANMAR / Bangladesh / Laos / Thailanda
+Juba este capitala cărei țări?    SUDANUL DE SUD / Sudan / Uganda / RD Congo
+Care este capitala Guineei?       Bamako / Dakar / Yamoussoukro / CONAKRY
+```
+
+### Ce s-a măsurat la final
+
+```
+în tabel:   140 țări  (nivel I: 20, II: 70, III: 50) — TOATE ciorne
+generate:   251 întrebări (124 directe, 127 inverse), 127 fapte
+sărite:     13 (se răspund singure)
+dubluri:    3 cu fișierul de mână
+scrise:     0 — perechea din data/trivia_gen/ e goală, ca la opere în prima zi
+```
+
+Grila, cu ciornele confirmate ipotetic, arată geografia la **277 de întrebări**
+(de la 24) și tot conținutul la **687** (de la 434). Cifra de urmărit:
+**41–45% din întrebările de luptă ar fi fabricate**, de la 27–30%. Pârghia rămâne
+lățimea conținutului scris de mână, nu o treaptă de alegere în plus.
+
+### Verificat
+
+- cele patru hash-uri din faza 1, identice octet cu octet; `git status` curat sub `data/`;
+- toate comenzile, pe toate trei tabelele: `--masoara`, probă uscată, `--scrie`, `--propune`;
+- `--masoara`: 195 de țări de azi (din 203 aduse), 194 cu etichetă română, 192 cu ISO, distribuția edițiilor;
+- probă uscată: 251 de întrebări, „exact una din patru e corectă" verificat pe toate, pe mulțimea completă de capitale actuale;
+- `--scrie`: două fișiere goale (totul e ciornă), JSON valid citit înapoi, 140 de ciorne raportate;
+- trei opriri probate rupând datele dinadins: Israel în tabel, Bolivia fără `capitala_qid`, ieșirea prin `capitala_qid`;
+- verificarea headless: **TOTUL E BUN**, 18 verdicte, 0 picate;
+- verdictul nou, probat că pică.
+
+### Ce NU s-a făcut
+
+- **Nimic n-a intrat în joc.** Toate cele 140 de rânduri sunt ciorne; jocul are tot 434 de întrebări.
+- **Nicio notă.** Cele 127 de fapte ar avea `nota: ""`, plus cele 190 de la literatură și 70 de la elemente.
+- **Nicio partidă jucată** cu conținutul nou.
+- **Banda de distanță** la distractori — măsurată, amânată cu motiv (vezi mai sus).
+- **Cele 28 de ciorne de la opere** — încă acolo, neatinse.
+
+### Ce urmează, concret
+
+1. **Confirmarea celor 140 de rânduri**, cu ochiul: genitivele întâi (alea sunt
+   ale mele, nu ale Wikidatei), apoi nivelurile. Aceiași pași ca la opere: șterge
+   `"ciorna": true`, rulează `--scrie`, verifică headless.
+   **Verifică fișierul cu un script mic înainte de `--scrie`**, nu doar cu ochiul
+   pe diff — lecția de la „Divina Comedie", care a pierdut și `"nivel": 2` odată cu
+   marcajul.
+2. **Codul ISO al Danemarcei**: `"cod_iso_de_mana": "DK"` pe rândul `Q756617`.
+   E singurul din 140. Lista se tipărește la fiecare rulare, sub „FĂRĂ COD ISO".
+3. **Indonezia**, de verificat de mână (Jakarta / Nusantara).
+4. **Un rând sau două din Oceania**, dacă cifra de 6% deranjează. Rezolvă mai mult
+   decât orice cod.
+5. **Cele 8 țări cu capitală multiplă**, dacă le vrei: `capitala_qid` e acolo și e
+   probat.
+
+### Fișiere
+
+Nou: `tools/fabrica/comun.py`, `tools/fabrica/capitale.py`,
+`tools/fabrica/date/elemente.json`, `tools/fabrica/date/tari.json`,
+`tools/fabrica/date/tari_propuse.json`,
+`tools/fabrica/cache/wikidata_capitale.json`,
+`data/trivia_gen/capitale_intrebari.json`, `data/trivia_gen/capitale_fapte.json`.
+Atinse: `tools/fabrica/elemente.py` (−651 de linii: modulul comun, coloanele în
+date, verificarea „exact una din patru"), `tools/fabrica/opere.py` (−698 de linii:
+modulul comun), `tools/verifica_trivia.gd` (secțiunea RĂSPUNSURILE,
+renumerotare), `docs/progres.md`, `CLAUDE.md` (două decizii noi).
 
 ---
 
