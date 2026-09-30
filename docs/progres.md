@@ -1,6 +1,6 @@
 # MINDKEEP — Jurnal de progres
 
-*Ultima actualizare: 29 septembrie 2026*
+*Ultima actualizare: 30 septembrie 2026*
 *Atașează acest fișier la începutul fiecărei sesiuni noi, împreună cu `CLAUDE.md` și `docs/pitch-document.md`.*
 
 ---
@@ -17,7 +17,7 @@
 | 6. Harta de expediție | ✅ loadout „N din M" · **12-16 noduri**, ramificate, cu sămânță · Luptă / Elită / Odihnă / Eveniment / **Magazin** / **Boss** · **Monede + puteri temporare** · sumar de run · aspect: pergament, simboluri de cerneală, trasee punctate · **nodurile și drumurile stau pe o PANGLICĂ (curbă centrală + benzi)**, nu pe o grilă dreaptă · **patru trasee, toate verzi pe 300 de semințe** (POTCOAVĂ activă; POTCOAVA OGLINDITĂ e aceeași formă, întoarsă) · strat înclinat (forfecare) la ȘARPE · **drumuri care nu se încrucișează niciodată (0 la 300 de semințe)** · **nodul curent are și aură, și X, și stă nemișcat sub figurină** · **două surse de hartă: GENERATĂ (panglica) sau DESENATĂ dintr-un fișier `data/harti/*.json`** — comutatorul `Expeditie.SURSA_HARTII`; azi e pe DESENATĂ · **harta umple pergamentul**: pânza ține toată pagina, antetul plutește peste ea (805 × 427 px de hartă, de la 666 × 353) · **drumurile merg în amândouă sensurile**, cu nodul parcurs tăiat definitiv și cu garanția, verificată pe 16 000 de expediții simulate, că nu te poți înfunda · **figurina sare, cade ca un slam și zguduie ecranul la aterizare**, cu un răgaz de 0,5 s înainte să se deschidă nodul · **tipurile nodurilor se împart după o REȚETĂ fixă, nu se trag cu zarul**: 9 reguli de vecinătate și de început, plasare conștientă de reguli, verificare completă și reîncercare cu sub-sămânță (0 eșecuri pe 500 de semințe × 3 surse de hartă) · rețeta se **plafonează după forma hărții**, nu după numărul de noduri · **nodul de Eveniment deschide Lacătul** (nivel din adâncime, sămânță din nodul, 6/10/14 Monede la succes) |
 | 7. Cetatea | ❌ |
 | 8. Save/Load | 🟡 tezaurul, sacul și expediția știu toate să se serializeze (`spre_dictionar` / `din_dictionar`), pe trei straturi de durată; scrierea pe disc, nu încă |
-| 9. Celelalte discipline | 🟡 Cultură generală ✅ (**434 de întrebări în joc**: 135 scrise de mână (`mana:0001`…) + **139 fabricate din Wikidata, elemente chimice** (`wd:Q897:simbol:…`) + **160 fabricate, operă → autor** (`wd:Q12730777:autor:…`) — **al doilea tabel al fabricii, confirmat parțial**: 135 din 163 de opere, 28 rămân ciorne pentru o trecere viitoare · **conținutul fabricat stă într-un DOSAR**, `data/trivia_gen/`, citit întreg de încărcător: un tabel nou = două fișiere, zero linii de cod · **18 fapte cu note** + 245 de fapte fabricate fără notă; **alegerea din luptă e în două trepte** — întâi domeniul, uniform, apoi întrebarea, cu sacul pe cheie de domeniu ȘI nivel; comutator `FOLOSESTE_WIKIDATA`; **al treilea tabel, țară ↔ capitală, e construit și stă întreg în ciornă** (140 de țări în `tools/fabrica/date/tari.json`, 251 de întrebări gata, 0 scrise până la confirmare) · **fabrica are un modul comun**, `tools/fabrica/comun.py`, iar coloanele de mână ale elementelor au ieșit din cod în `tools/fabrica/date/elemente.json` · vezi sesiunile CONȚINUTUL, ID ȘI FAPT, FABRICA, AL DOILEA TABEL și MODULUL COMUN) · Logica ✅ (80 de categorii) · Cuvinte ✅ · toate trei fără repetiții pe expediție, **Cultura generală după `id`, nu după text** · celelalte 5 ❌ |
+| 9. Celelalte discipline | 🟡 Cultură generală ✅ (**434 de întrebări în joc**: 135 scrise de mână (`mana:0001`…) + **139 fabricate din Wikidata, elemente chimice** (`wd:Q897:simbol:…`) + **160 fabricate, operă → autor** (`wd:Q12730777:autor:…`) — **al doilea tabel al fabricii, confirmat parțial**: 135 din 163 de opere, 28 rămân ciorne pentru o trecere viitoare · **conținutul fabricat stă într-un DOSAR**, `data/trivia_gen/`, citit întreg de încărcător: un tabel nou = două fișiere, zero linii de cod · **18 fapte cu note** + 245 de fapte fabricate fără notă; **alegerea din luptă e în două trepte** — întâi domeniul, uniform, apoi întrebarea, cu sacul pe cheie de domeniu ȘI nivel; comutator `FOLOSESTE_WIKIDATA`; **al treilea tabel, țară ↔ capitală, e construit și stă întreg în ciornă** (140 de țări în `tools/fabrica/date/tari.json`, 251 de întrebări gata, 0 scrise până la confirmare) · **fabrica are un modul comun**, `tools/fabrica/comun.py`, iar coloanele de mână ale elementelor au ieșit din cod în `tools/fabrica/date/elemente.json` · **faptele capitalelor au acum o LISTĂ de imagini**, `imagini: [{tip, …}]`, gândită să primească și harta desenată, și tablourile de mai târziu: **126 de steaguri pe disc** (`assets/imagini_fapte/steaguri/`, PNG 320 px, 0,53 MB sursă / 0,32 MB după import, toate în domeniul public, cu manifest de credite), plus o intrare de hartă pe fiecare din cele 127 de fapte; Omanul e singurul refuzat, cu motivul scris (licență necunoscută) · vezi sesiunile CONȚINUTUL, ID ȘI FAPT, FABRICA, AL DOILEA TABEL, MODULUL COMUN și STEAGURILE) · Logica ✅ (80 de categorii) · Cuvinte ✅ · toate trei fără repetiții pe expediție, **Cultura generală după `id`, nu după text** · celelalte 5 ❌ |
 | 10–13. Generator de inamici, artă, web | ❌ (artă parțial: figurile principale și piesele de pe butoanele de Obelisc au imagini reale · **arena are fundal: biblioteca gotică**, cu personajele așezate pe dalele din prim-plan, umbră de contact și lumină de sală) · Regina: **amânată**, vezi CLAUDE.md |
 
 Nodul de **Eveniment** are primul lui conținut: **Lacătul** — un cufăr cu cifru,
@@ -37,6 +37,329 @@ buget, generare) rămâne acolo unde era.
 Am sărit peste ordinea recomandată la pasul 12 (artă): imaginile pentru rege,
 cavaler și pentru cele trei piese de șah de pe butoane au intrat mai devreme, dar
 restul rămâne placeholder. Bucla de luptă e în continuare cea validată, nu arta.
+
+---
+
+## STEAGURILE (30 septembrie 2026) — o formă pentru imaginile faptelor
+
+**Rezultat: 126 de steaguri pe disc, 0,53 MB, toate în domeniul public** — și,
+mai important decât steagurile, **forma în care un fapt ține imagini**, gândită
+ca să primească și harta de azi, și tablourile de mâine.
+
+Nimic nu se afișează încă. Afișarea vine la pasul 13, cu Practice. Ce s-a făcut
+azi e partea care, dacă o amânam, ar fi însemnat peste trei luni o rulare pe tot
+conținutul ca să recuperez ceva ce era deja sub mână.
+
+---
+
+### Forma: o LISTĂ de imagini, nu un câmp pe fel
+
+```json
+{
+	"id": "wd:Q142",
+	"nota": "",
+	"surse": ["https://www.wikidata.org/wiki/Q142"],
+	"verificat": false,
+	"imagini": [
+		{"tip": "harta", "cod": "FR"},
+		{"tip": "steag", "fisier": "steaguri/Q142.png",
+		 "licenta": "Public domain", "autor": "SKopp",
+		 "sursa": "https://commons.wikimedia.org/wiki/File:Flag_of_France.svg"}
+	]
+}
+```
+
+Un câmp `steag` ar fi fost cel mai simplu lucru de scris azi și cel mai scump
+peste trei luni: ziua în care un fapt de artă vrea un tablou, popup-ul ar fi
+trebuit să învețe un al doilea câmp; ziua în care vrea și un portret al
+autorului, un al treilea. E exact forma pe care principiul din `CLAUDE.md` o
+refuză la discipline — **o disciplină nouă e un rând în tabel, nu o ramură nouă
+în cod.**
+
+Cu o listă, desenatorul de la pasul 13 are **o singură buclă**: pentru fiecare
+intrare, se uită la `tip` și desenează.
+
+### De ce a ieșit `cod_iso` din vârful faptului
+
+Dacă rămânea sus, Practice ar fi întrebat două lucruri diferite: „ce imagini ai
+în listă?" **și** „ai cumva un cod ISO, ca să-ți desenez și o hartă?". Adică fix
+ramura pe care lista există ca s-o evite. Deci `cod_iso: "FR"` a devenit
+`{"tip": "harta", "cod": "FR"}`.
+
+Diff-ul pe toate cele 127 de fapte a fost declarat înainte, nu descoperit după.
+
+### Două feluri de intrări, deosebite prin ce LIPSEȘTE
+
+| | desenată de joc | fișier real |
+|---|---|---|
+| exemplu | `{"tip": "harta", "cod": "FR"}` | `{"tip": "steag", "fisier": …}` |
+| greutate | zero | octeți pe disc |
+| licență | n-are voie s-o aibă | obligatorie |
+
+Regula pe care o pune verificatorul e **în amândouă direcțiile**: o intrare cu
+`fisier` trebuie să aibă licență, una fără fișier n-are voie. Așa, „am uitat
+licența" e o eroare, nu o omisiune tăcută.
+
+### Trei alegeri mici, fiecare cu un motiv care ține
+
+**Calea e relativă** (`steaguri/Q142.png`), cu rădăcina `assets/imagini_fapte/`
+scrisă o dată în Python și o dată în GDScript. Cu calea `res://` întreagă în
+JSON, ziua în care mut dosarul ar cere regenerarea faptelor fabricate — și
+repararea **de mână** a celor din `data/fapte_trivia.json`, care nu se
+regenerează. Faptul scris de mână e argumentul care decide.
+
+**Dosar propriu, `assets/imagini_fapte/`, nu `assets/art/`.** Acolo stă arta
+jocului, aici numai material străin, cu licență de onorat. Granița de dosar face
+ca „ce am în joc care nu-mi aparține?" să aibă un răspuns dintr-o privire.
+
+**Numele fișierului e QID-ul**, nu codul ISO. `fr.png` s-ar citi mai frumos, dar
+codul ISO are deja o excepție (Danemarca îl are doar de mână) și la tablouri nu
+există deloc — ar fi fost o regulă cu excepții încă de la al doilea fel de
+imagine. Citibilitatea o dă `credite.json` de lângă fișiere.
+
+---
+
+### Măsurat înainte: PNG de la Commons, nu SVG
+
+Tentația era SVG-ul: P41 arată aproape mereu spre unul, e vectorial, „cântărește
+nimic". Măsurat, e o capcană: un tricolor are 300 de octeți în SVG, dar unul cu
+stemă (Turkmenistan, Sri Lanka, Serbia) are între 1 și 5 MB de contururi — mai
+mult decât tot dosarul. Deci rasterizarea o face Commons, o dată, prin
+`iiurlwidth`.
+
+```
+cerut 320 px:  126 fișiere, 0,53 MB  (median 2,2 KB, maxim 30,7 KB — San Marino)
+după importul Godot, .ctex:           0,32 MB   ← cifra care contează la export
+fișierele .import (doar în Git):      0,11 MB
+```
+
+De zece ori mai puțin decât estimasem înainte de măsurătoare. E loc și de mai
+mare, dacă la pasul 13 se dovedește că 320 px nu ajung.
+
+Commons rotunjește la raportul steagului (a întors 330 px pentru 320 cerut), deci
+câmpul din manifest se numește `latime_ceruta`, nu `latime`. Un câmp care spune
+altceva decât conține e o minciună mică pe care o crezi peste șase luni.
+
+---
+
+### Lecția zilei: rangul preferat, și de ce planul meu era greșit
+
+Planul confirmat spunea: nu ating rangul preferat, „mai multe steaguri actuale"
+oprește ca la capitale, alegerea o scriu de mână. **Măsurătoarea a spus altceva.**
+
+```
+țări din tabel cu mai multe steaguri „actuale":  21  (18 cu două, 2 cu trei, 1 cu patru)
+decise de rangul preferat:                       21
+rămase nehotărâte:                                0
+```
+
+Pe toate cele 195 de state membre ONU: 28 din 28.
+
+Capitalele multiple erau 8, și 0 în tabel. 21 din 126 e altă cifră: **21 de
+rânduri scrise de mână nu sunt o listă citită**, sunt exact ce spune sesiunea
+capitalelor despre excepțiile declarate mecanic.
+
+Și cele 21 nu sunt ambiguități reale. Ce rămâne pe dinafară sunt **variante**
+(`Flag of Belgium (civil).svg`, `War flag of Peru.svg`,
+`Flag of Bulgaria (digital).svg`, `Civil Ensign of Switzerland (Pantone).svg`) și
+**steaguri istorice a căror declarație n-are dată de sfârșit scrisă**
+(`Flag of Rhodesia (1968–1979).svg` la Zimbabwe, `Flag of Sudan (1956–1970).svg`
+la Sudan) — adică lecția „un câmp lipsă nu e un NU", **a treia oară**, acum la al
+treilea fel de date.
+
+Rangul preferat nu e o euristică inventată de mine: e o declarație explicită a
+editorilor Wikidata, „dintre astea, asta e cea curentă". Diferența față de „ia
+prima" e diferența dintre a citi o afirmație și a ghici.
+
+**Ce ține alegerea cinstită, fiindcă tot e o alegere făcută de cod:**
+
+1. Zero sau două ranguri preferate → **oprește**, cu `steag_de_mana` ca ieșire.
+   Azi pornește de 0 ori, dar fără ea pasul de sus ar fi o presupunere.
+2. Toate cele 21 se **tipăresc la fiecare rulare**, cu ce au lăsat pe dinafară.
+3. Scena F6 le arată cu ochiul.
+
+**Două de verificat cu ochiul mai întâi:** Afganistanul iese cu
+`Flag of the Taliban.svg` (corect pentru 2021 încoace, dar e o alegere care merită
+văzută), iar Costa Rica cu steagul civil, nu cu cel de stat cu stemă.
+
+---
+
+### Licențele: 139 din 140 `pd`, una refuzată scris
+
+```
+pd                    139   domeniu public
+fără cod de licență     1   Flag of Oman.svg  —  'OGL-om 1.0', Copyrighted: True
+```
+
+Lista e **albă, nu neagră**: se acceptă `pd*`, `cc0`, `cc-by*`, iar orice altceva
+oprește. O listă neagră apără numai împotriva a ce mi-am imaginat deja; prima
+licență la care nu m-am gândit ar trece în tăcere. Iar aici greșeala nu e o
+întrebare urâtă, e un fișier pe care n-am dreptul să-l dau mai departe.
+
+**Omanul rămâne fără steag**, declarat în `STEAGURI_REFUZATE`, lângă `EXCLUSE`, cu
+motivul scris: „Open Government Licence – Oman 1.0" nu e nici domeniu public,
+nici Creative Commons, iar o licență guvernamentală străină nu e ceva ce pot
+judeca singur. Întrebările și harta Omanului nu sunt atinse — iese doar imaginea.
+Diferența față de `EXCLUSE`, unde iese țara întreagă.
+
+Și **refuzul se verifică singur**: dacă fișierul primește pe Commons o licență
+recunoscută, scriptul oprește și cere ștergerea declarației. Un refuz al cărui
+motiv nu mai e adevărat e la fel de rău ca unul lipsă, doar mai tăcut — aceeași
+regulă ca la „fantomele" din `DUBLURI`.
+
+Pentru `cc-by*`, faptul ține și `licenta_url`, nu doar autorul: atribuirea CC cere
+autorul, sursa **și** licența. Azi niciun steag nu e în cazul ăsta, dar câmpul e
+scris și verificat, fiindcă tablourile vor fi.
+
+---
+
+### Unde stă codul, și de ce nu tot în `comun.py`
+
+Aceeași linie ca la faza 1 a modulului comun: **intră ce n-are nicio părere
+despre steaguri.**
+
+| `comun.py` | `capitale.py` |
+|---|---|
+| metadatele Commons, în loturi de 50 | interogarea P41 |
+| lista albă de licențe, și oprirea | „care e steagul de azi" |
+| descărcarea la o lățime, o singură dată | `STEAGURI_REFUZATE`, `steag_de_mana` |
+| cache-ul, manifestul, cântărirea dosarului | lista `imagini` din fapt |
+
+E fix separarea `comun.interogheaza` (rețea) față de `INTEROGARE_TARI`
+(judecată). Mecanismul refuzului e în comun; **lista** refuzurilor, în tabel.
+
+Cache-ul metadatelor, `tools/fabrica/cache/commons.json`, **crește în loc să se
+rescrie**: la tablouri, fișierele de azi rămân pe loc, iar `--reincarca`
+împrospătează doar ce cere tabelul care rulează.
+
+**`--descarca` e un flag separat de `--scrie`**, dinadins: una atinge `assets/`,
+cealaltă `data/`. O rulare care scrie întrebări n-are de ce să plece la Commons.
+Și `--scrie` **oprește** dacă un fapt trimite la un fișier care nu e pe disc:
+verificatorul din Godot prinde și el asta, dar între `--scrie` și verificare e un
+commit.
+
+---
+
+### Verificatorul: a noua secțiune
+
+`tools/verifica_trivia.gd`, secțiunea **IMAGINILE FAPTELOR**, peste tot
+conținutul, inclusiv cel scris de mână:
+
+- `tip` dintr-o listă închisă — `"stag"` n-ar da nicio eroare nicăieri, imaginea
+  pur și simplu n-ar apărea;
+- fișierul există, verificat **în două feluri**: pe disc (`FileAccess`) și ca
+  resursă importată (`ResourceLoader`). Al doilea pică pe un repo proaspăt clonat
+  în care nu s-a deschis editorul — și e bine să se vadă ca atare, nu ca „fișier
+  lipsă";
+- licență obligatorie unde e fișier, interzisă unde nu e; autor obligatoriu unde
+  licența cere atribuire;
+- **fapt ↔ manifest**: aceeași licență și același autor în amândouă locurile.
+  Duplicarea ar fi fost un risc de divergență; comparată la fiecare rulare,
+  devine o probă;
+- **niciun fișier orfan** — un steag la care nu duce niciun fapt e greutate curată
+  în exportul web.
+
+Probată rupând patru lucruri dinadins, toate patru au picat cu mesajul lor:
+
+| ce am stricat | ce a picat |
+|---|---|
+| șters `Q142.png` | `fișierul lipsește de pe disc — steaguri/Q142.png` |
+| `"tip": "stag"` la Bulgaria | `tip necunoscut 'stag'` |
+| `"cod": "cze"` la Cehia | `harta are codul 'cze', care nu arată a cod ISO` |
+| licența schimbată în faptul Austriei | `faptul zice 'CC BY-SA 4.0', manifestul 'Public domain'` |
+| un PNG copiat în plus în dosar | `niciun fișier orfan → steaguri/Q99999.png` |
+
+### Scena F6: `tools/verifica_steaguri.tscn`
+
+Toate steagurile într-o grilă, cu numele țării sub fiecare și cu creditul care
+s-ar afișa în joc („domeniu public", sau „autor · licență").
+
+Există fiindcă e **singura verificare pe care un script nu o poate face**: un
+steag vechi, unul al țării vecine sau varianta de stat trec prin toate
+verdictele de mai sus, fiindcă sunt fișiere perfect valide. Iar 21 din 126 au
+fost alese de cod.
+
+**Citește faptele, nu dosarul.** Drumul parcurs aici e chiar drumul pe care-l va
+face Practice: fapt → lista `imagini` → intrarea `steag` → fișierul. Un steag
+rămas dintr-o rulare veche nu apare, fiindcă nu e în joc. Numele omenesc vine din
+manifest — faptul ține doar `wd:Q142`, iar la „Q142" nu te poți uita ca să spui
+„ăsta nu e steagul Franței".
+
+---
+
+### Două bug-uri găsite rupând codul dinadins
+
+Amândouă în ce scrisesem chiar atunci, amândouă tăcute:
+
+1. **`steag_de_mana` nu apărea în „PUSE DE MÂNĂ".** Adăugasem tipărirea, nu și
+   filtrul care alege rândurile. Un câmp care ocolește o verificare și nu se
+   tipărește e exact felul comod de a face o greșeală să dispară.
+2. **Fișierele refuzate nu erau nici măcar întrebate.** Părea firesc — „oricum nu
+   le folosesc" — și cu asta murea tăcut tocmai verificarea că refuzul mai e
+   justificat: `metadate_commons` nu poate observa că o licență s-a schimbat
+   pentru un fișier despre care nu întreabă.
+
+Niciunul n-ar fi fost găsit de o rulare care merge bine.
+
+---
+
+### Verificat
+
+- `--descarca`: 126 aduse; a doua rulare, **0 aduse, 126 deja pe disc**;
+- `--masoara` pe toate cele 195 de state: rangul preferat decide 28 din 28;
+- cele patru hash-uri ale celorlalte două tabele, **identice octet cu octet**
+  după schimbările din `comun.py`; singurul fișier schimbat sub `data/` e
+  `capitale_fapte.json`;
+- cinci opriri probate rupând datele: fișier lipsă la `--scrie`, `steag_de_mana`
+  inexistent, refuz nejustificat (`Flag of France.svg`), licență necunoscută cu
+  declarația Omanului ștearsă, `steag_de_mana` valid (Belgia iese din alegerea
+  automată, 21 → 20);
+- verificarea headless: **TOTUL E BUN**, 21 de verdicte, 0 picate;
+- secțiunea nouă, probată că pică pe cinci feluri de stricăciune;
+- scena F6 rulează curat: `126 din fapte, 0 fără fișier pe disc`.
+
+### Ce NU s-a făcut
+
+- **Nu s-a văzut niciun steag cu ochiul.** Captura pe care am încercat-o a prins
+  altă fereastră. **Ăsta e primul lucru de făcut: F6 pe
+  `tools/verifica_steaguri.tscn`**, cu Afganistanul și Costa Rica primele pe
+  listă.
+- **Nimic nu se afișează în joc.** `imagini` e scris, citit și verificat, dar
+  niciun desenator nu-l folosește — vine la pasul 13.
+- **Harta nu se desenează.** Intrarea `{"tip": "harta", "cod": "…"}` există pe
+  toate cele 127 de fapte; contururile Natural Earth și desenatorul, nu.
+- **Nicio notă.** Tot 0 din cele 127 de fapte ale capitalelor.
+- **Omanul rămâne fără steag**, cu motivul scris.
+- **Banda de distanță** la distractori și **cele 28 de ciorne de la opere** —
+  neatinse, ca la sesiunea trecută.
+
+### Ce urmează, concret
+
+1. **F6 pe scena steagurilor.** Afganistan (steagul talibanilor) și Costa Rica
+   (civil, nu de stat) sunt cele două alegeri de confirmat; restul e o trecere cu
+   privirea peste 126 de plăcuțe.
+2. Dacă un steag e greșit: `"steag_de_mana": "Flag of ….svg"` pe rândul din
+   `tari.json`, apoi `--descarca` și `--scrie`. Probat pe Belgia.
+3. **Contururile pentru hărți** (Natural Earth) și desenatorul — pasul 13, nu
+   acum.
+4. Când vin tablourile: `{"tip": "tablou", …}` e un caz în plus în
+   `TIPURI_DE_IMAGINE` din verificator și un dosar nou lângă `steaguri/`. Restul
+   mecanismului există.
+
+### Fișiere
+
+Nou: `tools/verifica_steaguri.gd`, `tools/verifica_steaguri.tscn`,
+`assets/imagini_fapte/steaguri/` (126 PNG + `credite.json`),
+`tools/fabrica/cache/commons.json`.
+Atinse: `tools/fabrica/comun.py` (secțiunea IMAGINILE DE PE WIKIMEDIA COMMONS,
+`--descarca` în `Argumente`, `cat_cantareste` cu filtru de sufixe),
+`tools/fabrica/capitale.py` (interogarea P41, `alege_steagul`,
+`STEAGURI_REFUZATE`, `steag_de_mana`, `cale_de_steag`, `arata_steagurile`,
+`pune_metadatele_steagurilor`, `descarca_steagurile`, `fapt_cu_imagini`),
+`tools/verifica_trivia.gd` (secțiunea IMAGINILE FAPTELOR),
+`data/trivia_gen/capitale_fapte.json` (toate cele 127),
+`tools/fabrica/cache/wikidata_capitale.json`, `docs/progres.md`,
+`CLAUDE.md` (secțiunea „Unelte" cu calea Godot, trei decizii noi).
 
 ---
 
@@ -7206,8 +7529,17 @@ stricate, semnalează membrii duplicați și domeniile prea sărace.
 ### Imediat (următoarea sesiune)
 
 *Rescrisă pe 27 septembrie 2026. Punctul 1 bifat în aceeași zi (sesiunea
-EVENIMENTUL DESCHIDE CUFĂRUL), punctul 3 pe 28 septembrie (sesiunea ID ȘI FAPT).*
+EVENIMENTUL DESCHIDE CUFĂRUL), punctul 3 pe 28 septembrie (sesiunea ID ȘI FAPT).
+Punctul 0 adăugat pe 30 septembrie (sesiunea STEAGURILE).*
 
+0. **F6 pe `tools/verifica_steaguri.tscn`.** Cele 126 de steaguri sunt pe disc și
+   trec toate verificările automate — dar niciunul n-a fost văzut cu ochiul, iar
+   21 dintre ele au fost alese de cod, prin rangul preferat din Wikidata. Un
+   steag vechi sau al altei țări e un fișier perfect valid, deci nicio validare
+   nu-l poate prinde. **Primele două de confirmat:** Afganistan
+   (`Flag of the Taliban.svg`) și Costa Rica (steagul civil, nu cel de stat cu
+   stemă). Dacă unul e greșit: `"steag_de_mana"` pe rândul din `tari.json`, apoi
+   `--descarca` și `--scrie`. Zece minute.
 1. **Lacătul de pe hartă, jucat pe mână.** Legarea e făcută și verificată
    headless; ce NU se poate afla din verificare e cât durează, cu ceasul pornit,
    un lacăt de nivel 3 — și dacă nodul se simte ca o respirație între lupte sau

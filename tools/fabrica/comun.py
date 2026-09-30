@@ -58,6 +58,7 @@ fel de rea ca una lipsă, doar mai tăcută.
 
 import difflib
 import hashlib
+import html
 import io
 import json
 import os
@@ -377,6 +378,354 @@ def multe(rand, camp):
 		q = qid_sau_nimic(bucata)
 		iesite.add(q if q else "?")
 	return iesite
+
+
+# ─────────────────────────────────────────────────────────────
+# IMAGINILE DE PE WIKIMEDIA COMMONS
+#
+# CE E AICI ȘI CE NU, după aceeași regulă ca restul modulului. Aici stă tot ce
+# nu are nicio părere despre CE fel de imagine se aduce: cererea la API, lista
+# albă de licențe, descărcarea, cache-ul, manifestul, măsurarea dosarului.
+# Rămâne în scriptul tabelului: CARE imagine e cea bună (steagul actual, nu unul
+# vechi), ce se face când sunt mai multe, și cum intră în fapt.
+#
+# E aceeași despărțire ca `interogheaza` (aici) față de `INTEROGARE_TARI`
+# (acolo): rețeaua e o unealtă, alegerea e o decizie.
+#
+# DE CE O LISTĂ ALBĂ DE LICENȚE, ȘI NU UNA NEAGRĂ. O listă neagră apără numai
+# împotriva a ce mi-am imaginat deja; prima licență la care nu m-am gândit trece
+# în tăcere. O listă albă mă obligă să mă uit la fiecare caz nou — iar aici
+# greșeala nu e o întrebare urâtă, e un fișier pe care n-am dreptul să-l dau mai
+# departe, într-un joc pe care vreau să-l pot publica.
+# ─────────────────────────────────────────────────────────────
+
+# Rădăcina imaginilor care ÎNSOȚESC FAPTE. Dinadins în afara lui `assets/art/`:
+# acolo stă arta jocului, aici stă numai material străin, cu licență de onorat.
+# Granița de dosar e ce face întrebarea „ce am în joc care nu-mi aparține?" să
+# aibă un răspuns dintr-o privire, nu dintr-o căutare.
+#
+# Aceeași cale e scrisă și în GDScript, în `tools/verifica_trivia.gd`. Se repetă
+# fiindcă sunt două limbi, nu fiindcă ar fi două decizii.
+DOSAR_IMAGINI = os.path.join(RADACINA, "assets", "imagini_fapte")
+
+# Cache-ul metadatelor de pe Commons, COMUN pe toate tabelele și pe toate
+# felurile de imagini. Crește în loc să se rescrie: la tablouri, fișierele de
+# azi rămân pe loc. De-aia `--reincarca` împrospătează doar intrările cerute de
+# tabelul care rulează, nu tot fișierul.
+CALE_CACHE_COMMONS = os.path.join(DOSAR_CACHE, "commons.json")
+
+API_COMMONS = "https://commons.wikimedia.org/w/api.php"
+
+# API-ul Commons primește până la 50 de titluri pe cerere. 127 de steaguri =
+# 3 cereri, nu 127.
+CATE_PE_CERERE = 50
+
+# Câmpurile manifestului, în ordine. Manifestul stă LÂNGĂ FIȘIERE, nu în
+# `tools/`: dacă cineva copiază dosarul, creditele pleacă cu el.
+ORDINEA_MANIFEST = ["fisier", "qid", "nume", "latime_ceruta", "octeti",
+                    "sursa", "licenta", "licenta_url", "autor"]
+
+
+def antet_user_agent():
+	"""User-Agent-ul cerut de Wikimedia, la fel pentru SPARQL și pentru Commons."""
+	return "Mindkeep-fabrica/0.1 (%s) Python-urllib" % contactul()
+
+
+def curata_html(text):
+	"""HTML → text simplu. Commons dă autorul ca `<a href=…>SKopp</a>`.
+
+	Nu e o curățenie de lene: câmpul `Artist` e HTML prin definiție (poate avea
+	legături, `<span>`-uri, `<br>`), iar în fapt trebuie să ajungă un nume pe
+	care jocul îl poate scrie sub imagine. Un `<a>` ajuns în JSON s-ar vedea ca
+	atare pe ecran.
+	"""
+	fara_taguri = re.sub(r"<[^>]+>", " ", str(text))
+	intreg = html.unescape(fara_taguri)
+	return re.sub(r"\s+", " ", intreg).strip()
+
+
+def nume_de_fisier_commons(uri):
+	"""`…/Special:FilePath/Flag%20of%20France.svg` → `Flag of France.svg`.
+
+	Wikidata întoarce imaginile ca URL-uri codate, nu ca titluri. Decodarea se
+	face aici o dată, ca să nu ajungă `%20` nici în cache, nici în cererile către
+	API.
+	"""
+	bucata = str(uri).rsplit("/", 1)[-1]
+	nume = urllib.parse.unquote(bucata).replace("_", " ").strip()
+	if not nume:
+		raise Eroare("URI de imagine pe care nu-l recunosc: %r" % uri)
+	return nume
+
+
+def _cere_atribuire(cod):
+	"""`True` / `False` pentru licențele cunoscute, `None` pentru orice altceva.
+
+	`None` NU înseamnă „probabil e în regulă". Cine cheamă funcția OPREȘTE pe el.
+	"""
+	if cod == "cc0" or cod.startswith("pd"):
+		return False
+	if cod.startswith("cc-by"):
+		return True
+	return None
+
+
+def clasifica_licenta(ext, nume):
+	"""Metadatele Commons → licența, sau o oprire.
+
+	CE OPREȘTE, și de ce fiecare:
+
+	1. Fără cod de licență. Un fișier fără licență declarată nu e „probabil
+	   liber", e un fișier despre care nu se știe nimic.
+	2. Un cod pe care lista albă nu-l cunoaște. Aici intră „fair use",
+	   „non-commercial", licențele personalizate — și, important, orice cod nou
+	   apărut pe Commons după ziua de azi.
+	3. O licență care cere atribuire, dar fără autor sau fără linkul licenței.
+	   Atribuirea CC cere autorul, sursa ȘI licența; cu unul din ele lipsă,
+	   creditul afișat de joc ar fi incomplet — adică o încălcare politicoasă.
+	"""
+	cod = str(ext.get("License", {}).get("value", "")).strip().lower()
+	scurt = curata_html(ext.get("LicenseShortName", {}).get("value", ""))
+	url = str(ext.get("LicenseUrl", {}).get("value", "")).strip()
+	autor = curata_html(ext.get("Artist", {}).get("value", ""))
+
+	if not cod:
+		raise Eroare(
+			"%s nu are cod de licență în metadatele Commons.\n"
+			"  Fabrica refuză orice fișier fără licență clară. Scoate rândul sau "
+			"caută alt fișier." % nume)
+
+	atribuire = _cere_atribuire(cod)
+	if atribuire is None:
+		raise Eroare(
+			"%s are licența %r, pe care nu o cunosc (%s).\n"
+			"  Lista albă e `pd*`, `cc0`, `cc-by*`. Dacă licența asta e într-adevăr\n"
+			"  bună de folosit, adaug-o în `_cere_atribuire` — dinadins nu se poate\n"
+			"  trece peste ea dintr-un flag de linie de comandă."
+			% (nume, cod, scurt or "fără nume scurt"))
+
+	if atribuire:
+		if not autor:
+			raise Eroare("%s are licența %s, care cere atribuire, dar Commons nu dă "
+			             "niciun autor." % (nume, scurt or cod))
+		if not url:
+			raise Eroare("%s are licența %s, care cere atribuire, dar Commons nu dă "
+			             "linkul licenței." % (nume, scurt or cod))
+
+	return {
+		"cod": cod,
+		# Numele scurt e ce se afișează. Unde lipsește, codul e mai bun decât
+		# nimic — dar nu se inventează o etichetă frumoasă peste un cod necitit.
+		"licenta": scurt or cod,
+		"licenta_url": url,
+		"autor": autor,
+		"cere_atribuire": atribuire,
+	}
+
+
+def metadate_commons(nume_fisiere, latime, reia=False, refuzate=None):
+	"""Licența, autorul și adresa miniaturii, pentru fiecare fișier. Din cache.
+
+	Cache-ul se completează, nu se rescrie: un fișier deja cunoscut, cerut la
+	aceeași lățime, nu mai atinge rețeaua. `reia=True` (adică `--reincarca`)
+	împrospătează DOAR fișierele cerute acum, ca să nu șteargă intrările altui
+	tabel.
+
+	Lățimea intră în condiție fiindcă `thumburl` depinde de ea. Un cache care
+	n-ar ține minte parametrul cu care a fost umplut e un cache care într-o zi
+	îți dă un fișier de altă mărime fără să spună nimic.
+
+	`refuzate` e un dicționar `nume fișier → motiv`, scris de tabel: fișiere
+	despre care AM DECIS deja că nu intră (o licență pe care n-o pot judeca).
+	Ele nu opresc scriptul, dar nici nu se strecoară: ies cu un câmp `refuzat`,
+	iar cine cheamă funcția le lasă afară și le tipărește.
+
+	DE CE LISTA STĂ LA TABEL ȘI MECANISMUL AICI: „ce fișier refuz" e o decizie
+	despre conținut, ca `EXCLUSE`; „cum se ține minte un refuz și cum se verifică
+	el" e formă, deci se scrie o dată. Aceeași despărțire ca la `DUBLURI`.
+	"""
+	cache = {}
+	if os.path.exists(CALE_CACHE_COMMONS):
+		with io.open(CALE_CACHE_COMMONS, encoding="utf-8") as f:
+			cache = json.load(f)
+
+	refuzate = refuzate or {}
+	de_cerut = []
+	for nume in nume_fisiere:
+		vechi = cache.get(nume)
+		if reia or vechi is None or int(vechi.get("latime_ceruta", 0)) != int(latime):
+			de_cerut.append(nume)
+		elif (nume in refuzate) != ("refuzat" in vechi):
+			# Lista de refuzuri s-a schimbat de la ultima rulare. Intrarea din cache
+			# răspunde la altă întrebare decât cea pusă acum, deci nu se folosește.
+			de_cerut.append(nume)
+
+	if de_cerut:
+		antet = antet_user_agent()
+		print("    cer metadate de la Commons: %d fișiere, %d cereri  (User-Agent: %s)"
+		      % (len(de_cerut),
+		         (len(de_cerut) + CATE_PE_CERERE - 1) // CATE_PE_CERERE, antet))
+		for i in range(0, len(de_cerut), CATE_PE_CERERE):
+			lot = de_cerut[i:i + CATE_PE_CERERE]
+			for nume, intrare in _un_lot_de_metadate(
+					lot, latime, antet, refuzate or {}).items():
+				cache[nume] = intrare
+			time.sleep(0.2)
+
+		os.makedirs(os.path.dirname(CALE_CACHE_COMMONS), exist_ok=True)
+		with io.open(CALE_CACHE_COMMONS, "w", encoding="utf-8", newline="\n") as f:
+			json.dump(cache, f, ensure_ascii=False, indent="\t", sort_keys=True)
+			f.write("\n")
+		print("    scris cache: %s (%d fișiere cunoscute)"
+		      % (relativ(CALE_CACHE_COMMONS), len(cache)))
+	else:
+		print("    metadatele Commons: toate %d din cache (%s)"
+		      % (len(nume_fisiere), relativ(CALE_CACHE_COMMONS)))
+
+	return {nume: cache[nume] for nume in nume_fisiere}
+
+
+def _un_lot_de_metadate(lot, latime, antet, refuzate):
+	"""O singură cerere la API-ul Commons, pentru până la 50 de titluri."""
+	parametri = {
+		"action": "query",
+		"format": "json",
+		"formatversion": "2",
+		"prop": "imageinfo",
+		"iiprop": "url|extmetadata|size|mime",
+		"iiurlwidth": str(int(latime)),
+		"titles": "|".join("File:%s" % n for n in lot),
+	}
+	cerere = urllib.request.Request(
+		API_COMMONS + "?" + urllib.parse.urlencode(parametri),
+		headers={"User-Agent": antet, "Accept": "application/json"},
+	)
+	try:
+		with urllib.request.urlopen(cerere, timeout=120) as raspuns:
+			date = json.loads(raspuns.read().decode("utf-8"))
+	except urllib.error.HTTPError as e:
+		raise Eroare("Commons a răspuns %d %s la metadate" % (e.code, e.reason))
+	except urllib.error.URLError as e:
+		raise Eroare("nu ajung la Commons: %s" % e.reason)
+
+	# API-ul normalizează titlurile (`_` → spațiu) și urmează redirectările. Fără
+	# hărțile astea, un fișier redenumit pe Commons ar apărea ca „lipsă", deși
+	# există — iar scriptul ar opri pentru un motiv fals.
+	inapoi = {}
+	for cheie in ("normalized", "redirects"):
+		for r in date.get("query", {}).get(cheie, []):
+			inapoi[r["to"]] = inapoi.get(r["from"], r["from"])
+
+	iesite = {}
+	for pagina in date.get("query", {}).get("pages", []):
+		titlu = pagina.get("title", "")
+		original = inapoi.get(titlu, titlu)
+		nume = original[len("File:"):] if original.startswith("File:") else original
+
+		if pagina.get("missing"):
+			raise Eroare("Commons nu are fișierul %r, deși Wikidata trimite la el.\n"
+			             "  Ori a fost șters, ori declarația arată greșit." % nume)
+
+		info = (pagina.get("imageinfo") or [{}])[0]
+
+		# UN REFUZ DECLARAT SE VERIFICĂ, NU SE CREDE PE CUVÂNT. Dacă fișierul a
+		# primit între timp o licență pe care lista albă o cunoaște, declarația
+		# nu mai are acoperire — și o declarație fără acoperire e la fel de rea ca
+		# una lipsă, doar mai tăcută. Deci atunci se OPREȘTE.
+		if nume in refuzate:
+			try:
+				buna = clasifica_licenta(info.get("extmetadata", {}), nume)
+			except Eroare:
+				buna = None
+			if buna is not None:
+				raise Eroare(
+					"%s e declarat refuzat, dar acum are licența %r, pe care o "
+					"recunosc.\n  Șterge declarația de refuz — altfel rămâne acolo "
+					"un motiv care nu mai e adevărat." % (nume, buna["licenta"]))
+			iesite[nume] = {
+				"refuzat": refuzate[nume],
+				"latime_ceruta": int(latime),
+				"licenta": curata_html(info.get("extmetadata", {})
+				                       .get("LicenseShortName", {}).get("value", "")),
+				"luat_la": time.strftime("%Y-%m-%dT%H:%M:%S"),
+			}
+			continue
+
+		licenta = clasifica_licenta(info.get("extmetadata", {}), nume)
+		thumb = info.get("thumburl") or info.get("url")
+		if not thumb:
+			raise Eroare("Commons nu dă nicio adresă de fișier pentru %r" % nume)
+
+		iesite[nume] = dict(licenta, **{
+			"latime_ceruta": int(latime),
+			"thumburl": thumb,
+			"sursa": info.get("descriptionurl")
+			         or ("https://commons.wikimedia.org/wiki/File:%s"
+			             % urllib.parse.quote(nume.replace(" ", "_"))),
+			"mime_original": info.get("mime", ""),
+			"octeti_original": int(info.get("size", 0)),
+			"luat_la": time.strftime("%Y-%m-%dT%H:%M:%S"),
+		})
+
+	lipsa = sorted(set(lot) - set(iesite))
+	if lipsa:
+		raise Eroare("Commons n-a răspuns pentru: %s" % ", ".join(lipsa))
+	return iesite
+
+
+def descarca_fisierul(url, cale):
+	"""Un fișier de pe Commons, pe disc. Întoarce câți octeți a scris."""
+	cerere = urllib.request.Request(url, headers={"User-Agent": antet_user_agent()})
+	try:
+		with urllib.request.urlopen(cerere, timeout=120) as raspuns:
+			continut = raspuns.read()
+	except urllib.error.HTTPError as e:
+		raise Eroare("Commons a răspuns %d %s la %s" % (e.code, e.reason, url))
+	except urllib.error.URLError as e:
+		raise Eroare("nu ajung la %s: %s" % (url, e.reason))
+	if not continut:
+		raise Eroare("fișier gol de la %s" % url)
+	os.makedirs(os.path.dirname(cale), exist_ok=True)
+	# `wb`, fără `newline`: e un PNG, nu text. Pe Windows, un fișier binar scris
+	# în mod text ar primi un `\r` în mijlocul octeților și n-ar mai fi o imagine.
+	with io.open(cale, "wb") as f:
+		f.write(continut)
+	return len(continut)
+
+
+def citeste_manifestul(cale):
+	"""Manifestul de credite → dicționar pe numele fișierului. Gol dacă nu există."""
+	if not os.path.exists(cale):
+		return {}
+	lista = citeste_lista(cale, "manifestul de credite")
+	return {str(r.get("fisier", "")): r for r in lista}
+
+
+def scrie_manifestul(cale, randuri):
+	"""Manifestul, un rând pe fișier, sortat pe numele fișierului.
+
+	Sortat, nu în ordinea descărcării: altfel o rulare care adaugă trei steaguri
+	ar da un diff în care nu se vede care sunt cele trei.
+	"""
+	scrie_pe_rand(cale, sorted(randuri, key=lambda r: r["fisier"]), ORDINEA_MANIFEST)
+
+
+def cat_cantareste(dosar, sarim_sufixele=()):
+	"""`(câte fișiere, câți octeți)` sub un dosar. Doar pentru raport.
+
+	`sarim_sufixele` există ca să se poată măsura CONȚINUTUL separat de
+	contabilitatea din jurul lui: după ce Godot importă, lângă fiecare PNG stă un
+	`.import`, iar o cifră care le adună pe amândouă răspunde la altă întrebare
+	decât „cât cântăresc imaginile".
+	"""
+	cate, octeti = 0, 0
+	for radacina, _, fisiere in os.walk(dosar):
+		for f in fisiere:
+			if any(f.endswith(s) for s in sarim_sufixele):
+				continue
+			cate += 1
+			octeti += os.path.getsize(os.path.join(radacina, f))
+	return cate, octeti
 
 
 # ─────────────────────────────────────────────────────────────
@@ -790,6 +1139,11 @@ class Argumente(object):
 		self.masoara = "--masoara" in argv
 		self.propune = "--propune" in argv
 		self.reincarca = "--reincarca" in argv
+		# Descărcarea imaginilor e un flag SEPARAT de `--scrie` dinadins: una
+		# atinge `data/`, cealaltă `assets/`. O rulare care scrie întrebări n-are
+		# de ce să plece la Commons, iar una care aduce fișiere n-are de ce să
+		# atingă conținutul.
+		self.descarca = "--descarca" in argv
 		self.samanta = random.randrange(1, 10 ** 6)
 		for arg in argv[1:]:
 			if arg.startswith("--seed="):

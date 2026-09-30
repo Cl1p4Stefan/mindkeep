@@ -11,6 +11,10 @@
     python tools/fabrica/capitale.py               raportul întreg, cu tot cu ciorne
     python tools/fabrica/capitale.py --scrie       scrie perechea din data/trivia_gen/,
                                                    FĂRĂ ciorne
+    python tools/fabrica/capitale.py --descarca    aduce steagurile lipsă în
+                                                   assets/imagini_fapte/steaguri/ și
+                                                   rescrie manifestul de credite.
+                                                   Nu atinge data/
     python tools/fabrica/capitale.py --reincarca   reia din rețea și rescrie cache-ul
 
 Al treilea tabel al fabricii, pentru domeniul `geografie`. Coloanele scrise de
@@ -18,7 +22,9 @@ mână stau în `tools/fabrica/date/tari.json`; ce e comun cu celelalte tabele, 
 `tools/fabrica/comun.py`.
 
     data/trivia_gen/capitale_intrebari.json   întrebările
-    data/trivia_gen/capitale_fapte.json       faptele, cu note goale și codul ISO
+    data/trivia_gen/capitale_fapte.json       faptele, cu note goale și lista de imagini
+    assets/imagini_fapte/steaguri/            steagurile, PNG la 320 px
+    assets/imagini_fapte/steaguri/credite.json  licența și autorul fiecăruia
 
 ─────────────────────────────────────────────────────────────
 CINE INTRĂ: STAT MEMBRU ONU, NU „STAT SUVERAN"
@@ -131,6 +137,7 @@ o capitală mutată n-are voie să rupă identitatea întrebării.
 import math
 import os
 import re
+import time
 
 import comun
 from comun import Eroare
@@ -144,6 +151,28 @@ CALE_PROPUSE = os.path.join(comun.DOSAR_DATE, "tari_propuse.json")
 
 CALE_INTREBARI = os.path.join(comun.DOSAR_GEN, "capitale_intrebari.json")
 CALE_FAPTE = os.path.join(comun.DOSAR_GEN, "capitale_fapte.json")
+
+# Steagurile: fișierele, și manifestul de credite de lângă ele. Vezi
+# `DOSAR_IMAGINI` din `comun.py` pentru de ce e un dosar separat de `assets/art`.
+CALE_STEAGURI = os.path.join(comun.DOSAR_IMAGINI, "steaguri")
+CALE_CREDITE = os.path.join(CALE_STEAGURI, "credite.json")
+
+# Calea scrisă în fapt, relativă la `DOSAR_IMAGINI`. Se folosește cu „/", nu cu
+# separatorul sistemului: e o cale care ajunge în JSON și pe care o citește
+# Godot, nu una de disc.
+SUBDOSAR_STEAGURI = "steaguri"
+
+# Lățimea miniaturii cerute de la Commons.
+#
+# MĂSURAT înainte de a fi aleasă: la 320 px, cele 140 de steaguri cântăresc
+# 0,59 MB cu totul (median 2,2 KB, maxim 30,7 KB — San Marino, care are stemă).
+# Alternativa, SVG-ul original, ar fi fost capcana: un tricolor are 300 de
+# octeți în SVG, dar un steag cu stemă are între 1 și 5 MB de contururi, adică
+# mai mult decât tot dosarul de aici. Deci rasterizarea o face Commons, o dată.
+#
+# Schimbarea cifrei nu cere nimic de mână: manifestul ține lățimea cu care s-a
+# descărcat fiecare fișier, iar `--descarca` reia doar ce nu se potrivește.
+LATIME_STEAG = 320
 
 DOMENIU = "geografie"
 
@@ -161,7 +190,8 @@ ONU = "Q1065"
 # „ciorne" în loc de „ciorna" ar fi o ciornă care ajunge în joc, fără ca nimic să
 # spună nimic.
 CAMPURI = {"qid", "tara", "genitiv", "capitala", "nivel", "ciorna",
-           "capitala_qid", "tara_de_mana", "capitala_de_mana", "cod_iso_de_mana"}
+           "capitala_qid", "tara_de_mana", "capitala_de_mana", "cod_iso_de_mana",
+           "steag_de_mana"}
 
 # O capitală mutată DUPĂ anul ăsta intră în lista „de citit cu ochiul". Nu
 # oprește nimic — doar îmi spune să mă uit. Vezi `arata_mutarile_recente`.
@@ -181,6 +211,29 @@ EXCLUSE = {
 	"Q801": "Israel — capitala e contestată internațional (Ierusalim / Tel Aviv). "
 	        "Un joc de învățare n-are voie să prezinte un răspuns disputat ca pe un "
 	        "fapt simplu, cu un singur buton verde.",
+}
+
+# ─────────────────────────────────────────────────────────────
+# STEAGURI REFUZATE, CU MOTIVUL SCRIS
+#
+# Tot o DECIZIE, tot lângă `EXCLUSE`, din același motiv: un steag lipsă dintr-un
+# dosar de 126 nu se observă niciodată.
+#
+# Diferența față de `EXCLUSE`: aici nu iese țara din tabel, iese doar imaginea.
+# Omanul are în continuare întrebări și va avea hartă — n-are steag.
+#
+# Și se VERIFICĂ singur: dacă fișierul primește pe Commons o licență pe care
+# lista albă o cunoaște, `comun.metadate_commons` OPREȘTE și cere ștergerea
+# rândului de aici. Un refuz al cărui motiv nu mai e adevărat e la fel de rău ca
+# un refuz lipsă, doar mai tăcut. (Aceeași regulă ca la „fantomele" din `DUBLURI`
+# și ca la `cod_iso_de_mana` devenit inutil.)
+# ─────────────────────────────────────────────────────────────
+STEAGURI_REFUZATE = {
+	"Flag of Oman.svg":
+		"licența e „Open Government Licence – Oman 1.0”, cu „Copyrighted: True”. "
+		"Nu e nici domeniu public, nici Creative Commons, deci lista albă n-o "
+		"cunoaște — iar eu n-am cum să judec singur o licență guvernamentală "
+		"străină. Omanul rămâne fără steag; întrebările și harta lui nu sunt atinse.",
 }
 
 # Întrebări din fișierul scris de mână care spun deja ce-am vrea să generăm.
@@ -254,6 +307,27 @@ SELECT ?tara ?capitala ?ro ?en ?de_cand WHERE {
 """ % ONU
 
 
+# STEAGURILE, prin nodul de declarație — exact ca la capitale, și din exact
+# același motiv: „steagul de azi" e o însușire a DECLARAȚIEI, nu a fișierului.
+# Cu scurtătura `wdt:P41`, Ungaria ar veni cu 28 de steaguri și Afganistanul cu
+# 24, iar scriptul n-ar avea de unde să știe care e al zilei de azi.
+#
+# Rangul se CERE, nu se filtrează aici. Vezi `alege_steagul` pentru ce se face
+# cu el — și de ce măsurătoarea a schimbat răspunsul.
+INTEROGARE_STEAGURI = """
+SELECT ?tara ?steag ?rang ?de_cand ?pana_cand WHERE {
+  ?tara p:P463 ?membru .
+  ?membru ps:P463 wd:%s .
+  FILTER NOT EXISTS { ?membru pq:P582 ?a_ieșit }
+  ?tara p:P41 ?decl .
+  ?decl ps:P41 ?steag .
+  ?decl wikibase:rank ?rang .
+  OPTIONAL { ?decl pq:P580 ?de_cand . }
+  OPTIONAL { ?decl pq:P582 ?pana_cand . }
+}
+""" % ONU
+
+
 def ia_datele(reincarca):
 	"""Cele două răspunsuri brute, din cache sau din rețea.
 
@@ -268,6 +342,15 @@ def ia_datele(reincarca):
 				"cache-ul e luat cu criteriul de intrare %s, iar acum ONU e %s.\n"
 				"  Criteriul stă în interogare, deci schimbarea lui cere --reincarca."
 				% (pachet.get("criteriu", "?"), ONU))
+		# UN CÂMP LIPSĂ NU E UN „NU" — lecția de la statele istorice, aplicată la
+		# propriul cache. Un cache luat înainte să existe interogarea steagurilor
+		# n-are cheia „steaguri", iar `.get("steaguri", {})` ar fi însemnat tăcut
+		# „nicio țară n-are steag" în loc de „n-am întrebat încă".
+		if "steaguri" not in pachet:
+			raise Eroare(
+				"cache-ul e luat înainte să existe interogarea steagurilor.\n"
+				"  Rulează cu --reincarca. (Fără oprirea asta, toate țările ar "
+				"apărea ca „fără steag”, ceea ce nu e același lucru.)")
 		return pachet
 
 	print("  Reîncarc din rețea.")
@@ -275,6 +358,7 @@ def ia_datele(reincarca):
 		"criteriu": ONU,
 		"tari": comun.interogheaza(INTEROGARE_TARI, "țările membre ONU"),
 		"capitale": comun.interogheaza(INTEROGARE_CAPITALE, "capitalele actuale"),
+		"steaguri": comun.interogheaza(INTEROGARE_STEAGURI, "steagurile"),
 	})
 
 
@@ -370,6 +454,101 @@ def desfa_capitalele(pachet):
 	return capitale
 
 
+def desfa_steagurile(pachet):
+	"""Rândurile → un dicționar QID de țară → lista declarațiilor de steag.
+
+	Nu se filtrează și nu se alege nimic aici — la fel ca `desfa_capitalele`.
+	Desfacerea citește, alegerea decide, și sunt două funcții fiindcă sunt două
+	feluri de greșeli.
+	"""
+	steaguri = {}
+	for r in comun.legaturi(pachet["steaguri"]):
+		qid = comun.qid_din(r["tara"]["value"])
+		steaguri.setdefault(qid, []).append({
+			"fisier": comun.nume_de_fisier_commons(r["steag"]["value"]),
+			# `…#PreferredRank` → `PreferredRank`.
+			"rang": r["rang"]["value"].rsplit("#", 1)[-1],
+			"de_cand": r.get("de_cand", {}).get("value", "")[:4],
+			"pana_cand": r.get("pana_cand", {}).get("value", "")[:4],
+		})
+	return steaguri
+
+
+def alege_steagul(ale_lui, de_mana, unde, nume, probleme):
+	"""Steagul de azi al unei țări, din toate declarațiile ei.
+
+	Întoarce `(fișier, cum s-a ales)`, sau `(None, …)` dacă nu se poate.
+
+	─────────────────────────────────────────────────────────────
+	DE CE RANGUL PREFERAT DECIDE AICI, DEȘI LA CAPITALE NU EXISTĂ NIMIC SIMILAR
+
+	Planul meu era să NU ating rangul: „mai multe steaguri actuale" să oprească,
+	exact ca „mai multe capitale actuale", iar alegerea s-o scriu de mână. Apoi
+	am măsurat, și măsurătoarea a spus altceva:
+
+	    cu mai multe steaguri „actuale":  21 țări (18 cu două, 2 cu trei, 1 cu patru)
+	    decise de rangul preferat:        21
+	    rămase nehotărâte:                 0
+
+	Capitalele multiple erau 8, și 0 în tabel. Steagurile multiple sunt 21 din
+	140 — iar 21 de rânduri scrise de mână nu sunt o listă citită, sunt exact
+	ce spune sesiunea CAPITALE despre excepțiile declarate mecanic: nu se mai
+	citesc.
+
+	Și, mai important, cele 21 nu sunt ambiguități reale. Ce rămâne pe dinafară
+	sunt VARIANTE (`Flag of Belgium (civil).svg`, `War flag of Peru.svg`,
+	`Flag of Bulgaria (digital).svg`, `Civil Ensign of Switzerland (Pantone).svg`)
+	și steaguri ISTORICE a căror declarație n-are dată de sfârșit scrisă
+	(`Flag of Rhodesia (1968–1979).svg` la Zimbabwe, `Flag of Sudan (1956–1970).svg`
+	la Sudan) — adică fix lecția „un câmp lipsă nu e un NU", a treia oară.
+
+	Rangul preferat nu e o euristică inventată de mine. E o declarație explicită
+	a editorilor Wikidata: „dintre valorile astea, asta e cea curentă". Diferența
+	față de „ia prima" e diferența dintre a citi o afirmație și a ghici.
+
+	CE ȚINE ALEGEREA CINSTITĂ, fiindcă tot e o alegere făcută de cod:
+
+	  1. Zero sau două rânguri preferate → OPREȘTE. Azi pornește de 0 ori, dar e
+	     garda fără de care pasul de sus ar fi o presupunere.
+	  2. Toate cele 21 se tipăresc LA FIECARE RULARE, cu ce au lăsat pe dinafară
+	     (`arata_steagurile`). Un mecanism care alege în locul meu trebuie să fie
+	     zgomotos, ca orice câmp care ocolește o verificare.
+	  3. Scena F6 le arată cu ochiul. Un steag vechi ales de un rang greșit e o
+	     greșeală pe care nicio validare n-o poate prinde.
+	"""
+	if de_mana:
+		gasit = next((d for d in ale_lui if d["fisier"] == de_mana), None)
+		if gasit is None:
+			probleme.append(
+				"%s (%s): steag_de_mana %r nu e printre declarațiile de steag de la "
+				"Wikidata.\n      Are: %s"
+				% (unde, nume, de_mana,
+				   ", ".join(sorted({d["fisier"] for d in ale_lui})) or "niciuna"))
+			return None, ""
+		return de_mana, "de mână"
+
+	# Cad declarațiile depreciate și cele cu dată de sfârșit. Pentru rest, „fără
+	# dată de sfârșit" nu e o garanție, e doar lipsa unei contraziceri.
+	actuale = [d for d in ale_lui
+	           if d["rang"] != "DeprecatedRank" and not d["pana_cand"]]
+	if not actuale:
+		return None, ""
+
+	distincte = sorted({d["fisier"] for d in actuale})
+	if len(distincte) == 1:
+		return distincte[0], "singurul"
+
+	preferate = sorted({d["fisier"] for d in actuale if d["rang"] == "PreferredRank"})
+	if len(preferate) == 1:
+		return preferate[0], "rang preferat"
+
+	probleme.append(
+		"%s (%s): %d steaguri actuale, dintre care %d cu rang preferat — rangul nu "
+		"decide.\n      %s\n      Alege tu cu \"steag_de_mana\": \"Flag of ….svg\"."
+		% (unde, nume, len(distincte), len(preferate), "\n      ".join(distincte)))
+	return None, ""
+
+
 # ─────────────────────────────────────────────────────────────
 # PROPUNERILE
 # ─────────────────────────────────────────────────────────────
@@ -449,7 +628,7 @@ def propune(tari, capitale, alese_deja):
 # MĂSURĂTOAREA
 # ─────────────────────────────────────────────────────────────
 
-def masoara(tari, capitale, istorice, lista):
+def masoara(tari, capitale, istorice, lista, steaguri):
 	"""Ce se poate afla din date, înainte să se aleagă metoda pentru nivel.
 
 	Aceeași disciplină ca la celelalte două tabele: se MĂSOARĂ înainte, nu se
@@ -485,6 +664,26 @@ def masoara(tari, capitale, istorice, lista):
 			ale_lui = capitale.get(qid, [])
 			print("      %-26s %s" % (nume, ", ".join(
 				"%s (%s)" % (c["ro"] or c["en"] or "?", c["qid"]) for c in ale_lui) or "—"))
+
+	print("\n  ── CÂTE STEAGURI „ACTUALE” ARE FIECARE ──")
+	print("    („actual” = fără rang depreciat și fără dată de sfârșit — adică")
+	print("     fără nicio contrazicere SCRISĂ, ceea ce nu e același lucru.)")
+	pe_cate_steaguri = {}
+	decide_rangul = 0
+	for qid in tari:
+		actuale = {d["fisier"] for d in steaguri.get(qid, [])
+		           if d["rang"] != "DeprecatedRank" and not d["pana_cand"]}
+		pe_cate_steaguri.setdefault(len(actuale), []).append(qid)
+		if len(actuale) > 1:
+			preferate = {d["fisier"] for d in steaguri.get(qid, [])
+			             if d["rang"] == "PreferredRank" and not d["pana_cand"]}
+			if len(preferate) == 1:
+				decide_rangul += 1
+	for cate in sorted(pe_cate_steaguri):
+		print("    %d steaguri: %d țări" % (cate, len(pe_cate_steaguri[cate])))
+	multe = sum(len(v) for c, v in pe_cate_steaguri.items() if c > 1)
+	print("    dintre cele cu mai multe, rangul preferat decide: %d din %d"
+	      % (decide_rangul, multe))
 
 	print("\n  ── DISTRIBUȚIA EDIȚIILOR WIKIPEDIA ──")
 	toate = [t["editii"] for t in tari.values()]
@@ -548,7 +747,7 @@ def cod_iso_ales(de_la_wikidata, de_mana, unde, nume, probleme):
 	return de_la_wikidata
 
 
-def leaga_tabelul(alese, tari, capitale):
+def leaga_tabelul(alese, tari, capitale, steaguri):
 	"""`tari.json` + datele de la Wikidata → lista de lucru. Strict la fiecare pas.
 
 	Adună TOATE neconcordanțele înainte să se oprească. Un script care cade la
@@ -577,6 +776,7 @@ def leaga_tabelul(alese, tari, capitale):
 		cap_de_mana = bool(rand.get("capitala_de_mana", False))
 		cap_pinuit = str(rand.get("capitala_qid", "")).strip()
 		iso_de_mana = str(rand.get("cod_iso_de_mana", "")).strip()
+		steag_de_mana = str(rand.get("steag_de_mana", "")).strip()
 
 		if not re.fullmatch(r"Q\d+", qid):
 			probleme.append("%s: qid %r nu arată a QID" % (unde, qid))
@@ -660,6 +860,10 @@ def leaga_tabelul(alese, tari, capitale):
 					% (unde, nume, nume_cap, aleasa["qid"], aleasa["ro"]))
 				continue
 
+		# ── STEAGUL: care e al zilei de azi ──
+		steag, cum_ales = alege_steagul(steaguri.get(qid, []), steag_de_mana,
+		                                unde, nume, probleme)
+
 		lista.append({
 			"qid": qid,
 			"tara": nume,
@@ -682,6 +886,15 @@ def leaga_tabelul(alese, tari, capitale):
 			"iso": cod_iso_ales(t["iso"], iso_de_mana, unde, nume, probleme),
 			"iso_wd": t["iso"],
 			"iso_de_mana": iso_de_mana,
+			# Numele fișierului de pe Commons, nu calea de pe disc. Traducerea în
+			# cale se face într-un singur loc, `cale_de_steag`.
+			"steag": steag or "",
+			"steag_cum": cum_ales,
+			"steag_de_mana": steag_de_mana,
+			# Toate declarațiile, ca `arata_steagurile` să poată tipări ce a lăsat
+			# alegerea pe dinafară. Fără ele, „rang preferat" ar fi un cuvânt, nu
+			# o listă pe care o pot citi.
+			"steaguri_wd": steaguri.get(qid, []),
 			"editii": t["editii"],
 			"continente": set(t["continente"]),
 			"vecini": set(t["vecini"]),
@@ -715,7 +928,8 @@ def arata_numele_de_mana(lista):
 	face o greșeală de tipar să dispară.
 	"""
 	de_mana = [e for e in lista
-	           if e["tara_de_mana"] or e["capitala_de_mana"] or e["iso_de_mana"]]
+	           if e["tara_de_mana"] or e["capitala_de_mana"] or e["iso_de_mana"]
+	           or e["steag_de_mana"]]
 	if de_mana:
 		print("\n  ── PUSE DE MÂNĂ (%d rânduri) ──" % len(de_mana))
 		for e in de_mana:
@@ -728,6 +942,8 @@ def arata_numele_de_mana(lista):
 			if e["iso_de_mana"]:
 				print("    cod ISO   %-4s (%-20s) Wikidata: %s"
 				      % (e["iso_de_mana"], e["tara"], e["iso_wd"] or "— (fără cod)"))
+			if e["steag_de_mana"]:
+				print("    steag     %-26s  (%s)" % (e["steag_de_mana"], e["tara"]))
 
 	# ȚĂRILE CARE AȘTEAPTĂ UN COD. Nu o oprire: codul e pentru hărțile de la pasul
 	# 13, nu pentru întrebare, iar o țară fără hartă e tot o țară bună de întrebat.
@@ -760,6 +976,171 @@ def arata_mutarile_recente(lista):
 	print("\n  ── CAPITALE MUTATE DUPĂ %d (de citit cu ochiul) ──" % ANUL_RECENT)
 	for e in recente:
 		print("    %-26s %-20s din %d" % (e["tara"], e["capitala"], e["de_cand"]))
+
+
+# ─────────────────────────────────────────────────────────────
+# STEAGURILE
+# ─────────────────────────────────────────────────────────────
+
+def cale_de_steag(qid):
+	"""`(calea scrisă în fapt, calea de pe disc)` pentru steagul unei țări.
+
+	NUMELE E QID-UL, nu codul ISO. `fr.png` s-ar citi mai frumos într-un listing,
+	dar codul ISO are deja o excepție (Danemarca îl are doar de mână) și la
+	tablouri sau portrete nu există deloc — deci ar fi o regulă cu excepții încă
+	de la al doilea fel de imagine. QID-ul e identitatea pe care fabrica o
+	folosește peste tot și care nu se schimbă niciodată. Citibilitatea o dă
+	`credite.json` de lângă fișiere, care ține numele omenesc.
+
+	Calea din fapt folosește „/" și e RELATIVĂ la `assets/imagini_fapte/`. Vezi
+	`fapte_cu_imagini` pentru de ce nu e o cale `res://` întreagă.
+	"""
+	nume = "%s.png" % qid
+	return "%s/%s" % (SUBDOSAR_STEAGURI, nume), os.path.join(CALE_STEAGURI, nume)
+
+
+def arata_steagurile(lista):
+	"""Tot ce s-a ales singur sau n-a ieșit, tipărit la fiecare rulare.
+
+	Trei liste, și fiecare există dintr-un alt motiv:
+
+	  ALESE DE RANG — mecanismul din `alege_steagul` alege în locul meu, deci
+	  trebuie să fie zgomotos. Se tipărește și CE A LĂSAT PE DINAFARĂ, fiindcă
+	  aia e informația din care se vede dacă alegerea e bună.
+
+	  REFUZATE — decizii scrise, ca `EXCLUSE`. Se citesc la fiecare rulare, nu
+	  doar în ziua în care s-au scris.
+
+	  FĂRĂ STEAG — nu oprește nimic (o țară fără steag e tot o țară bună de
+	  întrebat), dar se vede, ca lista să se scurteze, nu să se uite. Aceeași
+	  formă ca „FĂRĂ COD ISO".
+	"""
+	de_rang = [e for e in lista if e["steag_cum"] == "rang preferat"]
+	if de_rang:
+		print("\n  ── STEAG ALES DE RANGUL PREFERAT (%d) ──" % len(de_rang))
+		print("    Codul a ales, nu eu. Coloana din dreapta e ce a lăsat pe dinafară.")
+		for e in sorted(de_rang, key=lambda x: x["tara"]):
+			actuale = {d["fisier"] for d in e["steaguri_wd"]
+			           if d["rang"] != "DeprecatedRank" and not d["pana_cand"]}
+			lasate = sorted(actuale - {e["steag"]})
+			print("    %-24s %-36s ← %s"
+			      % (e["tara"][:24], e["steag"][:36], "; ".join(lasate)[:46]))
+
+	refuzate = [e for e in lista if e["steag"] in STEAGURI_REFUZATE]
+	if refuzate:
+		print("\n  ── STEAGURI REFUZATE DE MÂNĂ (%d) ──" % len(refuzate))
+		for e in sorted(refuzate, key=lambda x: x["tara"]):
+			print("    %s — %s" % (e["tara"], e["steag"]))
+			print("      %s" % STEAGURI_REFUZATE[e["steag"]])
+
+	fara = [e for e in lista if not e["steag"]]
+	if fara:
+		print("\n  ── FĂRĂ STEAG ÎN WIKIDATA (%d) ──" % len(fara))
+		print("    Întrebările ies normal; ce lipsește e imaginea de la pasul 13.")
+		for e in sorted(fara, key=lambda x: x["tara"]):
+			print("    %-26s %s" % (e["tara"], e["qid"]))
+
+
+def pune_metadatele_steagurilor(lista, reincarca):
+	"""Atârnă licența și autorul de fiecare rând, ca faptele să le poată purta.
+
+	Se face ÎNAINTE de construire, nu în timpul ei: o probă uscată trebuie să
+	arate exact faptele pe care le-ar scrie `--scrie`, iar dacă metadatele ar
+	veni abia la descărcare, proba ar arăta fapte fără licență, adică o minciună
+	ieftină.
+	"""
+	# SE CER ȘI CELE REFUZATE. Prima variantă le sărea — părea firesc, „oricum nu
+	# le folosesc" — și cu asta murea tăcut tocmai verificarea că refuzul mai e
+	# justificat: `metadate_commons` nu poate observa că o licență s-a schimbat
+	# pentru un fișier despre care nu întreabă. Găsită rupând codul dinadins.
+	cerute = sorted({e["steag"] for e in lista if e["steag"]})
+	meta = comun.metadate_commons(cerute, LATIME_STEAG, reia=reincarca,
+	                              refuzate=STEAGURI_REFUZATE) if cerute else {}
+	for e in lista:
+		e["steag_meta"] = meta.get(e["steag"])
+
+
+def descarca_steagurile(lista, qiduri_cu_fapt, reincarca):
+	"""Aduce fișierele care lipsesc și rescrie manifestul de credite.
+
+	SE DESCARCĂ DOAR CE CERE UN FAPT. Cele 13 țări sărite („se răspund singure")
+	rămân în tabel ca distractori, dar n-au fapt, deci n-au unde să-și arate
+	steagul — iar un fișier la care nu duce nimic e greutate curată în exportul
+	web. Verificatorul numără orfanii tocmai fiindcă altfel nu s-ar vedea
+	niciodată.
+
+	O RULARE NOUĂ NU DESCARCĂ DIN NOU. Manifestul ține lățimea fiecărui fișier;
+	se reia doar ce lipsește de pe disc sau ce are altă lățime decât `LATIME_STEAG`.
+	"""
+	vrute = [e for e in lista
+	         if e["steag"] and e["qid"] in qiduri_cu_fapt
+	         and e["steag"] not in STEAGURI_REFUZATE]
+	print("\n  ── DESCĂRCAREA STEAGURILOR ──")
+	print("    cerute de fapte: %d" % len(vrute))
+
+	meta = comun.metadate_commons(sorted({e["steag"] for e in vrute}),
+	                              LATIME_STEAG, reia=reincarca,
+	                              refuzate=STEAGURI_REFUZATE)
+
+	vechi = comun.citeste_manifestul(CALE_CREDITE)
+	randuri = []
+	adus, sarit = 0, 0
+	for e in sorted(vrute, key=lambda x: x["qid"]):
+		relativa, pe_disc = cale_de_steag(e["qid"])
+		m = meta[e["steag"]]
+		cunoscut = vechi.get(relativa)
+		destul = (cunoscut is not None
+		          and int(cunoscut.get("latime_ceruta", 0)) == LATIME_STEAG
+		          and os.path.exists(pe_disc))
+		if destul:
+			octeti = os.path.getsize(pe_disc)
+			sarit += 1
+		else:
+			octeti = comun.descarca_fisierul(m["thumburl"], pe_disc)
+			adus += 1
+			if adus % 20 == 0:
+				print("    … aduse %d" % adus)
+			time.sleep(0.1)
+		randuri.append({
+			"fisier": relativa,
+			"qid": e["qid"],
+			"nume": e["tara"],
+			"latime_ceruta": LATIME_STEAG,
+			"octeti": octeti,
+			"sursa": m["sursa"],
+			"licenta": m["licenta"],
+			"licenta_url": m["licenta_url"],
+			"autor": m["autor"],
+		})
+
+	comun.scrie_manifestul(CALE_CREDITE, randuri)
+	print("    aduse acum: %d   erau deja pe disc: %d" % (adus, sarit))
+	print("    manifest: %s (%d rânduri)" % (comun.relativ(CALE_CREDITE), len(randuri)))
+
+	# ORFANII: fișiere rămase de la o rulare veche, la care nu mai duce nimic.
+	# Se raportează, nu se șterg — un script care șterge singur din `assets/` e
+	# un script căruia îi dai pe mână arta într-o zi în care are un bug.
+	pastrate = {r["fisier"] for r in randuri} | {"%s/credite.json" % SUBDOSAR_STEAGURI}
+	pe_disc = set()
+	if os.path.isdir(CALE_STEAGURI):
+		pe_disc = {"%s/%s" % (SUBDOSAR_STEAGURI, f) for f in os.listdir(CALE_STEAGURI)
+		           if not f.endswith(".import")}
+	orfani = sorted(pe_disc - pastrate)
+	if orfani:
+		print("    ORFANI (fișiere la care nu duce niciun fapt): %d" % len(orfani))
+		for o in orfani:
+			print("      %s" % o)
+
+	# Imaginile, fără fișierele `.import` pe care le pune Godot lângă ele: alea
+	# sunt contabilitatea editorului, nu conținut, și nu pleacă așa în export.
+	cate, octeti = comun.cat_cantareste(CALE_STEAGURI, (".import",))
+	print("\n    DOSARUL: %d fișiere, %.2f MB  (%s)"
+	      % (cate, octeti / 1048576.0, comun.relativ(CALE_STEAGURI)))
+	cu_atribuire = [r for r in randuri if r["licenta_url"]]
+	print("    licențe: %d în domeniul public, %d cer atribuire"
+	      % (len(randuri) - len(cu_atribuire), len(cu_atribuire)))
+	for r in cu_atribuire:
+		print("      %-24s %-18s %s" % (r["nume"], r["licenta"], r["autor"][:40]))
 
 
 # ─────────────────────────────────────────────────────────────
@@ -1112,21 +1493,87 @@ def construieste(lista):
 	# spre un fapt inexistent, iar de la al 180-lea avertisment consola nu mai e un
 	# loc unde se citește ceva.
 	#
-	# `cod_iso` NU SE FOLOSEȘTE AZI. E cheia pentru hărțile desenate din date de la
-	# pasul 13 („Află mai multe"), iar motivul pentru care se pune ACUM e că altfel
-	# ar însemna, peste trei luni, o rulare `--reincarca` pe tot tabelul ca să
-	# recuperez un câmp care era deja sub mână. `_incarca_fapte` din `trivia.gd`
-	# cere doar `id` și `nota`, deci un câmp în plus nu strică nimic azi.
 	folosite = {q["fapt"] for q in intrebari}
-	fapte = [{
+	fapte = [fapt_cu_imagini(e) for e in lista if "wd:%s" % e["qid"] in folosite]
+
+	return intrebari, fapte, {"sarite": sarite}
+
+
+def fapt_cu_imagini(e):
+	"""Un fapt, cu lista lui de imagini.
+
+	─────────────────────────────────────────────────────────────
+	DE CE O LISTĂ, ȘI NU UN CÂMP `steag`
+
+	Un câmp `steag` ar fi fost cel mai simplu lucru de scris azi și cel mai scump
+	peste trei luni: ziua în care un fapt de artă vrea un tablou, popup-ul
+	„Află mai multe" ar fi trebuit să învețe un al doilea câmp; ziua în care vrea
+	și un portret al autorului, un al treilea. E exact forma pe care principiul
+	din `CLAUDE.md` o refuză la discipline — o disciplină nouă trebuie să fie un
+	rând în tabel, nu o ramură nouă în cod.
+
+	Cu o listă, desenatorul de la pasul 13 are O SINGURĂ buclă: pentru fiecare
+	intrare, se uită la `tip` și desenează. Un fel de imagine nou = un caz în
+	plus acolo, zero schimbări în datele deja scrise.
+
+	DE CE HARTA E ÎN LISTĂ, IAR `cod_iso` NU MAI STĂ LA VÂRFUL FAPTULUI. Dacă
+	rămânea sus, Practice ar fi trebuit să întrebe două lucruri diferite: „ce
+	imagini ai în listă?" ȘI „ai cumva un cod ISO, ca să-ți desenez și o hartă?".
+	Adică fix ramura pe care lista există ca s-o evite.
+
+	CELE DOUĂ FELURI, deosebite prin ce LIPSEȘTE:
+
+	    {"tip": "harta", "cod": "FR"}          desenată de joc: fără fișier, fără
+	                                           licență, fără greutate
+	    {"tip": "steag", "fisier": …, …}       fișier real: licență obligatorie
+
+	Regula pe care o pune verificatorul: o intrare cu `fisier` TREBUIE să aibă
+	licență; una fără fișier n-are voie să aibă. Așa, „am uitat licența" e o
+	eroare, nu o omisiune tăcută.
+
+	DE CE CALEA E RELATIVĂ (`steaguri/Q142.png`) ȘI NU `res://assets/…`. Rădăcina
+	e scrisă o dată în Python și o dată în GDScript. Cu calea întreagă în JSON,
+	ziua în care mut dosarul ar cere regenerarea faptelor fabricate — și
+	repararea DE MÂNĂ a celor din `data/fapte_trivia.json`, care nu se
+	regenerează. Un fapt scris de mână e argumentul care decide.
+	"""
+	imagini = []
+
+	# HARTA: nu se desenează azi. Câmpul intră acum fiindcă altfel ar fi
+	# însemnat, peste trei luni, o rulare `--reincarca` pe tot tabelul ca să
+	# recuperez un cod care era deja sub mână.
+	if e["iso"]:
+		imagini.append({"tip": "harta", "cod": e["iso"]})
+
+	if e["steag"] and e["steag"] not in STEAGURI_REFUZATE:
+		relativa, _ = cale_de_steag(e["qid"])
+		m = e["steag_meta"]
+		intrare = {
+			"tip": "steag",
+			"fisier": relativa,
+			"licenta": m["licenta"],
+			"autor": m["autor"],
+			"sursa": m["sursa"],
+		}
+		# Linkul licenței se scrie DOAR unde licența îl cere. La domeniul public
+		# n-ar arăta spre nimic de respectat, iar un câmp gol în 126 de fapte ar
+		# fi zgomot care ascunde exact cele câteva rânduri care contează.
+		if m["licenta_url"]:
+			intrare["licenta_url"] = m["licenta_url"]
+		imagini.append(intrare)
+
+	fapt = {
 		"id": "wd:%s" % e["qid"],
 		"nota": "",
 		"surse": ["https://www.wikidata.org/wiki/%s" % e["qid"]],
 		"verificat": False,
-		"cod_iso": e["iso"],
-	} for e in lista if "wd:%s" % e["qid"] in folosite]
-
-	return intrebari, fapte, {"sarite": sarite}
+	}
+	# Lista lipsește cu totul unde n-are nimic în ea. `_incarca_fapte` din
+	# `trivia.gd` cere doar `id` și `nota`, deci un câmp în plus nu strică — dar
+	# un câmp GOL ar fi o promisiune pe care faptul n-o ține.
+	if imagini:
+		fapt["imagini"] = imagini
+	return fapt
 
 
 # ─────────────────────────────────────────────────────────────
@@ -1139,6 +1586,7 @@ def main():
 	pachet = ia_datele(arg.reincarca)
 	tari, istorice = desfa_tarile(pachet)
 	capitale = desfa_capitalele(pachet)
+	steaguri = desfa_steagurile(pachet)
 	print("  Țări de azi, membre ONU: %d  (plus %d state istorice, scoase)"
 	      % (len(tari), len(istorice)))
 
@@ -1149,12 +1597,17 @@ def main():
 		print("\n══ DOAR PROPUS. Nimic scris în data/. ══\n")
 		return 0
 
-	lista_toata = leaga_tabelul(alese, tari, capitale)
+	lista_toata = leaga_tabelul(alese, tari, capitale, steaguri)
 
 	if arg.masoara:
-		masoara(tari, capitale, istorice, lista_toata)
+		masoara(tari, capitale, istorice, lista_toata, steaguri)
 		print("\n══ DOAR MĂSURAT. Nimic scris. ══\n")
 		return 0
+
+	# METADATELE STEAGURILOR, înainte de construire: faptele le poartă, deci
+	# trebuie să existe și la o probă uscată. Din cache, fără rețea, în afară de
+	# prima rulare — la fel ca răspunsurile SPARQL.
+	pune_metadatele_steagurilor(lista_toata, arg.reincarca)
 
 	# Ciornele se scot ÎNAINTE de construire, nu la sfârșit: distractorii se aleg
 	# dintre țările alese, deci o ciornă lăsată în listă ar ajunge distractor
@@ -1164,6 +1617,7 @@ def main():
 	comun.raporteaza_ciornele(lista_toata, ciorne, len(lista), arg.scrie, "țări")
 	arata_numele_de_mana(lista_toata)
 	arata_mutarile_recente(lista_toata)
+	arata_steagurile(lista_toata)
 
 	intrebari_mana = comun.citeste_lista(comun.CALE_MANA, "întrebările scrise de mână")
 	# DUBLURILE SE CAUTĂ PE TABELUL ÎNTREG, ciorne incluse. Suprapunerea cu
@@ -1225,14 +1679,38 @@ def main():
 	if intrebari:
 		comun.mostre(intrebari, 15, arg.samanta)
 
+	qiduri_cu_fapt = {f["id"].split(":", 1)[1] for f in fapte}
+
+	if arg.descarca:
+		descarca_steagurile(lista_toata, qiduri_cu_fapt, arg.reincarca)
+		print("\n══ DOAR DESCĂRCAT. Nimic scris în data/. ══\n")
+		return 0
+
 	if not arg.scrie:
 		print("\n══ PROBĂ USCATĂ. Rulează cu --scrie ca să scrie fișierele. ══\n")
 		return 0
 
+	# UN FAPT N-ARE VOIE SĂ TRIMITĂ LA UN FIȘIER CARE NU EXISTĂ. Verificatorul din
+	# Godot prinde și el asta, dar prea târziu: între `--scrie` și verificare e un
+	# commit, iar un commit cu fapte care arată în gol e un commit pe care-l
+	# repari, nu unul pe care-l faci. Deci oprirea e aici.
+	lipsa = []
+	for f in fapte:
+		for img in f.get("imagini", []):
+			if "fisier" not in img:
+				continue
+			pe_disc = os.path.join(comun.DOSAR_IMAGINI, img["fisier"].replace("/", os.sep))
+			if not os.path.exists(pe_disc):
+				lipsa.append("%s → %s" % (f["id"], img["fisier"]))
+	if lipsa:
+		raise Eroare(
+			"%d fapte trimit la fișiere care nu sunt pe disc.\n  Rulează întâi cu "
+			"--descarca.\n  - %s" % (len(lipsa), "\n  - ".join(lipsa[:10])))
+
 	comun.scrie_lista(CALE_INTREBARI, intrebari,
 	                  ["id", "fapt", "text", "variante", "corect", "nivel", "categorie"], "nivel")
 	comun.scrie_lista(CALE_FAPTE, fapte,
-	                  ["id", "nota", "surse", "verificat", "cod_iso"], "")
+	                  ["id", "nota", "surse", "verificat", "imagini"], "")
 	print("\n  Scris:")
 	print("    %s" % comun.relativ(CALE_INTREBARI))
 	print("    %s" % comun.relativ(CALE_FAPTE))

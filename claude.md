@@ -30,6 +30,33 @@ Detaliile complete sunt în **Mindkeep-Pitch-Document.md** — atașează-l ală
 
 ---
 
+## Unelte
+
+**Godot 4.7.2:** `C:\Users\stefa\Downloads\Godot_v4.7.2-stable_win64.exe\Godot_v4.7.2-stable_win64.exe`
+(varianta cu consolă, pentru ieșire în terminal: `…_console.exe` din același dosar).
+
+```bash
+# importă resursele noi (după ce fabrica a adus fișiere în assets/)
+"$GODOT" --headless --path . --import
+
+# verificările, fără fereastră; ies cu cod 1 dacă pică ceva
+"$GODOT" --headless --path . res://tools/verifica_trivia.tscn
+```
+
+Verificările care se judecă **cu ochiul** se pornesc cu F6 din editor —
+`tools/verifica_steaguri.tscn` (toate steagurile într-o grilă) e una din ele.
+
+**Fabrica de întrebări** (Python, nu are nevoie de Godot):
+
+```bash
+python tools/fabrica/capitale.py             # probă uscată, nu scrie nimic
+python tools/fabrica/capitale.py --masoara   # numai măsurători
+python tools/fabrica/capitale.py --descarca  # aduce imaginile în assets/
+python tools/fabrica/capitale.py --scrie     # scrie în data/trivia_gen/
+```
+
+---
+
 ## Decizii deja luate — nu le redeschide fără motiv
 
 Fiecare din astea a fost dezbătută și decisă conștient. Dacă propui altceva, spune de ce.
@@ -89,6 +116,9 @@ Decise pe 27 septembrie 2026. Contextul complet e în sesiunea CONȚINUTUL din `
 | **Mici (~400 px) și doar unde adaugă ceva** | Greutatea contează la exportul web: câteva mii de fapte cu câte o poză ar cântări mai mult decât tot restul jocului. Se implementează la pasul 13 |
 | **Criteriul de intrare e o chestiune de fapt, nu o judecată** | Pentru țări: stat membru ONU (`P463`), nu clasa „stat suveran". „Suveran" e o judecată contestată, deci ar fi cerut o decizie de la mine pentru Kosovo, Taiwan, Palestina, Abhazia. Apartenența la ONU e verificabilă și nu e a mea, iar statele cu recunoaștere parțială ies de la sine. Prețul: Vaticanul, observator, nu intră |
 | **Un răspuns disputat nu se prezintă ca fapt simplu** | Israelul e exclus de mână din tabelul capitalelor: capitala lui e contestată internațional. Un joc de învățare n-are voie să pună un răspuns disputat pe un singur buton verde. Excluderea stă scrisă, cu motivul, lângă `DUBLURI`, și OPREȘTE scriptul dacă rândul reapare — altfel ar fi o părere într-un comentariu |
+| **Imaginile unui fapt sunt o LISTĂ, nu un câmp pe fel** | `imagini: [{tip, …}]`. Un câmp `steag` ar fi cerut un al doilea câmp la tablouri și un al treilea la portrete; cu o listă, popup-ul are o singură buclă, iar un fel nou de imagine e un caz în plus în desenator, nu o schimbare în datele deja scrise. De-aia și harta a intrat în listă, iar `cod_iso` a ieșit din vârful faptului: altfel Practice ar fi întrebat două lucruri diferite. Intrarea cu `fisier` cere licență; cea desenată n-are voie s-o aibă |
+| **Lista albă de licențe, nu listă neagră** | O listă neagră apără doar împotriva a ce mi-am imaginat deja; prima licență la care nu m-am gândit trece în tăcere. Se acceptă `pd*`, `cc0`, `cc-by*`; orice altceva OPREȘTE. Un fișier pe care decid totuși să nu-l iau se declară scris, cu motivul — și declarația se verifică singură: dacă licența devine una recunoscută, scriptul oprește și cere ștergerea ei |
+| **Rangul preferat din Wikidata poate alege, dacă măsurătoarea o cere** | La steaguri, 21 din 126 de țări aveau mai multe declarații „actuale", iar rangul preferat le-a decis pe toate 21, fără nicio ambiguitate. 21 de rânduri scrise de mână n-ar fi fost o listă citită. Rangul nu e o euristică inventată de mine, e o afirmație explicită a editorilor — dar alegerea rămâne cinstită doar cu trei lucruri: oprește când rangul NU decide, tipărește toate cele 21 la fiecare rulare (cu ce a lăsat pe dinafară), și există o scenă în care le văd cu ochiul |
 | **Un câmp lipsă în Wikidata nu e un „NU"** | „Fără dată de sfârșit" înseamnă „nu scrie nicăieri că s-a terminat", nu „nu s-a terminat". Așa au intrat 10 state istorice printre cele 193 membre ONU. Orice filtru pe absența unui câmp are nevoie de un al doilea semn, iar cele două se compară înainte să fie crezute |
 
 ## Principii pe care vreau să le aperi

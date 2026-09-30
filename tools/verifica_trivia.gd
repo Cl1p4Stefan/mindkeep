@@ -98,6 +98,25 @@ const CATE_CU_NOTA := 18
 const TRAGERI_ECHILIBRU := 6000
 const TOLERANTA_ECHILIBRU := 0.20
 
+# Rădăcina imaginilor care însoțesc fapte. Aceeași cale e scrisă și în Python, în
+# `comun.DOSAR_IMAGINI`; se repetă fiindcă sunt două limbi, nu fiindcă ar fi două
+# decizii. La pasul 13 se mută lângă desenatorul care chiar încarcă imaginile —
+# azi n-are cine să le ceară, deci nu are ce căuta în `trivia.gd`.
+const DOSAR_IMAGINI := "res://assets/imagini_fapte"
+
+# Felurile de imagine pe care le cunoaște formatul, și dacă fiecare ține un
+# FIȘIER sau se DESENEAZĂ din date. Lista e închisă: un `tip` scris greșit ar fi
+# o imagine care nu apare niciodată, fără nicio eroare nicăieri.
+const TIPURI_DE_IMAGINE := {
+	"harta": false,   # desenată de joc din codul ISO — fără fișier, fără licență
+	"steag": true,    # fișier real, descărcat de fabrică, cu licență
+}
+
+# Unde stau creditele fiecărui dosar de imagini. Cheia e subdosarul.
+const MANIFESTE := {
+	"steaguri": "res://assets/imagini_fapte/steaguri/credite.json",
+}
+
 
 func _ready() -> void:
 	print("\n══ VERIFICAREA CULTURII GENERALE ══\n")
@@ -116,6 +135,7 @@ func _ready() -> void:
 	tot_bun = _echilibrul(intrebari) and tot_bun
 	tot_bun = _sacul(intrebari) and tot_bun
 	tot_bun = _sacurile_nu_se_amesteca(intrebari) and tot_bun
+	tot_bun = _imaginile() and tot_bun
 
 	print("\n══ %s ══\n" % ("TOTUL E BUN" if tot_bun else "SUNT PROBLEME, vezi mai sus"))
 	# Codul de ieșire, ca verificarea să poată fi pusă într-un script care
@@ -670,6 +690,194 @@ func _sacurile_nu_se_amesteca(intrebari: Array) -> bool:
 	return _verdict("%s își ține minte după ce %s s-a golit" % [martor, epuizat],
 		not repetat,
 		"" if not repetat else "%s a ieșit de două ori într-un ciclu" % id_martor)
+
+
+# ─────────────────────────────────────────────────────────────
+# 9. IMAGINILE FAPTELOR
+#
+# DE CE O SECȚIUNE ÎNTREAGĂ PENTRU NIȘTE CÂMPURI CARE NU SE AFIȘEAZĂ ÎNCĂ.
+# Fiindcă exact asta e problema: până la pasul 13 nu există nimic care să le
+# citească, deci o greșeală aici ar sta nevăzută luni de zile și ar ieși la
+# suprafață în ziua în care scriu desenatorul — adică în ziua în care aș crede
+# că bug-ul e în desenator.
+#
+# CE VERIFICĂ, ȘI DE CE FIECARE:
+#
+#   TIPURI CUNOSCUTE. `"tip": "stag"` n-ar da nicio eroare nicăieri: imaginea
+#   pur și simplu n-ar apărea. Lista închisă e singurul loc unde se vede.
+#
+#   FIȘIERUL EXISTĂ. Un fapt care trimite la un PNG lipsă. Se verifică în două
+#   feluri, fiindcă sunt două eșecuri diferite: fișierul pe disc
+#   (`FileAccess`) și resursa importată de Godot (`ResourceLoader`). Al doilea
+#   pică pe un repo proaspăt clonat în care nu s-a deschis încă editorul — și e
+#   bine să se vadă ca atare, nu ca „fișier lipsă".
+#
+#   LICENȚA. Regula pe care o pune formatul: o intrare cu `fisier` TREBUIE să
+#   aibă licență; una fără fișier n-are voie să aibă. Așa, „am uitat licența"
+#   devine o eroare, nu o omisiune tăcută. Iar unde licența cere atribuire
+#   (`licenta_url` scris), autorul nu poate lipsi: atribuirea CC cere autorul,
+#   sursa ȘI licența, nu doar una din ele.
+#
+#   MANIFESTUL SPUNE ACELAȘI LUCRU. Licența stă în două locuri — în fapt,
+#   fiindcă de acolo o citește jocul, și în `credite.json`, fiindcă acolo o
+#   caută un om care se uită la dosar. Duplicarea ar fi un risc de divergență;
+#   comparată la fiecare rulare, devine o probă.
+#
+#   NICIUN FIȘIER ORFAN. Un steag la care nu duce niciun fapt e greutate curată
+#   în exportul web, și e exact genul de lucru care nu se observă niciodată
+#   altfel. (Fabrica îl raportează și ea, dar numai când se rulează cu
+#   `--descarca`; aici se vede la fiecare verificare.)
+#
+# Ce NU verifică, și nici n-ar putea: dacă steagul e CEL BUN. Un steag vechi sau
+# al altei țări trece prin toate verificările de mai sus. Pentru asta există
+# `tools/verifica_steaguri.tscn`, care le arată cu ochiul.
+# ─────────────────────────────────────────────────────────────
+
+func _imaginile() -> bool:
+	print("\n  IMAGINILE FAPTELOR")
+
+	# Faptele se citesc A DOUA OARĂ, brute, de pe disc: `TRIVIA.fapte` ține doar
+	# nota, fiindcă atât îi trebuie luptei. Aceeași mișcare ca la ÎNCĂRCARE.
+	var cai: Array[String] = [TRIVIA.CALE_FAPTE]
+	if TRIVIA.FOLOSESTE_WIKIDATA:
+		cai.append_array(TRIVIA.fisierele_generate("_fapte.json"))
+
+	var probleme: Array[String] = []
+	var cerute := {}          # cale relativă → id-ul faptului care o cere
+	var cate_desenate := 0
+	var cu_atribuire := 0
+	var fapte_cu_imagini := 0
+
+	for cale in cai:
+		for f in Puzzle.citeste_lista_json(cale, "Verificare"):
+			if not (f is Dictionary) or not f.has("imagini"):
+				continue
+			var id_fapt := String(f.get("id", "?"))
+			if not (f["imagini"] is Array):
+				probleme.append("%s: `imagini` nu e o listă" % id_fapt)
+				continue
+			fapte_cu_imagini += 1
+			for img in f["imagini"]:
+				if not (img is Dictionary):
+					probleme.append("%s: o intrare din `imagini` nu e un obiect" % id_fapt)
+					continue
+				var tip := String(img.get("tip", ""))
+				if not TIPURI_DE_IMAGINE.has(tip):
+					probleme.append("%s: tip necunoscut '%s'" % [id_fapt, tip])
+					continue
+
+				var fisier := String(img.get("fisier", ""))
+				var licenta := String(img.get("licenta", ""))
+				var url_licenta := String(img.get("licenta_url", ""))
+				var autor := String(img.get("autor", ""))
+
+				if not TIPURI_DE_IMAGINE[tip]:
+					# DESENATĂ. N-are fișier, deci n-are ce licență să poarte.
+					cate_desenate += 1
+					if fisier != "" or licenta != "":
+						probleme.append("%s: '%s' se desenează, dar are fișier sau licență"
+							% [id_fapt, tip])
+					if tip == "harta" and not _cod_de_tara(String(img.get("cod", ""))):
+						probleme.append("%s: harta are codul '%s', care nu arată a cod ISO"
+							% [id_fapt, String(img.get("cod", ""))])
+					continue
+
+				# FIȘIER REAL.
+				if fisier == "":
+					probleme.append("%s: '%s' cere un fișier, dar n-are niciunul"
+						% [id_fapt, tip])
+					continue
+				cerute[fisier] = {"fapt": id_fapt, "licenta": licenta, "autor": autor}
+				var intreaga := "%s/%s" % [DOSAR_IMAGINI, fisier]
+				if not FileAccess.file_exists(intreaga):
+					probleme.append("%s: fișierul lipsește de pe disc — %s"
+						% [id_fapt, fisier])
+				elif not ResourceLoader.exists(intreaga):
+					probleme.append(("%s: fișierul e pe disc, dar Godot nu l-a importat "
+						+ "— %s (deschide o dată editorul)") % [id_fapt, fisier])
+				if licenta == "":
+					probleme.append("%s: %s n-are licență" % [id_fapt, fisier])
+				if url_licenta != "":
+					# `licenta_url` scris = licența cere atribuire. Fabrica îl pune
+					# numai acolo, tocmai ca să nu fie nevoie de un al doilea câmp
+					# care să spună același lucru cu alte cuvinte.
+					cu_atribuire += 1
+					if autor == "":
+						probleme.append("%s: %s are licența %s, care cere atribuire, dar n-are autor"
+							% [id_fapt, fisier, licenta])
+
+	var tot_bun := true
+	tot_bun = _verdict("fapte cu imagini", probleme.is_empty(),
+		"%d fapte, %d desenate, %d fișiere, %d cu atribuire"
+		% [fapte_cu_imagini, cate_desenate, cerute.size(), cu_atribuire]) and tot_bun
+	if not probleme.is_empty():
+		for p in probleme.slice(0, 8):
+			print("      %s" % p)
+		if probleme.size() > 8:
+			print("      … și încă %d" % (probleme.size() - 8))
+
+	tot_bun = _manifestele(cerute) and tot_bun
+	return tot_bun
+
+
+## Fiecare fișier cerut apare în manifestul lui, cu aceeași licență — și niciun
+## fișier din dosar nu rămâne fără un fapt care să-l ceară.
+func _manifestele(cerute: Dictionary) -> bool:
+	var nepotrivite: Array[String] = []
+	var orfani: Array[String] = []
+	var necunoscute: Array[String] = []
+
+	for subdosar in MANIFESTE:
+		var randuri := Puzzle.citeste_lista_json(MANIFESTE[subdosar], "Verificare")
+		var in_manifest := {}
+		for r in randuri:
+			in_manifest[String(r.get("fisier", ""))] = r
+
+		# Fapt → manifest: aceeași licență și același autor în amândouă locurile.
+		for fisier in cerute:
+			if not fisier.begins_with("%s/" % subdosar):
+				continue
+			if not in_manifest.has(fisier):
+				nepotrivite.append("%s nu e în manifestul %s" % [fisier, subdosar])
+				continue
+			var r: Dictionary = in_manifest[fisier]
+			var din_fapt: Dictionary = cerute[fisier]
+			if String(r.get("licenta", "")) != String(din_fapt["licenta"]):
+				nepotrivite.append("%s: faptul zice licența '%s', manifestul '%s'"
+					% [fisier, din_fapt["licenta"], String(r.get("licenta", ""))])
+			if String(r.get("autor", "")) != String(din_fapt["autor"]):
+				nepotrivite.append("%s: faptul zice autorul '%s', manifestul '%s'"
+					% [fisier, din_fapt["autor"], String(r.get("autor", ""))])
+
+		# Dosar → fapt: fișiere la care nu duce nimic.
+		var dosar := DirAccess.open("%s/%s" % [DOSAR_IMAGINI, subdosar])
+		if dosar == null:
+			necunoscute.append("nu pot deschide dosarul %s" % subdosar)
+			continue
+		for nume in dosar.get_files():
+			# `.import` sunt ale lui Godot, `credite.json` e manifestul însuși.
+			if nume.ends_with(".import") or nume == "credite.json":
+				continue
+			var relativa := "%s/%s" % [subdosar, nume]
+			if not cerute.has(relativa):
+				orfani.append(relativa)
+
+	var tot_bun := true
+	tot_bun = _verdict("fapt ↔ manifest", nepotrivite.is_empty() and necunoscute.is_empty(),
+		_primele(nepotrivite + necunoscute, 4)) and tot_bun
+	tot_bun = _verdict("niciun fișier orfan", orfani.is_empty(),
+		"" if orfani.is_empty() else _primele(orfani, 5)) and tot_bun
+	return tot_bun
+
+
+## Două litere mari, ca „FR". Aceeași formă pe care o cere și fabrica.
+func _cod_de_tara(cod: String) -> bool:
+	if cod.length() != 2:
+		return false
+	for c in cod:
+		if c < "A" or c > "Z":
+			return false
+	return true
 
 
 # ─────────────────────────────────────────────────────────────
