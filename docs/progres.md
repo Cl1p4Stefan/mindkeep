@@ -40,6 +40,40 @@ restul rămâne placeholder. Bucla de luptă e în continuare cea validată, nu 
 
 ---
 
+## NIVELUL URCĂ ÎN PALIERE (30 septembrie 2026) — trei trepte pe nivel, nu una
+
+Dificultatea întrebărilor dintr-un lanț nu mai crește la fiecare treaptă.
+Acum ține un **palier de 3 trepte** pe fiecare nivel:
+
+| trepte | nivel | combo pe care îl construiești |
+|---|---|---|
+| 1, 2, 3 | I | până la „COMBO x3" |
+| 4, 5, 6 | II | de la x4 la x6 |
+| 7 încolo | III | de la x7 |
+
+Înainte era `mini(treapta, NIVEL_MAX)`: la a doua întrebare a lanțului primeai
+deja Nivel II, iar la a treia Nivel III. Un lanț lung n-avea o pantă, avea un
+**perete la început** — și exact acolo e cel mai prost loc pentru el, fiindcă
+n-ai încă nimic acumulat de apărat. Cu paliere, primele răspunsuri construiesc
+combo-ul, iar greul vine când ai deja ceva de pierdut. Prima treaptă critică
+(a 5-a) cade acum în mijlocul Nivelului II, nu în platoul de III.
+
+Nu s-a adăugat nicio ramură: e un singur număr, `TREPTE_PE_NIVEL := 3` în
+`scenes/lupta/lupta.gd`, și o împărțire cu numere întregi în `nivel_treapta()`.
+Dacă la joc se simte că urcă prea repede, se pune 4. Funcția era deja chemată
+dintr-un singur loc, deci n-a fost nevoie să se atingă nici disciplinele, nici
+`puzzle.gd`.
+
+Cronometrul rămâne cum era (`TIMP_PE_NIVEL` = 12 / 12 / 15 secunde, minus o
+secundă pe treaptă, cu podea la 8). Efectul secundar e că presiunea de timp și
+dificultatea întrebării nu mai urcă în același cadru — ceea ce e de dorit: două
+lucruri care se înăspresc simultan se simt ca un zid, nu ca o pantă.
+
+`tools/verifica_trivia.tscn` trece, cu tot cu echilibrul pe domenii la 6000 de
+trageri pe nivel.
+
+---
+
 ## STEAGURILE (30 septembrie 2026) — o formă pentru imaginile faptelor
 
 **Rezultat: 126 de steaguri pe disc, 0,53 MB, toate în domeniul public** — și,

@@ -76,6 +76,14 @@ const RUNDE_RECARCARE := 1      # (doar pentru RECARCARE) câte runde stă bloca
 const NIVEL_MAX := 3            # câte niveluri de DIFICULTATE există (nu câte trepte)
 const CIFRE_ROMANE := ["I", "II", "III"]
 
+# Câte trepte ține un nivel de dificultate înainte ca următorul să preia.
+# Cu 3: treptele 1-3 sunt Nivel I, 4-6 sunt Nivel II, de la 7 încolo Nivel III.
+# Adică nivelul urcă odată cu combo-ul afișat — ajungi la „COMBO x3" cu
+# întrebări ușoare, iar Nivelul II începe exact la întrebarea care te duce la
+# „x4". E un singur număr de reglat, nu o listă de praguri: dacă la joc se
+# simte că nivelul urcă prea repede, pui 4 și ai patru trepte pe nivel.
+const TREPTE_PE_NIVEL := 3
+
 # Daunele fiecărei TREPTE, aplicate imediat ce ai răspuns corect la ea.
 # Lista acoperă primele 3 trepte; de la a 4-a încolo rămâne ultima valoare.
 # Lanțul nu se mai termină de la sine — deci daunele NU mai pot crește la
@@ -1018,11 +1026,24 @@ func _text_combo() -> String:
 	return "COMBO ×%d" % combo_corecte
 
 
-## Ce NIVEL DE DIFICULTATE cere o treaptă. Treptele 1-3 urcă I → II → III;
-## de la a 4-a încolo rămân la III. Nu inventăm niveluri noi de dificultate —
-## presiunea suplimentară vine din cronometru, nu din întrebări imposibile.
+## Ce NIVEL DE DIFICULTATE cere o treaptă. Nivelul urcă la fiecare
+## `TREPTE_PE_NIVEL` trepte: cu 3, treptele 1-3 sunt I, 4-6 sunt II, iar de la
+## 7 încolo rămân la III. Nu inventăm niveluri noi de dificultate — presiunea
+## suplimentară de după treapta a 7-a vine din cronometru, nu din întrebări
+## imposibile.
+##
+## De ce un PALIER și nu o treaptă pe nivel (cum era înainte): la a doua
+## întrebare a unui lanț primeai deja Nivel II, iar la a treia Nivel III. Un
+## lanț lung nu mai avea o pantă, ci un perete la început — cel mai prost loc
+## pentru el, fiindcă acolo n-ai încă nimic acumulat de apărat. Cu trei trepte
+## pe nivel, primele răspunsuri construiesc combo-ul, iar greul vine când ai
+## deja ceva de pierdut.
+##
+## Împărțirea e cu numere întregi, deci retează singură: (treapta - 1) spune
+## câte trepte ai lăsat în urmă, `/ TREPTE_PE_NIVEL` câte paliere complete sunt
+## în ele, iar `+ 1` fiindcă nivelurile se numără de la 1, nu de la 0.
 func nivel_treapta(treapta: int) -> int:
-	return mini(treapta, NIVEL_MAX)
+	return mini((treapta - 1) / TREPTE_PE_NIVEL + 1, NIVEL_MAX)
 
 
 ## E treapta asta o lovitură critică? (a 5-a, a 10-a, a 15-a...)
