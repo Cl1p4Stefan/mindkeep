@@ -1,7 +1,7 @@
 extends Control
 ## VERIFICAREA STEAGURILOR CU OCHIUL — toate, într-o grilă, cu numele sub fiecare.
 ##
-## Se pornește cu F6 din editor, pe `tools/verifica_steaguri.tscn`.
+## Se pornește cu F6 din editor, pe `tools/verificari/verifica_steaguri.tscn`.
 ##
 ## ─────────────────────────────────────────────────────────────
 ## DE CE O SCENĂ, ȘI NU ÎNCĂ UN VERDICT ÎN `verifica_trivia.gd`

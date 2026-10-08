@@ -12,7 +12,7 @@ extends RefCounted
 ## desenează nu calculează. Aici nu e doar curățenie, sunt trei lucruri
 ## concrete:
 ##
-##   1. Verificatorul din `tools/verifica_cifru.gd` poate bate generatorul pe
+##   1. Verificatorul din `tools/verificari/verifica_cifru.gd` poate bate generatorul pe
 ##      1500 de puzzle-uri fără fereastră, fără sunet, fără să construiască un
 ##      singur `Control`. Un generator lipit de scenă n-ar putea fi verificat
 ##      decât pornind jocul și jucând.

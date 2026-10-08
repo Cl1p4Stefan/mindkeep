@@ -2,7 +2,7 @@ extends Node
 ## VERIFICAREA TIPURILOR — bate generatorul de tipuri pe multe semințe.
 ##
 ## Se cheamă din afara jocului, fără fereastră:
-##   godot --headless --path . res://tools/verifica_tipuri.tscn
+##   godot --headless --path . res://tools/verificari/verifica_tipuri.tscn
 ##
 ## ─────────────────────────────────────────────────────────────
 ## DE CE ÎNCĂ O UNEALTĂ, PE LÂNGĂ CELELALTE TREI

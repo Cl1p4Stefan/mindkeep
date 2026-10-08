@@ -2,7 +2,7 @@ extends Node
 ## VERIFICAREA COLȚULUI DE JOS-DREAPTA — nodul împins lângă Boss.
 ##
 ## Se cheamă din afara jocului, fără fereastră:
-##   godot --headless --path . res://tools/verifica_coltul.tscn
+##   godot --headless --path . res://tools/verificari/verifica_coltul.tscn
 ##
 ## E o scenă, nu un `--script`, din același motiv ca `verifica_harta.gd`: fără
 ## autoload-uri, `expeditie.gd` nici nu se compilează.

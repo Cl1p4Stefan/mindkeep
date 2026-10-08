@@ -186,7 +186,7 @@ func _imagine() -> TextureRect:
 ## cutiei e aer transparent. Diferența dintre cele două e uneori de zeci de
 ## pixeli, iar umbra o simte întreagă.
 ##
-## Aceeași socoteală o face și `tools/verifica_podeaua.gd`, ca să poată măsura
+## Aceeași socoteală o face și `tools/verificari/verifica_podeaua.gd`, ca să poată măsura
 ## tălpile fără să pornească umbra. Sunt două locuri, și asta e o datorie mică
 ## asumată: unealta trebuie să poată măsura o scenă în care umbra încă nu
 ## există, altfel n-ar mai fi o verificare independentă.

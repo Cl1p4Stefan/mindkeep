@@ -2,7 +2,7 @@ extends Node
 ## VERIFICAREA PODELEI — stau personajele pe dale, sau plutesc?
 ##
 ## Se cheamă CU fereastră (nu `--headless`), fiindcă face și capturi:
-##   godot --path . res://tools/verifica_podeaua.tscn
+##   godot --path . res://tools/verificari/verifica_podeaua.tscn
 ##
 ## ─────────────────────────────────────────────────────────────
 ## DE CE EXISTĂ FIȘIERUL ĂSTA

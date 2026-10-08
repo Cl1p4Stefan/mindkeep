@@ -43,7 +43,7 @@ extends Control
 ## „panglică" nu apare în fișierul ăsta decât în comentariul de față.
 ##
 ## De ce asta ține drumurile să nu se taie: vezi nota lungă de la
-## `puncte_drum()` din `harta.gd`. Verificarea din `tools/verifica_harta.gd`
+## `puncte_drum()` din `harta.gd`. Verificarea din `tools/verificari/verifica_harta.gd`
 ## numără exact asta, pe aceleași puncte pe care le desenăm aici.
 
 ## Lungimea unei liniuțe și a pauzei dintre ele, în pixeli.

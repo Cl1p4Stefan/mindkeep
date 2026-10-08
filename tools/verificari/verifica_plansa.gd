@@ -2,7 +2,7 @@ extends Node
 ## VERIFICAREA PLANȘELOR — trece prin fiecare hartă desenată și o măsoară.
 ##
 ## Se cheamă din afara jocului, fără fereastră:
-##   godot --headless --path . res://tools/verifica_plansa.tscn
+##   godot --headless --path . res://tools/verificari/verifica_plansa.tscn
 ##
 ## Verifică TOATE fișierele din `data/harti/`, nu doar cea jucată. Motivul e
 ## practic: o planșă pe care n-o joci azi e o planșă pe care o joci peste o lună,

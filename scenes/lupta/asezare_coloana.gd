@@ -211,7 +211,7 @@ func _panou() -> Control:
 
 
 ## Marginea vizibilă dinspre panou, în coordonate de ecran. Nu o folosește
-## nimeni din joc — e pentru `tools/verifica_podeaua.gd`, ca verificarea să
+## nimeni din joc — e pentru `tools/verificari/verifica_podeaua.gd`, ca verificarea să
 ## întrebe nodul unde crede EL că e marginea, în loc să refacă socoteala pe
 ## cont propriu și să confirme o greșeală cu o copie a ei.
 func margine_interioara() -> float:

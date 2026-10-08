@@ -157,7 +157,7 @@ const ODIHNA_FRACTIUNE := 0.35
 ##               fiindcă geometria ei e demonstrată (vezi `harta.gd`). Nu poate
 ##               însă desena UN LOC anume.
 ##   DESENATA  — forma o pui tu, cu mâna, într-un fișier. În schimb, garanția se
-##               mută de la demonstrație la VERIFICARE: `tools/verifica_plansa.gd`.
+##               mută de la demonstrație la VERIFICARE: `tools/verificari/verifica_plansa.gd`.
 ##
 ## Ce NU se schimbă între ele: tipurile nodurilor (Luptă, Elită, Magazin…) se
 ## trag din sămânță în amândouă cazurile, cu aceleași reguli. Planșa dă doar
@@ -333,7 +333,7 @@ const INCERCARI_MAXIME := 200
 ##
 ## Ține `{"incercari": int, "picate": {nume → de_câte_ori}}` de la ultima
 ## chemare a lui `_pune_tipurile()`. NU e stare de expediție și NU se salvează:
-## e un martor lăsat în urmă, ca `tools/verifica_tipuri.gd` să poată spune cât
+## e un martor lăsat în urmă, ca `tools/verificari/verifica_tipuri.gd` să poată spune cât
 ## de greu a ieșit harta.
 ##
 ## De ce aici și nu socotit din nou în unealtă: unealta ar fi trebuit să refacă
@@ -780,7 +780,7 @@ static func _vecinatati(noduri: Array[Dictionary]) -> Array:
 ##      mersul înapoi permis, te poți băga într-un braț al hărții din care
 ##      singura ieșire e chiar nodul pe care tocmai l-ai ars. Pe `harta_01`,
 ##      o simulare cu alegeri la întâmplare se înfunda în 59% din rulări dacă
-##      regula asta lipsea (vezi `tools/verifica_drumuri.gd`).
+##      regula asta lipsea (vezi `tools/verificari/verifica_drumuri.gd`).
 ##
 ##      De ce se REFUZĂ opțiunea, în loc să se detecteze înfundarea când s-a
 ##      produs: fiindcă o înfundare nu se poate repara. Când ai băgat de seamă
@@ -1189,7 +1189,7 @@ func adancimea_bossului() -> int:
 ## Regula e simetrică, și nu din dragoste de simetrie — cele două benzi de la
 ## capete sunt cele înguste în practică, iar marginile le lărgesc pe amândouă.
 ##
-## Cât de înguste, măsurat cu `tools/verifica_eveniment.gd` pe cele două planșe:
+## Cât de înguste, măsurat cu `tools/verificari/verifica_eveniment.gd` pe cele două planșe:
 ##
 ##   BANDA 1 — adâncimea 1 e mereu o Luptă (regula „vecinii startului sunt
 ##   lupte"), deci Evenimentele încep de la 2. Dacă marginea de jos ar cădea în
@@ -1441,7 +1441,7 @@ static func _harta_din_plansa(
 			"spre": spre,
 		})
 
-	# Structura unei PLANȘE nu se verifică aici, ci în `tools/verifica_plansa.gd`,
+	# Structura unei PLANȘE nu se verifică aici, ci în `tools/verificari/verifica_plansa.gd`,
 	# și despărțirea e dinadins. O planșă e conținut scris de mână: se verifică
 	# atunci când o desenezi, cu o unealtă care are voie să-ți spună pe îndelete
 	# ce ai stricat. Jocul, în schimb, trebuie să PORNEASCĂ — un fișier de date
@@ -2279,10 +2279,10 @@ static func _regula_boss_cu_odihna_vecina(
 # schimbă de la o încercare la alta, așa că o reîncercare n-ar repara-o
 # niciodată — ar face doar două sute de pași degeaba.
 #
-# Pentru o PLANȘĂ desenată, aceeași verificare stă în `tools/verifica_plansa.gd`,
+# Pentru o PLANȘĂ desenată, aceeași verificare stă în `tools/verificari/verifica_plansa.gd`,
 # unde o vezi cât desenezi. Distanța minimă dintre noduri e tot acolo, fiindcă e
 # o măsură în PIXELI — iar pixelii unei hărți generate se nasc abia în `harta.gd`
-# și se măsoară în `tools/verifica_harta.gd`. Regula e aceeași în toate trei
+# și se măsoară în `tools/verificari/verifica_harta.gd`. Regula e aceeași în toate trei
 # locurile; doar unealta care o poate măsura diferă.
 # ─────────────────────────────────────────────────────────────
 

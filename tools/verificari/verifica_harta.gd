@@ -2,7 +2,7 @@ extends Node
 ## VERIFICAREA HĂRȚII — rulează generatorul pe multe semințe și numără defecte.
 ##
 ## Se cheamă din afara jocului, fără fereastră:
-##   godot --headless --path . res://tools/verifica_harta.tscn
+##   godot --headless --path . res://tools/verificari/verifica_harta.tscn
 ##
 ## E o SCENĂ, nu un `--script`, dintr-un motiv pe care l-am aflat pe pielea
 ## mea: cu `--script`, Godot nu pornește autoload-urile. `expeditie.gd` se

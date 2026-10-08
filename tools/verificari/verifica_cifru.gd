@@ -2,7 +2,7 @@ extends Node
 ## VERIFICAREA CIFRURILOR — bate generatorul de lacăte pe multe semințe.
 ##
 ## Se cheamă din afara jocului, fără fereastră:
-##   godot --headless --path . res://tools/verifica_cifru.tscn
+##   godot --headless --path . res://tools/verificari/verifica_cifru.tscn
 ##
 ## ─────────────────────────────────────────────────────────────
 ## DE CE ARE NEVOIE LACĂTUL DE O UNEALTĂ A LUI

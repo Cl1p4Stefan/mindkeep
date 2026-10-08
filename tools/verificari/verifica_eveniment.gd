@@ -2,7 +2,7 @@ extends Node
 ## VERIFICAREA EVENIMENTULUI — lacătul pe care ți-l dă harta, nu cel din F6.
 ##
 ## Se cheamă din afara jocului, fără fereastră:
-##   godot --headless --path . res://tools/verifica_eveniment.tscn
+##   godot --headless --path . res://tools/verificari/verifica_eveniment.tscn
 ##
 ## ─────────────────────────────────────────────────────────────
 ## DE CE ÎNCĂ O UNEALTĂ, PE LÂNGĂ `verifica_cifru.gd`

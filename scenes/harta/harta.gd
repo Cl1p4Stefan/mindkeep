@@ -185,7 +185,7 @@ const CARTE_JOS := Vector2(0.850, 0.850)
 const MARGINE_CARTE := 26.0
 
 ## Cât de aproape au voie să ajungă două centre de noduri. Același prag ca în
-## `tools/verifica_harta.gd`: 72 px e distanța la care ajungeau nodurile pe
+## `tools/verificari/verifica_harta.gd`: 72 px e distanța la care ajungeau nodurile pe
 ## harta dreaptă de dinaintea panglicii, adică pragul lui „n-am stricat nimic".
 const DISTANTA_MINIMA_NODURI := 72.0
 
@@ -240,7 +240,7 @@ const INFLUENTA_TRAGERII := 260.0
 ##
 ## AMPLITUDINEA e 0,085 din înălțimea zonei (±34 px pe fereastra implicită) și
 ## nu e aleasă din ochi: e cea mai mare la care toate verificările din
-## `tools/verifica_harta.gd` rămân verzi. Vezi socoteala de la
+## `tools/verificari/verifica_harta.gd` rămân verzi. Vezi socoteala de la
 ## `LATIMI_PANGLICA` — val mai mare înseamnă cotituri mai strânse, iar
 ## cotiturile strânse strivesc nodurile de pe banda dinăuntru.
 const TRASEU_VAL := [
@@ -459,7 +459,7 @@ const PAS_RAZA := 4.0
 ##
 ## ─────────────────────────────────────────────────────────────
 ## DE CE NU POATE FI ORICÂT — TREI LIMITE, TOATE MĂSURATE ÎN
-## `tools/verifica_harta.gd`
+## `tools/verificari/verifica_harta.gd`
 ##
 ## 1. RAZA COTITURII. Cea mai mare abatere laterală a unui nod (jumătate de
 ##    lățime PLUS abaterea organică) trebuie să fie mai mică decât raza celei
@@ -1204,7 +1204,7 @@ func _geometria(zona: Rect2) -> Dictionary:
 	# DE CE NU ȘI PE PANGLICĂ, deși funcția n-ar avea nimic împotrivă: acolo
 	# poziția nu e o alegere, e rezultatul unui sistem cu regulile lui (benzi,
 	# ordinea lor, abaterea potolită ca să nu se inverseze). Măsurat pe 300 de
-	# semințe în `tools/verifica_coltul.gd`, regula ar împinge nodul cu până la
+	# semințe în `tools/verificari/verifica_coltul.gd`, regula ar împinge nodul cu până la
 	# 326 px și l-ar lipi de vecin la fix 72 px — fiindcă panglica își termină
 	# ultimul strat departe de marginea din dreapta, INTENȚIONAT. N-au ieșit
 	# încrucișări, dar un sistem care are deja un răspuns nu are nevoie de al
@@ -2150,7 +2150,7 @@ static func _tras_de_capat(
 ## diferă doar prin `dec`. Dacă unul e lateral deasupra celuilalt la plecare ȘI
 ## la sosire, `dec`-urile lor nu se pot întâlni la mijloc — ar însemna să se
 ## inverseze și apoi să se inverseze la loc, adică să se taie de două ori.
-## Verificarea din `tools/verifica_harta.gd` numără exact asta, pe aceleași
+## Verificarea din `tools/verificari/verifica_harta.gd` numără exact asta, pe aceleași
 ## puncte pe care le desenează jocul.
 ##
 ## Întoarce puncte gata calculate. Pânza desenează liniuțe pe ele și nu are de

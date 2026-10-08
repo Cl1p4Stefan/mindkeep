@@ -46,7 +46,7 @@ extends RefCounted
 ## Nu verifică dacă harta e BUNĂ — dacă se poate ajunge peste tot, dacă drumurile
 ## se taie, dacă nodurile sunt prea apropiate. Aici se verifică doar dacă fișierul
 ## e CITIBIL: câmpurile există, au tipul potrivit, drumurile leagă noduri care
-## există. Restul e treaba lui `tools/verifica_plansa.gd`, dintr-un motiv practic:
+## există. Restul e treaba lui `tools/verificari/verifica_plansa.gd`, dintr-un motiv practic:
 ## o hartă prost desenată trebuie să se vadă la validare, nu să oprească jocul în
 ## mijlocul unei expediții.
 

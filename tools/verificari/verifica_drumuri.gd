@@ -2,7 +2,7 @@ extends Node
 ## VERIFICAREA DRUMURILOR — se poate înfunda o expediție?
 ##
 ## Se cheamă din afara jocului, fără fereastră:
-##   godot --headless --path . res://tools/verifica_drumuri.tscn
+##   godot --headless --path . res://tools/verificari/verifica_drumuri.tscn
 ##
 ## ─────────────────────────────────────────────────────────────
 ## DE CE EXISTĂ FIȘIERUL ĂSTA

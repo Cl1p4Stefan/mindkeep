@@ -6,3 +6,9 @@ export_presets.cfg
 *.translation
 /tools/fabrica/contact.txt
 /tools/fabrica/__pycache__/
+
+# Ieșirile lui `--propune` din fabrică: liste de candidați din care aleg de mână
+# ce intră în tabel. Sunt DOAR SCRISE, niciodată citite de vreun script, și se
+# refac dintr-o comandă. Comise, erau 118 KB de fișier care se schimba la fiecare
+# rulare și pe care nu-l citea nimeni din Git.
+/tools/fabrica/date/*_propuse.json
