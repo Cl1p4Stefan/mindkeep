@@ -116,7 +116,10 @@ CALE_PROPUSE = os.path.join(comun.DOSAR_DATE, "opere_propuse.json")
 CALE_INTREBARI = os.path.join(comun.DOSAR_GEN, "opere_intrebari.json")
 CALE_FAPTE = os.path.join(comun.DOSAR_GEN, "opere_fapte.json")
 
-DOMENIU = "literatura"
+DOMENIU = "arta_literatura"
+
+# Subcategoria. Vezi `comun.SUBCATEGORII` și `docs/plan-continut.md`.
+SUBCATEGORIE = "literatura_universala"
 
 # Relația, din care se compune `id`-ul: `wd:Q12730777:autor:cere_autor`.
 RELATIE = "autor"
@@ -1202,6 +1205,7 @@ def construieste(lista, autori):
 			nivel=e["nivel"],
 			fapt="wd:%s" % e["qid"],
 			domeniu=DOMENIU,
+			subcategorie=SUBCATEGORIE,
 		))
 
 	# ── SENSUL INVERS: o întrebare per autor ──
@@ -1239,6 +1243,7 @@ def construieste(lista, autori):
 			nivel=reprezentanta["nivel"],
 			fapt="wd:%s" % a["qid"],
 			domeniu=DOMENIU,
+			subcategorie=SUBCATEGORIE,
 		))
 
 	intrebari.sort(key=lambda q: (q["nivel"], q["id"]))
@@ -1297,6 +1302,10 @@ def construieste(lista, autori):
 
 def main():
 	arg = comun.argumentele()
+	# O dată, pe constantele tabelului: o subcategorie scrisă greșit aici ar face
+	# ca `trivia.gd` să refuze TOATE întrebările tabelului — s-ar vedea în bilanț,
+	# dar după ce s-a scris fișierul, nu înainte.
+	comun.verifica_subcategoria(DOMENIU, SUBCATEGORIE)
 
 	print("\n══ FABRICA: OPERĂ → AUTOR ══\n")
 
@@ -1395,8 +1404,8 @@ def main():
 		return 0
 
 	comun.scrie_lista(CALE_INTREBARI, intrebari,
-	            ["id", "fapt", "text", "variante", "corect", "nivel", "categorie"], "nivel")
-	comun.scrie_lista(CALE_FAPTE, fapte, ["id", "nota", "surse", "verificat"], "")
+	            comun.ORDINEA_INTREBARII, "nivel")
+	comun.scrie_lista(CALE_FAPTE, fapte, comun.ORDINEA_FAPTULUI, "")
 	print("\n  Scris:")
 	print("    %s" % comun.relativ(CALE_INTREBARI))
 	print("    %s" % comun.relativ(CALE_FAPTE))

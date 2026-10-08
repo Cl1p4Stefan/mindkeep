@@ -6,7 +6,8 @@
 		"variante": ["He", "Hg", "H", "Cl"],
 		"corect": 2,
 		"nivel": 1,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q556:simbol:cere_nume",
@@ -15,7 +16,8 @@
 		"variante": ["heliu", "hidrogen", "mercur", "aluminiu"],
 		"corect": 1,
 		"nivel": 1,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q560:simbol:cere_simbol",
@@ -24,7 +26,8 @@
 		"variante": ["H", "He", "Hg", "Li"],
 		"corect": 1,
 		"nivel": 1,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q560:simbol:cere_nume",
@@ -33,7 +36,8 @@
 		"variante": ["hidrogen", "mercur", "heliu", "oxigen"],
 		"corect": 2,
 		"nivel": 1,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q568:simbol:cere_simbol",
@@ -42,7 +46,8 @@
 		"variante": ["Li", "Au", "C", "Al"],
 		"corect": 0,
 		"nivel": 1,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q568:simbol:cere_nume",
@@ -51,7 +56,8 @@
 		"variante": ["litiu", "titan", "heliu", "siliciu"],
 		"corect": 0,
 		"nivel": 1,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q623:simbol:cere_simbol",
@@ -60,7 +66,8 @@
 		"variante": ["C", "Cu", "Cl", "Ca"],
 		"corect": 0,
 		"nivel": 1,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q623:simbol:cere_nume",
@@ -69,7 +76,8 @@
 		"variante": ["calciu", "carbon", "cupru", "clor"],
 		"corect": 1,
 		"nivel": 1,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q629:simbol:cere_simbol",
@@ -78,7 +86,8 @@
 		"variante": ["Ca", "O", "H", "Au"],
 		"corect": 1,
 		"nivel": 1,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q629:simbol:cere_nume",
@@ -87,7 +96,8 @@
 		"variante": ["hidrogen", "oxigen", "carbon", "neon"],
 		"corect": 1,
 		"nivel": 1,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q654:simbol:cere_simbol",
@@ -96,7 +106,8 @@
 		"variante": ["Ni", "Ne", "N", "Na"],
 		"corect": 1,
 		"nivel": 1,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q654:simbol:cere_nume",
@@ -105,7 +116,8 @@
 		"variante": ["nichel", "neon", "azot", "sodiu"],
 		"corect": 1,
 		"nivel": 1,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q660:simbol:cere_simbol",
@@ -114,7 +126,8 @@
 		"variante": ["Mn", "Mg", "Li", "Pt"],
 		"corect": 1,
 		"nivel": 1,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q660:simbol:cere_nume",
@@ -123,7 +136,8 @@
 		"variante": ["mangan", "magneziu", "mercur", "iod"],
 		"corect": 1,
 		"nivel": 1,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q663:simbol:cere_simbol",
@@ -132,7 +146,8 @@
 		"variante": ["Al", "Au", "Ar", "As"],
 		"corect": 0,
 		"nivel": 1,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q663:simbol:cere_nume",
@@ -141,7 +156,8 @@
 		"variante": ["aur", "aluminiu", "argint", "arsen"],
 		"corect": 1,
 		"nivel": 1,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q670:simbol:cere_simbol",
@@ -150,7 +166,8 @@
 		"variante": ["S", "Sn", "Se", "Si"],
 		"corect": 3,
 		"nivel": 1,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q670:simbol:cere_nume",
@@ -159,7 +176,8 @@
 		"variante": ["sulf", "seleniu", "siliciu", "staniu"],
 		"corect": 2,
 		"nivel": 1,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q682:simbol:cere_simbol",
@@ -168,7 +186,8 @@
 		"variante": ["Si", "Sn", "Se", "S"],
 		"corect": 3,
 		"nivel": 1,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q682:simbol:cere_nume",
@@ -177,7 +196,8 @@
 		"variante": ["sulf", "siliciu", "staniu", "seleniu"],
 		"corect": 0,
 		"nivel": 1,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q688:simbol:cere_simbol",
@@ -186,7 +206,8 @@
 		"variante": ["Cu", "Ca", "Cl", "C"],
 		"corect": 2,
 		"nivel": 1,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q688:simbol:cere_nume",
@@ -195,7 +216,8 @@
 		"variante": ["cupru", "carbon", "calciu", "clor"],
 		"corect": 3,
 		"nivel": 1,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q706:simbol:cere_simbol",
@@ -204,7 +226,8 @@
 		"variante": ["Cu", "Cl", "Ca", "C"],
 		"corect": 2,
 		"nivel": 1,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q706:simbol:cere_nume",
@@ -213,7 +236,8 @@
 		"variante": ["cupru", "carbon", "calciu", "clor"],
 		"corect": 2,
 		"nivel": 1,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q716:simbol:cere_simbol",
@@ -222,7 +246,8 @@
 		"variante": ["Au", "Cu", "Ti", "Ni"],
 		"corect": 2,
 		"nivel": 1,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q716:simbol:cere_nume",
@@ -231,7 +256,8 @@
 		"variante": ["titan", "clor", "litiu", "aluminiu"],
 		"corect": 0,
 		"nivel": 1,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q744:simbol:cere_simbol",
@@ -240,7 +266,8 @@
 		"variante": ["Ne", "Ni", "N", "Na"],
 		"corect": 1,
 		"nivel": 1,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q744:simbol:cere_nume",
@@ -249,7 +276,8 @@
 		"variante": ["neon", "sodiu", "nichel", "azot"],
 		"corect": 2,
 		"nivel": 1,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q753:simbol:cere_simbol",
@@ -258,7 +286,8 @@
 		"variante": ["C", "Cu", "Cl", "Ca"],
 		"corect": 1,
 		"nivel": 1,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q753:simbol:cere_nume",
@@ -267,7 +296,8 @@
 		"variante": ["clor", "carbon", "calciu", "cupru"],
 		"corect": 3,
 		"nivel": 1,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q758:simbol:cere_simbol",
@@ -276,7 +306,8 @@
 		"variante": ["Zn", "Li", "Mg", "Al"],
 		"corect": 0,
 		"nivel": 1,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q758:simbol:cere_nume",
@@ -285,7 +316,8 @@
 		"variante": ["aluminiu", "cupru", "zinc", "titan"],
 		"corect": 2,
 		"nivel": 1,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q1103:simbol:cere_simbol",
@@ -294,7 +326,8 @@
 		"variante": ["C", "Ni", "Ne", "I"],
 		"corect": 3,
 		"nivel": 1,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q1103:simbol:cere_nume",
@@ -303,7 +336,8 @@
 		"variante": ["siliciu", "iod", "sulf", "titan"],
 		"corect": 1,
 		"nivel": 1,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q880:simbol:cere_simbol",
@@ -312,7 +346,8 @@
 		"variante": ["P", "Pb", "Pt", "I"],
 		"corect": 2,
 		"nivel": 1,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q880:simbol:cere_nume",
@@ -321,7 +356,8 @@
 		"variante": ["plumb", "platină", "fosfor", "potasiu"],
 		"corect": 1,
 		"nivel": 1,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q897:simbol:cere_nume",
@@ -330,7 +366,8 @@
 		"variante": ["aluminiu", "argint", "aur", "argon"],
 		"corect": 2,
 		"nivel": 1,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q1098:simbol:cere_simbol",
@@ -339,7 +376,8 @@
 		"variante": ["Cl", "U", "Cu", "H"],
 		"corect": 1,
 		"nivel": 1,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q1098:simbol:cere_nume",
@@ -348,7 +386,8 @@
 		"variante": ["siliciu", "neon", "uraniu", "litiu"],
 		"corect": 2,
 		"nivel": 1,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 
 	{
@@ -358,7 +397,8 @@
 		"variante": ["Bi", "Be", "B", "Br"],
 		"corect": 1,
 		"nivel": 2,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q569:simbol:cere_nume",
@@ -367,7 +407,8 @@
 		"variante": ["brom", "bor", "beriliu", "bismut"],
 		"corect": 2,
 		"nivel": 2,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q618:simbol:cere_simbol",
@@ -376,7 +417,8 @@
 		"variante": ["Ba", "Be", "B", "Br"],
 		"corect": 2,
 		"nivel": 2,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q618:simbol:cere_nume",
@@ -385,7 +427,8 @@
 		"variante": ["beriliu", "bismut", "bariu", "bor"],
 		"corect": 3,
 		"nivel": 2,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q627:simbol:cere_simbol",
@@ -394,7 +437,8 @@
 		"variante": ["Na", "Nd", "N", "Ni"],
 		"corect": 2,
 		"nivel": 2,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q627:simbol:cere_nume",
@@ -403,7 +447,8 @@
 		"variante": ["neon", "neodim", "azot", "nichel"],
 		"corect": 2,
 		"nivel": 2,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q650:simbol:cere_simbol",
@@ -412,7 +457,8 @@
 		"variante": ["F", "Fe", "Sn", "Ba"],
 		"corect": 0,
 		"nivel": 2,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q650:simbol:cere_nume",
@@ -421,7 +467,8 @@
 		"variante": ["fier", "fluor", "fosfor", "kripton"],
 		"corect": 1,
 		"nivel": 2,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q658:simbol:cere_simbol",
@@ -430,7 +477,8 @@
 		"variante": ["N", "Ne", "Ni", "Na"],
 		"corect": 3,
 		"nivel": 2,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q658:simbol:cere_nume",
@@ -439,7 +487,8 @@
 		"variante": ["sodiu", "niobiu", "neodim", "neon"],
 		"corect": 0,
 		"nivel": 2,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q674:simbol:cere_simbol",
@@ -448,7 +497,8 @@
 		"variante": ["Pb", "Pt", "Po", "P"],
 		"corect": 3,
 		"nivel": 2,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q674:simbol:cere_nume",
@@ -457,7 +507,8 @@
 		"variante": ["plumb", "fosfor", "poloniu", "platină"],
 		"corect": 1,
 		"nivel": 2,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q696:simbol:cere_simbol",
@@ -466,7 +517,8 @@
 		"variante": ["Ar", "Ag", "As", "Au"],
 		"corect": 0,
 		"nivel": 2,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q696:simbol:cere_nume",
@@ -475,7 +527,8 @@
 		"variante": ["argint", "arsen", "aluminiu", "argon"],
 		"corect": 3,
 		"nivel": 2,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q703:simbol:cere_simbol",
@@ -484,7 +537,8 @@
 		"variante": ["Kr", "Pb", "P", "K"],
 		"corect": 3,
 		"nivel": 2,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q703:simbol:cere_nume",
@@ -493,7 +547,8 @@
 		"variante": ["kripton", "fier", "wolfram", "potasiu"],
 		"corect": 3,
 		"nivel": 2,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q725:simbol:cere_simbol",
@@ -502,7 +557,8 @@
 		"variante": ["Co", "Cd", "Cr", "C"],
 		"corect": 2,
 		"nivel": 2,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q725:simbol:cere_nume",
@@ -511,7 +567,8 @@
 		"variante": ["cadmiu", "cobalt", "carbon", "crom"],
 		"corect": 3,
 		"nivel": 2,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q731:simbol:cere_simbol",
@@ -520,7 +577,8 @@
 		"variante": ["Mn", "Mg", "Mo", "K"],
 		"corect": 0,
 		"nivel": 2,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q731:simbol:cere_nume",
@@ -529,7 +587,8 @@
 		"variante": ["magneziu", "molibden", "mercur", "mangan"],
 		"corect": 3,
 		"nivel": 2,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q677:simbol:cere_simbol",
@@ -538,7 +597,8 @@
 		"variante": ["F", "Fe", "Sn", "Bi"],
 		"corect": 1,
 		"nivel": 2,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q677:simbol:cere_nume",
@@ -547,7 +607,8 @@
 		"variante": ["fluor", "fosfor", "fier", "bor"],
 		"corect": 2,
 		"nivel": 2,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q740:simbol:cere_simbol",
@@ -556,7 +617,8 @@
 		"variante": ["Co", "Cd", "Cr", "Cs"],
 		"corect": 0,
 		"nivel": 2,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q740:simbol:cere_nume",
@@ -565,7 +627,8 @@
 		"variante": ["cadmiu", "crom", "cupru", "cobalt"],
 		"corect": 3,
 		"nivel": 2,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q871:simbol:cere_simbol",
@@ -574,7 +637,8 @@
 		"variante": ["Ag", "As", "Ar", "Al"],
 		"corect": 1,
 		"nivel": 2,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q871:simbol:cere_nume",
@@ -583,7 +647,8 @@
 		"variante": ["argon", "arsen", "argint", "aur"],
 		"corect": 1,
 		"nivel": 2,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q876:simbol:cere_simbol",
@@ -592,7 +657,8 @@
 		"variante": ["Sn", "S", "Se", "Si"],
 		"corect": 2,
 		"nivel": 2,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q876:simbol:cere_nume",
@@ -601,7 +667,8 @@
 		"variante": ["staniu", "siliciu", "stronțiu", "seleniu"],
 		"corect": 3,
 		"nivel": 2,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q879:simbol:cere_simbol",
@@ -610,7 +677,8 @@
 		"variante": ["Ba", "Bi", "B", "Br"],
 		"corect": 3,
 		"nivel": 2,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q879:simbol:cere_nume",
@@ -619,7 +687,8 @@
 		"variante": ["brom", "bismut", "bariu", "bor"],
 		"corect": 0,
 		"nivel": 2,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q888:simbol:cere_simbol",
@@ -628,7 +697,8 @@
 		"variante": ["Kr", "K", "W", "Pb"],
 		"corect": 0,
 		"nivel": 2,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q888:simbol:cere_nume",
@@ -637,7 +707,8 @@
 		"variante": ["potasiu", "kripton", "azot", "staniu"],
 		"corect": 1,
 		"nivel": 2,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q1090:simbol:cere_simbol",
@@ -646,7 +717,8 @@
 		"variante": ["Ag", "As", "Ar", "Au"],
 		"corect": 0,
 		"nivel": 2,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q1090:simbol:cere_nume",
@@ -655,7 +727,8 @@
 		"variante": ["argon", "arsen", "argint", "aluminiu"],
 		"corect": 2,
 		"nivel": 2,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q1091:simbol:cere_simbol",
@@ -664,7 +737,8 @@
 		"variante": ["Cd", "Co", "Cr", "C"],
 		"corect": 0,
 		"nivel": 2,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q1091:simbol:cere_nume",
@@ -673,7 +747,8 @@
 		"variante": ["cobalt", "crom", "calciu", "cadmiu"],
 		"corect": 3,
 		"nivel": 2,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q1096:simbol:cere_simbol",
@@ -682,7 +757,8 @@
 		"variante": ["Se", "Si", "Sr", "Sn"],
 		"corect": 3,
 		"nivel": 2,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q1096:simbol:cere_nume",
@@ -691,7 +767,8 @@
 		"variante": ["seleniu", "staniu", "sulf", "stibiu"],
 		"corect": 1,
 		"nivel": 2,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q1106:simbol:cere_simbol",
@@ -700,7 +777,8 @@
 		"variante": ["Sn", "Xe", "B", "Ag"],
 		"corect": 1,
 		"nivel": 2,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q1106:simbol:cere_nume",
@@ -709,7 +787,8 @@
 		"variante": ["beriliu", "seleniu", "xenon", "argon"],
 		"corect": 2,
 		"nivel": 2,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q1112:simbol:cere_simbol",
@@ -718,7 +797,8 @@
 		"variante": ["Be", "B", "Ba", "Bi"],
 		"corect": 2,
 		"nivel": 2,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q1112:simbol:cere_nume",
@@ -727,7 +807,8 @@
 		"variante": ["brom", "bor", "bariu", "beriliu"],
 		"corect": 2,
 		"nivel": 2,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q743:simbol:cere_simbol",
@@ -736,7 +817,8 @@
 		"variante": ["K", "W", "P", "Bi"],
 		"corect": 1,
 		"nivel": 2,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q743:simbol:cere_nume",
@@ -745,7 +827,8 @@
 		"variante": ["beriliu", "argon", "wolfram", "bismut"],
 		"corect": 2,
 		"nivel": 2,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q925:simbol:cere_simbol",
@@ -754,7 +837,8 @@
 		"variante": ["H", "Hg", "He", "Mn"],
 		"corect": 1,
 		"nivel": 2,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q925:simbol:cere_nume",
@@ -763,7 +847,8 @@
 		"variante": ["hidrogen", "heliu", "mercur", "wolfram"],
 		"corect": 2,
 		"nivel": 2,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q708:simbol:cere_simbol",
@@ -772,7 +857,8 @@
 		"variante": ["P", "Po", "Pu", "Pb"],
 		"corect": 3,
 		"nivel": 2,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q708:simbol:cere_nume",
@@ -781,7 +867,8 @@
 		"variante": ["poloniu", "plutoniu", "plumb", "platină"],
 		"corect": 2,
 		"nivel": 2,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q942:simbol:cere_simbol",
@@ -790,7 +877,8 @@
 		"variante": ["Bi", "B", "Ba", "Br"],
 		"corect": 0,
 		"nivel": 2,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q942:simbol:cere_nume",
@@ -799,7 +887,8 @@
 		"variante": ["bariu", "beriliu", "bismut", "bor"],
 		"corect": 2,
 		"nivel": 2,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q1128:simbol:cere_simbol",
@@ -808,7 +897,8 @@
 		"variante": ["Ru", "Rb", "Rn", "Ra"],
 		"corect": 3,
 		"nivel": 2,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q1128:simbol:cere_nume",
@@ -817,7 +907,8 @@
 		"variante": ["rubidiu", "rodiu", "radiu", "reniu"],
 		"corect": 2,
 		"nivel": 2,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 
 	{
@@ -827,7 +918,8 @@
 		"variante": ["Sb", "Sr", "Sc", "Sn"],
 		"corect": 2,
 		"nivel": 3,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q713:simbol:cere_nume",
@@ -836,7 +928,8 @@
 		"variante": ["scandiu", "stronțiu", "stibiu", "seleniu"],
 		"corect": 0,
 		"nivel": 3,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q861:simbol:cere_simbol",
@@ -845,7 +938,8 @@
 		"variante": ["Ge", "Sc", "Ga", "Pu"],
 		"corect": 2,
 		"nivel": 3,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q861:simbol:cere_nume",
@@ -854,7 +948,8 @@
 		"variante": ["galiu", "germaniu", "neodim", "poloniu"],
 		"corect": 0,
 		"nivel": 3,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q867:simbol:cere_simbol",
@@ -863,7 +958,8 @@
 		"variante": ["Ge", "Ga", "Cs", "Pu"],
 		"corect": 0,
 		"nivel": 3,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q867:simbol:cere_nume",
@@ -872,7 +968,8 @@
 		"variante": ["galiu", "niobiu", "cesiu", "germaniu"],
 		"corect": 3,
 		"nivel": 3,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q895:simbol:cere_simbol",
@@ -881,7 +978,8 @@
 		"variante": ["Rh", "Re", "Rb", "Rn"],
 		"corect": 2,
 		"nivel": 3,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q895:simbol:cere_nume",
@@ -890,7 +988,8 @@
 		"variante": ["reniu", "rodiu", "ruteniu", "rubidiu"],
 		"corect": 3,
 		"nivel": 3,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q938:simbol:cere_simbol",
@@ -899,7 +998,8 @@
 		"variante": ["Sb", "Sr", "Sc", "Se"],
 		"corect": 1,
 		"nivel": 3,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q938:simbol:cere_nume",
@@ -908,7 +1008,8 @@
 		"variante": ["stronțiu", "scandiu", "stibiu", "staniu"],
 		"corect": 0,
 		"nivel": 3,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q1046:simbol:cere_simbol",
@@ -917,7 +1018,8 @@
 		"variante": ["Nd", "Nb", "Na", "N"],
 		"corect": 1,
 		"nivel": 3,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q1046:simbol:cere_nume",
@@ -926,7 +1028,8 @@
 		"variante": ["neodim", "niobiu", "sodiu", "azot"],
 		"corect": 1,
 		"nivel": 3,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q1053:simbol:cere_simbol",
@@ -935,7 +1038,8 @@
 		"variante": ["Mn", "Mo", "In", "Ge"],
 		"corect": 1,
 		"nivel": 3,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q1053:simbol:cere_nume",
@@ -944,7 +1048,8 @@
 		"variante": ["mangan", "molibden", "mercur", "paladiu"],
 		"corect": 1,
 		"nivel": 3,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q1086:simbol:cere_simbol",
@@ -953,7 +1058,8 @@
 		"variante": ["Re", "Rb", "Rn", "Ru"],
 		"corect": 3,
 		"nivel": 3,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q1086:simbol:cere_nume",
@@ -962,7 +1068,8 @@
 		"variante": ["rubidiu", "reniu", "rodiu", "ruteniu"],
 		"corect": 3,
 		"nivel": 3,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q1087:simbol:cere_simbol",
@@ -971,7 +1078,8 @@
 		"variante": ["Re", "Ru", "Rn", "Rh"],
 		"corect": 3,
 		"nivel": 3,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q1087:simbol:cere_nume",
@@ -980,7 +1088,8 @@
 		"variante": ["rodiu", "ruteniu", "rubidiu", "radon"],
 		"corect": 0,
 		"nivel": 3,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q1089:simbol:cere_simbol",
@@ -989,7 +1098,8 @@
 		"variante": ["Pu", "Pd", "Po", "P"],
 		"corect": 1,
 		"nivel": 3,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q1089:simbol:cere_nume",
@@ -998,7 +1108,8 @@
 		"variante": ["plutoniu", "poloniu", "plumb", "paladiu"],
 		"corect": 3,
 		"nivel": 3,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q1094:simbol:cere_simbol",
@@ -1007,7 +1118,8 @@
 		"variante": ["Ir", "Nb", "Pu", "In"],
 		"corect": 3,
 		"nivel": 3,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q1094:simbol:cere_nume",
@@ -1016,7 +1128,8 @@
 		"variante": ["indiu", "iridiu", "molibden", "paladiu"],
 		"corect": 0,
 		"nivel": 3,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q1099:simbol:cere_simbol",
@@ -1025,7 +1138,8 @@
 		"variante": ["Sc", "Sr", "Sb", "Se"],
 		"corect": 2,
 		"nivel": 3,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q1099:simbol:cere_nume",
@@ -1034,7 +1148,8 @@
 		"variante": ["scandiu", "stibiu", "stronțiu", "seleniu"],
 		"corect": 1,
 		"nivel": 3,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q1100:simbol:cere_simbol",
@@ -1043,7 +1158,8 @@
 		"variante": ["Ta", "Te", "Tl", "Th"],
 		"corect": 1,
 		"nivel": 3,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q1100:simbol:cere_nume",
@@ -1052,7 +1168,8 @@
 		"variante": ["toriu", "tantal", "telur", "taliu"],
 		"corect": 2,
 		"nivel": 3,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q1108:simbol:cere_simbol",
@@ -1061,7 +1178,8 @@
 		"variante": ["Co", "Cr", "Cs", "Cd"],
 		"corect": 2,
 		"nivel": 3,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q1108:simbol:cere_nume",
@@ -1070,7 +1188,8 @@
 		"variante": ["cesiu", "cadmiu", "crom", "cobalt"],
 		"corect": 0,
 		"nivel": 3,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q1388:simbol:cere_simbol",
@@ -1079,7 +1198,8 @@
 		"variante": ["Nb", "Nd", "N", "Na"],
 		"corect": 1,
 		"nivel": 3,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q1388:simbol:cere_nume",
@@ -1088,7 +1208,8 @@
 		"variante": ["niobiu", "sodiu", "azot", "neodim"],
 		"corect": 3,
 		"nivel": 3,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q1123:simbol:cere_simbol",
@@ -1097,7 +1218,8 @@
 		"variante": ["Te", "Tl", "Ta", "Th"],
 		"corect": 2,
 		"nivel": 3,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q1123:simbol:cere_nume",
@@ -1106,7 +1228,8 @@
 		"variante": ["toriu", "telur", "tantal", "taliu"],
 		"corect": 2,
 		"nivel": 3,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q737:simbol:cere_simbol",
@@ -1115,7 +1238,8 @@
 		"variante": ["Rn", "Rh", "Rb", "Re"],
 		"corect": 3,
 		"nivel": 3,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q737:simbol:cere_nume",
@@ -1124,7 +1248,8 @@
 		"variante": ["rodiu", "ruteniu", "radon", "reniu"],
 		"corect": 3,
 		"nivel": 3,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q751:simbol:cere_simbol",
@@ -1133,7 +1258,8 @@
 		"variante": ["Ga", "Ta", "Tl", "Os"],
 		"corect": 3,
 		"nivel": 3,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q751:simbol:cere_nume",
@@ -1142,7 +1268,8 @@
 		"variante": ["cesiu", "telur", "germaniu", "osmiu"],
 		"corect": 3,
 		"nivel": 3,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q877:simbol:cere_simbol",
@@ -1151,7 +1278,8 @@
 		"variante": ["In", "Ir", "Tl", "Po"],
 		"corect": 1,
 		"nivel": 3,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q877:simbol:cere_nume",
@@ -1160,7 +1288,8 @@
 		"variante": ["iridiu", "indiu", "cesiu", "plutoniu"],
 		"corect": 0,
 		"nivel": 3,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q932:simbol:cere_simbol",
@@ -1169,7 +1298,8 @@
 		"variante": ["Tl", "Te", "Ta", "Th"],
 		"corect": 0,
 		"nivel": 3,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q932:simbol:cere_nume",
@@ -1178,7 +1308,8 @@
 		"variante": ["toriu", "tantal", "taliu", "telur"],
 		"corect": 2,
 		"nivel": 3,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q979:simbol:cere_simbol",
@@ -1187,7 +1318,8 @@
 		"variante": ["Pd", "Pu", "Pb", "Po"],
 		"corect": 3,
 		"nivel": 3,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q979:simbol:cere_nume",
@@ -1196,7 +1328,8 @@
 		"variante": ["paladiu", "plutoniu", "plumb", "poloniu"],
 		"corect": 3,
 		"nivel": 3,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q1133:simbol:cere_simbol",
@@ -1205,7 +1338,8 @@
 		"variante": ["Rh", "Rn", "Re", "Ru"],
 		"corect": 1,
 		"nivel": 3,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q1133:simbol:cere_nume",
@@ -1214,7 +1348,8 @@
 		"variante": ["ruteniu", "radon", "rubidiu", "reniu"],
 		"corect": 1,
 		"nivel": 3,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q1115:simbol:cere_simbol",
@@ -1223,7 +1358,8 @@
 		"variante": ["Th", "Te", "Ta", "Tl"],
 		"corect": 0,
 		"nivel": 3,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q1115:simbol:cere_nume",
@@ -1232,7 +1368,8 @@
 		"variante": ["telur", "tantal", "taliu", "toriu"],
 		"corect": 3,
 		"nivel": 3,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q1102:simbol:cere_simbol",
@@ -1241,7 +1378,8 @@
 		"variante": ["Po", "Pu", "Pd", "Pb"],
 		"corect": 1,
 		"nivel": 3,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	},
 	{
 		"id": "wd:Q1102:simbol:cere_nume",
@@ -1250,6 +1388,7 @@
 		"variante": ["paladiu", "poloniu", "plutoniu", "plumb"],
 		"corect": 2,
 		"nivel": 3,
-		"categorie": "stiinta"
+		"subcategorie": "stiinte_exacte",
+		"categorie": "stiinta_tehnologie"
 	}
 ]

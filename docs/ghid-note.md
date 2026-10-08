@@ -1,6 +1,12 @@
-# Ghid pentru notele de Cultură generală
+# Ghid pentru conținutul de Cultură generală
 
 *Scris pe 27 septembrie 2026. Locul lui: `docs/ghid-note.md`, lângă `progres.md`.*
+*Pe 6 octombrie 2026 a primit și definițiile domeniilor — numele fișierului a
+rămas, fiindcă e scris în cod în șapte locuri și nu merită o migrare.*
+
+Ghidul are două părți. Prima spune **în ce domeniu intră o întrebare**; restul,
+numerotat, spune **cum se scrie o notă**. Secțiunile numerotate nu s-au mișcat:
+`trivia.gd` și `da_iduri.py` trimit la ele pe număr.
 
 O **notă** e fraza care apare după ce ai răspuns la o întrebare: în modul
 Practice, la butonul „Află mai multe”; în sumarul luptei, pentru întrebările
@@ -10,6 +16,100 @@ Contractul din `puzzle.gd` are deja câmpul pentru ea: `explicatie`. Trivia îl
 lasă azi gol, iar un comentariu din `puzzle.gd` spune că explicația „nu are,
 deocamdată, un loc unde să fie afișată”. Practice e primul loc care o va afișa.
 Nota e ce pune Trivia în câmpul ăla.
+
+---
+
+## Domeniile: ce intră în fiecare
+
+*Scris pe 6 octombrie 2026, când cele șase domenii au fost retăiate.*
+
+Secțiunea asta nu e despre note — e despre **unde pui o întrebare**. Stă aici
+fiindcă amândouă se citesc în același moment: când scrii conținut. Lista de chei
+trăiește în `DOMENII`, din `scenes/trivia/trivia.gd`; ce urmează e înțelesul lor.
+
+| cheie | nume afișat | ce intră |
+|---|---|---|
+| `geografie` | Geografie și explorare | țări, capitale, relief, monumente, populații |
+| `istorie` | Istorie și societate | epoci, lideri, mitologie, religii |
+| `stiinta_tehnologie` | Știință și tehnologie | matematică, fizică, chimie, biologie, spațiu, invenții |
+| `arta_literatura` | Artă și literatură | cărți, pictură, arhitectură, muzică clasică, filosofie |
+| `divertisment` | Divertisment și media | filme, televiziune, muzică modernă, pop culture |
+| `sport_jocuri` | Sport și jocuri | sporturi, olimpism, gaming, jocuri de masă |
+| `gastronomie_lifestyle` | Gastronomie și lifestyle | bucătărie, băuturi, modă, tradiții |
+| `diverse` | Diverse și curiozități | lingvistică, logică ca fapt, curiozități |
+
+Subcategoriile fiecăruia (31 cu totul) sunt în **`docs/plan-continut.md`**, fiindcă
+ele sunt o unealtă de planificare a conținutului, nu de scris o notă.
+
+**Cheia nu e numele.** Cheia intră în `id`-uri, în cheile sacului și, de la Save,
+pe disc — deci e fără diacritice și nu se schimbă niciodată. Numele e text pe
+ecran și se poate rescrie oricând.
+
+*Două chei S-AU schimbat totuși, pe 8 octombrie 2026, când domeniile au trecut de
+la șase la opt: `stiinta_natura` → `stiinta_tehnologie` și `sport_timp_liber` →
+`sport_jocuri`. A fost singura zi în care se putea: `id`-urile de trivia nu
+conțin domeniul, cheile sacului trăiesc doar în memorie, iar Save-ul încă nu se
+scrie. Iar `sport_timp_liber` ar fi mințit de atunci încolo, fiindcă „timpul
+liber” s-a mutat la Gastronomie și lifestyle.*
+
+### Cazurile de graniță: domeniul îl dă ce trebuie să ȘTII
+
+Regula, în cinci cuvinte: **domeniul e cunoașterea cerută, nu subiectul.**
+
+- „Unde se află Turnul Eiffel?” → **geografie**. Răspunzi cu o hartă în cap.
+- „Cine l-a proiectat?” → **artă și literatură**, la `arhitectura_design`. Același
+  turn, altă cunoaștere.
+
+Mai multe, pe aceeași regulă:
+
+| întrebare | domeniu | de ce |
+|---|---|---|
+| „În ce an a căzut Zidul Berlinului?” | istorie | o dată |
+| „În ce oraș se afla Zidul Berlinului?” | geografie | un loc pe hartă |
+| „Cine a compus «Rapsodiile române»?” | artă și literatură | un compozitor |
+| „Pe ce continent se află Ierusalimul?” | geografie | un loc pe hartă |
+| „Câte picioare are un păianjen?” | știință și tehnologie | zoologie |
+| „Ce animal apare pe steagul Albaniei?” | geografie | steagurile sunt geografie, chiar când vorbesc despre animale |
+| „Ce echipă a câștigat Cupa Mondială din 1994?” | sport și jocuri | un rezultat sportiv, datat |
+
+Regula are un rost practic, nu estetic: fără ea, un subiect bogat (Egiptul,
+Leonardo, Dunărea) ar trage spre el întrebări din trei domenii, iar echilibrul
+din luptă ar deveni o părere. Cu ea, întrebarea se pune o dată — „ce am eu de
+știut ca să nimeresc?” — și răspunsul e același oricine o pune.
+
+Când întrebarea cere două lucruri deodată, domeniul e al celui **fără care nu
+poți răspunde deloc**. „Pe ce râu stă capitala Austriei?” are nevoie de capitală
+*și* de râu: amândouă geografie, deci nu e o graniță. „Ce pictor s-a născut în
+orașul care a dat numele pastei «bolognese»?” nu e o întrebare de graniță, e o
+întrebare prost pusă — se desface în două.
+
+### Divertisment și Sport: numai trecut, cu data spusă
+
+Cele două au o regulă pe care celelalte șase nu o au:
+
+1. **Numai fapte despre trecut**, și **data spusă explicit** în întrebare sau în
+   răspuns. „Ce film a luat Oscarul pentru cel mai bun film în 1994?” — da. „Care
+   e cel mai premiat film din istorie?” — nu.
+2. **Niciun «actual», niciun «în prezent», niciun «cel mai recent».** Nici în
+   întrebare, nici în notă.
+3. **La celebrități, doar cariera publică.** Ce a jucat, ce a cântat, ce a
+   câștigat, în ce an. Nu viața privată, nu relațiile, nu procesele.
+
+**De ce regula asta, și numai aici.** Un record de atletism sau un deținător de
+titlu se schimbă fără să se schimbe nimic în fișierul meu. O întrebare scrisă cu
+„actual” devine, într-un an, un fapt fals predat de un joc de învățare — exact
+greșeala pe care `CLAUDE.md` o refuză la modelul de limbaj („formulează, nu
+informează”), doar că venită din altă direcție: nu dintr-o halucinație, ci din
+trecerea timpului. Un fapt datat nu se poate învechi, fiindcă poartă data cu el.
+
+Celelalte domenii n-au nevoie de regulă fiindcă aproape nimic din ele nu se
+mișcă: numărul atomic al aurului și autorul „Micului Prinț” sunt la fel și la
+anul. Unde se mișcă totuși (o capitală mutată), fabrica are deja opriri scrise
+pentru asta.
+
+Al treilea punct are și un motiv care nu e despre corectitudine: „Ton sănătos”,
+din `CLAUDE.md`. Un joc care-mi antrenează mintea n-are de ce să mă întrebe cu
+cine s-a despărțit cineva.
 
 ---
 
@@ -170,7 +270,7 @@ De verificat: amplasamentul ales în 1908 · rivalitatea Sydney–Melbourne ca m
 
 De verificat: al doilea ca debit, după Amazon
 
-### Știință
+### Știință și natură
 
 **`paianjen`** · „Câte picioare are un păianjen?” (I)
 > Păianjenii au opt picioare, deci nu sunt insecte, care au șase. Fac parte din
@@ -193,7 +293,7 @@ numărul atomic 79?” (III)
 
 De verificat: Z = 79 · etimologiile Au și Ag
 
-### Artă
+### Artă și literatură — artă
 
 **`impresionism`** · „Ce curent artistic și-a luat numele de la tabloul „Impresie,
 răsărit de soare”?” (II)
@@ -213,7 +313,7 @@ material este sculptată statuia „David”…?” (I)
 De verificat: „David”, 1501–1504 · tavanul Sixtinei, 1508–1512 · că se considera
 în primul rând sculptor
 
-### Mitologie
+### Artă și literatură — mitologie
 
 **`ahile`** · „Ce erou grec era invulnerabil peste tot, în afară de călcâi?” (I)
 > Potrivit legendei, mama lui Ahile, Thetis, l-a scufundat în râul Styx ca să-l
@@ -230,7 +330,7 @@ de aici „potrivit legendei”)
 
 De verificat: numele fântânii (a lui Mimir)
 
-### Literatură
+### Artă și literatură — literatură
 
 **`sonet`** · „Câte versuri are un sonet?” (II)
 > Sonetul are 14 versuri. În forma italiană, ele se împart în două catrene și două
@@ -256,9 +356,7 @@ ca `citeste_lista_json` din `puzzle.gd` să-l poată citi fără nicio schimbare
 [
 	{
 		"id": "aur",
-		"nota": "Aurul are numărul atomic 79. Simbolul lui, Au, vine din latinescul „aurum”, la fel cum Ag, simbolul argintului, vine din „argentum”.",
-		"surse": [],
-		"verificat": false
+		"nota": "Aurul are numărul atomic 79. Simbolul lui, Au, vine din latinescul „aurum”, la fel cum Ag, simbolul argintului, vine din „argentum”."
 	}
 ]
 ```
@@ -269,14 +367,29 @@ stabil și `fapt`, legătura spre notă.
 ```json
 {
 	"id": "mana:0038",
+	"verificat": false,
 	"fapt": "aur",
 	"text": "Care este simbolul chimic al aurului?",
 	"variante": ["Ag", "Fe", "Cu", "Au"],
 	"corect": 3,
 	"nivel": 1,
-	"categorie": "stiinta"
+	"subcategorie": "chimie",
+	"categorie": "stiinta_natura"
 }
 ```
+
+### `subcategorie`: al doilea raft
+
+*Adăugat pe 6 octombrie 2026.*
+
+Pe lângă `categorie` (domeniul), fiecare întrebare are o `subcategorie`: una
+singură, dintr-o listă închisă pe domeniu. La istorie, subcategoriile sunt erele.
+
+Se alege după **aceeași regulă** ca domeniul — ce trebuie să ȘTII, nu subiectul —
+iar lista și cazurile de graniță sunt în **`docs/plan-continut.md`**, fiindcă
+subcategoriile sunt un instrument de planificare a conținutului, nu de scris o
+notă. Aici se spune doar că există, și că `etichete` nu dispare: ea rămâne pentru
+filtrele **transversale** (`romania`), care taie peste subcategorii.
 
 - **`id`-ul faptului** e un nume scurt, fără diacritice, cu `_`. Nu se schimbă
   niciodată, chiar dacă nota se rescrie.

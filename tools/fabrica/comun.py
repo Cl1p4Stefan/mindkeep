@@ -4,9 +4,19 @@
 
 Nu se rulează singur. Îl importă fiecare tabel al fabricii:
 
-    tools/fabrica/elemente.py    element ↔ simbol        (domeniul „stiinta")
-    tools/fabrica/opere.py       operă ↔ autor           (domeniul „literatura")
-    tools/fabrica/capitale.py    țară ↔ capitală         (domeniul „geografie")
+    tools/fabrica/elemente.py    element ↔ simbol        (știință și natură · chimie)
+    tools/fabrica/opere.py       operă ↔ autor           (artă și literatură · literatură)
+    tools/fabrica/capitale.py    țară ↔ capitală         (geografie · capitale)
+
+Și, din afara fabricii, o unealtă care lucrează pe fișierul SCRIS DE MÂNĂ:
+
+    tools/arata_ciornele.py      ciornele de confirmat
+
+Aceea nu e un tabel, deci nu ia de aici nici rețeaua, nici scrierea — numai
+`consola_pe_utf8`, `citeste_lista`, `verifica_campurile`, `SUBCATEGORII` și
+`Eroare`. Îndoaie puțin regula „îl importă fiecare tabel”, dar alternativa era
+să-și copieze `verifica_campurile`, adică exact ce modulul ăsta există să
+oprească.
 
 ─────────────────────────────────────────────────────────────
 DE CE EXISTĂ ABIA ACUM, LA AL TREILEA TABEL
@@ -93,16 +103,93 @@ DOSAR_GEN = os.path.join(RADACINA, "data", "trivia_gen")
 
 ENDPOINT = "https://query.wikidata.org/sparql"
 
-# Aceleași șase, în aceeași ordine ca `CATEGORII` din `trivia.gd`. Scrise aici,
+# Aceleași șase, în aceeași ordine ca `DOMENII` din `trivia.gd`. Scrise aici,
 # nu citite din date: raportul trebuie să arate o celulă GOALĂ dacă un domeniu
 # rămâne fără întrebări, iar un raport care-și ia lista din date n-o poate face.
-DOMENII = ["istorie", "geografie", "stiinta", "arta", "mitologie", "literatura"]
+# Divertismentul și Sportul pornesc goale exact de-aia: ca grila să le arate.
+DOMENII = ["geografie", "istorie", "stiinta_tehnologie", "arta_literatura",
+           "divertisment", "sport_jocuri", "gastronomie_lifestyle", "diverse"]
+
+
+# SUBCATEGORIILE, domeniu → cheile lui. Oglinda lui `SUBCATEGORII` din
+# `trivia.gd`, fără numele afișate: aici nu se afișează nimic pe ecran, se
+# VALIDEAZĂ. Autoritatea rămâne `trivia.gd`; se repetă fiindcă sunt două limbi,
+# nu fiindcă ar fi două decizii — la fel ca `DOMENII` și `PRAG_DOMENIU`.
+#
+# Înțelesul fiecărei chei e în `docs/plan-continut.md`.
+SUBCATEGORII = {
+	"geografie": ["geografie_politica", "geografie_fizica", "turism_monumente",
+	              "demografie_cultura"],
+	"istorie": ["antichitate_ev_mediu", "modern_contemporan", "lideri_personalitati",
+	            "mitologie_religii"],
+	"stiinta_tehnologie": ["stiinte_exacte", "lumea_vie", "astronomie_spatiu",
+	                       "tehnologie_inventii"],
+	"arta_literatura": ["literatura_universala", "arte_vizuale", "arhitectura_design",
+	                    "cultura_clasica"],
+	"divertisment": ["cinematografie", "televiziune", "muzica_moderna", "pop_culture"],
+	"sport_jocuri": ["sporturi_de_echipa", "individuale_olimpism", "motor_extreme",
+	                 "gaming"],
+	"gastronomie_lifestyle": ["bucataria_lumii", "ingrediente_tehnici", "bauturi",
+	                          "moda_traditii"],
+	"diverse": ["lingvistica", "logica_perspicacitate", "curiozitati"],
+}
+
+# ORDINEA CÂMPURILOR unei întrebări, pentru `scrie_lista`. Era scrisă de trei ori,
+# identic, în cele trei tabele; a devenit o constantă în ziua în care a trebuit să
+# primească un câmp nou, fiindcă atunci „identic” a devenit „trei locuri de ținut
+# sincronizate”.
+#
+# `subcategorie` stă ÎNAINTE de `categorie`, și ordinea e dictată de diff, nu de
+# cum se citește. `categorie` e ultimul câmp, deci singurul fără virgulă; cu
+# `subcategorie` după el, linia lui ar fi primit o virgulă, iar regenerarea celor
+# 550 de întrebări fabricate ar fi arătat trei linii schimbate pe întrebare în loc
+# de una adăugată. Un diff de 1650 de linii în care se caută câmpul nou nu se
+# citește; unul de 550 de inserări curate, da.
+ORDINEA_INTREBARII = ["id", "fapt", "text", "variante", "corect", "nivel",
+                      "subcategorie", "categorie"]
+
+# ORDINEA CÂMPURILOR unui fapt. Era și ea scrisă de trei ori, cu o mică
+# diferență la capitale (`imagini`), ceea ce e chiar semnul că trebuia să fie o
+# constantă: diferența e un câmp pe care unele fapte îl au și altele nu, nu o
+# decizie diferită. `scrie_lista` sare peste câmpurile care lipsesc.
+#
+# `surse` și `verificat` NU mai sunt aici: flagul de verificare stă pe ÎNTREBARE
+# (vezi `trivia.gd`), fiindcă acolo îl cauți când citești. Un fapt are nota,
+# etichetele și, la capitale, imaginile.
+ORDINEA_FAPTULUI = ["id", "nota", "etichete", "imagini"]
 
 NIVELURI = (1, 2, 3)
+
+# Câte întrebări trebuie să aibă o celulă (domeniu × nivel) ca domeniul să intre
+# în alegerea din luptă. AUTORITATEA E `PRAG_DOMENIU` DIN `scenes/trivia/trivia.gd`
+# — acolo e și socoteala care dă cifra. Se repetă aici fiindcă sunt două limbi,
+# nu fiindcă ar fi două decizii; la fel ca `DOSAR_IMAGINI`.
+#
+# Fără el, raportul ar minți în două locuri: grila ar arăta ca pline celule pe
+# care lupta nu le atinge, iar procentele din `cat_din_lupta` ar împărți la 6
+# domenii când lupta împarte la 4.
+PRAG_DOMENIU = 8
 
 
 class Eroare(Exception):
 	"""Ceva ce scriptul nu recunoaște. Oprește tot, nu se sare peste."""
+
+
+def verifica_subcategoria(domeniu, subcategorie):
+	"""Perechea (domeniu, subcategorie) e una dintre cele declarate?
+
+	Se cheamă O DATĂ, la pornirea fiecărui tabel, pe constantele lui — nu pe
+	fiecare rând. Costă nimic și oprește la SURSĂ o greșeală care altfel s-ar
+	vedea abia în joc: `trivia.gd` refuză o subcategorie necunoscută, deci un
+	`SUBCATEGORIE` scris greșit într-un script ar face să dispară toate cele 139
+	de întrebări ale tabelului. S-ar vedea (bilanțul spune „139 încărcate din
+	278”), dar după ce ai scris fișierul, nu înainte.
+	"""
+	if domeniu not in SUBCATEGORII:
+		raise Eroare("domeniu necunoscut: %r" % domeniu)
+	if subcategorie not in SUBCATEGORII[domeniu]:
+		raise Eroare("subcategoria %r nu e a domeniului %r; cele cunoscute: %s"
+		             % (subcategorie, domeniu, ", ".join(SUBCATEGORII[domeniu])))
 
 
 def consola_pe_utf8():
@@ -404,7 +491,7 @@ def multe(rand, camp):
 # Granița de dosar e ce face întrebarea „ce am în joc care nu-mi aparține?" să
 # aibă un răspuns dintr-o privire, nu dintr-o căutare.
 #
-# Aceeași cale e scrisă și în GDScript, în `tools/verifica_trivia.gd`. Se repetă
+# Aceeași cale e scrisă și în GDScript, în `tools/verificari/verifica_trivia.gd`. Se repetă
 # fiindcă sunt două limbi, nu fiindcă ar fi două decizii.
 DOSAR_IMAGINI = os.path.join(RADACINA, "assets", "imagini_fapte")
 
@@ -805,7 +892,7 @@ def zar(*bucati):
 
 
 def pune_la_locul_lui(cheie, relatie, sens, text, bun, restul, nivel, fapt, domeniu,
-                      eticheta=None):
+                      subcategorie, eticheta=None):
 	"""O întrebare gata de scris, cu răspunsul bun pus pe o poziție împrăștiată.
 
 	`trivia.gd` amestecă variantele la fiecare apariție (`_amesteca`), deci poziția
@@ -819,7 +906,7 @@ def pune_la_locul_lui(cheie, relatie, sens, text, bun, restul, nivel, fapt, dome
 	deci cele două se despart.
 
 	`id`-ul iese `wd:<QID>:<relație>:<sens>` — patru bucăți, forma pe care
-	`tools/verifica_trivia.gd` o cere de la orice `id` cu prefixul `wd:`. Relația
+	`tools/verificari/verifica_trivia.gd` o cere de la orice `id` cu prefixul `wd:`. Relația
 	e în el fiindcă o entitate poate apărea în mai multe tabele: Franța ar putea
 	fi mâine și într-un tabel „țară → limbă", și cele două întrebări n-au voie să
 	aibă același `id`.
@@ -837,6 +924,7 @@ def pune_la_locul_lui(cheie, relatie, sens, text, bun, restul, nivel, fapt, dome
 		"variante": variante,
 		"corect": loc,
 		"nivel": nivel,
+		"subcategorie": subcategorie,
 		"categorie": domeniu,
 	}
 
@@ -985,11 +1073,41 @@ def citeste_dosarul_generat(fara):
 	return altele
 
 
+def celulele(intrebari_mana, intrebari_gen):
+	"""Câte întrebări are fiecare celulă (domeniu, nivel), mână + fabricate.
+
+	Despărțită din `grila` fiindcă pragul se socotește acum în două locuri: în
+	grilă, ca să se MARCHEZE celulele sărite, și în `cat_din_lupta`, ca să se
+	împartă la câte domenii joacă într-adevăr. Două socoteli ar fi ajuns, într-o
+	zi, să dea două numere diferite.
+	"""
+	total = {}
+	for q in list(intrebari_mana) + list(intrebari_gen):
+		cheie = (str(q.get("categorie", "?")), int(q.get("nivel", 0)))
+		total[cheie] = total.get(cheie, 0) + 1
+	return total
+
+
+def domenii_in_lupta(intrebari_mana, intrebari_gen, nivel):
+	"""Domeniile care trec pragul la nivelul ăsta — adică cele care chiar joacă.
+
+	Aceeași regulă ca `trage_intrebarea` din `trivia.gd`, minus plasa de acolo
+	(dacă nu trece niciunul, jocul le ia pe toate). Plasa lipsește dinadins: un
+	raport n-are de ce să ascundă că nicio celulă nu e destul de groasă.
+	"""
+	total = celulele(intrebari_mana, intrebari_gen)
+	return [d for d in DOMENII if total.get((d, nivel), 0) >= PRAG_DOMENIU]
+
+
 def grila(intrebari_mana, intrebari_gen):
 	"""Grila de 6 domenii × 3 niveluri, cu întrebări ȘI fapte.
 
 	Faptele se numără separat fiindcă ele sunt măsura adevărată: 500 de întrebări
 	construite din 100 de fapte se simt ca 100 (decizia din sesiunea CONȚINUTUL).
+
+	Celulele sub `PRAG_DOMENIU` sunt marcate cu „·". Nu e decor: o celulă subțire
+	e conținut care EXISTĂ în fișier și nu ajunge niciodată în luptă, iar fără
+	semn ar arăta în grilă exact ca una care joacă.
 	"""
 	def strange(intrebari):
 		celule = {}
@@ -1005,9 +1123,10 @@ def grila(intrebari_mana, intrebari_gen):
 	gen = strange(intrebari_gen)
 
 	print("\n  ── GRILA: întrebări (fapte) ──")
-	print("    %-12s %18s %18s %18s %13s" % (
+	print("    %-18s %19s %19s %19s %13s" % (
 		"", "nivelul I", "nivelul II", "nivelul III", "total"))
 	total_general = 0
+	sarite = 0
 	for domeniu in DOMENII:
 		bucati = []
 		total_q = 0
@@ -1017,22 +1136,33 @@ def grila(intrebari_mana, intrebari_gen):
 			w = gen.get((domeniu, nivel), {"q": 0, "fapte": set()})
 			total_q += m["q"] + w["q"]
 			total_f |= m["fapte"] | w["fapte"]
-			bucati.append("%3d+%-3d (%2d+%-3d)" % (
+			sub_prag = m["q"] + w["q"] < PRAG_DOMENIU
+			sarite += 1 if sub_prag else 0
+			bucati.append("%s%3d+%-3d (%2d+%-3d)" % (
+				"·" if sub_prag else " ",
 				m["q"], w["q"], len(m["fapte"]), len(w["fapte"])))
 		total_general += total_q
-		print("    %-12s %s %12s" % (domeniu, " ".join("%17s" % b for b in bucati),
+		print("    %-18s %s %12s" % (domeniu, " ".join("%18s" % b for b in bucati),
 		                             "%4d (%3d)" % (total_q, len(total_f))))
 	print("    (mână + fabricate; parantezele sunt fapte distincte; %d întrebări în total)"
 	      % total_general)
+	print("    („·” = sub pragul de %d, deci domeniul e SĂRIT în luptă la nivelul"
+	      " acela: %d celule din %d)"
+	      % (PRAG_DOMENIU, sarite, len(DOMENII) * len(NIVELURI)))
 
 
 def cat_din_lupta(intrebari_mana, intrebari_gen, intrebarile_mele, domeniu, eticheta):
 	"""Ce parte din luptă devine relația asta.
 
 	Alegerea din `trivia.gd` e în două trepte: întâi domeniul, uniform, apoi
-	întrebarea — deci fiecare domeniu ia 1/6 din întrebări oricât de mare ar fi el.
+	întrebarea — deci fiecare domeniu ia 1/N din întrebări oricât de mare ar fi el.
 	Ce se schimbă e ce se întâmplă ÎN domeniu, și cifra aia merită văzută, nu
 	ghicită: pârghia rămâne lățimea conținutului, nu o treaptă de alegere în plus.
+
+	N NU E 6. E câte domenii trec `PRAG_DOMENIU` la nivelul ăla — azi patru, deci
+	un domeniu ia un sfert din luptă, nu o șesime. Cu 6 în numitor, raportul ar fi
+	spus cu o treime mai puțin decât adevărul, și exact despre tabelul pe care
+	tocmai l-am rulat.
 	"""
 	print("\n  ── CÂT DIN LUPTĂ DEVINE %s ──" % eticheta)
 	ale_mele = {q["id"] for q in intrebarile_mele}
@@ -1042,16 +1172,27 @@ def cat_din_lupta(intrebari_mana, intrebari_gen, intrebarile_mele, domeniu, etic
 		mele = [q for q in in_domeniu if str(q.get("id")) in ale_mele]
 		if not in_domeniu:
 			continue
+		joaca = domenii_in_lupta(intrebari_mana, intrebari_gen, nivel)
+		if domeniu not in joaca:
+			print("    nivelul %d: %d din %d întrebări de %s — dar domeniul e SUB"
+			      " PRAG (%d < %d), deci 0%% din luptă"
+			      % (nivel, len(mele), len(in_domeniu), domeniu,
+			         len(in_domeniu), PRAG_DOMENIU))
+			continue
 		print("    nivelul %d: %d din %d întrebări de %s (%.0f%%), "
-		      "adică %.0f%% din toate întrebările de luptă"
+		      "adică %.0f%% din toate întrebările de luptă (%d domenii joacă)"
 		      % (nivel, len(mele), len(in_domeniu), domeniu,
 		         100.0 * len(mele) / len(in_domeniu),
-		         100.0 * len(mele) / len(in_domeniu) / len(DOMENII)))
+		         100.0 * len(mele) / len(in_domeniu) / len(joaca), len(joaca)))
 
 	print("\n  ── CÂT DIN LUPTĂ E CONȚINUT FABRICAT (toate tabelele) ──")
 	for nivel in NIVELURI:
 		parti = []
-		for dom in DOMENII:
+		# Numai domeniile care TREC PRAGUL. Unul sărit nu dă nicio întrebare de
+		# luptă, deci a-l pune în medie ar trage cifra spre un conținut pe care
+		# jucătorul nu-l vede — iar Divertismentul și Sportul, goale, ar fi
+		# trecut drept „0% fabricat" și ar fi diluat răspunsul cu o treime.
+		for dom in domenii_in_lupta(intrebari_mana, intrebari_gen, nivel):
 			m = sum(1 for q in intrebari_mana
 			        if str(q.get("categorie")) == dom and int(q.get("nivel", 0)) == nivel)
 			g = sum(1 for q in intrebari_gen
@@ -1060,7 +1201,8 @@ def cat_din_lupta(intrebari_mana, intrebari_gen, intrebarile_mele, domeniu, etic
 				parti.append(1.0 * g / (m + g))
 		if parti:
 			print("    nivelul %d: %.0f%% din întrebările de luptă sunt fabricate"
-			      % (nivel, 100.0 * sum(parti) / len(parti)))
+			      " (peste cele %d domenii care joacă)"
+			      % (nivel, 100.0 * sum(parti) / len(parti), len(parti)))
 
 
 def mostre(intrebari, cate, samanta):

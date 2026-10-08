@@ -40,11 +40,43 @@ Detaliile complete sunt în **Mindkeep-Pitch-Document.md** — atașează-l ală
 "$GODOT" --headless --path . --import
 
 # verificările, fără fereastră; ies cu cod 1 dacă pică ceva
-"$GODOT" --headless --path . res://tools/verifica_trivia.tscn
+"$GODOT" --headless --path . res://tools/verificari/verifica_trivia.tscn
 ```
 
-Verificările care se judecă **cu ochiul** se pornesc cu F6 din editor —
-`tools/verifica_steaguri.tscn` (toate steagurile într-o grilă) e una din ele.
+**`tools/verificari/` e suita de teste a proiectului.** Fiecare e o scenă (nu un
+`--script`): cu `--script` Godot nu pornește autoload-urile, iar jumătate din
+fișiere nici nu se compilează fără `Sac` și `Muzica`.
+
+| scenă | ce bate | verdicte | durată |
+|---|---|---|---|
+| `verifica_trivia` | întrebările, faptele, echilibrul pe domenii, sacul, pragul | 29 | ~20 s |
+| `verifica_harta` | generatorul de hărți, pe sute de semințe | 28 | ~40 s |
+| `verifica_plansa` | fiecare hartă desenată din `data/harti/` | 26 | ~30 s |
+| `verifica_eveniment` | lacătul pe care-l dă harta, nu cel din F6 | 22 | ~30 s |
+| `verifica_tipuri` | rețeta tipurilor de nod, pe multe semințe | 9 | ~60 s |
+| `verifica_drumuri` | se poate înfunda o expediție? | 4 | ~15 s |
+| `verifica_coltul` | nodul împins lângă Boss | **tipărește măsurători, nu verdicte** | ~2 min |
+| `verifica_cifru` | generatorul de lacăte și dificultatea măsurată | `VERDICT` | **~10 min** |
+
+**Două scot altceva decât „OK”**, deci nu le căuta verdictele cu grep:
+`verifica_coltul` tipărește un tabel de distanțe pe semințe (se citește, nu se
+bifează), iar `verifica_cifru` încheie cu „VERDICT: cifrurile ies bine”.
+
+`verifica_cifru` e cu mult cea mai lentă fiindcă rezolvă fiecare lacăt generat ca
+un om: **596 de secunde**, măsurat pe 7 octombrie, cu cod de ieșire 0. Merge, doar
+că nu la fiecare schimbare — se rulează când atingi generatorul de lacăte. Dacă
+devine o piedică, ce se reglează e numărul de semințe din ea, nu existența ei.
+
+Două se judecă altfel și nu ies cu cod de eroare:
+
+- `verifica_steaguri` — **F6 din editor**, toate steagurile într-o grilă. E
+  singura verificare pe care un script n-o poate face: „arată bine?” nu e un
+  verdict.
+- `verifica_podeaua` — **cu fereastră**, nu `--headless`, fiindcă face capturi.
+
+Nu se șterge niciuna fără să dispară o verificare: toate bat sisteme care sunt
+încă în joc, iar cele două care par lente sunt lente fiindcă rulează mii de
+semințe.
 
 **Fabrica de întrebări** (Python, nu are nevoie de Godot):
 
@@ -53,7 +85,19 @@ python tools/fabrica/capitale.py             # probă uscată, nu scrie nimic
 python tools/fabrica/capitale.py --masoara   # numai măsurători
 python tools/fabrica/capitale.py --descarca  # aduce imaginile în assets/
 python tools/fabrica/capitale.py --scrie     # scrie în data/trivia_gen/
+python tools/fabrica/capitale.py --propune   # candidați de ales, în date/*_propuse.json
 ```
+
+`tools/fabrica/date/` ține **intrările** fabricii, scrise de mână: `elemente.json`,
+`opere.json`, `tari.json`, `autori.json`. Ieșirile lui `--propune`
+(`*_propuse.json`) sunt în `.gitignore`: nu le citește niciun script, se refac
+dintr-o comandă, iar comise erau 118 KB care se schimbau la fiecare rulare.
+
+**Verificarea întrebărilor nu are unelte, și e dinadins așa.** Fiecare întrebare
+din `data/intrebari_trivia.json` are un câmp `verificat`, `true` sau `false`.
+Întrebarea intră în joc **oricum** — flagul nu decide nimic în luptă, spune doar
+dacă am citit nota ei. Când o citesc și o găsesc corectă, deschid JSON-ul și scriu
+`true`. Niciun script, niciun parametru, niciun al doilea flag.
 
 ---
 
@@ -95,7 +139,7 @@ Fiecare din astea a fost dezbătută și decisă conștient. Dacă propui altcev
 
 ### Cultura generală: conținut și Practice
 
-Decise pe 27 septembrie 2026. Contextul complet e în sesiunea CONȚINUTUL din `progres.md`; regulile pentru note, în `docs/ghid-note.md`.
+Decise pe 27 septembrie 2026, cu domeniile retăiate pe 6 octombrie 2026. Contextul complet e în sesiunile CONȚINUTUL, DOMENIILE și PLANUL ȘI CIORNELE din `progres.md`; definițiile domeniilor și regulile pentru note, în `docs/ghid-note.md`; **ce conținut lipsește, de unde se ia și în ce ordine, în `docs/plan-continut.md`** (acolo stau și subcategoriile, cu capcanele fiecărui tabel propus).
 
 | Decizie | Motiv |
 |---|---|
@@ -104,10 +148,18 @@ Decise pe 27 septembrie 2026. Contextul complet e în sesiunea CONȚINUTUL din `
 | **Modelul de limbaj formulează, nu informează** | Primește fapte verificate și scrie din ele; nu e niciodată sursa unui fapt. O rată de 2% greșeli la 5000 de întrebări înseamnă 100 de fapte false predate de un joc de învățare |
 | **Nota aparține faptului, nu întrebării** | Un fapt dă mai multe întrebări și o singură notă: mai puțină muncă, nicio contradicție. Nota intră în câmpul `explicatie` din contractul `puzzle.gd` |
 | **Fiecare întrebare are un `id` stabil** | Textul se schimbă la reformulare, iar sacul, save-ul și istoricul din Practice au nevoie de o identitate care nu se mișcă. Se face înainte de Save |
-| **Ținte pe celulă (domeniu × nivel), inegale** | 500 unde domeniul le poartă; 150–250 de fapte la nivelul I din mitologie și artă. Nivelul I e plafonat de propria definiție („o știe orice adult”) |
+| **Ținte pe celulă (domeniu × nivel), inegale** | 500 unde domeniul le poartă; 150–250 de fapte la nivelul I acolo unde domeniul nu le duce. Nivelul I e plafonat de propria definiție („o știe orice adult”), iar de la paliere de 3 trepte e și nivelul CEL MAI TRAS în luptă (~49% din întrebări) — tensiunea e scrisă la „Rămas deschis” din `progres.md`, nehotărâtă |
 | **Se numără faptele, nu doar întrebările** | Cel mult 2–3 întrebări pe fapt. 500 de întrebări construite din 100 de fapte se simt ca 100 |
 | **O singură `categorie` pe întrebare, `etichete` pe fapt** | Categoria ține echilibrul din luptă și antetul de pe ecran. Filtrele transversale (ex. „romania”) vin din etichete, fără să înmulțească domeniile |
+| **`subcategorie`: al doilea raft, tot pe întrebare, tot exact una** | În Practice vreau să pot alege „geografie → capitale”. Un meniu care alege are nevoie de cifre corecte și de garanția că nicio întrebare nu rămâne pe dinafară, adică de o ÎMPĂRȚIRE, nu de etichete care se suprapun. Se alege după aceeași regulă ca domeniul — ce trebuie să ȘTII, nu subiectul. Lista e închisă pe domeniu, cheie → nume afișat, ca `DOMENII`, și e completă de la bun început (36 de chei, 4 folosite): o subcategorie scrisă de la început e un rând, una adăugată după ce s-a scris conținut e o migrare. `etichete` rămâne doar pentru transversale |
+| **La istorie, subcategoriile sunt ERELE, tăiate pe dată** | antichitate până la 476 · Ev Mediu 476–1500 · modern 1500–1914 · contemporan de la 1914. **Data decide, nu numele**: dinastia Yuan (1271) e `ev_mediu` deși „Evul Mediu” e o noțiune europeană. Subcategoria e un RAFT, nu o afirmație despre civilizația aia — altfel fiecare întrebare despre Asia ar cere o decizie de la mine, și raftul ar fi o părere. Prețul, scris: granița de la 1500 taie prin Evul Mediu românesc |
+| **Un singur flag, pe întrebare, care nu ține nimic afară din joc** | `verificat: true/false` în `intrebari_trivia.json`, pus de mână. Întrebările intră în joc neverificate, fiindcă o întrebare necitită e tot o întrebare bună în 95% din cazuri, iar una ținută afară nu se joacă niciodată. A fost, o zi, altfel: un câmp `ciorna` ținea întrebarea afară până o confirmam cu un script, faptul avea propriul `verificat` cu `surse` și o listă de afirmații de bifat, iar două unelte cu parametri le citeau și le semnau. Mai multă mașinărie decât conținut — și munca de verificare n-a devenit mai ușoară, doar mai ceremonioasă. Verificarea e o citire, nu un flux de lucru |
+| **Ținta pe celulă are trei trepte: 8 · 25 · plin** | PRAG 8 = celula intră în luptă. CONFORT 25 = 4-5 expediții lungi fără nicio repetiție în ea. PLIN = ținta din CONȚINUTUL (150–250 la nivelul I, 500 la II și III). Cele 500 nu-mi spun niciodată „celula asta e gata pentru azi”; orice celulă sub 500 arăta identic în grilă. Treapta care lipsește peste tot e CONFORT, și se atinge într-o săptămână de scris |
 | **În luptă: întâi domeniul, apoi întrebarea** | Conținutul generat nu iese echilibrat (Wikidata e bogată în geografie și știință). Alegerea în două trepte ține echilibrul oricum ar arăta baza, ca la Logică |
+| **OPT domenii, tăiate după cum se joacă, nu după cum a crescut baza** | Geografie și explorare · Istorie și societate · Știință și tehnologie · Artă și literatură · Divertisment și media · Sport și jocuri · Gastronomie și lifestyle · Diverse și curiozități. Șase, de pe 6 octombrie 2026; opt, de pe 8 octombrie, când Gastronomia a ieșit de sub Sport (nu se întreabă deloc la fel) și a apărut un raft pentru ce nu încape nicăieri — lingvistică, logică ca FAPT, curiozități. Fiecare domeniu are 3-4 subcategorii, deci 31 de rafturi de filtrat în Practice. Cheile `stiinta_natura` și `sport_timp_liber` au fost redenumite atunci, în singura zi în care se putea: domeniul nu intră în `id`-uri, iar Save-ul nu se scrie încă. Regula care a ținut la toate trei tăierile: un domeniu declarat devreme e un rând, iar unul adăugat după ce s-a scris conținut e o migrare — de-aia `diverse` există de azi, gol, în loc să apară peste trei luni |
+| **Un domeniu intră în luptă doar peste un prag de 8 întrebări pe nivel** | Pragul se măsoară pe CELULĂ (domeniu × nivel), fiindcă un domeniu poate fi gros la nivelul I și gol la III. Socoteala: o expediție lungă trage ~45 de întrebări de Cultură generală, din care ~49% la nivelul I (paliere de 3 trepte), adică ~22; împărțite la cele 4 domenii care trec pragul, 5-6 pe celulă. Sacul nu repetă până se golește, deci la 8 nu se repetă nimic într-o expediție, la 4 se repetă o dată. 8 e și o celulă scrisă de mână (baza de 135 s-a construit 7-8 pe celulă) și cifra la care nu pierd nimic din ce am: istoria are exact 8 și trece la limită — ceea ce o numește drept următoarea țintă de conținut, în loc s-o ascundă. Sub prag domeniul e SĂRIT, nu golit, și reintră singur când celula se umple. Dacă niciunul nu trece, se joacă cu toate: o întrebare repetată e mai bună decât ecranul de eroare în mijlocul unui lanț |
+| **Domeniul îl dă ce trebuie să ȘTII, nu subiectul** | „Unde se află Turnul Eiffel?” e geografie; „Cine l-a proiectat?” e artă și literatură. Fără regula asta, un subiect bogat (Egiptul, Leonardo, Dunărea) trage spre el întrebări din trei domenii, iar echilibrul din luptă devine o părere |
+| **La Divertisment și Sport, numai trecut, cu data spusă** | Fără „actual”, fără „în prezent”; la celebrități, doar cariera publică. Un record sau un deținător de titlu se schimbă fără să se schimbe nimic în fișierul meu, deci o întrebare scrisă cu „actual” devine într-un an un fapt fals predat de un joc de învățare — aceeași greșeală ca la modelul de limbaj, venită din trecerea timpului, nu din halucinație. Cariera publică și nu viața privată ține și de „Ton sănătos” |
 | **Practice: alegi domeniul, nu nivelul** | Nivelul urcă singur, separat pe fiecare domeniu |
 | **Nivelul următor se deblochează la un prag fix, nu la „toate corecte”** | „Toate” e un zid la final și crește odată cu conținutul. Pragul fix (de pornire: 60 de răspunsuri corecte la întrebări distincte) nu crește. După prag, nivelurile se amestecă |
 | **Greșitele revin; „învățat” cere 2–3 răspunsuri corecte la distanță în timp** | Un singur răspuns corect poate fi ghicit (o șansă din patru). Întrebările învățate ies din joc și intră în Jurnal |

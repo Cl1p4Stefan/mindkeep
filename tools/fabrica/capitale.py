@@ -176,6 +176,9 @@ LATIME_STEAG = 320
 
 DOMENIU = "geografie"
 
+# Subcategoria. Vezi `comun.SUBCATEGORII` și `docs/plan-continut.md`.
+SUBCATEGORIE = "geografie_politica"
+
 # Relația, din care se compune `id`-ul: `wd:Q142:capitala:cere_capitala`.
 RELATIE = "capitala"
 
@@ -1456,6 +1459,7 @@ def construieste(lista):
 				nivel=e["nivel"],
 				fapt="wd:%s" % e["qid"],
 				domeniu=DOMENIU,
+				subcategorie=SUBCATEGORIE,
 				eticheta=e["tara"],
 			))
 
@@ -1580,6 +1584,10 @@ def fapt_cu_imagini(e):
 
 def main():
 	arg = comun.argumentele()
+	# O dată, pe constantele tabelului: o subcategorie scrisă greșit aici ar face
+	# ca `trivia.gd` să refuze TOATE întrebările tabelului — s-ar vedea în bilanț,
+	# dar după ce s-a scris fișierul, nu înainte.
+	comun.verifica_subcategoria(DOMENIU, SUBCATEGORIE)
 
 	print("\n══ FABRICA: ȚARĂ ↔ CAPITALĂ ══\n")
 
@@ -1708,9 +1716,9 @@ def main():
 			"--descarca.\n  - %s" % (len(lipsa), "\n  - ".join(lipsa[:10])))
 
 	comun.scrie_lista(CALE_INTREBARI, intrebari,
-	                  ["id", "fapt", "text", "variante", "corect", "nivel", "categorie"], "nivel")
+	                  comun.ORDINEA_INTREBARII, "nivel")
 	comun.scrie_lista(CALE_FAPTE, fapte,
-	                  ["id", "nota", "surse", "verificat", "imagini"], "")
+	                  comun.ORDINEA_FAPTULUI, "")
 	print("\n  Scris:")
 	print("    %s" % comun.relativ(CALE_INTREBARI))
 	print("    %s" % comun.relativ(CALE_FAPTE))

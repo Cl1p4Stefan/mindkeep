@@ -115,7 +115,12 @@ CALE_FAPTE_WD = os.path.join(comun.DOSAR_GEN, "elemente_fapte.json")
 # Domeniul în care intră tot ce fabricăm aici. O singură `categorie` pe
 # întrebare, ca în decizia din CLAUDE.md; filtrele transversale vor veni din
 # `etichete`, pe fapt.
-DOMENIU = "stiinta"
+DOMENIU = "stiinta_tehnologie"
+
+# Subcategoria, pe care o poartă fiecare întrebare scrisă de aici. Vezi
+# `comun.SUBCATEGORII` pentru listă și `docs/plan-continut.md` pentru înțeles.
+# Perechea (domeniu, subcategorie) se verifică la pornire, nu pe fiecare rând.
+SUBCATEGORIE = "stiinte_exacte"
 
 # Relația, din care se compune `id`-ul: `wd:Q897:simbol:cere_nume`.
 RELATIE = "simbol"
@@ -641,6 +646,7 @@ def construieste(lista):
 				nivel=e["nivel"],
 				fapt="wd:%s" % e["qid"],
 				domeniu=DOMENIU,
+				subcategorie=SUBCATEGORIE,
 				eticheta=e["simbol"],
 			))
 
@@ -691,6 +697,10 @@ def construieste(lista):
 
 def main():
 	arg = comun.argumentele()
+	# O dată, pe constantele tabelului: o subcategorie scrisă greșit aici ar face
+	# ca `trivia.gd` să refuze TOATE întrebările tabelului — s-ar vedea în bilanț,
+	# dar după ce s-a scris fișierul, nu înainte.
+	comun.verifica_subcategoria(DOMENIU, SUBCATEGORIE)
 
 	print("\n══ FABRICA: ELEMENTELE CHIMICE ══\n")
 
@@ -746,8 +756,8 @@ def main():
 		return 0
 
 	comun.scrie_lista(CALE_WD, intrebari,
-	                  ["id", "fapt", "text", "variante", "corect", "nivel", "categorie"], "nivel")
-	comun.scrie_lista(CALE_FAPTE_WD, fapte, ["id", "nota", "surse", "verificat"], "")
+	                  comun.ORDINEA_INTREBARII, "nivel")
+	comun.scrie_lista(CALE_FAPTE_WD, fapte, comun.ORDINEA_FAPTULUI, "")
 	print("\n  Scris:")
 	print("    %s" % comun.relativ(CALE_WD))
 	print("    %s" % comun.relativ(CALE_FAPTE_WD))

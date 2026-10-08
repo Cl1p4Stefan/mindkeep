@@ -1,6 +1,6 @@
 # MINDKEEP — Jurnal de progres
 
-*Ultima actualizare: 30 septembrie 2026*
+*Ultima actualizare: 8 octombrie 2026*
 *Atașează acest fișier la începutul fiecărei sesiuni noi, împreună cu `CLAUDE.md` și `docs/pitch-document.md`.*
 
 ---
@@ -17,7 +17,7 @@
 | 6. Harta de expediție | ✅ loadout „N din M" · **12-16 noduri**, ramificate, cu sămânță · Luptă / Elită / Odihnă / Eveniment / **Magazin** / **Boss** · **Monede + puteri temporare** · sumar de run · aspect: pergament, simboluri de cerneală, trasee punctate · **nodurile și drumurile stau pe o PANGLICĂ (curbă centrală + benzi)**, nu pe o grilă dreaptă · **patru trasee, toate verzi pe 300 de semințe** (POTCOAVĂ activă; POTCOAVA OGLINDITĂ e aceeași formă, întoarsă) · strat înclinat (forfecare) la ȘARPE · **drumuri care nu se încrucișează niciodată (0 la 300 de semințe)** · **nodul curent are și aură, și X, și stă nemișcat sub figurină** · **două surse de hartă: GENERATĂ (panglica) sau DESENATĂ dintr-un fișier `data/harti/*.json`** — comutatorul `Expeditie.SURSA_HARTII`; azi e pe DESENATĂ · **harta umple pergamentul**: pânza ține toată pagina, antetul plutește peste ea (805 × 427 px de hartă, de la 666 × 353) · **drumurile merg în amândouă sensurile**, cu nodul parcurs tăiat definitiv și cu garanția, verificată pe 16 000 de expediții simulate, că nu te poți înfunda · **figurina sare, cade ca un slam și zguduie ecranul la aterizare**, cu un răgaz de 0,5 s înainte să se deschidă nodul · **tipurile nodurilor se împart după o REȚETĂ fixă, nu se trag cu zarul**: 9 reguli de vecinătate și de început, plasare conștientă de reguli, verificare completă și reîncercare cu sub-sămânță (0 eșecuri pe 500 de semințe × 3 surse de hartă) · rețeta se **plafonează după forma hărții**, nu după numărul de noduri · **nodul de Eveniment deschide Lacătul** (nivel din adâncime, sămânță din nodul, 6/10/14 Monede la succes) |
 | 7. Cetatea | ❌ |
 | 8. Save/Load | 🟡 tezaurul, sacul și expediția știu toate să se serializeze (`spre_dictionar` / `din_dictionar`), pe trei straturi de durată; scrierea pe disc, nu încă |
-| 9. Celelalte discipline | 🟡 Cultură generală ✅ (**434 de întrebări în joc**: 135 scrise de mână (`mana:0001`…) + **139 fabricate din Wikidata, elemente chimice** (`wd:Q897:simbol:…`) + **160 fabricate, operă → autor** (`wd:Q12730777:autor:…`) — **al doilea tabel al fabricii, confirmat parțial**: 135 din 163 de opere, 28 rămân ciorne pentru o trecere viitoare · **conținutul fabricat stă într-un DOSAR**, `data/trivia_gen/`, citit întreg de încărcător: un tabel nou = două fișiere, zero linii de cod · **18 fapte cu note** + 245 de fapte fabricate fără notă; **alegerea din luptă e în două trepte** — întâi domeniul, uniform, apoi întrebarea, cu sacul pe cheie de domeniu ȘI nivel; comutator `FOLOSESTE_WIKIDATA`; **al treilea tabel, țară ↔ capitală, e construit și stă întreg în ciornă** (140 de țări în `tools/fabrica/date/tari.json`, 251 de întrebări gata, 0 scrise până la confirmare) · **fabrica are un modul comun**, `tools/fabrica/comun.py`, iar coloanele de mână ale elementelor au ieșit din cod în `tools/fabrica/date/elemente.json` · **faptele capitalelor au acum o LISTĂ de imagini**, `imagini: [{tip, …}]`, gândită să primească și harta desenată, și tablourile de mai târziu: **126 de steaguri pe disc** (`assets/imagini_fapte/steaguri/`, PNG 320 px, 0,53 MB sursă / 0,32 MB după import, toate în domeniul public, cu manifest de credite), plus o intrare de hartă pe fiecare din cele 127 de fapte; Omanul e singurul refuzat, cu motivul scris (licență necunoscută) · vezi sesiunile CONȚINUTUL, ID ȘI FAPT, FABRICA, AL DOILEA TABEL, MODULUL COMUN și STEAGURILE) · Logica ✅ (80 de categorii) · Cuvinte ✅ · toate trei fără repetiții pe expediție, **Cultura generală după `id`, nu după text** · celelalte 5 ❌ |
+| 9. Celelalte discipline | 🟡 Cultură generală ✅ (**1706 de întrebări în joc, toate**: 1156 scrise de mână (`mana:0001`…) + **139 fabricate, elemente chimice** (`wd:Q897:simbol:…`) + **160 fabricate, operă → autor** (`wd:Q12730777:autor:…`) + **251 fabricate, țară ↔ capitală** (`wd:Q142:capitala:…`) — **conținutul fabricat stă într-un DOSAR**, `data/trivia_gen/`, citit întreg de încărcător: un tabel nou = două fișiere, zero linii de cod · **92 de fapte cu note** + 357 de fapte fabricate fără notă · **OPT DOMENII** (Geografie și explorare, Istorie și societate, Știință și tehnologie, Artă și literatură, Divertisment și media, Sport și jocuri, Gastronomie și lifestyle, Diverse și curiozități), cu **31 de subcategorii** — **toate OPT domeniile sunt în luptă, niciunul din cele 31 de rafturi nu e gol și nicio întrebare nu e fără raft** (cele 135 scrise înaintea câmpului au fost clasificate, iar 21 de întrebări de mitologie au trecut de la Artă la Istorie); **niciun raft nu mai e subțire din întâmplare** (`motor_extreme` a urcat de la 9 la 30, cu 10 pe fiecare nivel; singurele două sub 10 pe un nivel, `pop_culture` și `logica_perspicacitate`, sunt mici dinadins), tăiate după cum se joacă, nu după cum crescuse baza: artă + mitologie + literatură s-au unit, Divertisment și Sport pornesc goale · `CATEGORII` (listă) a devenit `DOMENII` (dicționar cheie → nume afișat), deci antetul scrie „ARTĂ ȘI LITERATURĂ”, nu cheia · **alegerea din luptă e în două trepte** — întâi domeniul, uniform, apoi întrebarea, cu sacul pe cheie de domeniu ȘI nivel — iar de azi **domeniul intră doar peste `PRAG_DOMENIU = 8` întrebări pe celulă**, cu plasă dacă nu trece niciunul; sub prag e sărit, nu golit (istoria trece cu rezerva ZERO, deci e următoarea țintă de conținut) · comutator `FOLOSESTE_WIKIDATA` · **fabrica are un modul comun**, `tools/fabrica/comun.py`, iar grila marchează celulele sărite · **faptele capitalelor au o LISTĂ de imagini**, `imagini: [{tip, …}]`: **126 de steaguri pe disc** (`assets/imagini_fapte/steaguri/`, PNG 320 px, 0,53 MB sursă, toate în domeniul public, cu manifest de credite), plus o intrare de hartă pe fiecare din cele 127 de fapte; Omanul e singurul refuzat, cu motivul scris · **fiecare întrebare are și o `subcategorie`**, una singură, din listă închisă pe domeniu (36 de chei, 4 folosite; la istorie sunt erele, tăiate pe dată) — cele 135 scrise de mână o primesc într-un lot de clasificare, cu un clichet în verificator · **istoria e la 18 pe toate trei nivelurile**, iar **Divertismentul și Sportul au câte 50 pe fiecare celulă**, pe 11 subcategorii cu care se poate filtra (filme 48, muzică 36, fotbal 30, olimpiade 30…) — deci **toate ȘASE domeniile sunt în luptă**, fiecare cu 1/6 din întrebări, și toate cele 11 subcategorii ale celor două domenii noi au conținut · **verificarea e un singur câmp**, `verificat: true/false` pe întrebare, pus de mână: întrebarea intră în joc oricum, iar flagul spune doar dacă i-am citit nota. Niciun script, niciun parametru — mecanismul de ciorne, al doilea flag de pe fapt și cele două unelte de confirmare s-au desfăcut (vezi UN SINGUR FLAG) · planul de conținut al tuturor celor șase domenii, cu subcategorii, tabele propuse și capcanele lor, e în **`docs/plan-continut.md`** · vezi sesiunile UN SINGUR FLAG, ȘASE DOMENII ÎN LUPTĂ, PLANUL ȘI CIORNELE, DOMENIILE, CONȚINUTUL, ID ȘI FAPT, FABRICA, AL DOILEA TABEL, MODULUL COMUN și STEAGURILE) · Logica ✅ (80 de categorii) · Cuvinte ✅ · toate trei fără repetiții pe expediție, **Cultura generală după `id`, nu după text** · celelalte 5 ❌ |
 | 10–13. Generator de inamici, artă, web | ❌ (artă parțial: figurile principale și piesele de pe butoanele de Obelisc au imagini reale · **arena are fundal: biblioteca gotică**, cu personajele așezate pe dalele din prim-plan, umbră de contact și lumină de sală) · Regina: **amânată**, vezi CLAUDE.md |
 
 Nodul de **Eveniment** are primul lui conținut: **Lacătul** — un cufăr cu cifru,
@@ -37,6 +37,2189 @@ buget, generare) rămâne acolo unde era.
 Am sărit peste ordinea recomandată la pasul 12 (artă): imaginile pentru rege,
 cavaler și pentru cele trei piese de șah de pe butoane au intrat mai devreme, dar
 restul rămâne placeholder. Bucla de luptă e în continuare cea validată, nu arta.
+
+---
+
+## MOTOR_EXTREME, DE LA 9 LA 30 (8 octombrie 2026) — cel mai subțire raft s-a închis
+
+21 de întrebări noi, **10 pe fiecare nivel** (de la 3/2/4). **1706 de întrebări
+în joc**, de la 1685.
+
+### De ce era subțire, și de ce 21 au fost de ajuns
+
+Raftul a ieșit subțire din desfacerea lui `alte_sporturi` pe 7 octombrie: numele
+vechi nu-mi spunea nimic concret, iar când l-am desfăcut, din conținutul existent
+au încăput acolo doar ciclismul, Formula 1 și boxul — nouă întrebări.
+
+Dar raftul acoperă, de fapt, **cinci lucruri**: sport cu motor, raliuri, ciclism,
+alpinism și sporturi de contact. Trei dintre ele n-aveau nicio întrebare. Lotul
+le atinge pe toate cinci, deci cele 21 n-au fost umplutură: au fost subiectele
+care lipseau.
+
+| nivel | ce a intrat |
+|---|---|
+| I (+7) | alpinism, casca de motociclist, tricoul galben, judo, Everest, surf, schi |
+| II (+8) | Hamilton 2008, Raliul Dakar 1978, Hillary și Tenzing Norgay 1953, sumo, Le Mans 1923, jiu-jitsu brazilian, Vuelta |
+| III (+6) | Fangio, Messner fără oxigen, Marele Premiu de la Monaco, Hinault, cele 14 optmiari, Rocky Marciano |
+
+### Două reformulări înainte de scriere
+
+Niciuna n-a fost prinsă de verificările mecanice — amândouă au ieșit la citit:
+
+- „a câștigat de cinci ori Turul Franței, **în anii 1980**” → **„între 1978 și
+  1985”**. Hinault a câștigat în 1978, 1979, 1981, 1982 și 1985: două din cinci
+  sunt în anii '70. Întrebarea ar fi fost corectă ca răspuns și falsă ca fapt.
+- distractorul **„Luxemburg”** la întrebarea despre orașe-state → **„Vatican”**.
+  Luxemburgul e mare ducat, nu oraș-stat, deci se elimina singur: un distractor
+  pe care îl tai fără să știi răspunsul nu e un distractor, e o variantă în plus
+  la ochi.
+
+A doua e tiparul care merită ținut minte: la o întrebare cu patru variante,
+**calitatea e în cele trei greșite**, nu în cea corectă.
+
+### Statistica pe rafturi, după lot
+
+```
+SPORT ȘI JOCURI                 57   58   57    172
+  sporturi_de_echipa            17   17   15     49
+  individuale_olimpism          14   17   16     47
+  motor_extreme                 10   10   10     30     ← era 3 / 2 / 4
+  gaming                        16   14   16     46
+TOTAL (toate domeniile)        492  617  597   1706
+```
+
+**Niciun raft gol, nicio întrebare fără raft, și numai două rafturi sub 10 pe un
+nivel** — `pop_culture` (8/8/8) și `logica_perspicacitate` (6/10/14), amândouă
+mici *dinadins*, cu motivul scris în sesiunea NICIUN RAFT GOL. Deci de azi nu mai
+există raft subțire din întâmplare.
+
+### Verificat
+
+- `verifica_trivia`, headless: **toate secțiunile OK**, 1706 încărcate. Cod 0.
+- Auditul de dubluri semantice: **7 perechi, niciuna din lotul nou** (cele 7 sunt
+  citite și legitime; a șaptea, iPhone/iPod, e nouă și e legitimă).
+- Texte distincte, variante distincte, răspunsul neapărut în text, pereche
+  (domeniu, subcategorie) validă, zero cuvinte interzise („actual”, „în prezent”).
+- `da_iduri.py --scrie`: 21 de id-uri noi (`mana:1136`…`mana:1156`).
+
+### Ce NU s-a făcut
+
+- **1678 din 1706 au `verificat: false`.** Lotul ăsta n-are nicio notă.
+- **Nicio partidă jucată** cu opt domenii și 31 de rafturi — tot singurul lucru
+  pe care nicio verificare nu-l atinge.
+- **Auditul de dubluri e tot un script de scratchpad**, nu o secțiune a
+  verificatorului.
+
+### Fișiere
+
+Atinse: `data/intrebari_trivia.json` (+21), `tools/da_iduri.py`
+(`CATE_INTREBARI` 1156), `tools/verificari/verifica_trivia.gd`
+(`CATE_INTREBARI_MANA` 1156), `docs/progres.md`.
+
+---
+
+## CELE 135 AU PRIMIT RAFT (8 octombrie 2026) — clichetul s-a închis
+
+Întrebările `mana:0001`…`mana:0135` erau scrise înaintea câmpului `subcategorie`
+(6 octombrie) și n-aveau raft. În luptă nu conta — alegerea e pe domeniu — dar în
+Practice erau **invizibile**: cereai „artă și literatură → arte vizuale” și nu
+primeai „Cine a pictat «Mona Lisa»?”, fiindcă ea nu era pe niciun raft.
+
+Acum toate 135 au raft, iar verificatorul spune:
+
+```
+  întrebări fără subcategorie      OK   0, cel mult 0
+```
+
+Clichetul `MAX_FARA_SUBCATEGORIE` era 135, cu verdict „cel mult”, fiindcă cifra
+numai scădea. A ajuns la **0**, deci de acum orice întrebare fără raft e o
+greșeală, nu o datorie. Verificarea rămâne, cu 0, exact ca să spună asta.
+
+### Regula de clasificare, și singurul loc unde a cerut gândire
+
+Aceeași ca la domeniu: **subcategoria o dă ce trebuie să ȘTII.** Mecanică aproape
+peste tot — „Care este capitala Portugaliei?” e `geografie_politica`, „Ce mărime
+se măsoară în ohmi?” e `stiinte_exacte`.
+
+Un singur loc a cerut o decizie, la istorie: unde merge o întrebare al cărei
+răspuns e un OM. Regula pe care am scris-o și am ținut-o: **dacă răspunsul e o
+persoană care a condus sau a schimbat ceva → `lideri_personalitati`; dacă e o
+dată, un popor, un tratat sau o instituție → raftul erei.** Așa, „Cine a fost
+primul președinte al Statelor Unite?” și „Cine a condus expediția din 1492?” stau
+împreună, iar „În ce an a căzut Zidul Berlinului?” stă la `modern_contemporan`.
+
+Fără regula asta, `lideri_personalitati` ar fi rămas pe jumătate gol, iar erele ar
+fi amestecat date cu oameni.
+
+### 21 de întrebări au schimbat DOMENIUL, nu doar raftul
+
+Mitologia stătea la Artă și literatură, fiindcă în taxonomia veche exista un
+domeniu `mitologie` care a fost înghițit acolo pe 6 octombrie. În cea nouă,
+mitologia e la **Istorie și societate**, pe `mitologie_religii`, lângă religiile
+lumii.
+
+Deci cele 21 de întrebări despre zei, eroi și legende — Zeus, Thor, Sisif, Anubis,
+Ghilgameș, Moirele, Amaterasu — au trecut de la `arta_literatura` la `istorie`.
+Altfel ar fi stat pe un raft de literatură, iar Practice n-ar fi avut unde să le
+caute.
+
+Efectul pe grilă: **istoria urcă de la 150 la 171** (57 pe nivel), iar arta
+coboară de la 313 la 292. Singura mutare de domeniu din tot lotul, și era necesară.
+
+### Mutarea a scos la iveală trei dubluri pe care auditul nu le putea vedea
+
+Punând mitologia veche și cea nouă pe același raft, trei perechi au devenit
+vecine:
+
+| în joc de la început | scrisă de mine ieri |
+|---|---|
+| „Cine era regele zeilor în mitologia greacă?” | „Ce zeu conducea ceilalți zei, în mitologia greacă?” |
+| „Care este echivalentul roman al zeiței grecești Afrodita?” | „Ce zeiță romană a dragostei îi corespunde Afroditei…?” |
+| „Cine era zeul tunetului în mitologia nordică?” | „Ce zeu nordic stăpânea tunetul și purta un ciocan?” |
+
+Același răspuns, aceeași întrebare. **Auditul de dubluri semantice nu le-a prins**,
+și motivul merită scris, fiindcă e o limită a metodei, nu o scăpare:
+
+> Potrivirea de cuvinte compară **forme exacte**, iar flexiunea românească le
+> desparte: „zeiței” ≠ „zeița”, „Afrodita” ≠ „Afroditei”, „grecești” ≠ „greacă”.
+> La perechea Afroditei, potrivirea a ieșit **zero**, deși cele două întrebări sunt
+> aceeași.
+
+Un semnal care se sprijină pe forma cuvântului e orb la o limbă flexionară. Ca să
+prindă așa ceva ar avea nevoie de rădăcini (stemming) — iar un stemmer românesc
+scris de mână ar greși în ambele direcții, adică exact ce proiectul refuză. Ce a
+prins dublurile în final a fost **mutarea lor pe același raft**: două întrebări
+vecine pe un raft de 39 se citesc, iar la citit se văd.
+
+Deci clasificarea n-a fost doar sortare: a fost și o verificare. Cele trei scrise
+ieri s-au rescris (Poseidon, Mercur, ciocanul Mjölnir); cele din joc de la început
+au rămas.
+
+### Statistica finală, pe domenii și rafturi
+
+```
+DOMENIU / subdomeniu                 I    II   III   total
+GEOGRAFIE ȘI EXPLORARE              77   158   130     365
+  geografie_politica                42   123    94     259
+  geografie_fizica                  14    15    16      45
+  turism_monumente                  11    10    10      31
+  demografie_cultura                10    10    10      30
+ISTORIE ȘI SOCIETATE                57    57    57     171
+  antichitate_ev_mediu              16    17    17      50
+  modern_contemporan                17    15    16      48
+  lideri_personalitati              11    12    11      34
+  mitologie_religii                 13    13    13      39
+ȘTIINȚĂ ȘI TEHNOLOGIE               77    90    86     253
+  stiinte_exacte                    41    58    53     152
+  lumea_vie                         14    12    12      38
+  astronomie_spatiu                 12    10    11      33
+  tehnologie_inventii               10    10    10      30
+ARTĂ ȘI LITERATURĂ                  73   103   116     292
+  literatura_universala             36    66    79     181
+  arte_vizuale                      14    15    14      43
+  arhitectura_design                10    10    11      31
+  cultura_clasica                   13    12    12      37
+DIVERTISMENT ȘI MEDIA               51    51    51     153
+  cinematografie                    16    16    16      48
+  televiziune                       16    15    14      45
+  muzica_moderna                    11    12    13      36
+  pop_culture                        8     8     8      24
+SPORT ȘI JOCURI                     50    50    51     151
+  sporturi_de_echipa                17    17    15      49
+  individuale_olimpism              14    17    16      47
+  motor_extreme                      3     2     4       9
+  gaming                            16    14    16      46
+GASTRONOMIE ȘI LIFESTYLE            50    50    50     150
+  bucataria_lumii                   16    16    16      48
+  ingrediente_tehnici               13    13    13      39
+  bauturi                           11    11    11      33
+  moda_traditii                     10    10    10      30
+DIVERSE ȘI CURIOZITĂȚI              50    50    50     150
+  lingvistica                       22    20    18      60
+  logica_perspicacitate              6    10    14      30
+  curiozitati                       22    20    18      60
+TOTAL                              485   609   591    1685
+```
+
+**31 de rafturi, niciunul gol. 1685 de întrebări, niciuna fără raft.**
+
+### Verificat
+
+- `verifica_trivia`, headless: **toate 10 secțiunile OK**, 1685 din 1685. Cod 0.
+- `întrebări fără subcategorie: 0, cel mult 0`.
+- Zero perechi (domeniu, subcategorie) nevalide, verificat pe mulțimea câmpurilor.
+- 1135 de texte distincte în fișierul scris de mână, după cele 3 rescrieri.
+- Auditul de dubluri: 6 perechi rămase, toate citite și legitime.
+- Clasificarea a fost făcută pe LINII, cu `subcategorie` inserată înaintea lui
+  `categorie` — care e ultimul câmp, deci singurul fără virgulă. Diff: 135 de
+  inserări curate plus 21 de linii `categorie` schimbate.
+
+### Ce NU s-a făcut
+
+- **`motor_extreme` are tot 9**, cel mai subțire raft din joc.
+- **1657 din 1685 au `verificat: false`.**
+- **Auditul de dubluri e tot un script de scratchpad**, nu o secțiune a
+  verificatorului. Și, de azi, știu și care e limita lui: flexiunea.
+- **Nicio partidă jucată** cu opt domenii și 31 de rafturi.
+
+### Ce urmează, concret
+
+1. **O luptă.** Singurul lucru pe care nicio verificare nu-l atinge.
+2. `motor_extreme`, de la 9 la 30.
+3. Auditul de dubluri, mutat în verificator ca raport — cu limita scrisă în el.
+
+### Fișiere
+
+Atinse: `data/intrebari_trivia.json` (135 de rafturi, 21 de domenii schimbate, 3
+întrebări rescrise), `tools/verificari/verifica_trivia.gd`
+(`MAX_FARA_SUBCATEGORIE` 0), `docs/progres.md`.
+
+---
+
+## NICIUN RAFT GOL (8 octombrie 2026) — 444 de întrebări, și o verificare nouă
+
+**Al optulea domeniu s-a deschis, iar toate cele 31 de rafturi au conținut.** 150
+la `diverse` (50 pe nivel) și 294 pentru cele 10 subcategorii rămase goale în
+domeniile vechi.
+
+**1685 de întrebări în joc**, de la 1241. Opt domenii în luptă, pentru prima dată.
+
+### Repartiția, și de ce nu e uniformă peste tot
+
+| raft | I | II | III | de ce |
+|---|---|---|---|---|
+| `lingvistica`, `curiozitati` | 22 | 20 | 18 | rafturi bogate la toate nivelurile |
+| `logica_perspicacitate` | 6 | 10 | 14 | **îngust la nivelul I dinadins** |
+| cele 9 rafturi din domeniile vechi | 10 | 10 | 10 | 30 fiecare |
+| `pop_culture` | 8 | 8 | 8 | **mai mic dinadins** |
+
+`logica_perspicacitate` urcă invers față de toate celelalte, și motivul e granița
+scrisă ieri: logica-ca-PROBLEMĂ merge la Obeliscul Logică, deci aici rămân termeni
+și paradoxuri cu nume. Iar paradoxul mincinosului nu e ceva ce știe orice adult —
+nivelul I n-are de unde să se umple cinstit.
+
+`pop_culture` rămâne mic fiindcă e singurul raft al cărui conținut se stinge: un
+fenomen viral îmbătrânește mai repede decât orice altceva din joc. Acolo intră
+numai ce are **dată și urmă** — Napster închis de instanțe, nu ce e pe val.
+
+### Verificarea care lipsea: DUBLURILE SEMANTICE
+
+Lotul s-a oprit la prima rulare pe un text existent. Dar căutând de ce, a ieșit
+ceva mai rău, pe care verificarea nu-l putea vedea:
+
+```
+Care este cel mai înalt vârf din România?     (mana:0105, în joc de săptămâni)
+Ce vârf e cel mai înalt din România?           (scrisă de mine, azi)
+```
+
+**Două șiruri diferite, o singură întrebare.** `verifica_trivia.gd` cere texte
+distincte — și are dreptate — dar compară șiruri identice. În luptă, cele două s-ar
+fi văzut ca o repetiție: exact lucrul pentru care există sacul.
+
+Semnalul nou: **același răspuns corect + cuvinte comune în întrebare**. Niciunul
+singur nu spune mare lucru (multe întrebări au răspunsul 1918; multe împart
+cuvinte), dar împreună sunt un semn bun. Pe potrivire de cuvinte de peste 0,33:
+
+| rulare | semnalate | dubluri adevărate | legitime |
+|---|---|---|---|
+| peste conținutul de dinainte | 12 | **8** | 4 |
+| după lotul nou | 9 | **3** | 6 |
+
+Cele legitime arată de ce **raportează, nu oprește**: „Cine a pictat Mona Lisa?” și
+„Cine a pictat Cina cea de Taină?” au același răspuns și cuvinte comune, dar sunt
+două tablouri. La fel Abbey Road și Sgt. Pepper, sau sushi și kimono, care sunt
+amândouă „Japonia” din întâmplare. O oprire ar fi cerut să șterg întrebări bune; un
+raport cere doar să citesc 12 rânduri.
+
+**Patru din cele 8 dubluri erau în loturile scrise de mine în ultimele două zile**,
+inclusiv una în același domeniu (aceeași melodie, întrebată de două ori la
+Divertisment). Fără semnalul ăsta ar fi rămas în joc.
+
+### 25 de întrebări rescrise înainte de scriere
+
+Pe lângă cele 11 reparate în fișier, 25 din lotul nou au fost rescrise **înainte**
+să ajungă pe disc. Toate loveau conținutul vechi fără subcategorie — adică exact
+cele 24 de geografie, 24 de știință și 63 de artă pe care noile rafturi le acoperă.
+
+Tiparul, care merită ținut minte: **rafturile goale sunt goale fiindcă subiectul lor
+era deja tratat în conținutul nesortat.** Deci umplerea lor nu e scriere pe teren
+liber, e scriere peste un strat vechi — iar prima mișcare trebuie să fie citirea
+stratului, nu scrierea.
+
+Rescrierile n-au fost pierderi. „Ce vârf e cel mai înalt din România?” a devenit „În
+ce masiv montan se află vârful Moldoveanu?”: același subiect, altă cunoaștere,
+întrebare mai bună. La fel „Cine a pictat Mona Lisa?”, devenită „Ce pictor italian a
+desenat în carnetele lui mașini zburătoare și scafandri?”.
+
+### Statistica finală
+
+```
+DOMENIU / subdomeniu               I    II   III   total
+GEOGRAFIE ȘI EXPLORARE            77   158   130     365
+  geografie_politica              39   120    92     251
+  geografie_fizica                10    10    10      30
+  turism_monumente                10    10    10      30
+  demografie_cultura              10    10    10      30
+  (fără subcategorie)              8     8     8      24
+ISTORIE ȘI SOCIETATE              50    50    50     150
+  antichitate_ev_mediu            14    14    14      42
+  modern_contemporan              14    14    14      42
+  lideri_personalitati             8     8     8      24
+  mitologie_religii                6     6     6      18
+  (fără subcategorie)              8     8     8      24
+ȘTIINȚĂ ȘI TEHNOLOGIE             77    90    86     253
+  stiinte_exacte                  39    52    48     139
+  lumea_vie                       10    10    10      30
+  astronomie_spatiu               10    10    10      30
+  tehnologie_inventii             10    10    10      30
+  (fără subcategorie)              8     8     8      24
+ARTĂ ȘI LITERATURĂ                80   110   123     313
+  literatura_universala           29    59    72     160
+  arte_vizuale                    10    10    10      30
+  arhitectura_design              10    10    10      30
+  cultura_clasica                 10    10    10      30
+  (fără subcategorie)             21    21    21      63
+DIVERTISMENT ȘI MEDIA             51    51    51     153
+  cinematografie                  16    16    16      48
+  televiziune                     16    15    14      45
+  muzica_moderna                  11    12    13      36
+  pop_culture                      8     8     8      24
+SPORT ȘI JOCURI                   50    50    51     151
+  sporturi_de_echipa              17    17    15      49
+  individuale_olimpism            14    17    16      47
+  motor_extreme                    3     2     4       9
+  gaming                          16    14    16      46
+GASTRONOMIE ȘI LIFESTYLE          50    50    50     150
+  bucataria_lumii                 16    16    16      48
+  ingrediente_tehnici             13    13    13      39
+  bauturi                         11    11    11      33
+  moda_traditii                   10    10    10      30
+DIVERSE ȘI CURIOZITĂȚI            50    50    50     150
+  lingvistica                     22    20    18      60
+  logica_perspicacitate            6    10    14      30
+  curiozitati                     22    20    18      60
+TOTAL                            485   609   591    1685
+```
+
+### Dezechilibrele care rămân, numite
+
+- **`motor_extreme` are 9**, cel mai subțire raft din joc. A ieșit așa din
+  desfacerea lui `alte_sporturi`: ciclismul, Formula 1 și boxul erau tot ce încăpea
+  acolo. E următoarea țintă dintre rafturi.
+- **Cele 135 fără subcategorie** stau pe patru domenii și umflă geografia, știința
+  și arta. Lotul de clasificare le-ar muta pe 16 rafturi.
+- **Conținutul fabricat domină trei rafturi**: `geografie_politica` 251,
+  `literatura_universala` 160, `stiinte_exacte` 139. Nu se poate echilibra cu mâna,
+  și nici nu trebuie: alegerea din luptă e pe DOMENIU, nu pe raft, iar acolo
+  echilibrul e ținut de `trage_intrebarea`. Rafturile contează în Practice, unde
+  alegi tu — și acolo un raft gros nu deranjează pe nimeni.
+
+### Verificat
+
+- `verifica_trivia`, headless: **toate 10 secțiunile OK**, 1685 încărcate din 1685.
+  Cod de ieșire 0.
+- **Niciun domeniu gol, niciun raft gol** — verificatorul scrie „niciuna din 4” la
+  toate opt domeniile.
+- 1135 de texte distincte în fișierul scris de mână, 1685 pe tot conținutul.
+- Echilibrul pe opt domenii și sacul pe 24 de chei: fără repetiții.
+- Auditul de dubluri semantice: 6 perechi rămase, toate citite și legitime.
+- `da_iduri.py --scrie`: 444 de id-uri noi (`mana:0692`…`mana:1135`).
+
+### Ce NU s-a făcut
+
+- **1657 din 1685 au `verificat: false`.**
+- **Nicio notă** pentru cele 444.
+- **Auditul de dubluri e un script de scratchpad, nu o verificare a proiectului.**
+  Merită mutat în `verifica_trivia.gd` ca secțiune care TIPĂREȘTE perechile — dar
+  nu ca verdict: ar pica pe conținut bun.
+- **Nicio partidă jucată** cu opt domenii.
+
+### Ce urmează, concret
+
+1. **O luptă.** Opt domenii, fiecare cu 1/8 din întrebări, și un antet de 24 de
+   caractere nevăzut încă.
+2. **Auditul de dubluri, mutat în verificator**, ca raport.
+3. `motor_extreme`, de la 9 la 30.
+4. Lotul de clasificare pentru cele 135.
+
+### Fișiere
+
+Atinse: `data/intrebari_trivia.json` (+444 de întrebări, 11 rescrise),
+`tools/da_iduri.py` (`CATE_INTREBARI` 1135),
+`tools/verificari/verifica_trivia.gd` (`CATE_INTREBARI_MANA` 1135),
+`docs/progres.md`.
+
+---
+
+## GASTRONOMIA ȘI ISTORIA LA 50 (8 octombrie 2026)
+
+214 întrebări noi: **+118 la Gastronomie și lifestyle** (de la 11/11/10) și **+96
+la Istorie și societate** (de la 18/18/18). Amândouă sunt acum la **50 pe fiecare
+nivel**, ca Artă, Sport și Divertisment.
+
+| domeniu | I | II | III |
+|---|---|---|---|
+| gastronomie_lifestyle | 50 (+42) | 50 (+42) | 50 (+42) |
+| istorie | 50 (+42) | 50 (+42) | 50 (+42) |
+
+**1241 de întrebări în joc**, de la 1027. Șapte domenii din opt; `diverse` e
+singurul rămas gol.
+
+### Rafturile deschise ieri s-au umplut azi
+
+`lideri_personalitati` și `mitologie_religii` au apărut ieri, odată cu taxonomia,
+și n-aveau **nicio** întrebare. Acum au 24 fiecare, 8 pe nivel. Istoria e primul
+domeniu cu **toate cele patru rafturi pline** — verificatorul scrie „niciuna din
+4”, nu „2 din 4”.
+
+Și gastronomia la fel: patru rafturi, niciunul gol. `moda_traditii`, care avea 6
+întrebări puse ieri doar ca să nu fie gol, are acum 30.
+
+| gastronomie | I | II | III | | istorie | I | II | III |
+|---|---|---|---|---|---|---|---|---|
+| bucataria_lumii | 16 | 16 | 16 | | antichitate_ev_mediu | 14 | 14 | 14 |
+| ingrediente_tehnici | 13 | 13 | 13 | | modern_contemporan | 14 | 14 | 14 |
+| bauturi | 11 | 11 | 11 | | lideri_personalitati | 8 | 8 | 8 |
+| moda_traditii | 10 | 10 | 10 | | mitologie_religii | 6 | 6 | 6 |
+| | | | | | *(fără subcategorie)* | 8 | 8 | 8 |
+
+### Granița dintre primele două rafturi de gastronomie, pusă la lucru
+
+`plan-continut.md` o scrisese ieri, teoretic: dacă subiectul e un **preparat** →
+`bucataria_lumii`; dacă e un **ingredient, o tehnică sau un termen** →
+`ingrediente_tehnici`. La 48 de întrebări scrise pe ea, a ținut fără nicio
+ezitare: „ce e ramenul?” e bucătărie, „ce e o emulsie?” e tehnică.
+
+### O verificare care a prins un cuvânt nevinovat
+
+Lotul de istorie a fost oprit de filtrul „numai trecut”:
+
+```
+! „actual” în text: 'Ce popor antic a săpat orașul Petra în stâncă, în actuala Iordanie?'
+```
+
+„Actuala Iordanie” înseamnă „Iordania de azi” — un fel cinstit de a localiza un
+oraș antic, nu o afirmație care se învechește. Filtrul e pe **cuvânt**, nu pe
+înțeles, deci a semnalat prea mult.
+
+Și totuși n-a fost schimbat, din același motiv pentru care verificarea cifrelor
+raportează în loc să oprească: **o verificare care greșește într-o singură
+direcție e folositoare; una care greșește în ambele, nu.** Rescrierea a costat
+cinci cuvinte („în sudul Iordaniei de azi”), iar textul a ieșit mai limpede decât
+era. Prețul a fost mai mic decât slăbirea filtrului.
+
+### Verificat
+
+- `verifica_trivia`, headless: **toate 10 secțiunile OK**, 1241 încărcate din 1241
+  găsite. Cod de ieșire 0.
+- **1241 de texte distincte** și **niciun răspuns în textul întrebării lui**, pe
+  tot conținutul.
+- `da_iduri.py --scrie`: 214 id-uri noi (`mana:0478`…`mana:0691`).
+- Echilibrul pe șapte domenii și sacul pe 21 de chei: fără repetiții.
+- Cele șase celule țintă au exact 50; opt rafturi din cele două domenii sunt
+  pline.
+
+### Ce NU s-a făcut
+
+- **`diverse` e gol.** 24 de întrebări (8 pe nivel) ar deschide al optulea domeniu
+  și ar duce jocul la 8 domenii, prima dată.
+- **Niciuna din cele 214 n-are notă.** Ca la loturile de ieri, și din același
+  motiv: la volumul ăsta, scrierea notelor ar însemna să informez, nu să formulez.
+- **1213 din 1241 au `verificat: false`.**
+- **9 rafturi din 31 sunt încă goale**, toate în domeniile vechi: geografia fizică,
+  turismul, astronomia, artele vizuale, pop culture.
+- **Nicio partidă jucată**, deci antetul de 24 de caractere („GASTRONOMIE ȘI
+  LIFESTYLE”) n-a fost încă văzut pe ecran.
+
+### Ce urmează, concret
+
+1. **`diverse`, 8 pe nivel** — singurul domeniu care lipsește din luptă.
+2. **O luptă**, pentru antetul lung și pentru cum se simt șapte domenii.
+3. Geografia fizică și artele vizuale: cele două rafturi goale cu tabele de
+   fabrică deja proiectate (`P610`, `P170` — al doilea aduce și imagine).
+
+### Fișiere
+
+Atinse: `data/intrebari_trivia.json` (+214 întrebări),
+`tools/da_iduri.py` (`CATE_INTREBARI` 691),
+`tools/verificari/verifica_trivia.gd` (`CATE_INTREBARI_MANA` 691),
+`docs/progres.md`.
+
+---
+
+## OPT DOMENII (8 octombrie 2026) — taxonomia se retaie, a doua oară în trei zile
+
+Pe 6 octombrie domeniile au trecut de la șase vechi la șase noi. Azi trec la
+**opt**, cu **31 de subcategorii** — iar cele 1027 de întrebări din joc își schimbă
+toate raftul.
+
+| cheie | nume afișat | subcategorii |
+|---|---|---|
+| `geografie` | Geografie și explorare | politică · fizică · turism și monumente · demografie |
+| `istorie` | Istorie și societate | antichitate și Ev Mediu · modern și contemporan · lideri · mitologie și religii |
+| `stiinta_tehnologie` | Știință și tehnologie | științe exacte · lumea vie · astronomie · tehnologie și invenții |
+| `arta_literatura` | Artă și literatură | literatură · arte vizuale · arhitectură · cultură clasică |
+| `divertisment` | Divertisment și media | cinematografie · televiziune · muzică modernă · pop culture |
+| `sport_jocuri` | Sport și jocuri | echipă · individuale și olimpism · motor și extreme · gaming |
+| `gastronomie_lifestyle` | Gastronomie și lifestyle | bucătăria lumii · ingrediente · băuturi · modă și tradiții |
+| `diverse` | Diverse și curiozități | lingvistică · logică și perspicacitate · curiozități |
+
+### Ce s-a mutat, și de ce fiecare mutare
+
+**Gastronomia a ieșit de sub Sport.** Stătea ca subcategorie la „Sport și timp
+liber”, lângă olimpiade și reguli de joc. O întrebare despre sarmale și una despre
+ofsaid n-au nimic în comun — nici sursa, nici felul cunoașterii. Cele 20 de
+întrebări au devenit sâmburele domeniului 7.
+
+**Jocurile video au plecat de la Divertisment la Sport.** În taxonomia nouă,
+`gaming` stă lângă jocurile de masă și șah: un joc e o competiție la care
+participi, nu un spectacol pe care-l privești. 21 de întrebări mutate, iar
+Divertismentul a scăzut de la 50 la 43 pe nivel.
+
+**`alte_sporturi` a murit, și merita.** Era definit prin **excludere**
+(„sporturile care nu sunt fotbal”), deci numele nu transmitea nimic — exact
+contrariul regulii scrise pentru subcategorii, că o subcategorie o dă ce trebuie
+să ȘTII. Citind cele 31 de întrebări, înăuntru erau trei lucruri care se întreabă
+complet diferit:
+
+| ce era, de fapt | câte | unde a mers |
+|---|---|---|
+| cine a câștigat ce, în ce an | 16 | după sportul lui: echipă / individuale / motor |
+| ce sport e și cum se joacă | 10 | la fel |
+| turnee și competiții | 5 | la fel |
+
+Și o greșeală de raft, prinsă la citit: `mana:0443` (Fischer, titlul mondial de șah
+din 1972) stătea la `alte_sporturi`, deși șahul e la `gaming`.
+
+**`reguli_de_joc` s-a desfăcut și el**, pe același criteriu: regula merge pe raftul
+sportului ei. „Câți jucători are o echipă de handbal” → `sporturi_de_echipa`;
+„cum se numește mat la șah” → `gaming`.
+
+### Două chei s-au schimbat, în singura zi în care se putea
+
+`stiinta_natura` → `stiinta_tehnologie`, `sport_timp_liber` → `sport_jocuri`.
+
+`CLAUDE.md` spune că o cheie **nu se schimbă niciodată**, și regula e bună — dar
+motivul ei e precis: cheia intră în `id`-uri, în cheile sacului și, de la Save, pe
+disc. Măsurat, nu presupus:
+
+- `id`-urile de trivia sunt `mana:NNNN` și `wd:QID:relație:sens` — **domeniul nu e
+  în ele**;
+- cheile sacului (`cultura_generala:<domeniu>:<nivel>`) se compun la rulare și
+  trăiesc doar în memorie;
+- **Save-ul nu se scrie încă pe disc** (pasul 8 din rută, neînceput).
+
+Deci fereastra era deschisă exact azi, și se închide la primul save scris. Iar
+`sport_timp_liber` ar fi mințit de mâine încolo, fiindcă „timpul liber” s-a mutat
+la Gastronomie și lifestyle. O cheie care minte e mai rea decât o cheie urâtă:
+peste un an cauți sarmalele unde scrie „timp liber”.
+
+### Migrarea: pe linii, cu 72 de decizii scrise pe id
+
+Cele 465 de întrebări scrise de mână s-au migrat **pe linii**, nu prin
+reserializare — altfel toate cele 4390 ar fi fost mutate degeaba. Diff-ul arată
+exact 195 de linii `categorie` și 330 de linii `subcategorie`.
+
+Maparea are două feluri, iar despărțirea lor e partea care contează:
+
+- **mecanică**, pe perechea (domeniu, subcategorie) — 19 reguli care acoperă 943
+  de întrebări. `capitale` → `geografie_politica`, `chimie` → `stiinte_exacte`,
+  `filme` → `cinematografie`, și așa mai departe.
+- **pe id**, pentru cele **72 care cereau o decizie una câte una**: tot
+  `alte_sporturi`, tot `reguli_de_joc`, toată `gastronomie`. Alea nu se puteau
+  mapa mecanic fiindcă vechiul raft amesteca lucruri care acum merg în patru
+  direcții diferite.
+
+Scriptul **oprește** dacă o întrebare nu se potrivește niciunei reguli — nu o lasă
+cu raftul vechi. Zero nepotriviri la rulare, și zero perechi (domeniu,
+subcategorie) nevalide după, verificat pe mulțimea câmpurilor, nu cu ochiul.
+
+Fabrica: trei constante schimbate (`DOMENIU` la elemente, `SUBCATEGORIE` la toate
+trei) și trei fișiere regenerate, 550 de întrebări.
+
+### Domeniul 7 ar fi pornit SĂRIT, deci a primit 12 întrebări
+
+Prima rulare după migrare a arătat prețul tăcut al mutării:
+
+```
+  gastronomie_lifestyle 7 (SĂRIT) · 7 (SĂRIT) · 6 (SĂRIT)
+```
+
+Cele 20 de întrebări moștenite se împart 7/7/6 pe niveluri, iar `PRAG_DOMENIU` e 8.
+Domeniul ar fi existat în `DOMENII`, cu patru rafturi, și n-ar fi apărut niciodată
+în luptă — adică migrarea ar fi avut, pe ecran, **efect zero**.
+
+Deci 12 întrebări scrise (4 pe nivel), care au adus domeniul la **11/11/10** și au
+umplut și `moda_traditii`, singurul raft rămas gol din el. Acum **șapte domenii din
+opt sunt în luptă**, fiecare cu 1/7 din întrebări.
+
+`diverse` rămâne gol, dinadins — ca Divertismentul și Sportul pe 6 octombrie. Un
+domeniu declarat devreme e un rând; unul adăugat după ce s-a scris conținut e o
+migrare ca cea de azi.
+
+### Două granițe scrise înainte să doară
+
+**`logica_perspicacitate` vs Obeliscul Logică.** Punctul 8 din taxonomie cerea
+„șiruri logice, deducții” — exact ce GENEREAZĂ Obeliscul Logică. Fără o graniță,
+aceeași întrebare ar putea veni din două locuri, iar una din ele ar fi o copie
+proastă a celeilalte (patru butoane în loc de un șir de completat).
+
+Granița, scrisă în `trivia.gd` și în plan: aici intră **fapte despre logică** —
+cum se numește paradoxul mincinosului, ce e un silogism, care e ghicitoarea
+Sfinxului. **Dacă o întrebare se poate rezolva gândind, fără s-o fi auzit, ea
+aparține Obeliscului.**
+
+**`diverse` vs restul.** Un domeniu numit „diverse” e, prin construcție, ispita de
+a pune acolo ce nu știi unde să pui — exact greșeala pentru care a murit
+`alte_sporturi`, repetată la scară de domeniu. Deci are o regulă în plus, mai
+strictă: **o întrebare intră aici numai dacă NU încape în niciunul din primele
+șapte.** Dacă încape și acolo și aici, merge acolo.
+
+Și `pop_culture`, al treilea raft cu risc: un fenomen viral se stinge, iar o
+întrebare despre el îmbătrânește mai repede decât orice altceva din joc. Acolo
+intră numai ce are **dată și urmă**.
+
+### Antetele, și o cifră de ținut sub ochi
+
+```
+GEOGRAFIE ȘI EXPLORARE · ISTORIE ȘI SOCIETATE · ȘTIINȚĂ ȘI TEHNOLOGIE ·
+ARTĂ ȘI LITERATURĂ · DIVERTISMENT ȘI MEDIA · SPORT ȘI JOCURI ·
+GASTRONOMIE ȘI LIFESTYLE · DIVERSE ȘI CURIOZITĂȚI
+```
+
+Diacriticele trec prin `to_upper()`, ca și înainte. Dar **cel mai lung antet a
+crescut de la 19 la 24 de caractere** („GASTRONOMIE ȘI LIFESTYLE”), iar antetul a
+mai dat o dată peste margine — sesiunea ARENA SE LINIȘTEȘTE, 28 septembrie, „antetul
+nu se mai revarsă peste întrebare”. Reparația de atunci ținea pentru 19. **De
+văzut cu ochiul, într-o luptă.** Nicio verificare headless nu poate spune dacă un
+text încape pe un buton.
+
+De-aia numele punctului 8 a rămas „Diverse și curiozități” (22 de caractere) și nu
+„Limbaj, logică și curiozități” (29): detaliul stă în subcategorii, care nu ajung
+în antet.
+
+### Grila de azi
+
+```
+                              nivelul I      nivelul II     nivelul III
+  geografie                   47 (+39)       128 (+120)     100 (+92)
+  istorie                     18 (+10)        18 (+10)       18 (+10)
+  stiinta_tehnologie          47 (+39)        60 (+52)       56 (+48)
+  arta_literatura             50 (+42)        80 (+72)       93 (+85)
+  divertisment                43 (+35)        43 (+35)       43 (+35)
+  sport_jocuri                50 (+42)        50 (+42)       51 (+43)
+  gastronomie_lifestyle       11 (+3)         11 (+3)        10 (+2)
+  diverse                      0 (SĂRIT)       0 (SĂRIT)      0 (SĂRIT)
+  (1027 întrebări în joc: 477 de mână + 550 fabricate)
+
+  subcategorii goale: geografie 3/4 · istorie 2/4 · stiinta_tehnologie 3/4
+                      arta_literatura 3/4 · divertisment 1/4 · sport_jocuri 0/4
+                      gastronomie_lifestyle 0/4 · diverse 3/3
+```
+
+14 rafturi din 31 sunt goale. Nu e o datorie ascunsă — e harta de lucru, tipărită
+la fiecare rulare.
+
+### Verificat
+
+- `verifica_trivia`, headless: **toate 10 secțiunile OK**, 1027 încărcate din 1027
+  găsite. Cod de ieșire 0.
+- Zero perechi (domeniu, subcategorie) nevalide, pe toate cele 1027.
+- Echilibrul pe **șapte** domenii, 6000 de trageri pe nivel: abatere maximă 4,9% /
+  2,8% / 5,0%, cu limita la 20%. Ținta a scăzut de la 1000 la ~857.
+- Sacul: 21 de chei (7 domenii × 3 niveluri) fără nicio repetiție pe un ciclu.
+- Migrarea: 195 de linii `categorie`, 330 `subcategorie`, zero nepotriviri.
+- Fabrica, toate trei tabelele regenerate, 550 de întrebări cu cheile noi.
+- `da_iduri.py --scrie`: 12 id-uri noi (`mana:0466`…`mana:0477`).
+
+### Ce NU s-a făcut
+
+- **`diverse` e gol.** 24 de întrebări (8 pe nivel) l-ar deschide.
+- **14 subcategorii din 31 sunt goale**, inclusiv `pop_culture`,
+  `lideri_personalitati`, `astronomie_spatiu`, `arte_vizuale` — toate cu tabele de
+  fabrică propuse în plan și niciunul scris.
+- **Antetul de 24 de caractere n-a fost văzut în joc.**
+- **Cele 135 de întrebări vechi n-au subcategorie.** Acum sunt împrăștiate pe
+  patru domenii (63 artă, 24 geografie, 24 istorie, 24 știință), iar lotul de
+  clasificare le-ar pune pe 16 rafturi din cele noi.
+- **999 din 1027 au `verificat: false`.**
+
+### Ce urmează, concret
+
+1. **O luptă, ca să se vadă antetul de 24 de caractere.** Singurul lucru din
+   sesiunea asta pe care nicio verificare nu-l atinge.
+2. **`diverse`, 8 pe nivel** — deschide al optulea domeniu.
+3. **Lotul de clasificare** pentru cele 135, acum cu 31 de rafturi în loc de 36.
+4. Primul tabel de fabrică din cele propuse: `arte_vizuale` (tablou → pictor,
+   `P170`), fiindcă **aduce imagine cu el** și ar umple „Află mai multe”.
+
+### Fișiere
+
+Atinse: `scenes/trivia/trivia.gd` (`DOMENII`, `SUBCATEGORII`),
+`tools/fabrica/comun.py` (oglinda lor), `tools/fabrica/elemente.py`, `opere.py`,
+`capitale.py` (`DOMENIU`, `SUBCATEGORIE`), `data/intrebari_trivia.json` (525 de
+linii de raft + 12 întrebări noi), `data/trivia_gen/*_intrebari.json`
+(regenerate), `tools/da_iduri.py` (`CATE_INTREBARI` 477),
+`tools/verificari/verifica_trivia.gd` (`CATE_INTREBARI_MANA` 477),
+`docs/ghid-note.md` (tabelul domeniilor), `docs/plan-continut.md` (secțiunea 3
+rescrisă), `CLAUDE.md`, `docs/progres.md`.
+
+---
+
+## 50 PE CELULĂ (7 octombrie 2026) — Divertisment și Sport ajung la CONFORT
+
+252 de întrebări noi, 42 pe fiecare din cele șase celule. Cele două domenii
+deschise ieri la **prag** (8) sunt acum la **50** pe fiecare nivel — adică peste
+treapta CONFORT din `docs/plan-continut.md`, prima din grilă care o atinge.
+
+| | nivel I | nivel II | nivel III |
+|---|---|---|---|
+| divertisment | 50 (+42) | 50 (+42) | 50 (+42) |
+| sport_timp_liber | 50 (+42) | 50 (+42) | 50 (+42) |
+
+**1015 întrebări în joc**, de la 763.
+
+### Subdomeniile se pot filtra, și n-a fost nevoie de nimic nou
+
+Cerința era „etichete după subdomeniu, ca să pot selecta doar capitalele la
+geografie”. Mecanismul exista: câmpul `subcategorie`, pus pe 6 octombrie, cu listă
+închisă pe domeniu. Lotul de azi doar îl umple — și acum fiecare raft are destul
+ca selecția să însemne ceva:
+
+```
+  DIVERTISMENT              I   II  III     SPORT                 I   II  III
+    filme                  16   16   16       alte_sporturi      10   10   11
+    muzica                 11   12   13       fotbal             10   10   10
+    seriale                 9    9    9       olimpiade          10   10   10
+    jocuri_video            7    7    7       reguli_de_joc       7    7    7
+    animatie                7    6    5       gastronomie         7    7    6
+                                              hobby_uri           6    6    6
+```
+
+Niciun raft sub 5. La `PRAG_DOMENIU = 8`, dacă vreodată pragul s-ar aplica și pe
+subcategorie (nu se aplică azi, și nu e nevoie), ar trece 8 din 11.
+
+### Ce NU au: fapt și notă
+
+Niciuna din cele 252 n-are `fapt`, deci n-are notă. A fost o alegere, nu o
+scăpare, și merită scris motivul:
+
+> 252 de note ar fi fost ~750 de afirmații verificabile scrise de mine la volum.
+> Regula din `CLAUDE.md` e că modelul **formulează, nu informează** — iar la
+> volumul ăsta, scrierea notelor e exact locul unde ar informa.
+
+Întrebarea în sine e deja o afirmație, dar e **o singură afirmație pe un rând**,
+exact ce se verifică dintr-o privire. O notă adaugă trei, pe un rând pe care nu-l
+citești decât în Practice. Notele se pot pune pe urmă, pe cele care merită.
+
+Precedent: cele 135 de întrebări scrise la început n-au nici ele fapt — numai cele
+18 din pilot au primit.
+
+### Verificările au prins două lucruri, înainte de scriere
+
+Scriptul de lot verifică tot ce se poate verifica mecanic: text unic față de tot
+fișierul, patru variante distincte, răspunsul care nu apare în textul întrebării
+(oglinda verificării din `verifica_trivia.gd`), subcategorie validă pe domeniul
+ei, și lista de cuvinte interzise de regula „numai trecut”.
+
+A oprit lotul de nivelul III pentru:
+
+```
+! răspunsul 'Roquefort' apare în text: 'Ce brânză franceză cu mucegai albastru
+  se maturează în peșterile din Roquefort?'
+```
+
+Întrebarea se răspundea singură. Rescrisă: „…se maturează în peșteri de calcar,
+din lapte de oaie?”.
+
+Și una pe care am tăiat-o eu, nu scriptul: decatlonul olimpic din 1976. Sportiva
+și-a schimbat numele mai târziu, iar o întrebare care cere numele de atunci cere o
+grijă pe care n-o pot da la volum. Regula „doar cariera publică” nu rezolvă
+problema numelui, deci întrebarea a ieșit. **Când o regulă nu acoperă un caz,
+cazul iese — nu regula se întinde.**
+
+### Verificat
+
+- `verifica_trivia`, headless: **toate 10 secțiunile OK**, 1015 încărcate din 1015
+  găsite. Cod de ieșire 0.
+- **1015 texte distincte** și **niciun răspuns în textul întrebării lui**, pe tot
+  conținutul — nu doar pe lotul nou.
+- `da_iduri.py --scrie`: 252 de id-uri noi (`mana:0214`…`mana:0465`), toate unice.
+- Cele șase celule au exact 50. Toate cele 11 subcategorii ale celor două domenii
+  au conținut pe toate trei nivelurile.
+
+### Ce NU s-a făcut
+
+- **987 din 1015 au `verificat: false`.** Dintre cele scrise de mână, 437 din 465.
+- **Nicio notă** pentru cele 252.
+- **Nicio partidă jucată.** Cultura generală are acum șase domenii pline-pline;
+  cum se simte e singura cifră care nu se poate calcula.
+- Cele 135 de întrebări vechi n-au subcategorie (clichetul le numără).
+
+### Ce urmează, concret
+
+1. **O expediție jucată.** Cu 50 pe celulă la patru din șase domenii, sacul nu mai
+   repetă nimic într-o expediție lungă, nicăieri.
+2. **Cuvinte are 20 pe nivel** — acum e cel mai subțire Obelisc din joc, cu mult.
+   La Cuvinte, cele 20 sunt și întrebările, și distractorii.
+3. Lotul de clasificare pentru cele 135 fără subcategorie.
+4. Istoria la 50 pe nivel, ca celelalte (acum 18).
+
+### Fișiere
+
+Atinse: `data/intrebari_trivia.json` (+252 de întrebări, 4390 de linii),
+`tools/da_iduri.py` (`CATE_INTREBARI` 465),
+`tools/verificari/verifica_trivia.gd` (`CATE_INTREBARI_MANA` 465),
+`docs/progres.md`.
+
+---
+
+## `tools/` CURAT (7 octombrie 2026) — un dosar pentru verificări, două fișiere șterse
+
+Continuarea simplificării, dar cu o concluzie pe jumătate diferită de ce părea la
+prima vedere: **din cele 30 de fișiere din `tools/`, niciunul nu era inutil.**
+Problema nu era ce conțineau, era unde stăteau.
+
+### Ce părea de șters și nu era
+
+Zece verificări, fiecare cu trei fișiere (`.gd`, `.gd.uid`, `.tscn`), adunau 30 de
+intrări într-un dosar cu patru lucruri folositoare. Arăta ca gunoi.
+
+Nu era. Au fost rulate toate, înainte să ating ceva:
+
+| scenă | rezultat |
+|---|---|
+| `verifica_trivia` | 29 de verdicte OK |
+| `verifica_harta` | 28 OK |
+| `verifica_plansa` | 26 OK |
+| `verifica_eveniment` | 22 OK |
+| `verifica_tipuri` | 9 OK |
+| `verifica_drumuri` | 4 OK |
+| `verifica_coltul` | merge, dar tipărește MĂSURĂTORI, nu verdicte — se citește, nu se bifează (~2 min) |
+| `verifica_cifru` | trece, în **596 de secunde**: rezolvă fiecare lacăt generat ca un om. Încheie cu „VERDICT: cifrurile ies bine”, nu cu „OK” |
+
+Toate bat sisteme care sunt **încă în joc**: generatorul de hărți, rețeta tipurilor
+de nod, garanția că o expediție nu se înfundă, generatorul de lacăte cu
+dificultatea măsurată. A șterge una înseamnă a șterge o verificare, nu a face
+curat. Deci au fost **mutate**, nu tăiate: `tools/verificari/`.
+
+Acum `tools/` are trei intrări: `da_iduri.py`, `fabrica/`, `verificari/`.
+
+**Mutarea n-a fost un `git mv` și gata.** Scenele trimit la scriptul lor prin
+CALE (`res://tools/verifica_tipuri.gd`), nu prin uid, deci fiecare `.tscn` a
+trebuit rescris. Și 22 de comentarii din joc trimit la verificări („socoteala e în
+`tools/verifica_harta.gd`”) — alea sunt chiar ce face comentariile folositoare, deci
+s-au rescris și ele. Plus 56 de căi din `progres.md`: o cale moartă într-un jurnal
+e mai rea decât una actualizată.
+
+Dovada că nu s-a rupt nimic: toate opt rulate din locul nou, aceleași verdicte.
+
+### Două lucruri care erau, într-adevăr, de șters
+
+`tools/fabrica/date/opere_propuse.json` (110 KB) și `tari_propuse.json` (8 KB) sunt
+ieșirile lui `--propune`: liste de candidați din care aleg de mână ce intră în
+tabel. Căutat cine le citește: **nimeni.** Apar numai la scriere, în `opere.py` și
+`capitale.py`.
+
+Erau comise în Git, deci 118 KB care se schimbau la fiecare rulare și pe care nu-i
+citea nimic. Au ieșit din Git și au intrat în `.gitignore`. Probat că ștergerea nu
+pierde nimic: `python tools/fabrica/capitale.py --propune` a refăcut fișierul,
+octet cu octet aceeași mărime, din cache — deci fără rețea.
+
+**Despărțirea care merita numită:** `tools/fabrica/date/` ține acum numai
+**INTRĂRI** — `elemente.json`, `opere.json`, `tari.json`, `autori.json`, toate
+scrise de mână, toate citite de fabrică. Ieșirile n-au ce căuta lângă ele, nici în
+dosar, nici în Git. Cache-ul (`tools/fabrica/cache/`) rămâne comis, și e altceva:
+el ÎNGHEAȚĂ o sursă vie, deci e o garanție de reproductibilitate, nu o ieșire.
+
+### Lecția, dacă e una
+
+Primul impuls la „dosarul e plin” e să ștergi. Dar un fișier de test arată exact
+ca unul mort: nu-l deschizi niciodată, nu-l cheamă nimic din joc, și nu se vede
+dacă e verde sau roșu până nu-l rulezi. **Diferența se află rulându-l, nu
+privindu-l** — iar cele patru minute de rulat au salvat suita de regresie a
+proiectului.
+
+Al doilea criteriu, care a și decis cele două ștergeri: **cine citește fișierul?**
+Nimeni → regenerabil → afară. `*_propuse.json` au picat la întrebarea asta;
+verificările au trecut-o, fiindcă pe ele le citesc eu, la fiecare schimbare care
+atinge harta sau conținutul.
+
+### Verificat
+
+- Toate cele 8 verificări headless, rulate din `tools/verificari/`: aceleași
+  verdicte ca înainte de mutare, cod de ieșire 0.
+- Nicio cale veche rămasă: `grep -rn "tools/verifica_"` nu mai întoarce nimic în
+  afară de cache-ul editorului Godot, care se reface singur.
+- `--propune` reface `tari_propuse.json` din cache, fără rețea.
+
+### Fișiere
+
+Mutate: toate cele 30 de fișiere `verifica_*` → `tools/verificari/`.
+Șterse din Git: `tools/fabrica/date/opere_propuse.json`, `tari_propuse.json`.
+Atinse: cele 19 fișiere mutate (căile din ele), `autoload/expeditie.gd`,
+`scenes/cifru/generator_cifru.gd`, `scenes/harta/harta.gd`, `panza.gd`,
+`plansa.gd`, `scenes/lupta/asezare_coloana.gd`, `umbra_contact.gd`,
+`scenes/trivia/trivia.gd`, `tools/fabrica/comun.py` (toate, numai căi în
+comentarii), `.gitignore`, `CLAUDE.md` (tabelul verificărilor),
+`docs/progres.md`, `docs/plan-continut.md`.
+
+---
+
+## UN SINGUR FLAG (7 octombrie 2026) — mașinăria de verificare s-a desfăcut
+
+**Zi de ȘTERS, nu de adăugat.** În două zile construisem un aparat de verificare
+mai complicat decât conținutul pe care-l verifica: un câmp `ciorna` care ținea
+întrebările afară din joc, un al doilea `verificat` pe fapt, cu `surse` și o listă
+de afirmații de bifat, un câmp `wikidata`, și două unelte cu parametri
+(`--confirma=tot`, `--verifica=…`, `--sursa=…`, `--domeniu=`, `--nivel=`).
+
+Verdictul, de la cine o folosea: *„sunt prea multe variabile, parametri etc, prea
+multe scripturi atunci când trebuie să verific întrebări.”* Corect, și merită
+numit ce s-a întâmplat: am optimizat **ceremonia** verificării, nu verificarea.
+Munca adevărată — a citi o notă și a căuta trei afirmații într-o sursă — n-a
+devenit mai ușoară cu niciun parametru.
+
+### Ce e acum
+
+Fiecare întrebare din `data/intrebari_trivia.json` are un câmp:
+
+```json
+{
+	"id": "mana:0001",
+	"verificat": false,
+	"fapt": "zidul_berlinului",
+	"text": "În ce an a căzut Zidul Berlinului?",
+	…
+}
+```
+
+- **Întrebarea intră în joc oricum.** Flagul nu decide nimic în luptă.
+- Când citesc nota și o găsesc corectă, scriu `true`. **De mână, în JSON.**
+- Nimic altceva. Niciun script, niciun parametru, niciun al doilea flag.
+
+Faptele au rămas cu **`nota` și `etichete`**. Au ieșit `verificat`, `surse`,
+`de_verificat` și `wikidata`.
+
+### Ce s-a șters
+
+| ce | de ce |
+|---|---|
+| câmpul `ciorna` | ținea 48 de întrebări afară din joc. O întrebare necitită e tot o întrebare bună în majoritatea cazurilor; una ținută afară nu se joacă niciodată |
+| `verificat` + `surse` pe fapt | al doilea flag pentru același lucru. Cel care rămâne stă pe întrebare, fiindcă acolo îl cauți când citești |
+| `de_verificat` pe fapt | 92 de liste de afirmații. Erau un ajutor real la citit, dar încă un câmp de ținut minte |
+| `wikidata` pe fapt | n-avea cine să-l mai folosească după ce a plecat unealta de sprijin |
+| `tools/arata_ciornele.py` | 600 de linii, nouă opriri, cinci parametri — toate pentru un mecanism care nu mai există |
+| `tools/sprijin_verificare.py` | aducea declarațiile de la Wikidata lângă notă. Chiar folositoare, și totuși: „prea multe scripturi” |
+| `CATE_CU_NOTA`, `CATE_CIORNE` din verificator | două cifre de ținut la zi |
+
+Niciuna din cele două unelte nu fusese comisă, deci sunt **definitiv duse**. Scris
+aici ca să existe urma: dacă într-o zi verificarea notelor devine iar munca
+principală, `sprijin_verificare.py` merită rescris — aducea declarațiile de la
+Wikidata cu anii î.Hr. și calendarul iulian corectate, iar cele două lecții din el
+sunt în sesiunea de deasupra.
+
+### Cifra care a dovedit că aparatul era de prisos
+
+`CATE_CU_NOTA` a trebuit schimbată de **patru ori în treizeci și șase de ore**:
+18 → 28 → 38 → 48. De fiecare dată fiindcă urca la un lot confirmat, și de fiecare
+dată am pus cifra pe care mi-o cerea verificarea.
+
+**O verificare pe care o actualizezi mecanic, fără s-o mai citești, nu verifică
+nimic** — a devenit o formalitate care îmi cerea o editare. A fost înlocuită cu o
+cifră TIPĂRITĂ, fără verdict („întrebări cu nota citită: 28 din 763”), fiindcă nu
+există nicio invariantă de cerut acolo: faptele fabricate au nota goală dinadins,
+iar numărul celor citite crește pe măsură ce citesc.
+
+Aceeași regulă a scos și verdictul de la secțiunea NOTELE. Ce a rămas acolo sunt
+invariante adevărate, care nu se schimbă niciodată: nicio notă peste limită,
+niciun fapt cu notă pe care nu-l cere nicio întrebare.
+
+### Ce a câștigat jocul, nu doar codul
+
+Cele 48 de ciorne de Divertisment și Sport au intrat în joc în clipa în care
+`ciorna` a dispărut. Deci:
+
+```
+  domenii fără nicio întrebare               niciunul
+  nivelul 1, pe domenii   arta_literatura 50 (+42), divertisment 8 (+0),
+                          geografie 47 (+39), istorie 18 (+10),
+                          sport_timp_liber 8 (+0), stiinta_natura 47 (+39)
+```
+
+**Toate șase domeniile sunt în luptă.** Echilibrul, măsurat pe 6000 de trageri pe
+nivel, împarte acum la șase: ținta e 1000 în loc de 1500, iar Divertismentul și
+Sportul ies cât celelalte (947–1015 la nivelul I, abatere maximă 8,2%).
+
+Asta nu e un câștig al simplificării în sine — conținutul era scris de ieri. Dar
+e ce s-ar fi întâmplat oricum, și mecanismul îl ținea pe loc **până găseam timp
+pentru o ceremonie**.
+
+### Două lucruri care NU s-au simplificat, dinadins
+
+- **Listele închise de câmpuri au rămas**, și una s-a adăugat: faptele au acum și
+  ele una (`CAMPURI_FAPT`). Un câmp scris greșit („verifcat”) ar fi o întrebare
+  care se poartă altfel decât crezi, în tăcere. Lista nu e un parametru și nu cere
+  nimic de la mine — doar refuză și spune care câmp.
+- **`verificat` lipsă înseamnă `false`.** Așa, cele 550 de întrebări fabricate nu
+  poartă câte un „false” degeaba: nimeni nu citește de mână conținut generat, iar
+  un câmp pus peste tot e un câmp pe care-l ignori peste tot.
+
+Și una care s-a simplificat fără să fie cerută: ordinea câmpurilor unui fapt era
+scrisă de trei ori în fabrică, cu o mică diferență la capitale. A devenit
+`comun.ORDINEA_FAPTULUI`, lângă `ORDINEA_INTREBARII`.
+
+### Verificat
+
+- `tools/verificari/verifica_trivia.tscn`, headless: **toate 10 secțiunile OK** (a 11-a,
+  CIORNELE, a fost ștearsă), 763 de întrebări încărcate din 763 găsite, 449 de
+  fapte. Cod de ieșire 0.
+- Migrarea datelor: 213 întrebări au primit flagul, din care **28 au ieșit `true`**
+  — cele 27 de fapte pe care le semnaseși, plus o întrebare care împărțea un fapt
+  verificat. Nicio semnătură pierdută la mutare.
+- Faptele scrise de mână: 92, cu `etichete, id, nota` și nimic altceva (verificat
+  pe mulțimea câmpurilor, nu cu ochiul).
+- Cele trei fișiere de fapte fabricate, regenerate: `surse` și `verificat` au ieșit
+  din toate 357, iar capitalele au păstrat `imagini`.
+- Echilibrul pe șase domenii, 6000 de trageri pe nivel: abatere maximă 8,2% /
+  3,8% / 2,5%, cu limita la 20%.
+- Sacul: 18 chei (6 domenii × 3 niveluri) fără nicio repetiție pe un ciclu întreg.
+
+### Ce NU s-a făcut
+
+- **735 din 763 de întrebări au `verificat: false`.** Din care 550 sunt fabricate,
+  deci nu le va citi nimeni de mână; rămân ~185 scrise de mână de citit.
+- **Cele 48 noi n-au fost citite de nimeni**, dar se joacă. Ăsta e chiar sensul
+  schimbării, nu o datorie ascunsă.
+- **Nicio partidă jucată** cu șase domenii.
+- **Cele 135 de întrebări vechi n-au subcategorie.** Clichetul din verificator le
+  numără.
+
+### Ce urmează, concret
+
+1. **O expediție jucată cu șase domenii.** Prima cifră care nu se poate calcula.
+2. **De citit notele, în ritmul propriu.** Deschizi JSON-ul, citești, pui `true`.
+   Verificatorul tipărește cât a mai rămas, fără să ceară nimic.
+3. Lotul de clasificare pentru cele 135 fără subcategorie.
+4. Primul tabel de fabrică din plan: `filme → regizor` (`P57`).
+
+### Fișiere
+
+Șterse: `tools/arata_ciornele.py`, `tools/sprijin_verificare.py`,
+`tools/fabrica/cache/wikidata_fapte.json`.
+Atinse: `scenes/trivia/trivia.gd` (`ciorne` și `unde_e` scoase, `CAMPURI_FAPT`
+adăugat, `verificat` numărat, `_incarca_fapte` simplificat),
+`tools/verificari/verifica_trivia.gd` (secțiunea 11 ștearsă, două constante scoase, două
+verdicte devenite cifre), `data/intrebari_trivia.json` (flagul pe toate 213,
+`ciorna` scos de pe 48), `data/fapte_trivia.json` (patru câmpuri scoase din 92),
+`data/trivia_gen/*_fapte.json` (regenerate), `tools/fabrica/comun.py`
+(`ORDINEA_FAPTULUI`), cele trei tabele, `CLAUDE.md`, `docs/ghid-note.md`,
+`docs/plan-continut.md`, `.gitignore`, `docs/progres.md`.
+
+---
+
+## ȘASE DOMENII ÎN LUPTĂ (7 octombrie 2026) — 48 de ciorne care deschid două domenii
+
+Ziua în care conținutul a ajuns din urmă mecanismul de ieri. Trei lucruri, în
+ordinea în care au fost făcute: cele două note găsite greșite s-au reparat, cele
+15 fapte din pilot au intrat în fluxul de verificare, iar Divertismentul și
+Sportul au primit lotul de deschidere — **8 întrebări pe fiecare celulă, exact
+pragul**.
+
+### 1. Cele două note greșite, și o semnătură retrasă
+
+`sprijin_verificare.py` le găsise ieri. Reparate:
+
+| fapt | înainte | acum |
+|---|---|---|
+| `edirne` | capitală „din 1363”, „înaintea lui fusese Bursa” | „din 1365 până în 1453”, fără claim-ul despre Bursa |
+| `zidul_lui_hadrian` | „aproape 120 de kilometri” | „pe 117 kilometri” |
+
+La `edirne` a ieșit și o a doua corectură, pe care n-o ceruse nimeni: `P36` al
+Imperiului Otoman arată **Didymoteicho între Bursa și Edirne** (1361–1363), deci
+„înaintea lui fusese Bursa” era mai încurcat decât spunea nota. Claim-ul a ieșit
+cu totul. Nu e o pierdere: o notă cu trei afirmații din care una e „aproape
+adevărată” e mai rea decât una cu două afirmații sigure.
+
+**Amândouă au pierdut `verificat: true` și sursa.** Fuseseră semnate, iar textul
+pe care îl acopereau s-a schimbat. O semnătură care supraviețuiește rescrierii
+textului nu mai înseamnă nimic — e chiar motivul pentru care `de_verificat` stă
+lângă `verificat`. Se re-semnează după recitire.
+
+### 2. Cele 15 fapte din pilot intră în flux
+
+Erau în joc din 27 septembrie, cu note neverificate, fără `de_verificat` și fără
+`wikidata` — deci nici unealta nouă nu le putea ajuta. Acum le au pe amândouă.
+
+**Listele nu s-au scris acum: existau deja**, în `docs/ghid-note.md` §5, sub
+fiecare notă a pilotului („De verificat: …”). Scriptul le-a MUTAT în date. Ăsta e
+și argumentul pentru care câmpul merita să existe: informația era scrisă de două
+săptămâni, într-un document, deci invizibilă pentru orice unealtă.
+
+QID-urile, toate 15, căutate. Unde faptul vorbește despre două-trei entități,
+câmpul le ține pe toate: `michelangelo` are omul, „David” și Capela Sixtină;
+`impresionism` are curentul și tabloul; `constantinopol` are împăratul și orașul.
+
+A ieșit și o proprietate lipsă: `aur` semnala „79” ca neregăsit, fiindcă `P1086`
+(numărul atomic) nu era în lista uneltei. Trei rânduri în plus — `P1086`, `P246`,
+`P274` — și faptul se potrivește singur.
+
+### 3. Lotul de deschidere: Divertisment și Sport, 8 pe celulă
+
+**48 de întrebări, 48 de fapte, 8 pe fiecare din cele 6 celule.** Exact
+`PRAG_DOMENIU`, deci în clipa confirmării **jocul trece de la patru domenii la
+șase** — prima schimbare din sesiunea DOMENIILE care se va simți jucând.
+
+Cifra 8 n-a fost aleasă ca să fie rotundă. Era argumentul din `plan-continut.md`:
+Divertismentul și Sportul nu erau „subțiri”, erau **invizibile**, iar 48 de
+întrebări sunt cea mai mare schimbare pe cea mai mică muncă din tot planul.
+Geografia până la PLIN are nevoie de mai mult decât toate celelalte la un loc, și
+tot nu s-ar observa.
+
+Repartiția pe subcategorii, și de ce contează: **toate cele 11 subcategorii ale
+celor două domenii au conținut.** Verificatorul tipărea până ieri „divertisment,
+subcategorii goale: 5 din 5”; azi scrie „niciuna din 5”. Rafturile declarate pe
+6 octombrie nu mai sunt promisiuni.
+
+| domeniu | nivel I | nivel II | nivel III |
+|---|---|---|---|
+| divertisment | animație 2, filme 2, jocuri 1, muzică 2, seriale 1 | filme 4, jocuri 1, muzică 2, seriale 1 | animație 1, filme 3, jocuri 1, muzică 2, seriale 1 |
+| sport | olimpiade 2, gastronomie 2, fotbal 1, alte 1, reguli 1, hobby 1 | olimpiade 2, fotbal 2, gastronomie 1, alte 1, reguli 1, hobby 1 | olimpiade 2, alte 2, fotbal 1, gastronomie 1, reguli 1, hobby 1 |
+
+Șase întrebări au eticheta `romania`: Nadia, Hagi, Năstase, mămăliga, sarmalele,
+Phoenix, „4 luni, 3 săptămâni și 2 zile”.
+
+### Regula „numai trecut, cu data spusă”, ținută de un verificator, nu de bunăvoință
+
+Cele două domenii au o regulă pe care celelalte patru nu o au (`ghid-note.md`), și
+ea e ușor de încălcat fără să bagi de seamă: „cel mai premiat film”, „actualul
+campion”. Scriptul lotului o verifică pe o listă de cuvinte interzise — „actual”,
+„în prezent”, „cel mai recent”, „momentan” — peste texte ȘI peste note.
+
+Fiecare din cele 48 poartă un an, un titlu sau o regulă care nu se mișcă: „din
+1937”, „în 1994”, „câți jucători are o echipă de baschet”. Niciuna nu poate
+îmbătrâni.
+
+**Ce am refuzat să scriu:** orice superlativ („cel mai bun film din istorie”),
+viața privată a cuiva, și recordurile care se bat. La nivelul III al ambelor
+domenii s-a simțit plafonul pe care îl anunța `plan-continut.md`: regula taie
+exact întrebările de cunoscător despre ce se întâmplă acum, deci nivelul III e
+făcut din istorie a divertismentului (Cetățeanul Kane, 1941) și palmarese închise
+(Schumacher, ultimul titlu în 2004).
+
+### O grafie disputată, prinsă de căutarea QID-urilor
+
+`--cauta` pentru albumul Phoenix a întors **două entități cu două grafii**:
+„Cantofabule” (Q12723391) și „Cantafabule – Bestiar” (Q12723384). Întrebarea mea
+cerea grafia „Cantafabule” pe un buton.
+
+Un titlu disputat pe un singur buton verde e **aceeași greșeală ca un fapt
+disputat** — regula din `CLAUDE.md` care a scos Israelul din tabelul capitalelor.
+Deci întrebarea nu mai cere titlul: „Ce formație rock românească a scos în 1975 un
+album-bestiar, cu animale fabuloase?”, iar nota spune pe față că apare scris în
+ambele feluri.
+
+Căutarea a plătit și la `film_titanic`: Wikidata are `Q25173` (nava) și `Q44578`
+(filmul din 1997). Ghicit, aș fi legat nota filmului de pachebot.
+
+### Ce a prins unealta de sprijin pe lotul nou
+
+Prima rulare a arătat o proprietate lipsă mai importantă decât toate celelalte:
+**`P577`, data publicării, nu era în listă.** E scrisă în `plan-continut.md` ca
+proprietate pentru tabelul de filme, dar nu intrase în unealtă. Opt proprietăți
+noi (`P577`, `P495`, `P57`, `P175`, `P166`, `P1346`, `P641`, plus `P619` de ieri)
+au dus Divertismentul de la **19 fapte cu cifre neregăsite la 9**.
+
+La sport, patru fapte aveau data pe **altă entitate**: medalia Nadiei stă pe
+ediția din 1976, nu pe ea; la fel Phelps, Owens și Hagi. Al doilea QID le-a
+rezolvat.
+
+Ce rămâne semnalat, și de ce e în regulă:
+
+| fel | exemple | se poate automatiza? |
+|---|---|---|
+| reguli și numărători | 11 jucători, 64 de pătrate, 16 piese, 40 de minute | **nu** — Wikidata nu ține regulile unui joc |
+| socoteli | „108 ani după 1896” | **nu** — e aritmetică, nu o declarație |
+| date pe entități pe care nu le-am legat | 1863 (federația de fotbal), 1889 (pizza Margherita), 1800 (sfecla de zahăr) | da, cu încă un QID — dar nu merită la fiecare |
+
+Niciuna nu oprește nimic: cifrele neregăsite se raportează, cu eticheta lor.
+Scriptul spune de fiecare dată „nu e o greșeală: o notă are voie să spună ce
+Wikidata nu ține”.
+
+### Grila de azi
+
+```
+                              nivelul I              nivelul II             nivelul III
+  geografie              47 (+39)               128 (+120)             100 (+92)
+  istorie                18 (+10)                18 (+10)               18 (+10)
+  stiinta_natura         47 (+39)                60 (+52)               56 (+48)
+  arta_literatura        50 (+42)                80 (+72)               93 (+85)
+  divertisment            0 (SĂRIT) +8 ciorne     0 (SĂRIT) +8 ciorne    0 (SĂRIT) +8 ciorne
+  sport_timp_liber        0 (SĂRIT) +8 ciorne     0 (SĂRIT) +8 ciorne    0 (SĂRIT) +8 ciorne
+  (715 în joc + 48 ciorne = 763; 449 fapte, din care 92 scrise de mână)
+
+  subcategorii goale: geografie 6/7 · istorie 0/4 · stiinta_natura 7/8
+                      arta_literatura 5/6 · divertisment 0/5 · sport 0/6
+```
+
+Istoria e la **18 pe toate trei nivelurile** — prima celulă scrisă de mână care nu
+mai stă pe muchia pragului, și singura din grilă cu rezervă pe toată coloana.
+Divertismentul și Sportul arată `0 (SĂRIT)` cu 8 ciorne alături: scrise, citibile,
+în afara jocului. Cifra din paranteză e singurul lucru care se schimbă la
+confirmare, și o schimbă din 0 în 8.
+
+### Verificat
+
+- `tools/verificari/verifica_trivia.tscn`, headless: **toate 11 secțiuni OK**, 715 întrebări
+  + 48 ciorne = 763 din 763 găsite, 449 de fapte. Cod de ieșire 0.
+- `CATE_INTREBARI_MANA` 213, `CATE_FAPTE` 92, `CATE_CIORNE` 48, `CATE_CU_NOTA` 48.
+  Ultima a urcat de la 38 la 48 **prin confirmarea nivelului III al istoriei**, nu
+  prin lotul nou — lotul nou n-a clintit-o, fiindcă e ciornă.
+- `tools/da_iduri.py --scrie`: 48 de id-uri noi (`mana:0166`…`mana:0213`), toate
+  unice, 96 de întrebări cu fapt.
+- Lotul, verificat înainte de scriere: texte unice față de toate cele 165
+  existente, variante distincte, niciun răspuns în textul întrebării lui,
+  subcategorii valide pe domeniul lor, niciun cuvânt interzis, nicio notă peste
+  240 de caractere (cea mai lungă: 187).
+- `tools/sprijin_verificare.py` pe toate cele 48: 24 + 24 de fapte aduse, zero
+  erori de interogare.
+- Cele 92 de fapte scrise de mână au acum **toate** `de_verificat` și `wikidata`.
+
+### Ce NU s-a făcut
+
+- **Niciuna din cele 48 de ciorne nu e confirmată.** Deci Divertismentul și
+  Sportul sunt tot sărite în luptă. Ăsta e rostul mecanismului, nu o scăpare.
+- **65 de fapte din 92 sunt `verificat: false`**, inclusiv cele 48 noi, cele 15 din
+  pilot și cele două corectate azi.
+- **Nicio partidă jucată** cu conținut nou. Cifra care mă interesează — cum se
+  simt șase domenii în loc de patru — nu se poate calcula.
+- **Niciun tabel nou de fabrică.** `evenimente_datate` și `filme → regizor` sunt
+  proiectate în plan, cu capcanele lor, și nescrise.
+- **Cele 135 de întrebări vechi n-au subcategorie.** Clichetul din verificator le
+  numără, iar lotul de clasificare nu s-a făcut.
+- **Cele 28 de ciorne de opere** au rămas ciorne (al cincilea raport care o spune).
+
+### Ce urmează, concret
+
+1. **De citit cele 48 de ciorne și de confirmat.** Asta deschide două domenii.
+   Sprijinul a potrivit deja cifrele la 39 din 48, deci rămâne citirea relațiilor.
+2. **O expediție jucată cu șase domenii.** Prima cifră care nu se poate calcula:
+   fiecare domeniu ia 1/6 în loc de 1/4, deci Cultura generală se lățește cu o
+   treime peste noapte. De simțit, nu de socotit.
+3. **Lotul de clasificare** pentru cele 135 de întrebări fără subcategorie.
+4. **Primul tabel de fabrică din plan**: `filme → regizor` (`P57`) e cea mai curată
+   relație din Divertisment, iar unealta de sprijin are deja proprietățile pentru
+   el.
+
+### Fișiere
+
+Atinse: `data/intrebari_trivia.json` (+48 de ciorne, un text rescris),
+`data/fapte_trivia.json` (+48 de fapte, `de_verificat` și `wikidata` pe toate
+cele 92, două note corectate și de-semnate), `tools/sprijin_verificare.py`
+(11 proprietăți noi), `tools/da_iduri.py` (`CATE_INTREBARI` 213),
+`tools/verificari/verifica_trivia.gd` (cele patru cifre), `docs/progres.md`.
+
+---
+
+## PLANUL ȘI CIORNELE (6 octombrie 2026) — o hartă a conținutului, un mecanism și primul lot
+
+Trei lucruri care se sprijină unul pe altul: un **plan** care spune ce lipsește și
+de unde se ia, un **mecanism** prin care o întrebare scrisă de mână poate exista
+fără să fie încă în joc, și **primul lot** scris cu el — 30 de ciorne de istorie,
+10 pe nivel.
+
+Sesiunea de dinainte (DOMENIILE) s-a încheiat cu o propoziție care cerea
+continuare: *„istoria trece cu rezerva zero, deci e următoarea țintă de
+conținut”*. Asta e continuarea.
+
+### 1. `docs/plan-continut.md`: harta
+
+Al treilea document de conținut, și fiecare răspunde la altă întrebare:
+`ghid-note.md` spune **în ce domeniu** intră o întrebare și **cum se scrie o
+notă**; `plan-continut.md` spune **ce lipsește, de unde se ia și în ce ordine**;
+`progres.md` spune **ce s-a făcut**.
+
+Ce conține: subdomeniile fiecărui domeniu (devenite subcategorii — vezi mai jos),
+sursa fiecăruia (tabel de fabrică sau scris de mână), iar pentru fiecare tabel
+propus **relația din Wikidata și capcanele ei**, scrise înainte să existe
+scriptul. Plus ordinea de lucru și ce NU intră.
+
+**Ținta pe celulă a primit două trepte intermediare.** Cea veche („500 unde
+domeniul le poartă, 150–250 la nivelul I”) e bună și rămâne, dar are un defect
+practic: nu se atinge în luni, deci nu-mi spune niciodată *„celula asta e gata
+pentru azi”* — orice celulă sub 500 arată identic în grilă. Deci:
+
+| treaptă | cifră | ce se schimbă în joc |
+|---|---|---|
+| PRAG | 8 | celula intră în luptă (`PRAG_DOMENIU`) |
+| CONFORT | 25 | 4-5 expediții lungi fără nicio repetiție în ea |
+| PLIN | 150–250 la I, 500 la II/III | ținta din CONȚINUTUL, neschimbată |
+
+Fiecare treaptă are un **înțeles mecanic**, nu o senzație. Și treapta care
+lipsește peste tot e CONFORT, nu PLIN: diferența dintre 8 și 25 e diferența
+dintre „domeniul apare” și „domeniul nu se simte subțire”, și se atinge într-o
+săptămână de scris.
+
+**Ordinea de lucru nu e după cât lipsește, e după cât se schimbă pe unitate de
+muncă scrisă.** Geografia până la PLIN are nevoie de mai mult decât toate
+celelalte la un loc, și totuși e ultima. Întâi istoria (rezerva zero, deci
+fragilă: o întrebare retrasă scoate domeniul din joc în tăcere), apoi
+Divertisment și Sport — care nu sunt „subțiri”, sunt **invizibile**, iar 48 de
+întrebări acolo fac jocul să aibă șase domenii în loc de patru.
+
+**Cea mai folositoare pagină din document e lista capcanelor**, fiindcă e scrisă
+înainte, nu după. Patru feluri, fiecare cu un exemplu care s-a întâmplat deja sau
+era la un pas:
+
+| capcană | exemplu | leacul |
+|---|---|---|
+| superlativul disputat | „cel mai lung fluviu” (Nil sau Amazon) | caut o DECLARAȚIE care îl spune (`P610`), nu un clasament calculat de mine |
+| data incertă | datele antice au precizie de deceniu sau secol | se citește precizia și se refuză tot ce nu e exact pe an |
+| faptul care se schimbă | Croația a trecut la euro în 2023 fără ca nimic din fișierul meu să se miște | întrebarea poartă data cu ea, sau faptul nu se ia |
+| un câmp lipsă nu e un „NU” | 10 state istorice intrate printre cele 193 membre ONU | orice filtru pe absența unui câmp cere un al doilea semn |
+
+Și două tabele **refuzate scris**, cu motivul: `P61` (inventatorul) — telefonul,
+becul, radioul au fiecare două-trei revendicări reale, iar Wikidata le ține pe
+toate; și `P47` (vecinii unei țări) — ține și granițe maritime, deci „cu cine se
+învecinează Spania?” iese cu Algeria. Un tabel refuzat scris e mai folositor decât
+unul nescris: peste trei luni n-am de unde să-mi amintesc de ce n-am făcut ceva.
+
+Capcana cea mai instructivă din tot documentul e la palmarese: **titlurile
+retrase.** Lance Armstrong a câștigat Tour de France din 1999 până în 2005 și apoi
+nu le-a mai câștigat — palmaresul oficial n-are învingător pentru acei ani, dar
+Wikidata poate să țină în continuare declarația. Un tabel care nu se oprește aici
+predă **șapte fapte false**.
+
+### 2. `subcategorie`: un câmp, nu o etichetă — și de ce asta a fost decizia zilei
+
+Planul avea nevoie de un nume pentru „capitale” în interiorul geografiei. Prima
+formă propusă a fost o **etichetă pe fapt**, lângă `romania`. A fost schimbată, și
+motivul e unul despre care merită scris, fiindcă nu e evident:
+
+> În Practice vreau să pot alege „geografie → capitale”. Un meniu care alege are
+> nevoie de **cifre corecte** și de garanția că **nicio întrebare nu rămâne pe
+> dinafară** — adică de o ÎMPĂRȚIRE, nu de etichete care se suprapun.
+
+Cu etichete, „capitala României” ar fi avut și `capitale`, și `romania`, iar
+meniul ar fi avut două răspunsuri la întrebarea „câte întrebări sunt aici?”. Cu un
+câmp, o întrebare stă în exact una.
+
+Și despărțirea se ține: **`etichete` rămâne pentru transversale.** `romania` taie
+PESTE subcategorii — Posada e `istorie`/`ev_mediu` + etichetă `romania`, Dâmbovița
+e `geografie`/`ape` + etichetă `romania`. Dacă `romania` ar fi fost subcategorie,
+ar fi trebuit să aleg între „e despre România” și „e despre râuri”.
+
+Se alege după **aceeași regulă ca domeniul**: ce trebuie să ȘTII, nu subiectul.
+„Pe ce râu stă Viena?” e `orase`, nu `ape`.
+
+**Lista e completă de la bun început: 36 de chei, din care azi se folosesc 4.**
+Același argument pentru care Divertismentul și Sportul au fost scrise goale în
+`DOMENII`: o subcategorie scrisă de la început e un rând, una adăugată după ce s-a
+scris conținut e o migrare. Prețul e că 32 de rafturi sunt promisiuni — de-aia
+verificatorul le **tipărește la fiecare rulare**, pe domeniu. Un raft declarat și
+uitat ar sta acolo ani; așa se vede că e gol până îl umplu sau îl șterg.
+
+**La istorie, subcategoriile sunt erele**, tăiate pe dată: antichitate până la
+476, Ev Mediu 476–1500, modern 1500–1914, contemporan de la 1914. **Data decide,
+nu numele** — dinastia Yuan (1271) e `ev_mediu` deși „Evul Mediu” e o noțiune
+europeană. Subcategoria e un RAFT, nu o afirmație despre civilizația aia; altfel
+fiecare întrebare despre Asia sau despre America precolumbiană ar cere o decizie
+de la mine, și raftul ar fi o părere.
+
+Prețul e scris în document, nu ascuns: **granița de la 1500 taie prin Evul Mediu
+românesc** (Neagoe Basarab, 1512–1521, iese `modern`), iar 1914 pune Titanicul
+(1912) în epoca modernă. Lotul de azi ocolește amândouă granițele, deci convenția
+e scrisă dar încă neîncercată.
+
+### Cele 550 de întrebări fabricate: un diff de 550 de inserări curate
+
+Câmpul nou trebuia să intre și în conținutul fabricat, iar aici a fost o alegere
+mică, cu un motiv care nu e estetic. În `ORDINEA_INTREBARII`, `subcategorie` stă
+**înaintea** lui `categorie`, nu după.
+
+`categorie` e ultimul câmp al unui obiect, deci singurul fără virgulă. Cu
+`subcategorie` după el, linia lui ar fi primit o virgulă, iar regenerarea celor
+550 de întrebări ar fi arătat **trei linii schimbate pe întrebare** în loc de una
+adăugată — 1650 de linii în care cauți câmpul nou, adică un diff care nu se
+citește.
+
+Dovada s-a luat, nu s-a presupus: fișierele regenerate, comparate cu ce ar fi
+scris fabrica de ieri (ordinea veche de câmpuri), dau **+550 linii, −0 linii**, și
+toate cele 550 sunt `"subcategorie"`:
+
+```
+elemente    139 întrebări   +139 linii, -0 linii   adăugiri care nu sunt subcategorie: 0
+opere       160 întrebări   +160 linii, -0 linii   adăugiri care nu sunt subcategorie: 0
+capitale    251 întrebări   +251 linii, -0 linii   adăugiri care nu sunt subcategorie: 0
+```
+
+Și ordinea a ieșit din cele trei scripturi într-o constantă (`comun.ORDINEA_INTREBARII`):
+era scrisă identic de trei ori, iar „identic” a devenit „trei locuri de ținut
+sincronizate” exact în ziua în care a trebuit să primească un câmp.
+
+Perechea (domeniu, subcategorie) se verifică **o dată, la pornirea fiecărui
+tabel** (`comun.verifica_subcategoria`). Fără ea, un `SUBCATEGORIE` scris greșit
+ar fi făcut ca `trivia.gd` să refuze toate cele 139 de întrebări ale tabelului —
+s-ar fi văzut în bilanț, dar după ce scrisesem fișierul. Probat rupând: `"chimei"`
+oprește scriptul, cu lista celor cunoscute.
+
+**Cele 135 scrise de mână n-au primit subcategoria azi.** Clasificarea lor e un
+lot separat, ca ciornă, pe care o confirm eu. Până atunci încărcătorul le acceptă,
+cu **un rând** de bilanț („135 intrebari fara subcategorie”), nu cu 135 de
+avertismente — iar verificatorul are un **clichet**: `MAX_FARA_SUBCATEGORIE = 135`,
+verdict „cel mult”, fiindcă cifra numai scade. Nu trebuie atinsă când clasific, și
+pică în clipa în care scriu conținut nou fără subcategorie.
+
+### 3. Mecanismul ciornelor
+
+Fabrica avea mecanismul de la al doilea tabel: un rând cu `"ciorna": true` intră
+în raportul de probă și nu intră în fișierul scris. Partea scrisă de mână n-avea
+echivalent, și asta era o gaură adevărată: **scriam întrebarea direct în joc**,
+deci ori o verificam înainte s-o scriu, ori o jucam neverificată. La 30 de
+întrebări pe lot, niciuna din cele două nu merge.
+
+De azi, o întrebare din `data/intrebari_trivia.json` cu `"ciorna": true`:
+
+- trece prin **toate** validările (patru variante, `corect` în interval, domeniu
+  și subcategorie cunoscute, faptul există) — o ciornă stricată se plânge ACUM, nu
+  în ziua în care o confirm;
+- își înregistrează `id`-ul, deci nu se poate ciocni cu nimic;
+- **își marchează faptul ca folosit** — fără asta, cele 29 de fapte ale lotului ar
+  fi dat 29 de avertismente „faptul nu e folosit de nicio întrebare”, și de-acolo
+  încolo consola nu mai e un loc unde se citește ceva;
+- **nu intră în `intrebari`**, deci nici în luptă, nici în sac, nici în echilibru.
+
+**Invarianta verificatorului s-a mutat, nu s-a slăbit.** Era „încărcate ==
+găsite”; e acum „încărcate + ciorne == găsite”. O ciornă nu e o pierdere — e
+scrisă, validată și ținută dinadins afară. Fără ea în partea stângă, invarianta ar
+fi picat la primul lot și aș fi învățat s-o ignor, care e cel mai rău lucru care i
+se poate întâmpla unei verificări. Ce rămâne prins e exact ce trebuie: o întrebare
+**stricată** nu e nici în `intrebari`, nici în `ciorne`, deci lipsește din sumă.
+
+### Lista închisă de câmpuri, și câmpul pe care am refuzat să-l adaug
+
+`trivia.gd` n-avea nicio verificare pe câmpuri necunoscute. Acum are, și refuză
+întrebarea. Motivul e chiar mecanismul de mai sus: **`"ciorne": true` (cu e) ar fi
+o ciornă neconfirmată care intră în joc**, fără ca nimic să spună nimic nicăieri —
+cel mai scump fel de greșeală, fiindcă nu se vede nici în cod, nici în date, doar
+în luptă. Refuzată, se vede în linia de bilanț. Același argument ca la
+`comun.verifica_campurile`, din fabrică; probat rupând: câmpul `ciorne` a scos
+`mana:0136` din joc, cu mesajul lui.
+
+Și o alegere care pare o scăpare și nu e: **`retras` NU e în listă**, deși e o
+convenție scrisă din sesiunea ID ȘI FAPT („o întrebare scoasă din joc se
+marchează `"retras": true` și rămâne pe loc”). Codul care sare peste retrase nu
+există încă. Dacă pun câmpul în listă acum, prima întrebare retrasă ar rămâne în
+joc în tăcere — exact felul de greșeală pe care lista închisă e pusă să o prindă.
+Așa, ziua aia mă oprește și scriu codul de care e nevoie.
+
+### `tools/arata_ciornele.py`
+
+Comanda de citit, și singurul loc unde ciornele se confirmă:
+
+```bash
+python tools/arata_ciornele.py                      # toate, de citit
+python tools/arata_ciornele.py --domeniu=istorie --nivel=1
+python tools/arata_ciornele.py --confirma=mana:0136,mana:0137
+python tools/arata_ciornele.py --confirma=tot
+```
+
+Cum arată o ciornă:
+
+```
+  mana:0136   contemporan
+  În ce an s-a încheiat al Doilea Război Mondial?
+      1944      1945  ✔      1946      1939
+  faptul `al_doilea_razboi_mondial`  ·  verificat: NU  ·  etichete: —
+      Al Doilea Război Mondial s-a încheiat în 1945: în mai, în Europa, și în
+      septembrie, în Asia, după capitularea Japoniei. Începuse în 1939, cu
+      invadarea Poloniei.
+      [ ] capitularea Germaniei, mai 1945
+      [ ] capitularea Japoniei, septembrie 1945
+      [ ] începutul: invadarea Poloniei, 1939
+```
+
+Nouă opriri, și fiecare are un motiv, nu e curățenie: ciornă fără `fapt` (nu se
+poate verifica), `fapt` inexistent (legătură falsă), notă goală sau peste limită,
+`de_verificat` gol („confirmat” n-ar însemna nimic), `subcategorie` lipsă sau
+străină domeniului, `verificat: true` cu `surse` gol, câmp necunoscut oriunde,
+etichetă în afara vocabularului. **Niciuna nu e avertisment** — un avertisment
+într-o unealtă pe care o rulezi ca să CITEȘTI se pierde printre 30 de ciorne
+tipărite.
+
+`--confirma=tot` înseamnă **tot ce s-a arătat**, nu tot ce există. Altfel
+`--domeniu=istorie --confirma=tot` ar fi confirmat și ce n-am citit, adică exact
+surpriza pe care o comandă de confirmare n-are voie s-o facă.
+
+**De ce confirmarea e o comandă, nu o ștergere de mână.** Fiindcă ștergerea unui
+rând dintr-un JSON scris de om e exact felul în care s-a pierdut odată câmpul
+`nivel` de la „Divina Comedie”: ștergi rândul de deasupra, sau lași o virgulă, sau
+o iei pe cea greșită din două obiecte asemănătoare. `--confirma` face chirurgie pe
+text, ca `tools/da_iduri.py`, și citește fișierul înapoi ca dovadă. Probat pe
+`mana:0136` și `mana:0140`, cu diff față de copia de dinainte:
+
+```
+-		"ciorna": true,
+-		"ciorna": true,
+```
+
+Două linii, nimic altceva.
+
+Și un amănunt mic cu un motiv real: **`ciorna` e al doilea câmp al obiectului, nu
+ultimul.** Ultimă, ar fi fost singura linie fără virgulă, și ștergerea ar fi lăsat
+o virgulă în aer pe linia dinainte — adică un JSON stricat la fiecare confirmare.
+Unealta nu ghicește: dacă linia nu e exact `"ciorna": true,`, se oprește și spune
+care e.
+
+### `de_verificat`: lista de bifat devine DATE
+
+Ghidul avea, sub fiecare notă a pilotului, un rând „De verificat: …”. Lista aia s-a
+mutat pe fapt, ca listă de șiruri. Motivul:
+
+> **`verificat: true` era un cuvânt de onoare.** Spunea că am verificat, nu CE am
+> verificat. O notă cu trei afirmații din care am confirmat două arăta, în date,
+> exact ca una verificată întreagă.
+
+Cu lista alături, boolean-ul devine o semnătură pe ceva anume, iar unealta are de
+unde s-o tipărească în loc s-o ghicească. Lista **rămâne** după verificare: e
+procesul-verbal, nu o listă de cumpărături.
+
+Ce NU face: nu numără afirmațiile din notă și nu le compară cu lista. Regula „cel
+mult trei afirmații” rămâne de ochi — un validator care ar încerca să extragă
+afirmații dintr-o frază românească ar greși în ambele direcții, iar o verificare
+care greșește în ambele direcții e mai rea decât niciuna. Aceeași lecție ca la
+„simbolul se deduce din nume?”, din sesiunea FABRICA.
+
+Confirmarea întrebării și verificarea faptului rămân **două lucruri separate**:
+`--confirma` zice „întrebarea e bună”, `verificat` zice „nota e de încredere”. Ce
+face Practice cu `verificat: false` e tot decizia amânată din `ghid-note.md` §7.
+
+### `--verifica`: a doua confirmare, adăugată tot pe 6 octombrie
+
+`verificat: true` se punea de mână. Merge la 10 fapte și nu mai merge la 100, deci
+a primit și ea comandă — dar **separată**, nu un al doilea efect al lui
+`--confirma`:
+
+```bash
+python tools/arata_ciornele.py --verifica=tot --sursa="manual istorie cls. X"
+python tools/arata_ciornele.py --verifica=mana:0136,pompei --sursa="…"
+```
+
+Despărțirea e tot argumentul de mai sus, privit din partea practică: o întrebare
+poate fi perfect corectă cu o notă în care un an e greșit. Cu o singură comandă
+n-ai mai putea spune „întrebarea intră în joc, dar nota mai are nevoie de o
+căutare” — iar ăsta e **cazul obișnuit**, nu excepția.
+
+Trei alegeri, fiecare venită din felul în care s-a folosit comanda în prima oră:
+
+- **Ia și `id`-uri de ÎNTREBARE, nu doar de fapt.** Le citești pe întrebări, deci
+  în cap ai `mana:0136`, nu `al_doilea_razboi_mondial`. Un `id` cu „:” e o
+  întrebare și se traduce în faptul ei. Despărțirea e sigură fiindcă id-urile de
+  fapt n-au „:” niciodată.
+- **Merge pe orice fapt, nu doar pe cele ale ciornelor.** Imediat după ce am
+  confirmat primele 10 întrebări, faptele lor nu mai erau ciorne — dar notele lor
+  aveau nevoie de exact aceeași verificare. O comandă care ar fi mers numai pe
+  ciorne ar fi fost inutilă chiar în clipa în care era nevoie de ea.
+- **`--sursa` e obligatorie.** Regula „nu poți fi verificat fără să spui de unde”
+  era ținută doar la CITIRE (`verificat: true` cu `surse` gol oprea unealta). Acum
+  e ținută și la SCRIERE, deci nu mai există niciun drum prin care un fapt devine
+  verificat fără sursă.
+
+Un fapt deja verificat e **sărit**, nu o eroare — aceeași purtare ca `da_iduri.py`,
+care lasă în pace un obiect ce are deja `id`. Altfel a doua rulare ar fi adăugat
+sursa de două ori.
+
+Chirurgia pe text a cerut grijă la un amănunt care ar fi stricat exact jumătate
+din fapte: `"verificat": false` e **ultimul** câmp la faptele fără etichete și
+**penultimul** la cele cu `etichete`. Rescrisă fără păstrarea virgulei, linia ar fi
+dat JSON stricat la jumătate din fapte și bun la cealaltă jumătate — adică o
+greșeală care trece o dată și cade a doua oară. `rescrie_campul` păstrează virgula
+dacă era; probat pe `vlad_tepes` și `carol_i`, care au etichete.
+
+Probat, pe date pe care le-am dat apoi înapoi: fără `--sursa` oprește; `--sursa`
+singur oprește; un `id` de întrebare confirmată și unul de fapt, amestecate,
+merg; a doua rulare sare peste cele deja verificate; `mana:9999` și un fapt
+inexistent opresc; `--verifica=tot` pe nivelul II a prins și `revolutia_franceza`,
+faptul împărțit cu nivelul I. Diff-ul pe disc: **două linii pe fapt**, `surse` și
+`verificat`.
+
+### `tools/sprijin_verificare.py`: mașina aduce sursa, omul judecă relațiile
+
+Verificarea unei note cerea un browser pentru fiecare afirmație din
+`de_verificat`. La 20 de ciorne și 60 de afirmații, aia e o seară. Unealta nouă
+aduce declarațiile de la Wikidata și le pune **lângă** notă.
+
+Ce NU face, și de ce merită scris mai apăsat decât ce face: **nu dă verdicte.**
+Motivul e greșeala găsită cu ochiul la `mana:0150`, în aceeași zi:
+
+> Nota spunea că armata lui Alexandru a refuzat să înainteze „la Indus”. **Anul
+> era corect** — 326 î.Hr., exact. Răzvrătirea fusese la râul Hyphasis, mai la
+> est. Orice verificare automată de date și cifre ar fi dat verde.
+
+Notele sunt făcute din RELAȚII („cine pe cine”, „unde anume”), iar
+`docs/ghid-note.md` §4 le pune separat de cifre, la punctul 2. Un script care ar
+încerca să le judece ar greși în ambele direcții — aceeași lecție ca la „simbolul
+se deduce din numele românesc?”, din sesiunea FABRICA. Deci:
+
+    mașina ADUCE sursa și prinde cifrele
+    omul   JUDECĂ relațiile
+
+Faptele au primit un câmp `wikidata`, **listă** de QID-uri, din același motiv ca
+`imagini`: un fapt poate vorbi despre două entități. Anii răscoalei lui Spartacus
+nu stau pe om, stau pe răscoală; perioada în care Edirne a fost capitală stă pe
+Imperiul Otoman, nu pe oraș.
+
+**QID-urile nu s-au ghicit.** Toate 29 s-au căutat cu `--cauta`, iar unealta
+tipărește la fiecare rulare eticheta și descrierea entității — deci un QID greșit
+nu poate trece neobservat. Căutarea a și plătit imediat: pentru `pompei`,
+Wikidata are și `Q36471` (comuna modernă) și `Q43332` (orașul roman). Ghicit, aș
+fi luat prima.
+
+### Trei capcane pe care unealta le-a scos la lumină în prima oră
+
+Niciuna presupusă; toate măsurate pe datele venite. Și două din trei erau pe
+punctul să mă trimită să „corectez” note corecte — adică o unealtă de verificare
+gata să strice exact ce verifica.
+
+**1. Calendarul iulian.** Prima dată adusă, la Hastings: `P585 = 1066-10-20`, iar
+nota și toată lumea spun 14 octombrie. Valorile vin de la Wikidata **normalizate
+în gregorian proleptic**, iar modelul de calendar al declarației e iulian. Șase
+zile — exact decalajul secolului XI. Unealta tipărește acum modelul și
+**convertește**: conversia e o socoteală (prin numărul zilei iuliene), nu o
+judecată, deci are ce căuta într-un script. Probată pe trei cazuri cu răspuns
+cunoscut: 1066-10-20 → 14 oct. 1066; 1917-11-07 → 25 oct. 1917; 1582-10-15 →
+5 oct. 1582.
+
+**2. Anii î.Hr., greșiți cu exact un an — un bug al meu.** Wikidata folosește
+numerotarea **astronomică**, în care anul 0 există și ESTE anul 1 î.Hr. Deci
+`-0062` e 63 î.Hr., nu 62. Prins fiindcă trei entități își spun datele în propria
+descriere, iar raportul meu le contrazicea pe toate trei cu exact un an: Augustus
+(descrierea zice 63 î.Hr., valoarea `-0062`), Alexandru cel Mare (356–323,
+valorile `-0355`/`-0322`), Iulius Cezar (100–44, valoarea de rang preferat
+`-0099`). După reparație, `spartacus` și `augustus` s-au potrivit singure.
+
+**3. Perioadele stau în CALIFICATORI, nu în declarații.** „Iustinian a domnit
+527–565” nu e pe persoană, e pe declarația `P39` (funcția deținută), ca
+`pq:P580`/`pq:P582`. La fel „Edirne, capitală 1363–1453”, pe `P36` al Imperiului
+Otoman. Fără ele, raportul semnala cifrele ca neregăsite la **tiparul cel mai des
+din tot domeniul istoriei**. Lista proprietăților „cu perioadă” e un dicționar de
+două rânduri, ca a treia să nu fie o ramură nouă.
+
+### Și o a patra, despre raport: un „OK” care liniștește degeaba
+
+Prima versiune a verificării de cifre întorcea `True`/`False`. A mințit la prima
+ocazie: nota de la Edirne scrie „capitală din 1363”, iar „1363” s-a regăsit — în
+rândul **altui oraș** (Didymoteicho, capitală 1361–1363). Raportul a scris „cifre
+regăsite: 1363”.
+
+Deci se întoarce acum **rândul în care s-a găsit**, și se tipărește:
+
+```
+    regăsit          1363  ←  capitala: Didymoteicho  (Q932648)   (de la 1361, până în 1363)
+    regăsit          1453  ←  capitala: Edirne  (Q43387)   (de la 1365, până în 1453)
+```
+
+Aceeași idee ca `de_verificat` lângă `verificat: true`: o afirmație se vede cu
+dovada alături, nu pe cuvânt. Iar potrivirea rămâne **dinadins slabă** (pe text,
+ca „1066” să se găsească în „1066-10-20”), fiindcă un comparator mai strict ar fi
+cerut să știu dinainte ce fel de valoare e fiecare cifră din notă — adică exact
+judecata pe care scriptul n-o face.
+
+Cifrele neregăsite se **raportează, nu opresc**: o notă are voie să spună ce
+Wikidata nu ține („un zbor de 108 minute”, „cincisprezece state”). O verificare
+care, prin construcție, greșește într-o singură direcție — semnalează prea mult,
+niciodată prea puțin — n-are voie să oprească; altfel o pornești o dată și o
+abandonezi.
+
+### Ce a găsit, pe cele 10 ciorne de nivelul III
+
+Opt din zece și-au potrivit toate cifrele singure, cu dovada alături. Două n-au,
+și amândouă sunt **note de-ale mele de corectat**, nu scăpări ale uneltei:
+
+| fapt | nota mea | ce spune sursa |
+|---|---|---|
+| `edirne` | capitală „din 1363” | `P36` al Imperiului Otoman: **de la 1365** (1363 e în rândul altui oraș) |
+| `zidul_lui_hadrian` | „aproape 120 de kilometri” | `P2043`: **117,5 km** |
+
+Prima e o confuzie reală: 1363 e anul cuceririi Adrianopolului, 1365 e mutarea
+capitalei. Nota le amestecă. A doua e rotunjirea mea, și e o decizie, nu o
+greșeală — dar e o decizie care trebuie luată, nu lăsată.
+
+### Primul lot confirmat: nivelurile I și II ale istoriei
+
+Cele 20 de ciorne de nivelurile I și II au fost citite și confirmate
+(`mana:0136`…`mana:0155`), iar 19 fapte au fost semnate cu `--verifica`.
+**Istoria e acum la 18 pe nivelurile I și II, adică rezerva +10** — primul domeniu
+scris de mână care iese din zona pragului. Nivelul III are tot 8, cu 10 ciorne.
+
+Și cele două cifre-martor s-au mișcat exact cum trebuia, ceea ce e singura dovadă
+că mecanismul ține de la un cap la altul:
+
+| cifră | la scrierea lotului | după 10 confirmate | după 20 |
+|---|---|---|---|
+| `CATE_CIORNE` | 30 | **20** | **10** |
+| `CATE_CU_NOTA` | **18** (neschimbat) | **28** | **38** |
+
+Prima linie e ce aștepți. A doua e cea care contează: `CATE_CU_NOTA` numără
+întrebările care ajung cu notă **pe ecran**. N-a clintit când au intrat 29 de note
+noi în fișier (erau ciorne), și a urcat cu exact 10 când am confirmat 10. Dacă s-ar
+fi mișcat la scriere, mecanismul n-ar fi ținut; dacă n-ar fi urcat la confirmare,
+confirmarea n-ar fi însemnat nimic.
+
+### 4. Lotul: 30 de ciorne de istorie
+
+10 pe nivel, `mana:0136`…`mana:0165`, cu 29 de fapte noi (una e împărțită: faptul
+`revolutia_franceza` ține și „în ce an a început?”, la nivelul I, și „ce închisoare
+a fost luată cu asalt pe 14 iulie 1789?”, la II — chiar regula de la secțiunea 1 a
+ghidului, folosită).
+
+| | antichitate | Ev Mediu | modern | contemporan |
+|---|---|---|---|---|
+| nivel I | 2 | 1 | 2 | 5 |
+| nivel II | 2 | 3 | 3 | 2 |
+| nivel III | 3 | 5 | 1 | 1 |
+
+Șase din 30 au eticheta `romania` (Marea Unire, Carol I, Vlad Țepeș, Posada,
+independența din 1877). Nivelul III se duce spre antichitate și Ev Mediu dinadins:
+acolo „o știi doar dacă te-a interesat” e cinstit, iar la contemporan ar fi
+alunecat spre trivia de almanah.
+
+**Ce am refuzat să scriu**, deși ar fi fost ușor: inventatorul telefonului, al
+becului, al radioului (disputate); orice superlativ; orice domnie medievală cu
+date care se contrazic între surse; și datele cu precizie de secol prezentate ca
+an. Vlad Țepeș are trei domnii, deci întrebarea din lot e despre **nume**, nu
+despre ani — iar nota spune ce e verificabil (semnătura „Drăculea”, porecla
+tatălui, romanul lui Stoker din 1897), nu cât l-a inspirat Stoker, care e
+discutabil.
+
+**Așezarea în fișier:** inserate la finalul celor trei blocuri de istorie
+existente (după `mana:0008`, `mana:0053`, `mana:0098`), nu lipite la coadă.
+Fișierul e organizat nivel → domeniu, deci o întrebare confirmată trebuie să fie
+deja la locul ei; altfel într-o zi mut linii, iar mutatul de linii e exact ce
+`da_iduri.py` se ferește să facă. Diff: **300 de inserări, zero linii mutate.**
+
+`id`-urile le-a dat scriptul, nu mâna. `CATE_INTREBARI` din `da_iduri.py` a trecut
+de la 135 la 165 — plasa lui, funcționând cum trebuie: se ridică de mână, odată cu
+lotul, fiindcă dacă s-ar citi din fișier n-ar mai prinde nimic.
+
+### Verificatorul: secțiunea 11, și de ce întreabă în trei feluri
+
+**O ciornă care ar ajunge în luptă n-ar crăpa nimic.** Ar fi o întrebare
+neverificată printre altele verificate, cu aceeași formă și același antet.
+Singurul loc în care s-ar vedea e o partidă în care nimeresc chiar ea și bag de
+seamă că n-am citit-o niciodată. Deci secțiunea 11 întreabă în trei feluri:
+
+| probă | ce prinde |
+|---|---|
+| nicio ciornă în `intrebari` | despărțirea listelor din încărcător |
+| nicio ciornă trasă în 1000 de trageri pe nivel | alegerea, pe drumul ei adevărat |
+| fiecare ciornă are fapt, cu notă | o ciornă pe care n-ai ce s-o confirmi |
+
+A doua nu se sprijină pe prima, și asta e tot rostul. Probat rupând codul în două
+feluri diferite:
+
+| ce am rupt | ce a picat |
+|---|---|
+| ciornele puse ȘI în `intrebari` | invarianta (745 ≠ 715), proba 1, proba 2 |
+| `trage_intrebarea` trage din `intrebari + ciorne` | **numai proba 2** (425 de trageri de ciornă) — invarianta și proba 1 au trecut liniștite |
+
+A doua linie e dovada că afirmația din comentariu nu e o vorbă: cu listele
+despărțite corect și o a treia sursă de întrebări adăugată din alt motiv, singura
+verificare care prinde scurgerea e cea care trage prin funcția luptei.
+
+Celelalte schimbări din verificator:
+
+- `CATE_INTREBARI_MANA` 135 → **165**; `CATE_FAPTE` 15 → **44**; `CATE_CIORNE` =
+  **30**, verdict **exact**, nu „cel mult”: dacă `--confirma=tot` ar lua vreodată
+  mai mult decât am citit, cifra asta pică.
+- **`CATE_CU_NOTA` a rămas 18**, și asta e cea mai elocventă cifră din sesiune: un
+  lot de 30 de ciorne cu 29 de note n-a mișcat numărul întrebărilor care ajung cu
+  notă pe ecran. Dacă s-ar fi mișcat, mecanismul n-ar fi ținut.
+- Secțiunea 5 socotește faptele ciornelor drept **folosite**, dar nu le numără la
+  „întrebări cu notă”. Cele două registre răspund la întrebări diferite:
+  `folosite` caută conținut MORT, iar o notă scrisă pentru o ciornă nu e moartă, e
+  neconfirmată; `cu_nota` caută ce ajunge pe ecran, iar o ciornă nu ajunge.
+- Grila arată ciornele **lângă** rezervă, nu în ea: `istorie 8 (+0) +10 ciorne`.
+  Adunate la rezervă, grila ar fi spus că istoria are +10 când în luptă are tot
+  +0 — exact minciuna pe care rezerva a fost pusă să o împiedice, cu semnul
+  schimbat.
+- Subcategoriile goale, tipărite pe domeniu (ciornele numărate: un raft pentru
+  care AM scris conținut nu mai e o promisiune, chiar dacă nu e încă în joc).
+
+### Grila de azi
+
+```
+                              nivelul I              nivelul II             nivelul III
+  geografie              47 (+39)               128 (+120)             100 (+92)
+  istorie                18 (+10)                 8 (+0)  +10 ciorne     8 (+0)  +10 ciorne
+  stiinta_natura         47 (+39)                60 (+52)               56 (+48)
+  arta_literatura        50 (+42)                80 (+72)               93 (+85)
+  divertisment            0                       0                      0
+  sport_timp_liber        0                       0                      0
+  (695 în joc + 20 ciorne = 715; 401 fapte, din care 44 scrise de mână)
+
+  subcategorii goale: geografie 6/7 · istorie 0/4 · stiinta_natura 7/8
+                      arta_literatura 5/6 · divertisment 5/5 · sport 6/6
+```
+
+Nivelul I e confirmat (18, rezerva +10). II și III sunt tot la 8, cu lotul lor
+scris și necitit — și așa trebuie să fie: o ciornă nu apără nimic până nu e citită.
+
+### Verificat
+
+- `tools/verificari/verifica_trivia.tscn`, headless: **toate 11 secțiunile OK**, 685 de
+  întrebări + 30 de ciorne = 715 din 715 găsite, 401 fapte. Cod de ieșire 0.
+- Secțiunea 11, probată rupând codul în două feluri (tabelul de mai sus); a doua
+  rupere arată că proba 2 prinde ce proba 1 nu poate.
+- Lista închisă de câmpuri, probată: `"ciorne": true` scoate întrebarea din joc,
+  cu mesaj.
+- `comun.verifica_subcategoria`, probată: `"chimei"` oprește tabelul elementelor.
+- `tools/arata_ciornele.py`: cele 30 de ciorne tipărite întregi (346 de rânduri),
+  și **șase opriri probate** fiecare pe date stricate dinadins — fapt fără
+  `de_verificat`, `verificat: true` cu `surse` gol, etichetă „Romania” cu R mare,
+  subcategorie străină domeniului, câmp `ciorne`, `--confirma` pe o întrebare care
+  nu e ciornă.
+- `--confirma` probat pe două ciorne, cu diff față de copia de dinainte: exact
+  două linii șterse. Dat înapoi, lotul e iar întreg.
+- Fabrica, toate trei tabelele regenerate: **+550 de linii, −0**, toate
+  `subcategorie`. Citite înapoi, id-uri unice peste tot conținutul.
+- `tools/da_iduri.py --scrie`: 30 de id-uri noi, 165 de întrebări cu id unic, 48
+  cu fapt.
+
+### Ce NU s-a făcut
+
+- **Nicio notă verificată.** Toate cele 44 de fapte scrise de mână sunt
+  `verificat: false`, inclusiv cele 15 din pilot. Lotul de azi are listele
+  `de_verificat` scrise; bifatul lor e muncă de citit, nu de scris cod.
+- **Nivelul III al lotului (10 ciorne) nu e confirmat.** Nivelurile I și II au
+  fost citite și confirmate în aceeași zi; restul așteaptă, și e în regulă — ăsta e
+  chiar rostul mecanismului.
+- **Cele două note găsite greșite nu sunt reparate** (`edirne`, 1363 în loc de
+  1365; `zidul_lui_hadrian`, rotunjirea la 120 km). Sunt ciorne, deci se repară
+  înainte de confirmare.
+- **Cele 15 fapte din pilot n-au `wikidata`.** Numai cele 29 din lotul nou au.
+- **Cele 135 scrise de mână n-au subcategorie.** Lot separat, ca ciornă.
+- **Divertismentul și Sportul sunt tot goale.** Planul spune ce să scriu acolo;
+  n-am scris nimic azi.
+- **Niciun tabel nou de fabrică.** `evenimente_datate` e proiectat în plan, cu
+  capcanele lui, și nescris.
+- **Nicio partidă jucată** cu conținutul nou — e ciornă, deci nici n-ar fi apărut.
+- **Cele 28 de ciorne de opere** au rămas ciorne (al patrulea raport care spune
+  asta).
+
+### Ce urmează, concret
+
+1. **Reparat cele două note găsite greșite** (`edirne`, `zidul_lui_hadrian`), apoi
+   citite și confirmate cele 10 ciorne de nivelul III. Asta duce istoria la 18 pe
+   toate trei nivelurile.
+3. **`--verifica` pe cele 44 de fapte scrise de mână.** Toate sunt încă
+   `verificat: false`, inclusiv cele 15 din pilot — comanda există de azi,
+   bifatul listelor nu s-a făcut.
+4. **Divertisment și sport, 8 pe nivel** — cea mai mare schimbare pe cea mai mică
+   muncă din tot planul: 48 de întrebări fac jocul să aibă șase domenii.
+5. Lotul de clasificare pentru cele 135 scrise de mână.
+
+### Fișiere
+
+Nou: `docs/plan-continut.md`, `tools/arata_ciornele.py`,
+`tools/sprijin_verificare.py`, `tools/fabrica/cache/wikidata_fapte.json`.
+Atinse: `scenes/trivia/trivia.gd` (`SUBCATEGORII`, `CAMPURI_INTREBARE`, `ciorne`,
+`fara_subcategorie`, `unde_e`, validările noi, bilanțul),
+`tools/verificari/verifica_trivia.gd` (constante, invarianta, grila, subcategoriile goale,
+secțiunea 5, secțiunea 11), `tools/fabrica/comun.py` (`SUBCATEGORII`,
+`ORDINEA_INTREBARII`, `verifica_subcategoria`, `pune_la_locul_lui`, antetul),
+`tools/fabrica/elemente.py`, `opere.py`, `capitale.py` (`SUBCATEGORIE`, ordinea,
+verificarea la pornire), `tools/da_iduri.py` (`CATE_INTREBARI` 165),
+`data/intrebari_trivia.json` (+300 de linii, 30 de ciorne, din care 10 confirmate),
+`data/fapte_trivia.json` (+208 linii, 29 de fapte),
+`data/trivia_gen/*_intrebari.json` (+550 de linii, toate `subcategorie`),
+`docs/ghid-note.md` (`de_verificat`, `subcategorie`), `CLAUDE.md`, `docs/progres.md`.
+
+---
+
+## DOMENIILE (6 octombrie 2026) — șase domenii noi și un prag de intrare în luptă
+
+**Zi de migrare și de reguli, zero conținut nou.** Cele șase domenii ale Culturii
+generale au fost retăiate, iar alegerea din luptă a primit o regulă pe care n-o
+avea: un domeniu intră în joc doar dacă are destul conținut la nivelul cerut.
+
+### Domeniile vechi erau tăiate după cum crescuse baza, nu după cum se joacă
+
+| vechi | nou |
+|---|---|
+| istorie | `istorie` — Istorie |
+| geografie | `geografie` — Geografie |
+| stiinta | `stiinta_natura` — Știință și natură |
+| arta + mitologie + literatura | `arta_literatura` — Artă și literatură |
+| — | `divertisment` — Divertisment |
+| — | `sport_timp_liber` — Sport și timp liber |
+
+Artă, mitologie și literatură erau trei domenii cu 21 de întrebări fiecare, care
+se întreabă **identic**: cine a scris, cine a pictat, cine a compus. Trei celule
+subțiri în loc de una groasă — iar subțirimea costă, de când alegerea e uniformă
+pe domenii: fiecare lua 1/6 din luptă cu 7 întrebări pe nivel.
+
+În locul lor au intrat două care lipseau cu totul. Divertismentul și Sportul
+**pornesc goale, dinadins**: un domeniu scris în `DOMENII` de la început e un
+rând; unul adăugat după ce s-a scris conținut e o migrare ca cea de azi.
+
+Ce intră în fiecare, cu regula pentru cazurile de graniță, e în
+**`docs/ghid-note.md`**, în secțiunea nouă de la început.
+
+### `CATEGORII` (listă) a devenit `DOMENII` (dicționar)
+
+```gdscript
+const DOMENII := {
+	"geografie": "Geografie",
+	"istorie": "Istorie",
+	"stiinta_natura": "Știință și natură",
+	"arta_literatura": "Artă și literatură",
+	"divertisment": "Divertisment",
+	"sport_timp_liber": "Sport și timp liber",
+}
+```
+
+Un dicționar face amândouă treburile: validează cheia la încărcare
+(`DOMENII.has`) și dă numele din antetul întrebării (`DOMENII[cheie]`). Cu o
+listă de chei lângă un dicționar de nume, un domeniu nou ar fi fost două locuri
+de ținut sincronizate, iar al doilea se uită.
+
+**Cheia nu e numele** — iar despărțirea asta nu exista înainte, fiindcă până azi
+`arta` era și una, și alta. Cheia intră în `id`-uri, în cheile sacului și, de la
+Save, pe disc, deci n-are diacritice și nu se schimbă niciodată. Numele e text pe
+ecran. Fără despărțire, antetul ar fi scris „ARTA_LITERATURA”; acum scrie
+„ARTĂ ȘI LITERATURĂ”, iar Logica afișa oricum etichete de două-trei cuvinte
+(„SIR NUMERIC”, „MIXT: x2, APOI +3”), deci forma exista deja pe ecran.
+
+### Pragul: 8 întrebări pe celulă, și socoteala din care iese
+
+Regula veche de echilibru (8/8/8/7/7/7 pe nivel, ținut de mână în fișier) nu mai
+are sens de când artă, mitologie și literatură sunt un singur domeniu. O
+înlocuiește una care nu depinde de cât de mare crește un domeniu:
+
+> Un domeniu intră în alegerea din luptă, la un nivel, doar dacă are acolo cel
+> puțin **8 întrebări**. Sub prag e **sărit, nu golit**.
+
+**1. Câte trage o expediție lungă.** Sesiunea CONȚINUTUL a fixat cifra: ~15 pe
+nivel, adică ~45 de întrebări de Cultură generală pe o expediție lungă. Dar cifra
+aia e de **dinainte de paliere**. Pe 30 septembrie nivelul urca la fiecare
+treaptă (`mini(treapta, 3)`): treapta 1 era nivelul I, treapta 2 nivelul II, iar
+treapta 3 și tot restul lanțului nivelul III — deci grosul cădea pe III. Cu
+`TREPTE_PE_NIVEL = 3`, repartiția s-a întors.
+
+Un lanț cu rata de reușită 0,8 pe întrebare (șansa de a ajunge la treapta *k* e
+0,8^(k-1)) dă în medie, pe activare:
+
+| nivel | treptele | întrebări pe activare |
+|---|---|---|
+| I | 1, 2, 3 | 1 + 0,8 + 0,64 = **2,4** |
+| II | 4, 5, 6 | 0,51 + 0,41 + 0,33 = **1,25** |
+| III | 7 încolo | 0,26 / 0,2 = **1,3** |
+
+≈ 5 întrebări pe activare, din care **49% la nivelul I**. Pe 45 de întrebări:
+~22 la nivelul I, ~11 la II, ~12 la III. **Nivelul încărcat nu mai e III, e I** —
+și acolo se decide pragul.
+
+**2. Cât ia un domeniu.** Alegerea e uniformă pe domeniile admise. Azi trec
+patru, deci ~5-6 trageri pe celulă la nivelul I. Cu toate șase pline, ~4.
+
+**3. Cât de des s-ar repeta.** Sacul garantează „nicio repetiție până se
+golește”, pe cheie domeniu × nivel:
+
+| întrebări în celulă | într-o expediție lungă |
+|---|---|
+| 8 | 5-6 trageri < 8 → **zero repetiții** |
+| 4 | sacul reciclează → aceeași întrebare **de două ori** |
+| 2 | de trei ori — și 1/6 din toată lupta ar fi acele două |
+
+**De ce 8 și nu alt număr.** Trei lucruri, și toate trei trebuiau să fie
+adevărate deodată:
+
+- **E cifra pe care o cere socoteala.** Primul număr la care garanția sacului mai
+  înseamnă ceva pentru o expediție lungă. Sub el, pragul ar lăsa să intre exact
+  domeniile care se repetă — adică n-ar apăra nimic.
+- **E o celulă scrisă de mână.** Baza de 135 s-a construit 7-8 pe celulă, deci 8
+  e cea mai mică porție de conținut pe care o produc dinadins.
+- **Nu arunc nimic din ce am.** Istoria are exact 8 pe fiecare nivel și trece la
+  limită. La 10, o regulă introdusă ca să apere echilibrul ar fi șters istoria din
+  joc. Și cu `FOLOSESTE_WIKIDATA` stins rămâne mâna: 8/8/8 la geografie, istorie
+  și știință, 21 la artă și literatură — toate trec. **La 9, stingerea
+  comutatorului ar lăsa în luptă trei domenii, și istoria ar ieși prima.**
+
+### Prețul, spus pe față: istoria trece cu rezerva zero
+
+La 8 pe nivel și 5-6 trageri, fiecare expediție lungă îmi arată 5-6 din cele 8
+întrebări de istorie ale unui nivel. Pragul nu ascunde asta, **o numește**:
+istoria e celula subțire și e următoarea țintă de conținut.
+
+Și mai e un fel în care tăcerea ar fi costat: dacă retrag vreodată o întrebare de
+istorie, domeniul iese din luptă fără nicio eroare, fără niciun avertisment — pur
+și simplu nu mai apare. De-aia verificatorul tipărește acum **rezerva fiecărei
+celule peste prag**, nu doar dacă trece:
+
+```
+  nivelul 1, pe domenii   arta_literatura 50 (+42), geografie 47 (+39),
+                          istorie 8 (+0), stiinta_natura 47 (+39)
+  domenii fără nicio întrebare   divertisment, sport_timp_liber
+```
+
+`(+0)` e ce vreau să văd. O coloană „trece / nu trece” ar fi arătat istoria exact
+ca geografia.
+
+Și, în aceeași secțiune, un rând care pare banal și nu e:
+
+```
+  antetele, cum ajung pe ecran   GEOGRAFIE · ISTORIE · ȘTIINȚĂ ȘI NATURĂ ·
+                                 ARTĂ ȘI LITERATURĂ · DIVERTISMENT · SPORT ȘI TIMP LIBER
+```
+
+E singurul lucru din sesiunea asta pe care nicio altă verificare nu-l poate
+atinge: `to_upper()` pe diacritice românești. Dacă ar da „ARTA SI LITERATURA”,
+nimic n-ar crăpa și nimic n-ar avertiza — s-ar vedea doar într-o luptă, pe o
+întrebare din domeniul ăla, dacă mă uit la antet. Acum se vede dintr-o rulare
+headless. (Godot îl face corect.)
+
+### Plasa: dacă niciun domeniu nu trece, se joacă cu toate
+
+`trage_intrebarea` putea întoarce dicționar gol, iar `puzzle.gd` scoate pentru el
+ecranul de eroare. În mijlocul unui lanț, asta nu e o apărare împotriva
+conținutului subțire, e o **pedeapsă pentru el** — pierzi lanțul fiindcă n-am
+scris destule întrebări. Deci dacă nicio celulă nu trece pragul, se trage din
+toate, cu un avertisment.
+
+Avertismentul a fost și prima greșeală a zilei, prinsă de verificator în aceeași
+rulare: scris fără registru, a ieșit **de o mie de ori** la o mie de trageri,
+fiindcă locul ăla e pe drumul fiecărei întrebări, nu al încărcării. Într-o luptă
+ar fi însemnat o consolă în care nu se mai poate citi nimic altceva — adică exact
+opusul a ce vrea un avertisment. Acum se spune o dată pe nivel, pe toată rularea
+(`_plasa_spusa`).
+
+### Verificatorul: echilibrul doar peste prag, și o secțiune care RUPE pragul
+
+**Secțiunea 6 (ECHILIBRUL)** socotea ținta ca 1/N peste domeniile *prezente*. De
+azi, „prezent” și „jucat” nu mai sunt același lucru: un domeniu cu trei întrebări
+e în date și nu e în luptă. Cu el în numitor, verificarea ar fi cerut 1/5 când
+lupta împarte la 4, și **ar fi picat pe un cod corect**. Ținta se socotește acum
+peste domeniile care trec pragul, cu aceeași constantă pe care o citește și lupta
+(`TRIVIA.PRAG_DOMENIU`), nu cu o cifră rescrisă în verificator.
+
+Plus o afirmație mai tare decât proporția: **niciuna din cele 6000 de trageri
+n-are voie să vină dintr-un domeniu sub prag.** Proporția e o măsură cu toleranță
+de 20%; asta e zero sau nimic.
+
+**Secțiunea 10 (PRAGUL) e cea care contează**, și motivul ei merită scris, fiindcă
+e o lecție care se repetă:
+
+> Azi **toate** domeniile cu conținut trec pragul. Deci dacă mâine scot filtrul
+> din `trage_intrebarea`, secțiunea 6 trece mai departe, neschimbată. **O regulă
+> care nu e niciodată încălcată nu e niciodată probată** — e doar un comentariu
+> care se întâmplă să fie adevărat.
+
+Deci se calcă dinadins. `TRIVIA.intrebari` e `static var`, adică aparține
+scriptului: se pune în locul lui o bază sintetică, se trage prin **chiar funcția
+pe care o folosește lupta**, și se pune conținutul la loc. Patru probe, fiindcă un
+prag greșit poate cădea în patru feluri și numai unul s-ar vedea jucând:
+
+| probă | ce prinde |
+|---|---|
+| un domeniu cu `prag - 1` nu iese niciodată | filtrul șters cu totul |
+| un domeniu cu exact `prag` IESE | un `>` scris în loc de `>=` — adică istoria tăiată în tăcere |
+| pragul se judecă pe celulă, nu pe domeniu | un filtru pus pe domeniul întreg |
+| toate sub prag → se trage totuși ceva | plasa ruptă, deci ecran de eroare în luptă |
+
+Rulează **ultima** din `_ready`, fiindcă e singura care mișcă pământul de sub
+celelalte, și pune conținutul la loc fără nicio ieșire devreme din funcție.
+
+Pragul s-a probat și pe datele adevărate, nu doar pe baza sintetică: pus la 9
+pentru o rulare, istoria apare `8 (SĂRIT)` la toate trei nivelurile, ținta devine
+1/3, și „niciun domeniu sub prag n-a ieșit” rămâne OK cu „1 domenii sub prag,
+niciunul tras”.
+
+### Migrarea: pe linie, nu prin reserializare
+
+`data/intrebari_trivia.json` e scris de mână, întrebare cu întrebare — deci
+migrarea a atins **numai liniile `"categorie": "…"`**, ca la `tools/da_iduri.py`.
+Nimic altceva din fișier nu s-a putut mișca, iar dovada e `git diff --numstat`:
+87 de linii schimbate (21 artă + 21 mitologie + 21 literatură + 24 știință), și
+zero linii schimbate care nu sunt `categorie`.
+
+Tabelele fabricii s-au **regenerat**, nu editat: `DOMENIU` e o constantă în
+fiecare script (`elemente.py` → `stiinta_natura`, `opere.py` → `arta_literatura`,
+`capitale.py` neatins). Hash-urile fișierelor s-au schimbat, și asta era
+intenționat — diff-ul arată exact 299 de linii (139 elemente + 160 opere), toate
+`categorie`, zero altceva. Faptele nu s-au atins deloc: ele nu poartă domeniu.
+
+### Grila nouă
+
+```
+                                 nivelul I          nivelul II         nivelul III         total
+    geografie              8+39  ( 1+20 )     8+120 ( 1+61 )     8+92  ( 1+46 )    275 (130)
+    istorie                8+0   ( 1+0  )     8+0   ( 2+0  )     8+0   ( 1+0  )     24 (  3)
+    stiinta_natura         8+39  ( 2+20 )     8+52  ( 1+26 )     8+48  ( 1+24 )    163 ( 73)
+    arta_literatura       21+29  ( 3+29 )    21+59  ( 2+59 )    21+72  ( 1+72 )    223 (166)
+    divertisment        ·  0+0   ( 0+0  )  ·  0+0   ( 0+0  )  ·  0+0   ( 0+0  )      0 (  0)
+    sport_timp_liber    ·  0+0   ( 0+0  )  ·  0+0   ( 0+0  )  ·  0+0   ( 0+0  )      0 (  0)
+    (mână + fabricate; parantezele sunt fapte distincte; 685 întrebări în total)
+    („·” = sub pragul de 8, deci domeniul e SĂRIT în luptă la nivelul acela: 6 celule din 18)
+```
+
+Marcajul `·` nu e decor: o celulă subțire e conținut care **există în fișier și
+nu ajunge niciodată în luptă**, iar fără semn ar arăta în grilă exact ca una care
+joacă.
+
+Și `cat_din_lupta` împărțea la `len(DOMENII)`, adică la 6. Lupta împarte la 4,
+deci raportul spunea cu o treime mai puțin decât adevărul — exact despre tabelul
+pe care tocmai îl rulasem. Acum împarte la câte domenii trec pragul la nivelul
+ăla, și scrie câte sunt.
+
+### Verificat
+
+- `tools/verificari/verifica_trivia.tscn`, headless: **toate 10 secțiunile OK**, 685 de
+  întrebări încărcate din 685 găsite, 372 de fapte. Cod de ieșire 0.
+- Antetele, tipărite: diacriticele trec prin `to_upper()` („ȘTIINȚĂ ȘI NATURĂ”).
+- Echilibrul, 6000 de trageri pe nivel: abaterea maximă 3,9% / 2,1% / 2,5%, cu
+  limita la 20%. Țintă 1500, 4 domenii peste prag la fiecare nivel.
+- Sacul: 12 chei (4 domenii × 3 niveluri) fără nicio repetiție pe un ciclu întreg.
+- Secțiunea 10, toate patru probele: sub prag nu iese, la prag iese, se judecă pe
+  celulă, plasa ține.
+- Pragul pus la 9 pentru o rulare: istoria `(SĂRIT)` pe toate nivelurile, țintă
+  1/3, nimic tras de sub prag. Pus la loc la 8.
+- `python tools/fabrica/elemente.py --scrie` și `opere.py --scrie`: scrise, citite
+  înapoi, id-uri unice peste tot conținutul, texte unice.
+
+### Ce NU s-a făcut
+
+- **Niciun conținut nou.** Divertismentul și Sportul sunt goale, iar istoria are
+  tot 24 de întrebări. Ziua a fost despre reguli și despre mutat, nu despre scris.
+- **„Memorie” e tot „Memorie”** pe butonul de Obelisc. Redenumirea în „Cultură
+  generală” e pasul 2 din rută, alt obiectiv.
+- **`data/logica_categorii.json` n-a fost atins.** Are și el un câmp `domeniu`
+  („natura”, „obiecte”, „abstract”), dar e spațiul de nume al Logicii, nu al
+  Culturii generale. Două câmpuri cu același nume și scopuri diferite — verificat
+  înainte, nu presupus.
+- **Cele 28 de ciorne de opere** au rămas ciorne.
+
+### Ce urmează, concret
+
+1. **Istoria, de la 8 la 20+ pe nivel.** E singura celulă cu rezerva zero, deci e
+   și singurul loc unde o întrebare retrasă ar scoate un domeniu din joc.
+2. **Un tabel de fabrică pentru istorie** — datele istorice din Wikidata sunt
+   bogate, iar axa timpului era deja gândită ca imagine desenată din date.
+3. Divertisment și Sport rămân deschise, cu regula „numai trecut” scrisă
+   înainte să existe prima întrebare.
+
+### Fișiere
+
+Atinse: `scenes/trivia/trivia.gd` (`DOMENII`, `PRAG_DOMENIU`, pragul în
+`trage_intrebarea`, numele afișat în antet, `_plasa_spusa`),
+`data/intrebari_trivia.json` (87 de linii de `categorie`),
+`tools/fabrica/comun.py` (`DOMENII`, `PRAG_DOMENIU`, `celulele`,
+`domenii_in_lupta`, grila cu marcaj, `cat_din_lupta` cu numitorul bun),
+`tools/fabrica/elemente.py` și `opere.py` (`DOMENIU`),
+`data/trivia_gen/elemente_intrebari.json` și `opere_intrebari.json`
+(regenerate, 299 de linii), `tools/verificari/verifica_trivia.gd` (secțiunea 6 rescrisă,
+secțiunea 10 nouă, rezerva în grilă), `docs/ghid-note.md` (secțiunea
+domeniilor), `CLAUDE.md`, `docs/progres.md`.
 
 ---
 
@@ -69,7 +2252,7 @@ secundă pe treaptă, cu podea la 8). Efectul secundar e că presiunea de timp �
 dificultatea întrebării nu mai urcă în același cadru — ceea ce e de dorit: două
 lucruri care se înăspresc simultan se simt ca un zid, nu ca o pantă.
 
-`tools/verifica_trivia.tscn` trece, cu tot cu echilibrul pe domenii la 6000 de
+`tools/verificari/verifica_trivia.tscn` trece, cu tot cu echilibrul pe domenii la 6000 de
 trageri pe nivel.
 
 ---
@@ -276,7 +2459,7 @@ commit.
 
 ### Verificatorul: a noua secțiune
 
-`tools/verifica_trivia.gd`, secțiunea **IMAGINILE FAPTELOR**, peste tot
+`tools/verificari/verifica_trivia.gd`, secțiunea **IMAGINILE FAPTELOR**, peste tot
 conținutul, inclusiv cel scris de mână:
 
 - `tip` dintr-o listă închisă — `"stag"` n-ar da nicio eroare nicăieri, imaginea
@@ -303,7 +2486,7 @@ Probată rupând patru lucruri dinadins, toate patru au picat cu mesajul lor:
 | licența schimbată în faptul Austriei | `faptul zice 'CC BY-SA 4.0', manifestul 'Public domain'` |
 | un PNG copiat în plus în dosar | `niciun fișier orfan → steaguri/Q99999.png` |
 
-### Scena F6: `tools/verifica_steaguri.tscn`
+### Scena F6: `tools/verificari/verifica_steaguri.tscn`
 
 Toate steagurile într-o grilă, cu numele țării sub fiecare și cu creditul care
 s-ar afișa în joc („domeniu public", sau „autor · licență").
@@ -356,7 +2539,7 @@ Niciunul n-ar fi fost găsit de o rulare care merge bine.
 
 - **Nu s-a văzut niciun steag cu ochiul.** Captura pe care am încercat-o a prins
   altă fereastră. **Ăsta e primul lucru de făcut: F6 pe
-  `tools/verifica_steaguri.tscn`**, cu Afganistanul și Costa Rica primele pe
+  `tools/verificari/verifica_steaguri.tscn`**, cu Afganistanul și Costa Rica primele pe
   listă.
 - **Nimic nu se afișează în joc.** `imagini` e scris, citit și verificat, dar
   niciun desenator nu-l folosește — vine la pasul 13.
@@ -382,7 +2565,7 @@ Niciunul n-ar fi fost găsit de o rulare care merge bine.
 
 ### Fișiere
 
-Nou: `tools/verifica_steaguri.gd`, `tools/verifica_steaguri.tscn`,
+Nou: `tools/verificari/verifica_steaguri.gd`, `tools/verificari/verifica_steaguri.tscn`,
 `assets/imagini_fapte/steaguri/` (126 PNG + `credite.json`),
 `tools/fabrica/cache/commons.json`.
 Atinse: `tools/fabrica/comun.py` (secțiunea IMAGINILE DE PE WIKIMEDIA COMMONS,
@@ -390,7 +2573,7 @@ Atinse: `tools/fabrica/comun.py` (secțiunea IMAGINILE DE PE WIKIMEDIA COMMONS,
 `tools/fabrica/capitale.py` (interogarea P41, `alege_steagul`,
 `STEAGURI_REFUZATE`, `steag_de_mana`, `cale_de_steag`, `arata_steagurile`,
 `pune_metadatele_steagurilor`, `descarca_steagurile`, `fapt_cu_imagini`),
-`tools/verifica_trivia.gd` (secțiunea IMAGINILE FAPTELOR),
+`tools/verificari/verifica_trivia.gd` (secțiunea IMAGINILE FAPTELOR),
 `data/trivia_gen/capitale_fapte.json` (toate cele 127),
 `tools/fabrica/cache/wikidata_capitale.json`, `docs/progres.md`,
 `CLAUDE.md` (secțiunea „Unelte" cu calea Godot, trei decizii noi).
@@ -859,7 +3042,7 @@ doar `id` și `nota`, și ignoră restul câmpurilor.
 
 ### Verificatorul: o secțiune nouă, probată că pică
 
-`tools/verifica_trivia.gd` are acum **opt secțiuni**. Cea nouă, a patra:
+`tools/verificari/verifica_trivia.gd` are acum **opt secțiuni**. Cea nouă, a patra:
 **RĂSPUNSURILE NU SE AUTODEZVĂLUIE** — niciun răspuns corect nu apare în textul
 întrebării lui, peste tot conținutul, inclusiv cel scris de mână.
 
@@ -976,7 +3159,7 @@ Nou: `tools/fabrica/comun.py`, `tools/fabrica/capitale.py`,
 `data/trivia_gen/capitale_intrebari.json`, `data/trivia_gen/capitale_fapte.json`.
 Atinse: `tools/fabrica/elemente.py` (−651 de linii: modulul comun, coloanele în
 date, verificarea „exact una din patru"), `tools/fabrica/opere.py` (−698 de linii:
-modulul comun), `tools/verifica_trivia.gd` (secțiunea RĂSPUNSURILE,
+modulul comun), `tools/verificari/verifica_trivia.gd` (secțiunea RĂSPUNSURILE,
 renumerotare), `docs/progres.md`, `CLAUDE.md` (două decizii noi).
 
 ---
@@ -1326,7 +3509,7 @@ CONȚINUTUL, dar înseamnă și 190 de note de scris când se ajunge acolo.
 
 ### Verificatorul: o secțiune nouă și un verdict nou, amândouă probate
 
-`tools/verifica_trivia.gd` are acum **șapte secțiuni**.
+`tools/verificari/verifica_trivia.gd` are acum **șapte secțiuni**.
 
 - **ÎNCĂRCAREA** citește **dosarul**, nu un fișier, și tipărește câte întrebări
   are fiecare fișier din el. Verdict nou: **dosarul fabricat are fișiere**.
@@ -1396,7 +3579,7 @@ Nou: `tools/fabrica/opere.py`, `tools/fabrica/date/autori.json`,
 Mutate: `data/intrebari_trivia_wd.json` → `data/trivia_gen/elemente_intrebari.json`,
 `data/fapte_trivia_wd.json` → `data/trivia_gen/elemente_fapte.json`.
 Atinse: `scenes/trivia/trivia.gd` (`DOSAR_GEN` în locul celor două constante,
-`fisierele_generate()`, încărcarea pe dosar), `tools/verifica_trivia.gd`
+`fisierele_generate()`, încărcarea pe dosar), `tools/verificari/verifica_trivia.gd`
 (secțiunea TEXTELE, dosarul, renumerotare), `tools/fabrica/elemente.py` (căile
 noi, grila peste tot dosarul), `.gitignore` (`__pycache__`), `docs/progres.md`.
 
@@ -1551,7 +3734,7 @@ cifre, aceeași fereastră.
 
 `scenes/lupta/lupta.tscn` (ambele blocuri de informație, cardul),
 `scenes/lupta/lupta.gd` (afișarea, cardul, funcțiile șterse),
-`tools/verifica_podeaua.gd` (căile măsurate — `RandIntentie` nu mai există, și
+`tools/verificari/verifica_podeaua.gd` (căile măsurate — `RandIntentie` nu mai există, și
 au apărut rândurile „PV jucator" și „PV inamic").
 
 ---
@@ -1700,7 +3883,7 @@ canalul alfa coloană cu coloană: **0.9514** la Rege, **0.9454** la Soldat. Plu
 0.85 la amândoi — vârful de întunecare era 4% din 255, prea puțin ca să lipească
 ceva; e acum 11% la Rege (podeaua de sub el e deja închisă) și 21% la Soldat.
 
-`tools/verifica_podeaua.gd` ținea o copie a cifrelor vechi; a primit și ea
+`tools/verificari/verifica_podeaua.gd` ținea o copie a cifrelor vechi; a primit și ea
 reperul nou, cu explicația de ce s-a mutat. Rulat după: **VERDICT: podeaua ține**.
 
 ### 6. Personajele s-au tras spre centru
@@ -1831,9 +4014,9 @@ fiindcă e o linie de cod și un fișier de conținut, iar conținutul e partea 
 Notele se pot scrie și verifica luni de zile înainte să existe ecranul care le
 arată.
 
-### Verificarea: `tools/verifica_trivia.gd`
+### Verificarea: `tools/verificari/verifica_trivia.gd`
 
-`godot --headless --path . res://tools/verifica_trivia.tscn` — instant, fără
+`godot --headless --path . res://tools/verificari/verifica_trivia.tscn` — instant, fără
 fereastră. Nu deschide nicio scenă: tot ce citește stă în `static var`-uri, deci
 aparține scriptului, nu unei copii a scenei.
 
@@ -1887,7 +4070,7 @@ sărite pentru `id`, nu 3) și a apărut fără notă: 17 în loc de 18.
 
 ### Fișiere
 
-Nou: `tools/da_iduri.py`, `data/fapte_trivia.json`, `tools/verifica_trivia.gd` +
+Nou: `tools/da_iduri.py`, `data/fapte_trivia.json`, `tools/verificari/verifica_trivia.gd` +
 `.tscn`. Atinse: `data/intrebari_trivia.json` (+153 de linii, 0 ștergeri),
 `scenes/trivia/trivia.gd` (faptele, cele cinci validări, sacul pe `id`, nota în
 `explicatie`), `autoload/sac.gd` (doar comentariul lui `_identitate`, care încă
@@ -2091,9 +4274,9 @@ nu pierzi nimic, doar nu câștigi.
 > scris ÎNAINTE de ea. Concret: prima scriere pe disc a unei expediții trebuie să
 > se întâmple la `intra_in_nod()`, nu la `_dupa_un_nod()`.
 
-### Verificarea headless: `tools/verifica_eveniment.gd`
+### Verificarea headless: `tools/verificari/verifica_eveniment.gd`
 
-`godot --headless --path . res://tools/verifica_eveniment.tscn` — **sub un
+`godot --headless --path . res://tools/verificari/verifica_eveniment.tscn` — **sub un
 minut**, pe 200 de semințe × 3 surse de hartă.
 
 Încă o unealtă pe lângă `verifica_cifru.gd`, fiindcă pune altă întrebare.
@@ -2171,7 +4354,7 @@ lucrurile de mai jos.
 | `autoload/expeditie.gd` | descrierea reală a nodului de Eveniment · `LACAT`, `AMESTEC_LACAT`, `ADAOS_LACAT` · `lacat_la()`, `adancimea_bossului()`, `nivel_lacat()`, `castiga_monede()` (prin care trec de-acum și Monedele din lupte, ca semnalul să nu poată fi uitat) |
 | `scenes/harta/harta.gd` | `SCENA_CIFRU` · ramura `EVENIMENT` → `_deschide_lacatul()` · `_pe_lacat_rezolvat()` |
 | `scenes/cifru/cifru.gd` | **doar un comentariu** din antet, care nu mai era adevărat |
-| `tools/verifica_eveniment.gd` + `.tscn` | nou |
+| `tools/verificari/verifica_eveniment.gd` + `.tscn` | nou |
 
 Neatinse: `generator_cifru.gd`, `rezolvitor_cifru.gd`, `banda_cifre.gd`,
 `cifru.tscn`, contractul.
@@ -2399,7 +4582,7 @@ senzație într-o luptă, poate părea că baza e subțire. De văzut jucând.
 
 ### Verificatorul: două verificări noi, amândouă probate că pot pica
 
-`tools/verifica_trivia.gd` are acum șase secțiuni. Cele noi:
+`tools/verificari/verifica_trivia.gd` are acum șase secțiuni. Cele noi:
 
 **ECHILIBRUL PE DOMENII** — 6000 de trageri pe fiecare nivel, prin chiar
 `TRIVIA.trage_intrebarea`, cu cerința ca fiecare domeniu să iasă la 1/N ± 20%.
@@ -2480,7 +4663,7 @@ Nou: `tools/fabrica/elemente.py`, `tools/fabrica/cache/wikidata_elemente.json`,
 `data/intrebari_trivia_wd.json`, `data/fapte_trivia_wd.json`.
 Atinse: `scenes/trivia/trivia.gd` (comutator, al doilea fișier, `trage_intrebarea`
 și `cheia_sacului` scoase ca funcții statice, `_incarca_fisier`, `_incarca_fapte`
-pe cale), `tools/verifica_trivia.gd` (șase secțiuni), `.gitignore`
+pe cale), `tools/verificari/verifica_trivia.gd` (șase secțiuni), `.gitignore`
 (`tools/fabrica/contact.txt`), `docs/progres.md`.
 
 ---
@@ -2596,23 +4779,36 @@ să se vadă.
 ### Țintele: 500 pe celulă, dar nu peste tot
 
 6 domenii × 3 niveluri = 18 celule. Ținta e 500 de întrebări pe celulă acolo
-unde domeniul le poartă. Nivelul I e plafonat de propria definiție: din
-mitologie, un adult obișnuit știe poate 100–150 de lucruri. Umflarea lui ar
-însemna ori întrebări mai grele cu eticheta greșită, ori același fapt în multe
-formulări, adică o repetare deghizată.
+unde domeniul le poartă. Nivelul I e plafonat de propria definiție: din folclor,
+un adult obișnuit știe poate 100–150 de lucruri. Umflarea lui ar însemna ori
+întrebări mai grele cu eticheta greșită, ori același fapt în multe formulări,
+adică o repetare deghizată.
+
+*Rescris pe 6 octombrie 2026, pe domeniile noi. Artă, mitologie și literatură
+erau trei rânduri cu „greu” și „la limită” la nivelul I; unite, duc nivelul I
+mult mai bine decât oricare din ele separat — pictura, cărțile, muzica clasică și
+folclorul au împreună destule lucruri pe care le știe orice adult. Asta n-a fost
+motivul unirii, dar e un câștig care merită numit.*
 
 | Domeniu | Nivel I | Nivel II | Nivel III |
 |---|---|---|---|
-| Știință | realist | realist | realist |
+| Știință și natură | realist | realist | realist |
 | Geografie | realist | realist | realist |
+| Artă și literatură | realist | realist | realist |
 | Istorie | la limită | realist | realist |
-| Literatură | la limită | realist | realist |
-| Artă | greu | la limită | realist |
-| Mitologie | greu | la limită | realist |
+| Divertisment | realist | realist | la limită |
+| Sport și timp liber | realist | realist | la limită |
+
+Divertismentul și Sportul sunt pe dos față de celelalte: nivelul I e ușor (filme
+și campioni pe care îi știe toată lumea), iar nivelul III e greu **nu din lipsă
+de fapte, ci din regula „numai trecut, cu data spusă”** (`docs/ghid-note.md`) —
+care taie exact întrebările de cunoscător despre ce se întâmplă acum.
 
 Designul Practice face asta acceptabil: jucătorul stă pe nivelul I doar cât îi ia
 pragul, deci nivelul I are nevoie de 150–250 de fapte bune, nu de 500. Cele 500
 contează la nivelurile II și III, acolo unde conținutul le poate susține.
+**Atenție**: ultima propoziție a fost scrisă înainte de paliere și e acum în
+tensiune cu ce trage lupta — vezi „Rămas deschis”, în aceeași sesiune.
 
 Raportul fabricii arată la fiecare rulare **grila de 6 × 3, cu întrebări ȘI
 fapte** pe fiecare celulă. Cel mult 2–3 întrebări pe fapt.
@@ -2667,6 +4863,34 @@ până nu apare conținut nou.
   etichetă, nu ca notă; pentru „Află mai multe” va trebui o propoziție.
 - **Ce face Practice cu faptele `verificat: false`** — le refuză sau le arată fără
   notă. Se decide când există modul.
+- **Nivelul I e cel mai greu de umplut ȘI cel mai tras în luptă** — tensiune
+  văzută pe 6 octombrie 2026, nehotărâtă dinadins.
+
+  Țintele de mai sus („nivelului I îi ajung 150–250 de fapte, cele 500 contează
+  la II și III”) au fost gândite pe **30 septembrie**, când nivelul urca la
+  fiecare treaptă: treapta 1 era nivelul I, treapta 2 nivelul II, iar toată coada
+  lanțului nivelul III. Pe atunci nivelul I primea o întrebare pe activare, deci
+  „mai puțin conținut la I” era o economie care nu se simțea.
+
+  De când `TREPTE_PE_NIVEL = 3`, repartiția s-a întors: **~49% din întrebările
+  unui lanț cad pe nivelul I**, ~25% pe II, ~26% pe III (socoteala e în sesiunea
+  DOMENIILE). Deci nivelul cu cel mai puțin conținut *posibil* — plafonat de
+  propria definiție, „o știe orice adult” — e acum cel mai consumat. Cele două
+  decizii sunt amândouă bune și se bat cap în cap.
+
+  Două ieșiri, și aleg una când simt problema jucând, nu acum:
+
+  1. **Mai mult conținut de nivel I**, adică ținta de la I urcă spre 400-500 și
+     accept că o parte din el va fi greu de scris fără să alunece spre nivelul II.
+     Prețul: exact repetarea deghizată de care se ferea plafonul.
+  2. **Altă valoare pentru `TREPTE_PE_NIVEL`** — 2 ar muta ~33% pe fiecare nivel
+     și ar apropia consumul de conținutul disponibil. Prețul: se pierde chiar ce a
+     adus paliere pe 30 septembrie, panta de la începutul lanțului, și prima
+     treaptă critică (a 5-a) ar cădea iar în platoul de nivelul III.
+
+  Nu se hotărăște din socoteală: cifrele spun doar că tensiunea e reală, nu care
+  jumătate doare mai mult. Ce lipsește e o expediție jucată cu conținut de nivel I
+  pe care **nu-l știu pe de rost** — adică nu se poate afla înainte să existe.
 
 ### Fișiere
 
@@ -3027,7 +5251,7 @@ cu aceleași puzzle-uri ca înainte ca formă și lungime.
 
 ### Verificarea: 500 de semințe × 3 niveluri
 
-`godot --headless --path . res://tools/verifica_cifru.tscn`. Verificatorul știe
+`godot --headless --path . res://tools/verificari/verifica_cifru.tscn`. Verificatorul știe
 acum de roata blocată (cere unicitatea în universul restrâns) și raportează, pe
 lângă ce raporta, **media indiciilor** și **timpul unei generări**.
 
@@ -3076,7 +5300,7 @@ fără el. Când fișierele apar în dosar, merg singure.
 ### Fișiere
 
 Nou: `scenes/cifru/banda_cifre.gd`. Rescrise: `cifru.gd`, `cifru.tscn`. Atinse:
-`generator_cifru.gd` (tabelul, roata blocată, sonda), `tools/verifica_cifru.gd`,
+`generator_cifru.gd` (tabelul, roata blocată, sonda), `tools/verificari/verifica_cifru.gd`,
 `autoload/sunet.gd` (două rânduri în catalog). Șters: `roata_cifra.gd` —
 plăcuțele desenate n-au ce căuta peste o poză reală; e în Git dacă va fi nevoie.
 **Neatinse:** contractul, `autoload/expeditie.gd`, `scenes/harta/`.
@@ -3120,7 +5344,7 @@ au fost atinse**. Scena se rulează singură cu F6, ca orice disciplină.
 | `scenes/cifru/roata_cifra.gd` (`RoataCifra`) | o roată desenată din cod: literă, cifră, săgeți, vecine | nimic despre cifruri, indicii, încercări |
 | `scenes/cifru/cifru.gd` + `.tscn` | ecranul: roțile, lista de indicii, cele trei încercări, verdictul | nimic despre cum se naște un puzzle |
 
-Plus `tools/verifica_cifru.gd` + `.tscn`, headless, ca celelalte verificatoare.
+Plus `tools/verificari/verifica_cifru.gd` + `.tscn`, headless, ca celelalte verificatoare.
 
 ### Cum se naște un cifru
 
@@ -3261,7 +5485,7 @@ poți.
 
 ### Verificatorul: 500 de semințe × 3 niveluri
 
-`godot --headless --path . res://tools/verifica_cifru.tscn` — **durează ~8
+`godot --headless --path . res://tools/verificari/verifica_cifru.tscn` — **durează ~8
 minute** (nivelul 3 are 10 000 de coduri de parcurs la fiecare întrebare pusă) și
 verifică, pentru fiecare din cele 1500 de puzzle-uri: soluția e unică; codul
 respectă toate indiciile; niciun indiciu redundant; niciun indiciu care fixează
@@ -3521,7 +5745,7 @@ Restul rămâne ca în tabelul de mai jos (talpă, lățime, turtire, culoare, l
 
 ### Ce mai verifică unealta de acum
 
-Trei probe noi în `tools/verifica_podeaua.gd`: aerul dintre pupitru și mantie
+Trei probe noi în `tools/verificari/verifica_podeaua.gd`: aerul dintre pupitru și mantie
 (în amândouă stările panoului), numele pe aceeași linie (toleranță 2 px, cu
 intenția obligatoriu sub numele inamicului) și marginile orizontale ale figurii
 desenate. Plus o curățenie: scena se eliberează înainte de ieșire, altfel Godot
@@ -3616,9 +5840,9 @@ un lanț de trei înmulțiri care se compun corect: fulgerul de la lovitură
 (învelișul) × identitatea inamicului (`modulate`) × lumina sălii
 (`self_modulate`).
 
-### Unealta: `tools/verifica_podeaua.gd`
+### Unealta: `tools/verificari/verifica_podeaua.gd`
 
-`godot --path . res://tools/verifica_podeaua.tscn` — **cu fereastră**, fiindcă
+`godot --path . res://tools/verificari/verifica_podeaua.tscn` — **cu fereastră**, fiindcă
 face și capturi. Măsoară tălpile față de linia peretelui, verifică să nu se calce
 informația de luptă cu punctele de PA sau cu butoanele, urmărește sfeșnicul din
 stânga, probează că umbra nu se clatină la lovitură, și scrie câte o captură în
@@ -3788,12 +6012,12 @@ hărți bune, dar de fiecare dată altele, face imposibil orice raport de bug.
 
 ### Unelte
 
-- **`tools/verifica_tipuri.gd`** (nou) — 500 de semințe × toate sursele. Media
+- **`tools/verificari/verifica_tipuri.gd`** (nou) — 500 de semințe × toate sursele. Media
   și maximul încercărilor, de câte ori a picat fiecare regulă, semințele care au
   atins limita, și proba că aceeași sămânță dă aceeași hartă. Avertizează singur
   când o regulă pică în peste jumătate din încercări: aia nu mai e o regulă
   strictă, e una care se ceartă cu altceva.
-- **`tools/verifica_plansa.gd`** — verificare nouă (9): orice nod în afară de
+- **`tools/verificari/verifica_plansa.gd`** — verificare nouă (9): orice nod în afară de
   Start și Boss are cel puțin doi VECINI. Verificarea (4) de dinainte număra
   IEȘIRILE (drumurile cu sensul lor); asta numără vecinii, cum îi citește jocul.
   Distanța minimă dintre noduri era deja acolo, verificarea (7).
@@ -3808,8 +6032,8 @@ de departe e nodul PENTRU JUCĂTOR. Două măsuri, două scopuri, amândouă
 documentate — dar merită reverificat când se atinge bugetul de dificultate
 (pasul 10).
 
-Fișiere atinse: `autoload/expeditie.gd`, `tools/verifica_plansa.gd`,
-`tools/verifica_tipuri.gd` (nou), `tools/verifica_tipuri.tscn` (nou).
+Fișiere atinse: `autoload/expeditie.gd`, `tools/verificari/verifica_plansa.gd`,
+`tools/verificari/verifica_tipuri.gd` (nou), `tools/verificari/verifica_tipuri.tscn` (nou).
 
 ---
 
@@ -4037,10 +6261,10 @@ unde merge, mutarea greșită e cu cinci noduri în urmă. Singurul lucru pe car
 De-aia drumul se închide ÎNAINTE să intri pe el, nu după. Un drum refuzat din
 timp nu e o pedeapsă; e chiar felul în care harta rămâne o hartă.
 
-### Verificarea: `tools/verifica_drumuri.gd`
+### Verificarea: `tools/verificari/verifica_drumuri.gd`
 
 ```
-godot --headless --path . res://tools/verifica_drumuri.tscn
+godot --headless --path . res://tools/verificari/verifica_drumuri.tscn
 ```
 
 16 000 de expediții jucate cu alegeri la întâmplare, pe planșele reale, pe hărți
@@ -4160,10 +6384,10 @@ răspund la aceeași întrebare sunt un sistem și o eroare.
 
 ### Verificarea
 
-`tools/verifica_coltul.gd` — rulează fără fereastră:
+`tools/verificari/verifica_coltul.gd` — rulează fără fereastră:
 
 ```
-godot --headless --path . res://tools/verifica_coltul.tscn
+godot --headless --path . res://tools/verificari/verifica_coltul.tscn
 ```
 
 Pe amândouă planșele × 7 semințe (56, 556 și 5 luate la nimereală), plus
@@ -4316,7 +6540,7 @@ nu dintr-o constantă nouă de reglat — care e întotdeauna varianta bună.
 
 ### Ce s-a verificat
 
-`tools/verifica_harta.gd` a rulat pe 300 de semințe, pe toate patru traseele
+`tools/verificari/verifica_harta.gd` a rulat pe 300 de semințe, pe toate patru traseele
 generate, după schimbare: zero muchii sărite, zero încrucișări în graf, zero
 încrucișări în desen, zero noduri ieșite din zonă. Harta GENERATĂ n-a fost
 atinsă — doar dreptunghiul în care se desenează a crescut.
@@ -4409,10 +6633,10 @@ generată dă exact numărul vechi (straturile rămase). Nu s-a pierdut informa�
 s-a pierdut presupunerea că toate drumurile sunt egale. La înfrângere, sumarul
 spune acum „Bossul mai era la 4 pași", care chiar măsoară cât de aproape ai fost.
 
-### Verificatorul: `tools/verifica_plansa.gd`
+### Verificatorul: `tools/verificari/verifica_plansa.gd`
 
 ```
-godot --headless --path . res://tools/verifica_plansa.tscn
+godot --headless --path . res://tools/verificari/verifica_plansa.tscn
 ```
 
 Trece prin TOATE fișierele din `data/harti/`. Motivul pentru care există e mai
@@ -4551,7 +6775,7 @@ oglinda exactă, se face dintr-un semn: `dec` negat în `asezare()`.
 
 ### Verificarea
 
-`tools/verifica_harta.gd` măsoară acum patru trasee în aceeași rulare. Pe 300 de
+`tools/verificari/verifica_harta.gd` măsoară acum patru trasee în aceeași rulare. Pe 300 de
 semințe, POTCOAVA OGLINDITĂ: **0 sărituri de strat, 0 încrucișări în graf, 0
 ordini inversate, 0 încrucișări în desen**, cea mai apropiată pereche 86,9 px
 (prag 72), 0 noduri și 0 px de drum ieșite din zona utilă. Celelalte trei au ieșit
@@ -4758,7 +6982,7 @@ tangenta e constantă.
 |---|---|
 | `harta.gd` | panglica, benzile, punctele fiecărui drum |
 | `panza.gd` | primește un șir de puncte și desenează liniuțe pe el. Cuvântul „panglică" nu mai apare în el decât într-un comentariu |
-| `tools/verifica_harta.gd` | măsoară AMÂNDOUĂ traseele, pe 300 de semințe |
+| `tools/verificari/verifica_harta.gd` | măsoară AMÂNDOUĂ traseele, pe 300 de semințe |
 
 Drumurile nu mai sunt Bézier între două centre. O Bézier nu știe nimic despre
 teren: pe o panglică ondulată ar tăia coarda. Acum drumul merge PE curbă, cu
@@ -5052,8 +7276,8 @@ numărau.
 
 ### Întâi măsurat, apoi reparat (a treia oară, și tot merită)
 
-`tools/verifica_harta.gd` — o SCENĂ headless, rulată cu
-`godot --headless --path . res://tools/verifica_harta.tscn` — trece generatorul
+`tools/verificari/verifica_harta.gd` — o SCENĂ headless, rulată cu
+`godot --headless --path . res://tools/verificari/verifica_harta.tscn` — trece generatorul
 prin 300 de semințe și numără patru lucruri:
 
 | | ce numără | înainte | după |
@@ -5174,8 +7398,8 @@ autoload/expeditie.gd        - `_leaga` rescrisa; `_amesteca` stearsa
 scenes/harta/harta.gd        - `centre_noduri()` + `_potoleste_abaterea()` (noi, static)
                                `DISTANTA_MINIMA_VERTICALA`; fara `_curbura`
 scenes/harta/panza.gd        - Bezier cubica, `punct_pe_drum()` static
-tools/verifica_harta.gd      - NOU: verificarea headless
-tools/verifica_harta.tscn    - NOU: scena care o porneste
+tools/verificari/verifica_harta.gd      - NOU: verificarea headless
+tools/verificari/verifica_harta.tscn    - NOU: scena care o porneste
 ```
 
 ### Ce a rămas de făcut aici
@@ -7566,7 +9790,7 @@ stricate, semnalează membrii duplicați și domeniile prea sărace.
 EVENIMENTUL DESCHIDE CUFĂRUL), punctul 3 pe 28 septembrie (sesiunea ID ȘI FAPT).
 Punctul 0 adăugat pe 30 septembrie (sesiunea STEAGURILE).*
 
-0. **F6 pe `tools/verifica_steaguri.tscn`.** Cele 126 de steaguri sunt pe disc și
+0. **F6 pe `tools/verificari/verifica_steaguri.tscn`.** Cele 126 de steaguri sunt pe disc și
    trec toate verificările automate — dar niciunul n-a fost văzut cu ochiul, iar
    21 dintre ele au fost alese de cod, prin rangul preferat din Wikidata. Un
    steag vechi sau al altei țări e un fișier perfect valid, deci nicio validare
@@ -7586,7 +9810,7 @@ Punctul 0 adăugat pe 30 septembrie (sesiunea STEAGURILE).*
    (sesiunea ID ȘI FAPT): `tools/da_iduri.py` (idempotent, strict, +153 de linii
    și 0 ștergeri), `data/fapte_trivia.json` cu cele 15 fapte din pilot, cinci
    validări în încărcător, sacul pe `id`, nota în `explicatie`, verificare
-   headless cu `tools/verifica_trivia.tscn`. **Nicio migrare n-a fost nevoie** —
+   headless cu `tools/verificari/verifica_trivia.tscn`. **Nicio migrare n-a fost nevoie** —
    confirmat prin `grep`: nimic nu scrie pe disc. A rămas nescrisă a 19-a
    întrebare din pilot („În ce perioadă a domnit Ștefan cel Mare?”), și **regula
    nouă: un `id` nu se refolosește niciodată**, deci întrebările nu se șterg din

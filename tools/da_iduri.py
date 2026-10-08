@@ -74,7 +74,15 @@ CIFRE = 4               # mana:0001. Ajunge până la 9999; peste, doar crește.
 # Câte întrebări se așteaptă la final. Nu e o limită, e o plasă: dacă
 # verificarea de la final găsește alt număr, ceva a mers prost la scriere și
 # vrei să afli acum, nu în joc.
-CATE_INTREBARI = 135
+#
+# 135 la început; 165 cu lotul de 30 de ciorne de istorie (6 octombrie 2026);
+# 213 cu lotul de deschidere pentru Divertisment și Sport (7 octombrie);
+# 465 când cele două domenii au ajuns la 50 pe nivel (7 octombrie).
+# 477 la trecerea pe opt domenii, 691 când gastronomia și istoria au ajuns
+# și ele la 50 pe nivel (8 octombrie).
+# Cifra se ridică DE MÂNĂ, odată cu lotul — și e bine așa: dacă s-ar citi din
+# fișier, n-ar mai prinde nimic.
+CATE_INTREBARI = 1156
 
 
 # ─────────────────────────────────────────────────────────────

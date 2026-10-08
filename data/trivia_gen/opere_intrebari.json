@@ -6,7 +6,8 @@
 		"variante": ["George Coșbuc", "Mihai Eminescu", "Ion Luca Caragiale", "Ion Creangă"],
 		"corect": 2,
 		"nivel": 1,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q1219561:autor:cere_autor",
@@ -15,7 +16,8 @@
 		"variante": ["Jules Verne", "Alexandre Dumas", "Victor Hugo", "Antoine de Saint-Exupéry"],
 		"corect": 0,
 		"nivel": 1,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q12730220:autor:cere_autor",
@@ -24,7 +26,8 @@
 		"variante": ["Ion Luca Caragiale", "Ion Creangă", "Mihai Eminescu", "George Coșbuc"],
 		"corect": 3,
 		"nivel": 1,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q140527:autor:cere_autor",
@@ -33,7 +36,8 @@
 		"variante": ["Victor Hugo", "Alexandre Dumas", "Jules Verne", "Antoine de Saint-Exupéry"],
 		"corect": 1,
 		"nivel": 1,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q147787:autor:cere_autor",
@@ -42,7 +46,8 @@
 		"variante": ["Feodor Dostoievski", "Antoine de Saint-Exupéry", "Lev Tolstoi", "Ion Luca Caragiale"],
 		"corect": 2,
 		"nivel": 1,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q15228:autor:cere_autor",
@@ -51,7 +56,8 @@
 		"variante": ["George Orwell", "J. R. R. Tolkien", "Ernest Hemingway", "Agatha Christie"],
 		"corect": 1,
 		"nivel": 1,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q161531:autor:cere_autor",
@@ -60,7 +66,8 @@
 		"variante": ["Lev Tolstoi", "Feodor Dostoievski", "Ion Luca Caragiale", "Ion Creangă"],
 		"corect": 0,
 		"nivel": 1,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q180736:autor:cere_autor",
@@ -69,7 +76,8 @@
 		"variante": ["Alexandre Dumas", "Victor Hugo", "Jules Verne", "Antoine de Saint-Exupéry"],
 		"corect": 1,
 		"nivel": 1,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q183565:autor:cere_autor",
@@ -78,7 +86,8 @@
 		"variante": ["Alexandre Dumas", "Victor Hugo", "Jules Verne", "Antoine de Saint-Exupéry"],
 		"corect": 2,
 		"nivel": 1,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q184935:autor:cere_opera",
@@ -87,7 +96,8 @@
 		"variante": ["Luceafărul", "Amintiri din copilărie", "O scrisoare pierdută", "Ultima noapte de dragoste, întâia noapte de război"],
 		"corect": 0,
 		"nivel": 1,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q191838:autor:cere_autor",
@@ -96,7 +106,8 @@
 		"variante": ["Jules Verne", "Alexandre Dumas", "Victor Hugo", "Antoine de Saint-Exupéry"],
 		"corect": 1,
 		"nivel": 1,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q204810:autor:cere_opera",
@@ -105,7 +116,8 @@
 		"variante": ["Amintiri din copilărie", "O scrisoare pierdută", "Luceafărul", "Hora Unirii"],
 		"corect": 0,
 		"nivel": 1,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q208460:autor:cere_autor",
@@ -114,7 +126,8 @@
 		"variante": ["J. R. R. Tolkien", "Agatha Christie", "George Orwell", "Ernest Hemingway"],
 		"corect": 2,
 		"nivel": 1,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q2908:autor:cere_opera",
@@ -123,7 +136,8 @@
 		"variante": ["Ciuma", "Contele de Monte-Cristo", "Micul prinț", "Mizerabilii"],
 		"corect": 2,
 		"nivel": 1,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q315132:autor:cere_opera",
@@ -132,7 +146,8 @@
 		"variante": ["Luceafărul", "Amintiri din copilărie", "Capra cu trei iezi", "O scrisoare pierdută"],
 		"corect": 3,
 		"nivel": 1,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q326914:autor:cere_autor",
@@ -141,7 +156,8 @@
 		"variante": ["Mark Twain", "George Orwell", "Charles Dickens", "J. R. R. Tolkien"],
 		"corect": 0,
 		"nivel": 1,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q3335:autor:cere_opera",
@@ -150,7 +166,8 @@
 		"variante": ["Stăpânul inelelor", "Hobbitul", "1984", "Bătrânul și marea"],
 		"corect": 2,
 		"nivel": 1,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q35160:autor:cere_autor",
@@ -159,7 +176,8 @@
 		"variante": ["Homer", "George Orwell", "William Shakespeare", "Mihai Eminescu"],
 		"corect": 0,
 		"nivel": 1,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q38337:autor:cere_opera",
@@ -168,7 +186,8 @@
 		"variante": ["Cei trei muschetari", "Douăzeci de mii de leghe sub mări", "Ocolul Pământului în 80 de zile", "Mizerabilii"],
 		"corect": 0,
 		"nivel": 1,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q40946:autor:cere_opera",
@@ -177,7 +196,8 @@
 		"variante": ["Călătoriile lui Gulliver", "Robinson Crusoe", "Macbeth", "Mândrie și prejudecată"],
 		"corect": 1,
 		"nivel": 1,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q473257:autor:cere_opera",
@@ -186,7 +206,8 @@
 		"variante": ["O scrisoare pierdută", "Amintiri din copilărie", "Iarna pe uliță", "Luceafărul"],
 		"corect": 2,
 		"nivel": 1,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q535:autor:cere_opera",
@@ -195,7 +216,8 @@
 		"variante": ["Mizerabilii", "Cei trei muschetari", "Contele de Monte-Cristo", "Ocolul Pământului în 80 de zile"],
 		"corect": 0,
 		"nivel": 1,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q6691:autor:cere_opera",
@@ -204,7 +226,8 @@
 		"variante": ["Iliada", "Robinson Crusoe", "Cei trei muschetari", "1984"],
 		"corect": 0,
 		"nivel": 1,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q692:autor:cere_opera",
@@ -213,7 +236,8 @@
 		"variante": ["Hamlet", "Robinson Crusoe", "Călătoriile lui Gulliver", "Aventurile lui Tom Sawyer"],
 		"corect": 0,
 		"nivel": 1,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q7243:autor:cere_opera",
@@ -222,7 +246,8 @@
 		"variante": ["Frații Karamazov", "Anna Karenina", "Crimă și pedeapsă", "Mizerabilii"],
 		"corect": 1,
 		"nivel": 1,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q7245:autor:cere_opera",
@@ -231,7 +256,8 @@
 		"variante": ["David Copperfield", "Aventurile lui Tom Sawyer", "Oliver Twist", "Colind de Crăciun"],
 		"corect": 1,
 		"nivel": 1,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q74287:autor:cere_autor",
@@ -240,7 +266,8 @@
 		"variante": ["George Orwell", "J. R. R. Tolkien", "Ernest Hemingway", "Agatha Christie"],
 		"corect": 1,
 		"nivel": 1,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q8275:autor:cere_autor",
@@ -249,7 +276,8 @@
 		"variante": ["George Orwell", "Antoine de Saint-Exupéry", "Homer", "Ion Luca Caragiale"],
 		"corect": 2,
 		"nivel": 1,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q892:autor:cere_opera",
@@ -258,7 +286,8 @@
 		"variante": ["Stăpânul inelelor", "1984", "Crima din Orient Express", "Bătrânul și marea"],
 		"corect": 0,
 		"nivel": 1,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 
 	{
@@ -268,7 +297,8 @@
 		"variante": ["Mihai Eminescu", "George Coșbuc", "Ion Luca Caragiale", "Ion Creangă"],
 		"corect": 3,
 		"nivel": 2,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q104871:autor:cere_autor",
@@ -277,7 +307,8 @@
 		"variante": ["Daniel Defoe", "William Shakespeare", "Jonathan Swift", "Jane Austen"],
 		"corect": 1,
 		"nivel": 2,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q1067:autor:cere_opera",
@@ -286,7 +317,8 @@
 		"variante": ["Divina Comedie", "Decameronul", "Don Quijote", "Visul unei nopți de vară"],
 		"corect": 0,
 		"nivel": 2,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q12727660:autor:cere_autor",
@@ -295,7 +327,8 @@
 		"variante": ["Liviu Rebreanu", "Marin Preda", "Camil Petrescu", "George Călinescu"],
 		"corect": 3,
 		"nivel": 2,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q12727790:autor:cere_autor",
@@ -304,7 +337,8 @@
 		"variante": ["Liviu Rebreanu", "Lucian Blaga", "Ernest Hemingway", "Mihail Sadoveanu"],
 		"corect": 1,
 		"nivel": 2,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q12735813:autor:cere_autor",
@@ -313,7 +347,8 @@
 		"variante": ["Liviu Rebreanu", "Mihail Sadoveanu", "Ioan Slavici", "Camil Petrescu"],
 		"corect": 2,
 		"nivel": 2,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q12736975:autor:cere_autor",
@@ -322,7 +357,8 @@
 		"variante": ["Ion Luca Caragiale", "Mihai Eminescu", "Ion Creangă", "George Coșbuc"],
 		"corect": 0,
 		"nivel": 2,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q130283:autor:cere_autor",
@@ -331,7 +367,8 @@
 		"variante": ["William Shakespeare", "Daniel Defoe", "Jonathan Swift", "Jane Austen"],
 		"corect": 0,
 		"nivel": 2,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q1360145:autor:cere_opera",
@@ -340,7 +377,8 @@
 		"variante": ["Ultima noapte de dragoste, întâia noapte de război", "Ion", "Maitreyi", "Moromeții"],
 		"corect": 3,
 		"nivel": 2,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q1396889:autor:cere_autor",
@@ -349,7 +387,8 @@
 		"variante": ["George Orwell", "J. R. R. Tolkien", "Ernest Hemingway", "Agatha Christie"],
 		"corect": 0,
 		"nivel": 2,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q1402:autor:cere_opera",
@@ -358,7 +397,8 @@
 		"variante": ["Infernul", "Divina Comedie", "Decameronul", "Don Quijote"],
 		"corect": 2,
 		"nivel": 2,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q15731603:autor:cere_autor",
@@ -367,7 +407,8 @@
 		"variante": ["Ioan Slavici", "George Călinescu", "Mihail Sadoveanu", "Liviu Rebreanu"],
 		"corect": 3,
 		"nivel": 2,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q1627839:autor:cere_autor",
@@ -376,7 +417,8 @@
 		"variante": ["Vasile Alecsandri", "Ioan Slavici", "Ion Luca Caragiale", "George Coșbuc"],
 		"corect": 0,
 		"nivel": 2,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q16438:autor:cere_autor",
@@ -385,7 +427,8 @@
 		"variante": ["Giovanni Boccaccio", "Dante Alighieri", "Miguel de Cervantes", "Jonathan Swift"],
 		"corect": 0,
 		"nivel": 2,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q164974:autor:cere_autor",
@@ -394,7 +437,8 @@
 		"variante": ["Jane Austen", "Charles Dickens", "Mark Twain", "Agatha Christie"],
 		"corect": 1,
 		"nivel": 2,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q170583:autor:cere_autor",
@@ -403,7 +447,8 @@
 		"variante": ["Charles Dickens", "Mark Twain", "Ernest Hemingway", "Jane Austen"],
 		"corect": 3,
 		"nivel": 2,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q181488:autor:cere_autor",
@@ -412,7 +457,8 @@
 		"variante": ["Daniel Defoe", "Jane Austen", "Jonathan Swift", "Charles Dickens"],
 		"corect": 2,
 		"nivel": 2,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q181598:autor:cere_autor",
@@ -421,7 +467,8 @@
 		"variante": ["William Shakespeare", "Daniel Defoe", "Jonathan Swift", "Jane Austen"],
 		"corect": 0,
 		"nivel": 2,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q183157:autor:cere_autor",
@@ -430,7 +477,8 @@
 		"variante": ["Feodor Dostoievski", "Lev Tolstoi", "Vasile Alecsandri", "Ernest Hemingway"],
 		"corect": 0,
 		"nivel": 2,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q18540186:autor:cere_autor",
@@ -439,7 +487,8 @@
 		"variante": ["Mihai Eminescu", "Ion Luca Caragiale", "Ion Creangă", "George Coșbuc"],
 		"corect": 0,
 		"nivel": 2,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q189811:autor:cere_autor",
@@ -448,7 +497,8 @@
 		"variante": ["Mark Twain", "Agatha Christie", "Ernest Hemingway", "Charles Dickens"],
 		"corect": 3,
 		"nivel": 2,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q191380:autor:cere_autor",
@@ -457,7 +507,8 @@
 		"variante": ["Alexandre Dumas", "Jules Verne", "Victor Hugo", "Antoine de Saint-Exupéry"],
 		"corect": 2,
 		"nivel": 2,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q2018068:autor:cere_autor",
@@ -466,7 +517,8 @@
 		"variante": ["Mihail Sadoveanu", "Mircea Eliade", "George Călinescu", "Ioan Slavici"],
 		"corect": 1,
 		"nivel": 2,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q205875:autor:cere_autor",
@@ -475,7 +527,8 @@
 		"variante": ["Voltaire", "Victor Hugo", "Molière", "Alexandre Dumas"],
 		"corect": 2,
 		"nivel": 2,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q214132:autor:cere_autor",
@@ -484,7 +537,8 @@
 		"variante": ["Ernest Hemingway", "Agatha Christie", "George Orwell", "J. R. R. Tolkien"],
 		"corect": 1,
 		"nivel": 2,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q215410:autor:cere_autor",
@@ -493,7 +547,8 @@
 		"variante": ["Mark Twain", "J. R. R. Tolkien", "George Orwell", "Charles Dickens"],
 		"corect": 0,
 		"nivel": 2,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q215894:autor:cere_autor",
@@ -502,7 +557,8 @@
 		"variante": ["Victor Hugo", "Alexandre Dumas", "Albert Camus", "Voltaire"],
 		"corect": 3,
 		"nivel": 2,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q219457:autor:cere_autor",
@@ -511,7 +567,8 @@
 		"variante": ["Jules Verne", "Alexandre Dumas", "Victor Hugo", "Antoine de Saint-Exupéry"],
 		"corect": 0,
 		"nivel": 2,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q23434:autor:cere_opera",
@@ -520,7 +577,8 @@
 		"variante": ["Bătrânul și marea", "Ferma Animalelor", "Crima din Orient Express", "Zece negri mititei"],
 		"corect": 0,
 		"nivel": 2,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q26505:autor:cere_autor",
@@ -529,7 +587,8 @@
 		"variante": ["Agatha Christie", "J. R. R. Tolkien", "Ernest Hemingway", "George Orwell"],
 		"corect": 2,
 		"nivel": 2,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q26833:autor:cere_autor",
@@ -538,7 +597,8 @@
 		"variante": ["Daniel Defoe", "William Shakespeare", "Jonathan Swift", "Jane Austen"],
 		"corect": 1,
 		"nivel": 2,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q29478:autor:cere_autor",
@@ -547,7 +607,8 @@
 		"variante": ["Franz Kafka", "Jane Austen", "Vasile Alecsandri", "Johann Wolfgang von Goethe"],
 		"corect": 3,
 		"nivel": 2,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q2988829:autor:cere_opera",
@@ -556,7 +617,8 @@
 		"variante": ["Enigma Otiliei", "Ion", "Pădurea spânzuraților", "Maitreyi"],
 		"corect": 0,
 		"nivel": 2,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q320372:autor:cere_autor",
@@ -565,7 +627,8 @@
 		"variante": ["Antoine de Saint-Exupéry", "Albert Camus", "Jules Verne", "Alexandre Dumas"],
 		"corect": 1,
 		"nivel": 2,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q34670:autor:cere_opera",
@@ -574,7 +637,8 @@
 		"variante": ["Micul prinț", "Ciuma", "O călătorie spre centrul Pământului", "Insula misterioasă"],
 		"corect": 1,
 		"nivel": 2,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q35064:autor:cere_opera",
@@ -583,7 +647,8 @@
 		"variante": ["Ferma Animalelor", "Zece negri mititei", "Bătrânul și marea", "Adio arme"],
 		"corect": 1,
 		"nivel": 2,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q352004:autor:cere_opera",
@@ -592,7 +657,8 @@
 		"variante": ["Hora Unirii", "Moara cu noroc", "Floare albastră", "O noapte furtunoasă"],
 		"corect": 0,
 		"nivel": 2,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q36322:autor:cere_opera",
@@ -601,7 +667,8 @@
 		"variante": ["David Copperfield", "Colind de Crăciun", "Oliver Twist", "Mândrie și prejudecată"],
 		"corect": 3,
 		"nivel": 2,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q381256:autor:cere_opera",
@@ -610,7 +677,8 @@
 		"variante": ["Ion", "Eu nu strivesc corola de minuni a lumii", "Aventurile lui Huckleberry Finn", "Ciuma"],
 		"corect": 1,
 		"nivel": 2,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q389933:autor:cere_autor",
@@ -619,7 +687,8 @@
 		"variante": ["Voltaire", "Victor Hugo", "Alexandre Dumas", "Molière"],
 		"corect": 3,
 		"nivel": 2,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q41166:autor:cere_opera",
@@ -628,7 +697,8 @@
 		"variante": ["Jurnal din anul ciumei", "Călătoriile lui Gulliver", "Robinson Crusoe", "Mândrie și prejudecată"],
 		"corect": 1,
 		"nivel": 2,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q41590:autor:cere_opera",
@@ -637,7 +707,8 @@
 		"variante": ["Maitreyi", "Pădurea spânzuraților", "Ion", "Baltagul"],
 		"corect": 0,
 		"nivel": 2,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q462220:autor:cere_opera",
@@ -646,7 +717,8 @@
 		"variante": ["Floare albastră", "Moara cu noroc", "Baltagul", "Pădurea spânzuraților"],
 		"corect": 3,
 		"nivel": 2,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q471005:autor:cere_autor",
@@ -655,7 +727,8 @@
 		"variante": ["Jules Verne", "Victor Hugo", "Antoine de Saint-Exupéry", "Albert Camus"],
 		"corect": 0,
 		"nivel": 2,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q480:autor:cere_autor",
@@ -664,7 +737,8 @@
 		"variante": ["Gabriel García Márquez", "Molière", "Miguel de Cervantes", "William Shakespeare"],
 		"corect": 2,
 		"nivel": 2,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q526518:autor:cere_opera",
@@ -673,7 +747,8 @@
 		"variante": ["Moara cu noroc", "Baltagul", "Maitreyi", "Moromeții"],
 		"corect": 1,
 		"nivel": 2,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q5682:autor:cere_opera",
@@ -682,7 +757,8 @@
 		"variante": ["Un veac de singurătate", "Dragostea în vremea holerei", "Visul unei nopți de vară", "Don Quijote"],
 		"corect": 3,
 		"nivel": 2,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q5686:autor:cere_opera",
@@ -691,7 +767,8 @@
 		"variante": ["Oliver Twist", "Mândrie și prejudecată", "Aventurile lui Huckleberry Finn", "Persuasiune"],
 		"corect": 0,
 		"nivel": 2,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q5878:autor:cere_opera",
@@ -700,7 +777,8 @@
 		"variante": ["Don Quijote", "Pădurea spânzuraților", "Un veac de singurătate", "Procesul"],
 		"corect": 2,
 		"nivel": 2,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q5879:autor:cere_opera",
@@ -709,7 +787,8 @@
 		"variante": ["Faust", "Procesul", "Metamorfoza", "Notre-Dame de Paris"],
 		"corect": 0,
 		"nivel": 2,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q62879:autor:cere_autor",
@@ -718,7 +797,8 @@
 		"variante": ["Charles Dickens", "Jane Austen", "Mark Twain", "Ernest Hemingway"],
 		"corect": 0,
 		"nivel": 2,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q687:autor:cere_opera",
@@ -727,7 +807,8 @@
 		"variante": ["Candid", "O călătorie spre centrul Pământului", "Notre-Dame de Paris", "Tartuffe"],
 		"corect": 3,
 		"nivel": 2,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q7736883:autor:cere_autor",
@@ -736,7 +817,8 @@
 		"variante": ["Ion Creangă", "Ion Luca Caragiale", "George Coșbuc", "Mihai Eminescu"],
 		"corect": 0,
 		"nivel": 2,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q845889:autor:cere_autor",
@@ -745,7 +827,8 @@
 		"variante": ["Agatha Christie", "Ernest Hemingway", "George Orwell", "J. R. R. Tolkien"],
 		"corect": 0,
 		"nivel": 2,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q857714:autor:cere_opera",
@@ -754,7 +837,8 @@
 		"variante": ["Moromeții", "Maitreyi", "Ultima noapte de dragoste, întâia noapte de război", "Moara cu noroc"],
 		"corect": 2,
 		"nivel": 2,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q905:autor:cere_opera",
@@ -763,7 +847,8 @@
 		"variante": ["Faust", "Suferințele tânărului Werther", "Bătrânul și marea", "Metamorfoza"],
 		"corect": 3,
 		"nivel": 2,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q9068:autor:cere_opera",
@@ -772,7 +857,8 @@
 		"variante": ["Avarul", "Tartuffe", "Candid", "Notre-Dame de Paris"],
 		"corect": 2,
 		"nivel": 2,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q961107:autor:cere_opera",
@@ -781,7 +867,8 @@
 		"variante": ["O noapte furtunoasă", "Ion", "Hora Unirii", "Moara cu noroc"],
 		"corect": 3,
 		"nivel": 2,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q991:autor:cere_opera",
@@ -790,7 +877,8 @@
 		"variante": ["Crimă și pedeapsă", "Război și pace", "Anna Karenina", "Moartea lui Ivan Ilici"],
 		"corect": 0,
 		"nivel": 2,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 
 	{
@@ -800,7 +888,8 @@
 		"variante": ["Molière", "Voltaire", "Victor Hugo", "Jules Verne"],
 		"corect": 0,
 		"nivel": 3,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q1054372:autor:cere_autor",
@@ -809,7 +898,8 @@
 		"variante": ["Molière", "Voltaire", "Alexandre Dumas", "Jules Verne"],
 		"corect": 0,
 		"nivel": 3,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q114864021:autor:cere_autor",
@@ -818,7 +908,8 @@
 		"variante": ["George Călinescu", "Mircea Eliade", "Camil Petrescu", "Marin Preda"],
 		"corect": 3,
 		"nivel": 3,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q119246277:autor:cere_autor",
@@ -827,7 +918,8 @@
 		"variante": ["Mircea Eliade", "Camil Petrescu", "George Călinescu", "Nichita Stănescu"],
 		"corect": 3,
 		"nivel": 3,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q1199417:autor:cere_autor",
@@ -836,7 +928,8 @@
 		"variante": ["Victor Hugo", "Alexandre Dumas", "Jules Verne", "Antoine de Saint-Exupéry"],
 		"corect": 0,
 		"nivel": 3,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q1211109:autor:cere_autor",
@@ -845,7 +938,8 @@
 		"variante": ["Alexandre Dumas", "Jules Verne", "Antoine de Saint-Exupéry", "Victor Hugo"],
 		"corect": 3,
 		"nivel": 3,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q1213902:autor:cere_autor",
@@ -854,7 +948,8 @@
 		"variante": ["Alexandre Dumas", "Victor Hugo", "Antoine de Saint-Exupéry", "Jules Verne"],
 		"corect": 3,
 		"nivel": 3,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q1215399:autor:cere_autor",
@@ -863,7 +958,8 @@
 		"variante": ["Jonathan Swift", "Jane Austen", "William Shakespeare", "Daniel Defoe"],
 		"corect": 3,
 		"nivel": 3,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q1261307:autor:cere_opera",
@@ -872,7 +968,8 @@
 		"variante": ["Mitul eternei reîntoarceri", "Sensul iubirii", "Domnișoara Christina", "Cartea nunții"],
 		"corect": 1,
 		"nivel": 3,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q12719719:autor:cere_autor",
@@ -881,7 +978,8 @@
 		"variante": ["Camil Petrescu", "Marin Preda", "Nichita Stănescu", "Mircea Eliade"],
 		"corect": 2,
 		"nivel": 3,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q12723500:autor:cere_autor",
@@ -890,7 +988,8 @@
 		"variante": ["George Călinescu", "Mircea Eliade", "Ioan Slavici", "Camil Petrescu"],
 		"corect": 0,
 		"nivel": 3,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q12724010:autor:cere_autor",
@@ -899,7 +998,8 @@
 		"variante": ["Ioan Slavici", "Vasile Alecsandri", "George Coșbuc", "Mihai Eminescu"],
 		"corect": 1,
 		"nivel": 3,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q12726230:autor:cere_autor",
@@ -908,7 +1008,8 @@
 		"variante": ["Ion Luca Caragiale", "Ion Creangă", "Mihai Eminescu", "George Coșbuc"],
 		"corect": 0,
 		"nivel": 3,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q12729385:autor:cere_autor",
@@ -917,7 +1018,8 @@
 		"variante": ["Mihai Eminescu", "Ion Creangă", "George Coșbuc", "Ion Luca Caragiale"],
 		"corect": 0,
 		"nivel": 3,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q12731814:autor:cere_autor",
@@ -926,7 +1028,8 @@
 		"variante": ["Mircea Eliade", "Liviu Rebreanu", "Marin Preda", "Mihail Sadoveanu"],
 		"corect": 0,
 		"nivel": 3,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q12731815:autor:cere_autor",
@@ -935,7 +1038,8 @@
 		"variante": ["Ion Creangă", "Ion Luca Caragiale", "George Coșbuc", "Mihai Eminescu"],
 		"corect": 1,
 		"nivel": 3,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q12732090:autor:cere_autor",
@@ -944,7 +1048,8 @@
 		"variante": ["Nichita Stănescu", "Mircea Eliade", "George Călinescu", "Liviu Rebreanu"],
 		"corect": 0,
 		"nivel": 3,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q12734726:autor:cere_autor",
@@ -953,7 +1058,8 @@
 		"variante": ["Ion Luca Caragiale", "Ion Creangă", "George Coșbuc", "Mihai Eminescu"],
 		"corect": 3,
 		"nivel": 3,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q12734809:autor:cere_autor",
@@ -962,7 +1068,8 @@
 		"variante": ["Ioan Slavici", "George Călinescu", "Vasile Alecsandri", "Liviu Rebreanu"],
 		"corect": 0,
 		"nivel": 3,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q12736580:autor:cere_autor",
@@ -971,7 +1078,8 @@
 		"variante": ["Camil Petrescu", "Liviu Rebreanu", "Mihail Sadoveanu", "George Călinescu"],
 		"corect": 2,
 		"nivel": 3,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q12736847:autor:cere_autor",
@@ -980,7 +1088,8 @@
 		"variante": ["Ion Luca Caragiale", "George Coșbuc", "Mihai Eminescu", "Ion Creangă"],
 		"corect": 1,
 		"nivel": 3,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q12736941:autor:cere_autor",
@@ -989,7 +1098,8 @@
 		"variante": ["Mihai Eminescu", "Ion Creangă", "George Coșbuc", "Ion Luca Caragiale"],
 		"corect": 2,
 		"nivel": 3,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q12736963:autor:cere_autor",
@@ -998,7 +1108,8 @@
 		"variante": ["Ion Luca Caragiale", "George Coșbuc", "Ion Creangă", "Mihai Eminescu"],
 		"corect": 0,
 		"nivel": 3,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q12738346:autor:cere_autor",
@@ -1007,7 +1118,8 @@
 		"variante": ["Mihail Sadoveanu", "Vasile Alecsandri", "Camil Petrescu", "Ioan Slavici"],
 		"corect": 3,
 		"nivel": 3,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q12741851:autor:cere_autor",
@@ -1016,7 +1128,8 @@
 		"variante": ["Ion Luca Caragiale", "Mihai Eminescu", "Ion Creangă", "George Coșbuc"],
 		"corect": 1,
 		"nivel": 3,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q12742158:autor:cere_autor",
@@ -1025,7 +1138,8 @@
 		"variante": ["Nichita Stănescu", "Tudor Arghezi", "Albert Camus", "George Călinescu"],
 		"corect": 1,
 		"nivel": 3,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q14594692:autor:cere_autor",
@@ -1034,7 +1148,8 @@
 		"variante": ["Liviu Rebreanu", "Marin Preda", "Mircea Eliade", "Camil Petrescu"],
 		"corect": 2,
 		"nivel": 3,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q151883:autor:cere_autor",
@@ -1043,7 +1158,8 @@
 		"variante": ["Franz Kafka", "Johann Wolfgang von Goethe", "Voltaire", "Jane Austen"],
 		"corect": 1,
 		"nivel": 3,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q15649004:autor:cere_autor",
@@ -1052,7 +1168,8 @@
 		"variante": ["Ion Luca Caragiale", "George Coșbuc", "Ion Creangă", "Mihai Eminescu"],
 		"corect": 1,
 		"nivel": 3,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q16386432:autor:cere_autor",
@@ -1061,7 +1178,8 @@
 		"variante": ["Ion Luca Caragiale", "George Coșbuc", "Ion Creangă", "Mihai Eminescu"],
 		"corect": 2,
 		"nivel": 3,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q16387038:autor:cere_autor",
@@ -1070,7 +1188,8 @@
 		"variante": ["Mircea Eliade", "Camil Petrescu", "Liviu Rebreanu", "George Călinescu"],
 		"corect": 0,
 		"nivel": 3,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q17322709:autor:cere_autor",
@@ -1079,7 +1198,8 @@
 		"variante": ["George Coșbuc", "Mihai Eminescu", "Ion Luca Caragiale", "Ion Creangă"],
 		"corect": 1,
 		"nivel": 3,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q18540201:autor:cere_autor",
@@ -1088,7 +1208,8 @@
 		"variante": ["Tudor Arghezi", "Nichita Stănescu", "Camil Petrescu", "George Călinescu"],
 		"corect": 0,
 		"nivel": 3,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q18540692:autor:cere_autor",
@@ -1097,7 +1218,8 @@
 		"variante": ["Mircea Eliade", "Mihail Sadoveanu", "Liviu Rebreanu", "Marin Preda"],
 		"corect": 1,
 		"nivel": 3,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q18544278:autor:cere_autor",
@@ -1106,7 +1228,8 @@
 		"variante": ["Camil Petrescu", "George Călinescu", "Marin Preda", "Mihail Sadoveanu"],
 		"corect": 3,
 		"nivel": 3,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q18544474:autor:cere_autor",
@@ -1115,7 +1238,8 @@
 		"variante": ["George Coșbuc", "Ion Luca Caragiale", "Ion Creangă", "Mihai Eminescu"],
 		"corect": 1,
 		"nivel": 3,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q18547232:autor:cere_autor",
@@ -1124,7 +1248,8 @@
 		"variante": ["Mihail Sadoveanu", "Liviu Rebreanu", "Vasile Alecsandri", "Ioan Slavici"],
 		"corect": 3,
 		"nivel": 3,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q200920:autor:cere_autor",
@@ -1133,7 +1258,8 @@
 		"variante": ["Agatha Christie", "Ernest Hemingway", "George Orwell", "J. R. R. Tolkien"],
 		"corect": 1,
 		"nivel": 3,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q2020094:autor:cere_autor",
@@ -1142,7 +1268,8 @@
 		"variante": ["Jules Verne", "Alexandre Dumas", "Victor Hugo", "Antoine de Saint-Exupéry"],
 		"corect": 1,
 		"nivel": 3,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q206400:autor:cere_autor",
@@ -1151,7 +1278,8 @@
 		"variante": ["Daniel Defoe", "Jonathan Swift", "Jane Austen", "William Shakespeare"],
 		"corect": 3,
 		"nivel": 3,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q210784:autor:cere_autor",
@@ -1160,7 +1288,8 @@
 		"variante": ["Feodor Dostoievski", "Lev Tolstoi", "Ioan Slavici", "Vasile Alecsandri"],
 		"corect": 0,
 		"nivel": 3,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q215750:autor:cere_autor",
@@ -1169,7 +1298,8 @@
 		"variante": ["Daniel Defoe", "Jonathan Swift", "J. R. R. Tolkien", "William Shakespeare"],
 		"corect": 3,
 		"nivel": 3,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q223688:autor:cere_autor",
@@ -1178,7 +1308,8 @@
 		"variante": ["Lev Tolstoi", "Feodor Dostoievski", "Franz Kafka", "Liviu Rebreanu"],
 		"corect": 1,
 		"nivel": 3,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q224078:autor:cere_autor",
@@ -1187,7 +1318,8 @@
 		"variante": ["Ernest Hemingway", "J. R. R. Tolkien", "George Orwell", "Agatha Christie"],
 		"corect": 3,
 		"nivel": 3,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q22978765:autor:cere_autor",
@@ -1196,7 +1328,8 @@
 		"variante": ["Mihai Eminescu", "Ion Creangă", "Ion Luca Caragiale", "George Coșbuc"],
 		"corect": 0,
 		"nivel": 3,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q235795:autor:cere_autor",
@@ -1205,7 +1338,8 @@
 		"variante": ["Agatha Christie", "George Orwell", "Ernest Hemingway", "J. R. R. Tolkien"],
 		"corect": 2,
 		"nivel": 3,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q23831177:autor:cere_autor",
@@ -1214,7 +1348,8 @@
 		"variante": ["Mircea Eliade", "George Călinescu", "Mihail Sadoveanu", "Camil Petrescu"],
 		"corect": 3,
 		"nivel": 3,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q25465610:autor:cere_autor",
@@ -1223,7 +1358,8 @@
 		"variante": ["Mihail Sadoveanu", "George Călinescu", "Marin Preda", "Camil Petrescu"],
 		"corect": 3,
 		"nivel": 3,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q274744:autor:cere_autor",
@@ -1232,7 +1368,8 @@
 		"variante": ["Charles Dickens", "Jane Austen", "Mark Twain", "Agatha Christie"],
 		"corect": 1,
 		"nivel": 3,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q29907330:autor:cere_autor",
@@ -1241,7 +1378,8 @@
 		"variante": ["George Coșbuc", "Ion Luca Caragiale", "Mihai Eminescu", "Ion Creangă"],
 		"corect": 3,
 		"nivel": 3,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q3224928:autor:cere_autor",
@@ -1250,7 +1388,8 @@
 		"variante": ["Mircea Eliade", "Mihail Sadoveanu", "George Călinescu", "Marin Preda"],
 		"corect": 0,
 		"nivel": 3,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q329989:autor:cere_autor",
@@ -1259,7 +1398,8 @@
 		"variante": ["Lev Tolstoi", "Feodor Dostoievski", "Mihail Sadoveanu", "Liviu Rebreanu"],
 		"corect": 1,
 		"nivel": 3,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q333179:autor:cere_autor",
@@ -1268,7 +1408,8 @@
 		"variante": ["Charles Dickens", "Mark Twain", "Jane Austen", "Ernest Hemingway"],
 		"corect": 2,
 		"nivel": 3,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q381756:autor:cere_autor",
@@ -1277,7 +1418,8 @@
 		"variante": ["Ernest Hemingway", "J. R. R. Tolkien", "George Orwell", "Agatha Christie"],
 		"corect": 3,
 		"nivel": 3,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q396602:autor:cere_autor",
@@ -1286,7 +1428,8 @@
 		"variante": ["Feodor Dostoievski", "J. R. R. Tolkien", "Ion Creangă", "Lev Tolstoi"],
 		"corect": 3,
 		"nivel": 3,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q435755:autor:cere_opera",
@@ -1295,7 +1438,8 @@
 		"variante": ["Bietul Ioanide", "Glossă", "Testament", "Mitul eternei reîntoarceri"],
 		"corect": 2,
 		"nivel": 3,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q4509219:autor:cere_autor",
@@ -1304,7 +1448,8 @@
 		"variante": ["Giovanni Boccaccio", "Dante Alighieri", "Molière", "Miguel de Cervantes"],
 		"corect": 1,
 		"nivel": 3,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q46587290:autor:cere_autor",
@@ -1313,7 +1458,8 @@
 		"variante": ["Liviu Rebreanu", "George Călinescu", "Mircea Eliade", "Mihail Sadoveanu"],
 		"corect": 1,
 		"nivel": 3,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q499396:autor:cere_autor",
@@ -1322,7 +1468,8 @@
 		"variante": ["Miguel de Cervantes", "Mircea Eliade", "Gabriel García Márquez", "Marin Preda"],
 		"corect": 2,
 		"nivel": 3,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q5057413:autor:cere_autor",
@@ -1331,7 +1478,8 @@
 		"variante": ["George Călinescu", "Mircea Eliade", "Marin Preda", "Nichita Stănescu"],
 		"corect": 2,
 		"nivel": 3,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q5320494:autor:cere_autor",
@@ -1340,7 +1488,8 @@
 		"variante": ["Ion Luca Caragiale", "George Coșbuc", "Ion Creangă", "Mihai Eminescu"],
 		"corect": 2,
 		"nivel": 3,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q588161:autor:cere_autor",
@@ -1349,7 +1498,8 @@
 		"variante": ["Voltaire", "Jules Verne", "Molière", "Victor Hugo"],
 		"corect": 2,
 		"nivel": 3,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q6414727:autor:cere_autor",
@@ -1358,7 +1508,8 @@
 		"variante": ["Mihai Eminescu", "Ion Luca Caragiale", "George Coșbuc", "Ion Creangă"],
 		"corect": 1,
 		"nivel": 3,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q727861:autor:cere_autor",
@@ -1367,7 +1518,8 @@
 		"variante": ["Agatha Christie", "Ernest Hemingway", "George Orwell", "J. R. R. Tolkien"],
 		"corect": 0,
 		"nivel": 3,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q7451156:autor:cere_autor",
@@ -1376,7 +1528,8 @@
 		"variante": ["Nichita Stănescu", "Liviu Rebreanu", "George Călinescu", "Marin Preda"],
 		"corect": 0,
 		"nivel": 3,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q768605:autor:cere_autor",
@@ -1385,7 +1538,8 @@
 		"variante": ["Antoine de Saint-Exupéry", "Jules Verne", "Victor Hugo", "Albert Camus"],
 		"corect": 1,
 		"nivel": 3,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q7924557:autor:cere_autor",
@@ -1394,7 +1548,8 @@
 		"variante": ["Mircea Eliade", "George Călinescu", "Nichita Stănescu", "Marin Preda"],
 		"corect": 3,
 		"nivel": 3,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q79762:autor:cere_autor",
@@ -1403,7 +1558,8 @@
 		"variante": ["Ernest Hemingway", "J. R. R. Tolkien", "Agatha Christie", "George Orwell"],
 		"corect": 1,
 		"nivel": 3,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q848612:autor:cere_autor",
@@ -1412,7 +1568,8 @@
 		"variante": ["J. R. R. Tolkien", "Mark Twain", "George Orwell", "Agatha Christie"],
 		"corect": 1,
 		"nivel": 3,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q869725:autor:cere_autor",
@@ -1421,7 +1578,8 @@
 		"variante": ["George Orwell", "Ernest Hemingway", "Mark Twain", "Charles Dickens"],
 		"corect": 2,
 		"nivel": 3,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q937443:autor:cere_autor",
@@ -1430,7 +1588,8 @@
 		"variante": ["Molière", "Voltaire", "Victor Hugo", "Alexandre Dumas"],
 		"corect": 0,
 		"nivel": 3,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	},
 	{
 		"id": "wd:Q98000186:autor:cere_autor",
@@ -1439,6 +1598,7 @@
 		"variante": ["George Călinescu", "Liviu Rebreanu", "Ioan Slavici", "Marin Preda"],
 		"corect": 1,
 		"nivel": 3,
-		"categorie": "literatura"
+		"subcategorie": "literatura_universala",
+		"categorie": "arta_literatura"
 	}
 ]

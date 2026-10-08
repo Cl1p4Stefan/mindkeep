@@ -18,23 +18,26 @@ extends Puzzle
 ## crape lupta la mijloc.
 ##
 ## ── CE CONȚINE BAZA ───────────────────────────────────────────
-## Șase domenii (istorie, geografie, știință, artă, mitologie, literatură) pe
-## trei niveluri. Nivelul e singura măsură a dificultății, iar înțelesul lui e
-## ăsta, și trebuie păstrat când adaugi întrebări:
+## Șase domenii (vezi `DOMENII`) pe trei niveluri. Nivelul e singura măsură a
+## dificultății, iar înțelesul lui e ăsta, și trebuie păstrat când adaugi
+## întrebări:
 ##
 ##   nivelul 1 — o știe orice adult, fără să fi studiat ceva anume
 ##   nivelul 2 — s-a predat la școală; îți amintești dacă ai fost atent
 ##   nivelul 3 — o știi doar dacă domeniul te-a interesat dincolo de școală
 ##
+## Ce intră în fiecare domeniu, cu regula pentru cazurile de graniță, e în
+## `docs/ghid-note.md`. Aici e doar lista, fiindcă aici se validează.
+##
 ## ── ECHILIBRUL PE DOMENII STĂ ÎN ALEGERE, NU ÎN DATE ──────────
-## Cele 135 de întrebări scrise de mână erau ținute în echilibru DINADINS
-## (8/8/8/7/7/7 pe nivel), iar întrebarea se trăgea din tot nivelul. Mergea
-## fiindcă fișierul era scris de om, deci echilibrul era o decizie.
+## Cele 135 de întrebări scrise de mână erau ținute în echilibru DINADINS, iar
+## întrebarea se trăgea din tot nivelul. Mergea fiindcă fișierul era scris de om,
+## deci echilibrul era o decizie.
 ##
 ## Cu întrebări FABRICATE nu mai merge: conținutul generat nu iese echilibrat și
 ## nu poate. Deci alegerea e acum în DOUĂ TREPTE — întâi domeniul, uniform între
-## cele prezente la nivelul cerut, apoi întrebarea din el. Așa echilibrul nu mai
-## depinde de cât de mare crește un domeniu. Motivul lung e în
+## cele care trec `PRAG_DOMENIU` la nivelul cerut, apoi întrebarea din el. Așa
+## echilibrul nu mai depinde de cât de mare crește un domeniu. Motivul lung e în
 ## `trage_intrebarea`; aceeași formă ca la Logică, unde se alege întâi
 ## categoria de regulă și abia apoi șirul.
 ##
@@ -99,11 +102,15 @@ const DOSAR_GEN := "res://data/trivia_gen"
 # COMUTATORUL. `false` și jocul nu mai vede NIMIC din dosarul fabricat — nici
 # întrebările, nici faptele — fără să se atingă nimic altceva.
 #
-# Există fiindcă conținutul fabricat poate să nu-mi placă. Azi sunt două relații
-# („element ↔ simbol" în știință, „operă ↔ autor" în literatură), fiecare
-# umplând ~85-90% din domeniul ei. În luptă asta înseamnă cam 2 din 7 întrebări
-# fabricate. Dacă se simte prea mult, se stinge de aici, iar leacul adevărat nu
-# e o treaptă de alegere în plus, e lățimea conținutului.
+# Există fiindcă conținutul fabricat poate să nu-mi placă. Azi sunt trei relații
+# („element ↔ simbol" în știință și natură, „operă ↔ autor" în artă și
+# literatură, „țară ↔ capitală" în geografie), fiecare umplând grosul domeniului
+# ei. Dacă se simte prea mult, se stinge de aici, iar leacul adevărat nu e o
+# treaptă de alegere în plus, e lățimea conținutului.
+#
+# Cu el stins rămâne numai mâna: 8/8/8 pe nivel la geografie, istorie și știință
+# și natură, 21 la artă și literatură. Toate trec `PRAG_DOMENIU`, deci jocul
+# rămâne cu patru domenii, nu cu unul — vezi socoteala de acolo.
 const FOLOSESTE_WIKIDATA := true
 
 # FAPTELE. Un „fapt" e un lucru despre lume care poate fi întrebat în mai multe
@@ -135,17 +142,185 @@ const CALE_FAPTE := "res://data/fapte_trivia.json"
 # tăiată ca să respecte o cifră nejucată.
 const MAX_NOTA := 240
 
-# Categoriile acceptate. Lista NU e decor: o categorie scrisă greșit în JSON
-# („istoire") e prinsă la încărcare, cu un avertisment în consolă, în loc să
-# ajungă în luptă ca antet fără sens.
+# DOMENIILE: cheia din JSON → numele care se vede în antetul întrebării.
 #
-# „literatura" s-a desprins din „arta" când baza a crescut la ~135 de
-# întrebări. La 45, cărțile încăpeau lângă pictură și muzică; la 135, cine
-# vrea să adauge întrebări nu mai știe unde să caute, iar echilibrul pe
-# domenii nu se mai poate citi dintr-o privire. „mitologie" e nouă.
-const CATEGORII := [
-	"istorie", "geografie", "stiinta", "arta", "mitologie", "literatura",
-]
+# Lista NU e decor: o cheie scrisă greșit în JSON („istoire") e prinsă la
+# încărcare, cu un avertisment în consolă, în loc să ajungă în luptă ca antet
+# fără sens.
+#
+# DE CE UN DICTIONARY, NU DOUĂ LISTE. Are două treburi — validează cheia
+# (`DOMENII.has`) și dă numele afișat (`DOMENII[cheie]`). Cu o listă de chei
+# lângă un dicționar de nume, un domeniu nou ar fi două locuri de ținut
+# sincronizate, iar al doilea se uită. Așa rămâne un rând, ca la Obeliscuri.
+#
+# CHEIA NU E NUMELE. Cheia intră în `id`-uri, în cheile sacului și, mâine, în
+# save — deci n-are diacritice și nu se schimbă niciodată. Numele e doar text pe
+# ecran și se poate rescrie oricând. Antetul le pune cu majuscule
+# („ARTĂ ȘI LITERATURĂ"); Logica afișează deja etichete de două-trei cuvinte.
+#
+# CELE ȘASE, și de ce astea. Vechile șase (istorie, geografie, stiinta, arta,
+# mitologie, literatura) erau tăiate după cum crescuse baza scrisă de mână, nu
+# după cum arată cultura generală pentru cineva care joacă. Artă, mitologie și
+# literatură erau trei domenii subțiri care se întreabă la fel (cine a scris,
+# cine a pictat, cine a compus) — acum sunt unul singur, destul de gros. În
+# locul lor au intrat două care lipseau cu totul: Divertisment și Sport.
+# Amândouă pornesc GOALE, deci azi sunt sărite (vezi `PRAG_DOMENIU`); există în
+# listă fiindcă un domeniu scris de la început e un rând, iar unul adăugat după
+# ce s-a scris conținut e o migrare.
+#
+# Ce intră în fiecare, cu regula pentru cazurile de graniță și cu regula
+# „numai trecut" de la Divertisment și Sport: `docs/ghid-note.md`.
+const DOMENII := {
+	"geografie": "Geografie și explorare",
+	"istorie": "Istorie și societate",
+	"stiinta_tehnologie": "Știință și tehnologie",
+	"arta_literatura": "Artă și literatură",
+	"divertisment": "Divertisment și media",
+	"sport_jocuri": "Sport și jocuri",
+	"gastronomie_lifestyle": "Gastronomie și lifestyle",
+	"diverse": "Diverse și curiozități",
+}
+
+
+# SUBCATEGORIILE: domeniu → (cheie din JSON → numele care se va vedea în Practice).
+#
+# ─── DE CE UN CÂMP PE ÎNTREBARE, NU O ETICHETĂ PE FAPT ────────
+# În Practice vreau să pot alege „geografie → capitale”. Un meniu care alege are
+# nevoie de două lucruri: cifre corecte și garanția că nicio întrebare nu rămâne
+# pe dinafară. Adică de o ÎMPĂRȚIRE, nu de etichete care se suprapun — fiecare
+# întrebare stă în exact o subcategorie.
+#
+# `etichete`, de pe fapt, rămâne pentru filtrele TRANSVERSALE, care taie peste
+# subcategorii: `romania` e singura de azi. O întrebare despre Posada e
+# `istorie` / `ev_mediu` / etichetă `romania`; una despre Dâmbovița e
+# `geografie` / `ape` / etichetă `romania`. Dacă `romania` ar fi fost
+# subcategorie, ar fi trebuit să aleg între „e despre România” și „e despre
+# râuri”, iar meniul ar fi avut două răspunsuri la aceeași întrebare.
+#
+# ─── CUM SE ALEGE, ACEEAȘI REGULĂ CA LA DOMENIU ───────────────
+# Subcategoria o dă CE TREBUIE SĂ ȘTII ca să răspunzi, nu subiectul. „Pe ce râu
+# stă Viena?” e `orase` (poziția unui oraș), nu `ape`. Înțelesul fiecărei chei,
+# cu cazurile de graniță, e în `docs/plan-continut.md`; aici e doar lista,
+# fiindcă aici se validează.
+#
+# ─── CHEIA NU E NUMELE ────────────────────────────────────────
+# Ca la `DOMENII`: cheia intră în cheile sacului din Practice
+# („practice:geografie:capitale”) și, de la Save, pe disc — deci fără diacritice
+# și nu se schimbă niciodată. Numele e text pe ecran.
+#
+# ─── TOATE ȘASE DOMENIILE, DE LA BUN ÎNCEPUT ──────────────────
+# Lista e completă, deși azi se folosesc patru chei din 36. Același motiv pentru
+# care Divertismentul și Sportul au fost scrise goale în `DOMENII`: o
+# subcategorie scrisă de la început e un rând, iar una adăugată după ce s-a scris
+# conținut e o migrare. Ca să nu rămână promisiuni uitate, verificatorul
+# tipărește la fiecare rulare subcategoriile care n-au nicio întrebare.
+const SUBCATEGORII := {
+	"geografie": {
+		"geografie_politica": "Geografie politică",
+		"geografie_fizica": "Geografie fizică",
+		"turism_monumente": "Turism și monumente",
+		"demografie_cultura": "Demografie și cultură",
+	},
+	"istorie": {
+		"antichitate_ev_mediu": "Antichitate și Ev Mediu",
+		"modern_contemporan": "Istorie modernă și contemporană",
+		"lideri_personalitati": "Lideri și personalități",
+		"mitologie_religii": "Mitologie și religii",
+	},
+	"stiinta_tehnologie": {
+		"stiinte_exacte": "Științe exacte",
+		"lumea_vie": "Lumea vie",
+		"astronomie_spatiu": "Astronomie și spațiu",
+		"tehnologie_inventii": "Tehnologie și invenții",
+	},
+	"arta_literatura": {
+		"literatura_universala": "Literatură universală",
+		"arte_vizuale": "Arte vizuale",
+		"arhitectura_design": "Arhitectură și design",
+		"cultura_clasica": "Cultură clasică",
+	},
+	"divertisment": {
+		"cinematografie": "Cinematografie",
+		"televiziune": "Televiziune",
+		"muzica_moderna": "Muzică modernă",
+		"pop_culture": "Pop culture și internet",
+	},
+	"sport_jocuri": {
+		"sporturi_de_echipa": "Sporturi de echipă",
+		"individuale_olimpism": "Sporturi individuale și olimpism",
+		"motor_extreme": "Sporturi cu motor și extreme",
+		"gaming": "Gaming și jocuri de masă",
+	},
+	"gastronomie_lifestyle": {
+		"bucataria_lumii": "Bucătăria lumii",
+		"ingrediente_tehnici": "Ingrediente și tehnici",
+		"bauturi": "Băuturi",
+		"moda_traditii": "Modă și tradiții",
+	},
+	# LOGICA DE AICI NU E OBELISCUL LOGICĂ, și granița merită scrisă fiindcă
+	# altfel aceeași întrebare ar putea veni din două locuri.
+	#
+	# Obeliscul Logică GENEREAZĂ șiruri și deducții de rezolvat: „4, 8, 12, ?”.
+	# `logica_perspicacitate` de aici ține FAPTE despre logică — un paradox cu
+	# nume, o ghicitoare celebră, un termen. Prima e o problemă pe care o rezolvi,
+	# a doua e un lucru pe care îl știi. Dacă vreodată o întrebare de aici se poate
+	# rezolva gândind, fără s-o fi auzit, ea aparține Obeliscului.
+	"diverse": {
+		"lingvistica": "Lingvistică",
+		"logica_perspicacitate": "Logică și perspicacitate",
+		"curiozitati": "Curiozități",
+	},
+}
+
+# CÂMPURILE pe care le poate avea o întrebare. Lista e ÎNCHISĂ, iar un câmp
+# necunoscut REFUZĂ întrebarea — un câmp scris greșit („verifcat”) ar fi o
+# întrebare care se poartă altfel decât crezi, fără ca nimic să spună nimic.
+# Refuzată, se vede în linia de bilanț („212 încărcate din 213 găsite”).
+#
+# `retras` NU E ÎN LISTĂ, deși e o convenție scrisă (`tools/da_iduri.py`: o
+# întrebare scoasă din joc se marchează retrasă și rămâne pe loc, cu id-ul ei).
+# Codul care sare peste retrase nu există încă. Dacă pun câmpul în listă acum,
+# prima întrebare retrasă ar rămâne în joc, în tăcere; așa, ziua aia mă oprește și
+# scriu codul de care e nevoie.
+const CAMPURI_INTREBARE := ["id", "verificat", "fapt", "text", "variante",
+	"corect", "nivel", "subcategorie", "categorie"]
+
+# CÂMPURILE unui fapt. Tot închisă, din același motiv.
+const CAMPURI_FAPT := ["id", "nota", "etichete", "imagini"]
+
+# CÂTE ÎNTREBĂRI TREBUIE SĂ AIBĂ UN DOMENIU LA UN NIVEL ca să intre în alegerea
+# din luptă. Se măsoară pe CELULĂ (domeniu × nivel), nu pe domeniu: un domeniu
+# poate fi gros la nivelul I și gol la III, iar alegerea se face oricum pe
+# nivelul cerut.
+#
+# ─── DE CE EXISTĂ ─────────────────────────────────────────────
+# Alegerea e uniformă pe domenii (vezi `trage_intrebarea`), deci un domeniu ia
+# 1/N din întrebările de luptă oricât de sărac ar fi. Un domeniu cu două
+# întrebări ar da două întrebări în 1/6 din luptă — adică exact o întrebare
+# gratis, repetată, care e cel mai rău lucru într-un joc de antrenament mental.
+# Sub prag domeniul e SĂRIT, nu golit: întrebările rămân încărcate, numărate de
+# verificator, și domeniul reintră singur în clipa în care celula se umple.
+#
+# ─── DE CE 8, ȘI NU ALT NUMĂR ─────────────────────────────────
+# 1. E cât trage o expediție lungă dintr-un domeniu. O expediție lungă consumă
+#    ~45 de întrebări de Cultură generală. Cu `TREPTE_PE_NIVEL = 3` și o rată de
+#    reușită de 0,8, un lanț dă în medie 2,4 întrebări de nivelul I, 1,25 de II
+#    și 1,3 de III — deci ~49% din trageri cad pe nivelul I, adică ~22. Împărțite
+#    la cele 4 domenii care trec pragul azi: 5-6 trageri pe celulă. Sacul
+#    garantează „nicio repetiție până se golește", deci la 8 nu se repetă nimic
+#    într-o expediție; la 4 s-ar repeta o dată, la 2 de două ori.
+# 2. E o celulă scrisă de mână. Baza de 135 a fost construită 7-8 pe celulă,
+#    deci 8 e cea mai mică porție de conținut pe care o produc dinadins.
+# 3. Nu aruncă nimic din ce am. Istoria are exact 8 pe fiecare nivel și trece la
+#    limită; la 10 aș fi pierdut istoria din joc printr-o regulă pusă să apere
+#    echilibrul. Și cu `FOLOSESTE_WIKIDATA` stins rămâne 8/8/8/21 pe nivel, deci
+#    toate trec — la 9, stingerea comutatorului ar lăsa un singur domeniu.
+#
+# PREȚUL, spus pe față: istoria trece cu zero rezervă, deci fiecare expediție
+# lungă îți arată 5-6 din cele 8 întrebări de istorie ale unui nivel. Pragul nu
+# ascunde asta, o numește — istoria e următoarea țintă de conținut, iar
+# verificatorul tipărește rezerva fiecărei celule, nu doar dacă trece.
+const PRAG_DOMENIU := 8
 
 # Cheia sacului din care se trag întrebările, fără repetiții, cât ține o
 # expediție. Vezi `autoload/sac.gd`.
@@ -175,10 +350,37 @@ const SAC := "cultura_generala"
 static var intrebari: Array[Dictionary] = []
 static var incarcare_incercata := false
 
+## Câte întrebări n-au încă `subcategorie`. Cele 135 scrise de mână înaintea
+## câmpului o primesc într-un lot separat de clasificare; până atunci sunt
+## acceptate, cu UN rând de bilanț la încărcare, nu cu 135 de avertismente.
+static var fara_subcategorie := 0
+
+## Câte întrebări au `verificat: false`, adică notele lor n-au fost încă citite
+## de nimeni.
+##
+## ─── DE CE E DOAR O CIFRĂ, NU UN FILTRU ───────────────────────
+## Fiindcă o întrebare NEVERIFICATĂ INTRĂ ÎN JOC. Flagul nu decide nimic în
+## luptă: spune doar dacă am citit nota ei și am găsit afirmațiile într-o sursă.
+##
+## A fost, o zi, altfel: exista un câmp `ciorna` care ținea întrebarea afară din
+## joc până o confirmam cu un script, iar faptul avea și el un `verificat`, cu
+## `surse` și o listă de afirmații de bifat. Două flaguri, două fișiere și două
+## unelte cu parametri — mai multă mașinărie decât conținut. S-a desfăcut tot:
+## un singur câmp, pe întrebare, pe care-l pui pe `true` de mână, în JSON, când
+## ai citit nota. Nimic nu-l cere și nimic nu se schimbă în joc când îl pui.
+##
+## Cifra se tipărește la încărcare, într-un rând, ca să se vadă cât a mai rămas
+## de citit. Nu e un verdict și n-are nevoie de nimeni ca s-o actualizeze.
+static var neverificate := 0
+
 ## Faptele, ca `id` → notă. Un Dictionary, nu o listă, fiindcă singura întrebare
 ## pusă vreodată aici e „ce notă are faptul ăsta?" — o căutare pe cheie, de câteva
 ## ori pe rundă.
 static var fapte := {}
+
+## Nivelurile la care s-a spus deja că alegerea a căzut pe plasa din
+## `trage_intrebarea`. Folosit ca mulțime: valoarea nu înseamnă nimic.
+static var _plasa_spusa := {}
 
 
 # ─────────────────────────────────────────────────────────────
@@ -206,7 +408,13 @@ func _compune_intrebare(nivel: int) -> Dictionary:
 	return {
 		# Antetul spune doar din ce domeniu e întrebarea. Nivelul nu apare —
 		# îl simți oricum din cronometru și din dificultate.
-		"categorie": String(q["categorie"]).to_upper(),
+		#
+		# Se afișează NUMELE, nu cheia: „ARTĂ ȘI LITERATURĂ", nu
+		# „ARTA_LITERATURA". `get` cu cheia pe post de rezervă e o plasă care
+		# n-ar trebui să prindă niciodată — încărcătorul refuză deja întrebările
+		# cu domeniu necunoscut — dar, dacă prinde, pe ecran apare ceva citibil
+		# în loc de gol.
+		"categorie": String(DOMENII.get(String(q["categorie"]), q["categorie"])).to_upper(),
 		"text": q["text"],
 		"variante": amestecate["variante"],
 		"corect": amestecate["corect"],
@@ -232,7 +440,7 @@ func _compune_intrebare(nivel: int) -> Dictionary:
 ## s-a putut trage nimic.
 ##
 ## DE CE E `static`, ȘI DESPĂRȚITĂ DE `_compune_intrebare`. Ca s-o poată chema
-## verificarea din `tools/verifica_trivia.gd`, fără fereastră și fără scenă.
+## verificarea din `tools/verificari/verifica_trivia.gd`, fără fereastră și fără scenă.
 ## Echilibrul pe domenii și sacul sunt exact lucrurile care NU se pot proba
 ## jucând — ca să vezi cu ochiul că știința nu ia 85% din întrebări, ar trebui să
 ## numeri câteva mii de lupte. Alternativa ar fi fost să rescrie verificarea
@@ -242,11 +450,11 @@ func _compune_intrebare(nivel: int) -> Dictionary:
 ## DE CE ÎN DOUĂ TREPTE
 ##
 ## Până la conținutul fabricat, întrebarea se trăgea din TOT nivelul, iar
-## echilibrul pe domenii era ținut de mână în fișier (8/8/8/7/7/7 pe nivel).
-## Mergea fiindcă fișierul era scris de om, deci echilibrul era o decizie.
+## echilibrul pe domenii era ținut de mână în fișier. Mergea fiindcă fișierul era
+## scris de om, deci echilibrul era o decizie.
 ##
 ## Conținutul generat nu iese echilibrat și nu POATE ieși: Wikidata e bogată în
-## geografie, științe și date, și săracă în mitologie românească. Cele 139 de
+## geografie, științe și date, și săracă în folclor românesc. Cele 139 de
 ## întrebări despre elemente intră toate în știință, iar dacă alegerea ar rămâne
 ## „trage din tot nivelul", știința ar lua 85% din întrebări și „Cultură
 ## generală" ar deveni, în practică, „Chimie, cu accidente" — adică ai antrena un
@@ -256,6 +464,18 @@ func _compune_intrebare(nivel: int) -> Dictionary:
 ## mare crește un domeniu. Aceeași formă ca la Logică, unde se alege întâi
 ## categoria de regulă și abia apoi șirul: acolo alegerea în două trepte e chiar
 ## ce împiedică „Fibonacci" să apară cât toate celelalte la un loc.
+##
+## ─────────────────────────────────────────────────────────────
+## ȘI DE CE ALEGEREA SARE DOMENIILE SUBȚIRI
+##
+## Uniformitatea taie în amândouă sensurile: ea e cea care împiedică știința să
+## ia 85%, dar tot ea RIDICĂ un domeniu cu două întrebări la 1/N din toată
+## lupta. Fără prag, ziua în care deschid Divertismentul cu trei întrebări ar fi
+## ziua în care una din șase întrebări de luptă e una din acele trei.
+##
+## Deci un domeniu intră în alegere doar dacă are `PRAG_DOMENIU` întrebări la
+## nivelul cerut. Cele de sub prag sunt SĂRITE, nu scoase: rămân în `intrebari`,
+## rămân numărate de verificator, și reintră singure când celula se umple.
 static func trage_intrebarea(nivel: int) -> Dictionary:
 	# `filter` trece prin array și păstrează doar elementele pentru care
 	# funcția anonimă (lambda) întoarce true. Aici: doar întrebările de nivelul cerut.
@@ -273,11 +493,35 @@ static func trage_intrebarea(nivel: int) -> Dictionary:
 			pe_domenii[domeniu] = []
 		pe_domenii[domeniu].append(q)
 
-	# `keys()` nu promite nicio ordine anume, dar nici nu ne trebuie. Ce ne trebuie
-	# e ca fiecare domeniu PREZENT să aibă șansa 1/N, indiferent câte întrebări
-	# are — și asta o dă `pick_random` peste lista de CHEI, nu peste întrebări.
-	var domenii: Array = pe_domenii.keys()
-	var domeniu_ales: String = String(domenii.pick_random())
+	# PRAGUL. Domeniile prea subțiri la nivelul ăsta ies din alegere — nu din
+	# date. Motivul e la `PRAG_DOMENIU`: alegerea uniformă ar ridica un domeniu cu
+	# trei întrebări la 1/N din toată lupta.
+	var destule: Array = []
+	for domeniu in pe_domenii:
+		if (pe_domenii[domeniu] as Array).size() >= PRAG_DOMENIU:
+			destule.append(domeniu)
+
+	# PLASA. Dacă NICIUN domeniu nu trece pragul, se joacă cu toate cele prezente.
+	# O întrebare repetată e mult mai bună decât un Obelisc care întoarce dicționar
+	# gol și scoate ecranul de eroare în mijlocul unui lanț. Nu se poate întâmpla
+	# cu conținutul de azi; se poate întâmpla la prima disciplină nouă de conținut
+	# care pornește de la zero, și atunci vreau să fie spus, nu descoperit.
+	if destule.is_empty():
+		# O DATĂ PE NIVEL, PE TOATĂ RULAREA. Întâi am scris-o fără registru, și
+		# verificarea a tipărit același avertisment de o mie de ori — fiindcă locul
+		# ăsta e pe drumul FIECĂREI întrebări, nu al încărcării. Într-o luptă ar fi
+		# însemnat o consolă în care nu se mai poate citi nimic altceva, adică exact
+		# opusul a ce vrea un avertisment.
+		if not _plasa_spusa.has(nivel):
+			_plasa_spusa[nivel] = true
+			push_warning(("Trivia: la nivelul %d niciun domeniu nu are %d intrebari; " +
+				"joc cu toate cele %d prezente.") % [nivel, PRAG_DOMENIU, pe_domenii.size()])
+		destule = pe_domenii.keys()
+
+	# Ordinea din `destule` nu contează, și nici nu e promisă. Ce ne trebuie e ca
+	# fiecare domeniu ADMIS să aibă șansa 1/N, indiferent câte întrebări are — și
+	# asta o dă `pick_random` peste lista de CHEI, nu peste întrebări.
+	var domeniu_ales: String = String(destule.pick_random())
 	pool = pe_domenii[domeniu_ales]
 
 	# TREAPTA 2: întrebarea.
@@ -415,7 +659,16 @@ static func incarca_intrebari() -> void:
 		for cale in fisierele_generate("_intrebari.json"):
 			cate_gasite += _incarca_fisier(cale, folosite, id_uri)
 
-	print("Trivia: %d intrebari incarcate (din %d gasite)." % [intrebari.size(), cate_gasite])
+	print("Trivia: %d intrebari incarcate (din %d gasite), %d neverificate." % [
+		intrebari.size(), cate_gasite, neverificate
+	])
+	# UN RÂND, nu un avertisment pe întrebare. Cele 135 scrise înaintea câmpului
+	# `subcategorie` îl vor primi într-un lot de clasificare; până atunci lipsa e o
+	# muncă rămasă, nu o greșeală — iar 135 de avertismente ar îngropa consola și
+	# ar face exact ce-i reproșez unui avertisment prost: să nu mai poată fi citit.
+	if fara_subcategorie > 0:
+		print("Trivia: %d intrebari fara subcategorie (de clasificat; vezi docs/plan-continut.md)."
+			% fara_subcategorie)
 
 	# Fapte pe care nu le cere nimeni. Nu strică nimic în joc, și exact de-aia
 	# merită un avertisment: altfel e muncă de scris și de verificat care nu ajunge
@@ -482,6 +735,15 @@ static func _incarca_fisier(cale: String, folosite: Dictionary, id_uri: Dictiona
 		id_uri[String(q["id"])] = "intrarea %d din %s" % [i, cale.get_file()]
 		if q.get("fapt", "") != "":
 			folosite[String(q["fapt"])] = true
+		if String(q.get("subcategorie", "")) == "":
+			fara_subcategorie += 1
+		# `verificat` LIPSĂ ÎNSEAMNĂ `false`. Așa, fișierele fabricate nu trebuie
+		# să poarte câte un „false” pe fiecare din cele 550 de întrebări: nimeni
+		# nu citește de mână conținut generat, iar un câmp pus degeaba e un câmp
+		# pe care-l ignori peste tot.
+		if not bool(q.get("verificat", false)):
+			neverificate += 1
+
 		intrebari.append(q)
 	return brute.size()
 
@@ -493,13 +755,26 @@ static func _incarca_fisier(cale: String, folosite: Dictionary, id_uri: Dictiona
 ## `citeste_lista_json` n-a găsit nimic — funcția aia s-a plâns deja în consolă.
 static func _incarca_fapte(cale: String) -> void:
 	var brute := Puzzle.citeste_lista_json(cale, "Fapte")
-	var neverificate := 0
 	var fara_nota := 0
 	var adaugate := 0
 	for i in range(brute.size()):
 		var f = brute[i]
 		var unde := "faptul %d din %s" % [i, cale.get_file()]
 		if not Puzzle.are_campurile(f, ["id", "nota"], "Fapte", unde):
+			continue
+
+		# Câmpuri necunoscute, ca la întrebări: un fapt n-are decât `nota`,
+		# `etichete` și (la cele fabricate) `imagini`. Flagul de verificare nu mai
+		# stă aici — stă pe întrebare, fiindcă acolo îl cauți.
+		var necunoscute_f: Array[String] = []
+		for cheie in f:
+			if not CAMPURI_FAPT.has(String(cheie)):
+				necunoscute_f.append(String(cheie))
+		if not necunoscute_f.is_empty():
+			necunoscute_f.sort()
+			push_warning("Fapte: %s are cimpuri pe care nu le cunosc: %s. Il sarim." % [
+				unde, ", ".join(necunoscute_f)
+			])
 			continue
 
 		var id_fapt := String(f["id"])
@@ -519,8 +794,6 @@ static func _incarca_fapte(cale: String) -> void:
 				id_fapt, nota.length(), MAX_NOTA
 			])
 
-		if not bool(f.get("verificat", false)):
-			neverificate += 1
 		# Notele goale se numără separat, fiindcă nu sunt o greșeală, sunt MUNCĂ
 		# RĂMASĂ. Toate cele 70 de fapte fabricate pornesc așa. O notă goală nu
 		# strică nimic: `explicatie` rămâne gol, exact ca la o întrebare fără fapt.
@@ -530,8 +803,8 @@ static func _incarca_fapte(cale: String) -> void:
 		adaugate += 1
 
 	if not brute.is_empty():
-		print("Trivia: %s — %d fapte (din %d gasite), %d neverificate, %d fara nota." % [
-			cale.get_file(), adaugate, brute.size(), neverificate, fara_nota
+		print("Trivia: %s — %d fapte (din %d gasite), %d fara nota." % [
+			cale.get_file(), adaugate, brute.size(), fara_nota
 		])
 
 
@@ -546,6 +819,21 @@ static func _intrebare_valida(q, i: int, id_uri: Dictionary, cale := CALE_INTREB
 	# nu se editează de mână.
 	var unde := "intrarea %d din %s" % [i, cale.get_file()]
 	if not Puzzle.are_campurile(q, ["id", "text", "variante", "corect", "nivel", "categorie"], "Trivia", unde):
+		return false
+
+	# ─── CÂMPURI NECUNOSCUTE ───
+	# Lista e închisă dinadins. Vezi `CAMPURI_INTREBARE`: un câmp scris greșit
+	# („verifcat”) ar trece neobservat, iar întrebarea s-ar purta altfel decât
+	# crezi. Refuzată, se vede în bilanț.
+	var necunoscute: Array[String] = []
+	for cheie in q:
+		if not CAMPURI_INTREBARE.has(String(cheie)):
+			necunoscute.append(String(cheie))
+	if not necunoscute.is_empty():
+		necunoscute.sort()
+		push_warning("Trivia: %s are cimpuri pe care nu le cunosc: %s. O sarim." % [
+			unde, ", ".join(necunoscute)
+		])
 		return false
 
 	# ─── IDENTITATEA ───
@@ -603,8 +891,25 @@ static func _intrebare_valida(q, i: int, id_uri: Dictionary, cale := CALE_INTREB
 		push_warning("Trivia: %s are nivelul %d, in afara intervalului 1-3." % [unde, nivel])
 		return false
 
-	if not (q["categorie"] in CATEGORII):
-		push_warning("Trivia: %s are categoria necunoscuta '%s'." % [unde, q["categorie"]])
+	var domeniu := String(q["categorie"])
+	if not DOMENII.has(domeniu):
+		push_warning("Trivia: %s are domeniul necunoscut '%s'." % [unde, domeniu])
 		return false
+
+	# ─── SUBCATEGORIA ───
+	# OPȚIONALĂ, dar nu la liber: lipsa e numărată într-un rând de bilanț (cele 135
+	# scrise înaintea câmpului), iar o cheie care EXISTĂ trebuie să fie una din
+	# cele ale domeniului ei. Perechea contează, nu cheia singură: o întrebare de
+	# istorie cu subcategoria `capitale` e la fel de stricată ca una cu o
+	# subcategorie inventată, și în Practice ar fi un raft pe care nu-l deschide
+	# nimeni niciodată.
+	var subcategorie := String(q.get("subcategorie", ""))
+	if subcategorie != "":
+		var ale_domeniului: Dictionary = SUBCATEGORII.get(domeniu, {})
+		if not ale_domeniului.has(subcategorie):
+			push_warning("Trivia: %s are subcategoria '%s', care nu e a domeniului '%s'." % [
+				unde, subcategorie, domeniu
+			])
+			return false
 
 	return true

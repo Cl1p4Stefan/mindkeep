@@ -1,94 +1,384 @@
 [
 	{
 		"id": "zidul_berlinului",
-		"nota": "Zidul Berlinului a căzut pe 9 noiembrie 1989, după ce despărțise orașul timp de 28 de ani. Câteva săptămâni mai târziu, în decembrie, a urmat Revoluția Română.",
-		"surse": [],
-		"verificat": false
+		"nota": "Zidul Berlinului a căzut pe 9 noiembrie 1989, după ce despărțise orașul timp de 28 de ani. Câteva săptămâni mai târziu, în decembrie, a urmat Revoluția Română."
 	},
 	{
 		"id": "stefan_cel_mare",
 		"nota": "Ștefan cel Mare a domnit în Moldova 47 de ani, între 1457 și 1504. În 1475 a învins oastea otomană la Vaslui, iar mormântul lui se află la Putna, mănăstirea pe care a ctitorit-o.",
-		"surse": [],
-		"verificat": false,
 		"etichete": ["romania"]
 	},
 	{
 		"id": "constantinopol",
-		"nota": "Constantin cel Mare a inaugurat în anul 330 noua capitală, pe locul vechiului Bizanț, iar orașul i-a primit numele: Constantinopol, azi Istanbul. A rămas capitala Imperiului Roman de Răsărit până în 1453, când l-au cucerit otomanii.",
-		"surse": [],
-		"verificat": false
+		"nota": "Constantin cel Mare a inaugurat în anul 330 noua capitală, pe locul vechiului Bizanț, iar orașul i-a primit numele: Constantinopol, azi Istanbul. A rămas capitala Imperiului Roman de Răsărit până în 1453, când l-au cucerit otomanii."
 	},
 	{
 		"id": "dambovita",
 		"nota": "Dâmbovița străbate centrul Bucureștiului. Dunărea, mult mai mare, curge la aproximativ 60 de kilometri sud de oraș.",
-		"surse": [],
-		"verificat": false,
 		"etichete": ["romania"]
 	},
 	{
 		"id": "canberra",
-		"nota": "Capitala Australiei e Canberra, nu Sydney. Orașul a fost ales la începutul secolului XX ca un compromis între Sydney și Melbourne, care își disputau amândouă titlul.",
-		"surse": [],
-		"verificat": false
+		"nota": "Capitala Australiei e Canberra, nu Sydney. Orașul a fost ales la începutul secolului XX ca un compromis între Sydney și Melbourne, care își disputau amândouă titlul."
 	},
 	{
 		"id": "congo",
-		"nota": "Fluviul Congo traversează Ecuatorul de două ori, într-un arc larg prin Africa Centrală. Este al doilea fluviu din lume ca debit, după Amazon.",
-		"surse": [],
-		"verificat": false
+		"nota": "Fluviul Congo traversează Ecuatorul de două ori, într-un arc larg prin Africa Centrală. Este al doilea fluviu din lume ca debit, după Amazon."
 	},
 	{
 		"id": "paianjen",
-		"nota": "Păianjenii au opt picioare, deci nu sunt insecte, care au șase. Fac parte din arahnide, alături de scorpioni și căpușe.",
-		"surse": [],
-		"verificat": false
+		"nota": "Păianjenii au opt picioare, deci nu sunt insecte, care au șase. Fac parte din arahnide, alături de scorpioni și căpușe."
 	},
 	{
 		"id": "mitocondria",
-		"nota": "Mitocondriile produc cea mai mare parte a energiei de care are nevoie celula. Au propriul lor ADN, semn că strămoșii lor au fost, cel mai probabil, bacterii care trăiau independent.",
-		"surse": [],
-		"verificat": false
+		"nota": "Mitocondriile produc cea mai mare parte a energiei de care are nevoie celula. Au propriul lor ADN, semn că strămoșii lor au fost, cel mai probabil, bacterii care trăiau independent."
 	},
 	{
 		"id": "aur",
-		"nota": "Aurul are numărul atomic 79. Simbolul lui, Au, vine din latinescul „aurum”, la fel cum Ag, simbolul argintului, vine din „argentum”.",
-		"surse": [],
-		"verificat": false
+		"nota": "Aurul are numărul atomic 79. Simbolul lui, Au, vine din latinescul „aurum”, la fel cum Ag, simbolul argintului, vine din „argentum”."
 	},
 	{
 		"id": "impresionism",
-		"nota": "„Impresie, răsărit de soare” e un tablou de Claude Monet. Un critic i-a folosit titlul ca să-i ironizeze pe pictorii din jurul lui, numindu-i „impresioniști”, iar ei au adoptat numele.",
-		"surse": [],
-		"verificat": false
+		"nota": "„Impresie, răsărit de soare” e un tablou de Claude Monet. Un critic i-a folosit titlul ca să-i ironizeze pe pictorii din jurul lui, numindu-i „impresioniști”, iar ei au adoptat numele."
 	},
 	{
 		"id": "michelangelo",
-		"nota": "Michelangelo se considera mai ales sculptor: a cioplit „David” din marmură, între 1501 și 1504. A pictat totuși și tavanul Capelei Sixtine, lucrând la el între 1508 și 1512.",
-		"surse": [],
-		"verificat": false
+		"nota": "Michelangelo se considera mai ales sculptor: a cioplit „David” din marmură, între 1501 și 1504. A pictat totuși și tavanul Capelei Sixtine, lucrând la el între 1508 și 1512."
 	},
 	{
 		"id": "ahile",
-		"nota": "Potrivit legendei, mama lui Ahile, Thetis, l-a scufundat în râul Styx ca să-l facă invulnerabil, ținându-l de călcâi. De aici vine expresia „călcâiul lui Ahile”, adică punctul slab al cuiva.",
-		"surse": [],
-		"verificat": false
+		"nota": "Potrivit legendei, mama lui Ahile, Thetis, l-a scufundat în râul Styx ca să-l facă invulnerabil, ținându-l de călcâi. De aici vine expresia „călcâiul lui Ahile”, adică punctul slab al cuiva."
 	},
 	{
 		"id": "odin",
-		"nota": "În mitologia nordică, Odin și-a dat un ochi pentru o sorbitură din fântâna lui Mimir, care dădea înțelepciune. De aceea e înfățișat de obicei cu un singur ochi.",
-		"surse": [],
-		"verificat": false
+		"nota": "În mitologia nordică, Odin și-a dat un ochi pentru o sorbitură din fântâna lui Mimir, care dădea înțelepciune. De aceea e înfățișat de obicei cu un singur ochi."
 	},
 	{
 		"id": "sonet",
-		"nota": "Sonetul are 14 versuri. În forma italiană, ele se împart în două catrene și două terține; Shakespeare le-a grupat altfel, în trei catrene și un distih final.",
-		"surse": [],
-		"verificat": false
+		"nota": "Sonetul are 14 versuri. În forma italiană, ele se împart în două catrene și două terține; Shakespeare le-a grupat altfel, în trei catrene și un distih final."
 	},
 	{
 		"id": "micul_print",
-		"nota": "Antoine de Saint-Exupéry era pilot, iar „Micul Prinț”, apărut în 1943, pornește de la o aterizare forțată în deșert. Autorul trăise una cu adevărat, în Sahara, în 1935.",
-		"surse": [],
-		"verificat": false
+		"nota": "Antoine de Saint-Exupéry era pilot, iar „Micul Prinț”, apărut în 1943, pornește de la o aterizare forțată în deșert. Autorul trăise una cu adevărat, în Sahara, în 1935."
+	},
+	{
+		"id": "al_doilea_razboi_mondial",
+		"nota": "Al Doilea Război Mondial s-a încheiat în 1945: în mai, în Europa, și în septembrie, în Asia, după capitularea Japoniei. Începuse în 1939, cu invadarea Poloniei."
+	},
+	{
+		"id": "gagarin",
+		"nota": "Iuri Gagarin a ocolit Pământul o singură dată, pe 12 aprilie 1961, într-un zbor de 108 minute. Primul om care a pășit pe Lună, Neil Armstrong, a venit opt ani mai târziu."
+	},
+	{
+		"id": "pompei",
+		"nota": "Vezuviul a îngropat Pompei și Herculanum în anul 79. Cenușa a păstrat străzile și casele atât de bine încât orașul, redescoperit în secolul XVIII, se vizitează azi ca atunci."
+	},
+	{
+		"id": "revolutia_franceza",
+		"nota": "Revoluția Franceză a început în 1789, iar data de la care se socotește e 14 iulie, când mulțimea a luat cu asalt închisoarea Bastilia. 14 iulie e azi ziua națională a Franței."
+	},
+	{
+		"id": "hitler",
+		"nota": "Adolf Hitler a condus Germania din 1933 până la moartea lui, în 1945. Wilhelm al II-lea, cu care e uneori confundat, fusese împăratul Germaniei în Primul Război Mondial."
+	},
+	{
+		"id": "titanic",
+		"nota": "Titanicul s-a scufundat în noaptea de 14 spre 15 aprilie 1912, după ce a lovit un iceberg în Atlanticul de Nord, în a cincea zi a primei lui călătorii."
+	},
+	{
+		"id": "ciuma_neagra",
+		"nota": "Ciuma neagră a ajuns în Europa în 1347, pe corăbiile venite din porturile Mării Negre, și s-a întins în patru ani peste tot continentul. Gripa spaniolă, cu care e confundată, a fost în 1918."
+	},
+	{
+		"id": "parthenon",
+		"nota": "Parthenonul a fost ridicat în secolul V î.Hr., pe Acropole, ca templu al zeiței Atena — aceeași care dăduse numele orașului."
+	},
+	{
+		"id": "kennedy",
+		"nota": "John F. Kennedy a fost împușcat la Dallas, pe 22 noiembrie 1963, în al treilea an de mandat. Era al patrulea președinte american asasinat; primul fusese Abraham Lincoln."
+	},
+	{
+		"id": "marea_unire",
+		"nota": "Marea Unire s-a încheiat pe 1 decembrie 1918, la Alba Iulia, cu unirea Transilvaniei. Basarabia se unise cu România mai devreme în același an, iar Moldova cu Țara Românească în 1859.",
+		"etichete": ["romania"]
+	},
+	{
+		"id": "carol_i",
+		"nota": "Carol I a fost domnitor din 1866 și rege din 1881, după ce România își câștigase independența. Cei 48 de ani ai lui sunt cea mai lungă domnie din istoria țării.",
+		"etichete": ["romania"]
+	},
+	{
+		"id": "iulius_cezar",
+		"nota": "Iulius Cezar a fost înjunghiat în Senat la Idele lui Marte, 15 martie 44 î.Hr. Nu a fost însă niciodată împărat: titlul îl ia abia fiul lui adoptiv, Octavian."
+	},
+	{
+		"id": "vlad_tepes",
+		"nota": "Vlad Țepeș semna „Drăculea”, adică fiul lui Dracul — porecla tatălui său, Vlad Dracul. Numele a fost luat de romancierul Bram Stoker în 1897, pentru un personaj care n-are nimic din domnitor.",
+		"etichete": ["romania"]
+	},
+	{
+		"id": "pearl_harbor",
+		"nota": "Atacul de la Pearl Harbor a fost pe 7 decembrie 1941, iar a doua zi Statele Unite au intrat în război. Până atunci rămăseseră în afara lui, deși Europa lupta din 1939."
+	},
+	{
+		"id": "alexandru_cel_mare",
+		"nota": "Alexandru cel Mare a trecut Indusul în 326 î.Hr. și a înaintat încă spre est, până la râul Hyphasis, unde armata a refuzat să mai meargă. A murit trei ani mai târziu, la 32 de ani."
+	},
+	{
+		"id": "declaratia_de_independenta",
+		"nota": "Declarația de Independență a fost adoptată pe 4 iulie 1776, de treisprezece colonii britanice. Constituția Statelor Unite, cu care e confundată, a venit abia în 1787."
+	},
+	{
+		"id": "machu_picchu",
+		"nota": "Machu Picchu a fost construit de incași în secolul XV, la peste 2400 de metri altitudine. Spaniolii n-au ajuns niciodată acolo, iar orașul a rămas necunoscut lumii până în 1911."
+	},
+	{
+		"id": "gutenberg",
+		"nota": "Johannes Gutenberg a tipărit în jurul anului 1455, la Mainz, o Biblie cu litere mobile de metal. În China și în Coreea, tiparul cu litere mobile era cunoscut de secole."
+	},
+	{
+		"id": "destramarea_urss",
+		"nota": "Uniunea Sovietică s-a destrămat în decembrie 1991, în cincisprezece state. Zidul Berlinului căzuse doi ani mai înainte, în 1989, dar URSS a mai existat după el."
+	},
+	{
+		"id": "hastings",
+		"nota": "La Hastings, în octombrie 1066, Wilhelm, duce de Normandia, l-a învins pe regele Harold al II-lea. De la cucerirea lui, engleza s-a umplut de cuvinte venite din franceză."
+	},
+	{
+		"id": "iustinian",
+		"nota": "Iustinian a domnit la Constantinopol din 527 până în 565 și a pus juriștii să adune dreptul roman într-o singură culegere. Prin ea, legile Romei au ajuns în dreptul european."
+	},
+	{
+		"id": "augustus",
+		"nota": "Octavian a primit în anul 27 î.Hr. titlul de Augustus, „cel venerat”, și e socotit primul împărat al Romei. Luna august îi poartă numele."
+	},
+	{
+		"id": "posada",
+		"nota": "Basarab I a învins la Posada, în 1330, oastea regelui ungar Carol Robert. Numele lui a rămas în dinastia Basarabilor și în numele Basarabiei.",
+		"etichete": ["romania"]
+	},
+	{
+		"id": "independenta_romaniei",
+		"nota": "România și-a proclamat independența pe 9 mai 1877 și a intrat în războiul ruso-turc. Marile puteri au recunoscut-o abia în 1878, la Congresul de la Berlin.",
+		"etichete": ["romania"]
+	},
+	{
+		"id": "spartacus",
+		"nota": "Spartacus, un gladiator venit din Tracia, a condus răscoala care a ținut Roma în șah între 73 și 71 î.Hr. A fost înfrântă de armata lui Crassus."
+	},
+	{
+		"id": "edirne",
+		"nota": "Edirne, numit și Adrianopol, a fost capitala otomană din 1365 până în 1453. În 1453, după cucerirea Constantinopolului, capitala s-a mutat acolo."
+	},
+	{
+		"id": "zidul_lui_hadrian",
+		"nota": "Zidul lui Hadrian a fost început în anul 122, din ordinul împăratului cu același nume, și tăia Britania de la o coastă la alta, pe 117 kilometri."
+	},
+	{
+		"id": "kublai_khan",
+		"nota": "Kublai Khan a întemeiat în 1271 dinastia Yuan și a mutat capitala în locul pe care se află azi Beijingul. Marco Polo povestește că a petrecut ani la curtea lui."
+	},
+	{
+		"id": "sputnik",
+		"nota": "Sputnik 1 a fost lansat pe 4 octombrie 1957 și a ocolit Pământul vreme de trei luni, transmițând un simplu semnal radio. De la el se socotește începutul cursei spațiale."
+	},
+	{
+		"id": "film_titanic",
+		"nota": "„Titanic”, filmul lui James Cameron din 1997, a fost primul care a trecut un miliard de dolari la încasări. A luat 11 premii Oscar, la fel ca „Ben-Hur”."
+	},
+	{
+		"id": "alba_ca_zapada",
+		"nota": "„Albă ca Zăpada și cei șapte pitici”, din 1937, a fost primul lung-metraj de animație al studioului Disney. Fiecare cadru a fost desenat de mână."
+	},
+	{
+		"id": "beatles",
+		"nota": "The Beatles au fost patru: John Lennon, Paul McCartney, George Harrison și Ringo Starr. Formația s-a despărțit în 1970, după zece ani de activitate."
+	},
+	{
+		"id": "simpson",
+		"nota": "„Familia Simpson” a început în 1989 și a pornit dintr-o serie de scurte desene pentru un show de televiziune, create de Matt Groening."
+	},
+	{
+		"id": "elvis",
+		"nota": "Elvis Presley a murit în 1977, la 42 de ani. Primul lui mare succes, „Heartbreak Hotel”, apăruse în 1956."
+	},
+	{
+		"id": "james_bond",
+		"nota": "James Bond, agentul 007, a fost inventat de scriitorul Ian Fleming în 1953. Primul film, „Dr. No”, a apărut în 1962, cu Sean Connery în rol."
+	},
+	{
+		"id": "mickey_mouse",
+		"nota": "Mickey Mouse a apărut în 1928, în „Steamboat Willie”, unul dintre primele desene animate cu sunet sincronizat. Walt Disney i-a dat chiar el vocea."
+	},
+	{
+		"id": "tetris",
+		"nota": "Tetris a fost scris în 1984 de Alexei Pajitnov, la Moscova. A ajuns cunoscut în toată lumea după ce a fost vândut împreună cu consola Game Boy, în 1989."
+	},
+	{
+		"id": "jurassic_park",
+		"nota": "„Jurassic Park”, regizat de Steven Spielberg în 1993, a amestecat animația pe calculator cu păpuși mecanice la mărime naturală. Pornește de la un roman al lui Michael Crichton."
+	},
+	{
+		"id": "forrest_gump",
+		"nota": "„Forrest Gump”, din 1994, i-a adus lui Tom Hanks al doilea Oscar pentru rol principal, la un an după primul. Filmul a luat și premiul pentru cel mai bun film."
+	},
+	{
+		"id": "game_boy",
+		"nota": "Game Boy, lansat de Nintendo în 1989, avea un ecran alb-negru și mergea pe patru baterii. A fost vândut împreună cu Tetris, iar asta l-a scos din raftul de jucării."
+	},
+	{
+		"id": "queen",
+		"nota": "Freddie Mercury a fost solistul formației Queen din 1970 până la moartea lui, în 1991. „Bohemian Rhapsody”, din 1975, are aproape șase minute, neobișnuit de mult pentru un single."
+	},
+	{
+		"id": "friends",
+		"nota": "„Friends” a fost difuzat între 1994 și 2004, zece sezoane. Cafeneaua Central Perk, unde se petrece jumătate din serial, era un decor de studio."
+	},
+	{
+		"id": "nasul",
+		"nota": "„Nașul”, din 1972, l-a avut pe Marlon Brando în rolul lui Vito Corleone. Pornește de la romanul lui Mario Puzo, apărut în 1969."
+	},
+	{
+		"id": "dark_side",
+		"nota": "„The Dark Side of the Moon”, albumul Pink Floyd din 1973, a stat în clasamentul american peste 700 de săptămâni. Prisma de pe copertă a fost desenată de studioul Hipgnosis."
+	},
+	{
+		"id": "matrix",
+		"nota": "„Matrix”, din 1999, a făcut cunoscut efectul numit „bullet time”, în care camera se mișcă în jurul unei scene oprite. A luat patru premii Oscar, toate tehnice."
+	},
+	{
+		"id": "cetateanul_kane",
+		"nota": "„Cetățeanul Kane”, din 1941, a fost primul film al lui Orson Welles, făcut la 25 de ani. Misterul cuvântului „Rosebud” se lămurește în ultimul cadru."
+	},
+	{
+		"id": "chihiro",
+		"nota": "„Călătoria lui Chihiro”, din 2001, a fost primul film de animație desenat de mână care a luat Oscarul pentru animație. Regizorul, Hayao Miyazaki, nu a venit la ceremonie."
+	},
+	{
+		"id": "playstation",
+		"nota": "Prima consolă PlayStation a fost lansată de Sony în 1994, în Japonia. Pornise ca o colaborare cu Nintendo, care s-a rupt înainte de lansare."
+	},
+	{
+		"id": "abba",
+		"nota": "ABBA a câștigat Eurovisionul din 1974, la Brighton, cu „Waterloo”. Numele formației e făcut din inițialele celor patru membri."
+	},
+	{
+		"id": "soprano",
+		"nota": "„Clanul Soprano” a fost difuzat între 1999 și 2007 și e socotit începutul serialelor de televiziune scrise ca romane. Tony Soprano a fost jucat de James Gandolfini."
+	},
+	{
+		"id": "palme_dor_2007",
+		"nota": "„4 luni, 3 săptămâni și 2 zile”, al lui Cristian Mungiu, a luat Palme d'Or la Cannes în 2007 — primul film românesc cu acest premiu.",
+		"etichete": ["romania"]
+	},
+	{
+		"id": "phoenix",
+		"nota": "Albumul Phoenix din 1975, un bestiar cântat, apare scris și „Cantofabule”, și „Cantafabule”. În 1977, membrii formației au plecat din România ascunși între boxe.",
+		"etichete": ["romania"]
+	},
+	{
+		"id": "pe_aripile_vantului",
+		"nota": "„Pe aripile vântului”, din 1939, a fost primul film color care a luat Oscarul pentru cel mai bun film. Hattie McDaniel a devenit prima actriță de culoare premiată cu un Oscar."
+	},
+	{
+		"id": "nadia",
+		"nota": "Nadia Comăneci a primit prima notă de 10 din istoria gimnasticii olimpice la Montreal, în 1976. Tabela de scor nu era făcută pentru asta și a afișat 1,00.",
+		"etichete": ["romania"]
+	},
+	{
+		"id": "unsprezece_fotbal",
+		"nota": "O echipă de fotbal are 11 jucători pe teren, dintre care unul e portarul. Numărul a fost fixat în primele reguli scrise, în 1863."
+	},
+	{
+		"id": "mamaliga",
+		"nota": "Mămăliga se face din făină de porumb, iar porumbul a ajuns în Țările Române abia în secolul XVII. Înainte, aceeași mâncare se făcea din mei.",
+		"etichete": ["romania"]
+	},
+	{
+		"id": "tenis_wimbledon",
+		"nota": "Wimbledon e turneul de tenis cel mai vechi, ținut din 1877, și singurul dintre cele patru mari care se joacă pe iarbă."
+	},
+	{
+		"id": "tabla_de_sah",
+		"nota": "Tabla de șah are 64 de pătrate, 8 pe 8, jumătate albe și jumătate negre. Aceeași tablă se folosește și la dame."
+	},
+	{
+		"id": "ciclul_olimpic",
+		"nota": "Jocurile Olimpice de vară se țin la fiecare patru ani, interval numit olimpiadă. Cele de iarnă au fost mutate, din 1994, la mijlocul intervalului."
+	},
+	{
+		"id": "cupa_mondiala",
+		"nota": "Cupa Mondială de fotbal se ține o dată la patru ani, din 1930. A fost sărită doar de două ori, în 1942 și 1946, din cauza celui de-al Doilea Război Mondial."
+	},
+	{
+		"id": "sarmale",
+		"nota": "Sarmalele se fac din foi de varză sau de viță umplute cu carne tocată și orez. Numele vine din turcescul „sarmak”, care înseamnă „a învârti”.",
+		"etichete": ["romania"]
+	},
+	{
+		"id": "olimpiada_1896",
+		"nota": "Primele Jocuri Olimpice moderne s-au ținut la Atena, în 1896, cu sportivi din 14 țări. Nu s-au dat medalii de aur: învingătorii au primit argint."
+	},
+	{
+		"id": "cm_1994",
+		"nota": "Brazilia a câștigat Cupa Mondială din 1994, găzduită de Statele Unite. Finala cu Italia s-a terminat 0-0 și s-a decis la lovituri de departajare."
+	},
+	{
+		"id": "nastase",
+		"nota": "Ilie Năstase a fost primul lider al clasamentului mondial ATP, în 1973, când clasamentul a fost introdus. A câștigat turneul de la Roland Garros în 1973.",
+		"etichete": ["romania"]
+	},
+	{
+		"id": "cinci_baschet",
+		"nota": "O echipă de baschet are cinci jucători pe teren. Jocul a fost inventat în 1891 de James Naismith, care a folosit la început două coșuri de piersici."
+	},
+	{
+		"id": "piese_de_sah",
+		"nota": "Fiecare jucător începe o partidă de șah cu 16 piese: un rege, o regină, doi turnuri, doi cai, doi episcopi și opt pioni."
+	},
+	{
+		"id": "pizza",
+		"nota": "Pizza vine din Napoli, iar varianta Margherita, cu roșii, mozzarella și busuioc, a fost făcută în 1889 și numită după regina Margherita de Savoia."
+	},
+	{
+		"id": "jesse_owens",
+		"nota": "Jesse Owens a câștigat patru medalii de aur la Jocurile Olimpice de la Berlin, în 1936: la 100 m, 200 m, lungime și ștafetă."
+	},
+	{
+		"id": "hagi",
+		"nota": "Gheorghe Hagi a jucat la Real Madrid și la Barcelona, iar în România e supranumit „Regele”. A fost căpitanul echipei naționale la Cupa Mondială din 1994, când România a ajuns în sferturi.",
+		"etichete": ["romania"]
+	},
+	{
+		"id": "olimpiada_anulata_1916",
+		"nota": "Jocurile Olimpice din 1916, programate la Berlin, au fost anulate din cauza Primului Război Mondial. Ediția a păstrat totuși numărul în șir, deci următoarea, din 1920, e a șaptea."
+	},
+	{
+		"id": "cm_1930",
+		"nota": "Prima Cupă Mondială de fotbal s-a ținut în Uruguay, în 1930, iar gazdele au câștigat-o. Au participat 13 echipe, chemate prin invitație, fără preliminarii."
+	},
+	{
+		"id": "phelps",
+		"nota": "Michael Phelps a câștigat opt medalii de aur la Jocurile Olimpice din 2008, de la Beijing — cele mai multe la o singură ediție. Mark Spitz avea șapte, din 1972."
+	},
+	{
+		"id": "repriza_rugby",
+		"nota": "Un meci de rugby are două reprize de 40 de minute. Jocul s-a desprins din fotbal în 1871, când s-a înființat federația engleză de rugby."
+	},
+	{
+		"id": "rocada",
+		"nota": "Rocada e singura mutare de șah care mișcă două piese deodată, regele și turnul. Nu se poate face dacă vreuna din ele s-a mișcat deja în partidă."
+	},
+	{
+		"id": "sfecla_de_zahar",
+		"nota": "Zahărul se obține și din sfeclă, nu doar din trestie. Procedeul a fost pus la punct în Germania, la 1800, când blocada navală a tăiat aprovizionarea cu trestie din colonii."
+	},
+	{
+		"id": "atena_2004",
+		"nota": "Grecia a găzduit din nou Jocurile Olimpice de vară în 2004, la 108 ani după prima ediție modernă. Proba de aruncare a greutății s-a ținut la Olimpia, pe stadionul antic."
+	},
+	{
+		"id": "schumacher",
+		"nota": "Michael Schumacher a câștigat șapte titluri mondiale de Formula 1, ultimul în 2004. Cinci dintre ele au venit la rând, între 2000 și 2004, cu Ferrari."
 	}
 ]

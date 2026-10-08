@@ -6,6 +6,7 @@
 		"variante": ["Berlin", "Madrid", "Paris", "Roma"],
 		"corect": 2,
 		"nivel": 1,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -15,6 +16,7 @@
 		"variante": ["Germania", "Italia", "Franța", "Spania"],
 		"corect": 2,
 		"nivel": 1,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -24,6 +26,7 @@
 		"variante": ["Nicosia", "Copenhaga", "Dublin", "Londra"],
 		"corect": 3,
 		"nivel": 1,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -33,6 +36,7 @@
 		"variante": ["Irlanda", "Regatul Unit", "Cipru", "Danemarca"],
 		"corect": 1,
 		"nivel": 1,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -42,6 +46,7 @@
 		"variante": ["Beijing", "Tokyo", "Moscova", "Seul"],
 		"corect": 0,
 		"nivel": 1,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -51,6 +56,7 @@
 		"variante": ["China", "Rusia", "Japonia", "Afganistan"],
 		"corect": 0,
 		"nivel": 1,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -60,6 +66,7 @@
 		"variante": ["Beijing", "Tokyo", "Moscova", "Kiev"],
 		"corect": 2,
 		"nivel": 1,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -69,6 +76,7 @@
 		"variante": ["Japonia", "Rusia", "Polonia", "Ucraina"],
 		"corect": 1,
 		"nivel": 1,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -78,6 +86,7 @@
 		"variante": ["Moscova", "Beijing", "Manila", "Tokyo"],
 		"corect": 3,
 		"nivel": 1,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -87,6 +96,7 @@
 		"variante": ["China", "Japonia", "Rusia", "Filipine"],
 		"corect": 1,
 		"nivel": 1,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -96,6 +106,7 @@
 		"variante": ["Varșovia", "Berlin", "Paris", "Praga"],
 		"corect": 1,
 		"nivel": 1,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -105,6 +116,7 @@
 		"variante": ["Germania", "Austria", "Franța", "Polonia"],
 		"corect": 0,
 		"nivel": 1,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -114,6 +126,7 @@
 		"variante": ["Kiev", "Moscova", "Varșovia", "Budapesta"],
 		"corect": 0,
 		"nivel": 1,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -123,6 +136,7 @@
 		"variante": ["Polonia", "Ucraina", "Moldova", "Rusia"],
 		"corect": 1,
 		"nivel": 1,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -132,6 +146,7 @@
 		"variante": ["Praga", "Viena", "Varșovia", "Berlin"],
 		"corect": 0,
 		"nivel": 1,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -141,6 +156,7 @@
 		"variante": ["Germania", "Cehia", "Austria", "Polonia"],
 		"corect": 1,
 		"nivel": 1,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -150,6 +166,7 @@
 		"variante": ["Kiev", "București", "Chișinău", "Madrid"],
 		"corect": 2,
 		"nivel": 1,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -159,6 +176,7 @@
 		"variante": ["România", "Ucraina", "Polonia", "Moldova"],
 		"corect": 3,
 		"nivel": 1,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -168,6 +186,7 @@
 		"variante": ["Kiev", "Sofia", "Chișinău", "București"],
 		"corect": 3,
 		"nivel": 1,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -177,6 +196,7 @@
 		"variante": ["Bulgaria", "România", "Ungaria", "Moldova"],
 		"corect": 1,
 		"nivel": 1,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -186,6 +206,7 @@
 		"variante": ["Sofia", "București", "Atena", "Skopje"],
 		"corect": 0,
 		"nivel": 1,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -195,6 +216,7 @@
 		"variante": ["România", "Bulgaria", "Grecia", "Serbia"],
 		"corect": 1,
 		"nivel": 1,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -204,6 +226,7 @@
 		"variante": ["Viena", "București", "Kiev", "Budapesta"],
 		"corect": 3,
 		"nivel": 1,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -213,6 +236,7 @@
 		"variante": ["România", "Ucraina", "Austria", "Ungaria"],
 		"corect": 3,
 		"nivel": 1,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -222,6 +246,7 @@
 		"variante": ["Paris", "Madrid", "Lisabona", "Viena"],
 		"corect": 1,
 		"nivel": 1,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -231,6 +256,7 @@
 		"variante": ["Franța", "Portugalia", "Spania", "Regatul Unit"],
 		"corect": 2,
 		"nivel": 1,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -240,6 +266,7 @@
 		"variante": ["Havana", "Ottawa", "Moscova", "Washington, D.C."],
 		"corect": 3,
 		"nivel": 1,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -249,6 +276,7 @@
 		"variante": ["Canada", "Cuba", "Japonia", "Statele Unite ale Americii"],
 		"corect": 3,
 		"nivel": 1,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -258,6 +286,7 @@
 		"variante": ["Kiev", "Moscova", "Berlin", "Varșovia"],
 		"corect": 3,
 		"nivel": 1,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -267,6 +296,7 @@
 		"variante": ["Germania", "Rusia", "Cehia", "Polonia"],
 		"corect": 3,
 		"nivel": 1,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -276,6 +306,7 @@
 		"variante": ["Roma", "Viena", "Paris", "Valletta"],
 		"corect": 0,
 		"nivel": 1,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -285,6 +316,7 @@
 		"variante": ["Franța", "Italia", "Austria", "Elveția"],
 		"corect": 1,
 		"nivel": 1,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -294,6 +326,7 @@
 		"variante": ["Roma", "Budapesta", "Praga", "Viena"],
 		"corect": 3,
 		"nivel": 1,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -303,6 +336,7 @@
 		"variante": ["Cehia", "Ungaria", "Austria", "Germania"],
 		"corect": 2,
 		"nivel": 1,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -312,6 +346,7 @@
 		"variante": ["Sofia", "Atena", "Ankara", "Tirana"],
 		"corect": 1,
 		"nivel": 1,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -321,6 +356,7 @@
 		"variante": ["Grecia", "Bulgaria", "Turcia", "Albania"],
 		"corect": 0,
 		"nivel": 1,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -330,6 +366,7 @@
 		"variante": ["Spania", "Portugalia", "Franța", "Ucraina"],
 		"corect": 1,
 		"nivel": 1,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -339,6 +376,7 @@
 		"variante": ["Cairo", "Tripoli", "Mogadishu", "Nairobi"],
 		"corect": 0,
 		"nivel": 1,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -348,6 +386,7 @@
 		"variante": ["Libia", "Somalia", "Egipt", "Kenya"],
 		"corect": 2,
 		"nivel": 1,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 
@@ -358,6 +397,7 @@
 		"variante": ["N'Djamena", "Tripoli", "Cairo", "Khartoum"],
 		"corect": 1,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -367,6 +407,7 @@
 		"variante": ["Niger", "Sudan", "Egipt", "Libia"],
 		"corect": 3,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -376,6 +417,7 @@
 		"variante": ["Abuja", "Tripoli", "Nairobi", "Rabat"],
 		"corect": 3,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -385,6 +427,7 @@
 		"variante": ["Libia", "Nigeria", "Maroc", "Kenya"],
 		"corect": 2,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -394,6 +437,7 @@
 		"variante": ["Yaoundé", "Niamey", "Abuja", "N'Djamena"],
 		"corect": 2,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -403,6 +447,7 @@
 		"variante": ["Ciad", "Nigeria", "Camerun", "Niger"],
 		"corect": 1,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -412,6 +457,7 @@
 		"variante": ["Addis Abeba", "Nairobi", "Tripoli", "Mogadishu"],
 		"corect": 3,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -421,6 +467,7 @@
 		"variante": ["Etiopia", "Kenya", "Nigeria", "Somalia"],
 		"corect": 3,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -430,6 +477,7 @@
 		"variante": ["Addis Abeba", "Mogadishu", "Nairobi", "Kampala"],
 		"corect": 2,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -439,6 +487,7 @@
 		"variante": ["Etiopia", "Kenya", "Somalia", "Uganda"],
 		"corect": 1,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -448,6 +497,7 @@
 		"variante": ["Nairobi", "Addis Abeba", "Mogadishu", "Khartoum"],
 		"corect": 1,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -457,6 +507,7 @@
 		"variante": ["Somalia", "Etiopia", "Kenya", "Sudanul de Sud"],
 		"corect": 1,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -466,6 +517,7 @@
 		"variante": ["Buenos Aires", "Lima", "Brasília", "Montevideo"],
 		"corect": 2,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -475,6 +527,7 @@
 		"variante": ["Brazilia", "Uruguay", "Venezuela", "Peru"],
 		"corect": 0,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -484,6 +537,7 @@
 		"variante": ["Washington, D.C.", "Ottawa", "Havana", "Kingston"],
 		"corect": 1,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -493,6 +547,7 @@
 		"variante": ["Statele Unite ale Americii", "Cuba", "Canada", "Haiti"],
 		"corect": 2,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -502,6 +557,7 @@
 		"variante": ["Riga", "Minsk", "Vilnius", "Moscova"],
 		"corect": 1,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -511,6 +567,7 @@
 		"variante": ["Belarus", "Letonia", "Lituania", "Ucraina"],
 		"corect": 0,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -520,6 +577,7 @@
 		"variante": ["Copenhaga", "Dublin", "Nicosia", "Reykjavík"],
 		"corect": 3,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -529,6 +587,7 @@
 		"variante": ["Danemarca", "Suedia", "Letonia", "Islanda"],
 		"corect": 3,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -538,6 +597,7 @@
 		"variante": ["Riga", "Moscova", "Tbilisi", "Tallinn"],
 		"corect": 3,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -547,6 +607,7 @@
 		"variante": ["Letonia", "Rusia", "Malta", "Estonia"],
 		"corect": 3,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -556,6 +617,7 @@
 		"variante": ["Oslo", "Copenhaga", "Helsinki", "Stockholm"],
 		"corect": 0,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -565,6 +627,7 @@
 		"variante": ["Norvegia", "Finlanda", "Suedia", "Danemarca"],
 		"corect": 0,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -574,6 +637,7 @@
 		"variante": ["Stockholm", "Riga", "Vilnius", "Tallinn"],
 		"corect": 1,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -583,6 +647,7 @@
 		"variante": ["Letonia", "Estonia", "Suedia", "Belarus"],
 		"corect": 0,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -592,6 +657,7 @@
 		"variante": ["Praga", "Kiev", "Bratislava", "Varșovia"],
 		"corect": 2,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -601,6 +667,7 @@
 		"variante": ["Polonia", "Cehia", "Slovacia", "Ungaria"],
 		"corect": 2,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -610,6 +677,7 @@
 		"variante": ["Zagreb", "Ljubljana", "Roma", "Viena"],
 		"corect": 1,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -619,6 +687,7 @@
 		"variante": ["Croația", "Italia", "Austria", "Slovenia"],
 		"corect": 3,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -628,6 +697,7 @@
 		"variante": ["Belgrad", "Tirana", "Sofia", "Skopje"],
 		"corect": 3,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -637,6 +707,7 @@
 		"variante": ["Albania", "Serbia", "Grecia", "Macedonia de Nord"],
 		"corect": 3,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -646,6 +717,7 @@
 		"variante": ["Podgorica", "Tirana", "Belgrad", "Skopje"],
 		"corect": 1,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -655,6 +727,7 @@
 		"variante": ["Serbia", "Macedonia de Nord", "Albania", "Muntenegru"],
 		"corect": 2,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -664,6 +737,7 @@
 		"variante": ["Podgorica", "Belgrad", "Zagreb", "Ljubljana"],
 		"corect": 2,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -673,6 +747,7 @@
 		"variante": ["Croația", "Bosnia și Herțegovina", "Muntenegru", "Serbia"],
 		"corect": 0,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -682,6 +757,7 @@
 		"variante": ["Podgorica", "Sarajevo", "Zagreb", "Belgrad"],
 		"corect": 1,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -691,6 +767,7 @@
 		"variante": ["Serbia", "Bosnia și Herțegovina", "Muntenegru", "Croația"],
 		"corect": 1,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -700,6 +777,7 @@
 		"variante": ["Baku", "Erevan", "Teheran", "Ankara"],
 		"corect": 0,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -709,6 +787,7 @@
 		"variante": ["Azerbaidjan", "Iran", "Turcia", "Armenia"],
 		"corect": 0,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -718,6 +797,7 @@
 		"variante": ["Nicosia", "Ankara", "Londra", "Berna"],
 		"corect": 0,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -727,6 +807,7 @@
 		"variante": ["Turcia", "Regatul Unit", "Bosnia și Herțegovina", "Cipru"],
 		"corect": 3,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -736,6 +817,7 @@
 		"variante": ["Ankara", "Tbilisi", "Moscova", "Vaduz"],
 		"corect": 1,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -745,6 +827,7 @@
 		"variante": ["Turcia", "Rusia", "Georgia", "Bosnia și Herțegovina"],
 		"corect": 2,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -754,6 +837,7 @@
 		"variante": ["Turkmenistan", "Uzbekistan", "Kazahstan", "Kârgâzstan"],
 		"corect": 2,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -763,6 +847,7 @@
 		"variante": ["Valletta", "Roma", "Oslo", "Podgorica"],
 		"corect": 0,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -772,6 +857,7 @@
 		"variante": ["Italia", "Malta", "Georgia", "Țările de Jos"],
 		"corect": 1,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -781,6 +867,7 @@
 		"variante": ["Sarajevo", "Zagreb", "Podgorica", "Tirana"],
 		"corect": 2,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -790,6 +877,7 @@
 		"variante": ["Bosnia și Herțegovina", "Muntenegru", "Serbia", "Croația"],
 		"corect": 1,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -799,6 +887,7 @@
 		"variante": ["Washington, D.C.", "Havana", "Ottawa", "Port-au-Prince"],
 		"corect": 1,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -808,6 +897,7 @@
 		"variante": ["Statele Unite ale Americii", "Cuba", "Canada", "Costa Rica"],
 		"corect": 1,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -817,6 +907,7 @@
 		"variante": ["Hanoi", "New Delhi", "Jakarta", "Bangkok"],
 		"corect": 2,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -826,6 +917,7 @@
 		"variante": ["Thailanda", "Indonezia", "India", "Vietnam"],
 		"corect": 1,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -835,6 +927,7 @@
 		"variante": ["Londra", "Dublin", "Belgrad", "Reykjavík"],
 		"corect": 1,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -844,6 +937,7 @@
 		"variante": ["Irlanda", "Regatul Unit", "Țările de Jos", "Cipru"],
 		"corect": 0,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -853,6 +947,7 @@
 		"variante": ["Bruxelles", "Amsterdam", "Paris", "Berlin"],
 		"corect": 1,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -862,6 +957,7 @@
 		"variante": ["Belgia", "Germania", "Țările de Jos", "Franța"],
 		"corect": 2,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -871,6 +967,7 @@
 		"variante": ["Amsterdam", "Berlin", "Bruxelles", "Paris"],
 		"corect": 2,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -880,6 +977,7 @@
 		"variante": ["Țările de Jos", "Franța", "Belgia", "Germania"],
 		"corect": 2,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -889,6 +987,7 @@
 		"variante": ["Helsinki", "Stockholm", "Oslo", "Moscova"],
 		"corect": 0,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -898,6 +997,7 @@
 		"variante": ["Norvegia", "Suedia", "Finlanda", "Rusia"],
 		"corect": 2,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -907,6 +1007,7 @@
 		"variante": ["Berna", "Viena", "Vaduz", "Tallinn"],
 		"corect": 2,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -916,6 +1017,7 @@
 		"variante": ["Elveția", "Austria", "Liechtenstein", "Irlanda"],
 		"corect": 2,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -925,6 +1027,7 @@
 		"variante": ["Vilnius", "Copenhaga", "Oslo", "Stockholm"],
 		"corect": 3,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -934,6 +1037,7 @@
 		"variante": ["Lituania", "Finlanda", "Norvegia", "Suedia"],
 		"corect": 3,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -943,6 +1047,7 @@
 		"variante": ["Stockholm", "Minsk", "Vilnius", "Riga"],
 		"corect": 2,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -952,6 +1057,7 @@
 		"variante": ["Lituania", "Letonia", "Suedia", "Belarus"],
 		"corect": 0,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -961,6 +1067,7 @@
 		"variante": ["Baku", "Teheran", "Ankara", "Erevan"],
 		"corect": 3,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -970,6 +1077,7 @@
 		"variante": ["Azerbaidjan", "Armenia", "Iran", "Turcia"],
 		"corect": 1,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -979,6 +1087,7 @@
 		"variante": ["Vaduz", "Viena", "Berlin", "Berna"],
 		"corect": 3,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -988,6 +1097,7 @@
 		"variante": ["Liechtenstein", "Italia", "Franța", "Elveția"],
 		"corect": 3,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -997,6 +1107,7 @@
 		"variante": ["Belgrad", "Podgorica", "Skopje", "Zagreb"],
 		"corect": 0,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1006,6 +1117,7 @@
 		"variante": ["Albania", "Bosnia și Herțegovina", "Serbia", "Macedonia de Nord"],
 		"corect": 2,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1015,6 +1127,7 @@
 		"variante": ["Noua Zeelandă", "Indonezia", "Nigeria", "Australia"],
 		"corect": 3,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1024,6 +1137,7 @@
 		"variante": ["Montevideo", "Brasília", "Asunción", "Buenos Aires"],
 		"corect": 3,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1033,6 +1147,7 @@
 		"variante": ["Uruguay", "Argentina", "Brazilia", "Paraguay"],
 		"corect": 1,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1042,6 +1157,7 @@
 		"variante": ["Bogotá", "Lima", "Brasília", "Quito"],
 		"corect": 1,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1051,6 +1167,7 @@
 		"variante": ["Peru", "Brazilia", "Columbia", "Ecuador"],
 		"corect": 0,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1060,6 +1177,7 @@
 		"variante": ["Seul", "Pyongyang", "Moscova", "Beijing"],
 		"corect": 1,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1069,6 +1187,7 @@
 		"variante": ["Coreea de Nord", "Coreea de Sud", "Rusia", "China"],
 		"corect": 0,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1078,6 +1197,7 @@
 		"variante": ["Ankara", "Tbilisi", "Damasc", "Bagdad"],
 		"corect": 0,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1087,6 +1207,7 @@
 		"variante": ["Cipru", "Turcia", "Azerbaidjan", "Georgia"],
 		"corect": 1,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1096,6 +1217,7 @@
 		"variante": ["Canberra", "Wellington", "Tallinn", "Ankara"],
 		"corect": 1,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1105,6 +1227,7 @@
 		"variante": ["Australia", "Siria", "Serbia", "Noua Zeelandă"],
 		"corect": 3,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1114,6 +1237,7 @@
 		"variante": ["New Delhi", "Kabul", "Jakarta", "Beijing"],
 		"corect": 0,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1123,6 +1247,7 @@
 		"variante": ["Indonezia", "Afganistan", "India", "Nepal"],
 		"corect": 2,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1132,6 +1257,7 @@
 		"variante": ["Bogotá", "Brasília", "Caracas", "Lima"],
 		"corect": 2,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1141,6 +1267,7 @@
 		"variante": ["Columbia", "Brazilia", "Argentina", "Venezuela"],
 		"corect": 3,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1150,6 +1277,7 @@
 		"variante": ["Bogotá", "Lima", "Brasília", "Caracas"],
 		"corect": 0,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1159,6 +1287,7 @@
 		"variante": ["Brazilia", "Venezuela", "Peru", "Columbia"],
 		"corect": 3,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1168,6 +1297,7 @@
 		"variante": ["Copenhaga", "Oslo", "Reykjavík", "Stockholm"],
 		"corect": 0,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1177,6 +1307,7 @@
 		"variante": ["Danemarca", "Islanda", "Norvegia", "Suedia"],
 		"corect": 0,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1186,6 +1317,7 @@
 		"variante": ["Buenos Aires", "Brasília", "Caracas", "Montevideo"],
 		"corect": 3,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1195,6 +1327,7 @@
 		"variante": ["Brazilia", "Argentina", "Uruguay", "Peru"],
 		"corect": 2,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1204,6 +1337,7 @@
 		"variante": ["Riad", "Erevan", "Teheran", "Doha"],
 		"corect": 2,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1213,6 +1347,7 @@
 		"variante": ["Turcia", "Iran", "Afganistan", "Emiratele Arabe Unite"],
 		"corect": 1,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1222,6 +1357,7 @@
 		"variante": ["Damasc", "Amman", "Teheran", "Bagdad"],
 		"corect": 3,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1231,6 +1367,7 @@
 		"variante": ["Irak", "Iordania", "Arabia Saudită", "Siria"],
 		"corect": 0,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1240,6 +1377,7 @@
 		"variante": ["Amman", "Bagdad", "Riad", "Damasc"],
 		"corect": 0,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1249,6 +1387,7 @@
 		"variante": ["Iordania", "Irak", "Siria", "Arabia Saudită"],
 		"corect": 0,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1258,6 +1397,7 @@
 		"variante": ["Damasc", "Beirut", "Pyongyang", "New Delhi"],
 		"corect": 1,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1267,6 +1407,7 @@
 		"variante": ["Liban", "Siria", "India", "Iran"],
 		"corect": 0,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1276,6 +1417,7 @@
 		"variante": ["Teheran", "Riad", "Doha", "Beirut"],
 		"corect": 2,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1285,6 +1427,7 @@
 		"variante": ["Iran", "Arabia Saudită", "Qatar", "Afganistan"],
 		"corect": 2,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1294,6 +1437,7 @@
 		"variante": ["Doha", "Teheran", "Abu Dhabi", "Riad"],
 		"corect": 3,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1303,6 +1447,7 @@
 		"variante": ["Iordania", "Qatar", "Iran", "Arabia Saudită"],
 		"corect": 3,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1312,6 +1457,7 @@
 		"variante": ["Damasc", "Ankara", "Beirut", "Amman"],
 		"corect": 0,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1321,6 +1467,7 @@
 		"variante": ["Liban", "Siria", "Iordania", "Irak"],
 		"corect": 1,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1330,6 +1477,7 @@
 		"variante": ["Bangkok", "Jakarta", "Phnom Penh", "Naypyidaw"],
 		"corect": 0,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1339,6 +1487,7 @@
 		"variante": ["Indonezia", "Myanmar", "Thailanda", "Laos"],
 		"corect": 2,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1348,6 +1497,7 @@
 		"variante": ["Riad", "Teheran", "Muscat", "Abu Dhabi"],
 		"corect": 3,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1357,6 +1507,7 @@
 		"variante": ["Arabia Saudită", "Iran", "Emiratele Arabe Unite", "Oman"],
 		"corect": 2,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1366,6 +1517,7 @@
 		"variante": ["Jakarta", "Vientiane", "Hanoi", "Beijing"],
 		"corect": 2,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1375,6 +1527,7 @@
 		"variante": ["Indonezia", "Laos", "Cambodgia", "Vietnam"],
 		"corect": 3,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1384,6 +1537,7 @@
 		"variante": ["Pyongyang", "Seul", "Tokyo", "Beijing"],
 		"corect": 1,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1393,6 +1547,7 @@
 		"variante": ["Coreea de Nord", "Coreea de Sud", "China", "Japonia"],
 		"corect": 1,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1402,6 +1557,7 @@
 		"variante": ["New Delhi", "Teheran", "Kabul", "Dușanbe"],
 		"corect": 2,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1411,6 +1567,7 @@
 		"variante": ["Iran", "India", "Afganistan", "China"],
 		"corect": 2,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1420,6 +1577,7 @@
 		"variante": ["Jakarta", "Tokyo", "Beijing", "Manila"],
 		"corect": 3,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1429,6 +1587,7 @@
 		"variante": ["Indonezia", "Japonia", "China", "Filipine"],
 		"corect": 3,
 		"nivel": 2,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 
@@ -1439,6 +1598,7 @@
 		"variante": ["Bamako", "Dakar", "Yamoussoukro", "Conakry"],
 		"corect": 3,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1448,6 +1608,7 @@
 		"variante": ["Mali", "Coasta de Fildeș", "Guineea", "Senegal"],
 		"corect": 2,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1457,6 +1618,7 @@
 		"variante": ["Bamako", "Yamoussoukro", "Ouagadougou", "Accra"],
 		"corect": 1,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1466,6 +1628,7 @@
 		"variante": ["Mali", "Burkina Faso", "Ghana", "Coasta de Fildeș"],
 		"corect": 3,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1475,6 +1638,7 @@
 		"variante": ["Kinshasa", "Brazzaville", "Yaoundé", "N'Djamena"],
 		"corect": 2,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1484,6 +1648,7 @@
 		"variante": ["Republica Congo", "Ciad", "Camerun", "Republica Democratică Congo"],
 		"corect": 2,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1493,6 +1658,7 @@
 		"variante": ["Antananarivo", "Maputo", "N'Djamena", "Dodoma"],
 		"corect": 0,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1502,6 +1668,7 @@
 		"variante": ["Mozambic", "Namibia", "Coasta de Fildeș", "Madagascar"],
 		"corect": 3,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1511,6 +1678,7 @@
 		"variante": ["Bamako", "Dakar", "Nouakchott", "Kampala"],
 		"corect": 2,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1520,6 +1688,7 @@
 		"variante": ["Mali", "Senegal", "Mauritania", "Mozambic"],
 		"corect": 2,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1529,6 +1698,7 @@
 		"variante": ["Lusaka", "Antananarivo", "Maputo", "Dodoma"],
 		"corect": 2,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1538,6 +1708,7 @@
 		"variante": ["Mozambic", "Zimbabwe", "Zambia", "Tanzania"],
 		"corect": 0,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1547,6 +1718,7 @@
 		"variante": ["Gaborone", "Windhoek", "Luanda", "Lusaka"],
 		"corect": 1,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1556,6 +1728,7 @@
 		"variante": ["Namibia", "Botswana", "Angola", "Zambia"],
 		"corect": 0,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1565,6 +1738,7 @@
 		"variante": ["N'Djamena", "Bamako", "Niamey", "Ouagadougou"],
 		"corect": 2,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1574,6 +1748,7 @@
 		"variante": ["Niger", "Mali", "Burkina Faso", "Ciad"],
 		"corect": 0,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1583,6 +1758,7 @@
 		"variante": ["Kigali", "Khartoum", "Juba", "Kampala"],
 		"corect": 3,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1592,6 +1768,7 @@
 		"variante": ["Uganda", "Republica Democratică Congo", "Tanzania", "Sudanul de Sud"],
 		"corect": 0,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1601,6 +1778,7 @@
 		"variante": ["Kampala", "Kigali", "Kinshasa", "Dodoma"],
 		"corect": 1,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1610,6 +1788,7 @@
 		"variante": ["Tanzania", "Uganda", "Republica Democratică Congo", "Rwanda"],
 		"corect": 3,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1619,6 +1798,7 @@
 		"variante": ["Conakry", "Nouakchott", "Bamako", "Dakar"],
 		"corect": 3,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1628,6 +1808,7 @@
 		"variante": ["Guineea", "Mauritania", "Mali", "Senegal"],
 		"corect": 3,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1637,6 +1818,7 @@
 		"variante": ["Kampala", "Kinshasa", "Khartoum", "Juba"],
 		"corect": 2,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1646,6 +1828,7 @@
 		"variante": ["Republica Democratică Congo", "Eritreea", "Sudanul de Sud", "Sudan"],
 		"corect": 3,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1655,6 +1838,7 @@
 		"variante": ["Accra", "Yamoussoukro", "Ouagadougou", "Niamey"],
 		"corect": 0,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1664,6 +1848,7 @@
 		"variante": ["Coasta de Fildeș", "Burkina Faso", "Republica Democratică Congo", "Ghana"],
 		"corect": 3,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1673,6 +1858,7 @@
 		"variante": ["Dușanbe", "Așgabat", "Tașkent", "Bișkek"],
 		"corect": 2,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1682,6 +1868,7 @@
 		"variante": ["Uzbekistan", "Turkmenistan", "Tadjikistan", "Kârgâzstan"],
 		"corect": 0,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1691,6 +1878,7 @@
 		"variante": ["Riad", "Teheran", "Manama", "Tașkent"],
 		"corect": 2,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1700,6 +1888,7 @@
 		"variante": ["Arabia Saudită", "Iran", "Turkmenistan", "Bahrain"],
 		"corect": 3,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1709,6 +1898,7 @@
 		"variante": ["Vientiane", "Phnom Penh", "Bangkok", "Hanoi"],
 		"corect": 1,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1718,6 +1908,7 @@
 		"variante": ["Laos", "Vietnam", "Cambodgia", "Thailanda"],
 		"corect": 2,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1727,6 +1918,7 @@
 		"variante": ["Niamey", "Khartoum", "Yaoundé", "N'Djamena"],
 		"corect": 3,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1736,6 +1928,7 @@
 		"variante": ["Camerun", "Niger", "Ciad", "Sudan"],
 		"corect": 2,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1745,6 +1938,7 @@
 		"variante": ["Ulaanbaatar", "Vientiane", "Bișkek", "Manama"],
 		"corect": 0,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1754,6 +1948,7 @@
 		"variante": ["Mongolia", "Turkmenistan", "Maldive", "Cambodgia"],
 		"corect": 0,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1763,6 +1958,7 @@
 		"variante": ["Buenos Aires", "Asunción", "Brasília", "Quito"],
 		"corect": 1,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1772,6 +1968,7 @@
 		"variante": ["Argentina", "Brazilia", "Ecuador", "Paraguay"],
 		"corect": 3,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1781,6 +1978,7 @@
 		"variante": ["Bogotá", "Lima", "Asunción", "Quito"],
 		"corect": 3,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1790,6 +1988,7 @@
 		"variante": ["Peru", "Ecuador", "Columbia", "Paraguay"],
 		"corect": 1,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1799,6 +1998,7 @@
 		"variante": ["Santo Domingo", "Kingston", "Managua", "Tegucigalpa"],
 		"corect": 1,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1808,6 +2008,7 @@
 		"variante": ["Republica Dominicană", "Honduras", "Nicaragua", "Jamaica"],
 		"corect": 3,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1817,6 +2018,7 @@
 		"variante": ["Managua", "Port-au-Prince", "Tegucigalpa", "Santo Domingo"],
 		"corect": 2,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1826,6 +2028,7 @@
 		"variante": ["Nicaragua", "Costa Rica", "Haiti", "Honduras"],
 		"corect": 3,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1835,6 +2038,7 @@
 		"variante": ["Port-au-Prince", "Santo Domingo", "Managua", "Tegucigalpa"],
 		"corect": 1,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1844,6 +2048,7 @@
 		"variante": ["Republica Dominicană", "Haiti", "Nicaragua", "Costa Rica"],
 		"corect": 0,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1853,6 +2058,7 @@
 		"variante": ["Santo Domingo", "Port-au-Prince", "Kingston", "Tegucigalpa"],
 		"corect": 1,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1862,6 +2068,7 @@
 		"variante": ["Republica Dominicană", "Haiti", "Costa Rica", "Nicaragua"],
 		"corect": 1,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1871,6 +2078,7 @@
 		"variante": ["Managua", "San José", "Santo Domingo", "Kingston"],
 		"corect": 1,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1880,6 +2088,7 @@
 		"variante": ["Costa Rica", "Nicaragua", "Jamaica", "Honduras"],
 		"corect": 0,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1889,6 +2098,7 @@
 		"variante": ["Managua", "Tegucigalpa", "San José", "Santo Domingo"],
 		"corect": 0,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1898,6 +2108,7 @@
 		"variante": ["Honduras", "Nicaragua", "Costa Rica", "Republica Dominicană"],
 		"corect": 1,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1907,6 +2118,7 @@
 		"variante": ["Tașkent", "Dușanbe", "Bișkek", "Astana"],
 		"corect": 2,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1916,6 +2128,7 @@
 		"variante": ["Tadjikistan", "Uzbekistan", "Kazahstan", "Kârgâzstan"],
 		"corect": 3,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1925,6 +2138,7 @@
 		"variante": ["Phnom Penh", "Naypyidaw", "Vientiane", "Bangkok"],
 		"corect": 2,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1934,6 +2148,7 @@
 		"variante": ["Cambodgia", "Myanmar", "Laos", "Thailanda"],
 		"corect": 2,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1943,6 +2158,7 @@
 		"variante": ["Malé", "Naypyidaw", "Tașkent", "Ulaanbaatar"],
 		"corect": 0,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1952,6 +2168,7 @@
 		"variante": ["Uzbekistan", "Nepal", "Maldive", "Oman"],
 		"corect": 2,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1961,6 +2178,7 @@
 		"variante": ["Naypyidaw", "Dacca", "Vientiane", "New Delhi"],
 		"corect": 0,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1970,6 +2188,7 @@
 		"variante": ["Myanmar", "Bangladesh", "Laos", "Thailanda"],
 		"corect": 0,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1979,6 +2198,7 @@
 		"variante": ["New Delhi", "Phnom Penh", "Kathmandu", "Dacca"],
 		"corect": 2,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1988,6 +2208,7 @@
 		"variante": ["India", "Uzbekistan", "Nepal", "Tadjikistan"],
 		"corect": 2,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -1997,6 +2218,7 @@
 		"variante": ["Riad", "Teheran", "Abu Dhabi", "Muscat"],
 		"corect": 3,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -2006,6 +2228,7 @@
 		"variante": ["Iran", "Arabia Saudită", "Oman", "Emiratele Arabe Unite"],
 		"corect": 2,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -2015,6 +2238,7 @@
 		"variante": ["Tașkent", "Bișkek", "Dușanbe", "Kabul"],
 		"corect": 2,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -2024,6 +2248,7 @@
 		"variante": ["Kârgâzstan", "Tadjikistan", "Uzbekistan", "Afganistan"],
 		"corect": 1,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -2033,6 +2258,7 @@
 		"variante": ["Tașkent", "Așgabat", "Teheran", "Astana"],
 		"corect": 1,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -2042,6 +2268,7 @@
 		"variante": ["Uzbekistan", "Afganistan", "Turkmenistan", "Kazahstan"],
 		"corect": 2,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -2051,6 +2278,7 @@
 		"variante": ["Dacca", "Naypyidaw", "New Delhi", "Malé"],
 		"corect": 0,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -2060,6 +2288,7 @@
 		"variante": ["Myanmar", "India", "Kârgâzstan", "Bangladesh"],
 		"corect": 3,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -2069,6 +2298,7 @@
 		"variante": ["Bamako", "Conakry", "Nouakchott", "Niamey"],
 		"corect": 0,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -2078,6 +2308,7 @@
 		"variante": ["Mali", "Guineea", "Senegal", "Mauritania"],
 		"corect": 0,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -2087,6 +2318,7 @@
 		"variante": ["Lusaka", "Luanda", "Kinshasa", "Windhoek"],
 		"corect": 1,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -2096,6 +2328,7 @@
 		"variante": ["Republica Democratică Congo", "Angola", "Republica Congo", "Namibia"],
 		"corect": 1,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -2105,6 +2338,7 @@
 		"variante": ["Kinshasa", "Lusaka", "Kigali", "Dodoma"],
 		"corect": 3,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -2114,6 +2348,7 @@
 		"variante": ["Rwanda", "Uganda", "Tanzania", "Republica Democratică Congo"],
 		"corect": 2,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -2123,6 +2358,7 @@
 		"variante": ["Maputo", "Kinshasa", "Dodoma", "Lusaka"],
 		"corect": 3,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -2132,6 +2368,7 @@
 		"variante": ["Zambia", "Tanzania", "Mozambic", "Angola"],
 		"corect": 0,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -2141,6 +2378,7 @@
 		"variante": ["Lusaka", "Gaborone", "Harare", "Maputo"],
 		"corect": 2,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -2150,6 +2388,7 @@
 		"variante": ["Mozambic", "Zimbabwe", "Zambia", "Botswana"],
 		"corect": 1,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -2159,6 +2398,7 @@
 		"variante": ["Khartoum", "Juba", "Kinshasa", "Kampala"],
 		"corect": 1,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -2168,6 +2408,7 @@
 		"variante": ["Sudanul de Sud", "Sudan", "Uganda", "Republica Democratică Congo"],
 		"corect": 0,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -2177,6 +2418,7 @@
 		"variante": ["Gaborone", "Windhoek", "Lusaka", "Harare"],
 		"corect": 0,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -2186,6 +2428,7 @@
 		"variante": ["Namibia", "Zimbabwe", "Zambia", "Botswana"],
 		"corect": 3,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -2195,6 +2438,7 @@
 		"variante": ["Accra", "Niamey", "Bamako", "Ouagadougou"],
 		"corect": 3,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -2204,6 +2448,7 @@
 		"variante": ["Niger", "Mali", "Burkina Faso", "Coasta de Fildeș"],
 		"corect": 2,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -2213,6 +2458,7 @@
 		"variante": ["Luanda", "Kinshasa", "Yaoundé", "Brazzaville"],
 		"corect": 3,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -2222,6 +2468,7 @@
 		"variante": ["Republica Congo", "Angola", "Camerun", "Republica Democratică Congo"],
 		"corect": 0,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -2231,6 +2478,7 @@
 		"variante": ["Kinshasa", "Brazzaville", "Luanda", "Kigali"],
 		"corect": 0,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -2240,6 +2488,7 @@
 		"variante": ["Camerun", "Republica Democratică Congo", "Tanzania", "Rwanda"],
 		"corect": 1,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -2249,6 +2498,7 @@
 		"variante": ["Asmara", "Khartoum", "Addis Abeba", "Windhoek"],
 		"corect": 0,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	},
 	{
@@ -2258,6 +2508,7 @@
 		"variante": ["Sudan", "Etiopia", "Madagascar", "Eritreea"],
 		"corect": 3,
 		"nivel": 3,
+		"subcategorie": "geografie_politica",
 		"categorie": "geografie"
 	}
 ]

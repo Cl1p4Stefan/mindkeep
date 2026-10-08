@@ -2,7 +2,7 @@ extends Node
 ## VERIFICAREA CULTURII GENERALE — întrebările, faptele și legătura dintre ele.
 ##
 ## Se cheamă din afara jocului, fără fereastră:
-##   godot --headless --path . res://tools/verifica_trivia.tscn
+##   godot --headless --path . res://tools/verificari/verifica_trivia.tscn
 ##
 ## ─────────────────────────────────────────────────────────────
 ## DE CE O UNEALTĂ, ȘI NU O PARTIDĂ
@@ -46,16 +46,27 @@ extends Node
 ##   n-ar fi găsit niciodată altfel.
 ##
 ##   ECHILIBRUL PE DOMENII, la alegerea din luptă. Datele nu mai sunt echilibrate
-##   (știința are ~160 de întrebări, mitologia 21); echilibrul stă acum în
+##   (geografia are 275 de întrebări, istoria 24); echilibrul stă acum în
 ##   ALEGERE, în două trepte. Se trag câteva mii de întrebări pe fiecare nivel,
 ##   prin chiar funcția pe care o folosește lupta, și se cere ca fiecare domeniu
-##   să iasă pe la 1/N. Verificarea asta e cea mai greu de înlocuit cu ochiul.
+##   CARE TRECE PRAGUL să iasă pe la 1/N. Verificarea asta e cea mai greu de
+##   înlocuit cu ochiul.
+##
+##   PRAGUL, PROBAT RUPÂNDU-L. Echilibrul de mai sus nu poate spune nimic despre
+##   un domeniu care, azi, oricum trece pragul: dacă `PRAG_DOMENIU` s-ar șterge
+##   din `trage_intrebarea`, secțiunea de echilibru ar trece în continuare.
+##   Singurul fel de a proba o regulă e s-o calci: se pune în locul conținutului
+##   o bază sintetică în care un domeniu are `PRAG - 1` întrebări, și se cere ca
+##   el să NU iasă niciodată; apoi i se dă exact `PRAG`, și se cere să iasă. Plus
+##   plasa: dacă niciun domeniu nu trece, lupta trebuie să primească totuși o
+##   întrebare, nu ecranul de eroare.
 ##
 ##   SACUL NU REPETĂ PE UN CICLU. E o GARANȚIE, nu o probabilitate: se trage un
 ##   sac întreg și se numără id-urile distincte — trebuie să iasă exact câte
 ##   întrebări are. Apoi încă o tragere, prima din ciclul nou, care nu trebuie
 ##   s-o repete pe ultima din ciclul vechi (regula de la răscruce din `sac.gd`).
-##   Cheile sunt pe DOMENIU și nivel, deci se probează 18 sacuri, nu 3.
+##   Cheile sunt pe DOMENIU și nivel, deci se probează un sac pe fiecare celulă
+##   care are conținut, nu 3.
 ##
 ##   SACURILE NU SE AMESTECĂ ÎNTRE DOMENII. Cea mai țintită: se golește complet un
 ##   domeniu și se întreabă altul dacă își mai ține minte biletele. `Sac.extrage`
@@ -86,17 +97,41 @@ const TRIVIA := preload("res://scenes/trivia/trivia.gd")
 # mecanic, fără s-o mai citești. Pentru cele fabricate se verifică INVARIANTA:
 # câte s-au încărcat = câte s-au găsit. Aia nu se schimbă niciodată, oricât crește
 # fișierul, și e chiar ce vrei să afli (o întrebare stricată e sărită în tăcere).
-const CATE_INTREBARI_MANA := 135
-const CATE_FAPTE := 15
-const CATE_CU_NOTA := 18
+const CATE_INTREBARI_MANA := 1156
+const CATE_FAPTE := 92
+
+# CÂTE ÎNTREBĂRI AJUNG CU NOTĂ PE ECRAN. Nu se mai scrie o cifră aici.
+#
+# A fost una, și a trebuit schimbată de patru ori într-o zi și jumătate — 18, 28,
+# 38, 48 — fiindcă urca la fiecare lot confirmat. O verificare pe care o
+# actualizezi mecanic, fără s-o mai citești, nu mai verifică nimic: ajungi să pui
+# cifra pe care ți-o cere ea.
+#
+# Deci se cere o INVARIANTĂ, nu un număr: fiecare întrebare care arată spre un
+# fapt trebuie să ajungă la o notă nevidă. Aia nu se schimbă niciodată, oricât
+# crește conținutul, și e chiar ce vrei să afli — o legătură care duce nicăieri.
+
+# CÂTE ÎNTREBĂRI POT FI FĂRĂ `subcategorie`. De pe 8 octombrie 2026: ZERO.
+#
+# A fost 135 — cele scrise înaintea câmpului — cu verdict „cel mult”, fiindcă
+# cifra numai scădea. Lotul de clasificare le-a dat raftul tuturor, deci clichetul
+# s-a închis: de acum, ORICE întrebare fără subcategorie e o greșeală, nu o
+# datorie. Verificarea rămâne, cu 0, exact ca să spună asta.
+const MAX_FARA_SUBCATEGORIE := 0
 
 # Câte trageri se fac ca să se măsoare echilibrul pe domenii. Destule ca abaterea
-# întâmplătoare să scadă sub ce ne interesează: la 6000 de trageri și 6 domenii,
-# fiecare ar trebui să iasă pe la 1000, iar împrăștierea normală e de vreo ±30.
-# Toleranța de mai jos e cu mult peste ea, deci verificarea pică doar dacă
+# întâmplătoare să scadă sub ce ne interesează: la 6000 de trageri și 4-6 domenii,
+# fiecare ar trebui să iasă pe la 1000-1500, iar împrăștierea normală e de vreo
+# ±35. Toleranța de mai jos e cu mult peste ea, deci verificarea pică doar dacă
 # alegerea e într-adevăr strâmbă, nu dacă zarul a avut o zi.
 const TRAGERI_ECHILIBRU := 6000
 const TOLERANTA_ECHILIBRU := 0.20
+
+# Câte trageri la proba pragului (secțiunea 10). Mai puține decât la echilibru,
+# fiindcă întrebarea e alta: acolo se măsoară o proporție, aici se caută o
+# APARIȚIE. Un domeniu care n-are voie să iasă și totuși iese la 1 din 6 ar fi
+# prins de 1000 de trageri de sute de ori; nu-ți trebuie 6000 ca să afli asta.
+const TRAGERI_PRAG := 1000
 
 # Rădăcina imaginilor care însoțesc fapte. Aceeași cale e scrisă și în Python, în
 # `comun.DOSAR_IMAGINI`; se repetă fiindcă sunt două limbi, nu fiindcă ar fi două
@@ -136,6 +171,10 @@ func _ready() -> void:
 	tot_bun = _sacul(intrebari) and tot_bun
 	tot_bun = _sacurile_nu_se_amesteca(intrebari) and tot_bun
 	tot_bun = _imaginile() and tot_bun
+	# ULTIMA, fiindcă e singura care ÎNLOCUIEȘTE `TRIVIA.intrebari` cu o bază
+	# sintetică. O pune la loc când termină, dar o verificare care mișcă pământul
+	# de sub celelalte n-are de ce să ruleze înaintea lor.
+	tot_bun = _pragul() and tot_bun
 
 	print("\n══ %s ══\n" % ("TOTUL E BUN" if tot_bun else "SUNT PROBLEME, vezi mai sus"))
 	# Codul de ieșire, ca verificarea să poată fi pusă într-un script care
@@ -178,6 +217,18 @@ func _incarcarea(intrebari: Array, fapte: Dictionary) -> bool:
 	var gasite := brute_mana.size() + brute_wd.size()
 	tot_bun = _verdict("toate întrebările au trecut", intrebari.size() == gasite,
 		"%d încărcate din %d găsite" % [intrebari.size(), gasite]) and tot_bun
+	tot_bun = _verdict("întrebări fără subcategorie",
+		TRIVIA.fara_subcategorie <= MAX_FARA_SUBCATEGORIE,
+		"%d, cel mult %d (cifra numai scade)" % [
+			TRIVIA.fara_subcategorie, MAX_FARA_SUBCATEGORIE
+		]) and tot_bun
+
+	# CÂTE AU FOST CITITE. Nu e un verdict: o întrebare neverificată e în joc, cu
+	# drepturi egale, iar cifra spune doar cât a mai rămas de citit. Un verdict ar
+	# fi cerut un prag, iar un prag ar fi o cifră de ținut la zi.
+	print("    %-42s %d din %d (%.0f%%)" % ["întrebări cu nota citită",
+		intrebari.size() - TRIVIA.neverificate, intrebari.size(),
+		100.0 * (intrebari.size() - TRIVIA.neverificate) / maxi(1, intrebari.size())])
 
 	# DOSARUL NU E GOL. Într-un build exportat, fișierele care nu sunt resurse
 	# Godot ajung în pachet doar dacă presetul le prinde în filtru; altfel
@@ -215,6 +266,13 @@ func _incarcarea(intrebari: Array, fapte: Dictionary) -> bool:
 	# în două trepte îl face să nu mai conteze. Nu e un verdict: un domeniu de
 	# patru ori mai mare decât altul nu mai e o greșeală, de când echilibrul stă
 	# în alegere. Dar e o cifră pe care vreau s-o am sub ochi.
+	#
+	# LÂNGĂ FIECARE CELULĂ, REZERVA EI PESTE PRAG. Un simplu „trece / nu trece" ar
+	# fi ascuns exact lucrul care m-ar prinde pe picior greșit: istoria are azi
+	# fix 8 pe nivel, adică trece cu rezerva ZERO. În ziua în care retrag o
+	# întrebare de istorie, domeniul iese din luptă în tăcere — nimic nu crapă,
+	# nimic nu avertizează, pur și simplu nu mai apare. Cu rezerva tipărită, ziua
+	# aia se vede înainte, nu după.
 	for nivel in range(1, 4):
 		var pe_domenii := {}
 		for q in intrebari:
@@ -226,8 +284,61 @@ func _incarcarea(intrebari: Array, fapte: Dictionary) -> bool:
 		domenii.sort()
 		var b: Array[String] = []
 		for d in domenii:
-			b.append("%s %d" % [d, pe_domenii[d]])
+			var cate := int(pe_domenii[d])
+			var rezerva := cate - TRIVIA.PRAG_DOMENIU
+			b.append("%s %d (%s)" % [d, cate,
+				"SĂRIT" if rezerva < 0 else "+%d" % rezerva])
 		print("    %-42s %s" % ["  nivelul %d, pe domenii" % nivel, ", ".join(b)])
+
+	# Domeniile care n-au NICIO întrebare nu apar deloc în bucla de mai sus (nu
+	# sunt în date), deci se spun separat. Azi sunt două, Divertisment și Sport, și
+	# e în regulă: au fost deschise goale, dinadins. Dar lista lor e singurul loc
+	# unde se vede că un domeniu declarat în `trivia.gd` n-a primit niciodată
+	# conținut — altfel ar sta acolo ani, ca o promisiune pe care n-o mai ține
+	# minte nimeni.
+	var fara_nimic: Array[String] = []
+	for d in TRIVIA.DOMENII:
+		var are := false
+		for q in intrebari:
+			if String(q["categorie"]) == d:
+				are = true
+				break
+		if not are:
+			fara_nimic.append(String(d))
+	print("    %-42s %s" % ["domenii fără nicio întrebare",
+		", ".join(fara_nimic) if not fara_nimic.is_empty() else "niciunul"])
+
+	# ANTETELE, așa cum ajung pe ecran. Singurul lucru din sesiunea domeniilor pe
+	# care nu-l poate vedea nicio altă verificare: `to_upper()` pe diacritice
+	# românești. Dacă ar da „ARTA SI LITERATURA" în loc de „ARTĂ ȘI LITERATURĂ",
+	# nimic n-ar crăpa și nimic n-ar avertiza — s-ar vedea doar într-o luptă, pe o
+	# întrebare din domeniul ăla, dacă mă uit la antet.
+	var antete: Array[String] = []
+	for cheie in TRIVIA.DOMENII:
+		antete.append(String(TRIVIA.DOMENII[cheie]).to_upper())
+	print("    %-42s %s" % ["antetele, cum ajung pe ecran", " · ".join(antete)])
+
+	# SUBCATEGORIILE FĂRĂ NICIO ÎNTREBARE, pe domeniu.
+	#
+	# Lista din `trivia.gd` e completă de la bun început (36 de chei), deși azi se
+	# folosesc patru. Asta e o decizie bună — o subcategorie scrisă de la început e
+	# un rând, iar una adăugată după ce s-a scris conținut e o migrare — dar are un
+	# preț: 32 de promisiuni pe care nu le mai ține minte nimeni. Rândurile de mai
+	# jos sunt ce le ține treze. `docs/plan-continut.md` le explică; aici se vede
+	# care sunt încă goale.
+	#
+	var cu_ceva := {}
+	for q in intrebari:
+		cu_ceva[String(q.get("subcategorie", ""))] = true
+	for domeniu in TRIVIA.SUBCATEGORII:
+		var goale: Array[String] = []
+		var ale_lui: Dictionary = TRIVIA.SUBCATEGORII[domeniu]
+		for cheie in ale_lui:
+			if not cu_ceva.has(String(cheie)):
+				goale.append(String(cheie))
+		print("    %-42s %s" % ["  %s, subcategorii goale" % domeniu,
+			"%d din %d: %s" % [goale.size(), ale_lui.size(), ", ".join(goale)]
+			if not goale.is_empty() else "niciuna din %d" % ale_lui.size()])
 
 	return tot_bun
 
@@ -449,6 +560,7 @@ func _notele(intrebari: Array, fapte: Dictionary) -> bool:
 		if String(fapte.get(id_fapt, "")) != "":
 			cu_nota += 1
 
+
 	var prea_lungi: Array[String] = []
 	var maxim := 0
 	for id_fapt in fapte:
@@ -463,8 +575,16 @@ func _notele(intrebari: Array, fapte: Dictionary) -> bool:
 			nefolosite.append(id_fapt)
 
 	var tot_bun := true
-	tot_bun = _verdict("întrebări cu notă", cu_nota == CATE_CU_NOTA,
-		"%d din %d așteptate" % [cu_nota, CATE_CU_NOTA]) and tot_bun
+	# CÂTE ÎNTREBĂRI AJUNG LA O NOTĂ — o cifră, nu un verdict, și merită spus de ce
+	# nu e un verdict: nu există nimic de cerut aici. Faptele fabricate au nota
+	# GOALĂ dinadins (cele 357 există doar ca legăturile `wd:` să nu ducă nicăieri),
+	# deci „fiecare legătură duce la o notă” ar fi fals prin construcție, iar o
+	# cifră scrisă aici ar urca la fiecare lot — exact ce s-a desfăcut azi.
+	#
+	# Ce se verifică rămâne mai jos, și sunt invariante adevărate: nicio notă peste
+	# limită, niciun fapt cu notă pe care nu-l cere nicio întrebare.
+	print("    %-42s %d din %d" % ["întrebări care ajung la o notă", cu_nota,
+		intrebari.size()])
 	tot_bun = _verdict("note sub limită", prea_lungi.is_empty(),
 		"cea mai lungă: %d din %d" % [maxim, TRIVIA.MAX_NOTA] if prea_lungi.is_empty()
 		else _primele(prea_lungi, 5)) and tot_bun
@@ -479,15 +599,26 @@ func _notele(intrebari: Array, fapte: Dictionary) -> bool:
 # Verificarea care n-avea de ce să existe înainte de conținutul fabricat, și care
 # e acum cea mai greu de înlocuit cu ochiul.
 #
-# Datele NU mai sunt echilibrate: știința are ~160 de întrebări, mitologia 21.
+# Datele NU mai sunt echilibrate: geografia are 275 de întrebări, istoria 24.
 # Echilibrul s-a mutat în ALEGERE (`trage_intrebarea`, în două trepte). Numai că o
 # alegere e o probabilitate, iar o probabilitate nu se vede jucând: ca să bagi de
-# seamă cu ochiul că știința iese de patru ori mai des decât ar trebui, ar trebui
-# să ții socoteala câtorva sute de lupte. Aici se trag câteva mii dintr-un foc.
+# seamă cu ochiul că geografia iese de patru ori mai des decât ar trebui, ar
+# trebui să ții socoteala câtorva sute de lupte. Aici se trag câteva mii dintr-un
+# foc.
 #
 # Se cheamă chiar `TRIVIA.trage_intrebarea`, nu o copie a ei scrisă aici. Dacă
 # alegerea se rescrie vreodată și uită treapta domeniului, verificarea asta cade —
 # ceea ce e chiar rostul ei. O copie ar fi trecut liniștită.
+#
+# ȚINTA SE SOCOTEȘTE PESTE DOMENIILE CARE TREC PRAGUL, nu peste cele prezente. De
+# când există `PRAG_DOMENIU`, „prezent" și „jucat" nu mai sunt același lucru: un
+# domeniu cu trei întrebări e în date și nu e în luptă. Cu el în numitor,
+# verificarea ar fi cerut ca fiecare domeniu să iasă pe la 1/5 când lupta împarte
+# la 4, și ar fi picat pe un cod corect.
+#
+# Și, pe lângă proporție, o afirmație mai tare: NICIUNA din cele câteva mii de
+# trageri n-are voie să vină dintr-un domeniu sub prag. Proporția e o măsură cu
+# toleranță; asta e zero sau nimic.
 # ───────────────────────────────────────────────────────────
 
 func _echilibrul(intrebari: Array) -> bool:
@@ -495,25 +626,46 @@ func _echilibrul(intrebari: Array) -> bool:
 	var tot_bun := true
 
 	for nivel in range(1, 4):
-		# Câte domenii SUNT la nivelul ăsta. Ținta nu e „1/6", e „1/N": dacă un
-		# nivel n-are întrebări de mitologie, celelalte cinci trebuie să împartă
-		# tot, iar verificarea n-are de ce să ceară șasea parte pentru nimic.
-		var prezente := {}
+		# Câte întrebări are fiecare domeniu la nivelul ăsta — de aici ies și cele
+		# care JOACĂ (peste prag), și cele doar prezente.
+		var cate_are := {}
 		for q in intrebari:
 			if int(q["nivel"]) == nivel:
-				prezente[String(q["categorie"])] = true
-		if prezente.is_empty():
+				var cheie := String(q["categorie"])
+				cate_are[cheie] = int(cate_are.get(cheie, 0)) + 1
+		if cate_are.is_empty():
 			tot_bun = _verdict("nivelul %d" % nivel, false, "nicio întrebare") and tot_bun
+			continue
+
+		# Ținta nu e „1/6", e „1/N" peste domeniile care trec pragul. Aceeași
+		# regulă ca în `trage_intrebarea`, cu aceeași constantă — nu o cifră
+		# rescrisă aici, care ar fi putut rămâne în urmă.
+		var prezente := {}
+		var sub_prag := {}
+		for d in cate_are:
+			if int(cate_are[d]) >= TRIVIA.PRAG_DOMENIU:
+				prezente[d] = true
+			else:
+				sub_prag[d] = true
+		if prezente.is_empty():
+			# Plasa din `trage_intrebarea` intră în joc: se trage din toate. Nu e
+			# un eșec al codului, e o stare a conținutului — dar verificarea n-are
+			# ce măsura, deci o spune și merge mai departe.
+			print("    %-42s %s" % ["  nivelul %d" % nivel,
+				"niciun domeniu peste prag; alegerea e pe plasă, nu se măsoară"])
 			continue
 
 		var tinta := float(TRAGERI_ECHILIBRU) / float(prezente.size())
 		var numarate := {}
+		var din_sub_prag: Array[String] = []
 		for _i in range(TRAGERI_ECHILIBRU):
 			var q := TRIVIA.trage_intrebarea(nivel)
 			if q.is_empty():
 				break
 			var d := String(q["categorie"])
 			numarate[d] = int(numarate.get(d, 0)) + 1
+			if sub_prag.has(d) and not din_sub_prag.has(d):
+				din_sub_prag.append(d)
 
 		# Cel mai depărtat domeniu de țintă. Un singur număr, fiindcă ce ne
 		# interesează e cazul cel mai rău, nu media — o medie ar ascunde exact
@@ -529,15 +681,28 @@ func _echilibrul(intrebari: Array) -> bool:
 			if abatere > cea_mai_mare_abatere:
 				cea_mai_mare_abatere = abatere
 				vinovat = d
-			bucati.append("%s %d" % [d.substr(0, 4), cate])
+			# `substr(0, 4)` nu mai merge: „stiinta_natura" și „sport_timp_liber"
+			# încep amândouă cu „s", iar „arta_literatura" tăiată la 4 e „arta",
+			# adică numele unui domeniu care nu mai există. Opt caractere le
+			# deosebesc pe toate șase și încap pe un rând.
+			bucati.append("%s %d" % [d.substr(0, 8), cate])
 
-		print("    %-42s %s" % ["  nivelul %d (țintă %d)" % [nivel, int(tinta)],
-			", ".join(bucati)])
+		print("    %-42s %s" % ["  nivelul %d (țintă %d, %d domenii peste prag)" % [
+			nivel, int(tinta), prezente.size()], ", ".join(bucati)])
 		tot_bun = _verdict("nivelul %d, uniform pe domenii" % nivel,
 			cea_mai_mare_abatere <= TOLERANTA_ECHILIBRU,
 			"abaterea maximă %.1f%% (%s), limita %.0f%%" % [
 				cea_mai_mare_abatere * 100.0, vinovat, TOLERANTA_ECHILIBRU * 100.0
 			]) and tot_bun
+
+		# Zero sau nimic: un domeniu sub prag n-are voie să apară nici măcar o dată
+		# în câteva mii de trageri. Dacă `PRAG_DOMENIU` s-ar scoate din alegere,
+		# verdictul de mai sus ar putea trece (domeniile subțiri sunt puține, deci
+		# abaterea ar rămâne mică), iar ăsta pică imediat.
+		tot_bun = _verdict("nivelul %d, niciun domeniu sub prag n-a ieșit" % nivel,
+			din_sub_prag.is_empty(),
+			("%d domenii sub prag, niciunul tras" % sub_prag.size())
+			if din_sub_prag.is_empty() else _primele(din_sub_prag, 4)) and tot_bun
 
 		# Tragerile de mai sus au umplut sacurile. Le golim, ca secțiunile de mai
 		# jos să pornească de la zero — altfel ar măsura un sac deja pe jumătate
@@ -730,7 +895,7 @@ func _sacurile_nu_se_amesteca(intrebari: Array) -> bool:
 #
 # Ce NU verifică, și nici n-ar putea: dacă steagul e CEL BUN. Un steag vechi sau
 # al altei țări trece prin toate verificările de mai sus. Pentru asta există
-# `tools/verifica_steaguri.tscn`, care le arată cu ochiul.
+# `tools/verificari/verifica_steaguri.tscn`, care le arată cu ochiul.
 # ─────────────────────────────────────────────────────────────
 
 func _imaginile() -> bool:
@@ -878,6 +1043,160 @@ func _cod_de_tara(cod: String) -> bool:
 		if c < "A" or c > "Z":
 			return false
 	return true
+
+
+# ─────────────────────────────────────────────────────────────
+# 10. PRAGUL, PROBAT RUPÂNDU-L
+#
+# DE CE NU AJUNGE SECȚIUNEA 6. Acolo se măsoară că domeniile care trec pragul
+# ies uniform. Dar azi TOATE domeniile cu conținut trec pragul, deci dacă mâine
+# cineva (eu, peste trei luni) scoate filtrul din `trage_intrebarea`, secțiunea
+# 6 trece mai departe, neschimbată. O regulă care nu e niciodată încălcată nu e
+# niciodată probată — e doar un comentariu care se întâmplă să fie adevărat.
+#
+# Deci se calcă dinadins. `TRIVIA.intrebari` e `static var`, adică aparține
+# SCRIPTULUI: se poate pune în locul lui o bază sintetică, se trage prin CHIAR
+# funcția pe care o folosește lupta, și se pune conținutul la loc.
+#
+# Se probează toate marginile, fiindcă un prag greșit poate cădea în patru
+# feluri, și numai unul din ele s-ar vedea jucând:
+#   SUB prag  — domeniul subțire nu iese niciodată. Dacă ar ieși, ar fi o
+#               întrebare repetată într-o expediție, pe care n-o prinzi jucând.
+#   LA prag   — domeniul cu exact `PRAG` întrebări IESE. Fără proba asta, un
+#               `>` scris în loc de `>=` ar tăia în tăcere istoria din joc.
+#   PE CELULĂ — pragul se judecă pe (domeniu × nivel), nu pe domeniu întreg.
+#   PLASA     — dacă niciun domeniu nu trece, se trage totuși ceva. Altfel
+#               `trage_intrebarea` ar întoarce dicționar gol, iar Obeliscul ar
+#               scoate ecranul de eroare în mijlocul unui lanț.
+# ─────────────────────────────────────────────────────────────
+
+func _pragul() -> bool:
+	print("\n  PRAGUL (bază sintetică, %d trageri pe probă)" % TRAGERI_PRAG)
+	var prag: int = TRIVIA.PRAG_DOMENIU
+	var tot_bun := true
+
+	# Conținutul adevărat, pus deoparte ÎNAINTE de orice. Funcția n-are nicio
+	# ieșire devreme, dinadins: una singură ar lăsa jocul cu întrebări inventate
+	# până la repornire, iar asta nu s-ar vedea ca o verificare picată, s-ar vedea
+	# ca o bază de întrebări înnebunită.
+	var adevarate: Array[Dictionary] = TRIVIA.intrebari
+
+	# ── Proba 1: sub prag, nu iese NICIODATĂ ──
+	TRIVIA.intrebari = _baza_sintetica({
+		"gros_a": prag * 4, "gros_b": prag * 4, "subtire": prag - 1,
+	})
+	var vazute := _trage_de_multe_ori(1)
+	tot_bun = _verdict("domeniul cu %d (sub prag) nu iese" % (prag - 1),
+		not vazute.has("subtire"), _cheile(vazute)) and tot_bun
+
+	# ── Proba 2: exact la prag, IESE ──
+	# Asta prinde un `>` pus în loc de `>=` — adică exact greșeala care azi ar
+	# scoate istoria din joc, fiindcă ea are fix 8 pe fiecare nivel.
+	Sac.expeditie_noua()
+	TRIVIA.intrebari = _baza_sintetica({
+		"gros_a": prag * 4, "gros_b": prag * 4, "subtire": prag,
+	})
+	vazute = _trage_de_multe_ori(1)
+	tot_bun = _verdict("domeniul cu exact %d (la prag) iese" % prag,
+		vazute.has("subtire"), _cheile(vazute)) and tot_bun
+
+	# Și, fiindcă acum toate trei trec pragul, trebuie să iasă cam la fel de des,
+	# deși unul are de patru ori mai multe întrebări. E aceeași întrebare ca la
+	# secțiunea 6, pusă pe o bază la care știu dinainte răspunsul.
+	var tinta := float(TRAGERI_PRAG) / 3.0
+	var abatere_maxima := 0.0
+	for d in ["gros_a", "gros_b", "subtire"]:
+		abatere_maxima = maxf(abatere_maxima,
+			absf(float(int(vazute.get(d, 0))) - tinta) / tinta)
+	tot_bun = _verdict("cele trei peste prag ies uniform",
+		abatere_maxima <= TOLERANTA_ECHILIBRU,
+		"abaterea maximă %.1f%%, limita %.0f%%" % [
+			abatere_maxima * 100.0, TOLERANTA_ECHILIBRU * 100.0]) and tot_bun
+
+	# ── Proba 3: pragul se judecă pe CELULĂ, nu pe domeniu ──
+	# Un domeniu gros la nivelul 1 și subțire la 2 iese la 1 și e sărit la 2. Fără
+	# proba asta, un filtru scris pe domeniul întreg ar trece neobservat: azi
+	# niciun domeniu adevărat nu e gros la un nivel și subțire la altul.
+	Sac.expeditie_noua()
+	var amestecata: Array[Dictionary] = []
+	amestecata.append_array(_intrebari_pentru("gros", 1, prag * 4))
+	amestecata.append_array(_intrebari_pentru("gros", 2, prag * 4))
+	amestecata.append_array(_intrebari_pentru("pe_jumatate", 1, prag * 4))
+	amestecata.append_array(_intrebari_pentru("pe_jumatate", 2, prag - 1))
+	TRIVIA.intrebari = amestecata
+	var la_unu := _trage_de_multe_ori(1)
+	Sac.expeditie_noua()
+	var la_doi := _trage_de_multe_ori(2)
+	tot_bun = _verdict("pragul se judecă pe CELULĂ, nu pe domeniu",
+		la_unu.has("pe_jumatate") and not la_doi.has("pe_jumatate"),
+		"nivelul 1: [%s] · nivelul 2: [%s]" % [_cheile(la_unu), _cheile(la_doi)]
+		) and tot_bun
+
+	# ── Proba 4: PLASA ──
+	# Toate domeniile sub prag: lupta trebuie să primească o întrebare oricum. Un
+	# dicționar gol aici ar însemna ecranul de eroare în mijlocul unui lanț, adică
+	# o pedeapsă pentru conținut subțire în loc de o apărare împotriva lui.
+	Sac.expeditie_noua()
+	TRIVIA.intrebari = _baza_sintetica({"a": 2, "b": 2, "c": 2})
+	vazute = _trage_de_multe_ori(1)
+	tot_bun = _verdict("plasa: toate sub prag, tot se trage ceva",
+		vazute.size() == 3, _cheile(vazute)) and tot_bun
+
+	# Conținutul adevărat, la loc.
+	TRIVIA.intrebari = adevarate
+	Sac.expeditie_noua()
+	return tot_bun
+
+
+## Trage de `TRAGERI_PRAG` ori prin CHIAR funcția luptei și întoarce câte au ieșit
+## din fiecare domeniu. Un Dictionary, fiindcă întrebările puse sunt două — „a
+## ieșit vreodată?" și „de câte ori?" — și amândouă se citesc din el.
+func _trage_de_multe_ori(nivel: int) -> Dictionary:
+	var numarate := {}
+	for _i in range(TRAGERI_PRAG):
+		var q := TRIVIA.trage_intrebarea(nivel)
+		if q.is_empty():
+			continue
+		var d := String(q["categorie"])
+		numarate[d] = int(numarate.get(d, 0)) + 1
+	return numarate
+
+
+## O bază de întrebări inventată: `{domeniu: câte}`, toate la nivelul 1.
+##
+## Întrebările sunt false, dar au tot ce cere drumul prin care trec: `id` (sacul
+## recunoaște după el), `categorie` și `nivel`. NU trec prin încărcător, deci n-au
+## nevoie nici de variante, nici de un domeniu din `DOMENII` — iar asta e
+## dinadins: numele inventate („gros_a") nu se pot încurca cu unul adevărat.
+func _baza_sintetica(cate_pe_domeniu: Dictionary) -> Array[Dictionary]:
+	var lista: Array[Dictionary] = []
+	for domeniu in cate_pe_domeniu:
+		lista.append_array(_intrebari_pentru(String(domeniu), 1,
+			int(cate_pe_domeniu[domeniu])))
+	return lista
+
+
+func _intrebari_pentru(domeniu: String, nivel: int, cate: int) -> Array[Dictionary]:
+	var lista: Array[Dictionary] = []
+	for i in range(cate):
+		lista.append({
+			"id": "test:%s:%d:%d" % [domeniu, nivel, i],
+			"categorie": domeniu,
+			"nivel": nivel,
+		})
+	return lista
+
+
+## Cheile unui Dictionary cu numărătorile lor, sortate, ca text — pentru
+## amănuntul de lângă verdict. Se tipărește ȘI când verdictul e bun: ce a ieșit
+## e exact lucrul pe care vrei să-l vezi cu ochiul, nu doar „OK".
+func _cheile(d: Dictionary) -> String:
+	var chei: Array = d.keys()
+	chei.sort()
+	var bucati: Array[String] = []
+	for c in chei:
+		bucati.append("%s %d" % [c, d[c]])
+	return ", ".join(bucati) if not bucati.is_empty() else "niciunul"
 
 
 # ─────────────────────────────────────────────────────────────
