@@ -14,7 +14,7 @@
 | 3. Trivia, ca scenă independentă | ✅ gata |
 | 4. Bucla completă a unei lupte | ✅ victorie · înfrângere · recompense (Fragmente) |
 | 5. Trei inamici manuali | ✅ Soldatul · Lăncierul (ceas) · Spadasinul (vulnerabilitate), aleși din joc |
-| 6. Harta de expediție | ✅ loadout „N din M" · **12-16 noduri**, ramificate, cu sămânță · Luptă / Elită / Odihnă / Eveniment / **Magazin** / **Boss** · **Monede + puteri temporare** · sumar de run · aspect: pergament, simboluri de cerneală, trasee punctate · **nodurile și drumurile stau pe o PANGLICĂ (curbă centrală + benzi)**, nu pe o grilă dreaptă · **patru trasee, toate verzi pe 300 de semințe** (POTCOAVĂ activă; POTCOAVA OGLINDITĂ e aceeași formă, întoarsă) · strat înclinat (forfecare) la ȘARPE · **drumuri care nu se încrucișează niciodată (0 la 300 de semințe)** · **nodul curent are și aură, și X, și stă nemișcat sub figurină** · **două surse de hartă: GENERATĂ (panglica) sau DESENATĂ dintr-un fișier `data/harti/*.json`** — comutatorul `Expeditie.SURSA_HARTII`; azi e pe DESENATĂ · **harta umple pergamentul**: pânza ține toată pagina, antetul plutește peste ea (805 × 427 px de hartă, de la 666 × 353) · **drumurile merg în amândouă sensurile**, cu nodul parcurs tăiat definitiv și cu garanția, verificată pe 16 000 de expediții simulate, că nu te poți înfunda · **figurina sare, cade ca un slam și zguduie ecranul la aterizare**, cu un răgaz de 0,5 s înainte să se deschidă nodul · **tipurile nodurilor se împart după o REȚETĂ fixă, nu se trag cu zarul**: 9 reguli de vecinătate și de început, plasare conștientă de reguli, verificare completă și reîncercare cu sub-sămânță (0 eșecuri pe 500 de semințe × 3 surse de hartă) · rețeta se **plafonează după forma hărții**, nu după numărul de noduri · **nodul de Eveniment deschide Lacătul** (nivel din adâncime, sămânță din nodul, 6/10/14 Monede la succes) |
+| 6. Harta de expediție | ✅ loadout „N din M" · **12-16 noduri**, ramificate, cu sămânță · Luptă / Elită / Odihnă / Eveniment / **Magazin** / **Boss** · **Monede + puteri temporare** · sumar de run · aspect: pergament, simboluri de cerneală, trasee punctate · **nodurile și drumurile stau pe o PANGLICĂ (curbă centrală + benzi)**, nu pe o grilă dreaptă · **patru trasee, toate verzi pe 300 de semințe** (POTCOAVĂ activă; POTCOAVA OGLINDITĂ e aceeași formă, întoarsă) · strat înclinat (forfecare) la ȘARPE · **drumuri care nu se încrucișează niciodată (0 la 300 de semințe)** · **nodul curent are și aură, și X, și stă nemișcat sub figurină** · **două surse de hartă: GENERATĂ (panglica) sau DESENATĂ dintr-un fișier `data/harti/*.json`** — comutatorul `Expeditie.SURSA_HARTII`; azi e pe DESENATĂ · **harta umple pergamentul**: pânza ține toată pagina, antetul plutește peste ea (805 × 427 px de hartă, de la 666 × 353) · **drumurile merg în amândouă sensurile**, cu nodul parcurs tăiat definitiv și cu garanția, verificată pe 16 000 de expediții simulate, că nu te poți înfunda · **figurina sare, cade ca un slam și zguduie ecranul la aterizare**, cu un răgaz de 0,5 s înainte să se deschidă nodul · **tipurile nodurilor se împart după o REȚETĂ fixă, nu se trag cu zarul**: 10 reguli de vecinătate, de început și de FINAL, plasare conștientă de reguli, verificare completă și reîncercare cu sub-sămânță (0 eșecuri pe 500 de semințe × 3 surse de hartă) · **la cel mult 2 pași de Boss e garantat un nod de bătaie** (100% pe 300 de semințe × 3 surse, de la 85% / 96% / 81%) · **niciun nod special nu mai are un geamăn lipit**, nici Evenimentul (0 pe 900 de hărți) · **rețeta nu se mai crede pe cuvânt: se PROBEAZĂ** — plafonul comun încearcă plasarea adevărată și taie un nod când forma nu le încape pe toate · rețeta se **plafonează după forma hărții**, nu după numărul de noduri · **nodul de Eveniment deschide Lacătul** (nivel din adâncime, sămânță din nodul, 6/10/14 Monede la succes) |
 | 7. Cetatea | ❌ |
 | 8. Save/Load | 🟡 tezaurul, sacul și expediția știu toate să se serializeze (`spre_dictionar` / `din_dictionar`), pe trei straturi de durată; scrierea pe disc, nu încă |
 | 9. Celelalte discipline | 🟡 Cultură generală ✅ (**2692 de întrebări în joc, toate**: 2142 scrise de mână (`mana:0001`…) + **139 fabricate, elemente chimice** (`wd:Q897:simbol:…`) + **160 fabricate, operă → autor** (`wd:Q12730777:autor:…`) + **251 fabricate, țară ↔ capitală** (`wd:Q142:capitala:…`) — **conținutul fabricat stă într-un DOSAR**, `data/trivia_gen/`, citit întreg de încărcător: un tabel nou = două fișiere, zero linii de cod · **92 de fapte cu note** + 357 de fapte fabricate fără notă · **OPT DOMENII** (Geografie și explorare, Istorie și societate, Știință și tehnologie, Artă și literatură, Divertisment și media, Sport și jocuri, Gastronomie și lifestyle, Diverse și curiozități), cu **31 de subcategorii** — **toate OPT domeniile sunt în luptă, niciunul din cele 31 de rafturi nu e gol și nicio întrebare nu e fără raft** (cele 135 scrise înaintea câmpului au fost clasificate, iar 21 de întrebări de mitologie au trecut de la Artă la Istorie); **toate cele 93 de celule (subdomeniu × nivel) au cel puțin 25 de întrebări** — treapta CONFORT din `plan-continut.md`, cea la care 4-5 expediții lungi nu repetă nimic; drumul până la 100 pe celulă cere încă 6631 și trece prin fabrică, nu prin scris de mână, tăiate după cum se joacă, nu după cum crescuse baza: artă + mitologie + literatură s-au unit, Divertisment și Sport pornesc goale · `CATEGORII` (listă) a devenit `DOMENII` (dicționar cheie → nume afișat), deci antetul scrie „ARTĂ ȘI LITERATURĂ”, nu cheia · **alegerea din luptă e în două trepte** — întâi domeniul, uniform, apoi întrebarea, cu sacul pe cheie de domeniu ȘI nivel — iar de azi **domeniul intră doar peste `PRAG_DOMENIU = 8` întrebări pe celulă**, cu plasă dacă nu trece niciunul; sub prag e sărit, nu golit (istoria trece cu rezerva ZERO, deci e următoarea țintă de conținut) · comutator `FOLOSESTE_WIKIDATA` · **fabrica are un modul comun**, `tools/fabrica/comun.py`, iar grila marchează celulele sărite · **faptele capitalelor au o LISTĂ de imagini**, `imagini: [{tip, …}]`: **126 de steaguri pe disc** (`assets/imagini_fapte/steaguri/`, PNG 320 px, 0,53 MB sursă, toate în domeniul public, cu manifest de credite), plus o intrare de hartă pe fiecare din cele 127 de fapte; Omanul e singurul refuzat, cu motivul scris · **fiecare întrebare are și o `subcategorie`**, una singură, din listă închisă pe domeniu (36 de chei, 4 folosite; la istorie sunt erele, tăiate pe dată) — cele 135 scrise de mână o primesc într-un lot de clasificare, cu un clichet în verificator · **istoria e la 18 pe toate trei nivelurile**, iar **Divertismentul și Sportul au câte 50 pe fiecare celulă**, pe 11 subcategorii cu care se poate filtra (filme 48, muzică 36, fotbal 30, olimpiade 30…) — deci **toate ȘASE domeniile sunt în luptă**, fiecare cu 1/6 din întrebări, și toate cele 11 subcategorii ale celor două domenii noi au conținut · **verificarea e un singur câmp**, `verificat: true/false` pe întrebare, pus de mână: întrebarea intră în joc oricum, iar flagul spune doar dacă i-am citit nota. Niciun script, niciun parametru — mecanismul de ciorne, al doilea flag de pe fapt și cele două unelte de confirmare s-au desfăcut (vezi UN SINGUR FLAG) · planul de conținut al tuturor celor șase domenii, cu subcategorii, tabele propuse și capcanele lor, e în **`docs/plan-continut.md`** · vezi sesiunile UN SINGUR FLAG, ȘASE DOMENII ÎN LUPTĂ, PLANUL ȘI CIORNELE, DOMENIILE, CONȚINUTUL, ID ȘI FAPT, FABRICA, AL DOILEA TABEL, MODULUL COMUN și STEAGURILE) · Logica ✅ (80 de categorii) · Cuvinte ✅ · toate trei fără repetiții pe expediție, **Cultura generală după `id`, nu după text** · celelalte 5 ❌ |
@@ -37,6 +37,201 @@ buget, generare) rămâne acolo unde era.
 Am sărit peste ordinea recomandată la pasul 12 (artă): imaginile pentru rege,
 cavaler și pentru cele trei piese de șah de pe butoane au intrat mai devreme, dar
 restul rămâne placeholder. Bucla de luptă e în continuare cea validată, nu arta.
+
+---
+
+## DOUĂ CUFERE LA RÂND (8 octombrie 2026) — Evenimentul intră sub regula gemenilor, și rețeta începe să se probeze
+
+Pe `harta_01`, sămânța 1, două Evenimente cădeau lipite. Nu era o scăpare: era
+o **excepție scrisă** — `_se_cearta()` îi dădea Evenimentului un prag mai blând
+decât celorlalte trei tipuri speciale.
+
+| tip | se ceartă la | adică |
+|---|---|---|
+| Elită, Odihnă, Magazin | 1 sau 2 pași | nici vecini, nici frați printr-o răscruce |
+| **Eveniment, până azi** | **exact 2 pași** | frați, nu. **Vecini, da** |
+
+Motivul excepției era adevărat când s-a scris: Evenimentul era un placeholder,
+marcat pe hartă și fără conținut. De când nodul deschide **Lacătul**, două
+Evenimente lipite sunt două cufere la rând — același puzzle de două ori, și o
+bucată de drum pe care harta nu te lasă să hotărăști nimic.
+
+Excepția a dispărut. `_se_cearta()` are acum un singur prag pentru toate patru,
+iar lista celor patru tipuri speciale s-a scris o dată, în `SPECIALE`: înainte
+trăia în trei locuri, iar unul din ele (`_regula_fara_gemeni_vecini`) rămăsese
+cu trei tipuri în loc de patru. Diferența era o decizie veche, dar arăta ca o
+scăpare — și când decizia s-a schimbat, trebuia găsită în două locuri.
+
+### Prețul: panglica de 14 noduri s-a rupt
+
+Regula singură a stricat harta GENERATĂ. **14 semințe din 500** și-au epuizat
+toate cele 200 de încercări și au căzut pe harta de rezervă — adică o expediție
+numai din Lupte.
+
+Cauza nu era regula, ci o gaură veche în `reteta()`. `_cat_incap()` răspunde la
+„câte Odihne încap?”. Întrebarea pe care n-o poate pune e **„câte Odihne încap
+ÎN TIMP CE se așază și două Elite, două Magazine și două Evenimente?”** —
+fiecare tip socotește singur, pe o hartă pe care își imaginează că e singurul.
+
+Pe panglica de 14 noduri, cele patru tipuri cereau 8 noduri în 9 poziții,
+dintre care una trebuie să rămână bătaie (regula de ieri). Fiecare tip
+„încăpea”. Împreună, nu.
+
+### Plafonul comun: o PROBĂ, nu o formulă
+
+N-am o formulă. „Câte noduri speciale, de patru feluri, cu praguri de poziție
+diferite, încap pe graful ăsta” e o problemă de împachetare; o formulă scrisă
+de mână ar fi fost o ghicitoare care pică la prima regulă nouă — exact ce s-a
+întâmplat de **trei** ori deja (Odihna la 14 noduri, bătaia de lângă Boss,
+Evenimentul de azi).
+
+Deci `reteta()` nu mai crede pe cuvânt: **încearcă**. Rulează plasarea
+adevărată, cu regulile adevărate, pe o copie a hărții. Dacă nu iese, taie un
+nod special și întreabă iar, în ordinea asta:
+
+| se taie | de ce acolo |
+|---|---|
+| **Evenimentul** | singurul cu `minim` 0, și cel mai numeros |
+| **Magazinul** | Monedele au și alte surse (luptele, cuferele) |
+| **Elita** | vârful expediției; `minim` 1 o apără de dispariție |
+| **Odihna** | ultima: singura frână de PV din joc, și pe ea se sprijină `_regula_boss_cu_odihna_vecina` |
+
+Costă o rulare în plus pe hartă, **o dată**, înainte de expediție — nu la
+fiecare încercare. Sămânța probei e FIXĂ, nu a hărții: proba răspunde la o
+întrebare despre FORMĂ, iar cu sămânța hărții două expediții pe aceeași planșă
+ar fi primit rețete diferite, și „câte Odihne are harta asta?” ar fi redevenit
+o întrebare fără răspuns.
+
+### Pragul probei, reglat de două ori, în amândouă sensurile
+
+Cea mai instructivă parte a sesiunii. Prima variantă cerea **o reușită în 40**:
+
+> Panglica a trecut de la 14 semințe căzute la **1** — sămânța 1169, a cărei
+> rată adevărată cu rețeta plină e de vreo **3%**. Proba o văzuse ca pe o rețetă
+> bună, fiindcă o aranjare rară tot e o aranjare. Bucla adevărată a ratat-o de
+> două sute de ori la rând.
+
+Pentru o rată `r`, bucla de `INCERCARI_MAXIME` ratează cu `(1-r)^200`: la 2% e
+1,8% (o hartă din 55), la 3% e 0,2%, la 8% e 0,000006%. Deci pragul trebuie să
+fie o **rată**, nu o existență.
+
+A doua variantă cerea **10 reușite în 100**, adică un prag corect de 10%:
+
+> `harta_02` a pierdut un Eveniment pe **toate** cele 500 de semințe, deși rata
+> ei adevărată e de 15% — peste prag. Un prag bun, **măsurat prost**: cu doar
+> 100 de trageri și o sămânță fixă, un șir nefericit decide pentru toată forma.
+
+Varianta de acum: **16 reușite din 200**, adică rata de 8%, măsurată cu exact
+bugetul buclei adevărate. O formă de 15% trece cu 99,7%; una de 3% nu trece
+deloc. Ratele adevărate, măsurate pe 3000 de trageri per formă:
+
+| forma | rata cu rețeta ei |
+|---|---|
+| `harta_01` (cea jucată) | 63,6% |
+| `harta_02` | 35,9% |
+| panglica de 14, sămânța 1169 | 13,0% după tăiere (≈3% înainte) |
+
+### Unde s-a ajuns
+
+| sursa | rețeta plină? | încercări/sămânță | semințe căzute |
+|---|---|---|---|
+| **`harta_01`** (planșa jucată) | **da**, neatinsă | 1,58 (max 9) | 0 |
+| `harta_02` | **da**, 3 Evenimente | 6,57 (max 42) | 0 |
+| panglica, 16 noduri | da | — | 0 |
+| panglica, 12 noduri | tăiată pe 22% | — | 0 |
+| panglica, 14 noduri | tăiată pe 59% | — | 0 |
+
+**Planșa pe care se joacă azi nu pierde nimic.** Panglica generată plătește, și
+plătește din cauza formei ei: are două noduri pe strat, deci doi frați sunt la
+exact 2 pași, iar „nici vecini, nici frați” înseamnă pe ea „cel puțin trei
+straturi între doi de același fel”. E aceeași îngustime care a tăiat Odihna de
+la 3 la 2 în sesiunea cu plafonul per tip — doar că acum se vede în patru
+tipuri, nu în unul. Panglica e rezerva (`SURSA_HARTII` e pe DESENATĂ), deci
+prețul se plătește unde se vede cel mai puțin.
+
+Verificat pe 300 de semințe × 3 surse: **0 gemeni speciali lipiți** din 900 de
+hărți, și tot 0 hărți cu bătaia mai departe de 2 pași de Boss. `verifica_tipuri`
+a crescut de la ~31 s la ~70 s — proba trage până la 16 reușite pe fiecare din
+cele 1500 de hărți.
+
+---
+
+## BĂTAIA DE DINAINTEA BOSSULUI (8 octombrie 2026) — o a zecea regulă, pe finalul hărții
+
+Pe `harta_01`, sămânța 1, toate luptele cădeau în prima jumătate a drumului.
+Ultimele trei noduri înainte de Boss erau **Eveniment, Magazin, Odihnă** — cea
+mai apropiată bătaie, la 3 pași. Nu era ghinion pe o sămânță; era o gaură în
+reguli.
+
+### Ce spunea măsurătoarea
+
+Cea mai apropiată bătaie, pe 300 de semințe, ÎNAINTE:
+
+| sursa hărții | la 1 pas | la 2 pași | la 3 pași | la 4 |
+|---|---|---|---|---|
+| `harta_01` | — (Bossul are un singur vecin, și e Odihna) | 84,7% | **15,3%** | — |
+| `harta_02` | 34,3% | 62,0% | **3,7%** | — |
+| panglica generată | 24,3% | 56,3% | **19,0%** | **0,3%** |
+
+Deci una din șase expediții pe `harta_01` și una din cinci pe panglică se
+terminau cu trei noduri liniștite.
+
+### De ce contează, și de ce 2 și nu 1
+
+De la Odihna lipită de Boss (`_regula_boss_cu_odihna_vecina`) până la Boss nu
+mai ai cum să-ți cheltui PV-ul. Dacă nici înaintea ei nu e o bătaie, **Odihna
+aia nu mai e o hotărâre** — e un buton care te umple gratis, fiindcă vii de la
+un Magazin și un Eveniment. Bătaia de la 2 pași e ce o face să conteze: intri
+în ea cu PV plin, ieși lovit, și abia atunci Odihna are ce repara.
+
+Pragul e 2, nu 1, fiindcă pe `harta_01` Bossul are **un singur vecin**, iar
+acela e deja luat de regula Odihnei. Un prag de 1 ar fi cerut imposibilul acolo
+— exact felul de ceartă între reguli care, ultima dată, a coborât
+`LUPTE_MINIME_ELITA` de la 3 la 2. Elita se numără ca bătaie: n-are voie lipită
+de Boss, dar la doi pași are, și acolo e chiar vârful pe care regula îl caută.
+
+### Două locuri, nu unul: paza și plasa
+
+Regula nouă e scrisă de două ori, dinadins, și diferența merită ținută minte:
+
+| unde | ce face |
+|---|---|
+| `_incape()`, în timpul plasării | **PAZA.** Un tip liniștit (Odihnă, Magazin, Eveniment) care ar ocupa ultimul nod de bătaie din zona finală e SĂRIT, și se încearcă altă poziție |
+| `_regula_bataie_aproape_de_boss()`, la verificare | **PLASA.** Trece peste harta gata și spune „nicio bătaie aproape de boss" dacă paza s-a stricat |
+
+Dacă regula ar fi existat numai ca plasă, o singură poziție pusă greșit ar fi
+aruncat toată încercarea — 16 noduri la coș pentru unul. Cu paza din mers, nodul
+greșit e doar sărit. Se vede în cifre: regula **nu apare niciodată** în lista
+„de câte ori a picat fiecare regulă" din `verifica_tipuri`, fiindcă paza ține
+invariantul („zona finală are cel puțin o bătaie") adevărat de la prima buclă a
+lui `_o_incercare()`, unde tot ce nu s-a așezat încă e Luptă.
+
+### Prețul, măsurat
+
+| sursa | încercări per sămânță, înainte | după | maximul, înainte → după |
+|---|---|---|---|
+| panglica generată | 4,52 | 5,04 | 60 → 83 |
+| `harta_01` | 1,37 | 1,53 | 7 → 7 |
+| `harta_02` | 2,86 | 2,84 | 18 → 18 |
+
+O zecime de încercare în plus, pe 500 de semințe, cu `INCERCARI_MAXIME` la 200.
+Nicio sămânță la limită, nicio rețetă încălcată, aceeași sămânță dă aceeași
+hartă. Cea mai apropiată bătaie e acum la **cel mult 2 pași pe 100% din cele
+300 de semințe, pe toate trei sursele**.
+
+Nota de la `INCERCARI_MAXIME` spunea „media 7 și 23, maximul 130" — cifre care
+scăzuseră singure pe drum, înainte de sesiunea asta. S-au rescris cu
+măsurătoarea de azi, fiindcă o notă de măsurătoare care nu mai e adevărată e mai
+rea decât niciuna.
+
+### Ce NU s-a atins
+
+Nu s-a schimbat nici rețeta (tot 2 Elite, 3 Odihne, 2 Magazine, 3 Evenimente la
+16 noduri), nici o cifră de echilibru, nici harta desenată. O regulă în plus,
+un invariant păzit la plasare, o constantă — `PASI_MAXIMI_PANA_LA_BATAIE := 2`.
+
+Verificările care bat harta ies toate cu cod 0: `verifica_drumuri`,
+`verifica_plansa`, `verifica_harta`, `verifica_eveniment`, `verifica_tipuri`.
 
 ---
 

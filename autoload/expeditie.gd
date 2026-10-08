@@ -263,6 +263,18 @@ const NODURI_DE_REFERINTA := 16
 ## una fără Odihnă e o cursă de PV fără frână; una fără Elită n-are niciun vârf.
 ## Evenimentul n-are minim, fiindcă azi e doar marcat pe hartă — o expediție
 ## fără el nu pierde nimic ce se poate juca.
+## TIPURILE SPECIALE: tot ce nu e Start, Boss sau Luptă.
+##
+## Scrisă o dată, fiindcă trei locuri o întrebau separat și unul din ele a rămas
+## în urmă: `_regula_fara_gemeni_vecini` avea trei tipuri, iar
+## `_regula_fara_gemeni_la_acelasi_nod` patru. Diferența era o decizie veche
+## (Evenimentul avea voie lipit de alt Eveniment), dar arăta ca o scăpare — și
+## când decizia s-a schimbat, trebuia găsită în două locuri.
+##
+## Lupta NU e aici, și nu din neatenție: ea e restul rețetei, deci două Lupte
+## lipite sunt normale — altfel n-ar mai avea cum să fie distanțierele celorlalte.
+const SPECIALE := [Nod.ELITA, Nod.ODIHNA, Nod.MAGAZIN, Nod.EVENIMENT]
+
 const PROPORTII := [
 	{"tip": Nod.ELITA, "la_referinta": 2, "minim": 1},
 	{"tip": Nod.ODIHNA, "la_referinta": 3, "minim": 1},
@@ -316,6 +328,29 @@ const LUPTE_MINIME_ELITA := 2
 ## La câți pași de Start poate apărea cea mai apropiată Odihnă.
 const PASI_MINIMI_ODIHNA := 3
 
+## La cel mult atâția pași de Boss trebuie să existe un nod de BĂTAIE
+## (Luptă sau Elită).
+##
+## Regula de mai sus îi spune Odihnei să nu cadă prea devreme. Asta îi spune
+## bătăii să nu se termine prea devreme — și a apărut dintr-o măsurătoare, nu
+## dintr-o bănuială: pe `harta_01`, sămânța 1, cele patru Lupte și cele două
+## Elite încăpeau toate în prima jumătate a drumului, iar ultimele trei noduri
+## înainte de Boss erau Eveniment, Magazin, Odihnă. Pe 300 de semințe, cea mai
+## apropiată bătaie cădea la 3 pași de Boss în 15% din cazuri pe `harta_01`,
+## 19% pe panglica generată.
+##
+## De ce contează: de la Odihna lipită de Boss (`_regula_boss_cu_odihna_vecina`)
+## până la Boss nu mai ai cum să-ți cheltui PV-ul. Dacă nici înaintea ei nu e o
+## bătaie, Odihna aia nu mai e o hotărâre — e un buton care te umple gratis,
+## fiindcă vii de la un Magazin și un Eveniment. Bătaia de la 2 pași e ce o
+## face să conteze: intri în ea cu PV plin, ieși lovit, și ABIA atunci Odihna
+## are ce repara.
+##
+## 2, nu 1: nodul de la 1 pas e deja luat de Odihnă pe hărțile unde Bossul are
+## un singur vecin (`harta_01`), deci un prag de 1 ar fi cerut imposibilul
+## acolo. La 2 pași regula se poate ține pe toate cele trei forme de hartă.
+const PASI_MAXIMI_PANA_LA_BATAIE := 2
+
 ## Câte aranjări se încearcă până să ne dăm bătuți pe o sămânță.
 ##
 ## Nu e o limită de timp, ci o plasă împotriva buclei infinite: dacă regulile
@@ -323,11 +358,76 @@ const PASI_MINIMI_ODIHNA := 3
 ## umbli la o cifră de mai sus — vreau un `push_error` cu numele regulii
 ## vinovate și o hartă jucabilă, nu un joc înghețat la pornirea expediției.
 ##
-## Pe planșele de azi, media e 7 încercări (`harta_01`) și 23 (`harta_02`), cu
-## maximul măsurat la 130 pe 500 de semințe. Marginea e de zece ori media, nu de
-## două — dinadins: ziua în care o cifră de mai sus se schimbă, vreau ca harta
-## să iasă mai greu, nu să nu mai iasă.
+## Măsurat pe 500 de semințe, 8 octombrie 2026: media e 1,5 încercări
+## (`harta_01`), 2,8 (`harta_02`) și 5,0 pe panglica generată; maximul, 7 / 18 /
+## 83. Cifrele astea au fost 7 și 23 când s-a scris nota — au scăzut de la sine
+## pe drum, iar `_regula_bataie_aproape_de_boss` le-a urcat înapoi cu o zecime.
+## Marginea e de douăzeci de ori maximul, nu de două — dinadins: ziua în care o
+## cifră de mai sus se schimbă, vreau ca harta să iasă mai greu, nu să nu mai
+## iasă.
 const INCERCARI_MAXIME := 200
+
+## Câte plasări încearcă PROBA de rețetă cel mult.
+##
+## Exact bugetul buclei adevărate, și dinadins același număr: proba răspunde la
+## „bucla de `INCERCARI_MAXIME` încercări o va găsi?”, deci întreabă cu aceeași
+## monedă. Cu un buget mai mic, proba ar fi fost un estimator zgomotos — vezi
+## mai jos ce a costat.
+const INCERCARI_DE_PROBA := INCERCARI_MAXIME
+
+## Câte dintre ele trebuie să REUȘEASCĂ, ca rețeta să treacă proba.
+##
+## 16 din 200, adică o rată de 8%. Cifra are două jumătăți, și amândouă s-au
+## plătit cu o măsurătoare greșită înainte.
+##
+## JUMĂTATEA DE SUS — cât de rar e „prea rar”. Pentru o rată `r`, bucla de
+## `INCERCARI_MAXIME` ratează aranjarea cu `(1-r)^200`:
+##
+##     r = 2%  →  1,8%          o hartă din 55. Prea des.
+##     r = 3%  →  0,2%          la 183 de hărți de-o mărime, una cade.
+##     r = 8%  →  0,000006%     una la șaptesprezece milioane.
+##
+## Cu „măcar o reușită în 40”, panglica de 14 noduri trecea de la 14 semințe
+## căzute la 1: sămânța 1169, a cărei rată adevărată cu rețeta plină era de
+## vreo 3%. Proba o văzuse ca pe o rețetă bună, fiindcă o aranjare rară tot e o
+## aranjare. Bucla adevărată a ratat-o de două sute de ori la rând, a căzut pe
+## harta de rezervă, și expediția a ieșit numai din Lupte.
+##
+## JUMĂTATEA DE JOS — cât de mult trebuie să tragi ca să ȘTII rata. Sămânța
+## probei e FIXĂ, deci ea decide pentru toată forma: un șir nefericit nu
+## înseamnă „o hartă stricată”, înseamnă „toate hărțile formei ăsteia, tăiate”.
+## Cu 10 reușite din 100, `harta_02` și-a pierdut un Eveniment pe TOATE cele 500
+## de semințe, deși rata ei adevărată era de 15% — adică peste prag. Un prag
+## bun, măsurat prost.
+##
+## La 16 din 200, o formă de 15% trece cu o șansă de 99,7%, iar una de 3% picată
+## nu mai trece deloc. Prețul e că proba trage până la 16 reușite în loc de 4 —
+## pe o hartă largă, vreo 25 de plasări, o dată per expediție.
+const REUSITE_LA_PROBA := 16
+
+## Sămânța probei. FIXĂ, nu sămânța hărții — și asta e chiar rostul.
+##
+## Proba răspunde la o întrebare despre FORMĂ („încape rețeta asta pe harta
+## asta?”), nu despre sămânță. Cu sămânța hărții, două expediții pe aceeași
+## planșă ar fi putut primi rețete DIFERITE, după cum s-a nimerit proba — iar
+## „câte Odihne are harta asta?” ar fi redevenit o întrebare fără răspuns, exact
+## ce rețeta fixă a venit să repare.
+const SAMANTA_DE_PROBA := 7919
+
+## ÎN CE ORDINE SE TAIE din rețetă când forma nu le încape pe toate.
+##
+## `minim` din `PROPORTII` spune cât de jos poate coborî fiecare tip; asta spune
+## cine coboară PRIMUL. Ordinea e o afirmație de design, nu o comoditate:
+##
+##   EVENIMENTUL — singurul cu `minim` 0, și cel mai numeros. O expediție cu
+##   două cufere în loc de trei pierde cel mai puțin.
+##   MAGAZINUL — Monedele au și alte surse (luptele, cuferele), deci un Magazin
+##   în minus e mai scump, nu catastrofal.
+##   ELITA — vârful expediției. `minim` 1 o apără oricum de dispariție.
+##   ODIHNA — ultima, fiindcă e singura frână de PV din joc ȘI fiindcă pe ea se
+##   sprijină `_regula_boss_cu_odihna_vecina`. Se taie doar când nu mai e nimic
+##   altceva de tăiat.
+const ORDINEA_TAIERII := [Nod.EVENIMENT, Nod.MAGAZIN, Nod.ELITA, Nod.ODIHNA]
 
 ## CE A PĂȚIT ULTIMA ATRIBUIRE DE TIPURI. Numai pentru unelte, nu pentru joc.
 ##
@@ -747,7 +847,7 @@ static func vecinii_din(noduri: Array[Dictionary], id: int) -> Array[int]:
 ## VECINĂTĂȚILE TUTUROR NODURILOR, socotite o dată.
 ##
 ## `vecinii_din()` costă o plimbare prin toată harta. Regulile de mai jos întreabă
-## de vecini de câteva mii de ori pe expediție (200 de încercări × 9 reguli × 16
+## de vecini de câteva mii de ori pe expediție (200 de încercări × 10 reguli × 16
 ## noduri), deci aici se socotesc o dată și se dau mai departe ca listă.
 ##
 ## Indexul din Array E chiar id-ul nodului — asta ține numai fiindcă id-ul unui
@@ -1655,7 +1755,118 @@ static func reteta(
 			# Locurile eliberate se duc la Lupte, nu la alt tip special: dacă
 			# le-ar lua Evenimentul, am fi înlocuit o îngrămădeală cu alta.
 			cate[Nod.LUPTA] = int(cate.get(Nod.LUPTA, 0)) + (cerute - plafonat)
+
+	# Și acum partea pe care plafonul per tip n-o poate ști. Vezi mai jos.
+	return _taiata_pana_incape(cate, noduri, vecinatati, id_start, id_boss)
+
+
+# ─────────────────────────────────────────────────────────────
+# PLAFONUL COMUN: ce încape când TOATE tipurile se bat pe aceleași poziții
+#
+# `_cat_incap()` răspunde la „câte Odihne încap?”. Întrebarea pe care n-o poate
+# pune e „câte Odihne încap ÎN TIMP CE se așază și două Elite, două Magazine și
+# două Evenimente?”. Fiecare tip socotește singur, pe o hartă pe care își
+# imaginează că e singurul.
+#
+# De două ori la rând asta a fost destul, și a treia oară n-a mai fost:
+#
+#   — Odihna pe panglica de 14 noduri: plafonul per tip a prins-o (29% din
+#     hărți, rețeta tăiată de la 3 la 2).
+#   — Bătaia de lângă Boss: încă o poziție scoasă din joc, tot în zona cea mai
+#     strâmtă a hărții.
+#   — Evenimentul care nu mai are voie lipit de alt Eveniment: pe panglica de 14
+#     noduri, cele patru tipuri cereau 8 noduri în 9 poziții, dintre care una
+#     trebuie să rămână bătaie. Fiecare tip „încăpea”. Împreună, nu. Măsurat:
+#     14 semințe din 500 își epuizau toate cele 200 de încercări și cădeau pe
+#     harta de rezervă — adică o expediție de numai Lupte.
+#
+# DE CE O PROBĂ, ȘI NU O FORMULĂ
+#
+# Fiindcă n-am o formulă. „Câte noduri speciale, de patru feluri, cu praguri de
+# poziție diferite, încap pe graful ăsta” e o problemă de împachetare; o formulă
+# scrisă de mână ar fi fost o ghicitoare care pică la prima regulă nouă — exact
+# ce s-a întâmplat de trei ori deja.
+#
+# Proba nu ghicește: ÎNCEARCĂ. Rulează plasarea adevărată, cu regulile
+# adevărate, pe o copie a hărții. Dacă nu iese în `INCERCARI_DE_PROBA`, taie un
+# nod special din rețetă (în `ORDINEA_TAIERII`) și întreabă iar.
+#
+# Prețul e o rulare în plus la fiecare hartă, o dată, înainte de expediție — nu
+# la fiecare încercare. Pe hărțile largi proba trece din prima; pe cele strâmte
+# plătește cât ar fi plătit oricum bucla de reîncercări, doar că întoarce o
+# rețetă pe care harta o poate ține, în loc de un `push_error`.
+# ─────────────────────────────────────────────────────────────
+
+## Taie din rețetă până când plasarea CHIAR iese pe forma asta.
+static func _taiata_pana_incape(
+	cate: Dictionary, noduri: Array[Dictionary], vecinatati: Array,
+	id_start: int, id_boss: int
+) -> Dictionary:
+	# Pe o COPIE: `reteta()` e chemată și din unelte, pe o hartă gata, iar o
+	# probă care ar scrie peste tipurile ei ar șterge chiar ce se verifica.
+	var proba := _copie_de_proba(noduri)
+
+	while not _se_poate_plasa(proba, vecinatati, id_start, id_boss, cate):
+		var tip := _urmatorul_de_taiat(cate)
+		if tip < 0:
+			# Totul e la minim și tot nu iese. Nu mai e nimic de tăiat, deci se
+			# lasă rețeta cum e: bucla de 200 de încercări și harta de rezervă
+			# rămân plasa de dedesubt, cu `push_error`-ul care numește regula.
+			break
+		cate[tip] = int(cate[tip]) - 1
+		cate[Nod.LUPTA] = int(cate.get(Nod.LUPTA, 0)) + 1
 	return cate
+
+
+## Prima poziție din `ORDINEA_TAIERII` care mai are de unde scădea. `-1` dacă
+## toate sunt la `minim`.
+static func _urmatorul_de_taiat(cate: Dictionary) -> int:
+	for tip in ORDINEA_TAIERII:
+		var minimul := 0
+		for rand in PROPORTII:
+			if int(rand["tip"]) == int(tip):
+				minimul = int(rand["minim"])
+		if int(cate.get(tip, 0)) > minimul:
+			return int(tip)
+	return -1
+
+
+## Iese plasarea cu rețeta asta DESTUL DE DES — `REUSITE_LA_PROBA` reușite în
+## cel mult `INCERCARI_DE_PROBA` încercări?
+##
+## „Destul de des”, nu „măcar o dată”: vezi nota de la `REUSITE_LA_PROBA`.
+##
+## Se folosesc plasarea și regulile ADEVĂRATE, nu o aproximare a lor. Dacă
+## mâine se adaugă o regulă, proba o ia în seamă fără să se atingă nimeni de ea
+## — tocmai de-aia e o probă și nu o formulă.
+static func _se_poate_plasa(
+	proba: Array[Dictionary], vecinatati: Array, id_start: int, id_boss: int,
+	cate: Dictionary
+) -> bool:
+	var reusite := 0
+	for incercare in range(INCERCARI_DE_PROBA):
+		var rng := RandomNumberGenerator.new()
+		rng.seed = _sub_samanta(SAMANTA_DE_PROBA, incercare)
+		if not _o_incercare(rng, proba, vecinatati, id_start, id_boss, cate):
+			continue
+		if not _reguli_picate(proba, vecinatati, id_start, id_boss).is_empty():
+			continue
+		reusite += 1
+		if reusite >= REUSITE_LA_PROBA:
+			return true
+	return false
+
+
+## O hartă de unică folosință, pe care proba poate scrie tipuri.
+##
+## Numai câmpurile de care au nevoie plasarea și regulile: `id` și `tip`.
+## Copiile sunt dicționare noi, deci nimic din ce scrie proba nu ajunge în harta
+## adevărată.
+static func _copie_de_proba(noduri: Array[Dictionary]) -> Array[Dictionary]:
+	var copie: Array[Dictionary] = []
+	for nod in noduri:
+		copie.append({"id": int(nod["id"]), "tip": Nod.LUPTA})
+	return copie
 
 
 ## PAȘII ÎNTRE ORICARE DOUĂ NODURI. Un tabel, nu o funcție chemată de N² ori.
@@ -1678,9 +1889,9 @@ static func _toti_pasii(vecinatati: Array) -> Array:
 ##   permise sunt „tot, fără Start și fără vecinii lui” — exact, nu aproximativ.
 ##
 ##   CÂT DE DEPARTE trebuie să stea doi de același fel, din regulile de
-##   vecinătate. Pentru Elită, Odihnă și Magazin: nici vecini (un pas), nici
-##   frați prin cineva (doi pași) — deci cel puțin trei. Pentru Eveniment doar
-##   „nu frați”, deci se ceartă la exact doi pași; vecine au voie să fie.
+##   vecinătate: nici vecini (un pas), nici frați prin cineva (doi pași) — deci
+##   cel puțin trei, pentru TOATE cele patru tipuri speciale. Evenimentul a avut
+##   un prag mai blând până pe 8 octombrie 2026; vezi `_se_cearta()`.
 ##
 ## Răspunsul e cel mai mare grup de poziții permise care nu se ceartă între ele.
 static func _cat_incap(
@@ -1705,10 +1916,20 @@ static func _cat_incap(
 
 
 ## Doi de același tip, la distanța asta — se ceartă?
+##
+## Un singur prag pentru toate tipurile speciale: nici vecini (un pas), nici
+## frați printr-o răscruce (doi pași). Funcția primește `tip` deși nu-l mai
+## folosește, și rămâne o funcție cu nume în loc de un `pasi <= 2` scris de
+## patru ori: ea e locul în care se citește ce înseamnă „se ceartă”, iar ziua în
+## care un tip are iar nevoie de alt prag, aici se scrie, nu în patru locuri.
+##
+## A avut o excepție, până pe 8 octombrie 2026: Evenimentul se certa doar la
+## exact doi pași, deci două Evenimente aveau voie LIPITE. Se vedea în joc —
+## două cufere la rând nu sunt o alegere, sunt un coridor — și n-a costat nimic
+## s-o scot (vezi sesiunea DOUĂ CUFERE LA RÂND din `progres.md`).
+@warning_ignore("unused_parameter")
 static func _se_cearta(tip: int, pasi: int) -> bool:
-	if tip == Nod.EVENIMENT:
-		return pasi == 2   # doar „frați prin cineva”; vecini au voie
-	return pasi <= 2       # nici vecini, nici frați
+	return pasi <= 2
 
 
 ## CEL MAI MARE GRUP DE POZIȚII CARE NU SE CEARTĂ ÎNTRE ELE.
@@ -1870,6 +2091,24 @@ static func _o_incercare(
 
 	var pasi := _pasi_de_la(vecinatati, id_start)
 
+	# ZONA FINALĂ: nodurile de la cel mult `PASI_MAXIMI_PANA_LA_BATAIE` pași de
+	# Boss. Din ea nu are voie să dispară ULTIMA bătaie — de asta se ocupă
+	# `_incape()`, la fiecare așezare. Bossul însuși nu e în listă (el nu se
+	# numără ca bătaie); Startul e, dacă se nimerește atât de aproape, fiindcă
+	# el e Luptă prin definiție.
+	#
+	# De ce aici și nu ca o reîncercare pe regulă: regula din pasul 3 ar fi
+	# prins harta stricată DUPĂ ce s-a construit, și ar fi aruncat toată
+	# încercarea pentru un singur nod pus greșit. Verificat din mers, nodul
+	# greșit e doar sărit.
+	var pana_la_boss := _pasi_de_la(vecinatati, id_boss)
+	var zona_finala: Array[int] = []
+	for i in range(noduri.size()):
+		if i == id_boss:
+			continue
+		if int(pana_la_boss[i]) <= PASI_MAXIMI_PANA_LA_BATAIE:
+			zona_finala.append(i)
+
 	# ORDINEA: cel mai constrâns tip primul. Vezi nota lungă de la începutul
 	# secțiunii — nu e o preferință, e diferența dintre 500/500 și 489/500.
 
@@ -1882,7 +2121,8 @@ static func _o_incercare(
 		for v in vecinatati[id_boss]:
 			if int(v) in libere and int(pasi[int(v)]) >= PASI_MINIMI_ODIHNA:
 				langa_boss.append(int(v))
-		if not _aseaza(rng, noduri, vecinatati, libere, Nod.ODIHNA, langa_boss, 1):
+		if not _aseaza(rng, noduri, vecinatati, libere, Nod.ODIHNA, langa_boss, 1,
+				zona_finala):
 			return false
 		cate_odihne -= 1
 	var destul_de_departe: Array[int] = []
@@ -1890,14 +2130,14 @@ static func _o_incercare(
 		if int(pasi[i]) >= PASI_MINIMI_ODIHNA:
 			destul_de_departe.append(i)
 	if not _aseaza(rng, noduri, vecinatati, libere, Nod.ODIHNA,
-			destul_de_departe, cate_odihne):
+			destul_de_departe, cate_odihne, zona_finala):
 		return false
 
 	# (b) EVENIMENTUL. N-are nicio regulă de poziție — doar pe cea de vecinătate
 	#     („nu doi de același fel la același nod”). Merge al doilea tocmai
 	#     fiindcă e numeros: trei bucăți lăsate la urmă n-ar mai avea unde intra.
 	if not _aseaza(rng, noduri, vecinatati, libere, Nod.EVENIMENT,
-			libere.duplicate(), int(cate.get(Nod.EVENIMENT, 0))):
+			libere.duplicate(), int(cate.get(Nod.EVENIMENT, 0)), zona_finala):
 		return false
 
 	# (c) ELITA. Pragul se măsoară pe nodurile de bătaie știute până acum, adică
@@ -1914,7 +2154,7 @@ static func _o_incercare(
 			continue   # niciun vecin al Bossului nu e Elită
 		pentru_elita.append(i)
 	if not _aseaza(rng, noduri, vecinatati, libere, Nod.ELITA,
-			pentru_elita, int(cate.get(Nod.ELITA, 0))):
+			pentru_elita, int(cate.get(Nod.ELITA, 0)), zona_finala):
 		return false
 
 	# (d) MAGAZINUL. Acum se cunosc TOATE nodurile de bătaie (Lupte și Elite),
@@ -1925,7 +2165,7 @@ static func _o_incercare(
 		if int(lupte_minime[i]) >= LUPTE_MINIME_MAGAZIN:
 			pentru_magazin.append(i)
 	if not _aseaza(rng, noduri, vecinatati, libere, Nod.MAGAZIN,
-			pentru_magazin, int(cate.get(Nod.MAGAZIN, 0))):
+			pentru_magazin, int(cate.get(Nod.MAGAZIN, 0)), zona_finala):
 		return false
 
 	# Ce a rămas e Luptă — și e deja Luptă, din prima buclă a funcției.
@@ -1942,7 +2182,8 @@ static func _o_incercare(
 ## Restul regulilor depind de harta întreagă și de-aia există pasul 3.
 static func _aseaza(
 	rng: RandomNumberGenerator, noduri: Array[Dictionary], vecinatati: Array,
-	libere: Array[int], tip: int, candidati: Array[int], cate: int
+	libere: Array[int], tip: int, candidati: Array[int], cate: int,
+	zona_finala: Array[int]
 ) -> bool:
 	if cate <= 0:
 		return true
@@ -1953,7 +2194,7 @@ static func _aseaza(
 			break
 		if not p in libere:
 			continue
-		if not _incape(noduri, vecinatati, p, tip):
+		if not _incape(noduri, vecinatati, p, tip, zona_finala):
 			continue
 		noduri[p]["tip"] = tip
 		libere.erase(p)
@@ -1963,10 +2204,12 @@ static func _aseaza(
 
 ## Poate sta un nod de tipul `tip` pe poziția `p`, față de ce e deja pus?
 static func _incape(
-	noduri: Array[Dictionary], vecinatati: Array, p: int, tip: int
+	noduri: Array[Dictionary], vecinatati: Array, p: int, tip: int,
+	zona_finala: Array[int]
 ) -> bool:
-	# Vecin direct de același tip — numai pentru tipurile la care regula o cere.
-	if tip in [Nod.ELITA, Nod.ODIHNA, Nod.MAGAZIN]:
+	# Vecin direct de același tip. Lista e chiar `SPECIALE`: toate cele patru
+	# tipuri speciale se feresc de un geamăn lipit.
+	if tip in SPECIALE:
 		for v in vecinatati[p]:
 			if int(noduri[int(v)]["tip"]) == tip:
 				return false
@@ -1976,6 +2219,25 @@ static func _incape(
 		for w in vecinatati[int(v)]:
 			if int(w) != p and int(noduri[int(w)]["tip"]) == tip:
 				return false
+
+	# ULTIMA BĂTAIE DIN ZONA FINALĂ nu se ia. Un tip liniștit (Odihnă, Magazin,
+	# Eveniment) care ar ocupa singurul nod de bătaie rămas lângă Boss e sărit;
+	# Lupta și Elita trec, fiindcă ele CHIAR sunt bătaia pe care o cerem.
+	#
+	# „Rămas” se citește din `noduri`: tot ce nu s-a așezat încă e Luptă, din
+	# prima buclă a lui `_o_incercare()`. Deci invariantul „zona finală are cel
+	# puțin o bătaie” e adevărat la început și nu se poate strica — ceea ce face
+	# din `_regula_bataie_aproape_de_boss` o plasă, nu un filtru.
+	if not tip in [Nod.LUPTA, Nod.ELITA] and p in zona_finala:
+		var mai_e_bataie := false
+		for z in zona_finala:
+			if int(z) == p:
+				continue
+			if int(noduri[int(z)]["tip"]) in [Nod.LUPTA, Nod.ELITA]:
+				mai_e_bataie = true
+				break
+		if not mai_e_bataie:
+			return false
 	return true
 
 
@@ -2096,6 +2358,9 @@ static func _reguli_picate(
 	var picate: Array[String] = []
 	var pasi := _pasi_de_la(vecinatati, id_start)
 	var lupte := _lupte_minime(noduri, vecinatati, id_start)
+	# Pașii socotiți din CELĂLALT capăt. Aceeași funcție, altă pornire: regulile
+	# de început măsoară distanța de la Start, cea de final distanța până la Boss.
+	var pasi_pana_la_boss := _pasi_de_la(vecinatati, id_boss)
 
 	if not _regula_magazin_dupa_lupte(noduri, lupte):
 		picate.append("magazin prea devreme")
@@ -2115,6 +2380,8 @@ static func _reguli_picate(
 		picate.append("elită lipită de boss")
 	if not _regula_boss_cu_odihna_vecina(noduri, vecinatati, id_boss):
 		picate.append("boss fără odihnă alături")
+	if not _regula_bataie_aproape_de_boss(noduri, pasi_pana_la_boss):
+		picate.append("nicio bătaie aproape de boss")
 	return picate
 
 
@@ -2177,17 +2444,23 @@ static func _regula_vecinii_startului_sunt_lupte(
 	return true
 
 
-## Fără două Odihne, două Elite sau două Magazine lipite.
+## Fără două noduri speciale de același fel lipite: nici Odihne, nici Elite,
+## nici Magazine, nici Evenimente.
 ##
 ## Două Odihne legate printr-un drum sunt una lângă alta indiferent din care
 ## capăt vii — de-aia verificarea e pe perechi de vecini, nu pe „ce urmează
 ## după”.
+##
+## Evenimentul a fost scutit de regula asta până pe 8 octombrie 2026, cu
+## motivul că e doar marcat pe hartă. Nu mai e: de când nodul deschide Lacătul,
+## două Evenimente lipite sunt două cufere la rând — același puzzle de două ori,
+## și o bucată de drum pe care harta nu te lasă să hotărăști nimic.
 static func _regula_fara_gemeni_vecini(
 	noduri: Array[Dictionary], vecinatati: Array
 ) -> bool:
 	for nod in noduri:
 		var tip := int(nod["tip"])
-		if not tip in [Nod.ELITA, Nod.ODIHNA, Nod.MAGAZIN]:
+		if not tip in SPECIALE:
 			continue
 		for v in vecinatati[int(nod["id"])]:
 			if int(noduri[int(v)]["tip"]) == tip:
@@ -2203,12 +2476,11 @@ static func _regula_fara_gemeni_vecini(
 static func _regula_fara_gemeni_la_acelasi_nod(
 	noduri: Array[Dictionary], vecinatati: Array
 ) -> bool:
-	var speciale := [Nod.ELITA, Nod.ODIHNA, Nod.MAGAZIN, Nod.EVENIMENT]
 	for i in range(noduri.size()):
 		var vazute := {}
 		for v in vecinatati[i]:
 			var tip := int(noduri[int(v)]["tip"])
-			if not tip in speciale:
+			if not tip in SPECIALE:
 				continue
 			if vazute.has(tip):
 				return false
@@ -2267,6 +2539,27 @@ static func _regula_boss_cu_odihna_vecina(
 		return true
 	for v in vecinatati[id_boss]:
 		if int(noduri[int(v)]["tip"]) == Nod.ODIHNA:
+			return true
+	return false
+
+
+## Cel puțin un nod de bătaie la cel mult `PASI_MAXIMI_PANA_LA_BATAIE` de Boss.
+##
+## Oglinda regulii „odihna nu prea aproape de start”: aici se apără FINALUL
+## drumului. Motivul lung e scris la constantă; pe scurt, fără ea ultimele trei
+## noduri ale expediției pot fi toate liniștite, iar Odihna de dinaintea
+## Bossului n-are ce vindeca.
+##
+## Elita se numără ca bătaie, deși n-are voie LIPITĂ de Boss
+## (`_regula_boss_fara_elite_vecine`): la doi pași are, iar o Elită acolo e
+## exact vârful pe care regula asta îl caută.
+static func _regula_bataie_aproape_de_boss(
+	noduri: Array[Dictionary], pasi_pana_la_boss: PackedInt32Array
+) -> bool:
+	for nod in noduri:
+		if not int(nod["tip"]) in [Nod.LUPTA, Nod.ELITA]:
+			continue
+		if int(pasi_pana_la_boss[int(nod["id"])]) <= PASI_MAXIMI_PANA_LA_BATAIE:
 			return true
 	return false
 
