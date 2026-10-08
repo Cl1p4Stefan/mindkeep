@@ -10,7 +10,7 @@ extends Control
 # schimbi un număr aici, nu cauți prin tot codul.
 # `:=` înseamnă „deduce tu tipul din valoare" (aici: int).
 # ─────────────────────────────────────────────────────────────
-const PA_PE_RUNDA := 3          # PA primite la începutul fiecărei runde (nu se reportează)
+const PA_PE_RUNDA := 2          # PA primite la începutul fiecărei runde (nu se reportează)
 const COST_OBELISC := 1         # o activare = 1 PA, indiferent câte trepte urmează
 # PV-ul MAXIM nu mai e o constantă aici: e al expediției (`Expeditie.PV_MAX`).
 # Regula „PV-ul nu se reface între lupte" înseamnă exact asta — lupta îl
