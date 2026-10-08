@@ -97,7 +97,7 @@ const TRIVIA := preload("res://scenes/trivia/trivia.gd")
 # mecanic, fără s-o mai citești. Pentru cele fabricate se verifică INVARIANTA:
 # câte s-au încărcat = câte s-au găsit. Aia nu se schimbă niciodată, oricât crește
 # fișierul, și e chiar ce vrei să afli (o întrebare stricată e sărită în tăcere).
-const CATE_INTREBARI_MANA := 1156
+const CATE_INTREBARI_MANA := 2142
 const CATE_FAPTE := 92
 
 # CÂTE ÎNTREBĂRI AJUNG CU NOTĂ PE ECRAN. Nu se mai scrie o cifră aici.

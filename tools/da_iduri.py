@@ -82,7 +82,7 @@ CIFRE = 4               # mana:0001. Ajunge până la 9999; peste, doar crește.
 # și ele la 50 pe nivel (8 octombrie).
 # Cifra se ridică DE MÂNĂ, odată cu lotul — și e bine așa: dacă s-ar citi din
 # fișier, n-ar mai prinde nimic.
-CATE_INTREBARI = 1156
+CATE_INTREBARI = 2142
 
 
 # ─────────────────────────────────────────────────────────────

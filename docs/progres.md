@@ -17,7 +17,7 @@
 | 6. Harta de expediție | ✅ loadout „N din M" · **12-16 noduri**, ramificate, cu sămânță · Luptă / Elită / Odihnă / Eveniment / **Magazin** / **Boss** · **Monede + puteri temporare** · sumar de run · aspect: pergament, simboluri de cerneală, trasee punctate · **nodurile și drumurile stau pe o PANGLICĂ (curbă centrală + benzi)**, nu pe o grilă dreaptă · **patru trasee, toate verzi pe 300 de semințe** (POTCOAVĂ activă; POTCOAVA OGLINDITĂ e aceeași formă, întoarsă) · strat înclinat (forfecare) la ȘARPE · **drumuri care nu se încrucișează niciodată (0 la 300 de semințe)** · **nodul curent are și aură, și X, și stă nemișcat sub figurină** · **două surse de hartă: GENERATĂ (panglica) sau DESENATĂ dintr-un fișier `data/harti/*.json`** — comutatorul `Expeditie.SURSA_HARTII`; azi e pe DESENATĂ · **harta umple pergamentul**: pânza ține toată pagina, antetul plutește peste ea (805 × 427 px de hartă, de la 666 × 353) · **drumurile merg în amândouă sensurile**, cu nodul parcurs tăiat definitiv și cu garanția, verificată pe 16 000 de expediții simulate, că nu te poți înfunda · **figurina sare, cade ca un slam și zguduie ecranul la aterizare**, cu un răgaz de 0,5 s înainte să se deschidă nodul · **tipurile nodurilor se împart după o REȚETĂ fixă, nu se trag cu zarul**: 9 reguli de vecinătate și de început, plasare conștientă de reguli, verificare completă și reîncercare cu sub-sămânță (0 eșecuri pe 500 de semințe × 3 surse de hartă) · rețeta se **plafonează după forma hărții**, nu după numărul de noduri · **nodul de Eveniment deschide Lacătul** (nivel din adâncime, sămânță din nodul, 6/10/14 Monede la succes) |
 | 7. Cetatea | ❌ |
 | 8. Save/Load | 🟡 tezaurul, sacul și expediția știu toate să se serializeze (`spre_dictionar` / `din_dictionar`), pe trei straturi de durată; scrierea pe disc, nu încă |
-| 9. Celelalte discipline | 🟡 Cultură generală ✅ (**1706 de întrebări în joc, toate**: 1156 scrise de mână (`mana:0001`…) + **139 fabricate, elemente chimice** (`wd:Q897:simbol:…`) + **160 fabricate, operă → autor** (`wd:Q12730777:autor:…`) + **251 fabricate, țară ↔ capitală** (`wd:Q142:capitala:…`) — **conținutul fabricat stă într-un DOSAR**, `data/trivia_gen/`, citit întreg de încărcător: un tabel nou = două fișiere, zero linii de cod · **92 de fapte cu note** + 357 de fapte fabricate fără notă · **OPT DOMENII** (Geografie și explorare, Istorie și societate, Știință și tehnologie, Artă și literatură, Divertisment și media, Sport și jocuri, Gastronomie și lifestyle, Diverse și curiozități), cu **31 de subcategorii** — **toate OPT domeniile sunt în luptă, niciunul din cele 31 de rafturi nu e gol și nicio întrebare nu e fără raft** (cele 135 scrise înaintea câmpului au fost clasificate, iar 21 de întrebări de mitologie au trecut de la Artă la Istorie); **niciun raft nu mai e subțire din întâmplare** (`motor_extreme` a urcat de la 9 la 30, cu 10 pe fiecare nivel; singurele două sub 10 pe un nivel, `pop_culture` și `logica_perspicacitate`, sunt mici dinadins), tăiate după cum se joacă, nu după cum crescuse baza: artă + mitologie + literatură s-au unit, Divertisment și Sport pornesc goale · `CATEGORII` (listă) a devenit `DOMENII` (dicționar cheie → nume afișat), deci antetul scrie „ARTĂ ȘI LITERATURĂ”, nu cheia · **alegerea din luptă e în două trepte** — întâi domeniul, uniform, apoi întrebarea, cu sacul pe cheie de domeniu ȘI nivel — iar de azi **domeniul intră doar peste `PRAG_DOMENIU = 8` întrebări pe celulă**, cu plasă dacă nu trece niciunul; sub prag e sărit, nu golit (istoria trece cu rezerva ZERO, deci e următoarea țintă de conținut) · comutator `FOLOSESTE_WIKIDATA` · **fabrica are un modul comun**, `tools/fabrica/comun.py`, iar grila marchează celulele sărite · **faptele capitalelor au o LISTĂ de imagini**, `imagini: [{tip, …}]`: **126 de steaguri pe disc** (`assets/imagini_fapte/steaguri/`, PNG 320 px, 0,53 MB sursă, toate în domeniul public, cu manifest de credite), plus o intrare de hartă pe fiecare din cele 127 de fapte; Omanul e singurul refuzat, cu motivul scris · **fiecare întrebare are și o `subcategorie`**, una singură, din listă închisă pe domeniu (36 de chei, 4 folosite; la istorie sunt erele, tăiate pe dată) — cele 135 scrise de mână o primesc într-un lot de clasificare, cu un clichet în verificator · **istoria e la 18 pe toate trei nivelurile**, iar **Divertismentul și Sportul au câte 50 pe fiecare celulă**, pe 11 subcategorii cu care se poate filtra (filme 48, muzică 36, fotbal 30, olimpiade 30…) — deci **toate ȘASE domeniile sunt în luptă**, fiecare cu 1/6 din întrebări, și toate cele 11 subcategorii ale celor două domenii noi au conținut · **verificarea e un singur câmp**, `verificat: true/false` pe întrebare, pus de mână: întrebarea intră în joc oricum, iar flagul spune doar dacă i-am citit nota. Niciun script, niciun parametru — mecanismul de ciorne, al doilea flag de pe fapt și cele două unelte de confirmare s-au desfăcut (vezi UN SINGUR FLAG) · planul de conținut al tuturor celor șase domenii, cu subcategorii, tabele propuse și capcanele lor, e în **`docs/plan-continut.md`** · vezi sesiunile UN SINGUR FLAG, ȘASE DOMENII ÎN LUPTĂ, PLANUL ȘI CIORNELE, DOMENIILE, CONȚINUTUL, ID ȘI FAPT, FABRICA, AL DOILEA TABEL, MODULUL COMUN și STEAGURILE) · Logica ✅ (80 de categorii) · Cuvinte ✅ · toate trei fără repetiții pe expediție, **Cultura generală după `id`, nu după text** · celelalte 5 ❌ |
+| 9. Celelalte discipline | 🟡 Cultură generală ✅ (**2692 de întrebări în joc, toate**: 2142 scrise de mână (`mana:0001`…) + **139 fabricate, elemente chimice** (`wd:Q897:simbol:…`) + **160 fabricate, operă → autor** (`wd:Q12730777:autor:…`) + **251 fabricate, țară ↔ capitală** (`wd:Q142:capitala:…`) — **conținutul fabricat stă într-un DOSAR**, `data/trivia_gen/`, citit întreg de încărcător: un tabel nou = două fișiere, zero linii de cod · **92 de fapte cu note** + 357 de fapte fabricate fără notă · **OPT DOMENII** (Geografie și explorare, Istorie și societate, Știință și tehnologie, Artă și literatură, Divertisment și media, Sport și jocuri, Gastronomie și lifestyle, Diverse și curiozități), cu **31 de subcategorii** — **toate OPT domeniile sunt în luptă, niciunul din cele 31 de rafturi nu e gol și nicio întrebare nu e fără raft** (cele 135 scrise înaintea câmpului au fost clasificate, iar 21 de întrebări de mitologie au trecut de la Artă la Istorie); **toate cele 93 de celule (subdomeniu × nivel) au cel puțin 25 de întrebări** — treapta CONFORT din `plan-continut.md`, cea la care 4-5 expediții lungi nu repetă nimic; drumul până la 100 pe celulă cere încă 6631 și trece prin fabrică, nu prin scris de mână, tăiate după cum se joacă, nu după cum crescuse baza: artă + mitologie + literatură s-au unit, Divertisment și Sport pornesc goale · `CATEGORII` (listă) a devenit `DOMENII` (dicționar cheie → nume afișat), deci antetul scrie „ARTĂ ȘI LITERATURĂ”, nu cheia · **alegerea din luptă e în două trepte** — întâi domeniul, uniform, apoi întrebarea, cu sacul pe cheie de domeniu ȘI nivel — iar de azi **domeniul intră doar peste `PRAG_DOMENIU = 8` întrebări pe celulă**, cu plasă dacă nu trece niciunul; sub prag e sărit, nu golit (istoria trece cu rezerva ZERO, deci e următoarea țintă de conținut) · comutator `FOLOSESTE_WIKIDATA` · **fabrica are un modul comun**, `tools/fabrica/comun.py`, iar grila marchează celulele sărite · **faptele capitalelor au o LISTĂ de imagini**, `imagini: [{tip, …}]`: **126 de steaguri pe disc** (`assets/imagini_fapte/steaguri/`, PNG 320 px, 0,53 MB sursă, toate în domeniul public, cu manifest de credite), plus o intrare de hartă pe fiecare din cele 127 de fapte; Omanul e singurul refuzat, cu motivul scris · **fiecare întrebare are și o `subcategorie`**, una singură, din listă închisă pe domeniu (36 de chei, 4 folosite; la istorie sunt erele, tăiate pe dată) — cele 135 scrise de mână o primesc într-un lot de clasificare, cu un clichet în verificator · **istoria e la 18 pe toate trei nivelurile**, iar **Divertismentul și Sportul au câte 50 pe fiecare celulă**, pe 11 subcategorii cu care se poate filtra (filme 48, muzică 36, fotbal 30, olimpiade 30…) — deci **toate ȘASE domeniile sunt în luptă**, fiecare cu 1/6 din întrebări, și toate cele 11 subcategorii ale celor două domenii noi au conținut · **verificarea e un singur câmp**, `verificat: true/false` pe întrebare, pus de mână: întrebarea intră în joc oricum, iar flagul spune doar dacă i-am citit nota. Niciun script, niciun parametru — mecanismul de ciorne, al doilea flag de pe fapt și cele două unelte de confirmare s-au desfăcut (vezi UN SINGUR FLAG) · planul de conținut al tuturor celor șase domenii, cu subcategorii, tabele propuse și capcanele lor, e în **`docs/plan-continut.md`** · vezi sesiunile UN SINGUR FLAG, ȘASE DOMENII ÎN LUPTĂ, PLANUL ȘI CIORNELE, DOMENIILE, CONȚINUTUL, ID ȘI FAPT, FABRICA, AL DOILEA TABEL, MODULUL COMUN și STEAGURILE) · Logica ✅ (80 de categorii) · Cuvinte ✅ · toate trei fără repetiții pe expediție, **Cultura generală după `id`, nu după text** · celelalte 5 ❌ |
 | 10–13. Generator de inamici, artă, web | ❌ (artă parțial: figurile principale și piesele de pe butoanele de Obelisc au imagini reale · **arena are fundal: biblioteca gotică**, cu personajele așezate pe dalele din prim-plan, umbră de contact și lumină de sală) · Regina: **amânată**, vezi CLAUDE.md |
 
 Nodul de **Eveniment** are primul lui conținut: **Lacătul** — un cufăr cu cifru,
@@ -37,6 +37,161 @@ buget, generare) rămâne acolo unde era.
 Am sărit peste ordinea recomandată la pasul 12 (artă): imaginile pentru rege,
 cavaler și pentru cele trei piese de șah de pe butoane au intrat mai devreme, dar
 restul rămâne placeholder. Bucla de luptă e în continuare cea validată, nu arta.
+
+---
+
+## CONFORT 25 PE TOATE CELE 93 DE CELULE (8 octombrie 2026) — 986 de întrebări
+
+**986 de întrebări noi, pe toate cele opt domenii.** Toate cele 93 de celule
+(subdomeniu × nivel) au cel puțin **25** de întrebări — a doua treaptă din
+`plan-continut.md`, cea la care 4-5 expediții lungi nu repetă nimic într-o celulă.
+
+**2692 de întrebări în joc**, de la 1706. Verificatorul iese cu cod 0.
+
+### Ce s-a cerut, ce costa, ce s-a livrat
+
+Cererea era **100 pe subdomeniu și pe nivel**: 93 × 100 = 9300 de întrebări, deci
+**7617 noi, de 4,5 ori tot ce exista**. Trei lucruri au făcut cifra asta o decizie,
+nu o comandă de executat:
+
+1. **Volumul.** 7617 de întrebări scrise de mână nu intră într-o sesiune la o
+   calitate care se poate apăra. Tranșa de azi, 986, a fost scrisă în opt loturi,
+   fiecare cu validare și cu o citire a rafturilor vecine înainte.
+2. **Un principiu decis se rupe la volumul ăsta.** „Modelul de limbaj formulează,
+   nu informează” (CLAUDE.md). 7617 de fapte venite din model îl fac SURSA
+   faptelor, iar la 2% greșeli ies **152 de fapte false predate de un joc de
+   învățare** — exact ce decizia aia interzice. Volumul de ordinul miilor trebuie
+   să vină din **fabrică**, adică din tabelele Wikidata deja propuse în
+   `plan-continut.md`, unde faptul e verificabil și scriptul oprește pe ambiguitate.
+3. **La nivelul I, 100 e imposibil prin definiție.** Nivelul I e „o știe orice
+   adult”. Nu există 100 de noțiuni de logică, nici 100 de fenomene pop cu dată și
+   urmă, pe care le știe orice adult. `pop_culture` e mic *dinadins*: conținutul
+   lui îmbătrânește cel mai repede.
+
+Deci s-a livrat **CONFORT 25 pe toate celulele**, treapta pe care planul o
+numește „cea care lipsește peste tot și se atinge într-o săptămână de scris”.
+
+### Repartiția pe domenii
+
+| domeniu | adăugate | unde erau găurile |
+|---|---|---|
+| Geografie | 119 | fizica, turismul și demografia stăteau la 10-16 |
+| Istorie | 129 | `lideri_personalitati` avea 11-14 pe nivel |
+| Știință | 124 | `tehnologie_inventii` era la 10 pe toate nivelurile |
+| Artă | 114 | `arhitectura_design` era la 10 |
+| Divertisment | 147 | `pop_culture` cerea singur 51 |
+| Sport | 128 | `motor_extreme` cerea singur 45, de la 10 la 25 |
+| Gastronomie | 150 | patru rafturi, toate sub 17 |
+| Diverse | 75 | `logica_perspicacitate` cerea 19 la nivelul I |
+
+Cele trei rafturi hrănite de fabrică — `geografie_politica` 259,
+`literatura_universala` 181, `stiinte_exacte` 152 — erau deja peste 25 și nu s-au
+atins.
+
+### Ce a prins verificarea, și ce NU putea prinde
+
+Validatorul de lot a oprit de patru ori, pe text deja existent: sărbătoarea de 25
+decembrie, insulina, camerele inimii, forța care ține planetele pe orbită, cele
+trei dungi Adidas. Fiecare s-a înlocuit, nu s-a slăbit verificarea.
+
+Dar **auditul de dubluri semantice a găsit 22 de perechi, din care 18 erau ale
+mele** — întrebări care treceau toate verificările mecanice (text distinct,
+variante distincte, răspunsul neapărut în text) și totuși întrebau același lucru:
+
+```
+mana:0730  N1 curiozitati   Ce insectă produce mierea?        → Albina
+(nouă)     N1 lumea_vie     Ce insectă produce miere?          → Albina
+```
+
+Toate 18 au fost rescrise înainte de id-uri, iar rescrierile n-au adus nicio
+ciocnire nouă. Au mai rămas 10 perechi, toate citite și legitime (iPhone/iPod,
+Mona Lisa/Cina cea de Taină, seturile de volei față de cele de la Wimbledon).
+
+### Tiparul, care e o lecție de structură, nu o scăpare
+
+Cele 18 nu erau împrăștiate la întâmplare. **14 din 18 loveau trei rafturi
+anume**, și motivul e că rafturile alea sunt TRANSVERSALE:
+
+- `curiozitati` adună „ce animal / ce parte a plantei / ce unitate”, deci se
+  ciocnește cu `lumea_vie` și cu `astronomie_spatiu`;
+- `lingvistica` adună „ce limbă se vorbește în”, deci se ciocnește cu
+  `demografie_cultura`;
+- `pop_culture` adună jucării și jocuri, deci se ciocnește cu `gaming`, iar
+  băuturile de firmă îl ciocnesc cu `bauturi`.
+
+Un raft „de toate” nu se poate umple fără să-i citești vecinii întâi. De-aia
+fiecare lot a pornit cu o listare a rafturilor pe care urma să scriu — și de-aia
+cele mai multe dubluri au ieșit totuși, fiindcă n-am listat rafturile ALTOR
+domenii. Regula pentru data viitoare: **înainte de a scrie într-un raft, citește
+și rafturile transversale, nu numai pe cel din care scrii.**
+
+### Statistica finală
+
+```
+DOMENIU / subdomeniu                    I   II  III  total
+GEOGRAFIE ȘI EXPLORARE                117  198  169    484
+  geografie_politica                   42  123   94    259
+  geografie_fizica · turism · demografie    25 pe fiecare celulă    225
+ISTORIE ȘI SOCIETATE                  100  100  100    300
+  toate patru rafturile                     25 pe fiecare celulă    300
+ȘTIINȚĂ ȘI TEHNOLOGIE                 116  133  128    377
+  stiinte_exacte                       41   58   53    152
+  lumea_vie · astronomie · tehnologie       25 pe fiecare celulă    225
+ARTĂ ȘI LITERATURĂ                    111  141  154    406
+  literatura_universala                36   66   79    181
+  arte_vizuale · arhitectura · cultura_clasica  25 pe celulă       225
+DIVERTISMENT ȘI MEDIA                 100  100  100    300
+SPORT ȘI JOCURI                       100  100  100    300
+GASTRONOMIE ȘI LIFESTYLE              100  100  100    300
+DIVERSE ȘI CURIOZITĂȚI                 75   75   75    225
+TOTAL                                 819  947  926   2692
+```
+
+```
+celule sub   8:  0 din 93
+celule sub  25:  0 din 93     ← CONFORT atins peste tot
+celule sub  50: 87 din 93     (lipsesc 2131)
+celule sub 100: 92 din 93     (lipsesc 6631)
+```
+
+### Drumul până la 100, dacă îl vrem
+
+**6631 de întrebări.** Și nu se face la fel pentru toate celulele:
+
+| ce | cât | cum |
+|---|---|---|
+| nivelurile II și III, unde faptul e verificabil | ~4400 | **fabrică**: tabele Wikidata din `plan-continut.md` (monument → țară, operă → compozitor, specie → clasă, pilot → titlu) |
+| nivelul I, peste tot | ~2200 | **de mână**, și aici e plafonul real: „o știe orice adult” nu se întinde la 100 pe orice raft |
+| `pop_culture` și `logica_perspicacitate` la nivelul I | — | **nu se pot duce cinstit la 100**; ambele sunt mici dinadins, cu motivul scris |
+
+Următorul pas care merită, dacă vrem volum: **un tabel nou în fabrică**, nu un lot
+nou scris de mână. Un tabel dă 150-250 de întrebări dintr-o comandă, cu faptul
+verificabil și cu scriptul care oprește pe ambiguitate.
+
+### Verificat
+
+- `verifica_trivia`, headless: **toate secțiunile OK**, 2692 încărcate din 2692.
+  Cod 0.
+- Echilibrul pe opt domenii: abatere maximă 8,0% la nivelul II, limita 20%.
+- Sacul: 24 de chei, un ciclu întreg fără nicio repetiție.
+- 2142 de texte distincte în fișierul scris de mână, 2692 pe tot conținutul.
+- Auditul de dubluri: 10 perechi rămase, toate citite și legitime.
+- `da_iduri.py --scrie`: 986 de id-uri noi (`mana:1157`…`mana:2142`).
+
+### Ce NU s-a făcut
+
+- **2664 din 2692 au `verificat: false`.** Tranșa asta n-are nicio notă.
+- **Nicio partidă jucată** cu 2692 de întrebări.
+- **Auditul de dubluri e tot un script de scratchpad**, deși azi a prins 18
+  întrebări. După sesiunea asta, mutarea lui în verificator nu mai e o idee
+  frumoasă, e datorie: e singura verificare care a găsit ceva.
+- **Nimic comis.**
+
+### Fișiere
+
+Atinse: `data/intrebari_trivia.json` (+986, 18 rescrise), `tools/da_iduri.py`
+(`CATE_INTREBARI` 2142), `tools/verificari/verifica_trivia.gd`
+(`CATE_INTREBARI_MANA` 2142), `docs/progres.md`.
 
 ---
 
