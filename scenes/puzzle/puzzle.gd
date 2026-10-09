@@ -20,6 +20,9 @@ extends Control
 ##   3. `arata_combo(text, marcaj)`          — streak-ul, cât e întrebarea pe ecran
 ##   4. semnalul `verdict(bun)`              — „am răspuns", strigat pe loc
 ##   5. semnalul `rezolvat(succes)`          — CE RETURNEAZĂ, după pauză
+##   6. `cu_cronometru`                      — curge timpul? Vezi variabila.
+##      Lupta n-o atinge (e `true` din start); Practice o stinge înainte de
+##      `porneste()`, fiindcă presiunea de timp e a luptei, nu a întrebării.
 ##
 ## ── CONTRACTUL CĂTRE O DISCIPLINĂ (nou) ───────────────────────
 ## O disciplină nouă e un script care scrie `extends Puzzle` și implementează
@@ -263,6 +266,28 @@ var indice_corect := -1
 var raspuns_dat := false   # ca un al doilea click să nu poată răspunde de două ori
 var pornit := false        # a chemat cineva porneste()?
 var explicatie := ""       # regula rezolvării; azi neafișată (vezi `_termina`)
+
+## CURGE TIMPUL? `true` în luptă, `false` în Practice.
+##
+## ── DE CE UN COMUTATOR, ȘI NU O SCENĂ A DOUA ──────────────────
+## Presiunea de timp e a LUPTEI, nu a întrebării: în Practice vrei să stai pe o
+## întrebare cât îți ia să te gândești la ea, fiindcă acolo scopul e să înveți,
+## nu să reziști. Dar restul scenei — cele patru butoane, cei trei timpi ai
+## verdictului, culorile, antetul — e identic, iar o copie a lui „fără
+## cronometru" ar fi exact duplicarea împotriva căreia există fișierul ăsta.
+##
+## ── DE CE AJUNG DOUĂ LINII ────────────────────────────────────
+## Fiindcă tot cronometrul atârnă de `_process`, iar `_process` se pornește
+## într-un singur loc (`porneste`, ultima linie). Fără el nu curge timpul, nu
+## expiră nimic și nu pornește ticăitul: `actualizeaza_cronometru()` e chemată
+## o dată, cu timpul plin, deci trece pe ramura care STINGE ceasul. Nicio
+## ramură nouă, niciun `if` pe drumul răspunsului.
+##
+## Bara se ascunde, fiindcă o bară plină care nu se mișcă e o promisiune
+## mincinoasă — ori măsoară ceva, ori nu există.
+##
+## Se pune ÎNAINTE de `porneste()`, ca orice altceva din contract.
+var cu_cronometru := true
 
 @onready var eticheta_categorie: Label = %CategorieEticheta
 @onready var eticheta_context: Label = %ContextEticheta
@@ -552,7 +577,13 @@ func porneste(nivel: int, context := "", scurtare := 0.0) -> void:
 
 	butoane[0].grab_focus()   # ca să meargă și cu tastatura (săgeți + Enter)
 	actualizeaza_cronometru()
-	set_process(true)         # ABIA ACUM pornește timpul
+
+	# BARA: vizibilă doar dacă măsoară ceva. Se scrie la fiecare întrebare, nu o
+	# dată în `_ready`, fiindcă ecranul de eroare (`_fara_intrebari`) o ascunde —
+	# iar întrebarea de după el trebuie s-o găsească la locul ei.
+	bara_timp.visible = cu_cronometru
+	# ABIA ACUM pornește timpul — și numai dacă e cerut. Vezi `cu_cronometru`.
+	set_process(cu_cronometru)
 
 
 ## Vama dintre disciplină și restul scenei: verifică dicționarul primit ÎNAINTE

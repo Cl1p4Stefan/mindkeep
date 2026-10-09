@@ -49,7 +49,7 @@ fișiere nici nu se compilează fără `Sac` și `Muzica`.
 
 | scenă | ce bate | verdicte | durată |
 |---|---|---|---|
-| `verifica_trivia` | întrebările, faptele, echilibrul pe domenii, sacul, pragul | 29 | ~20 s |
+| `verifica_trivia` | întrebările, faptele, echilibrul pe domenii, sacul, pragul, rafturile din Practice | 33 | ~20 s |
 | `verifica_harta` | generatorul de hărți, pe sute de semințe | 28 | ~40 s |
 | `verifica_plansa` | fiecare hartă desenată din `data/harti/` | 26 | ~30 s |
 | `verifica_eveniment` | lacătul pe care-l dă harta, nu cel din F6 | 22 | ~30 s |
@@ -123,6 +123,7 @@ Fiecare din astea a fost dezbătută și decisă conștient. Dacă propui altcev
 | **Toate disciplinele dau daune de bază** | Altfel una devine „cea inutilă"; diferă doar efectul secundar                                                                                                   |
 | **Greșeală = pierzi 1 PA, NU tura**      | Pierderea turii pedepsește ignoranța în loc s-o corecteze                                                                                                       |
 | **Desktop = „casa" progresului**         | Build-ul web e demo; save-urile nu se sincronizează automat                                                                                                     |
+| **Meniul de start e scena principală**   | Două moduri de joc înseamnă o răscruce, iar răscrucea trebuie să fie un ecran, nu un `run/main_scene` schimbat de mână. Meniul ÎNCARCĂ o scenă și nu știe nimic despre ea: harta își alege singură ecranul (loadout / hartă / sumar) din starea lui `Expeditie`, exact ca până acum — deci `harta.tscn` și `lupta.tscn` pornesc în continuare singure cu F6. Ieșire spre meniu doar de pe loadout și de pe sumar: din mijlocul unei expediții, fără Save, ar fi o abandonare deghizată în pauză |
 
 
 ### Bucla de luptă
@@ -160,7 +161,8 @@ Decise pe 27 septembrie 2026, cu domeniile retăiate pe 6 octombrie 2026. Contex
 | **Un domeniu intră în luptă doar peste un prag de 8 întrebări pe nivel** | Pragul se măsoară pe CELULĂ (domeniu × nivel), fiindcă un domeniu poate fi gros la nivelul I și gol la III. Socoteala: o expediție lungă trage ~45 de întrebări de Cultură generală, din care ~49% la nivelul I (paliere de 3 trepte), adică ~22; împărțite la cele 4 domenii care trec pragul, 5-6 pe celulă. Sacul nu repetă până se golește, deci la 8 nu se repetă nimic într-o expediție, la 4 se repetă o dată. 8 e și o celulă scrisă de mână (baza de 135 s-a construit 7-8 pe celulă) și cifra la care nu pierd nimic din ce am: istoria are exact 8 și trece la limită — ceea ce o numește drept următoarea țintă de conținut, în loc s-o ascundă. Sub prag domeniul e SĂRIT, nu golit, și reintră singur când celula se umple. Dacă niciunul nu trece, se joacă cu toate: o întrebare repetată e mai bună decât ecranul de eroare în mijlocul unui lanț |
 | **Domeniul îl dă ce trebuie să ȘTII, nu subiectul** | „Unde se află Turnul Eiffel?” e geografie; „Cine l-a proiectat?” e artă și literatură. Fără regula asta, un subiect bogat (Egiptul, Leonardo, Dunărea) trage spre el întrebări din trei domenii, iar echilibrul din luptă devine o părere |
 | **La Divertisment și Sport, numai trecut, cu data spusă** | Fără „actual”, fără „în prezent”; la celebrități, doar cariera publică. Un record sau un deținător de titlu se schimbă fără să se schimbe nimic în fișierul meu, deci o întrebare scrisă cu „actual” devine într-un an un fapt fals predat de un joc de învățare — aceeași greșeală ca la modelul de limbaj, venită din trecerea timpului, nu din halucinație. Cariera publică și nu viața privată ține și de „Ton sănătos” |
-| **Practice: alegi domeniul, nu nivelul** | Nivelul urcă singur, separat pe fiecare domeniu |
+| **Practice: alegi domeniul și, dacă vrei, raftul — niciodată nivelul** | Domeniul și subcategoria sunt o LUPĂ peste conținut: în luptă alege jocul, uniform și peste `PRAG_DOMENIU`, fiindcă acolo un domeniu sărac ar lua 1/N din toată lupta; în Practice alegi tu, deci acolo NU există prag — un prag ar fi însemnat „nu ai voie să exersezi raftul care tocmai a apărut”. Primul buton e „Tot domeniul”, singurul care cuprinde și întrebările fără raft. Nivelul, în schimb, nu se alege: urcă singur, pe DOMENIU (nu pe raft — altfel ar fi 31 de progrese și un nivel care sare după ce raft ai deschis), la `PRAG_PRACTICE` = 60 de răspunsuri corecte la întrebări distincte. Cheia sacului cuprinde filtrul (`practice:<domeniu>:<raft sau tot>:<nivel>`), fiindcă `Sac.extrage` golește registrul unei chei când lista primită se epuizează |
+| **Rafturile goale apar, dezactivate** | Un raft ascuns e un raft despre care nu afli niciodată nimic — nu știi dacă nu există, dacă l-ai pierdut sau dacă n-am scris încă nimic în el. Unul stins, cu cifra pe el, e o hartă a conținutului care lipsește: aceeași decizie ca la `PRAG_DOMENIU`, unde domeniile subțiri sunt SĂRITE, nu scoase din date. Cifra de pe buton e câte întrebări are raftul LA NIVELUL TĂU, nu totalul pe trei niveluri: aia e cifra care se și joacă, și ea decide dacă butonul e activ |
 | **Nivelul următor se deblochează la un prag fix, nu la „toate corecte”** | „Toate” e un zid la final și crește odată cu conținutul. Pragul fix (de pornire: 60 de răspunsuri corecte la întrebări distincte) nu crește. După prag, nivelurile se amestecă |
 | **Greșitele revin; „învățat” cere 2–3 răspunsuri corecte la distanță în timp** | Un singur răspuns corect poate fi ghicit (o șansă din patru). Întrebările învățate ies din joc și intră în Jurnal |
 | **„Află mai multe” poate arăta și o imagine, câmp opțional ca nota** | Unde e Bolivia sau cum arată un monument se înțelege dintr-o privire, nu din 240 de caractere. Unde imaginea lipsește, popup-ul rămâne cum era |
@@ -187,7 +189,7 @@ Decise pe 27 septembrie 2026, cu domeniile retăiate pe 6 octombrie 2026. Contex
 
 ## Ordinea de construcție (ruta recomandată)
 
-**Făcut deja:** setup + Git, scena de luptă, sistemul de combo, Trivia + Logică integrate, arhetipuri de inamici (Atac constant / Grabnic), card de inamic, artă pentru rege și cavaler, audio (muzică, feedback, ticăit, victorie/înfrângere), UI lustruit.
+**Făcut deja:** setup + Git, scena de luptă, sistemul de combo, Trivia + Logică integrate, arhetipuri de inamici (Atac constant / Grabnic), card de inamic, artă pentru rege și cavaler, audio (muzică, feedback, ticăit, victorie/înfrângere), UI lustruit, harta de expediție, meniul de start și prima felie din Practice.
 
 **Ce urmează:**
 
@@ -203,7 +205,7 @@ Decise pe 27 septembrie 2026, cu domeniile retăiate pe 6 octombrie 2026. Contex
 10. **Generatorul de inamici** — arhetipuri + modificatori + buget, după ce știi că piesele merită combinate. Aici se separă identitatea inamicului (nume, descriere, facțiune) de `DATE_ARHETIP`.
 11. **Artă, VFX, „juice"** — parțial început (figurile principale au imagini reale); restul e placeholder.
 12. **Turnul Perseverenței** — al doilea mod de joc
-13. **Antrenament liber (Practice)** — Cultură generală pe domeniul ales. Nivelul urcă singur, pe fiecare domeniu (prag fix, apoi amestec); „Află mai multe” afișează nota faptului și, opțional, o imagine (hartă desenată din date sau imagine reală cu licență); întrebările greșite revin. Are nevoie de: `id` stabil, note, istoric permanent pe întrebare (vine cu Save), conținut suficient pe celule. Detaliile sunt în sesiunea CONȚINUTUL din `progres.md`.
+13. **Antrenament liber (Practice)** — Cultură generală pe domeniul ales. **Prima felie e făcută** (8 octombrie 2026): meniu de start, alegerea domeniului și a raftului din `DOMENII` și `SUBCATEGORII`, întrebările prin chiar scena de trivia a luptei, fără cronometru, cu nivel pe domeniu (`PRAG_PRACTICE` = 60) și progres ținut doar în memorie. **A rămas:** întrebările greșite care revin, „învățat” și Jurnalul, amestecul de niveluri după deblocare, popup-ul „Află mai multe” cu nota faptului și, opțional, o imagine (hartă desenată din date sau imagine reală cu licență), istoricul comun cu expedițiile și Save (de care atârnă istoricul permanent pe întrebare). Detaliile sunt în sesiunile CONȚINUTUL și MENIUL ȘI PRACTICE din `progres.md`.
 14. **Export web pentru feedback**
 
 **Pe o linie paralelă (conținut, nu cod):** fabrica de întrebări de Cultură generală. După proba cu un singur tabel din Wikidata, crește câte puțin, ghidată de grila pe celule. Nu blochează ruta și nu e blocată de ea.

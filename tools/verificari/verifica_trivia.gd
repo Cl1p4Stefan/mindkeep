@@ -170,6 +170,7 @@ func _ready() -> void:
 	tot_bun = _echilibrul(intrebari) and tot_bun
 	tot_bun = _sacul(intrebari) and tot_bun
 	tot_bun = _sacurile_nu_se_amesteca(intrebari) and tot_bun
+	tot_bun = _rafturile(intrebari) and tot_bun
 	tot_bun = _imaginile() and tot_bun
 	# ULTIMA, fiindcă e singura care ÎNLOCUIEȘTE `TRIVIA.intrebari` cu o bază
 	# sintetică. O pune la loc când termină, dar o verificare care mișcă pământul
@@ -858,7 +859,197 @@ func _sacurile_nu_se_amesteca(intrebari: Array) -> bool:
 
 
 # ─────────────────────────────────────────────────────────────
-# 9. IMAGINILE FAPTELOR
+# 9. RAFTURILE DIN PRACTICE
+#
+# Tragerea din Practice (`trage_din_raft`) nu e alegerea din luptă, și de-aia
+# are nevoie de verificarea ei: acolo domeniul îl alege jocul, uniform și peste
+# un prag; aici îl alege jucătorul, iar singura promisiune e „primești exact ce
+# ai cerut, fără repetiții".
+#
+# ─── DE CE NU SE POATE PROBA CU OCHIUL ────────────────────────
+# Un buton pe care scrie „136 la nivelul I" și un sac care trage din alte 140 se
+# văd identic pe ecran. Tot ce ai vedea e o întrebare de alt raft, o dată la
+# câteva zeci — adică exact ceea ce pui pe seama propriei neatenții.
+#
+# ─── CELE TREI LUCRURI VERIFICATE ─────────────────────────────
+#
+#   FILTRUL E RESPECTAT. Fiecare întrebare trasă din raft are domeniul, nivelul
+#   ȘI subcategoria cerute. Se trage prin CHIAR funcția pe care o cheamă ecranul,
+#   nu printr-o copie a filtrului scrisă aici: o verificare care-și rescrie
+#   obiectul probează copia, nu codul.
+#
+#   RAFTURILE ÎMPART TOT DOMENIUL. „Tot domeniul" trebuie să cuprindă exact
+#   suma rafturilor plus întrebările fără raft — nici una în plus, niciuna pe
+#   dinafară. Ăsta e chiar motivul pentru care `subcategorie` e un CÂMP și nu o
+#   etichetă (vezi `SUBCATEGORII`): o împărțire, nu niște etichete care se
+#   suprapun. Dacă s-ar suprapune, cifrele de pe butoane ar fi false și n-ar
+#   avertiza nimic.
+#
+#   UN CICLU ÎNTREG, FĂRĂ REPETIȚII. Garanția sacului, pe fiecare raft: se trag
+#   exact atâtea întrebări câte are raftul și trebuie să iasă toate distincte.
+#
+#   CHEILE SUNT SEPARATE PE FILTRU. Cea mai țintită, scrisă pentru o singură
+#   greșeală — aceeași pe care o apără secțiunea 8, cu un nivel mai jos.
+#   `Sac.extrage` golește registrul unei chei când lista primită se epuizează.
+#   Deci dacă cheia n-ar cuprinde raftul, terminarea unui raft ar șterge memoria
+#   întregului domeniu; iar dacă Practice ar folosi cheia LUPTEI, exersarea unui
+#   raft dimineața ar face lupta de seara să repete întrebări. Se probează
+#   amândouă: se golește un raft, apoi se întreabă alt raft al aceluiași domeniu
+#   ȘI sacul de luptă al aceleiași celule dacă își mai țin minte biletele.
+# ─────────────────────────────────────────────────────────────
+
+func _rafturile(intrebari: Array) -> bool:
+	print("\n  RAFTURILE DIN PRACTICE (tragerea filtrată, pe fiecare raft cu conținut)")
+	var tot_bun := true
+
+	var filtru_incalcat: Array[String] = []
+	var cicluri_picate: Array[String] = []
+	var impartiri_picate: Array[String] = []
+	var rafturi_probate := 0
+	var trageri := 0
+
+	var domenii: Array = TRIVIA.DOMENII.keys()
+	domenii.sort()
+	for domeniu in domenii:
+		var nume_domeniu := String(domeniu)
+		for nivel in range(1, 4):
+			# ÎMPĂRȚIREA. „Tot domeniul" față de suma rafturilor plus cele fără
+			# raft. Se numără cu `raftul()`, adică prin chiar funcția care scrie
+			# cifrele pe butoanele din Practice.
+			var tot: int = TRIVIA.raftul(nivel, nume_domeniu).size()
+			var suma := 0
+			var rafturi: Dictionary = TRIVIA.SUBCATEGORII.get(nume_domeniu, {})
+			for cheie in rafturi:
+				suma += TRIVIA.raftul(nivel, nume_domeniu, String(cheie)).size()
+			var fara_raft := 0
+			for q in intrebari:
+				if int(q["nivel"]) == nivel and String(q["categorie"]) == nume_domeniu \
+						and String(q.get("subcategorie", "")) == "":
+					fara_raft += 1
+			if tot != suma + fara_raft:
+				impartiri_picate.append("%s:%d (tot %d ≠ %d + %d)" % [
+					nume_domeniu, nivel, tot, suma, fara_raft])
+
+			# FILTRUL ȘI CICLUL, pe fiecare raft cu conținut. Un singur ciclu
+			# răspunde la amândouă întrebările, fiindcă fiecare tragere se uită
+			# și la ce a venit, și la dacă a mai venit.
+			for cheie in rafturi:
+				var raft := String(cheie)
+				var cate: int = TRIVIA.raftul(nivel, nume_domeniu, raft).size()
+				if cate == 0:
+					continue   # rafturile goale sunt dezactivate pe ecran
+				rafturi_probate += 1
+
+				var vazute := {}
+				var repetari := 0
+				for _i in range(cate):
+					var tras := TRIVIA.trage_din_raft(nivel, nume_domeniu, raft)
+					trageri += 1
+					if tras.is_empty():
+						repetari += 1   # n-ar trebui să se poată: raftul are conținut
+						break
+					if int(tras["nivel"]) != nivel \
+							or String(tras["categorie"]) != nume_domeniu \
+							or String(tras.get("subcategorie", "")) != raft:
+						filtru_incalcat.append("%s din %s:%s:%d" % [
+							String(tras["id"]), nume_domeniu, raft, nivel])
+					var id := String(tras["id"])
+					if vazute.has(id):
+						repetari += 1
+					vazute[id] = true
+
+				if repetari > 0 or vazute.size() != cate:
+					cicluri_picate.append("%s (%d din %d)" % [
+						TRIVIA.cheia_raftului(nume_domeniu, raft, nivel), vazute.size(), cate])
+
+	Sac.expeditie_noua()
+
+	tot_bun = _verdict("filtrul e respectat", filtru_incalcat.is_empty(),
+		"%d trageri, pe %d rafturi" % [trageri, rafturi_probate]
+		if filtru_incalcat.is_empty() else _primele(filtru_incalcat, 4)) and tot_bun
+	tot_bun = _verdict("rafturile împart tot domeniul", impartiri_picate.is_empty(),
+		"%d celule" % (TRIVIA.DOMENII.size() * 3) if impartiri_picate.is_empty()
+		else _primele(impartiri_picate, 4)) and tot_bun
+	tot_bun = _verdict("un ciclu întreg, pe fiecare raft", cicluri_picate.is_empty(),
+		"%d rafturi fără nicio repetiție" % rafturi_probate if cicluri_picate.is_empty()
+		else _primele(cicluri_picate, 4)) and tot_bun
+	tot_bun = _cheile_pe_filtru() and tot_bun
+	return tot_bun
+
+
+## Se golește un raft, apoi se întreabă vecinul lui ȘI sacul de luptă.
+##
+## Caută prima celulă (domeniu × nivel) care are DOUĂ rafturi cu conținut —
+## fiindcă fără doi martori nu se poate pune întrebarea. Dacă nu există niciuna,
+## verificarea PICĂ în loc să treacă în tăcere: „n-am avut ce proba" nu e același
+## lucru cu „e bine", iar o verificare care se dă singură la o parte când
+## conținutul e sărac e o verificare pe care n-o mai vezi niciodată pică.
+func _cheile_pe_filtru() -> bool:
+	for nivel in range(1, 4):
+		for domeniu in TRIVIA.DOMENII:
+			var nume_domeniu := String(domeniu)
+			var cu_continut: Array[String] = []
+			for cheie in TRIVIA.SUBCATEGORII.get(nume_domeniu, {}):
+				if not TRIVIA.raftul(nivel, nume_domeniu, String(cheie)).is_empty():
+					cu_continut.append(String(cheie))
+			if cu_continut.size() < 2:
+				continue
+			return _proba_cheilor(nume_domeniu, nivel, cu_continut[0], cu_continut[1])
+
+	return _verdict("cheile sunt separate pe filtru", false,
+		"nicio celulă n-are două rafturi cu conținut")
+
+
+func _proba_cheilor(domeniu: String, nivel: int, martor: String, epuizat: String) -> bool:
+	# O tragere din martor: de acum are un bilet pus deoparte.
+	var tras_martor := TRIVIA.trage_din_raft(nivel, domeniu, martor)
+	var id_martor := String(tras_martor.get("id", ""))
+
+	# Și una din sacul de LUPTĂ al aceleiași celule, care n-are nicio treabă cu
+	# Practice și trebuie să rămână neatins.
+	var pool_lupta: Array = TRIVIA.raftul(nivel, domeniu)
+	var tras_lupta = Sac.extrage(TRIVIA.cheia_sacului(domeniu, nivel), pool_lupta, "id")
+	var id_lupta := String(tras_lupta["id"]) if tras_lupta != null else ""
+
+	# Golim celălalt raft de tot, plus o tragere peste, ca să declanșăm chiar
+	# reciclarea. Aia e clipa în care un sac cu cheie prea largă ar șterge tot.
+	var cate_epuizat: int = TRIVIA.raftul(nivel, domeniu, epuizat).size()
+	for _i in range(cate_epuizat + 1):
+		TRIVIA.trage_din_raft(nivel, domeniu, epuizat)
+
+	# MARTORUL: dacă memoria lui a supraviețuit, biletul tras la început NU poate
+	# ieși din nou cât mai există altele nevăzute.
+	var cate_martor: int = TRIVIA.raftul(nivel, domeniu, martor).size()
+	var repetat_in_practice := false
+	for _i in range(cate_martor - 1):
+		var tras := TRIVIA.trage_din_raft(nivel, domeniu, martor)
+		if not tras.is_empty() and String(tras["id"]) == id_martor:
+			repetat_in_practice = true
+			break
+
+	# SACUL DE LUPTĂ, aceeași întrebare. Pool-ul lui e tot domeniul, deci mult mai
+	# mare: ajunge o mână de trageri ca să se vadă dacă memoria i-a fost ștearsă.
+	var repetat_in_lupta := false
+	for _i in range(mini(cate_martor, pool_lupta.size() - 1)):
+		var tras = Sac.extrage(TRIVIA.cheia_sacului(domeniu, nivel), pool_lupta, "id")
+		if tras != null and String(tras["id"]) == id_lupta:
+			repetat_in_lupta = true
+			break
+
+	Sac.expeditie_noua()
+
+	var bun := not repetat_in_practice and not repetat_in_lupta
+	var amanunt := "%s:%d — %s a ținut minte după ce %s s-a golit" % [
+		domeniu, nivel, martor, epuizat]
+	if repetat_in_practice:
+		amanunt = "%s a ieșit de două ori după golirea lui %s" % [id_martor, epuizat]
+	elif repetat_in_lupta:
+		amanunt = "sacul de LUPTĂ a uitat (%s a ieșit de două ori)" % id_lupta
+	return _verdict("cheile sunt separate pe filtru", bun, amanunt)
+
+
+# ─────────────────────────────────────────────────────────────
+# 10. IMAGINILE FAPTELOR
 #
 # DE CE O SECȚIUNE ÎNTREAGĂ PENTRU NIȘTE CÂMPURI CARE NU SE AFIȘEAZĂ ÎNCĂ.
 # Fiindcă exact asta e problema: până la pasul 13 nu există nimic care să le
@@ -1046,7 +1237,7 @@ func _cod_de_tara(cod: String) -> bool:
 
 
 # ─────────────────────────────────────────────────────────────
-# 10. PRAGUL, PROBAT RUPÂNDU-L
+# 11. PRAGUL, PROBAT RUPÂNDU-L
 #
 # DE CE NU AJUNGE SECȚIUNEA 6. Acolo se măsoară că domeniile care trec pragul
 # ies uniform. Dar azi TOATE domeniile cu conținut trec pragul, deci dacă mâine

@@ -1,6 +1,6 @@
 # MINDKEEP — Jurnal de progres
 
-*Ultima actualizare: 8 octombrie 2026*
+*Ultima actualizare: 9 octombrie 2026*
 *Atașează acest fișier la începutul fiecărei sesiuni noi, împreună cu `CLAUDE.md` și `docs/pitch-document.md`.*
 
 ---
@@ -16,9 +16,9 @@
 | 5. Trei inamici manuali | ✅ Soldatul · Lăncierul (ceas) · Spadasinul (vulnerabilitate), aleși din joc |
 | 6. Harta de expediție | ✅ loadout „N din M" · **12-16 noduri**, ramificate, cu sămânță · Luptă / Elită / Odihnă / Eveniment / **Magazin** / **Boss** · **Monede + puteri temporare** · sumar de run · aspect: pergament, simboluri de cerneală, trasee punctate · **nodurile și drumurile stau pe o PANGLICĂ (curbă centrală + benzi)**, nu pe o grilă dreaptă · **patru trasee, toate verzi pe 300 de semințe** (POTCOAVĂ activă; POTCOAVA OGLINDITĂ e aceeași formă, întoarsă) · strat înclinat (forfecare) la ȘARPE · **drumuri care nu se încrucișează niciodată (0 la 300 de semințe)** · **nodul curent are și aură, și X, și stă nemișcat sub figurină** · **două surse de hartă: GENERATĂ (panglica) sau DESENATĂ dintr-un fișier `data/harti/*.json`** — comutatorul `Expeditie.SURSA_HARTII`; azi e pe DESENATĂ · **harta umple pergamentul**: pânza ține toată pagina, antetul plutește peste ea (805 × 427 px de hartă, de la 666 × 353) · **drumurile merg în amândouă sensurile**, cu nodul parcurs tăiat definitiv și cu garanția, verificată pe 16 000 de expediții simulate, că nu te poți înfunda · **figurina sare, cade ca un slam și zguduie ecranul la aterizare**, cu un răgaz de 0,5 s înainte să se deschidă nodul · **tipurile nodurilor se împart după o REȚETĂ fixă, nu se trag cu zarul**: 10 reguli de vecinătate, de început și de FINAL, plasare conștientă de reguli, verificare completă și reîncercare cu sub-sămânță (0 eșecuri pe 500 de semințe × 3 surse de hartă) · **la cel mult 2 pași de Boss e garantat un nod de bătaie** (100% pe 300 de semințe × 3 surse, de la 85% / 96% / 81%) · **niciun nod special nu mai are un geamăn lipit**, nici Evenimentul (0 pe 900 de hărți) · **rețeta nu se mai crede pe cuvânt: se PROBEAZĂ** — plafonul comun încearcă plasarea adevărată și taie un nod când forma nu le încape pe toate · rețeta se **plafonează după forma hărții**, nu după numărul de noduri · **nodul de Eveniment deschide Lacătul** (nivel din adâncime, sămânță din nodul, 6/10/14 Monede la succes) |
 | 7. Cetatea | ❌ |
-| 8. Save/Load | 🟡 tezaurul, sacul și expediția știu toate să se serializeze (`spre_dictionar` / `din_dictionar`), pe trei straturi de durată; scrierea pe disc, nu încă |
+| 8. Save/Load | 🟡 tezaurul, sacul și expediția știu toate să se serializeze (`spre_dictionar` / `din_dictionar`), pe trei straturi de durată; scrierea pe disc, nu încă · **de pe 8 octombrie are un client nou**: progresul din Practice (nivelul pe domeniu + `id`-urile știute pe celulă) trăiește în două `static var` și **se pierde la închiderea jocului** — forma lor (chei text, valori simple) e deja cea pe care `JSON.stringify` o înghite fără conversii |
 | 9. Celelalte discipline | 🟡 Cultură generală ✅ (**2692 de întrebări în joc, toate**: 2142 scrise de mână (`mana:0001`…) + **139 fabricate, elemente chimice** (`wd:Q897:simbol:…`) + **160 fabricate, operă → autor** (`wd:Q12730777:autor:…`) + **251 fabricate, țară ↔ capitală** (`wd:Q142:capitala:…`) — **conținutul fabricat stă într-un DOSAR**, `data/trivia_gen/`, citit întreg de încărcător: un tabel nou = două fișiere, zero linii de cod · **92 de fapte cu note** + 357 de fapte fabricate fără notă · **OPT DOMENII** (Geografie și explorare, Istorie și societate, Știință și tehnologie, Artă și literatură, Divertisment și media, Sport și jocuri, Gastronomie și lifestyle, Diverse și curiozități), cu **31 de subcategorii** — **toate OPT domeniile sunt în luptă, niciunul din cele 31 de rafturi nu e gol și nicio întrebare nu e fără raft** (cele 135 scrise înaintea câmpului au fost clasificate, iar 21 de întrebări de mitologie au trecut de la Artă la Istorie); **toate cele 93 de celule (subdomeniu × nivel) au cel puțin 25 de întrebări** — treapta CONFORT din `plan-continut.md`, cea la care 4-5 expediții lungi nu repetă nimic; drumul până la 100 pe celulă cere încă 6631 și trece prin fabrică, nu prin scris de mână, tăiate după cum se joacă, nu după cum crescuse baza: artă + mitologie + literatură s-au unit, Divertisment și Sport pornesc goale · `CATEGORII` (listă) a devenit `DOMENII` (dicționar cheie → nume afișat), deci antetul scrie „ARTĂ ȘI LITERATURĂ”, nu cheia · **alegerea din luptă e în două trepte** — întâi domeniul, uniform, apoi întrebarea, cu sacul pe cheie de domeniu ȘI nivel — iar de azi **domeniul intră doar peste `PRAG_DOMENIU = 8` întrebări pe celulă**, cu plasă dacă nu trece niciunul; sub prag e sărit, nu golit (istoria trece cu rezerva ZERO, deci e următoarea țintă de conținut) · comutator `FOLOSESTE_WIKIDATA` · **fabrica are un modul comun**, `tools/fabrica/comun.py`, iar grila marchează celulele sărite · **faptele capitalelor au o LISTĂ de imagini**, `imagini: [{tip, …}]`: **126 de steaguri pe disc** (`assets/imagini_fapte/steaguri/`, PNG 320 px, 0,53 MB sursă, toate în domeniul public, cu manifest de credite), plus o intrare de hartă pe fiecare din cele 127 de fapte; Omanul e singurul refuzat, cu motivul scris · **fiecare întrebare are și o `subcategorie`**, una singură, din listă închisă pe domeniu (36 de chei, 4 folosite; la istorie sunt erele, tăiate pe dată) — cele 135 scrise de mână o primesc într-un lot de clasificare, cu un clichet în verificator · **istoria e la 18 pe toate trei nivelurile**, iar **Divertismentul și Sportul au câte 50 pe fiecare celulă**, pe 11 subcategorii cu care se poate filtra (filme 48, muzică 36, fotbal 30, olimpiade 30…) — deci **toate ȘASE domeniile sunt în luptă**, fiecare cu 1/6 din întrebări, și toate cele 11 subcategorii ale celor două domenii noi au conținut · **verificarea e un singur câmp**, `verificat: true/false` pe întrebare, pus de mână: întrebarea intră în joc oricum, iar flagul spune doar dacă i-am citit nota. Niciun script, niciun parametru — mecanismul de ciorne, al doilea flag de pe fapt și cele două unelte de confirmare s-au desfăcut (vezi UN SINGUR FLAG) · planul de conținut al tuturor celor șase domenii, cu subcategorii, tabele propuse și capcanele lor, e în **`docs/plan-continut.md`** · vezi sesiunile UN SINGUR FLAG, ȘASE DOMENII ÎN LUPTĂ, PLANUL ȘI CIORNELE, DOMENIILE, CONȚINUTUL, ID ȘI FAPT, FABRICA, AL DOILEA TABEL, MODULUL COMUN și STEAGURILE) · Logica ✅ (80 de categorii) · Cuvinte ✅ · toate trei fără repetiții pe expediție, **Cultura generală după `id`, nu după text** · celelalte 5 ❌ |
-| 10–13. Generator de inamici, artă, web | ❌ (artă parțial: figurile principale și piesele de pe butoanele de Obelisc au imagini reale · **arena are fundal: biblioteca gotică**, cu personajele așezate pe dalele din prim-plan, umbră de contact și lumină de sală) · Regina: **amânată**, vezi CLAUDE.md |
+| 10–13. Generator de inamici, artă, web | ❌ (artă parțial: figurile principale și piesele de pe butoanele de Obelisc au imagini reale · **arena are fundal: biblioteca gotică**, cu personajele așezate pe dalele din prim-plan, umbră de contact și lumină de sală) · Regina: **amânată**, vezi CLAUDE.md · **pasul 13 (Practice) — prima felie ✅**: **meniu de start** (`scenes/meniu/`, de azi `run/main_scene`) cu două butoane, și **Antrenament liber** (`scenes/practice/`) — alegi domeniul, apoi raftul, din `DOMENII` și `SUBCATEGORII`, cu cifrele pe butoane și rafturile goale stinse; întrebările vin prin **chiar scena de trivia a luptei**, fără cronometru (`cu_cronometru`, două linii în `puzzle.gd`); nivel pe DOMENIU, urcat singur la `PRAG_PRACTICE` = 60 de întrebări distincte știute; sac propriu, pe cheie cu filtru (`practice:<domeniu>:<raft>:<nivel>`); progres ținut doar în memorie, până la Save · vezi sesiunea MENIUL ȘI PRACTICE |
 
 Nodul de **Eveniment** are primul lui conținut: **Lacătul** — un cufăr cu cifru,
 dedus din indicii, cu artă adevărată (roți care se învârt în spatele
@@ -37,6 +37,262 @@ buget, generare) rămâne acolo unde era.
 Am sărit peste ordinea recomandată la pasul 12 (artă): imaginile pentru rege,
 cavaler și pentru cele trei piese de șah de pe butoane au intrat mai devreme, dar
 restul rămâne placeholder. Bucla de luptă e în continuare cea validată, nu arta.
+
+---
+
+## MENIUL ȘI PRACTICE (8 octombrie 2026) — a doua ușă a jocului, și prima felie din pasul 13
+
+Până azi, jocul avea un singur drum: F5 deschidea harta, iar al doilea mod de
+joc exista doar în pitch. Acum există o **răscruce** — un meniu de start cu două
+butoane — și, în spatele celui de-al doilea, **Antrenament liber (Practice)**:
+Cultura generală, pe domeniul și pe raftul ales de tine, fără cronometru.
+
+Fișiere noi: `scenes/meniu/` și `scenes/practice/`. `run/main_scene` din
+`project.godot` arată de azi spre meniu.
+
+### Meniul nu știe nimic despre ce deschide
+
+Regula pe care o apără fișierul de 59 de linii: meniul **încarcă** o scenă și
+nimic mai mult. Harta își alege singură ecranul (loadout / hartă / sumar) în
+`_ready`-ul ei, din starea lui `Expeditie`, exact ca până acum. Singurul lucru
+pe care harta a aflat despre meniu e o **cale**, într-o constantă.
+
+De-aia `harta.tscn` și `lupta.tscn` pornesc în continuare singure cu F6 — probat
+headless pe amândouă, fără nicio eroare.
+
+Un meniu de start e locul în care se adună, pe nesimțite, logica tuturor
+celorlalte ecrane: „dacă ai un save, scrie Continuă”, „dacă n-ai deblocat
+Turnul, ascunde butonul”, „dacă expediția e în curs, du-l direct acolo”. Fiecare
+din astea aparține ecranului de DUPĂ, iar un meniu care le adună devine singurul
+fișier pe care trebuie să-l deschizi ca să înțelegi orice.
+
+### Ieșirea spre meniu: două butoane, nu trei
+
+„Meniu” apare pe **ecranul de loadout** și pe **sumarul de final**, adică pe
+singurele două ecrane unde nu e nimic de pierdut: pe primul expediția n-a
+început, pe al doilea s-a terminat deja. Din **mijlocul** unei expediții nu
+există ieșire, și nu din uitare: fără Save (pasul 8), tot ce ține expediția
+trăiește în autoload, deci un buton de acolo n-ar fi o pauză, ar fi o abandonare
+deghizată în pauză. Când apare Save-ul, butonul devine ieftin și cinstit.
+
+**Capcana găsită la sumar.** `Expeditie.final` rămâne setat după un run încheiat,
+iar `_ready` îl citește ca pe „arată sumarul”. Fără golire, ieși în meniu de pe
+sumar, apeși din nou „Expediție” — și primești sumarul aceleiași expediții
+moarte, fără nicio cale de a porni una nouă. Deci `_pe_meniu()` cheamă
+`Expeditie.goleste()`, aceeași golire pe care o face deja butonul „Expediție
+nouă”. Pe loadout nu face nimic, și e bine că nu face nimic **într-un singur
+loc**, în loc să întrebe „de pe care ecran am fost chemat?”.
+
+### Muzica meniului, și o cale moartă descoperită de ea
+
+Meniul și Practice cântă `Piesa.CETATE` — piesa liniștită, cea care e deja „casa”
+jocului. `HARTA` ar fi promis o expediție din meniu, `LUPTA` ar fi fost o
+minciună.
+
+Cerând-o, s-a văzut că **nu există**: tabelul din `muzica.gd` arăta spre
+`muzica_cetate.ogg`, iar pe disc fișierul se numește de la început
+`sound_castle.ogg`. Nu s-a observat până azi fiindcă nimeni nu cerea piesa
+asta — Cetatea e pasul 7 și n-are încă scenă, iar un fișier lipsă nu e o eroare
+fatală, doar liniște. Primul care a cerut-o a fost meniul, și atunci s-a auzit:
+adică nu s-a auzit. Reparația e **un rând în tabel**, exact ce promite
+comentariul de acolo.
+
+### Practice refolosește scena de întrebare a luptei
+
+Întrebarea de pe ecran e **chiar** `trivia.tscn`, instanțiată ca în `lupta.gd`:
+aceleași patru butoane, același antet, aceiași trei timpi ai verdictului. Un al
+doilea UI de întrebare ar fi însemnat ca fiecare lustruire viitoare (un sunet, o
+animație, „Află mai multe”) să se facă de două ori, cu două șanse să se despartă
+pe furiș.
+
+Tot ce-i spune Practice scenei de trivia sunt **trei valori**, puse înainte de
+`porneste()`: `cu_cronometru`, `filtru_domeniu`, `filtru_subcategorie`.
+
+### Cronometrul: un comutator, nu o scenă a doua
+
+`puzzle.gd` a primit `var cu_cronometru := true`. Lupta n-o atinge; Practice o
+stinge. Au ajuns **două linii** în `porneste()`, fiindcă tot cronometrul atârnă
+de `_process`, iar `_process` se pornește într-un singur loc:
+
+```gdscript
+bara_timp.visible = cu_cronometru
+set_process(cu_cronometru)
+```
+
+Fără `_process` nu curge timpul, nu expiră nimic și nu pornește ticăitul —
+`actualizeaza_cronometru()` e chemată o dată, cu timpul plin, deci trece pe
+ramura care **stinge** ceasul. Nicio ramură nouă pe drumul răspunsului. Bara se
+ascunde fiindcă o bară plină care nu se mișcă e o promisiune mincinoasă: ori
+măsoară ceva, ori nu există.
+
+### Tragerea pe raft: trei funcții, și nicio atingere la alegerea din luptă
+
+`trage_intrebarea` (echilibrul pe domenii + `PRAG_DOMENIU`) a rămas neatinsă.
+`_compune_intrebare` a primit **un ternar**, nu o ramură: filtru gol = lupta,
+filtru pus = Practice. În `trivia.gd` sunt acum, `static`:
+
+| funcție | ce face |
+|---|---|
+| `raftul(nivel, domeniu, subcategorie)` | lista raftului. Aceeași funcție dă și **lista din care se trage**, și **cifra scrisă pe buton** |
+| `cheia_raftului(domeniu, subcategorie, nivel)` | `practice:<domeniu>:<raft sau „tot">:<nivel>` |
+| `trage_din_raft(nivel, domeniu, subcategorie)` | `raftul()` + `Sac.extrage(..., "id")` |
+
+**O singură funcție pentru numărat și pentru tras** nu e economie de linii: e
+felul în care nu poți avea un buton pe care scrie 136 și un sac cu 140.
+
+**Ce NU e acolo, dinadins:**
+
+- **niciun prag.** `PRAG_DOMENIU` apără echilibrul LUPTEI, unde domeniul îl
+  alege jocul. În Practice alegi tu, deci n-are ce echilibra nimeni — iar un
+  prag ar fi însemnat „nu ai voie să exersezi raftul care tocmai a apărut”.
+- **nicio plasă pe nivel.** `trage_intrebarea` cade pe alt nivel dacă cel cerut
+  e gol, fiindcă în luptă alternativa ar fi ecranul de eroare în mijlocul unui
+  lanț. Aici alternativa e mai bună: ecranul **dezactivează** rafturile goale.
+  Un fallback ar fi amestecat nivelurile pe furiș (amestecul e o felie separată)
+  și ar fi făcut invizibil un bug.
+
+**De ce în cheie intră și raftul.** Aceeași regulă ca la cheia luptei, cu un
+nivel mai jos: `Sac.extrage` golește registrul unei chei când lista primită se
+epuizează. Fără raft în cheie, terminarea capitalelor ar șterge memoria întregii
+geografii. Iar dacă Practice ar folosi **cheia luptei**, exersarea unui raft
+dimineața ar face lupta de seara să repete întrebări — nu ar crăpa nimic, s-ar
+vedea doar ca „parcă se repetă ceva, uneori”.
+
+### Ecranele, și ce scrie pe butoane
+
+Trei ecrane într-o scenă: domeniile, rafturile domeniului, întrebările.
+**Nicio listă scrisă în scenă**: butoanele se generează din `DOMENII` și
+`SUBCATEGORII[domeniu]`, ca rândurile din loadout. Al nouălea domeniu e un rând
+în `trivia.gd` și nimic altceva.
+
+Primul buton de pe ecranul rafturilor e **„Tot domeniul”**, și nu e o
+comoditate: e singurul care cuprinde ȘI întrebările fără subcategorie. Câmpul e
+opțional, deci fără butonul ăsta ar putea exista întrebări pe care niciun raft nu
+le arată — exact ce nu vrei de la un meniu care pretinde că împarte tot
+conținutul.
+
+**Cifra de pe buton e câte întrebări are raftul LA NIVELUL TĂU**, nu totalul pe
+trei niveluri: aia e cifra care se și joacă, și aceeași cifră decide dacă butonul
+e activ. Prețul, spus pe față: când deblochezi nivelul II la un domeniu, un raft
+care are conținut doar la nivelul I se stinge.
+
+**Rafturile goale apar, dezactivate, nu ascunse.** Un raft ascuns e un raft
+despre care nu afli niciodată nimic: nu știi dacă nu există, dacă l-ai pierdut
+sau dacă n-am scris încă nimic în el. Aceeași decizie ca la `PRAG_DOMENIU`, unde
+domeniile subțiri sunt SĂRITE, nu scoase din date. (Azi niciun raft nu e gol:
+toate cele 93 de celule au cel puțin 25 de întrebări, de la CONFORT 25.)
+
+### Nivelul, pragul și progresul
+
+Nivelul **nu se alege**. Pornești de la I și urcă singur, pe **domeniu** — nu pe
+raft: numărat pe raft, ar fi fost 31 de progrese de ținut minte și un nivel care
+sare în sus și-n jos după ce raft ai deschis. Alegerea raftului e o lupă, nu un
+alt joc.
+
+`PRAG_PRACTICE = 60` răspunsuri corecte la **întrebări distincte** (pe `id`,
+singurul câmp care nu se schimbă niciodată). Fără „distincte”, 60 s-ar fi putut
+face din 3 întrebări repetate de 20 de ori.
+
+Contorul **repornește pe fiecare nivel**: cheia e `domeniu:nivel`, deci cele 60
+de la nivelul I nu deschid instantaneu și nivelul III. La nivelul III scrie
+„nivelul maxim”. Pe ecran: `Nivel I · 12 / 60 pana la nivelul II`.
+
+**Progresul se pierde la închiderea jocului.** Trăiește în două `static var`
+(nivelul pe domeniu, mulțimea de `id`-uri știute pe celulă): aparțin
+SCRIPTULUI, deci rezistă la plimbarea prin meniu și înapoi — probat: după o scenă
+nouă, cele 3 știute erau încă acolo — dar mor cu procesul. Forma lor (chei text,
+valori simple) e deja cea pe care `JSON.stringify` o înghite fără conversii, deci
+la Save se scriu ca sunt.
+
+### Două lucruri decise de fapte, nu de plan
+
+**„Schimbă domeniul” stă vizibil tot timpul**, nu doar după răspuns. Planul era
+să apară amândouă butoanele după răspuns — dar fără cronometru o întrebare **nu
+se termină singură**, deci un ecran din care nu poți ieși decât răspunzând ar fi
+fost un zid. „Următoarea” e cea care apare: stă dezactivată până răspunzi.
+Bonus: layout-ul nu mai sare, fiindcă rândul de butoane are mereu aceeași formă.
+
+**Raft gol la nivelul următor** — se poate întâmpla fără niciun bug: exersezi un
+raft, treci pragul la jumătate, iar nivelul lui următor n-are încă conținut.
+Atunci ecranul o **spune** („Raftul asta nu are intrebari la nivelul III. Alege
+altul.”), în loc să ceară o întrebare care nu există și să primească ecranul de
+EROARE din `puzzle.gd` — care aici ar fi fost o minciună: nu e nimic stricat,
+doar n-am scris încă întrebările.
+
+### Verificarea
+
+`verifica_trivia` a primit secțiunea **9. RAFTURILE DIN PRACTICE**, cu patru
+verdicte noi (29 → **33**). Toate verzi, cod de ieșire 0, **16,9 secunde** în
+total:
+
+```
+  RAFTURILE DIN PRACTICE (tragerea filtrată, pe fiecare raft cu conținut)
+    filtrul e respectat                 OK   2692 trageri, pe 93 rafturi
+    rafturile împart tot domeniul       OK   24 celule
+    un ciclu întreg, pe fiecare raft    OK   93 rafturi fără nicio repetiție
+    cheile sunt separate pe filtru      OK   geografie:1 — geografie_politica a
+                                             ținut minte după ce geografie_fizica
+                                             s-a golit
+```
+
+- **filtrul**, probat prin **chiar** `trage_din_raft`, nu printr-o copie a
+  filtrului scrisă în verificare: o verificare care-și rescrie obiectul probează
+  copia, nu codul.
+- **împărțirea**: „Tot domeniul” = suma rafturilor + cele fără raft, pe toate
+  cele 24 de celule. Ăsta e chiar motivul pentru care `subcategorie` e un CÂMP și
+  nu o etichetă: o împărțire, nu etichete care se suprapun. Dacă s-ar suprapune,
+  cifrele de pe butoane ar fi false și n-ar avertiza nimic.
+- **ciclul**: garanția sacului, pe toate cele 93 de rafturi cu conținut.
+- **cheile pe filtru**: se golește un raft, apoi se întreabă **alt raft al
+  aceluiași domeniu** ȘI **sacul de luptă al aceleiași celule** dacă își mai țin
+  minte biletele. Dacă nu există nicio celulă cu două rafturi pline, verificarea
+  **PICĂ** în loc să treacă în tăcere: „n-am avut ce proba” nu e același lucru cu
+  „e bine”.
+
+Pe lângă asta, scena întreagă a fost probată cap-coadă într-o scenă temporară,
+ștearsă după: 8 butoane de domeniu cu cifrele lor, 5 rafturi la istorie,
+cronometru stins și bară ascunsă, filtrul ajuns la scena de trivia
+(`istorie / modern_contemporan`), trei răspunsuri corecte care urcă amândoi
+contorii, un răspuns greșit care urcă doar sesiunea, pragul la 60 (nivelul se
+deschide și anunțul apare), capul la nivelul III și textul de raft gol.
+
+### Rămas deschis
+
+- **`Expeditie.incepe()` cheamă `Sac.expeditie_noua()`, care golește TOT sacul**
+  — inclusiv cheile `practice:`. Deci o expediție pornită între două sesiuni de
+  Practice resetează garanția „fără repetiții” de acolo. Lăsat așa dinadins:
+  leacul curat ar fi o golire selectivă, dar `sac.gd` e generic și nu are voie să
+  știe ce e „practice”. Se decide la Save, unde sacul devine oricum permanent.
+- **Lista de alegere nu are `ScrollContainer`.** Opt butoane de domeniu încap
+  (~480 px din 648). Al doisprezecelea nu va încăpea, și atunci ăsta e locul.
+- **Pragul de 60 e în continuare nejucat.** Prima cifră care se va simți greșită.
+- **Istoricul nu e comun cu expedițiile** (recomandat în sesiunea CONȚINUTUL,
+  încă neimplementat): exersez o întrebare dimineața și o pot primi gratis în
+  luptă seara. Cere Save.
+- **Nota faptului tot nu se vede nicăieri.** Se încarcă în `explicatie` de la
+  sesiunea ID ȘI FAPT; „Află mai multe” e felia următoare din pasul 13, și ea e
+  cea care-i dă primul ecran.
+- **Ce face Practice cu `verificat: false`** — tot nedecis, și acum e locul unde
+  se va decide: 2664 din 2692 de întrebări sunt neverificate, deci un filtru ar
+  goli ecranul.
+
+### Documentele vecine, aduse la zi pe 9 octombrie 2026
+
+Trei locuri rămăseseră în urmă — nu din sesiunea asta, ci de dinainte, și s-au văzut
+abia când codul a ajuns la ele:
+
+- **`plan-continut.md`, cheia sacului.** Scria `practice:geografie:capitale`, cu
+  trei bucăți. Cheia adevărată, de când există cod, are patru:
+  `practice:<domeniu>:<raft sau „tot”>:<nivel>`. Nivelul TREBUIE să fie în ea —
+  lista unui raft e alta pe fiecare nivel.
+- **`plan-continut.md`, grila.** „6 × 3”, rămasă de dinaintea celor opt domenii.
+  Acum 8 × 3. Plus un rând nou la „ce se măsoară singur”: împărțirea pe rafturi se
+  probează de azi, iar ea e chiar ce deosebește o ÎMPĂRȚIRE de niște etichete.
+- **`ghid-note.md`.** Spunea că `explicatie` e gol și că „Practice e primul loc care
+  o va afișa”. Trivia îl umple de la sesiunea ID ȘI FAPT, iar Practice există de
+  ieri și tot nu afișează nota: aia e felia următoare. Și întrebarea despre
+  `verificat: false` are acum o cifră lângă ea — 2664 din 2692 — care spune de ce un
+  filtru ar goli ecranul.
 
 ---
 

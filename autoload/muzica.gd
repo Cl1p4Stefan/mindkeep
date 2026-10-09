@@ -59,7 +59,12 @@ enum Piesa {
 
 const PIESE := {
 	Piesa.LUPTA: "res://assets/audio/sound_battle.ogg",
-	Piesa.CETATE: "res://assets/audio/muzica_cetate.ogg",
+	# Numele fișierului era `muzica_cetate.ogg`, care nu există pe disc — pe disc
+	# e `sound_castle.ogg`, de la început. Nu s-a văzut până azi fiindcă nimeni
+	# nu cerea piesa asta: Cetatea e pasul 7 și n-are încă scenă, iar un fișier
+	# lipsă nu e o eroare fatală (vezi `reda`), doar liniște. Primul care a
+	# cerut-o a fost meniul de start, și atunci s-a auzit — adică nu s-a auzit.
+	Piesa.CETATE: "res://assets/audio/sound_castle.ogg",
 	Piesa.HARTA: "res://assets/audio/expedition_map_sound.ogg",
 }
 

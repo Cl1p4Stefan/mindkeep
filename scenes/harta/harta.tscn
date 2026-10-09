@@ -221,6 +221,13 @@ layout_mode = 2
 disabled = true
 text = "Porneste expeditia"
 
+[node name="LoadoutMeniu" type="Button" parent="PanouLoadout/Centru/Panou/Margini/Coloana"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "Meniu"
+
 [node name="PanouSumar" type="Control" parent="."]
 unique_name_in_owner = true
 visible = false
@@ -292,6 +299,13 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 48)
 layout_mode = 2
 text = "Expeditie noua"
+
+[node name="SumarMeniu" type="Button" parent="PanouSumar/Centru/Panou/Margini/Coloana"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "Meniu"
 
 [node name="PanouMesaj" type="Control" parent="."]
 unique_name_in_owner = true

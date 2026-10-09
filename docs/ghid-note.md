@@ -12,10 +12,12 @@ O **notă** e fraza care apare după ce ai răspuns la o întrebare: în modul
 Practice, la butonul „Află mai multe”; în sumarul luptei, pentru întrebările
 greșite; în Jurnal, ca fapt câștigat. Același text, trei locuri.
 
-Contractul din `puzzle.gd` are deja câmpul pentru ea: `explicatie`. Trivia îl
-lasă azi gol, iar un comentariu din `puzzle.gd` spune că explicația „nu are,
-deocamdată, un loc unde să fie afișată”. Practice e primul loc care o va afișa.
-Nota e ce pune Trivia în câmpul ăla.
+Contractul din `puzzle.gd` are deja câmpul pentru ea: `explicatie`, iar Trivia îl
+UMPLE de la sesiunea ID ȘI FAPT — doar că nimic nu-l afișează încă. Nici măcar
+Practice, care există de pe **8 octombrie 2026**: prima lui felie pune întrebările pe
+raftul ales, fără cronometru, dar butonul „Află mai multe” e felia următoare. Deci
+notele se pot scrie și verifica mai departe fără să aștepte cod: ecranul care le
+arată e aproape, și câmpul în care ajung e deja scris.
 
 ---
 
@@ -205,8 +207,11 @@ Ce verifici, în ordine:
 2. direcția relațiilor (cine pe cine a învins, ce vine din ce);
 3. ce e legendă, convenție sau ipoteză, și dacă nota o spune.
 
-Încărcătorul poate refuza mai târziu, în Practice, faptele cu `verificat: false`,
-sau le poate lăsa să apară fără notă. Decizia se ia când există modul.
+Încărcătorul poate refuza, în Practice, întrebările cu `verificat: false`, sau le
+poate lăsa să apară fără notă. Modulul există de pe 8 octombrie 2026 și **nu
+filtrează nimic**: 2664 din cele 2692 de întrebări sunt neverificate, deci un filtru
+ar goli ecranul. Decizia rămâne deschisă, dar locul ei e acum limpede — se ia când
+apare „Află mai multe”, fiindcă abia atunci nota se ȘI vede.
 
 **În fabrica de întrebări** (scriptul Python), verificarea devine parțial
 automată: nota e scrisă din faptele sursă, iar validatorul cere ca fiecare an,

@@ -343,6 +343,30 @@ const PRAG_DOMENIU := 8
 # domeniu", care e mai tare decât cea de dinainte, nu mai slabă.
 const SAC := "cultura_generala"
 
+# Cheia sacului din PRACTICE, unde întrebarea n-o alege jocul, ci jucătorul.
+#
+# ─── DE CE UN AL DOILEA SAC, ȘI NU ACELAȘI ────────────────────
+# Fiindcă lista din care se trage e alta, iar regula sacului e aceeași de
+# fiecare dată: cheia trebuie să cuprindă TOT ce face lista să fie alta. În
+# Practice, ce o face alta e FILTRUL — domeniul ȘI raftul.
+#
+# Dacă Practice ar folosi cheia luptei (`cultura_generala:geografie:1`) cu o
+# listă filtrată pe un singur raft, atunci în clipa în care termini cele 30 de
+# întrebări despre capitale, `Sac.extrage` ar goli registrul ÎNTREGII geografii
+# de nivelul I („sacul s-a golit → ciclu nou", în `sac.gd`) — adică exersezi un
+# raft dimineața și lupta de seara îți dă din nou întrebări pe care le-a mai
+# pus. Nu ar crăpa nimic; s-ar vedea ca „parcă se repetă ceva, uneori".
+#
+# ─── ȘI DE CE ÎN CHEIE INTRĂ ȘI RAFTUL ────────────────────────
+# Din exact același motiv, cu un nivel mai jos: „geografie, tot domeniul" și
+# „geografie, capitale" sunt două liste diferite. Fără raft în cheie, epuizarea
+# capitalelor ar șterge memoria întregului domeniu.
+#
+# „tot" e numele raftului atunci când n-ai ales niciunul. Un text, nu un șir gol,
+# fiindcă o cheie cu două două puncte lipite („practice:geografie::1") e o cheie
+# pe care n-o poți citi într-un raport și n-o poți deosebi de o greșeală.
+const SAC_PRACTICE := "practice"
+
 # `static var` = aparține SCRIPTULUI, nu fiecărei copii a scenei.
 # Deschizi puzzle-ul de ~7 ori pe rundă; fără `static`, fișierul ar fi citit
 # de pe disc de fiecare dată. Așa, se citește o singură dată pe rulare,
@@ -384,6 +408,37 @@ static var _plasa_spusa := {}
 
 
 # ─────────────────────────────────────────────────────────────
+# FILTRUL DIN PRACTICE
+#
+# Două variabile de INSTANȚĂ (nu `static`): sunt ale copiei de scenă care stă
+# chiar acum pe ecran, nu ale scriptului. Lupta nu le atinge niciodată, deci
+# rămân goale acolo, iar `_compune_intrebare` trage ca întotdeauna.
+# ─────────────────────────────────────────────────────────────
+
+## Domeniul cerut, sau gol = „alege tu" (lupta).
+var filtru_domeniu := ""
+
+## Raftul cerut, sau gol = tot domeniul. Contează doar dacă `filtru_domeniu`
+## e pus: un raft fără domeniu n-ar însemna nimic, fiindcă cheile de
+## subcategorie se repetă între domenii doar prin accident, nu prin regulă.
+var filtru_subcategorie := ""
+
+## ÎNTREBAREA BRUTĂ care stă chiar acum pe ecran, așa cum e în fișier.
+##
+## `_compune_intrebare` întoarce întrebarea ÎMPACHETATĂ pentru ecran (antet cu
+## majuscule, variante amestecate) — iar din împachetare `id`-ul lipsește, și
+## bine lipsește: nimic din luptă n-are ce face cu el.
+##
+## Practice are. Pragul de acolo se numără pe întrebări DISTINCTE, deci are
+## nevoie de identitatea celei la care tocmai ai răspuns, iar singurul câmp care
+## nu se mișcă niciodată e `id`. Alternativa ar fi fost să umflu contractul cu
+## `puzzle.gd` cu un câmp de care are nevoie un singur ecran.
+##
+## Dicționar gol până la prima întrebare, și gol dacă n-a putut fi trasă niciuna.
+var ultima_trasa := {}
+
+
+# ─────────────────────────────────────────────────────────────
 # CELE DOUĂ FUNCȚII DIN CONTRACTUL CU `Puzzle`
 # ─────────────────────────────────────────────────────────────
 
@@ -395,7 +450,17 @@ func _pregateste_datele() -> void:
 ## A doua: produce o întrebare. Tot ce urmează după — cronometru, culori,
 ## verdict — e treaba bazei, care nu știe că a primit trivia.
 func _compune_intrebare(nivel: int) -> Dictionary:
-	var q := trage_intrebarea(nivel)
+	# UN TERNAR, NU O RAMURĂ. Locul ăsta e singurul din fișier care răspunde la
+	# „de unde vine întrebarea", deci aici e locul cinstit pentru a doua sursă.
+	# Filtru gol = lupta, cu echilibrul pe domenii și pragul ei; filtru pus =
+	# Practice, unde domeniul l-a ales jucătorul, deci n-are ce echilibra nimeni.
+	var q := trage_din_raft(nivel, filtru_domeniu, filtru_subcategorie) \
+		if filtru_domeniu != "" else trage_intrebarea(nivel)
+
+	# Reținem BRUTA înainte de orice împachetare — vezi `ultima_trasa`. Se scrie
+	# și când e gol, dinadins: altfel un ecran care n-a putut trage nimic ar
+	# rămâne cu identitatea întrebării de dinainte și i-ar trece pragul ei.
+	ultima_trasa = q
 
 	# Dicționar gol = „n-am putut": baza arată ecranul de eroare și raportează
 	# eșec ordonat, în loc să lase lupta să aștepte un semnal care nu mai vine.
@@ -556,6 +621,75 @@ static func trage_intrebarea(nivel: int) -> Dictionary:
 ## același text ajung, într-o zi, să-l compună altfel.
 static func cheia_sacului(domeniu: String, nivel: int) -> String:
 	return "%s:%s:%d" % [SAC, domeniu, nivel]
+
+
+# ─────────────────────────────────────────────────────────────
+# PRACTICE: TRAGEREA PE RAFT
+#
+# Trei funcții scurte, toate `static`, din același motiv pentru care e statică
+# `trage_intrebarea`: ca verificarea din `tools/verificari/` să le poată chema
+# fără fereastră și fără scenă.
+#
+# ─── CE NU E AICI, ȘI DINADINS ────────────────────────────────
+# NICIUN PRAG. `PRAG_DOMENIU` apără echilibrul LUPTEI, unde domeniul îl alege
+# jocul: fără el, un domeniu cu trei întrebări ar lua 1/N din toată lupta. În
+# Practice domeniul îl alegi TU, deci n-are ce echilibra nimeni — iar un prag
+# acolo ar însemna „nu ai voie să exersezi raftul care tocmai a apărut", exact
+# invers decât vrei de la un ecran de antrenament.
+#
+# NICIO PLASĂ PE NIVEL. `trage_intrebarea` cade pe alt nivel dacă cel cerut e
+# gol, fiindcă în luptă alternativa ar fi ecranul de eroare în mijlocul unui
+# lanț. Aici alternativa e mai bună: ecranul DEZACTIVEAZĂ rafturile goale, deci
+# nu se poate ajunge aici cu un raft fără întrebări decât printr-un bug — iar
+# atunci vreau dicționarul gol, nu o întrebare de alt nivel care ar face bug-ul
+# invizibil și ar amesteca nivelurile pe furiș (amestecul e o felie separată).
+# ─────────────────────────────────────────────────────────────
+
+## Întrebările unui raft: domeniul cerut, la nivelul cerut.
+##
+## `subcategorie` gol = TOT DOMENIUL, și atunci intră și întrebările care n-au
+## încă subcategorie. E chiar rostul butonului „Tot domeniul": e singurul care
+## garantează că nicio întrebare a domeniului nu rămâne pe dinafară.
+##
+## Aceeași funcție dă și LISTA din care se trage, și CIFRA scrisă pe buton.
+## Alternativa — ecranul numără cu filtrul lui, tragerea filtrează cu al ei — e
+## felul cel mai simplu de a avea un buton pe care scrie 136 și un sac cu 140.
+static func raftul(nivel: int, domeniu: String, subcategorie := "") -> Array[Dictionary]:
+	var pe_raft: Array[Dictionary] = []
+	for q in intrebari:
+		if int(q["nivel"]) != nivel:
+			continue
+		if String(q["categorie"]) != domeniu:
+			continue
+		if subcategorie != "" and String(q.get("subcategorie", "")) != subcategorie:
+			continue
+		pe_raft.append(q)
+	return pe_raft
+
+
+## Cheia sacului pentru un raft. Într-un singur loc, ca `cheia_sacului`:
+## verificarea trebuie să ceară exact cheia pe care o folosește ecranul, iar
+## două locuri care compun același text ajung, într-o zi, să-l compună altfel.
+##
+## Forma: `practice:<domeniu>:<raft sau „tot">:<nivel>`. Motivul pentru fiecare
+## bucată e la `SAC_PRACTICE`.
+static func cheia_raftului(domeniu: String, subcategorie: String, nivel: int) -> String:
+	var raft := subcategorie if subcategorie != "" else "tot"
+	return "%s:%s:%s:%d" % [SAC_PRACTICE, domeniu, raft, nivel]
+
+
+## Trage o întrebare din raft, fără repetiții cât timp mai există una nevăzută.
+## Întoarce întrebarea BRUTĂ (ca `trage_intrebarea`), sau dicționar gol.
+static func trage_din_raft(nivel: int, domeniu: String, subcategorie := "") -> Dictionary:
+	var pool := raftul(nivel, domeniu, subcategorie)
+	if pool.is_empty():
+		return {}
+	# „id" e câmpul după care sacul recunoaște o întrebare — nu poziția în listă,
+	# care se mută, și nu textul, care se schimbă la reformulare. Vezi `sac.gd`.
+	var tras = Sac.extrage(cheia_raftului(domeniu, subcategorie, nivel), pool, "id")
+	if tras == null:
+		return {}
+	return tras
 
 
 ## Ce fișier să cauți dacă ecranul de eroare apare vreodată în luptă.

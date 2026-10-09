@@ -128,7 +128,14 @@ ar fi trebuit să aleg între „e despre România” și „e despre râuri”,
 avut două răspunsuri la aceeași întrebare.
 
 Cheile nu au diacritice și nu se schimbă niciodată: intră în `id`-uri, în cheile
-sacului din Practice (`practice:geografie:capitale`) și, de la Save, pe disc.
+sacului din Practice și, de la Save, pe disc. Cheia aia există de pe **8 octombrie
+2026**, când s-a făcut ecranul, și are patru bucăți, nu trei:
+`practice:<domeniu>:<raft sau „tot”>:<nivel>` — de pildă
+`practice:geografie:capitale:2`. Nivelul e în ea fiindcă `Sac.extrage` golește
+registrul unei chei când lista primită se epuizează, iar lista unui raft e alta pe
+fiecare nivel; `tot` e numele raftului când n-ai ales niciunul, ca să nu existe chei
+cu două două puncte lipite. Se compune într-un singur loc,
+`trivia.cheia_raftului()`.
 
 ### Geografie și explorare
 
@@ -443,7 +450,7 @@ dintr-o rulare headless, nu de aici:
 "$GODOT" --headless --path . res://tools/verificari/verifica_trivia.tscn
 ```
 
-- **grila 6 × 3**, cu întrebări, fapte și rezerva peste prag pe fiecare celulă —
+- **grila 8 × 3**, cu întrebări, fapte și rezerva peste prag pe fiecare celulă —
   deci treapta la care e fiecare celulă (PRAG / CONFORT / PLIN) se vede, nu se
   presupune;
 - **subcategoriile fără nicio întrebare**, tipărite pe domeniu. Un raft declarat
@@ -452,6 +459,11 @@ dintr-o rulare headless, nu de aici:
 - **câte întrebări au nota citită**, din câte sunt. O cifră, nu un verdict: o
   întrebare neverificată e în joc cu drepturi egale, iar cifra spune doar cât a
   mai rămas de citit.
+- **împărțirea pe rafturi, probată, nu presupusă** (de pe 8 octombrie 2026, de când
+  există Practice): „Tot domeniul” trebuie să fie exact suma rafturilor plus
+  întrebările fără raft, pe fiecare celulă. Dacă rafturile s-ar suprapune, cifrele de
+  pe butoanele din Practice ar fi false și nimic nu te-ar avertiza — asta e chiar
+  deosebirea dintre o ÎMPĂRȚIRE și niște etichete, pe care se sprijină secțiunea asta.
 
 **Verificarea nu are unelte.** Fiecare întrebare are `verificat: true/false` în
 `data/intrebari_trivia.json`, pus de mână când citesc nota ei. Niciun script,

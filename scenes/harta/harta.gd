@@ -37,6 +37,14 @@ const SCENA_LUPTA := "res://scenes/lupta/lupta.tscn"
 ## `change_scene_to_file` ca lupta — vezi `_deschide_lacatul()` pentru de ce.
 const SCENA_CIFRU := "res://scenes/cifru/cifru.tscn"
 
+## Meniul de start. SINGURUL lucru pe care harta află despre el: o cale.
+##
+## Nu îl întreabă nimic, nu îi spune nimic și nu-și schimbă comportamentul
+## fiindcă există. `_ready` rămâne singurul loc care decide ce ecran vezi, din
+## starea lui `Expeditie` — exact ca atunci când harta era scena principală. De
+## aia `harta.tscn` pornește în continuare singură cu F6.
+const SCENA_MENIU := "res://scenes/meniu/meniu.tscn"
+
 # ── RĂGAZUL DE DUPĂ ATERIZARE ─────────────────────────────────
 ## Cât se ține harta pe ecran DUPĂ ce piesa a aterizat, înainte să se deschidă
 ## nodul (lupta, odihna, magazinul).
@@ -696,12 +704,14 @@ const LATIME_ETICHETA := 230.0
 @onready var loadout_lista: VBoxContainer = %LoadoutLista
 @onready var camp_samanta: LineEdit = %CampSamanta
 @onready var buton_loadout: Button = %LoadoutButon
+@onready var buton_loadout_meniu: Button = %LoadoutMeniu
 
 @onready var panou_sumar: Control = %PanouSumar
 @onready var sumar_titlu: Label = %SumarTitlu
 @onready var sumar_text: Label = %SumarText
 @onready var sumar_randuri: VBoxContainer = %SumarRanduri
 @onready var buton_sumar: Button = %SumarButon
+@onready var buton_sumar_meniu: Button = %SumarMeniu
 
 @onready var panou_magazin: Control = %PanouMagazin
 @onready var magazin_subtitlu: Label = %MagazinSubtitlu
@@ -779,6 +789,10 @@ var lacat: Control = null
 func _ready() -> void:
 	buton_loadout.pressed.connect(_pe_pornire)
 	buton_sumar.pressed.connect(_pe_expeditie_noua)
+	# Cele două ieșiri spre meniu. DOAR de pe ecranele în care nu e nimic de
+	# pierdut — vezi `_pe_meniu`.
+	buton_loadout_meniu.pressed.connect(_pe_meniu)
+	buton_sumar_meniu.pressed.connect(_pe_meniu)
 	buton_mesaj.pressed.connect(_pe_mesaj_inchis)
 	buton_magazin.pressed.connect(_pe_magazin_inchis)
 	# Fereastra redimensionată ⇒ nodurile trebuie reașezate. Semnalul vine de
@@ -3023,3 +3037,33 @@ func _pe_expeditie_noua() -> void:
 	Expeditie.goleste()
 	panou_sumar.visible = false
 	_arata_loadout()
+
+
+# ─────────────────────────────────────────────────────────────
+# IEȘIREA SPRE MENIU
+# ─────────────────────────────────────────────────────────────
+
+## Înapoi în meniul de start.
+##
+## ─── DE CE NUMAI DE PE LOADOUT ȘI DE PE SUMAR ─────────────────
+## Fiindcă alea sunt singurele două ecrane pe care nu e nimic de pierdut: pe
+## loadout expediția nici n-a început, pe sumar s-a terminat deja. Din MIJLOCUL
+## unei expediții nu există ieșire, și nu din uitare: fără Save (pasul 8), tot
+## ce ține expediția trăiește în autoload, deci un buton de acolo n-ar fi o
+## pauză, ar fi o abandonare deghizată în pauză. Când apare Save-ul, butonul
+## devine ieftin și cinstit — atunci se adaugă, nu acum.
+##
+## ─── DE CE SE GOLEȘTE EXPEDIȚIA ───────────────────────────────
+## `Expeditie.final` rămâne setat după un run încheiat, iar `_ready` îl citește
+## ca pe „arată sumarul". Fără `goleste()`, ieși în meniu de pe sumar, apeși din
+## nou „Expediție" — și primești sumarul aceleiași expediții moarte, fără nicio
+## cale de a porni una nouă. Golirea e aceeași pe care o face deja butonul
+## „Expediție nouă"; aici e doar strămutată înaintea schimbării de scenă.
+##
+## Pe loadout, `final` e oricum gol, deci golirea nu face nimic — și e bine că
+## nu face nimic într-un singur loc, în loc să întrebe „de pe care ecran am fost
+## chemat?". Un ecran care trebuie să știe pe ce drum a fost deschis e un ecran
+## care se va deschide greșit, într-o zi, pe al treilea drum.
+func _pe_meniu() -> void:
+	Expeditie.goleste()
+	get_tree().change_scene_to_file(SCENA_MENIU)
