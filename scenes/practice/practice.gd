@@ -34,21 +34,28 @@ extends Control
 ## Nicio linie din `trage_intrebarea` (alegerea din luptă) nu e atinsă.
 ##
 ## ─────────────────────────────────────────────────────────────
-## PROGRESUL SE PIERDE LA ÎNCHIDEREA JOCULUI. DINADINS, DEOCAMDATĂ.
+## PROGRESUL TRECE PE DISC, DAR ÎNCĂ STĂ ÎN `static var`
 ##
-## Save-ul e pasul 8 și nu există încă, deci nivelurile și întrebările știute
-## trăiesc în `static var`-urile de mai jos: aparțin SCRIPTULUI, nu copiei de
-## scenă, deci rezistă la plimbarea prin meniu și înapoi — dar mor cu procesul.
-## Când apare Save-ul, cele două dicționare de mai jos sunt exact ce se scrie pe
-## disc; forma lor (chei text, valori simple) e deja cea pe care `JSON.stringify`
-## o înghite fără conversii, din același motiv ca la `Tezaur` și `Sac`.
+## Nivelurile și întrebările știute trăiesc în `static var`-urile de mai jos:
+## aparțin SCRIPTULUI, nu copiei de scenă, deci rezistă la plimbarea prin meniu
+## și înapoi. Până la Save mureau cu procesul; de azi, `Arhiva` le duce în
+## `permanent.json` prin cele două funcții statice de la finalul fișierului, și
+## le aduce înapoi la pornire.
+##
+## CE A RĂMAS STRÂMB, ȘI MERITĂ SPUS. Starea care supraviețuiește unei scene
+## aparține unui AUTOLOAD — regula scrisă în antetul lui `tezaur.gd`,
+## `sac.gd` și `expeditie.gd`. Progresul ăsta o încalcă: stă într-un script de
+## scenă, iar `Arhiva` ajunge la el cu un `preload`. Ziua în care se mută e
+## felia următoare din Practice, cea cu greșitele care revin și cu Jurnalul —
+## atunci apar și alte două-trei dicționare care n-au ce căuta într-un ecran.
+## Azi ar fi fost un refactor într-o sesiune despre disc.
 ##
 ## ─────────────────────────────────────────────────────────────
 ## CE NU INTRĂ ÎN FELIA ASTA (e în plan, în felii separate)
 ##
 ## Greșitele care revin, „învățat" și Jurnalul, amestecul de niveluri după
 ## deblocare, popup-ul „Află mai multe" cu note și imagini, istoricul comun cu
-## expedițiile, Save. Nota faptului SE ÎNCARCĂ deja (câmpul `explicatie` din
+## expedițiile. Nota faptului SE ÎNCARCĂ deja (câmpul `explicatie` din
 ## contract), doar că nimic n-o afișează încă — nici în luptă, nici aici.
 
 const SCENA_MENIU := "res://scenes/meniu/meniu.tscn"
@@ -89,7 +96,7 @@ const CIFRE_ROMANE := ["I", "II", "III"]
 
 
 # ─────────────────────────────────────────────────────────────
-# PROGRESUL (în memorie, vezi antetul)
+# PROGRESUL (static, scris pe disc de `Arhiva` — vezi antetul)
 # ─────────────────────────────────────────────────────────────
 
 ## Nivelul atins pe fiecare domeniu: cheia domeniului → 1, 2 sau 3.
@@ -397,11 +404,21 @@ func _inregistreaza(domeniu: String, nivel: int, id: String) -> void:
 	pe_celula[id] = true
 	_stiute[cheie] = pe_celula
 
+	# PE DISC, ACUM. O întrebare știută e un lucru TERMINAT, iar regula Arhivei
+	# e că ce s-a terminat se scrie — altfel o sesiune de antrenament de o
+	# jumătate de oră ar atârna de felul în care se închide jocul. Fișierul are
+	# câțiva kilobytes, deci o scriere la fiecare răspuns corect nu se simte.
+	Arhiva.salveaza_permanent()
+
 	if pe_celula.size() < PRAG_PRACTICE:
 		return
 	if nivel >= _nivel_maxim():
 		return
 	_nivel_atins[domeniu] = nivel + 1
+	# A doua scriere, fiindcă s-a schimbat încă ceva: nivelul. Două scrieri la
+	# a 60-a întrebare, una la toate celelalte — mai ieftin decât o funcție care
+	# ar încerca să le unească și care s-ar putea încurca în ce s-a schimbat.
+	Arhiva.salveaza_permanent()
 	# Un nivel deblocat în tăcere e o răsplată pe care n-o observi. Rândul se
 	# șterge la întrebarea următoare (vezi `_pe_raft_ales`).
 	eticheta_anunt.text = "Nivelul %s deblocat la %s." % [
@@ -471,3 +488,59 @@ func _goleste(container: Node) -> void:
 	for copil in container.get_children():
 		container.remove_child(copil)
 		copil.queue_free()
+
+
+# ─────────────────────────────────────────────────────────────
+# SALVARE
+#
+# Statice, fiindcă starea pe care o duc e statică: `Arhiva` nu are o copie a
+# ecranului ăsta la îndemână (și n-ar trebui să aibă — un ecran e o scenă, un
+# progres e un fapt). Vezi antetul fișierului pentru ce a rămas strâmb aici.
+#
+# Progresul ăsta e PERMANENT: intră în `permanent.json`, nu în save-ul
+# expediției. Ce știi nu se pierde când un run se încheie.
+# ─────────────────────────────────────────────────────────────
+
+## Progresul ca Dictionary cu chei text — forma pe care `JSON.stringify()` o
+## înghite fără nicio conversie, din același motiv ca la `Tezaur` și `Sac`.
+##
+## `_stiute` e un dicționar de dicționare („geografie:2" → {id: true}), iar
+## `duplicate(true)` copiază și cuiburile: fără `true`, save-ul ar ține
+## REFERINȚE la mulțimile vii, care se schimbă până la scrierea pe disc.
+static func spre_dictionar() -> Dictionary:
+	return {
+		"nivel_atins": _nivel_atins.duplicate(),
+		"stiute": _stiute.duplicate(true),
+	}
+
+
+## Drumul invers. Pornim de la gol, deci un save căruia îi lipsește un domeniu
+## nu lasă în urmă progres fantomă din rularea curentă.
+##
+## Tot ce vine de pe disc e curățat pe loc: nivelul prin `int()` (JSON întoarce
+## toate numerele ca float, iar un nivel 2.0 ar sparge `CIFRE_ROMANE[nivel - 1]`),
+## iar mulțimile de id-uri prin `String()`. Un domeniu care nu mai există în
+## `DOMENII` e ignorat la afișare fără niciun cod special: ecranul își desenează
+## butoanele din `DOMENII`, nu din progres.
+static func din_dictionar(date: Dictionary) -> void:
+	_nivel_atins.clear()
+	_stiute.clear()
+
+	var niveluri = date.get("nivel_atins")
+	if niveluri is Dictionary:
+		for domeniu in niveluri:
+			# Strâns în intervalul care există: un nivel 7 dintr-un save umblat
+			# cu mâna ar cere un raft care nu există, iar ecranul ar rămâne gol
+			# fără să spună de ce.
+			_nivel_atins[String(domeniu)] = clampi(
+				int(niveluri[domeniu]), 1, Puzzle.TIMP_PE_NIVEL.size())
+
+	var stiute = date.get("stiute")
+	if stiute is Dictionary:
+		for celula in stiute:
+			if not (stiute[celula] is Dictionary):
+				continue
+			var ids := {}
+			for id in stiute[celula]:
+				ids[String(id)] = true
+			_stiute[String(celula)] = ids

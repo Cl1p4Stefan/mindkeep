@@ -57,6 +57,7 @@ fișiere nici nu se compilează fără `Sac` și `Muzica`.
 | `verifica_drumuri` | se poate înfunda o expediție? | 4 | ~15 s |
 | `verifica_coltul` | nodul împins lângă Boss | **tipărește măsurători, nu verdicte** | ~2 min |
 | `verifica_cifru` | generatorul de lacăte și dificultatea măsurată | `VERDICT` | **~10 min** |
+| `verifica_salvarea` | drumul stare → disc → stare, câmp cu câmp; chei lipsă și în plus; fișiere stricate; versiunea; nodul nerezolvat | 54 | ~1 s |
 
 **Două scot altceva decât „OK”**, deci nu le căuta verdictele cu grep:
 `verifica_coltul` tipărește un tabel de distanțe pe semințe (se citește, nu se
@@ -123,7 +124,11 @@ Fiecare din astea a fost dezbătută și decisă conștient. Dacă propui altcev
 | **Toate disciplinele dau daune de bază** | Altfel una devine „cea inutilă"; diferă doar efectul secundar                                                                                                   |
 | **Greșeală = pierzi 1 PA, NU tura**      | Pierderea turii pedepsește ignoranța în loc s-o corecteze                                                                                                       |
 | **Desktop = „casa" progresului**         | Build-ul web e demo; save-urile nu se sincronizează automat                                                                                                     |
-| **Meniul de start e scena principală**   | Două moduri de joc înseamnă o răscruce, iar răscrucea trebuie să fie un ecran, nu un `run/main_scene` schimbat de mână. Meniul ÎNCARCĂ o scenă și nu știe nimic despre ea: harta își alege singură ecranul (loadout / hartă / sumar) din starea lui `Expeditie`, exact ca până acum — deci `harta.tscn` și `lupta.tscn` pornesc în continuare singure cu F6. Ieșire spre meniu doar de pe loadout și de pe sumar: din mijlocul unei expediții, fără Save, ar fi o abandonare deghizată în pauză |
+| **Save: două fișiere, nu unul**          | `permanent.json` (Tezaur, Antrenament, sacurile permanente) și `expeditie.json`, care EXISTĂ doar cât e un run viu. Cu un singur fișier, „șterge expediția" ar fi însemnat „rescrie fișierul care ține și Fragmentele" — iar „e un run în curs?" devine o întrebare despre existența unui fișier, nu un câmp dinăuntru care se poate contrazice |
+| **Apelurile de salvare stau în SCENE**   | `Arhiva` adună dicționarele celorlalți și nu știe nicio regulă de joc; nimeni nu depinde de ea. Dacă salvarea ar fi în autoload-uri, `verifica_drumuri` (~20.000 de expediții jucate, adică sute de mii de intrări în noduri) ar bate discul și ar scrie peste save-ul adevărat |
+| **Nodul se scrie pe disc la INTRARE**    | Înainte să se deschidă ce te așteaptă, nu la finalul nodului — altfel un lacăt ratat se reia cu codul deja văzut pe roți. Consecința: un nod poate fi „intrat dar nerezolvat", iar ce se întâmplă la reluare e coloana `reluabil` din `DATE_NOD` (Evenimentul NU se reia; lupta repornește de la zero) |
+| **Un save mai nou NU se citește**        | Vechi se deschide chiar și strâmb (cheie lipsă = implicit, cheie necunoscută = ignorată). Mai nou se pune deoparte: cheile pe care nu le știu pot însemna altceva decât cred. Un fișier ilizibil se redenumește, nu se șterge, și faptul se spune în meniu |
+| **Meniul de start e scena principală**   | Două moduri de joc înseamnă o răscruce, iar răscrucea trebuie să fie un ecran, nu un `run/main_scene` schimbat de mână. Meniul ÎNCARCĂ o scenă și nu știe nimic despre ea: harta își alege singură ecranul (loadout / hartă / sumar) din starea lui `Expeditie`, exact ca până acum — deci `harta.tscn` și `lupta.tscn` pornesc în continuare singure cu F6. Ieșire spre meniu doar de pe loadout și de pe sumar: din mijlocul unei expediții, fără Save, ar fi o abandonare deghizată în pauză. **De la Save (12 octombrie 2026) ieșirea de pe hartă ar fi ieftină și cinstită — butonul nu s-a adăugat încă, e la „Rămas deschis" în sesiunea SAVE** |
 
 
 ### Bucla de luptă
@@ -189,7 +194,7 @@ Decise pe 27 septembrie 2026, cu domeniile retăiate pe 6 octombrie 2026. Contex
 
 ## Ordinea de construcție (ruta recomandată)
 
-**Făcut deja:** setup + Git, scena de luptă, sistemul de combo, Trivia + Logică integrate, arhetipuri de inamici (Atac constant / Grabnic), card de inamic, artă pentru rege și cavaler, audio (muzică, feedback, ticăit, victorie/înfrângere), UI lustruit, harta de expediție, meniul de start și prima felie din Practice.
+**Făcut deja:** setup + Git, scena de luptă, sistemul de combo, Trivia + Logică integrate, arhetipuri de inamici (Atac constant / Grabnic), card de inamic, artă pentru rege și cavaler, audio (muzică, feedback, ticăit, victorie/înfrângere), UI lustruit, harta de expediție, meniul de start, prima felie din Practice și **Save/Load pe disc** (pasul 8).
 
 **Ce urmează:**
 
@@ -200,7 +205,7 @@ Decise pe 27 septembrie 2026, cu domeniile retăiate pe 6 octombrie 2026. Contex
 5. **3 inamici manuali** — unul simplu, unul Barieră, unul cu vulnerabilitate
 6. **Harta de expediție** — noduri, alegerea drumului, loadout-ul de 3 din N
 7. **Cetatea** — clădiri, upgrade-uri, economia resurselor
-8. **Save/Load**
+8. ~~**Save/Load**~~ — **FĂCUT** (12 octombrie 2026). `autoload/arhiva.gd`, două fișiere în `user://`, scriere prin fișier temporar și redenumire, versiune în save, fișier ilizibil pus deoparte și anunțat în meniu. Vezi sesiunea SAVE din `progres.md`.
 9. **Disciplinele 5-8** — Reținere, Tipare, Spațial, Reflex
 10. **Generatorul de inamici** — arhetipuri + modificatori + buget, după ce știi că piesele merită combinate. Aici se separă identitatea inamicului (nume, descriere, facțiune) de `DATE_ARHETIP`.
 11. **Artă, VFX, „juice"** — parțial început (figurile principale au imagini reale); restul e placeholder.

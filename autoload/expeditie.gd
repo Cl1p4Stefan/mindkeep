@@ -76,6 +76,28 @@ enum Nod {
 ##   buget        — cât de SCUMP poate fi inamicul ales acolo (cine încape)
 ##   monede       — câte Monede cad la o victorie
 ##   bonus        — Fragmente în plus, o singură dată, pentru un nod greu
+##   reluabil     — se poate RELUA, dacă ai închis jocul în el? Vezi mai jos.
+##
+## „reluabil" e singura coloană care există din cauza Save-ului, și e scrisă ca
+## DATĂ, nu ca `if`, din același motiv ca restul tabelului.
+##
+## Save-ul scrie expediția pe disc în clipa în care INTRI într-un nod (regula e
+## la `intra_in_nod()`). Deci un nod poate fi, pe disc, „intrat dar nerezolvat":
+## ai închis jocul în mijlocul luptei. Întrebarea „ce se întâmplă la reluare?"
+## are două răspunsuri diferite, și amândouă sunt corecte:
+##
+##   LUPTĂ, ELITĂ, BOSS, ODIHNĂ, MAGAZIN → `true`. Nodul se redeschide, lupta
+##   repornește de la zero. Nimic nu s-a scurs: un adversar nu-ți spune nimic
+##   ce-ai putea folosi a doua oară, iar o Odihnă sau un Magazin reluate dau
+##   exact ce dădeau. Fără asta, ieșirea din joc în mijlocul unei lupte ar SĂRI
+##   lupta — iar la Boss ar da chiar ecranul de victorie, fiindcă `la_capat()`
+##   e adevărat în clipa în care ești PE nodul lui.
+##
+##   EVENIMENT → `false`. Cufărul ți-a arătat codul pe roți, iar sămânța
+##   lacătului e deterministă: reluarea ar da același lacăt, cu răspunsul deja
+##   știut. Nodul rămâne consumat, cufărul e pierdut. Nota întreagă e în
+##   sesiunea EVENIMENTUL DESCHIDE CUFĂRUL, scrisă cu două zile înainte să
+##   existe vreun fișier pe disc.
 ##
 ## „putere” și „buget” sunt două lucruri diferite, și merită două coloane:
 ## bugetul alege CINE apare (un Spadasin în loc de un Soldat), puterea îl umflă
@@ -86,37 +108,37 @@ const DATE_NOD := {
 		"cheie": "lupta", "nume": "Lupta",
 		"descriere": "Un adversar obisnuit iti taie drumul.",
 		"culoare": Color(0.96, 0.93, 0.86),
-		"putere": 1.0, "buget": 1.0, "monede": 8, "bonus": 0,
+		"putere": 1.0, "buget": 1.0, "monede": 8, "bonus": 0, "reluabil": true,
 	},
 	Nod.ELITA: {
 		"cheie": "elita", "nume": "Elita",
 		"descriere": "Mai mult PV, lovituri mai grele — si o rasplata pe masura.",
 		"culoare": Color(1.00, 0.62, 0.26),
-		"putere": 1.6, "buget": 1.8, "monede": 16, "bonus": 12,
+		"putere": 1.6, "buget": 1.8, "monede": 16, "bonus": 12, "reluabil": true,
 	},
 	Nod.ODIHNA: {
 		"cheie": "odihna", "nume": "Odihna",
 		"descriere": "Singurul loc din expeditie in care regele isi revine.",
 		"culoare": Color(1.00, 0.80, 0.52),
-		"putere": 1.0, "buget": 1.0, "monede": 0, "bonus": 0,
+		"putere": 1.0, "buget": 1.0, "monede": 0, "bonus": 0, "reluabil": true,
 	},
 	Nod.EVENIMENT: {
 		"cheie": "eveniment", "nume": "Eveniment",
 		"descriere": "Un cufar incuiat. Cifrul nu e scris nicaieri — se deduce.",
 		"culoare": Color(0.84, 0.82, 0.96),
-		"putere": 1.0, "buget": 1.0, "monede": 0, "bonus": 0,
+		"putere": 1.0, "buget": 1.0, "monede": 0, "bonus": 0, "reluabil": false,
 	},
 	Nod.MAGAZIN: {
 		"cheie": "magazin", "nume": "Magazin",
 		"descriere": "Un negustor pe drum. Monedele stranse se schimba aici pe ajutor — doar pentru expeditia asta.",
 		"culoare": Color(1.00, 0.86, 0.38),
-		"putere": 1.0, "buget": 1.0, "monede": 0, "bonus": 0,
+		"putere": 1.0, "buget": 1.0, "monede": 0, "bonus": 0, "reluabil": true,
 	},
 	Nod.BOSS: {
 		"cheie": "boss", "nume": "Boss",
 		"descriere": "Capatul drumului. Mai greu decat orice Elita — si ultimul lucru dintre tine si sumar.",
 		"culoare": Color(0.92, 0.30, 0.22),
-		"putere": 2.3, "buget": 2.6, "monede": 30, "bonus": 30,
+		"putere": 2.3, "buget": 2.6, "monede": 30, "bonus": 30, "reluabil": true,
 	},
 }
 
@@ -611,6 +633,24 @@ var harta: Array[Dictionary] = []
 ## Unde ești. `-1` = încă n-ai intrat pe hartă (ești la loadout).
 var pozitie := -1
 
+## NODUL ÎN CARE AI INTRAT ȘI CARE NU S-A ÎNCHEIAT ÎNCĂ. `-1` = niciunul.
+##
+## Există doar din cauza Save-ului, și fără el save-ul ar avea o gaură mare:
+## expediția se scrie pe disc la INTRAREA în nod (vezi `intra_in_nod`), deci un
+## joc închis în mijlocul unei lupte lăsa pe disc un nod deja trecut în
+## `parcurse`, pe care harta nu-l mai deschidea niciodată — lupta sărită, iar la
+## Boss chiar victoria, fiindcă `la_capat()` se uită doar la ce nod ești.
+##
+## DE CE UN INT ȘI NU UN `bool in_nod`. Un bool ar fi fost de ajuns, fiindcă
+## nodul nerezolvat e mereu `pozitie`. Dar un int SPUNE care, deci se citește
+## din save cu ochiul la depanare — iar dacă vreodată n-ar fi egal cu `pozitie`,
+## asta e chiar semnul că cineva a uitat să-l șteargă. Un bool ar fi ascuns
+## greșeala; un int o arată.
+##
+## Se pune la intrare, se șterge când nodul s-a încheiat (`incheie_nodul()`).
+## Ce se întâmplă cu el la reluare e în coloana „reluabil" din `DATE_NOD`.
+var nod_nerezolvat := -1
+
 ## Drumul parcurs, în ordine. E ȘI istoricul pentru ecranul de sumar, ȘI
 ## sursa lui „ce noduri sunt în urma mea” pentru desenarea hărții.
 var parcurse: Array[int] = []
@@ -670,6 +710,7 @@ func goleste() -> void:
 	plansa = ""
 	harta.clear()
 	pozitie = -1
+	nod_nerezolvat = -1
 	parcurse.clear()
 	loadout.clear()
 	pv = PV_MAX
@@ -740,13 +781,35 @@ static func _plansa_de_jucat() -> String:
 
 
 ## Intră în nodul cu indicele dat. Cheamă-l DOAR cu un nod din `accesibile()`.
+##
+## NODUL E CONSUMAT AICI, la intrare, nu la verdict: `parcurse` îl primește
+## înainte să se fi întâmplat ceva în el, deci un cufăr ratat nu se poate
+## reîncerca și o luptă pierdută nu se poate repeta. E regula hărții pentru
+## toate nodurile („drumul nu se poate reface"), nu o pedeapsă.
+##
+## ȘI DE AICI SE SALVEAZĂ PE DISC, din `harta.gd`, înainte să se deschidă ce te
+## așteaptă. Dacă salvarea s-ar face la finalul nodului, un lacăt ratat s-ar
+## relua cu codul deja văzut pe roți. Vezi coloana „reluabil" din `DATE_NOD`
+## pentru ce se întâmplă cu nodul la reluare.
 func intra_in_nod(id: int) -> void:
 	if id < 0 or id >= harta.size():
 		push_warning("Expeditie: nod inexistent %d." % id)
 		return
 	pozitie = id
+	nod_nerezolvat = id
 	parcurse.append(id)
 	s_a_schimbat.emit()
+
+
+## Nodul s-a încheiat: lupta s-a terminat, mesajul s-a închis, magazinul s-a
+## părăsit. De aici încolo, o reluare a expediției pornește de pe hartă, nu din
+## nod.
+##
+## E o funcție separată, și nu o linie în `_dupa_un_nod()` din hartă, dintr-un
+## motiv de responsabilitate: starea expediției se schimbă doar din fișierul
+## care o deține. Ecranul spune CÂND, expediția spune CE.
+func incheie_nodul() -> void:
+	nod_nerezolvat = -1
 
 
 ## Încheie expediția. `victorie` = ai ajuns la capăt; altfel PV-ul a ajuns 0.
@@ -2796,6 +2859,7 @@ func spre_dictionar() -> Dictionary:
 		"plansa": plansa,
 		"harta": noduri,
 		"pozitie": pozitie,
+		"nod_nerezolvat": nod_nerezolvat,
 		"parcurse": parcurse.duplicate(),
 		"loadout": loadout.duplicate(),
 		"pv": pv,
@@ -2814,6 +2878,10 @@ func din_dictionar(date: Dictionary) -> void:
 	# Un save vechi n-are câmpul, deci "" — adică hartă generată. Exact ce era.
 	plansa = String(date.get("plansa", ""))
 	pozitie = int(date.get("pozitie", -1))
+	# Un save scris înainte de câmpul ăsta n-are niciun nod nerezolvat: pe
+	# atunci nu exista scriere pe disc, deci nici reluare. `-1` e răspunsul
+	# corect, nu doar valoarea comodă.
+	nod_nerezolvat = int(date.get("nod_nerezolvat", -1))
 	pv = int(date.get("pv", PV_MAX))
 	pv_max = int(date.get("pv_max", PV_MAX))
 	fragmente_castigate = int(date.get("fragmente_castigate", 0))

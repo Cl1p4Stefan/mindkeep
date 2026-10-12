@@ -65,7 +65,47 @@ extends Node
 ##
 ## Amândouă scriu în aceleași sertare, deci `expeditie_noua()` și save-ul
 ## nu trebuie să știe care disciplină folosește care formă.
+##
+## ────────────────────────────────────────────────────────────
+## CÂT TRĂIEȘTE UN SAC: `Durata`, DECLARATĂ DE APELANT
+##
+## Nu toate sacurile au aceeași durată de viață, și diferența nu e o chestiune
+## de gust:
+##
+##   Sacul de LUPTĂ al unui domeniu („cultura_generala:geografie:2") trebuie să
+##   se golească la fiecare expediție nouă. Altfel, după zece runuri, lupta ar
+##   trage din ce-a rămas pe fundul sacului — iar la un joc de învățare
+##   repetarea LA DISTANȚĂ e exact ce vrei, nu ce eviți.
+##
+##   Sacul unui RAFT din Practice („practice:geografie:capitale:2") trebuie să
+##   supraviețuiască expedițiilor. Exersezi un raft dimineața, pornești o
+##   expediție la prânz, te întorci la raft seara: dacă memoria s-a șters,
+##   garanția „fără repetiții" a dispărut fără ca nimeni să fi cerut asta.
+##
+## CINE DECIDE. Nu sacul: `sac.gd` nu știe, și n-are voie să știe, ce e
+## „practice" sau ce e un domeniu — toată valoarea lui vine din faptul că nu
+## știe ce e un bilet. Deci durata o DECLARĂ apelantul, la folosire:
+##
+##     Sac.extrage(cheie, pool, "id")                        ← pe expediție
+##     Sac.extrage(cheie, pool, "id", Sac.Durata.PERMANENT)  ← rămâne
+##
+## Iar cunoștința aia stă exact acolo unde trebuie: `trivia.gd` e singurul
+## fișier care știe că un raft din Practice nu e o luptă.
+##
+## CE SE VEDE DIN AFARĂ. `expeditie_noua()` golește numai sacurile de
+## expediție. Pentru „șterge tot" (joc nou, unelte de verificare) e
+## `goleste_tot()`. Iar la salvare, durata nu se scrie în fișier: FIȘIERUL e
+## cel care o spune — tot ce stă în save-ul permanent e, prin definiție,
+## permanent. Vezi `spre_dictionar()`.
 
+
+## Cât trăiește un sac. Pe disc nu ajunge niciodată ca număr (vezi nota de sus),
+## deci ordinea din listă nu e o capcană aici — dar `enum`, nu `bool`, fiindcă
+## „durată" are nume, iar `true` n-ar spune care dintre cele două.
+enum Durata {
+	EXPEDITIE,   ## se golește la fiecare expediție nouă
+	PERMANENT,   ## trece în save-ul permanent și supraviețuiește runurilor
+}
 
 ## Ce s-a tras deja, în ciclul curent: „cheia sacului" → listă de identități.
 ## O identitate e un text — vezi `_identitate()` mai jos pentru de ce un text
@@ -75,6 +115,17 @@ var _extrase := {}
 ## Ultima identitate trasă din fiecare sac. Există doar pentru regula de la
 ## răscrucea dintre cicluri, explicată sus.
 var _ultima := {}
+
+## Durata fiecărui sac: cheie → `Durata`. Se scrie la fiecare folosire a cheii,
+## nu doar la prima: o atribuire în plus e mai ieftină decât un `if` care
+## întreabă dacă cheia e deja cunoscută, și amândouă pun aceeași valoare.
+##
+## O cheie care nu e aici e de expediție. Asta e valoarea implicită DINADINS:
+## un sac nou, scris de cineva care n-a citit nota de sus, se va goli prea des
+## — adică va repeta o întrebare. Invers, un sac rămas permanent din neatenție
+## ar opri repetarea pe veci, și aia nu se vede ca un bug, se vede ca o bază de
+## întrebări care s-a terminat.
+var _durata := {}
 
 
 # ─────────────────────────────────────────────────────────────
@@ -96,11 +147,17 @@ var _ultima := {}
 ##                elementul însuși devine identitatea lui — bun pentru
 ##                liste de șiruri simple.
 ##
+##   `durata`   — cât trăiește sacul ăsta. Vezi `Durata` în antet. Implicit „pe
+##                expediție", fiindcă aia e regula pentru lupte.
+##
 ## Întoarce `null` dacă lista e goală: apelantul decide ce înseamnă asta
 ## (la Trivia, ecranul de eroare).
-func extrage(cheie: String, elemente: Array, camp_id := "") -> Variant:
+func extrage(cheie: String, elemente: Array, camp_id := "",
+		durata := Durata.EXPEDITIE) -> Variant:
 	if elemente.is_empty():
 		return null
+
+	_durata[cheie] = durata
 
 	# `Array.has()` peste o listă de câteva zeci de elemente e ieftin, iar o
 	# listă simplă se salvează pe disc fără nicio conversie. Cu mii de
@@ -162,7 +219,8 @@ func extrage(cheie: String, elemente: Array, camp_id := "") -> Variant:
 ## funcție dinadins: despărțite în „verifică" și „reține", ar exista un loc
 ## în care se poate uita a doua, iar bug-ul ăla nu se vede decât ca „parcă
 ## se repetă ceva, uneori".
-func retine(cheie: String, identitate: String) -> bool:
+func retine(cheie: String, identitate: String, durata := Durata.EXPEDITIE) -> bool:
+	_durata[cheie] = durata
 	var vazute: Array = _extrase.get(cheie, [])
 	if vazute.has(identitate):
 		return false
@@ -182,16 +240,34 @@ func recicleaza(cheie: String) -> void:
 	_extrase[cheie] = []
 
 
-## Golește toate sacurile: expediție nouă, toate întrebările redevin noi.
+## Expediție nouă: sacurile DE EXPEDIȚIE redevin pline, cele permanente nu se
+## ating. O cheamă `Expeditie.incepe()`.
 ##
-## NU O CHEAMĂ ÎNCĂ NIMENI, și e în regulă. Harta de expediție (pasul 6 din
-## ruta de construcție) e locul ei firesc: acolo se naște noțiunea de
-## „expediție nouă". Până atunci, o expediție ține cât o rulare a jocului,
-## fiindcă autoload-ul pornește gol — ceea ce înseamnă că întrebările nu se
-## repetă nici măcar între două lupte consecutive, exact ce vrei.
+## Până la Save golea tot, fiindcă tot era de expediție. Despărțirea a venit
+## odată cu Practice: o expediție pornită între două sesiuni de antrenament
+## ștergea garanția „fără repetiții" de pe rafturi — scris la „Rămas deschis"
+## în sesiunea MENIUL ȘI PRACTICE, reparat la Save.
+##
+## Se umblă pe o COPIE a cheilor (`_extrase.keys()` întoarce un Array nou), nu
+## direct pe dicționar: ștergi din ce parcurgi și ai o buclă care sare intrări.
 func expeditie_noua() -> void:
+	for cheie in _extrase.keys():
+		if int(_durata.get(cheie, Durata.EXPEDITIE)) == Durata.EXPEDITIE:
+			_extrase.erase(cheie)
+			_ultima.erase(cheie)
+			_durata.erase(cheie)
+
+
+## Șterge TOT, inclusiv sacurile permanente.
+##
+## Două apelante, amândouă din afara jocului jucat: un „joc nou" care aruncă
+## progresul, și uneltele din `tools/verificari/`. O verificare pleacă mereu de
+## la zero — de-aia acolo se cheamă asta, nu `expeditie_noua()`, deși până la
+## Save cele două făceau exact același lucru.
+func goleste_tot() -> void:
 	_extrase.clear()
 	_ultima.clear()
+	_durata.clear()
 
 
 # ─────────────────────────────────────────────────────────────
@@ -223,25 +299,62 @@ func _identitate(element, camp_id: String) -> String:
 # Scrise de pe acum, din același motiv ca la `Tezaur`: formatul e mai ușor
 # de ales azi, cu un singur fel de sac, decât peste trei luni cu șase.
 #
-# Ce se salvează e memoria unei EXPEDIȚII, deci intră în save-ul unei
-# expediții în desfășurare — nu în progresul permanent. Dacă închizi jocul
-# la jumătatea unei expediții și revii, întrebările deja văzute rămân văzute.
+# SACUL SE SALVEAZĂ ÎN DOUĂ FIȘIERE, și de-aia funcțiile cer o `durata`:
+# sacurile de expediție intră în save-ul expediției, cele permanente în
+# progresul permanent. Închizi jocul la jumătatea unei expediții și revii:
+# întrebările deja văzute rămân văzute, din amândouă felurile de sac.
+#
+# DURATA NU SE SCRIE ÎN FIȘIER, și merită spus de ce, fiindcă e tentant s-o
+# scrii „ca să fie". FIȘIERUL e cel care o spune: tot ce stă în save-ul
+# permanent e permanent, prin definiție. Un câmp în plus ar fi un al doilea loc
+# care susține același lucru — adică un loc care se poate contrazice cu primul.
+# Aceeași regulă ca la ecranul din Practice, care nu-și ține minte ce ecran e.
 # ─────────────────────────────────────────────────────────────
 
-## Starea ca Dictionary cu chei text — exact forma pe care
+## Sacurile de o durată anume, ca Dictionary cu chei text — exact forma pe care
 ## `JSON.stringify()` o înghite fără nicio conversie.
-func spre_dictionar() -> Dictionary:
-	return {
-		"extrase": _extrase.duplicate(true),
-		"ultima": _ultima.duplicate(true),
-	}
+func spre_dictionar(durata := Durata.EXPEDITIE) -> Dictionary:
+	var extrase := {}
+	var ultima := {}
+	for cheie in _extrase:
+		if int(_durata.get(cheie, Durata.EXPEDITIE)) != durata:
+			continue
+		extrase[cheie] = (_extrase[cheie] as Array).duplicate()
+		if _ultima.has(cheie):
+			ultima[cheie] = _ultima[cheie]
+	return {"extrase": extrase, "ultima": ultima}
 
 
-## Drumul invers. Pornim de la gol, deci un save vechi, căruia îi lipsește
-## un sac, nu lasă în urmă bilete fantomă din rularea curentă.
-func din_dictionar(date: Dictionary) -> void:
-	expeditie_noua()
-	if date.get("extrase") is Dictionary:
-		_extrase = (date["extrase"] as Dictionary).duplicate(true)
-	if date.get("ultima") is Dictionary:
-		_ultima = (date["ultima"] as Dictionary).duplicate(true)
+## Drumul invers, pentru o durată. Sacurile de durata ASTA se golesc întâi, deci
+## un save căruia îi lipsește un sac nu lasă în urmă bilete fantomă din rularea
+## curentă; celelalte nu se ating, fiindcă cele două fișiere se citesc unul după
+## altul și al doilea n-are voie să șteargă ce-a adus primul.
+func din_dictionar(date: Dictionary, durata := Durata.EXPEDITIE) -> void:
+	for cheie in _extrase.keys():
+		if int(_durata.get(cheie, Durata.EXPEDITIE)) == durata:
+			_extrase.erase(cheie)
+			_ultima.erase(cheie)
+			_durata.erase(cheie)
+
+	var extrase = date.get("extrase")
+	if extrase is Dictionary:
+		for cheie in extrase:
+			# Tot ce vine dintr-un fișier trece prin filtrul ăsta: o cheie a
+			# cărei valoare nu e o listă e sărită, nu crapă încărcarea. Un save
+			# vechi trebuie să se deschidă chiar și strâmb.
+			if not (extrase[cheie] is Array):
+				continue
+			var identitati: Array = []
+			for id in extrase[cheie]:
+				identitati.append(String(id))
+			_extrase[String(cheie)] = identitati
+			_durata[String(cheie)] = durata
+
+	var ultima = date.get("ultima")
+	if ultima is Dictionary:
+		for cheie in ultima:
+			# Numai pentru sacurile care au ajuns înăuntru: un „ultima" fără
+			# „extrase" ar fi o cheie cunoscută pe jumătate, iar `expeditie_noua`
+			# n-ar avea ce să golească din ea.
+			if _extrase.has(String(cheie)):
+				_ultima[String(cheie)] = String(ultima[cheie])

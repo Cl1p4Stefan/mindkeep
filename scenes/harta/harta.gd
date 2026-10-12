@@ -816,8 +816,46 @@ func _ready() -> void:
 		_arata_sumar()
 	elif not Expeditie.activa:
 		_arata_loadout()
+	elif Expeditie.nod_nerezolvat >= 0:
+		_reia_nodul()
 	else:
 		_dupa_un_nod()
+
+
+## AI ÎNCHIS JOCUL ÎN MIJLOCUL UNUI NOD. Ce se întâmplă acum.
+##
+## Ramura asta există numai de când Save-ul scrie pe disc. Până atunci, un nod
+## intrat era mereu un nod rezolvat: starea trăia în memorie, deci dacă ieșeai
+## din joc, ieșeai din toată expediția.
+##
+## Cu un fișier pe disc, nodul poate fi „intrat dar neîncheiat", iar dacă nimic
+## nu s-ar uita la asta, harta l-ar trata ca încheiat și l-ar SĂRI: lupta
+## pierdută pe gratis, iar la Boss chiar ecranul de victorie — `la_capat()` e
+## adevărat în clipa în care ești pe nodul lui, nu după ce l-ai bătut.
+##
+## Răspunsul vine din DATE, nu de aici: coloana „reluabil" din `DATE_NOD` spune
+## care noduri se pot redeschide fără să se scurgă nimic (lupta repornește de la
+## zero) și care nu (Evenimentul ți-a arătat codul pe roți).
+func _reia_nodul() -> void:
+	var nod := Expeditie.nod_curent()
+	var fisa := Expeditie.date_nod(int(nod.get("tip", Expeditie.Nod.LUPTA)))
+
+	if bool(fisa.get("reluabil", true)):
+		# Harta se desenează ÎNTÂI, deși nodul o acoperă imediat: la Odihnă și
+		# la Magazin, panoul e un voal peste pergament, iar sub voal trebuie să
+		# fie o hartă, nu un ecran gol. La luptă nu se vede oricum — scena se
+		# schimbă în același cadru.
+		_arata_harta()
+		_deschide_nodul()
+		return
+
+	# Nod neredeschis: a fost consumat la intrare și rămâne consumat. Se spune,
+	# fiindcă altfel ai bănui un bug. `incheie_nodul()` vine din `_dupa_un_nod`,
+	# pe care `_pe_mesaj_inchis` îl cheamă după ce apeși.
+	_arata_mesaj(
+		String(fisa.get("nume", "Nod")).to_upper(),
+		"Ai lasat locul asta in urma cand ai inchis jocul.\nDrumul nu se poate reface."
+	)
 
 
 # ─────────────────────────────────────────────────────────────
@@ -910,6 +948,9 @@ func _pe_pornire() -> void:
 	var text := camp_samanta.text.strip_edges()
 	var samanta := int(text) if text.is_valid_int() else 0
 	Expeditie.incepe(alese, samanta)
+	# AMBELE fișiere: expediția se naște, iar `incepe()` a chemat
+	# `Sac.expeditie_noua()`, deci s-au schimbat și sacurile din permanent.
+	Arhiva.salveaza_tot()
 	panou_loadout.visible = false
 	_arata_harta()
 
@@ -2646,6 +2687,29 @@ func _pe_nod_apasat(id: int) -> void:
 	await _sari_pe(id)
 
 	Expeditie.intra_in_nod(id)
+
+	# PRIMA SCRIERE PE DISC A UNUI NOD SE FACE AICI, ÎNAINTE SĂ SE DESCHIDĂ CE
+	# TE AȘTEAPTĂ. Nu e o chestiune de comoditate, e regula de care atârnă
+	# Lacătul: cufărul îți arată codul pe roți când greșești, iar sămânța lui e
+	# deterministă. Dacă save-ul s-ar scrie la FINALUL nodului, ai putea ieși
+	# din joc pe ecranul de eșec și relua exact același lacăt cu răspunsul deja
+	# știut. Nota întreagă e în sesiunea EVENIMENTUL DESCHIDE CUFĂRUL.
+	#
+	# Ce se întâmplă cu un nod intrat și nerezolvat (ai închis jocul în mijlocul
+	# unei lupte) e în coloana „reluabil" din `Expeditie.DATE_NOD`.
+	Arhiva.salveaza_expeditia()
+
+	_deschide_nodul()
+
+
+## CE TE AȘTEAPTĂ LA NODUL CURENT. Fără salt, fără `intra_in_nod` — doar
+## deschiderea.
+##
+## E despărțită de `_pe_nod_apasat` fiindcă are DOI apelanți: clicul, și
+## RELUAREA unei expediții salvate în mijlocul unui nod (vezi `_reia_nodul`).
+## Unite, reluarea ar fi cerut un al doilea `match` cu aceleași șase cazuri —
+## iar două locuri care știu ce face un nod ajung, într-o zi, să știe altceva.
+func _deschide_nodul() -> void:
 	var nod := Expeditie.nod_curent()
 
 	match int(nod["tip"]):
@@ -2657,6 +2721,26 @@ func _pe_nod_apasat(id: int) -> void:
 			get_tree().change_scene_to_file(SCENA_LUPTA)
 		Expeditie.Nod.ODIHNA:
 			var recuperat := Expeditie.odihneste()
+			# ODIHNA SE ÎNCHEIE ÎN CLIPA ÎN CARE VINDECĂ, nu când apeși pe mesaj.
+			#
+			# Cele două linii de mai jos sunt o pereche, și ordinea lor e tot
+			# rostul. Salvarea de la intrarea în nod e de DINAINTEA vindecării;
+			# fără o a doua scriere, un joc închis pe mesajul de Odihnă ar relua
+			# expediția cu nodul consumat și PV-ul nerecuperat — pierzi ce ai
+			# câștigat, nu ce n-ai dus la capăt.
+			#
+			# Dar numai salvarea n-ar fi fost de ajuns, ba chiar ar fi fost mai
+			# rău: nodul ar fi rămas NEREZOLVAT pe disc, iar Odihna e `reluabil`,
+			# deci reluarea l-ar fi deschis din nou și te-ar fi vindecat A DOUA
+			# OARĂ. Ieși din joc pe mesaj și te întorci cu 70% din PV în loc de
+			# 35%.
+			#
+			# Regula generală, de ținut minte pentru orice nod viitor: un nod cu
+			# efect INSTANTANEU se încheie când efectul s-a întâmplat. `reluabil`
+			# se ocupă doar de nodurile întrerupte ÎNAINTE de efectul lor — la
+			# Odihnă, fereastra aia e același cadru, deci practic nu există.
+			Expeditie.incheie_nodul()
+			Arhiva.salveaza_expeditia()
 			_arata_mesaj(
 				"ODIHNA",
 				"Regele isi recapata suflul: +%d PV.\nAcum %d / %d." % [
@@ -2737,14 +2821,39 @@ func _sari_pe(id: int) -> void:
 ## după ce te-ai întors dintr-o luptă. UN SINGUR loc, ca cele trei drumuri să
 ## nu poată ajunge la trei concluzii diferite despre același final.
 func _dupa_un_nod() -> void:
+	# NODUL S-A ÎNCHEIAT. De aici încolo, o reluare pornește de pe hartă, nu
+	# dinăuntrul nodului. Prima linie a funcției, dinadins: dacă ar fi pe
+	# ramuri, ar exista o ramură din care se poate uita.
+	Expeditie.incheie_nodul()
+
 	if Expeditie.e_doborat():
 		Expeditie.incheie(false)
+		_incheie_pe_disc()
 		_arata_sumar()
 	elif Expeditie.la_capat():
 		Expeditie.incheie(true)
+		_incheie_pe_disc()
 		_arata_sumar()
 	else:
+		# Ambele fișiere: expediția a înaintat, iar lupta de dinainte a putut
+		# plăti Fragmente în Tezaur.
+		Arhiva.salveaza_tot()
 		_arata_harta()
+
+
+## Expediția s-a terminat: progresul se scrie, fișierul expediției dispare.
+##
+## ORDINEA CONTEAZĂ. Întâi se scrie permanentul, abia apoi se șterge expediția.
+## Invers, o închidere bruscă între cele două ar fi lăsat un run fără fișier și
+## fără Fragmentele lui scrise — adică singurul caz în care Save-ul PIERDE ceva
+## câștigat.
+##
+## Starea din memorie nu se atinge: ecranul de sumar are nevoie de ea. Prețul,
+## scris: ieși din joc cu sumarul pe ecran și nu-l mai vezi niciodată. Cifrele
+## sunt deja plătite în Tezaur, deci se pierde priveliștea, nu răsplata.
+func _incheie_pe_disc() -> void:
+	Arhiva.salveaza_permanent()
+	Arhiva.sterge_expeditia()
 
 
 # ─────────────────────────────────────────────────────────────
@@ -2834,6 +2943,16 @@ func _pe_lacat_rezolvat(succes: bool) -> void:
 		lacat = null
 
 	Expeditie.castiga_monede(plata)
+	# CUFĂRUL S-A ÎNCHEIAT, ca Odihna: verdictul a căzut, Monedele s-au plătit,
+	# mesajul de după e doar informație. Aceeași pereche de linii, și tot pentru
+	# ca o ieșire din joc pe mesaj să nu piardă ce s-a câștigat.
+	#
+	# Aici `reluabil: false` rămâne însă important, pentru CEALALTĂ fereastră:
+	# dacă închizi jocul cu lacătul deschis, înainte de verdict, nodul e
+	# nerezolvat — și atunci cufărul NU se redeschide, fiindcă ți-ar da același
+	# cifru cu codul deja văzut pe roți.
+	Expeditie.incheie_nodul()
+	Arhiva.salveaza_expeditia()
 
 	# Nivelul se scrie în mesaj DINADINS: e singurul loc din care afli că
 	# lacătele nu sunt toate la fel, și de ce cel de lângă Boss ți-a luat cinci
@@ -2923,6 +3042,9 @@ func _pe_putere_cumparata(cheie: String) -> void:
 		return   # n-au ajuns Monedele; butonul era oricum stins
 
 	Sunet.reda(Sunet.Efect.CORECT)
+	# Ce-ai cumpărat e un lucru terminat, deci se scrie. Din același motiv ca la
+	# Odihnă: salvarea de la intrarea în nod e de dinaintea cumpărăturii.
+	Arhiva.salveaza_expeditia()
 	# Rescriem vitrina: Monedele au scăzut, deci alte butoane trebuie stinse.
 	_construieste_magazin()
 	# Și antetul, fiindcă și el arată Monedele — și, la „Zale ferecate”, PV-ul.

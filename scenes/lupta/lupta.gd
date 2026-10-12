@@ -1455,6 +1455,31 @@ func termina_lupta(victorie: bool) -> void:
 	# să nu se desprindă unul de altul.
 	_arata_verdictul(victorie, recompensa)
 
+	# ─────────────────────────────────────────────────────────────
+	# AICI SE PREDĂ LUPTA EXPEDIȚIEI, ȘI DE AICI SE SCRIE PE DISC.
+	#
+	# Până la Save, PV-ul se dădea înapoi în `_inapoi_la_harta()`, adică la
+	# APĂSAREA butonului de verdict. Mergea perfect cât nimic nu se scria pe
+	# disc: între verdict și buton nu exista nicio cale de ieșire din joc.
+	#
+	# Cu un save pe disc, fereastra aia devine o gaură: Fragmentele sunt deja
+	# plătite în Tezaur (`acorda_recompensa()`, mai sus), dar nodul ar rămâne
+	# nerezolvat — deci o ieșire din joc pe ecranul de verdict ar relua lupta de
+	# la zero și ar plăti răsplata a doua oară. Iar PV-ul scris pe disc ar fi
+	# cel de DINAINTEA luptei.
+	#
+	# Regula Arhivei („se scrie după fiecare lucru terminat") spune exact unde
+	# e locul: lupta se termină AICI, nu când apeși un buton. Butonul doar
+	# schimbă scena.
+	# ─────────────────────────────────────────────────────────────
+	Expeditie.seteaza_pv(pv_jucator)
+	# Nodul e rezolvat: o reluare pornește de pe hartă, nu din luptă. Vezi
+	# coloana „reluabil" din `Expeditie.DATE_NOD`.
+	Expeditie.incheie_nodul()
+	# Ambele fișiere: expediția (PV, Monede, recorduri) și permanentul
+	# (Fragmentele, care au intrat în Tezaur).
+	Arhiva.salveaza_tot()
+
 	buton_incheie_tura.text = "Inapoi pe harta"
 	actualizeaza_ui()
 
@@ -1714,13 +1739,14 @@ func _pe_verdict_apasat() -> void:
 	_inapoi_la_harta()
 
 
-## Predă PV-ul înapoi expediției și schimbă scena.
+## Schimbă scena. Nimic altceva.
 ##
-## PV-ul se scrie AICI, într-un singur loc, pe amândouă drumurile — și la
-## victorie, și la înfrângere. Pus în `termina_lupta()`, ar fi trebuit scris de
-## două ori; pus în două ramuri, ar fi fost uitat într-una.
+## PV-ul se predă în `termina_lupta()`, nu aici, de la sesiunea SAVE: lupta se
+## termină când cade cineva, nu când apeși butonul. Vezi nota de acolo pentru
+## gaura care se deschidea altfel. Funcția are doi apelanți (butonul de verdict
+## și butonul de jos, care devine „Inapoi pe harta"), iar asta e tot rostul ei:
+## amândouă duc în același loc.
 func _inapoi_la_harta() -> void:
-	Expeditie.seteaza_pv(pv_jucator)
 	get_tree().change_scene_to_file(SCENA_HARTA)
 
 

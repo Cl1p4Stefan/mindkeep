@@ -1,6 +1,6 @@
 # MINDKEEP — Jurnal de progres
 
-*Ultima actualizare: 9 octombrie 2026*
+*Ultima actualizare: 12 octombrie 2026*
 *Atașează acest fișier la începutul fiecărei sesiuni noi, împreună cu `CLAUDE.md` și `docs/pitch-document.md`.*
 
 ---
@@ -16,9 +16,9 @@
 | 5. Trei inamici manuali | ✅ Soldatul · Lăncierul (ceas) · Spadasinul (vulnerabilitate), aleși din joc |
 | 6. Harta de expediție | ✅ loadout „N din M" · **12-16 noduri**, ramificate, cu sămânță · Luptă / Elită / Odihnă / Eveniment / **Magazin** / **Boss** · **Monede + puteri temporare** · sumar de run · aspect: pergament, simboluri de cerneală, trasee punctate · **nodurile și drumurile stau pe o PANGLICĂ (curbă centrală + benzi)**, nu pe o grilă dreaptă · **patru trasee, toate verzi pe 300 de semințe** (POTCOAVĂ activă; POTCOAVA OGLINDITĂ e aceeași formă, întoarsă) · strat înclinat (forfecare) la ȘARPE · **drumuri care nu se încrucișează niciodată (0 la 300 de semințe)** · **nodul curent are și aură, și X, și stă nemișcat sub figurină** · **două surse de hartă: GENERATĂ (panglica) sau DESENATĂ dintr-un fișier `data/harti/*.json`** — comutatorul `Expeditie.SURSA_HARTII`; azi e pe DESENATĂ · **harta umple pergamentul**: pânza ține toată pagina, antetul plutește peste ea (805 × 427 px de hartă, de la 666 × 353) · **drumurile merg în amândouă sensurile**, cu nodul parcurs tăiat definitiv și cu garanția, verificată pe 16 000 de expediții simulate, că nu te poți înfunda · **figurina sare, cade ca un slam și zguduie ecranul la aterizare**, cu un răgaz de 0,5 s înainte să se deschidă nodul · **tipurile nodurilor se împart după o REȚETĂ fixă, nu se trag cu zarul**: 10 reguli de vecinătate, de început și de FINAL, plasare conștientă de reguli, verificare completă și reîncercare cu sub-sămânță (0 eșecuri pe 500 de semințe × 3 surse de hartă) · **la cel mult 2 pași de Boss e garantat un nod de bătaie** (100% pe 300 de semințe × 3 surse, de la 85% / 96% / 81%) · **niciun nod special nu mai are un geamăn lipit**, nici Evenimentul (0 pe 900 de hărți) · **rețeta nu se mai crede pe cuvânt: se PROBEAZĂ** — plafonul comun încearcă plasarea adevărată și taie un nod când forma nu le încape pe toate · rețeta se **plafonează după forma hărții**, nu după numărul de noduri · **nodul de Eveniment deschide Lacătul** (nivel din adâncime, sămânță din nodul, 6/10/14 Monede la succes) |
 | 7. Cetatea | ❌ |
-| 8. Save/Load | 🟡 tezaurul, sacul și expediția știu toate să se serializeze (`spre_dictionar` / `din_dictionar`), pe trei straturi de durată; scrierea pe disc, nu încă · **de pe 8 octombrie are un client nou**: progresul din Practice (nivelul pe domeniu + `id`-urile știute pe celulă) trăiește în două `static var` și **se pierde la închiderea jocului** — forma lor (chei text, valori simple) e deja cea pe care `JSON.stringify` o înghite fără conversii |
+| 8. Save/Load | ✅ **pe disc**, de pe 12 octombrie 2026. `autoload/arhiva.gd` — singurul fișier din joc care atinge discul, fără nicio regulă de joc în el; dependența merge într-un singur sens (apelurile de salvare stau în SCENE, ca uneltele de verificare să rămână uscate) · **două fișiere în `user://`**: `permanent.json` (Tezaur + progresul din Antrenament + sacurile permanente) și `expeditie.json`, care există doar cât e un run viu · **scriere prin fișier temporar și redenumire**, cu adoptarea unui `.nou` orfan la citire · **`versiune` în save**: mai vechi se citește prin `_migreaza()`, mai nou se pune deoparte · **un fișier ilizibil nu se șterge și nu se suprascrie** — se redenumește `*.stricat.json` (cu data în nume dacă e deja unul pus deoparte), iar meniul o spune, cu mesaje separate pentru progres și pentru expediție · **butonul din meniu devine „Continua expeditia"**, cu nodurile în urmă și PV-ul pe rândul de sub el · **sacul are acum DURATĂ pe cheie** (`Sac.Durata`): rafturile din Practice sunt permanente, sacurile de luptă rămân pe expediție · **nodul se scrie pe disc la INTRARE**, deci a apărut `nod_nerezolvat` și coloana `reluabil` din `DATE_NOD` — altfel o luptă întreruptă era sărită, iar la Boss era chiar victorie · 54 de verdicte în `verifica_salvarea`, ~1 s · vezi sesiunea SAVE
 | 9. Celelalte discipline | 🟡 Cultură generală ✅ (**2692 de întrebări în joc, toate**: 2142 scrise de mână (`mana:0001`…) + **139 fabricate, elemente chimice** (`wd:Q897:simbol:…`) + **160 fabricate, operă → autor** (`wd:Q12730777:autor:…`) + **251 fabricate, țară ↔ capitală** (`wd:Q142:capitala:…`) — **conținutul fabricat stă într-un DOSAR**, `data/trivia_gen/`, citit întreg de încărcător: un tabel nou = două fișiere, zero linii de cod · **92 de fapte cu note** + 357 de fapte fabricate fără notă · **OPT DOMENII** (Geografie și explorare, Istorie și societate, Știință și tehnologie, Artă și literatură, Divertisment și media, Sport și jocuri, Gastronomie și lifestyle, Diverse și curiozități), cu **31 de subcategorii** — **toate OPT domeniile sunt în luptă, niciunul din cele 31 de rafturi nu e gol și nicio întrebare nu e fără raft** (cele 135 scrise înaintea câmpului au fost clasificate, iar 21 de întrebări de mitologie au trecut de la Artă la Istorie); **toate cele 93 de celule (subdomeniu × nivel) au cel puțin 25 de întrebări** — treapta CONFORT din `plan-continut.md`, cea la care 4-5 expediții lungi nu repetă nimic; drumul până la 100 pe celulă cere încă 6631 și trece prin fabrică, nu prin scris de mână, tăiate după cum se joacă, nu după cum crescuse baza: artă + mitologie + literatură s-au unit, Divertisment și Sport pornesc goale · `CATEGORII` (listă) a devenit `DOMENII` (dicționar cheie → nume afișat), deci antetul scrie „ARTĂ ȘI LITERATURĂ”, nu cheia · **alegerea din luptă e în două trepte** — întâi domeniul, uniform, apoi întrebarea, cu sacul pe cheie de domeniu ȘI nivel — iar de azi **domeniul intră doar peste `PRAG_DOMENIU = 8` întrebări pe celulă**, cu plasă dacă nu trece niciunul; sub prag e sărit, nu golit (istoria trece cu rezerva ZERO, deci e următoarea țintă de conținut) · comutator `FOLOSESTE_WIKIDATA` · **fabrica are un modul comun**, `tools/fabrica/comun.py`, iar grila marchează celulele sărite · **faptele capitalelor au o LISTĂ de imagini**, `imagini: [{tip, …}]`: **126 de steaguri pe disc** (`assets/imagini_fapte/steaguri/`, PNG 320 px, 0,53 MB sursă, toate în domeniul public, cu manifest de credite), plus o intrare de hartă pe fiecare din cele 127 de fapte; Omanul e singurul refuzat, cu motivul scris · **fiecare întrebare are și o `subcategorie`**, una singură, din listă închisă pe domeniu (36 de chei, 4 folosite; la istorie sunt erele, tăiate pe dată) — cele 135 scrise de mână o primesc într-un lot de clasificare, cu un clichet în verificator · **istoria e la 18 pe toate trei nivelurile**, iar **Divertismentul și Sportul au câte 50 pe fiecare celulă**, pe 11 subcategorii cu care se poate filtra (filme 48, muzică 36, fotbal 30, olimpiade 30…) — deci **toate ȘASE domeniile sunt în luptă**, fiecare cu 1/6 din întrebări, și toate cele 11 subcategorii ale celor două domenii noi au conținut · **verificarea e un singur câmp**, `verificat: true/false` pe întrebare, pus de mână: întrebarea intră în joc oricum, iar flagul spune doar dacă i-am citit nota. Niciun script, niciun parametru — mecanismul de ciorne, al doilea flag de pe fapt și cele două unelte de confirmare s-au desfăcut (vezi UN SINGUR FLAG) · planul de conținut al tuturor celor șase domenii, cu subcategorii, tabele propuse și capcanele lor, e în **`docs/plan-continut.md`** · vezi sesiunile UN SINGUR FLAG, ȘASE DOMENII ÎN LUPTĂ, PLANUL ȘI CIORNELE, DOMENIILE, CONȚINUTUL, ID ȘI FAPT, FABRICA, AL DOILEA TABEL, MODULUL COMUN și STEAGURILE) · Logica ✅ (80 de categorii) · Cuvinte ✅ · toate trei fără repetiții pe expediție, **Cultura generală după `id`, nu după text** · celelalte 5 ❌ |
-| 10–13. Generator de inamici, artă, web | ❌ (artă parțial: figurile principale și piesele de pe butoanele de Obelisc au imagini reale · **arena are fundal: biblioteca gotică**, cu personajele așezate pe dalele din prim-plan, umbră de contact și lumină de sală) · Regina: **amânată**, vezi CLAUDE.md · **pasul 13 (Practice) — prima felie ✅**: **meniu de start** (`scenes/meniu/`, de azi `run/main_scene`) cu două butoane, și **Antrenament liber** (`scenes/practice/`) — alegi domeniul, apoi raftul, din `DOMENII` și `SUBCATEGORII`, cu cifrele pe butoane și rafturile goale stinse; întrebările vin prin **chiar scena de trivia a luptei**, fără cronometru (`cu_cronometru`, două linii în `puzzle.gd`); nivel pe DOMENIU, urcat singur la `PRAG_PRACTICE` = 60 de întrebări distincte știute; sac propriu, pe cheie cu filtru (`practice:<domeniu>:<raft>:<nivel>`); progres ținut doar în memorie, până la Save · vezi sesiunea MENIUL ȘI PRACTICE |
+| 10–13. Generator de inamici, artă, web | ❌ (artă parțial: figurile principale și piesele de pe butoanele de Obelisc au imagini reale · **arena are fundal: biblioteca gotică**, cu personajele așezate pe dalele din prim-plan, umbră de contact și lumină de sală) · Regina: **amânată**, vezi CLAUDE.md · **pasul 13 (Practice) — prima felie ✅**: **meniu de start** (`scenes/meniu/`, de azi `run/main_scene`) cu două butoane, și **Antrenament liber** (`scenes/practice/`) — alegi domeniul, apoi raftul, din `DOMENII` și `SUBCATEGORII`, cu cifrele pe butoane și rafturile goale stinse; întrebările vin prin **chiar scena de trivia a luptei**, fără cronometru (`cu_cronometru`, două linii în `puzzle.gd`); nivel pe DOMENIU, urcat singur la `PRAG_PRACTICE` = 60 de întrebări distincte știute; sac propriu, pe cheie cu filtru (`practice:<domeniu>:<raft>:<nivel>`); progres scris pe disc de la Save (12 octombrie), în `permanent.json` · vezi sesiunea MENIUL ȘI PRACTICE |
 
 Nodul de **Eveniment** are primul lui conținut: **Lacătul** — un cufăr cu cifru,
 dedus din indicii, cu artă adevărată (roți care se învârt în spatele
@@ -37,6 +37,387 @@ buget, generare) rămâne acolo unde era.
 Am sărit peste ordinea recomandată la pasul 12 (artă): imaginile pentru rege,
 cavaler și pentru cele trei piese de șah de pe butoane au intrat mai devreme, dar
 restul rămâne placeholder. Bucla de luptă e în continuare cea validată, nu arta.
+
+---
+
+## SAVE (12 octombrie 2026) — pasul 8: starea ajunge pe disc, și o gaură pe care doar Save-ul o putea deschide
+
+Serializarea exista de trei luni: `Tezaur`, `Sac` și `Expeditie` știau toate să
+se facă dicționar și să se citească înapoi, scrise devreme dinadins („formatul e
+mai ușor de ales acum, cât e ieftin"). Ce lipsea era un fișier. Sesiunea asta
+n-a reinventat formatul — l-a dus pe disc.
+
+Și, făcând asta, a descoperit că scrierea pe disc deschide singură o gaură care
+până azi nu putea exista. Secțiunea despre ea e cea mai importantă din sesiune.
+
+### `Arhiva`: dependența merge într-un singur sens
+
+Un autoload nou, `autoload/arhiva.gd`, înregistrat **ultimul** în
+`project.godot`. Ordinea nu e cosmetică: autoload-urile intră în arbore în
+ordinea din listă, deci `Tezaur._ready()` (care cheamă `goleste()`) rulează
+înaintea lui `Arhiva._ready()` (care încarcă). Invers, golirea ar fi șters exact
+ce se citise de pe disc.
+
+`Arhiva` nu știe ce e un Fragment, ce e un nod de Boss sau ce înseamnă
+„practice". Știe JSON, `FileAccess`, și numele celor patru dicționare pe care le
+adună. Toate celelalte depind de ea; ea nu depinde de niciunul — iar asta se
+vede în locul cel mai important:
+
+**Apelurile de salvare stau în SCENE, nu în autoload-uri.** Motivul e
+măsurabil, nu estetic: `verifica_drumuri.gd` joacă vreo 20.000 de expediții,
+adică sute de mii de `intra_in_nod()`, iar `verifica_harta.gd` cheamă `incepe()`
+pe sute de semințe. Dacă salvarea ar fi fost înăuntrul lor, fiecare verificare
+ar fi bătut discul de sute de mii de ori **și** ar fi scris peste save-ul
+adevărat. Așa, uneltele au rămas uscate fără să afle că există Save.
+
+Prețul, scris: un viitor apelant al lui `intra_in_nod()` poate uita salvarea.
+Azi e un singur ecran care-l cheamă.
+
+### Două fișiere, fiindcă sunt două durate de viață
+
+```
+user://permanent.json    Tezaur · progresul din Antrenament · sacurile permanente
+user://expeditie.json    expediția în curs + sacurile ei — EXISTĂ doar cât e un run viu
+```
+
+Trei motive, în ordinea importanței:
+
+1. **Durate diferite înseamnă ȘTERGERI diferite.** Expediția se încheie →
+   fișierul ei dispare. Cu un singur fișier, „șterge expediția" ar fi însemnat
+   „rescrie fișierul care ține și Fragmentele" — adică singurul fișier de
+   neînlocuit ar fi fost atins la fiecare final de run.
+2. **Frecvențe diferite.** Expediția se scrie la fiecare nod; permanentul, rar.
+   Un fișier scris des e un fișier mai des prins la mijloc.
+3. **„E un run în curs?" devine `FileAccess.file_exists()`**, nu un câmp
+   dinăuntru care se poate contrazice cu restul.
+
+`user://` și nu `res://`, fiindcă într-un joc exportat `res://` e doar de citit;
+pe Windows ajunge în `%APPDATA%\Godot\app_userdata\mindkeep\`. JSON cu taburi,
+deci citibil cu ochiul — la un joc care e în primul rând pentru mine, un save pe
+care-l poți deschide și citi e un save pe care-l poți depana.
+
+### Scrierea nu poate lăsa un fișier tăiat
+
+Se scrie în `expeditie.json.nou`, complet, se închide, și abia apoi se
+**redenumește** peste cel adevărat. Redenumirea e un singur pas pentru sistemul
+de fișiere, deci o închidere bruscă te lasă fie cu save-ul vechi întreg, fie cu
+cel nou întreg — niciodată cu jumătate din fiecare.
+
+Plasa în plus, la citire: **un `.nou` orfan se adoptă.** Pe Windows, redenumirea
+peste un fișier existent îl șterge întâi, deci există o fereastră de o
+microsecundă în care niciunul nu e la locul lui. Fișierul `.nou` e întreg (a fost
+scris și închis înainte), deci aruncarea lui ar fi fost singura pierdere de date
+pe care Save-ul ar fi putut-o face singur. Trei linii.
+
+### Versiunea: vechi se deschide, nou nu
+
+Fiecare fișier începe cu `"versiune": 1` și un `"scris_la"` pe care nu-l citește
+nimeni din joc (e pentru ochii mei, când deschid fișierul ca să înțeleg ce s-a
+întâmplat).
+
+| ce găsește | ce face | de ce |
+|---|---|---|
+| mai mică (sau lipsă = 0) | se citește, prin `_migreaza()` | azi funcția nu face nimic, și exact de-aia merită să existe: prima cheie care-și va schimba înțelesul va fi un `if versiune < 2:`, nu o arheologie prin tot jocul |
+| egală | se citește | — |
+| mai mare | **NU se citește**, se pune deoparte ca `permanent.v99.json` | un save din viitor nu poate fi citit „strâmb": cheile pe care nu le știu pot însemna altceva decât cred |
+
+Asimetria e tot rostul. „Se deschide chiar și strâmb" (cheie lipsă = valoarea
+implicită, cheie necunoscută = ignorată, `int()` pe tot ce vine numeric) e regula
+pentru save-uri VECHI. Pentru unul mai nou, singurul răspuns cinstit e să nu-l
+atingi.
+
+### Un fișier ilizibil se pune deoparte, nu se șterge
+
+Decis în sesiunea asta, la întrebare: **se anunță.** Un progres pierdut în tăcere
+arată exact ca „n-am jucat niciodată" — iar fișierul rămas pe disc e singurul loc
+din care se mai poate salva ceva.
+
+- fișierul se redenumește `permanent.stricat.json` (sau `expeditie.stricat.json`);
+- dacă există deja unul pus deoparte altădată, cel nou primește **data în nume**,
+  iar dacă și aia e luată (două stricări în aceeași secundă), un număr. O a doua
+  stricare n-are voie s-o șteargă pe prima;
+- meniul scrie un rând, cu **mesaje separate** pentru cele două fișiere:
+  „Progresul salvat nu s-a putut citi" și „Expeditia salvata nu s-a putut citi".
+  Pierderile sunt diferite — un run întrerupt e o seară, progresul permanent sunt
+  toate serile;
+- motivul tehnic („JSON invalid, linia 3") NU intră în frază: pe ecran e zgomot,
+  iar în consolă `Arhiva` l-a scris deja, cu tot cu numele fișierului pus
+  deoparte.
+
+`Arhiva` ține FAPTUL (`stricate`: „ce fișier" → „de ce"); fraza o face meniul. Un
+fișier care nu știe ce e un Fragment n-are de ce să știe cum se vorbește cu
+jucătorul.
+
+### GAURA: nodul e consumat la intrare, iar lupta nu se salvează
+
+Cele două reguli erau decise de dinainte, fiecare pentru un motiv bun:
+
+- **nodul se scrie pe disc la INTRARE** (`intra_in_nod`), înainte să se deschidă
+  ce te așteaptă — altfel un lacăt ratat s-ar relua cu codul deja văzut pe roți
+  (nota din sesiunea EVENIMENTUL DESCHIDE CUFĂRUL, scrisă cu două săptămâni
+  înainte să existe vreun fișier);
+- **lupta nu se salvează**: o expediție întreruptă în luptă se reia de la nodul
+  acela.
+
+Puse împreună, pe disc, dau altceva decât suma lor. Nodul intrat e deja în
+`parcurse`, deci harta nu-l mai deschide: **lupta întreruptă era SĂRITĂ.** Iar la
+Boss era mai rău decât o luptă pe gratis — `la_capat()` e adevărat în clipa în
+care ești PE nodul Bossului, nu după ce l-ai bătut, deci reluarea ducea direct la
+**ecranul de victorie**.
+
+Până azi nimic din asta nu putea exista: starea trăia în memorie, deci dacă
+ieșeai din joc, ieșeai din toată expediția. E o gaură pe care doar prima scriere
+pe disc o putea deschide — și pe care numai o verificare a dus-întorsului o putea
+găsi înainte de prima partidă.
+
+**Leacul respectă amândouă deciziile, literă cu literă**, și costă un câmp și o
+coloană:
+
+- **`Expeditie.nod_nerezolvat`**, pus la intrare, șters de `incheie_nodul()`. Un
+  int, nu un `bool in_nod`: spune CARE nod, deci se citește din save cu ochiul la
+  depanare — iar dacă n-ar fi egal cu `pozitie`, asta e chiar semnul că cineva a
+  uitat să-l șteargă. Un bool ar fi ascuns greșeala.
+- **coloana `reluabil` în `DATE_NOD`.** Date, nu `if`-uri, ca tot tabelul:
+
+| nod | reluabil | de ce |
+|---|---|---|
+| Luptă · Elită · Boss | ✅ | lupta repornește de la zero. Un adversar nu-ți spune nimic ce-ai putea folosi a doua oară |
+| Odihnă · Magazin | ✅ | reluate, dau exact ce dădeau |
+| **Eveniment** | ❌ | cufărul ți-a arătat codul pe roți, iar sămânța lacătului e deterministă. Nodul rămâne consumat, cufărul e pierdut |
+
+La reluare, `harta.gd` citește fișa și face una din două. Pentru asta,
+deschiderea nodului s-a despărțit de clic: `_deschide_nodul()` are acum doi
+apelanți (clicul, după salt, și reluarea), fiindcă două locuri care știu ce face
+un nod ajung într-o zi să știe altceva.
+
+### Și o a doua fereastră, în luptă
+
+PV-ul se predă expediției în `_inapoi_la_harta()`, adică la **apăsarea**
+butonului de verdict. Mergea perfect cât nimic nu se scria pe disc: între verdict
+și buton nu exista nicio cale de ieșire din joc.
+
+Cu un save pe disc, fereastra aia devine o gaură cu capăt dublu. Fragmentele sunt
+deja plătite în Tezaur (`acorda_recompensa()` se cheamă la verdict), dar nodul ar
+fi rămas nerezolvat — deci o ieșire din joc pe ecranul de verdict ar fi **reluat
+lupta și plătit răsplata a doua oară**, iar PV-ul scris pe disc ar fi fost cel de
+DINAINTEA luptei.
+
+Regula Arhivei spune exact unde e locul: **lupta se termină când cade cineva, nu
+când apeși un buton.** Predarea PV-ului, `incheie_nodul()` și salvarea s-au mutat
+în `termina_lupta()`; `_inapoi_la_harta()` schimbă acum doar scena.
+
+### Unde se scrie, exact
+
+Regula scurtă: **se scrie după fiecare lucru TERMINAT**, deci cel mai rău caz e
+mereu „pierzi ce n-ai dus la capăt", niciodată „pierzi ce ai dus".
+
+| unde | ce se scrie | de ce acolo |
+|---|---|---|
+| `harta.gd`, după `Expeditie.incepe()` | ambele | expediția se naște, iar `incepe()` a chemat `Sac.expeditie_noua()` |
+| `harta.gd`, după `intra_in_nod()`, **înainte de `match`** | expediția | regula de care atârnă Lacătul |
+| `harta.gd`, după `odihneste()` | expediția, **plus `incheie_nodul()`** | salvarea de la intrare e de DINAINTEA vindecării. Vezi regula nodurilor cu efect instantaneu, mai jos |
+| `harta.gd`, după `cumpara()` | expediția | ce-ai cumpărat e câștigat |
+| `harta.gd`, după plata cufărului | expediția, **plus `incheie_nodul()`** | la fel: verdictul a căzut, Monedele s-au plătit, mesajul de după e doar informație |
+| `lupta.gd`, în `termina_lupta()` | ambele | vezi mai sus |
+| `harta.gd::_dupa_un_nod()` | ambele | singurul loc în care se adună cele trei drumuri |
+| `_dupa_un_nod()`, pe ramura `incheie()` | permanent, apoi **șterge** expediția | în ordinea asta: invers, o închidere între cele două ar fi lăsat un run fără fișier și fără Fragmentele lui scrise |
+| `practice.gd`, după `_inregistreaza()` | permanent | o întrebare știută nu are voie să moară cu procesul |
+
+Nimic nu se scrie la închiderea ferestrei. Cu punctele de mai sus, un
+`NOTIFICATION_WM_CLOSE_REQUEST` ar fi salvat doar o luptă în curs — adică exact
+ce decizia „lupta nu se salvează" spune să nu salvăm.
+
+**Un nod cu efect INSTANTANEU se încheie când efectul s-a întâmplat**, nu când
+apeși pe mesajul de după. Regula a ieșit la iveală pe Odihnă, și era o scurgere
+în direcția proastă: salvarea de după `odihneste()` repara pierderea PV-ului, dar
+lăsa nodul NEREZOLVAT pe disc — iar Odihna e `reluabil`, deci reluarea l-ar fi
+deschis din nou și te-ar fi vindecat **a doua oară**. Ieși din joc pe mesaj și te
+întorci cu 70% din PV în loc de 35%.
+
+`incheie_nodul()` se cheamă deci în patru locuri, nu în unul: la Odihnă (după
+vindecare), la cufăr (după plată), în `termina_lupta()`, și ca plasă pe prima
+linie din `_dupa_un_nod()`. Ce rămâne pentru `reluabil` sunt exact nodurile
+întrerupte ÎNAINTE de efectul lor — la Odihnă fereastra aia e același cadru, deci
+practic nu există; la lacăt e tot timpul cât te uiți la roți, și aia e chiar
+fereastra care trebuia închisă.
+
+### Sacul are acum DURATĂ pe cheie
+
+Întrebarea pusă la începutul sesiunii: sacul Culturii generale devine permanent,
+iar `Expeditie.incepe()` → `Sac.expeditie_noua()` golea tot, inclusiv cheile
+`practice:`. **Răspunsul: numai rafturile din Practice trec în permanent.**
+
+`Sac` a învățat o `Durata`, declarată de APELANT la folosire:
+
+```gdscript
+Sac.extrage(cheie, pool, "id")                        # pe expediție
+Sac.extrage(cheie, pool, "id", Sac.Durata.PERMANENT)  # rămâne
+```
+
+`sac.gd` nu știe ce e „practice" și n-are voie să afle — toată valoarea lui vine
+din faptul că nu știe ce e un bilet. Singura linie din tot jocul care declară
+permanența e în `trivia.gd::trage_din_raft()`, adică exact în fișierul care știe
+că un raft de antrenament nu e o luptă. `expeditie_noua()` golește de acum numai
+sacurile de expediție; pentru „șterge tot" (joc nou, unelte de verificare) există
+`goleste_tot()` — care e chiar vechiul `expeditie_noua()`, deci cele 10 apeluri
+din `verifica_trivia.gd` s-au mutat pe el fără să schimbe nimic.
+
+Durata **nu se scrie în fișier**: FIȘIERUL o spune. Tot ce stă în save-ul
+permanent e permanent, prin definiție, iar un câmp în plus ar fi fost un al
+doilea loc care susține același lucru — adică un loc care se poate contrazice cu
+primul.
+
+**Ce s-a schimbat față de ce scria în CONȚINUTUL.** Acolo scrisesem că sacul de
+LUPTĂ al Culturii generale devine permanent. Am ales altfel, deocamdată, ca să
+văd cum se simt repetările între expediții — la un joc de învățare, repetarea la
+DISTANȚĂ e ce vrei, nu ce eviți. Dacă se dovedesc deranjante, schimbarea e o
+constantă și o structură de date: cheile de luptă trec pe `Durata.PERMANENT`, și
+atunci `vazute` din `sac.gd` trebuie să devină un `Dictionary` folosit ca mulțime
+— comentariul de acolo spune deja că `Array.has` e ieftin la 45 de bilete, nu la
+2692.
+
+### Progresul din Antrenament, și o datorie pe care o numesc
+
+Nivelurile și întrebările știute din Practice trăiau în două `static var` și
+mureau cu procesul. Acum `Arhiva` le duce în `permanent.json` prin două funcții
+statice noi, și le aduce înapoi la pornire.
+
+**A rămas strâmb, și merită spus:** starea care supraviețuiește unei scene
+aparține unui AUTOLOAD — regula scrisă în antetul lui `tezaur.gd`, `sac.gd` și
+`expeditie.gd`. Progresul ăsta o încalcă: stă într-un script de scenă, iar
+`Arhiva` ajunge la el cu un `preload`. Ziua în care se mută e felia următoare din
+Practice, cea cu greșitele care revin și cu Jurnalul, când apar oricum alte
+două-trei dicționare care n-au ce căuta într-un ecran. Azi ar fi fost un refactor
+într-o sesiune despre disc.
+
+### Ce vede jucătorul
+
+Două rânduri în meniu, și nimic altceva:
+
+- butonul scrie **„Continua expeditia"**, cu `N noduri in urma, X / Y PV. Pornita
+  cu samanta Z.` dedesubt. E o CITIRE a stării, nu o decizie despre ecranul de
+  după: harta își alege singură ecranul, exact ca până acum, și ar fi arătat harta
+  oricum. Fără rândul ăsta, apeși „Expeditie" așteptând un loadout și aterizezi în
+  mijlocul unui run — iar primul lucru pe care l-ai crede e că jocul a uitat să-ți
+  dea alegerea;
+- rândul portocaliu de la fișierele puse deoparte, când e cazul.
+
+### Verificarea: `tools/verificari/verifica_salvarea.gd`
+
+`godot --headless --path . res://tools/verificari/verifica_salvarea.tscn` —
+**54 de verdicte în ~1 secundă.** Scrie DOAR în `user://verificare_salvare/`
+(`Arhiva.dosar` se mută pe prima linie, dosarul se golește la început și la
+final): o verificare care poate suprascrie save-ul adevărat e o verificare pe
+care n-o rulezi niciodată.
+
+| secțiune | ce bate |
+|---|---|
+| 1. dus-întors | stare BOGATĂ (run pornit, 4 noduri parcurse, PV schimbat, Monede, o putere cumpărată, recorduri, Fragmente, bilete în amândouă felurile de sac, progres în Antrenament) → disc → **tot golit** → citit → comparat câmp cu câmp, cu calea primei diferențe tipărită. Plus o probă că golirea chiar golește: fără ea, comparația ar trece chiar dacă încărcarea n-ar face nimic |
+| 2. tipurile | `typeof()` pe fiecare număr care a trecut prin JSON. **Verificarea pe care dus-întorsul n-o poate face:** în GDScript `3 == 3.0` e `true`, deci un `int()` uitat ar trece comparația fără o pată și ar crăpa abia când numărul ajunge să indexeze un Array |
+| 3. chei lipsă | fișiere goale și un save pe jumătate scris → valorile implicite, zero crăpături |
+| 4. chei în plus | o resursă ștearsă, un tip de nod inventat (→ Luptă), chei de nivel înalt necunoscute |
+| 5. fișiere stricate | patru feluri de ilizibil (tăiat la mijloc, gunoi binar, gol, un Array în loc de obiect) × **ambele fișiere** |
+| 6. două stricări la rând | trei la rând, în aceeași secundă → trei fișiere, cu trei conținuturi distincte |
+| 7. versiunea | fără versiune se citește; una din viitor nu, și e pusă deoparte cu versiunea în nume |
+| 8. atomicitatea | niciun `.nou` rămas după o scriere; un `.nou` orfan se adoptă ȘI se pune la locul lui |
+| 9. nodul nerezolvat | ajunge pe disc, se șterge la încheiere, tabelul `reluabil` e cel așteptat, iar la Boss `la_capat()` e deja adevărat — deci nodul e singurul care decide |
+| 10. duratele sacului | fiecare sac într-un singur fișier · `expeditie_noua()` golește doar ce trebuie · rămâne permanent și după disc · declarația din `trivia.gd`, probată prin chiar funcția ecranului |
+| 11. expediția încheiată | fișierul dispare, Fragmentele rămân scrise, iar un fișier de expediție încheiată nu se reia |
+
+**Ruptă de două ori, ca să știm că poate pica:**
+
+| ce am rupt | ce a prins |
+|---|---|
+| scos `"id"` din bucla de `int()` din `din_dictionar` | `starea se întoarce întreagă PICAT /expeditie/harta/0/id: int față de float`, plus secțiunea 2 pe toate cele 14 noduri. Ieșire 1 |
+| scos `nod_nerezolvat = id` din `intra_in_nod` | `nodul nerezolvat ajunge pe disc PICAT nod_nerezolvat=-1, pozitie=0`. Ieșire 1 |
+
+Prima rupere spune și de ce comparația de la secțiunea 1 întreabă `typeof`
+înaintea valorii: altfel un float strecurat ar fi trecut neatins.
+
+### O capcană de unealtă, de ținut minte
+
+**O eroare de PARSARE într-un script de verificare nu oprește Godot — îl lasă să
+ruleze la infinit.** Scena se încarcă fără script, `_ready()` nu rulează
+niciodată, deci `get_tree().quit()` nu se cheamă, iar procesul headless rămâne
+agățat până îl omori. Prima rulare a arătat exact așa, și „se blochează" însemna
+de fapt „nu compilează". Dacă vreodată o verificare pare să nu se mai termine,
+prima întrebare e dacă s-a încărcat scriptul, nu ce buclă s-a învârtit.
+
+Cauza, de reținut pentru GDScript: `var x := ceva_fără_tip.get_basename()` nu
+compilează („cannot infer the type"), iar `DirAccess.get_files_at()` întoarce un
+`PackedStringArray`, nu un `Array` — conversia la `return` nu se face singură.
+
+### Verificat
+
+| unealtă | rezultat |
+|---|---|
+| `verifica_salvarea` | **54/54 OK**, ~1 s, cod 0 (și cod 1 pe amândouă ruperile) |
+| `verifica_trivia` | 0 picate, 15 s — sacul a trecut prin `Durata` și prin `goleste_tot` |
+| `verifica_drumuri` | 0 picate, 19 s |
+| `verifica_eveniment` | 0 picate, 9 s (de două ori: și după salvarea adăugată la plata cufărului) |
+| `verifica_harta` | 0 picate, 16 s |
+| `verifica_plansa` | 0 picate, 4 s |
+| `verifica_tipuri` | 0 picate, 36 s |
+| `--headless --quit` pe meniu | fără erori noi |
+
+`verifica_cifru` NU s-a rulat: generatorul de lacăte n-a fost atins, iar costul e
+10 minute.
+
+### Ce NU s-a făcut
+
+- **Nicio partidă jucată pe mână.** Tot ce scrie mai sus e verificat în date, nu
+  pe ecran. Lista de probat cu mâna e la „Imediat".
+- **Niciun buton de abandonare a unui run.** Cât timp un save de expediție
+  există, nu poți porni alta: loadout-ul se vede doar când `Expeditie.activa` e
+  fals. Așa face și Slay the Spire, deci nu e un bug — dar e o ușă care lipsește.
+- **Nicio ieșire spre meniu din mijlocul expediției.** Decizia din CLAUDE.md
+  spune că fără Save ar fi fost „o abandonare deghizată în pauză". Save-ul există
+  de azi, deci butonul a devenit ieftin și cinstit — dar nu s-a adăugat.
+- **Save-ul nu se vede nicăieri în joc** în afara meniului: nicio confirmare,
+  niciun „s-a salvat". Pentru un joc care salvează singur la fiecare nod, e
+  probabil bine așa.
+- **Fără copie de rezervă rotativă.** Un save stricat se pune deoparte, dar nu
+  există un „penultimul save" la care să cazi.
+
+### Rămas deschis
+
+- **Progresul din Antrenament stă încă într-un script de scenă.** Vezi secțiunea
+  de mai sus; ziua mutării e felia următoare din Practice.
+- **Sacul de luptă al Culturii generale a rămas pe expediție**, deși CONȚINUTUL
+  spunea altceva. Dacă repetările între expediții deranjează:
+  `Durata.PERMANENT` pe cheile de luptă, plus `Dictionary` ca mulțime în
+  `sac.gd`.
+- **F6 pe `lupta.tscn` scrie `permanent.json`.** O probă dată cu F6 câștigă
+  Fragmente adevărate, care ajung pe disc. Expediția e apărată
+  (`salveaza_expeditia` se dă la o parte când `Expeditie.activa` e fals, altfel
+  meniul ar oferi un run fantomă), dar tezaurul nu. Se repară cu un comutator de
+  „mod de probă" în `Arhiva`, dacă ajunge să deranjeze.
+- **Ieși din joc cu sumarul pe ecran și nu-l mai vezi niciodată.** Cifrele sunt
+  deja plătite în Tezaur, deci se pierde priveliștea, nu răsplata. Un „ultimul
+  run" în meniu l-ar readuce.
+- **`scris_la` nu se vede nicăieri.** E în fișier pentru depanare; meniul ar
+  putea scrie „jucat ultima dată acum trei zile" fără nicio muncă.
+- **Build-ul web.** `user://` merge și acolo (IndexedDB), dar save-urile nu se
+  sincronizează cu desktopul — decizia din CLAUDE.md rămâne: desktopul e „casa"
+  progresului.
+
+### Fișiere
+
+| fișier | ce |
+|---|---|
+| `autoload/arhiva.gd` | **nou** — singurul fișier din joc care atinge discul |
+| `project.godot` | `Arhiva` înregistrată ULTIMA în `[autoload]` |
+| `autoload/sac.gd` | `enum Durata`, `_durata` pe cheie, `expeditie_noua()` selectiv, `goleste_tot()` nou, serializare pe durată |
+| `autoload/expeditie.gd` | `nod_nerezolvat`, `incheie_nodul()`, coloana `reluabil` în `DATE_NOD`, cele două capete de serializare |
+| `scenes/trivia/trivia.gd` | o singură linie reală: `Durata.PERMANENT` la `trage_din_raft` |
+| `scenes/harta/harta.gd` | `_deschide_nodul()` desprins din `_pe_nod_apasat`, `_reia_nodul()` nou, `_incheie_pe_disc()`, șase apeluri de salvare |
+| `scenes/lupta/lupta.gd` | predarea PV-ului, `incheie_nodul()` și salvarea mutate în `termina_lupta()` |
+| `scenes/practice/practice.gd` | `spre_dictionar()` / `din_dictionar()` statice, salvare după `_inregistreaza()` |
+| `scenes/meniu/meniu.gd`, `.tscn` | butonul care spune adevărul, rândul de avertisment (`Avertisment`, ascuns) |
+| `tools/verificari/verifica_salvarea.gd`, `.tscn` | **nouă** — 54 de verdicte, ~1 s |
+| `tools/verificari/verifica_trivia.gd` | 10 × `expeditie_noua()` → `goleste_tot()` |
+| `CLAUDE.md` | patru decizii noi, rândul din tabelul verificărilor, pasul 8 bifat |
+| `docs/progres.md` | antetul, rândurile 8 și 13, sesiunea asta, lista „Imediat" |
 
 ---
 
@@ -10431,12 +10812,37 @@ Punctul 0 adăugat pe 30 septembrie (sesiunea STEAGURILE).*
    - **decizia despre notele `wd:`**, ÎNAINTE de prima notă scrisă: fișierul
      generat se rescrie întreg, deci notele nu pot sta în el. Cele două variante
      sunt în sesiunea FABRICA, la „Regula care trebuie scrisă acum”.
-5. **Apoi înapoi pe rută: Cetatea (7), Save (8).** La Save, sacul Culturii
-   generale trece în stratul permanent, cu cheile pentru Practice gândite de la
-   început. **Și o regulă de care depinde Lacătul:** prima scriere pe disc a unei
-   expediții se face la `intra_in_nod()`, nu la `_dupa_un_nod()` — altfel, ieșit
-   din joc pe ecranul de eșec al unui cufăr, ai relua exact același lacăt cu codul
-   deja arătat pe roți. Nota întreagă e în sesiunea EVENIMENTUL DESCHIDE CUFĂRUL.
+5. ~~**Apoi înapoi pe rută: Cetatea (7), Save (8).**~~ **Save FĂCUT** pe 12
+   octombrie (sesiunea SAVE): `autoload/arhiva.gd`, două fișiere în `user://`,
+   scriere prin fișier temporar și redenumire, `versiune` în save, fișier ilizibil
+   pus deoparte și anunțat în meniu, 54 de verdicte în `verifica_salvarea`. Sacul
+   Culturii generale a trecut în permanent **numai pentru rafturile din Practice**
+   (`Sac.Durata`), nu și pentru cele de luptă — motivul și pârghia sunt în
+   sesiune. Regula Lacătului e respectată: prima scriere se face la
+   `intra_in_nod()`, înainte de `match`. **Rămâne Cetatea (pasul 7).**
+6. **SAVE-UL, JUCAT PE MÂNĂ.** Nimic din pasul 8 n-a fost încă văzut pe ecran —
+   tot ce s-a verificat e în date. Lista, în ordinea în care se poate face dintr-o
+   singură sesiune de joc:
+   - pornește o expediție, mergi două noduri, **închide jocul din fereastră** (nu
+     din editor). La repornire, meniul trebuie să scrie „Continua expeditia", cu
+     nodurile și PV-ul corecte, iar harta trebuie să se deschidă exact de unde ai
+     rămas;
+   - **închide jocul în mijlocul unei lupte.** Lupta trebuie să repornească de la
+     zero, cu același inamic. (Dacă sare lupta, `nod_nerezolvat` nu ajunge pe
+     disc — dar verificarea ar fi prins asta.)
+   - **închide jocul pe ecranul de verdict al unei lupte câștigate.** Fragmentele
+     trebuie să fie deja în tezaur, iar lupta să NU se repete;
+   - **ratează un cufăr și închide jocul pe ecranul de eșec.** La repornire
+     trebuie să primești mesajul „ai lăsat locul ăsta în urmă", nu același lacăt;
+   - **închide jocul pe mesajul de Odihnă** și verifică DOUĂ lucruri: că PV-ul
+     recuperat a rămas, și că nu te-a vindecat a doua oară la repornire (vezi
+     regula nodurilor cu efect instantaneu, în sesiunea SAVE — e singura
+     scurgere pe care verificarea headless nu o poate prinde, fiindcă trăiește
+     în `harta.gd`, nu în date);
+   - Practice: răspunde corect la câteva întrebări, închide, repornește — cifra de
+     progres trebuie să fie acolo;
+   - și, la final, uită-te cu ochiul în `%APPDATA%\Godot\app_userdata\mindkeep\`:
+     cele două fișiere trebuie să fie citibile, iar `scris_la` să aibă data bună.
 
 ### Datorie tehnică deschisă
 

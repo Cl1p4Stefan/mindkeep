@@ -708,7 +708,7 @@ func _echilibrul(intrebari: Array) -> bool:
 		# Tragerile de mai sus au umplut sacurile. Le golim, ca secțiunile de mai
 		# jos să pornească de la zero — altfel ar măsura un sac deja pe jumătate
 		# consumat și ar pica pe drept, dar din vina noastră.
-		Sac.expeditie_noua()
+		Sac.goleste_tot()
 
 	return tot_bun
 
@@ -787,7 +787,7 @@ func _sacul(intrebari: Array) -> bool:
 	tot_bun = _verdict("răscrucea dintre cicluri", rascruci_picate.is_empty(),
 		"" if rascruci_picate.is_empty() else _primele(rascruci_picate, 4)) and tot_bun
 
-	Sac.expeditie_noua()
+	Sac.goleste_tot()
 	return tot_bun
 
 
@@ -852,7 +852,7 @@ func _sacurile_nu_se_amesteca(intrebari: Array) -> bool:
 			repetat = true
 			break
 
-	Sac.expeditie_noua()
+	Sac.goleste_tot()
 	return _verdict("%s își ține minte după ce %s s-a golit" % [martor, epuizat],
 		not repetat,
 		"" if not repetat else "%s a ieșit de două ori într-un ciclu" % id_martor)
@@ -962,7 +962,7 @@ func _rafturile(intrebari: Array) -> bool:
 					cicluri_picate.append("%s (%d din %d)" % [
 						TRIVIA.cheia_raftului(nume_domeniu, raft, nivel), vazute.size(), cate])
 
-	Sac.expeditie_noua()
+	Sac.goleste_tot()
 
 	tot_bun = _verdict("filtrul e respectat", filtru_incalcat.is_empty(),
 		"%d trageri, pe %d rafturi" % [trageri, rafturi_probate]
@@ -1036,7 +1036,7 @@ func _proba_cheilor(domeniu: String, nivel: int, martor: String, epuizat: String
 			repetat_in_lupta = true
 			break
 
-	Sac.expeditie_noua()
+	Sac.goleste_tot()
 
 	var bun := not repetat_in_practice and not repetat_in_lupta
 	var amanunt := "%s:%d — %s a ținut minte după ce %s s-a golit" % [
@@ -1283,7 +1283,7 @@ func _pragul() -> bool:
 	# ── Proba 2: exact la prag, IESE ──
 	# Asta prinde un `>` pus în loc de `>=` — adică exact greșeala care azi ar
 	# scoate istoria din joc, fiindcă ea are fix 8 pe fiecare nivel.
-	Sac.expeditie_noua()
+	Sac.goleste_tot()
 	TRIVIA.intrebari = _baza_sintetica({
 		"gros_a": prag * 4, "gros_b": prag * 4, "subtire": prag,
 	})
@@ -1308,7 +1308,7 @@ func _pragul() -> bool:
 	# Un domeniu gros la nivelul 1 și subțire la 2 iese la 1 și e sărit la 2. Fără
 	# proba asta, un filtru scris pe domeniul întreg ar trece neobservat: azi
 	# niciun domeniu adevărat nu e gros la un nivel și subțire la altul.
-	Sac.expeditie_noua()
+	Sac.goleste_tot()
 	var amestecata: Array[Dictionary] = []
 	amestecata.append_array(_intrebari_pentru("gros", 1, prag * 4))
 	amestecata.append_array(_intrebari_pentru("gros", 2, prag * 4))
@@ -1316,7 +1316,7 @@ func _pragul() -> bool:
 	amestecata.append_array(_intrebari_pentru("pe_jumatate", 2, prag - 1))
 	TRIVIA.intrebari = amestecata
 	var la_unu := _trage_de_multe_ori(1)
-	Sac.expeditie_noua()
+	Sac.goleste_tot()
 	var la_doi := _trage_de_multe_ori(2)
 	tot_bun = _verdict("pragul se judecă pe CELULĂ, nu pe domeniu",
 		la_unu.has("pe_jumatate") and not la_doi.has("pe_jumatate"),
@@ -1327,7 +1327,7 @@ func _pragul() -> bool:
 	# Toate domeniile sub prag: lupta trebuie să primească o întrebare oricum. Un
 	# dicționar gol aici ar însemna ecranul de eroare în mijlocul unui lanț, adică
 	# o pedeapsă pentru conținut subțire în loc de o apărare împotriva lui.
-	Sac.expeditie_noua()
+	Sac.goleste_tot()
 	TRIVIA.intrebari = _baza_sintetica({"a": 2, "b": 2, "c": 2})
 	vazute = _trage_de_multe_ori(1)
 	tot_bun = _verdict("plasa: toate sub prag, tot se trage ceva",
@@ -1335,7 +1335,7 @@ func _pragul() -> bool:
 
 	# Conținutul adevărat, la loc.
 	TRIVIA.intrebari = adevarate
-	Sac.expeditie_noua()
+	Sac.goleste_tot()
 	return tot_bun
 
 

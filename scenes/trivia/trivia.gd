@@ -680,13 +680,25 @@ static func cheia_raftului(domeniu: String, subcategorie: String, nivel: int) ->
 
 ## Trage o întrebare din raft, fără repetiții cât timp mai există una nevăzută.
 ## Întoarce întrebarea BRUTĂ (ca `trage_intrebarea`), sau dicționar gol.
+##
+## SACUL RAFTULUI E PERMANENT, și ăsta e singurul loc din joc care declară asta.
+## `sac.gd` nu știe ce e „practice" și nu trebuie să afle (vezi `Sac.Durata`);
+## fișierul ăsta e singurul care știe că un raft de antrenament nu e o luptă.
+## Fără declarația de mai jos, o expediție pornită între două sesiuni de
+## antrenament ar șterge memoria rafturilor — adică exact scurgerea scrisă la
+## „Rămas deschis" în sesiunea MENIUL ȘI PRACTICE.
+##
+## Sacul de LUPTĂ, dimpotrivă, rămâne pe expediție (`cheia_sacului`, mai sus):
+## la un joc de învățare, o întrebare care revine peste câteva runuri e exact ce
+## vrei. Vezi sesiunea SAVE pentru de ce nu s-au făcut amândouă permanente.
 static func trage_din_raft(nivel: int, domeniu: String, subcategorie := "") -> Dictionary:
 	var pool := raftul(nivel, domeniu, subcategorie)
 	if pool.is_empty():
 		return {}
 	# „id" e câmpul după care sacul recunoaște o întrebare — nu poziția în listă,
 	# care se mută, și nu textul, care se schimbă la reformulare. Vezi `sac.gd`.
-	var tras = Sac.extrage(cheia_raftului(domeniu, subcategorie, nivel), pool, "id")
+	var tras = Sac.extrage(cheia_raftului(domeniu, subcategorie, nivel), pool, "id",
+		Sac.Durata.PERMANENT)
 	if tras == null:
 		return {}
 	return tras

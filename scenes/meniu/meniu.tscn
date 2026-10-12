@@ -84,6 +84,7 @@ theme_override_font_sizes/font_size = 18
 text = "Expeditie"
 
 [node name="ExpeditieRol" type="Label" parent="Centru/Panou/Margini/Coloana"]
+unique_name_in_owner = true
 modulate = Color(0.52, 0.52, 0.6, 1)
 layout_mode = 2
 theme_override_font_sizes/font_size = 13
@@ -103,5 +104,15 @@ modulate = Color(0.52, 0.52, 0.6, 1)
 layout_mode = 2
 theme_override_font_sizes/font_size = 13
 text = "Cultura generala, pe domeniul ales. Fara cronometru."
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Avertisment" type="Label" parent="Centru/Panou/Margini/Coloana"]
+unique_name_in_owner = true
+visible = false
+modulate = Color(1, 0.62, 0.35, 1)
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = ""
 horizontal_alignment = 1
 autowrap_mode = 3

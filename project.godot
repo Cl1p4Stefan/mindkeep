@@ -24,6 +24,7 @@ Tezaur="*res://autoload/tezaur.gd"
 Sac="*res://autoload/sac.gd"
 Discipline="*res://autoload/discipline.gd"
 Expeditie="*res://autoload/expeditie.gd"
+Arhiva="*res://autoload/arhiva.gd"
 
 [display]
 
