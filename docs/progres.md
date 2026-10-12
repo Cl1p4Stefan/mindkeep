@@ -17,8 +17,8 @@
 | 6. Harta de expediție | ✅ loadout „N din M" · **12-16 noduri**, ramificate, cu sămânță · Luptă / Elită / Odihnă / Eveniment / **Magazin** / **Boss** · **Monede + puteri temporare** · sumar de run · aspect: pergament, simboluri de cerneală, trasee punctate · **nodurile și drumurile stau pe o PANGLICĂ (curbă centrală + benzi)**, nu pe o grilă dreaptă · **patru trasee, toate verzi pe 300 de semințe** (POTCOAVĂ activă; POTCOAVA OGLINDITĂ e aceeași formă, întoarsă) · strat înclinat (forfecare) la ȘARPE · **drumuri care nu se încrucișează niciodată (0 la 300 de semințe)** · **nodul curent are și aură, și X, și stă nemișcat sub figurină** · **două surse de hartă: GENERATĂ (panglica) sau DESENATĂ dintr-un fișier `data/harti/*.json`** — comutatorul `Expeditie.SURSA_HARTII`; azi e pe DESENATĂ · **harta umple pergamentul**: pânza ține toată pagina, antetul plutește peste ea (805 × 427 px de hartă, de la 666 × 353) · **drumurile merg în amândouă sensurile**, cu nodul parcurs tăiat definitiv și cu garanția, verificată pe 16 000 de expediții simulate, că nu te poți înfunda · **figurina sare, cade ca un slam și zguduie ecranul la aterizare**, cu un răgaz de 0,5 s înainte să se deschidă nodul · **tipurile nodurilor se împart după o REȚETĂ fixă, nu se trag cu zarul**: 10 reguli de vecinătate, de început și de FINAL, plasare conștientă de reguli, verificare completă și reîncercare cu sub-sămânță (0 eșecuri pe 500 de semințe × 3 surse de hartă) · **la cel mult 2 pași de Boss e garantat un nod de bătaie** (100% pe 300 de semințe × 3 surse, de la 85% / 96% / 81%) · **niciun nod special nu mai are un geamăn lipit**, nici Evenimentul (0 pe 900 de hărți) · **rețeta nu se mai crede pe cuvânt: se PROBEAZĂ** — plafonul comun încearcă plasarea adevărată și taie un nod când forma nu le încape pe toate · rețeta se **plafonează după forma hărții**, nu după numărul de noduri · **nodul de Eveniment deschide Lacătul** (nivel din adâncime, sămânță din nodul, 6/10/14 Monede la succes) |
 | 7. Cetatea | ❌ |
 | 8. Save/Load | ✅ **pe disc**, de pe 12 octombrie 2026. `autoload/arhiva.gd` — singurul fișier din joc care atinge discul, fără nicio regulă de joc în el; dependența merge într-un singur sens (apelurile de salvare stau în SCENE, ca uneltele de verificare să rămână uscate) · **două fișiere în `user://`**: `permanent.json` (Tezaur + progresul din Antrenament + sacurile permanente) și `expeditie.json`, care există doar cât e un run viu · **scriere prin fișier temporar și redenumire**, cu adoptarea unui `.nou` orfan la citire · **`versiune` în save**: mai vechi se citește prin `_migreaza()`, mai nou se pune deoparte · **un fișier ilizibil nu se șterge și nu se suprascrie** — se redenumește `*.stricat.json` (cu data în nume dacă e deja unul pus deoparte), iar meniul o spune, cu mesaje separate pentru progres și pentru expediție · **butonul din meniu devine „Continua expeditia"**, cu nodurile în urmă și PV-ul pe rândul de sub el · **sacul are acum DURATĂ pe cheie** (`Sac.Durata`): rafturile din Practice sunt permanente, sacurile de luptă rămân pe expediție · **nodul se scrie pe disc la INTRARE**, deci a apărut `nod_nerezolvat` și coloana `reluabil` din `DATE_NOD` — altfel o luptă întreruptă era sărită, iar la Boss era chiar victorie · 54 de verdicte în `verifica_salvarea`, ~1 s · vezi sesiunea SAVE
-| 9. Celelalte discipline | 🟡 Cultură generală ✅ (**2692 de întrebări în joc, toate**: 2142 scrise de mână (`mana:0001`…) + **139 fabricate, elemente chimice** (`wd:Q897:simbol:…`) + **160 fabricate, operă → autor** (`wd:Q12730777:autor:…`) + **251 fabricate, țară ↔ capitală** (`wd:Q142:capitala:…`) — **conținutul fabricat stă într-un DOSAR**, `data/trivia_gen/`, citit întreg de încărcător: un tabel nou = două fișiere, zero linii de cod · **92 de fapte cu note** + 357 de fapte fabricate fără notă · **OPT DOMENII** (Geografie și explorare, Istorie și societate, Știință și tehnologie, Artă și literatură, Divertisment și media, Sport și jocuri, Gastronomie și lifestyle, Diverse și curiozități), cu **31 de subcategorii** — **toate OPT domeniile sunt în luptă, niciunul din cele 31 de rafturi nu e gol și nicio întrebare nu e fără raft** (cele 135 scrise înaintea câmpului au fost clasificate, iar 21 de întrebări de mitologie au trecut de la Artă la Istorie); **toate cele 93 de celule (subdomeniu × nivel) au cel puțin 25 de întrebări** — treapta CONFORT din `plan-continut.md`, cea la care 4-5 expediții lungi nu repetă nimic; drumul până la 100 pe celulă cere încă 6631 și trece prin fabrică, nu prin scris de mână, tăiate după cum se joacă, nu după cum crescuse baza: artă + mitologie + literatură s-au unit, Divertisment și Sport pornesc goale · `CATEGORII` (listă) a devenit `DOMENII` (dicționar cheie → nume afișat), deci antetul scrie „ARTĂ ȘI LITERATURĂ”, nu cheia · **alegerea din luptă e în două trepte** — întâi domeniul, uniform, apoi întrebarea, cu sacul pe cheie de domeniu ȘI nivel — iar de azi **domeniul intră doar peste `PRAG_DOMENIU = 8` întrebări pe celulă**, cu plasă dacă nu trece niciunul; sub prag e sărit, nu golit (istoria trece cu rezerva ZERO, deci e următoarea țintă de conținut) · comutator `FOLOSESTE_WIKIDATA` · **fabrica are un modul comun**, `tools/fabrica/comun.py`, iar grila marchează celulele sărite · **faptele capitalelor au o LISTĂ de imagini**, `imagini: [{tip, …}]`: **126 de steaguri pe disc** (`assets/imagini_fapte/steaguri/`, PNG 320 px, 0,53 MB sursă, toate în domeniul public, cu manifest de credite), plus o intrare de hartă pe fiecare din cele 127 de fapte; Omanul e singurul refuzat, cu motivul scris · **fiecare întrebare are și o `subcategorie`**, una singură, din listă închisă pe domeniu (36 de chei, 4 folosite; la istorie sunt erele, tăiate pe dată) — cele 135 scrise de mână o primesc într-un lot de clasificare, cu un clichet în verificator · **istoria e la 18 pe toate trei nivelurile**, iar **Divertismentul și Sportul au câte 50 pe fiecare celulă**, pe 11 subcategorii cu care se poate filtra (filme 48, muzică 36, fotbal 30, olimpiade 30…) — deci **toate ȘASE domeniile sunt în luptă**, fiecare cu 1/6 din întrebări, și toate cele 11 subcategorii ale celor două domenii noi au conținut · **verificarea e un singur câmp**, `verificat: true/false` pe întrebare, pus de mână: întrebarea intră în joc oricum, iar flagul spune doar dacă i-am citit nota. Niciun script, niciun parametru — mecanismul de ciorne, al doilea flag de pe fapt și cele două unelte de confirmare s-au desfăcut (vezi UN SINGUR FLAG) · planul de conținut al tuturor celor șase domenii, cu subcategorii, tabele propuse și capcanele lor, e în **`docs/plan-continut.md`** · vezi sesiunile UN SINGUR FLAG, ȘASE DOMENII ÎN LUPTĂ, PLANUL ȘI CIORNELE, DOMENIILE, CONȚINUTUL, ID ȘI FAPT, FABRICA, AL DOILEA TABEL, MODULUL COMUN și STEAGURILE) · Logica ✅ (80 de categorii) · Cuvinte ✅ · toate trei fără repetiții pe expediție, **Cultura generală după `id`, nu după text** · celelalte 5 ❌ |
-| 10–13. Generator de inamici, artă, web | ❌ (artă parțial: figurile principale și piesele de pe butoanele de Obelisc au imagini reale · **arena are fundal: biblioteca gotică**, cu personajele așezate pe dalele din prim-plan, umbră de contact și lumină de sală) · Regina: **amânată**, vezi CLAUDE.md · **pasul 13 (Practice) — prima felie ✅**: **meniu de start** (`scenes/meniu/`, de azi `run/main_scene`) cu două butoane, și **Antrenament liber** (`scenes/practice/`) — alegi domeniul, apoi raftul, din `DOMENII` și `SUBCATEGORII`, cu cifrele pe butoane și rafturile goale stinse; întrebările vin prin **chiar scena de trivia a luptei**, fără cronometru (`cu_cronometru`, două linii în `puzzle.gd`); nivel pe DOMENIU, urcat singur la `PRAG_PRACTICE` = 60 de întrebări distincte știute; sac propriu, pe cheie cu filtru (`practice:<domeniu>:<raft>:<nivel>`); progres scris pe disc de la Save (12 octombrie), în `permanent.json` · vezi sesiunea MENIUL ȘI PRACTICE |
+| 9. Celelalte discipline | 🟡 Cultură generală ✅ (**2692 de întrebări în joc, toate**: 2142 scrise de mână (`mana:0001`…) + **139 fabricate, elemente chimice** (`wd:Q897:simbol:…`) + **160 fabricate, operă → autor** (`wd:Q12730777:autor:…`) + **251 fabricate, țară ↔ capitală** (`wd:Q142:capitala:…`) — **conținutul fabricat stă într-un DOSAR**, `data/trivia_gen/`, citit întreg de încărcător: un tabel nou = două fișiere, zero linii de cod · **449 de fapte, TOATE cu notă** (92 scrise de mână + 357 fabricate din șabloane, de pe 12 octombrie: numărul atomic la elemente, anul apariției și anii autorului la opere, descrierea țării la capitale) — deci **646 din 2692 de întrebări ajung la o notă, de la 96**, iar un validator cere ca fiecare cifră și fiecare nume propriu dintr-o notă să existe în datele sursă · **OPT DOMENII** (Geografie și explorare, Istorie și societate, Știință și tehnologie, Artă și literatură, Divertisment și media, Sport și jocuri, Gastronomie și lifestyle, Diverse și curiozități), cu **31 de subcategorii** — **toate OPT domeniile sunt în luptă, niciunul din cele 31 de rafturi nu e gol și nicio întrebare nu e fără raft** (cele 135 scrise înaintea câmpului au fost clasificate, iar 21 de întrebări de mitologie au trecut de la Artă la Istorie); **toate cele 93 de celule (subdomeniu × nivel) au cel puțin 25 de întrebări** — treapta CONFORT din `plan-continut.md`, cea la care 4-5 expediții lungi nu repetă nimic; drumul până la 100 pe celulă cere încă 6631 și trece prin fabrică, nu prin scris de mână, tăiate după cum se joacă, nu după cum crescuse baza: artă + mitologie + literatură s-au unit, Divertisment și Sport pornesc goale · `CATEGORII` (listă) a devenit `DOMENII` (dicționar cheie → nume afișat), deci antetul scrie „ARTĂ ȘI LITERATURĂ”, nu cheia · **alegerea din luptă e în două trepte** — întâi domeniul, uniform, apoi întrebarea, cu sacul pe cheie de domeniu ȘI nivel — iar de azi **domeniul intră doar peste `PRAG_DOMENIU = 8` întrebări pe celulă**, cu plasă dacă nu trece niciunul; sub prag e sărit, nu golit (istoria trece cu rezerva ZERO, deci e următoarea țintă de conținut) · comutator `FOLOSESTE_WIKIDATA` · **fabrica are un modul comun**, `tools/fabrica/comun.py`, iar grila marchează celulele sărite · **faptele capitalelor au o LISTĂ de imagini**, `imagini: [{tip, …}]`: **126 de steaguri pe disc** (`assets/imagini_fapte/steaguri/`, PNG 320 px, 0,53 MB sursă, toate în domeniul public, cu manifest de credite), plus o intrare de hartă pe fiecare din cele 127 de fapte; Omanul e singurul refuzat, cu motivul scris · **fiecare întrebare are și o `subcategorie`**, una singură, din listă închisă pe domeniu (36 de chei, 4 folosite; la istorie sunt erele, tăiate pe dată) — cele 135 scrise de mână o primesc într-un lot de clasificare, cu un clichet în verificator · **istoria e la 18 pe toate trei nivelurile**, iar **Divertismentul și Sportul au câte 50 pe fiecare celulă**, pe 11 subcategorii cu care se poate filtra (filme 48, muzică 36, fotbal 30, olimpiade 30…) — deci **toate ȘASE domeniile sunt în luptă**, fiecare cu 1/6 din întrebări, și toate cele 11 subcategorii ale celor două domenii noi au conținut · **verificarea e un singur câmp**, `verificat: true/false` pe întrebare, pus de mână: întrebarea intră în joc oricum, iar flagul spune doar dacă i-am citit nota. Niciun script, niciun parametru — mecanismul de ciorne, al doilea flag de pe fapt și cele două unelte de confirmare s-au desfăcut (vezi UN SINGUR FLAG) · planul de conținut al tuturor celor șase domenii, cu subcategorii, tabele propuse și capcanele lor, e în **`docs/plan-continut.md`** · vezi sesiunile UN SINGUR FLAG, ȘASE DOMENII ÎN LUPTĂ, PLANUL ȘI CIORNELE, DOMENIILE, CONȚINUTUL, ID ȘI FAPT, FABRICA, AL DOILEA TABEL, MODULUL COMUN și STEAGURILE) · Logica ✅ (80 de categorii) · Cuvinte ✅ · toate trei fără repetiții pe expediție, **Cultura generală după `id`, nu după text** · celelalte 5 ❌ |
+| 10–13. Generator de inamici, artă, web | ❌ (artă parțial: figurile principale și piesele de pe butoanele de Obelisc au imagini reale · **arena are fundal: biblioteca gotică**, cu personajele așezate pe dalele din prim-plan, umbră de contact și lumină de sală) · Regina: **amânată**, vezi CLAUDE.md · **pasul 13 (Practice) — prima felie ✅**: **meniu de start** (`scenes/meniu/`, de azi `run/main_scene`) cu două butoane, și **Antrenament liber** (`scenes/practice/`) — alegi domeniul, apoi raftul, din `DOMENII` și `SUBCATEGORII`, cu cifrele pe butoane și rafturile goale stinse; întrebările vin prin **chiar scena de trivia a luptei**, fără cronometru (`cu_cronometru`, două linii în `puzzle.gd`); nivel pe DOMENIU, urcat singur la `PRAG_PRACTICE` = 60 de întrebări distincte știute; sac propriu, pe cheie cu filtru (`practice:<domeniu>:<raft>:<nivel>`); progres scris pe disc de la Save (12 octombrie), în `permanent.json` · **„Afla mai multe" ✓** (12 octombrie): după fiecare răspuns, corect sau greșit, un buton deschide nota faptului, citită din `explicatie` (contractul cu `puzzle.gd`), nu din `TRIVIA.fapte`; fără notă, butonul nu există — azi 96 din 2692 de întrebări ajung la una, deci apare la ~1 din 14; imaginea din popup e felia următoare · vezi sesiunile MENIUL ȘI PRACTICE și AFLĂ MAI MULTE |
 
 Nodul de **Eveniment** are primul lui conținut: **Lacătul** — un cufăr cu cifru,
 dedus din indicii, cu artă adevărată (roți care se învârt în spatele
@@ -37,6 +37,350 @@ buget, generare) rămâne acolo unde era.
 Am sărit peste ordinea recomandată la pasul 12 (artă): imaginile pentru rege,
 cavaler și pentru cele trei piese de șah de pe butoane au intrat mai devreme, dar
 restul rămâne placeholder. Bucla de luptă e în continuare cea validată, nu arta.
+
+---
+
+## NOTELE SE FABRICĂ (12 octombrie 2026) — de la 96 la 646, și un validator care nu mă lasă să inventez
+
+Butonul „Află mai multe" s-a aprins dimineață și a arătat, în aceeași zi, că n-are
+ce să arate: **96 de note din 2692 de întrebări, adică una din 28.** Cererea a fost
+„toate întrebările să aibă note". Răspunsul cinstit a fost că jumătate din ea se
+poate face corect, iar jumătate nu se poate face deloc — nu din lene, ci fiindcă ar
+fi încălcat chiar regula pentru care există `CLAUDE.md`.
+
+### Decizia, luată înainte de prima literă scrisă
+
+Cele 2596 de întrebări fără notă se împart în două grămezi care n-au nimic în comun:
+
+| grămadă | câte | ce are în spate |
+|---|---|---|
+| fabricate, cu fapt dar cu nota goală | **550** | un tabel verificat (Wikidata + coloanele mele) |
+| scrise de mână, fără fapt deloc | **2046** | **nimic** |
+
+Pentru a doua grămadă, singura sursă a faptelor aș fi fost **eu** — vreo 5000 de
+afirmații scoase din memorie, toate cu `verificat: false`, toate arătate în joc de
+dimineață încolo. Adică exact „modelul de limbaj formulează, nu informează", citit
+invers. Întrebarea a fost pusă pe față, cu cifrele, și răspunsul a fost **„nu — doar
+din surse verificabile"**. Cele 2046 rămân fără notă până au un tabel, iar drumul
+spre ele e **mai multe tabele în fabrică, nu mai multă memorie de-a mea.**
+
+### Ce s-a făcut
+
+**Toate cele 449 de fapte fabricate au acum notă. Zero goale.**
+
+| | înainte | acum |
+|---|---|---|
+| întrebări cu notă | 96 din 2692 (3,6%) | **646 din 2692 (24%)** |
+| fapte cu notă | 92 din 449 | **449 din 449** |
+| nota cea mai lungă | 232 | 232 (limita 240) |
+
+În joc, măsurat pe drumul adevărat din Practice: **12 din 12** întrebări pe
+„geografie → geografie politică", 9 din 12 pe „artă → literatură universală" (cele
+trei rămase sunt scrise de mână). Zero dezacorduri între ce zic datele și ce arată
+ecranul.
+
+### Validatorul din ghid §4, care acum există
+
+`comun.verifica_nota()` — scris o dată, folosit de toate trei tabelele. Cere ca
+**fiecare bucată de cifre și fiecare nume propriu dintr-o notă să apară în datele
+din care nota a fost compusă.** Primul cuvânt al fiecărei propoziții e scutit (are
+majusculă din gramatică), iar singura excepție scrisă e `Hr`, din „î.Hr.".
+
+La `--scrie`, o notă care nu trece **oprește scrierea întregului fișier**. Probat
+rupându-l: cu un „Descoperit în 1766" strecurat în șablonul elementelor, toate cele
+70 cad cu „cifra 1766 din notă nu e în datele sursă" și nu se scrie niciun octet.
+
+**Ce prinde și ce nu, scris ca să nu mă mint:** prinde cifra inventată — greșeala
+tipică a unui model de limbaj, și singura pe care o poate prinde o mașină. NU prinde
+o afirmație falsă fără cifre („Parisul se află în Spania"). De-aia notele se compun
+din **șabloane**, nu propoziție cu propoziție: un șablon greșit se vede la prima
+rulare, în toate cele 127 de note deodată.
+
+### Cele trei șabloane
+
+**ELEMENTE (70).** „Simbolul chimic al sodiului este Na, iar numărul lui atomic este
+11. Simbolul vine din numele latin, nu din cel românesc." Cârligul e **numărul
+atomic**, singurul fapt în plus din tabel și unul pe care nu-l cere niciuna din cele
+două întrebări. A doua propoziție o primesc doar cele **9 din `DIN_LATINA`** — acolo
+cârligul e „confuzia frecventă" (§3), cea mai bună dintre toate, fiindcă jucătorul
+care a greșit a greșit exact din motivul ăla. Afirmația nu e a mea: e înțelesul
+declarat al lui `DIN_LATINA`, scris de mână și folosit deja ca regulă de nivel.
+
+**OPERE (160), două șabloane.** Pentru operă: „Autorul „Furtuna” este William
+Shakespeare (1564–1616). Opera a apărut în 1623." Pentru autor: „Gabriel García
+Márquez (1927–2014) a fost scriitor, jurnalist colombian și laureat Nobel în
+literatură." — apoziția e `schema:description` de la Wikidata, filtrată pe română,
+deci text CC0 pe care-l pot folosi **ca dată**. E genul de cârlig pe care nu l-aș
+putea scrie singur fără să devin sursa faptului.
+
+*Niciun pasiv, și nu din stil:* „«Harap-Alb» a fost scris**ă** de…" cere acordul
+participiului cu genul gramatical al titlului, care nu se poate deduce din nimic din
+tabel. „Autorul „X” este…" merge la orice titlu. La fel „a apărut": cu auxiliarul
+„a avea", participiul nu se schimbă.
+
+**CAPITALE (127).** „Capitala Rusiei este Moscova. Rusia este o țară din Europa de
+Est și Asia de Nord." Cârligul e tot descrierea Wikidata — **140 din 140 de țări o
+au în română.**
+
+### Două cârlige care arătau mai bune și au căzut la măsurătoare
+
+Cache-ul capitalelor avea deja două câmpuri nefolosite, și amândouă păreau cârlige
+mai interesante. Măsurate, niciunul nu ține:
+
+- **`vecini` (P47).** „Franța are 11 state vecine." Wikidata numără și Brazilia și
+  Surinamul, prin Guyana Franceză. Cifra e corectă pentru Wikidata și falsă pentru
+  orice manual: Rusia iese cu 18, Indonezia cu 10, Turcia cu 10. Ar fi predat exact
+  genul de lucru pentru care există regula despre modelul de limbaj — doar că
+  greșeala ar fi venit din date, nu din mine.
+- **`de_cand`** (calificatorul P580 de pe P36). „Parisul e capitala Franței din …" —
+  **Franța întoarce ZECE ani diferiți**: 1682, 1789, 1871, 1940, 1942, 1944… Fiecare
+  e o declarație adevărată despre o capitală de atunci (Versailles, Vichy), iar
+  interogarea nu poate alege între ele. Un câmp cu zece valori dintre care una se ia
+  la întâmplare nu e o dată, e un zar. Cele 27 de țări care-l aveau în cache îl
+  aveau prin aceeași loterie.
+
+### Decizia deschisă din sesiunea FABRICA s-a DIZOLVAT
+
+Scria acolo, din 28 septembrie: *„`fapte_wd.json` se rescrie întreg la fiecare
+rulare, deci notele pentru faptele `wd:` NU pot sta în el… decizia trebuie luată
+înainte de prima notă scrisă."* Cele două variante erau „notele în fișierul de mână"
+sau „scriptul păstrează notele vechi".
+
+**Niciuna nu mai e necesară.** Grija presupunea note scrise DE MÂNĂ, care s-ar fi
+pierdut la regenerare. O notă compusă de șablon **se recompune la fiecare rulare**,
+din aceleași date — n-are ce să se piardă. (Varianta 1 ar fi fost și stricată:
+`_incarca_fapte` refuză al doilea fapt cu același `id`, iar fișierul de mână se
+citește primul, deci `imagini` ale celor 127 de capitale s-ar fi pierdut în tăcere.)
+
+Dacă vreodată un fapt `wd:` cere o notă scrisă de mână, ziua aia readuce decizia —
+dar atunci va fi despre UN fapt, nu despre toate.
+
+### Ce a prins validatorul, și ce n-a putut prinde
+
+**Validatorul a oprit 6 note bune**, toate din tokenizare, nu din date — și fiecare
+a cerut o reparație în `_bucatile`:
+
+| nota | de ce cădea |
+|---|---|
+| „Contele de Monte-Cristo” | sursa tăiată pe cratimă dă „monte" și „cristo"; în notă numele apare întreg |
+| „Hobbitul”, „Stăpânul inelelor” | „J.R.R. Tolkien" tăiat pe spații dă „j.r.r."; în notă inițiala se citește „J" |
+| „D-ale carnavalului” | cratima, iar |
+| N'Djamena (Ciad) | apostroful, la fel |
+
+Acum tăierea se face de două ori, cu două asprimi: o dată pe spații și paranteze, o
+dată și pe cratimă, punct și apostrof. **Nu e o slăbire** — un „Madrid" pus în locul
+Parisului cade în continuare, fiindcă nicio tăiere a sursei nu-l produce. (Probat.)
+
+**Patru defecte le-a prins numai ochiul**, citind mostrele, fiindcă validatorul apără
+faptele și nu gramatica:
+
+| ce ieșea | ce e acum |
+|---|---|
+| `Homer (-900–-800)` | `Homer (900–800 î.Hr.)` — Wikidata dă anii dinaintea erei ca numere negative |
+| `Daniel Defoe a trăit: 1660–1731.` | `…s-a născut în 1660 și a murit în 1731.` — două puncte în mijlocul unei note o fac să arate ca un câmp de bază de date |
+| `…este Washington, D.C..` | un singur punct, când capitala se termină deja cu unul (1 din 127) |
+| `Statele Unite ale Americii ESTE o țară…` | `…SUNT o țară…` — 3 nume de plural din 140 |
+
+Cele trei plurale (`Emiratele Arabe Unite`, `Statele Unite ale Americii`, `Țările de
+Jos`) sunt o listă scrisă, cu o plasă: un prim cuvânt terminat în „-ele" sau „-ile"
+care NU e în listă oprește scriptul și cere decizia. La fel articolul („o țară", dar
+„un oraș-stat"): măsurat pe toate 140, descrierea începe cu doar patru cuvinte —
+`țară` (137), `stat`, `oraș-stat`, `monarhie` — deci e o listă de patru, care se
+oprește la al cincilea.
+
+**Și un bug care nu era al notelor:** cele 40 de note de autor ieșeau goale, în
+tăcere. `candidati_autori` purta doar ce trebuia ca un autor să fie ALES ca
+distractor — nu `nastere`, `moarte`, `descriere`. Datele existau un nivel mai sus.
+Prins de raportul „148 din 188 fapte", adică de o cifră, nu de un verdict: de-aia
+raportul tipărește cifra chiar și când totul e bun.
+
+### De citit cu ochiul, rămas
+
+- **Homer.** „Autorul „Iliada” este Homer (900–800 î.Hr.)." Atribuirea e tradițională
+  și datele sunt disputate, iar `ghid-note.md` §2.6 cere „potrivit legendei" / „cel
+  mai probabil" pentru ce nu e fapt sigur. Șablonul nu știe asta. E singurul autor
+  antic din tabel; dacă deranjează, leacul e o excepție scrisă, nu o regulă.
+- **Danemarca.** Descrierea Wikidata zice „stat suveran transcontinental și o
+  monarhie constituțională". „Suveran" e cuvântul pe care tabelul l-a refuzat
+  dinadins ca CRITERIU de intrare (de-aia criteriul e apartenența la ONU) — aici
+  intră doar ca text descriptiv, al editorilor Wikidata, nu ca o clasificare de-a mea.
+  Merită știut că e acolo.
+- **Toate cele 449**, la un moment dat. `verificat` rămâne `false` pe toate
+  întrebările: notele sunt compuse din date verificate, dar n-au fost citite de nimeni.
+
+### Verificat
+
+- `verifica_trivia`: **33/33 OK**, cod 0, iar verificarea însăși raportează acum
+  „întrebări care ajung la o notă: 646 din 2692" și „note sub limită: OK — cea mai
+  lungă 232 din 240".
+- Încărcătorul jocului: „0 fara nota" pe toate patru fișierele de fapte (era „127
+  fara nota", „70 fara nota", „160 fara nota").
+- Validatorul, probat rupându-l: an inventat, nume inventat, notă prea lungă, notă
+  goală — toate patru oprite.
+- În joc, prin drumul adevărat din Practice: 12/12 pe geografie politică, 0
+  dezacorduri între `explicatie` și date.
+
+### Fișiere
+
+Noi în `comun.py`: `MAX_NOTA`, `PERMISE_IN_NOTA`, `_bucatile`, `ca_text`,
+`verifica_nota`, `raporteaza_notele`.
+Atinse: `tools/fabrica/comun.py`, `elemente.py` (`compune_nota`), `opere.py`
+(`an_scris`, `anii_vietii`, `curata_descrierea`, `nota_operei`, `nota_autorului`,
+plus cele trei câmpuri în `candidati_autori`), `capitale.py` (`?descriere` în
+interogare, gardă de cache, `ARTICOL`, `PLURAL`, `acordul`, `compune_nota`),
+`data/trivia_gen/*_fapte.json` (rescrise), `tools/fabrica/cache/wikidata_capitale.json`
+(reîncărcat, acum cu `descriere`).
+
+**`capitale.py` cere `--reincarca` o singură dată** pentru oricine are un cache mai
+vechi — garda o spune, cu motivul.
+
+### Rămas deschis
+
+**Cele 2046 de întrebări scrise de mână.** Drumul e tabele noi în fabrică. Cele din
+`docs/plan-continut.md` care ar aduce și note aproape gratis, fiindcă Wikidata are
+descrieri române pentru aproape orice entitate: filme → regizor, state → fluviu,
+pictură → pictor, țară → monedă. Fiecare tabel nou aduce întrebări ȘI note în
+aceeași rulare — asta e lecția zilei de azi.
+
+**Notele sunt scurte:** mediana 69–79 de caractere, față de 120–200 cerute de §2.3.
+Nu le-am umflat. Un element are atâtea de spus câte scrie în tabel, iar o propoziție
+pusă ca să ajung la numărul de caractere ar fi exact felul de frază care sună bine și
+nu se poate verifica. Dacă pe ecran arată prea sărace, leacul e o coloană nouă în
+tabel, nu un adjectiv.
+
+---
+
+## AFLĂ MAI MULTE (12 octombrie 2026) — nota faptului ajunge pe ecran, după 14 zile în care s-a încărcat degeaba
+
+Notele existau din 28 septembrie. `fapte_trivia.json` are 92, `_incarca_fapte`
+le citea la fiecare pornire, `_compune_intrebare` le punea în `explicatie`, iar
+`verifica_trivia` număra câte întrebări ajung la una. **Nimic nu le afișa.** Era
+scris, cu drept, în comentariul din `trivia.gd`: „se umple de pe acum fiindcă e o
+linie aici și un fișier de conținut în plus, iar conținutul e partea lentă".
+
+Felia de azi e capătul celălalt al liniei ăsteia: un buton.
+
+### Ce s-a făcut
+
+**Un buton, un popup, și nicio linie nouă de conținut.** După fiecare răspuns în
+Practice — corect SAU greșit — sub panoul întrebării apare „Afla mai multe".
+Deschide un panou peste tot ecranul, cu nota faptului; se închide cu butonul
+„Inchide" sau cu Escape.
+
+| fișier | ce s-a schimbat |
+|---|---|
+| `scenes/practice/practice.tscn` | `ButonAfla` (plat, auriu, invizibil din start) între `ZonaPuzzle` și rândul de acțiuni; `PanouNota` — umbră + panou centrat, ultimul copil al rădăcinii |
+| `scenes/practice/practice.gd` | `nota_curenta`, trei `@onready`, două linii în `_pe_raspuns`, trei în `_inchide_puzzle`, `_deschide_nota`, `_inchide_nota`, `_unhandled_input` |
+
+### Cele patru decizii, fiecare cu prețul ei
+
+**NOTA VINE DIN CONTRACT, NU DIN DATE.** Se citește din `puzzle.explicatie` —
+câmpul pe care baza îl primește de la disciplină — nu din `TRIVIA.fapte`.
+Practice nu știe nici că există fapte, nici cum se leagă o întrebare de unul. O
+a doua căutare scrisă în ecran ar fi fost un al doilea drum către aceeași notă,
+iar ziua în care unul se schimbă e ziua în care Practice arată altceva decât
+lupta. Pe deasupra: butonul merge **din prima** și pentru Logică sau Cuvinte,
+fără nicio linie în plus, fiindcă și ele pun ceva în `explicatie` (numele
+regulii). N-a fost nevoie de niciun câmp nou în contract — exista deja.
+
+**POARTA E NOTA, NU CÂMPUL `fapt`.** Cifra de azi: **646 de întrebări arată spre
+un fapt, dar numai 96 ajung la o notă nevidă.** Cele 550 fabricate au fapte cu
+nota goală, dinadins (există doar ca legăturile `wd:` să nu ducă nicăieri). Un
+fapt fără notă e, pe ecran, exact același lucru ca o întrebare fără fapt, deci
+se întreabă ce SE AFIȘEAZĂ, nu ce se speră. Consecința, spusă pe față:
+**butonul apare la cam 1 întrebare din 14** (măsurat pe istorie, nivelul I:
+3 din 20 de trageri). Nu e un bug, e grosimea conținutului — și e prima dată
+când se vede.
+
+**SE ARATĂ ȘI LA ÎNTREBĂRILE NEVERIFICATE.** 2664 din 2692 au
+`verificat: false`. Un filtru pe flagul ăla ar fi golit ecranul aproape complet,
+și pe un motiv greșit: flagul spune dacă AM CITIT nota, nu dacă nota e bună
+(vezi sesiunea UN SINGUR FLAG). Nu există nicio linie în `practice.gd` care să-l
+pomenească, și nu trebuie să existe.
+
+**FĂRĂ NOTĂ, FĂRĂ URMĂ.** Butonul e `visible = false`, nu dezactivat: într-un
+`VBoxContainer` un copil invizibil nu ocupă loc, deci cele 13 întrebări din 14
+arată exact ca ieri. E **pe dos** față de rafturile goale din ecranul de alegere,
+care apar STINSE — și dinadins: acolo un buton stins e o informație („raftul
+există, dar e gol"), aici n-ar fi niciuna, doar o promisiune care nu se ține.
+Prețul: când butonul apare, rândul de dedesubt coboară cu ~44 px. Ecranul face
+deja asta pentru eticheta `Anunt`, deci nu e o mișcare nouă.
+
+### Trei amănunte care păreau mărunte și nu sunt
+
+**Nota se COPIAZĂ în clipa răspunsului, nu se recitește la apăsare.** Altfel „ce
+scrie în popup" și „ce scenă stă pe ecran" ar fi fost două lucruri care se pot
+contrazice. Aceeași regulă ca la `ultima_trasa` din `trivia.gd`: ce-ți trebuie
+mai târziu se reține CÂND e adevărat.
+
+**Ștergerea notei stă ÎNAINTE de `if puzzle == null` din `_inchide_puzzle`.**
+Funcția se cheamă și pe un drum pe care nu există scenă de puzzle („raftul asta
+nu are întrebări la nivelul X", care o cheamă și apoi se oprește). Scrisă după
+ieșirea aia, nota de la întrebarea de dinainte ar fi rămas pe ecran fără nicio
+întrebare deasupra ei. Întrebarea și nota ei se nasc și mor împreună, deci
+locul e unul.
+
+**Umbra popup-ului nu e decor.** `ColorRect` are `mouse_filter` pe STOP din
+fabrică, deci EA e lucrul care face panoul modal. Fără ea, se putea apăsa
+„Urmatoarea" prin umbră, iar întrebarea s-ar fi schimbat în spatele notei pe
+care o citeai.
+
+**Focusul rămâne pe „Urmatoarea"**, chiar dacă butonul notei tocmai a apărut
+deasupra lui. Drumul obișnuit e „răspund, merg înainte", iar un Enter care
+deschide brusc un popup ar fi o surpriză plătită de cel care citea repede. Nota
+e o alegere, nu un pas. În popup, focusul trece pe „Inchide", deci aceeași tastă
+care l-ar fi deschis îl și închide.
+
+### Cum s-a probat
+
+Cu o scenă de probă de unică folosință, ștearsă după (`--headless`, fără
+fereastră): a intrat pe istorie, a tras 20 de întrebări, a apăsat de fiecare
+dată **răspunsul GREȘIT** prin chiar butonul pe care l-ar apăsa jucătorul, și a
+cerut patru lucruri:
+
+- butonul apare la cele cu notă (3 din 20) și nu apare la celelalte (17);
+- la cele fără buton, `nota_curenta` e goală — adică nu există o notă ținută
+  ascunsă;
+- textul din popup e **exact** `explicatie` al scenei care stă pe ecran;
+- după `_inchide_puzzle`, butonul e stins și nota uitată.
+
+Toate patru au trecut. S-a rulat și varianta cu răspunsuri CORECTE: identică,
+fiindcă `_pe_raspuns` nu se uită la `succes` când pune nota — iar aia e chiar
+decizia („ton sănătos": momentul în care ai cea mai mare nevoie de notă e cel în
+care n-ai știut).
+
+Suitele existente: `verifica_salvarea` 54/54, `verifica_trivia` 33/33, ambele
+cod 0.
+
+### Rămas deschis
+
+**O verificare permanentă pentru „nota de pe ecran e a întrebării de pe ecran".**
+Proba de azi a fost ștearsă, deci invariantul nu e păzit de nimic. E singurul
+lucru din felia asta care se poate strica în tăcere: dacă `ultima_trasa = q` se
+mută vreodată în `_compune_intrebare`, jucătorul ar citi nota unei alte
+întrebări — adică un joc de învățare care predă o legătură falsă, exact clasa de
+greșeli împotriva căreia există regula „modelul formulează, nu informează".
+Ar fi vreo 25 de linii în `verifica_trivia`, într-o secțiune nouă care
+instanțiază `trivia.tscn` și cheamă `porneste()` fără să răspundă (deci fără
+pauze): se cere `explicatie == fapte[ultima_trasa.fapt]`. **Nu s-a făcut azi** —
+ar fi fost al doilea obiectiv într-o sesiune cerută pentru unul.
+
+**IMAGINEA din popup.** `imagini` e deja un câmp al faptului și e deja validat
+(`CAMPURI_FAPT`), iar cele 126 de steaguri plus 127 de intrări de hartă sunt pe
+disc — dar `_incarca_fapte` citește **doar nota**, deci imaginea n-are încă pe ce
+drum să ajungă în `explicatie`. Asta e și prima limită a contractului: un câmp
+text nu poate duce o imagine. Când se face, drumul cel mai ieftin e un al doilea
+câmp opțional în dicționarul întrebării (`"imagini": [...]`), iar locul pe ecran
+e în `PanouNota`, între titlu și text. Restul ecranului nu se atinge.
+
+**Nota în LUPTĂ rămâne neafișată**, și rămâne dinadins: un popup în mijlocul unui
+lanț ar rupe exact lucrul pentru care există lanțul. Dacă vreodată se vrea acolo,
+locul e ecranul de verdict al luptei, nu întrebarea.
+
+**Jucat pe mână.** Nimic din felia asta n-a fost văzut cu ochiul: panoul, umbra,
+lungimea unei note de 232 de caractere în 620 px, și dacă butonul auriu plat se
+citește ca un link sau se pierde. F6 pe `scenes/practice/practice.tscn`, domeniul
+Istorie și societate — butonul apare la una din ~14 întrebări, deci răbdare.
 
 ---
 

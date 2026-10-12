@@ -612,6 +612,46 @@ def alege_distractorii(tinta, lista, sens):
 
 
 # ─────────────────────────────────────────────────────────────
+# NOTA („AFLĂ MAI MULTE")
+#
+# UN ȘABLON, NU 70 DE PROPOZIȚII. Nota se compune din câmpurile care sunt deja
+# verificate: `genitiv` (din tabelul meu, confirmat prin eticheta română de la
+# Wikidata), `simbol` și `numar` (de la Wikidata). Nimic nu vine din afara lor —
+# `comun.verifica_nota` o și probează, cifră cu cifră și nume cu nume.
+#
+# ── DE CE NUMĂRUL ATOMIC E UN CÂRLIG, ȘI NU O REPETIȚIE ───────
+# `ghid-note.md` §2.2 cere ca nota să adauge ceva, nu să repete întrebarea.
+# Cele două întrebări ale tabelului cer simbolul sau numele, deci răspunsul e
+# deja aprins pe buton când apare nota. Numărul atomic nu e întrebat de niciuna
+# din ele: e locul elementului în tabelul periodic, singurul fapt în plus pe
+# care-l am despre el și care nu se învechește niciodată.
+#
+# ── A DOUA PROPOZIȚIE, DOAR LA CELE 9 DIN `DIN_LATINA` ────────
+# Acolo cârligul e „confuzia frecventă" (§3), cel mai bun dintre toate: Na nu
+# pornește de la „sodiu", iar jucătorul care a greșit tocmai a greșit din motivul
+# ăsta. Afirmația NU e a mea — e chiar înțelesul declarat al lui `DIN_LATINA`,
+# scris de mână și folosit deja ca regulă de nivel (vezi `leaga_tabelul`). O
+# folosesc ca dată, nu ca amintire.
+#
+# Notele ies scurte: 70 de caractere fără a doua propoziție, ~130 cu ea, față de
+# cele 120–200 cerute de §2.3. Nu le umflu. Un element are atâtea de spus câte
+# scrie în tabel, iar o propoziție pusă ca să ajung la numărul de caractere ar
+# fi exact felul de frază care sună bine și nu se poate verifica.
+# ─────────────────────────────────────────────────────────────
+
+def compune_nota(e):
+	"""Un element → (nota, valorile din care e făcută)."""
+	nota = ("Simbolul chimic al %s este %s, iar numărul lui atomic este %d."
+	        % (e["genitiv"], e["simbol"], e["numar"]))
+	if e["simbol"] in DIN_LATINA:
+		nota += " Simbolul vine din numele latin, nu din cel românesc."
+	# Valorile îi ajung validatorului exact așa cum au intrat în șablon. `nume` e
+	# aici deși șablonul nu-l folosește: e același cuvânt ca rădăcina genitivului,
+	# iar fără el o notă care ar începe cu numele n-ar mai trece.
+	return nota, [e["genitiv"], e["nume"], e["simbol"], e["numar"]]
+
+
+# ─────────────────────────────────────────────────────────────
 # CONSTRUIREA ÎNTREBĂRILOR
 # ─────────────────────────────────────────────────────────────
 
@@ -672,23 +712,33 @@ def construieste(lista):
 
 	comun.verifica_un_singur_raspuns(intrebari, este_corect)
 
-	# Faptele. Nota e goală: pilotul cere întrebări, nu note. Câmpul EXISTĂ
-	# fiindcă altfel încărcătorul din `trivia.gd` se plânge pentru fiecare
-	# întrebare care arată spre un fapt inexistent — 139 de avertismente la
-	# fiecare pornire, iar de-acolo încolo consola nu mai e un loc unde se
-	# citește ceva.
+	# ── FAPTELE, CU NOTĂ ──
 	#
-	# ATENȚIE, e scris și în `docs/progres.md`: fișierul ăsta se REscrie întreg
-	# la fiecare rulare, deci notele pentru faptele `wd:` NU pot sta în el. Când
-	# vor exista, vor sta într-un loc pe care generarea nu-l atinge.
-	fapte = [{
-		"id": "wd:%s" % e["qid"],
-		"nota": "",
-		"surse": ["https://www.wikidata.org/wiki/%s" % e["qid"]],
-		"verificat": False,
-	} for e in lista]
+	# Vechea grijă din `docs/progres.md` („fișierul se rescrie întreg, deci notele
+	# `wd:` nu pot sta în el") S-A DIZOLVAT, și merită spus de ce: ea presupunea
+	# note scrise DE MÂNĂ, care s-ar fi pierdut la prima regenerare. O notă
+	# compusă de șablon se recompune la fiecare rulare, din aceleași date, deci
+	# n-are ce să se piardă. Nici varianta 1 (notele în fișierul de mână), nici
+	# varianta 2 (scriptul păstrează notele vechi) nu mai sunt necesare.
+	#
+	# Dacă vreodată un fapt `wd:` are nevoie de o notă scrisă de mână, ziua aia
+	# readuce decizia — dar atunci va fi despre UN fapt, nu despre toate.
+	probleme = []
+	fapte = []
+	for e in lista:
+		nota, surse = compune_nota(e)
+		# VALIDATĂ UNA CU UNA, nu pe un eșantion: costă microsecunde, iar un
+		# șablon stricat strică toate cele 70 deodată, nu una.
+		comun.verifica_nota(nota, surse, "wd:%s (%s)" % (e["qid"], e["simbol"]),
+		                    probleme)
+		fapte.append({
+			"id": "wd:%s" % e["qid"],
+			"nota": nota,
+			"surse": ["https://www.wikidata.org/wiki/%s" % e["qid"]],
+			"verificat": False,
+		})
 
-	return intrebari, fapte
+	return intrebari, fapte, probleme
 
 
 
@@ -736,10 +786,12 @@ def main():
 		", ".join("%s/%s ← %s" % (s, sens, id_) for (s, sens), id_ in sorted(dubluri.items()))
 		or "niciuna"))
 
-	intrebari, fapte = construieste(lista)
-	print("    generate: %d întrebări, %d fapte (toate cu nota goală)"
-	      % (len(intrebari), len(fapte)))
+	intrebari, fapte, probleme_note = construieste(lista)
+	print("    generate: %d întrebări, %d fapte" % (len(intrebari), len(fapte)))
 	print("    „exact una din patru e corectă”: verificat pe toate %d" % len(intrebari))
+	comun.raporteaza_notele(fapte, probleme_note, arg.scrie)
+	din_latina = sum(1 for e in lista if e["simbol"] in DIN_LATINA)
+	print("          cu a doua propoziție (din DIN_LATINA): %d" % din_latina)
 
 	# Grila arată TOT conținutul din joc, nu doar tabelul rulat acum: de când sunt
 	# mai multe fabrici, un raport care se uită doar la el însuși minte cu jumătăți

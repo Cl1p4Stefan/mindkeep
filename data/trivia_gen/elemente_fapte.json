@@ -1,282 +1,282 @@
 [
 	{
 		"id": "wd:Q556",
-		"nota": ""
+		"nota": "Simbolul chimic al hidrogenului este H, iar numărul lui atomic este 1."
 	},
 	{
 		"id": "wd:Q560",
-		"nota": ""
+		"nota": "Simbolul chimic al heliului este He, iar numărul lui atomic este 2."
 	},
 	{
 		"id": "wd:Q568",
-		"nota": ""
+		"nota": "Simbolul chimic al litiului este Li, iar numărul lui atomic este 3."
 	},
 	{
 		"id": "wd:Q623",
-		"nota": ""
+		"nota": "Simbolul chimic al carbonului este C, iar numărul lui atomic este 6."
 	},
 	{
 		"id": "wd:Q629",
-		"nota": ""
+		"nota": "Simbolul chimic al oxigenului este O, iar numărul lui atomic este 8."
 	},
 	{
 		"id": "wd:Q654",
-		"nota": ""
+		"nota": "Simbolul chimic al neonului este Ne, iar numărul lui atomic este 10."
 	},
 	{
 		"id": "wd:Q660",
-		"nota": ""
+		"nota": "Simbolul chimic al magneziului este Mg, iar numărul lui atomic este 12."
 	},
 	{
 		"id": "wd:Q663",
-		"nota": ""
+		"nota": "Simbolul chimic al aluminiului este Al, iar numărul lui atomic este 13."
 	},
 	{
 		"id": "wd:Q670",
-		"nota": ""
+		"nota": "Simbolul chimic al siliciului este Si, iar numărul lui atomic este 14."
 	},
 	{
 		"id": "wd:Q682",
-		"nota": ""
+		"nota": "Simbolul chimic al sulfului este S, iar numărul lui atomic este 16."
 	},
 	{
 		"id": "wd:Q688",
-		"nota": ""
+		"nota": "Simbolul chimic al clorului este Cl, iar numărul lui atomic este 17."
 	},
 	{
 		"id": "wd:Q706",
-		"nota": ""
+		"nota": "Simbolul chimic al calciului este Ca, iar numărul lui atomic este 20."
 	},
 	{
 		"id": "wd:Q716",
-		"nota": ""
+		"nota": "Simbolul chimic al titanului este Ti, iar numărul lui atomic este 22."
 	},
 	{
 		"id": "wd:Q744",
-		"nota": ""
+		"nota": "Simbolul chimic al nichelului este Ni, iar numărul lui atomic este 28."
 	},
 	{
 		"id": "wd:Q753",
-		"nota": ""
+		"nota": "Simbolul chimic al cuprului este Cu, iar numărul lui atomic este 29."
 	},
 	{
 		"id": "wd:Q758",
-		"nota": ""
+		"nota": "Simbolul chimic al zincului este Zn, iar numărul lui atomic este 30."
 	},
 	{
 		"id": "wd:Q1103",
-		"nota": ""
+		"nota": "Simbolul chimic al iodului este I, iar numărul lui atomic este 53."
 	},
 	{
 		"id": "wd:Q880",
-		"nota": ""
+		"nota": "Simbolul chimic al platinei este Pt, iar numărul lui atomic este 78."
 	},
 	{
 		"id": "wd:Q897",
-		"nota": ""
+		"nota": "Simbolul chimic al aurului este Au, iar numărul lui atomic este 79."
 	},
 	{
 		"id": "wd:Q1098",
-		"nota": ""
+		"nota": "Simbolul chimic al uraniului este U, iar numărul lui atomic este 92."
 	},
 	{
 		"id": "wd:Q569",
-		"nota": ""
+		"nota": "Simbolul chimic al beriliului este Be, iar numărul lui atomic este 4."
 	},
 	{
 		"id": "wd:Q618",
-		"nota": ""
+		"nota": "Simbolul chimic al borului este B, iar numărul lui atomic este 5."
 	},
 	{
 		"id": "wd:Q627",
-		"nota": ""
+		"nota": "Simbolul chimic al azotului este N, iar numărul lui atomic este 7. Simbolul vine din numele latin, nu din cel românesc."
 	},
 	{
 		"id": "wd:Q650",
-		"nota": ""
+		"nota": "Simbolul chimic al fluorului este F, iar numărul lui atomic este 9."
 	},
 	{
 		"id": "wd:Q658",
-		"nota": ""
+		"nota": "Simbolul chimic al sodiului este Na, iar numărul lui atomic este 11. Simbolul vine din numele latin, nu din cel românesc."
 	},
 	{
 		"id": "wd:Q674",
-		"nota": ""
+		"nota": "Simbolul chimic al fosforului este P, iar numărul lui atomic este 15."
 	},
 	{
 		"id": "wd:Q696",
-		"nota": ""
+		"nota": "Simbolul chimic al argonului este Ar, iar numărul lui atomic este 18."
 	},
 	{
 		"id": "wd:Q703",
-		"nota": ""
+		"nota": "Simbolul chimic al potasiului este K, iar numărul lui atomic este 19. Simbolul vine din numele latin, nu din cel românesc."
 	},
 	{
 		"id": "wd:Q725",
-		"nota": ""
+		"nota": "Simbolul chimic al cromului este Cr, iar numărul lui atomic este 24."
 	},
 	{
 		"id": "wd:Q731",
-		"nota": ""
+		"nota": "Simbolul chimic al manganului este Mn, iar numărul lui atomic este 25."
 	},
 	{
 		"id": "wd:Q677",
-		"nota": ""
+		"nota": "Simbolul chimic al fierului este Fe, iar numărul lui atomic este 26. Simbolul vine din numele latin, nu din cel românesc."
 	},
 	{
 		"id": "wd:Q740",
-		"nota": ""
+		"nota": "Simbolul chimic al cobaltului este Co, iar numărul lui atomic este 27."
 	},
 	{
 		"id": "wd:Q871",
-		"nota": ""
+		"nota": "Simbolul chimic al arsenului este As, iar numărul lui atomic este 33."
 	},
 	{
 		"id": "wd:Q876",
-		"nota": ""
+		"nota": "Simbolul chimic al seleniului este Se, iar numărul lui atomic este 34."
 	},
 	{
 		"id": "wd:Q879",
-		"nota": ""
+		"nota": "Simbolul chimic al bromului este Br, iar numărul lui atomic este 35."
 	},
 	{
 		"id": "wd:Q888",
-		"nota": ""
+		"nota": "Simbolul chimic al kriptonului este Kr, iar numărul lui atomic este 36."
 	},
 	{
 		"id": "wd:Q1090",
-		"nota": ""
+		"nota": "Simbolul chimic al argintului este Ag, iar numărul lui atomic este 47. Simbolul vine din numele latin, nu din cel românesc."
 	},
 	{
 		"id": "wd:Q1091",
-		"nota": ""
+		"nota": "Simbolul chimic al cadmiului este Cd, iar numărul lui atomic este 48."
 	},
 	{
 		"id": "wd:Q1096",
-		"nota": ""
+		"nota": "Simbolul chimic al staniului este Sn, iar numărul lui atomic este 50. Simbolul vine din numele latin, nu din cel românesc."
 	},
 	{
 		"id": "wd:Q1106",
-		"nota": ""
+		"nota": "Simbolul chimic al xenonului este Xe, iar numărul lui atomic este 54."
 	},
 	{
 		"id": "wd:Q1112",
-		"nota": ""
+		"nota": "Simbolul chimic al bariului este Ba, iar numărul lui atomic este 56."
 	},
 	{
 		"id": "wd:Q743",
-		"nota": ""
+		"nota": "Simbolul chimic al wolframului este W, iar numărul lui atomic este 74."
 	},
 	{
 		"id": "wd:Q925",
-		"nota": ""
+		"nota": "Simbolul chimic al mercurului este Hg, iar numărul lui atomic este 80. Simbolul vine din numele latin, nu din cel românesc."
 	},
 	{
 		"id": "wd:Q708",
-		"nota": ""
+		"nota": "Simbolul chimic al plumbului este Pb, iar numărul lui atomic este 82. Simbolul vine din numele latin, nu din cel românesc."
 	},
 	{
 		"id": "wd:Q942",
-		"nota": ""
+		"nota": "Simbolul chimic al bismutului este Bi, iar numărul lui atomic este 83."
 	},
 	{
 		"id": "wd:Q1128",
-		"nota": ""
+		"nota": "Simbolul chimic al radiului este Ra, iar numărul lui atomic este 88."
 	},
 	{
 		"id": "wd:Q713",
-		"nota": ""
+		"nota": "Simbolul chimic al scandiului este Sc, iar numărul lui atomic este 21."
 	},
 	{
 		"id": "wd:Q861",
-		"nota": ""
+		"nota": "Simbolul chimic al galiului este Ga, iar numărul lui atomic este 31."
 	},
 	{
 		"id": "wd:Q867",
-		"nota": ""
+		"nota": "Simbolul chimic al germaniului este Ge, iar numărul lui atomic este 32."
 	},
 	{
 		"id": "wd:Q895",
-		"nota": ""
+		"nota": "Simbolul chimic al rubidiului este Rb, iar numărul lui atomic este 37."
 	},
 	{
 		"id": "wd:Q938",
-		"nota": ""
+		"nota": "Simbolul chimic al stronțiului este Sr, iar numărul lui atomic este 38."
 	},
 	{
 		"id": "wd:Q1046",
-		"nota": ""
+		"nota": "Simbolul chimic al niobiului este Nb, iar numărul lui atomic este 41."
 	},
 	{
 		"id": "wd:Q1053",
-		"nota": ""
+		"nota": "Simbolul chimic al molibdenului este Mo, iar numărul lui atomic este 42."
 	},
 	{
 		"id": "wd:Q1086",
-		"nota": ""
+		"nota": "Simbolul chimic al ruteniului este Ru, iar numărul lui atomic este 44."
 	},
 	{
 		"id": "wd:Q1087",
-		"nota": ""
+		"nota": "Simbolul chimic al rodiului este Rh, iar numărul lui atomic este 45."
 	},
 	{
 		"id": "wd:Q1089",
-		"nota": ""
+		"nota": "Simbolul chimic al paladiului este Pd, iar numărul lui atomic este 46."
 	},
 	{
 		"id": "wd:Q1094",
-		"nota": ""
+		"nota": "Simbolul chimic al indiului este In, iar numărul lui atomic este 49."
 	},
 	{
 		"id": "wd:Q1099",
-		"nota": ""
+		"nota": "Simbolul chimic al stibiului este Sb, iar numărul lui atomic este 51. Simbolul vine din numele latin, nu din cel românesc."
 	},
 	{
 		"id": "wd:Q1100",
-		"nota": ""
+		"nota": "Simbolul chimic al telurului este Te, iar numărul lui atomic este 52."
 	},
 	{
 		"id": "wd:Q1108",
-		"nota": ""
+		"nota": "Simbolul chimic al cesiului este Cs, iar numărul lui atomic este 55."
 	},
 	{
 		"id": "wd:Q1388",
-		"nota": ""
+		"nota": "Simbolul chimic al neodimului este Nd, iar numărul lui atomic este 60."
 	},
 	{
 		"id": "wd:Q1123",
-		"nota": ""
+		"nota": "Simbolul chimic al tantalului este Ta, iar numărul lui atomic este 73."
 	},
 	{
 		"id": "wd:Q737",
-		"nota": ""
+		"nota": "Simbolul chimic al reniului este Re, iar numărul lui atomic este 75."
 	},
 	{
 		"id": "wd:Q751",
-		"nota": ""
+		"nota": "Simbolul chimic al osmiului este Os, iar numărul lui atomic este 76."
 	},
 	{
 		"id": "wd:Q877",
-		"nota": ""
+		"nota": "Simbolul chimic al iridiului este Ir, iar numărul lui atomic este 77."
 	},
 	{
 		"id": "wd:Q932",
-		"nota": ""
+		"nota": "Simbolul chimic al taliului este Tl, iar numărul lui atomic este 81."
 	},
 	{
 		"id": "wd:Q979",
-		"nota": ""
+		"nota": "Simbolul chimic al poloniului este Po, iar numărul lui atomic este 84."
 	},
 	{
 		"id": "wd:Q1133",
-		"nota": ""
+		"nota": "Simbolul chimic al radonului este Rn, iar numărul lui atomic este 86."
 	},
 	{
 		"id": "wd:Q1115",
-		"nota": ""
+		"nota": "Simbolul chimic al toriului este Th, iar numărul lui atomic este 90."
 	},
 	{
 		"id": "wd:Q1102",
-		"nota": ""
+		"nota": "Simbolul chimic al plutoniului este Pu, iar numărul lui atomic este 94."
 	}
 ]

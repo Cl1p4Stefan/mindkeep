@@ -51,12 +51,50 @@ extends Control
 ## Azi ar fi fost un refactor într-o sesiune despre disc.
 ##
 ## ─────────────────────────────────────────────────────────────
+## „AFLĂ MAI MULTE" — NOTA FAPTULUI (felia din 12 octombrie 2026)
+##
+## După fiecare răspuns, corect SAU greșit, apare un buton care deschide nota
+## faptului. Patru lucruri merită spuse despre el:
+##
+##   1. VINE DIN CONTRACT, NU DIN DATE. Nota se citește din `explicatie`, câmpul
+##      pe care `puzzle.gd` îl primește de la disciplină (vezi `_compune_intrebare`
+##      din `trivia.gd`) — NU din `TRIVIA.fapte`. Ecranul ăsta nu știe nici că
+##      există fapte, nici cum se leagă o întrebare de unul. O a doua căutare
+##      scrisă aici ar fi fost un al doilea drum către aceeași notă, iar ziua în
+##      care unul se schimbă e ziua în care Practice arată altceva decât lupta.
+##      Pe deasupra, așa butonul merge din prima și pentru Logică sau Cuvinte,
+##      fără nicio linie în plus: ele pun în `explicatie` regula rezolvării.
+##   2. POARTA E NOTA, NU CÂMPUL `fapt`. Azi 646 de întrebări arată spre un fapt,
+##      dar doar 96 ajung la o notă NEVIDĂ: cele 550 fabricate au fapte cu nota
+##      goală, dinadins (vezi `_incarca_fapte`). Un fapt fără notă e, pe ecran,
+##      exact același lucru ca o întrebare fără fapt — deci se întreabă ce se
+##      afișează, nu ce se speră.
+##   3. SE ARATĂ ȘI LA ÎNTREBĂRILE NEVERIFICATE. 2664 din 2692 au
+##      `verificat: false`, deci un filtru pe flagul ăla ar fi golit ecranul.
+##      Flagul spune dacă AM CITIT nota, nu dacă nota e bună — vezi `neverificate`
+##      din `trivia.gd`. Nu există, și nu trebuie să existe, nicio linie aici
+##      care să-l pomenească.
+##   4. FĂRĂ NOTĂ, FĂRĂ URMĂ. Butonul e `visible = false`, nu dezactivat: într-un
+##      VBoxContainer un copil invizibil nu ocupă loc, deci o întrebare fără notă
+##      arată exact ca înainte. E pe dos față de rafturile goale din ecranul de
+##      alegere, care apar STINSE — și dinadins: acolo un buton stins e o
+##      informație („raftul există, dar e gol"), aici n-ar fi niciuna, doar o
+##      promisiune care nu se ține. Prețul, spus pe față: când butonul apare,
+##      rândul de dedesubt coboară cu ~44px. Ecranul face deja asta pentru
+##      eticheta `Anunt`, deci nu e o mișcare nouă.
+##
+## ─────────────────────────────────────────────────────────────
 ## CE NU INTRĂ ÎN FELIA ASTA (e în plan, în felii separate)
 ##
 ## Greșitele care revin, „învățat" și Jurnalul, amestecul de niveluri după
-## deblocare, popup-ul „Află mai multe" cu note și imagini, istoricul comun cu
-## expedițiile. Nota faptului SE ÎNCARCĂ deja (câmpul `explicatie` din
-## contract), doar că nimic n-o afișează încă — nici în luptă, nici aici.
+## deblocare, istoricul comun cu expedițiile. Și IMAGINEA din popup (hartă
+## desenată din date sau imagine reală cu licență): `imagini` e deja un câmp al
+## faptului, dar `_incarca_fapte` citește doar nota, deci imaginea n-are încă pe
+## ce drum să ajungă aici. Când va avea, locul ei e în `PanouNota`, între titlu
+## și text — restul ecranului nu se atinge.
+##
+## În LUPTĂ nota rămâne neafișată, și rămâne dinadins: un popup în mijlocul unui
+## lanț ar rupe exact lucrul pentru care există lanțul.
 
 const SCENA_MENIU := "res://scenes/meniu/meniu.tscn"
 
@@ -138,6 +176,19 @@ var subcategorie_aleasa := ""   # "" = tot domeniul
 ## Copia vie a scenei de trivia, cât timp e una pe ecran.
 var puzzle: Control = null
 
+## NOTA ÎNTREBĂRII LA CARE S-A RĂSPUNS, sau gol = n-are notă.
+##
+## ── DE CE O COPIE, ȘI NU `puzzle.explicatie` CITIT LA APĂSARE ─
+## Fiindcă „ce scrie în popup" și „ce scenă stă pe ecran" ar fi devenit două
+## lucruri care se pot contrazice. Copia se face o singură dată, în clipa
+## răspunsului, și se șterge când întrebarea pleacă — deci nu există nicio
+## fereastră de timp în care butonul e aprins și nota e a altei întrebări.
+## Aceeași regulă ca la `ultima_trasa` din `trivia.gd`: ce ai nevoie mai târziu
+## se reține CÂND e adevărat, nu se recitește când s-a schimbat.
+##
+## Gol înseamnă „fără notă", nu „n-am citit încă" — vezi punctul 2 din antet.
+var nota_curenta := ""
+
 ## Contorul de SESIUNE: cât ai răspuns de când ai intrat pe ecranul ăsta.
 ## Nu se resetează la schimbarea domeniului — altfel „sesiune" ar însemna două
 ## lucruri, iar cifra n-ar mai spune „cât am lucrat azi".
@@ -159,6 +210,11 @@ var total_sesiune := 0
 @onready var zona_puzzle: PanelContainer = %ZonaPuzzle
 @onready var buton_urmatoarea: Button = %ButonUrmatoarea
 @onready var buton_schimba: Button = %ButonSchimba
+@onready var buton_afla: Button = %ButonAfla
+
+@onready var panou_nota: Control = %PanouNota
+@onready var nota_text: Label = %NotaText
+@onready var buton_inchide_nota: Button = %ButonInchideNota
 
 
 func _ready() -> void:
@@ -166,6 +222,8 @@ func _ready() -> void:
 	buton_inapoi.pressed.connect(_arata_domenii)
 	buton_urmatoarea.pressed.connect(_intrebare_noua)
 	buton_schimba.pressed.connect(_arata_domenii)
+	buton_afla.pressed.connect(_deschide_nota)
+	buton_inchide_nota.pressed.connect(_inchide_nota)
 
 	Muzica.reda(Muzica.Piesa.CETATE)
 
@@ -358,6 +416,20 @@ func _pe_raspuns(succes: bool, de_la: Node) -> void:
 	if succes and id != "":
 		_inregistreaza(domeniu_ales, nivel, id)
 
+	# NOTA, ACUM. `explicatie` e câmpul din contractul cu `puzzle.gd`, pus de
+	# `porneste()` din ce a întors disciplina — deci aici nu se întreabă nicio
+	# bază de date, se citește ce a ajuns pe ecran. Vezi punctul 1 din antet.
+	#
+	# SE ÎNTÂMPLĂ LA FEL LA CORECT ȘI LA GREȘIT, și asta e chiar rostul feliei:
+	# momentul în care ai cea mai mare nevoie de notă e cel în care n-ai știut.
+	# „Ton sănătos" din CLAUDE.md — înveți ceva și când greșești.
+	nota_curenta = String(de_la.explicatie)
+	buton_afla.visible = nota_curenta != ""
+
+	# FOCUSUL RĂMÂNE PE „URMĂTOAREA", chiar dacă butonul notei tocmai a apărut
+	# deasupra lui. Drumul obișnuit e „răspund, merg înainte", iar un Enter care
+	# deschide brusc un popup ar fi o surpriză plătită de cel care citea repede.
+	# Nota e o alegere, nu un pas.
 	buton_urmatoarea.disabled = false
 	buton_urmatoarea.grab_focus()
 	_actualizeaza_antet()
@@ -370,11 +442,85 @@ func _pe_raspuns(succes: bool, de_la: Node) -> void:
 ## pentru un cadru `ZonaPuzzle` are doi copii — iar un `PanelContainer` le dă
 ## amândurora tot spațiul, suprapuse. Se vede ca un pâlpâit de litere duble.
 func _inchide_puzzle() -> void:
+	# NOTA PLEACĂ ÎNTÂI, și ÎNAINTE de ieșirea de mai jos. Dacă ștergerea ar fi
+	# scrisă după `if puzzle == null`, un drum pe care nu există scenă de puzzle
+	# (de pildă „raft gol la nivelul ăsta", care cheamă funcția și apoi se
+	# oprește) ar lăsa pe ecran butonul notei de la întrebarea de dinainte —
+	# adică o notă care nu mai are nicio întrebare deasupra ei.
+	#
+	# Un singur loc pentru amândouă fiindcă sunt un singur lucru: întrebarea și
+	# nota ei se nasc și mor împreună. Despărțite în două funcții, ar fi existat
+	# un drum din care se poate uita a doua.
+	nota_curenta = ""
+	buton_afla.visible = false
+	_inchide_nota()
+
 	if puzzle == null:
 		return
 	zona_puzzle.remove_child(puzzle)
 	puzzle.queue_free()
 	puzzle = null
+
+
+# ─────────────────────────────────────────────────────────────
+# POPUP-UL „AFLĂ MAI MULTE"
+#
+# Un panou peste tot ecranul, nu un `AcceptDialog`. Motivul e felia următoare:
+# nota va avea, cândva, o imagine deasupra ei (hartă desenată din date sau
+# imagine reală cu licență), iar o fereastră de sistem s-ar fi redimensionat
+# singură în jurul ei, cu temă proprie și cu alt fundal decât restul jocului.
+# Un `Control` cu `visible` e un panou pe care îl desenez eu, în aceeași
+# paletă — și e ȘI mai puțin cod decât un dialog configurat.
+#
+# UMBRA DE DEASUPRA NU E DECOR: `ColorRect` are `mouse_filter` pe STOP din
+# fabrică, deci el e lucrul care face popup-ul MODAL. Fără ea, ai putut apăsa
+# „Următoarea" prin umbră, iar întrebarea s-ar fi schimbat în spatele notei pe
+# care o citeai.
+# ─────────────────────────────────────────────────────────────
+
+## Deschide nota întrebării la care s-a răspuns.
+##
+## Garda nu e paranoia: butonul e ascuns când nota lipsește, dar o tastă
+## (Enter pe un buton care tocmai s-a ascuns) poate ajunge la un semnal cu un
+## cadru întârziere. Un popup gol ar fi arătat ca un bug.
+func _deschide_nota() -> void:
+	if nota_curenta == "":
+		return
+	nota_text.text = nota_curenta
+	panou_nota.visible = true
+	# Focusul trece pe „Închide", deci Enter sau Space închid nota — tasta care
+	# a deschis-o o și închide, fără să fie nevoie de mouse.
+	buton_inchide_nota.grab_focus()
+
+
+## Închide nota. Chemată de buton, de Escape și de `_inchide_puzzle`.
+##
+## Nu are nicio gardă și nu se plânge dacă popup-ul era deja închis: a-l închide
+## de două ori trebuie să fie la fel de ieftin ca o dată, altfel fiecare loc care
+## o cheamă ar fi avut nevoie de propriul `if`.
+func _inchide_nota() -> void:
+	if not panou_nota.visible:
+		return
+	panou_nota.visible = false
+	# Înapoi de unde a plecat focusul. Fără rândul ăsta, după închidere nicio
+	# tastă n-ar mai face nimic până la primul click.
+	if not buton_urmatoarea.disabled:
+		buton_urmatoarea.grab_focus()
+
+
+## ESCAPE închide nota, fiindcă asta face Escape peste orice panou care s-a
+## deschis deasupra a altceva. `_unhandled_input`, nu `_input`: așa butoanele
+## primesc întâi ce e al lor, iar noi luăm doar ce n-a vrut nimeni.
+##
+## `set_input_as_handled` oprește tasta aici. Fără el, același Escape ar putea
+## cădea mai departe la cine mai ascultă — azi nimeni, mâine poate un meniu de
+## pauză, și atunci o apăsare ar fi făcut două lucruri.
+func _unhandled_input(eveniment: InputEvent) -> void:
+	if not panou_nota.visible:
+		return
+	if eveniment.is_action_pressed("ui_cancel"):
+		_inchide_nota()
+		get_viewport().set_input_as_handled()
 
 
 # ─────────────────────────────────────────────────────────────

@@ -1126,6 +1126,135 @@ def alege_distractorii(tinta, candidati, sens, cheie_zar):
 # CONSTRUIREA ÎNTREBĂRILOR
 # ─────────────────────────────────────────────────────────────
 
+# ─────────────────────────────────────────────────────────────
+# NOTELE („AFLĂ MAI MULTE")
+#
+# DOUĂ ȘABLOANE, fiindcă sunt două feluri de fapte: opera (pentru sensul direct,
+# „Cine a scris X?") și autorul (pentru cel invers). Fiecare își spune răspunsul
+# o dată, natural — `ghid-note.md` §2.1, fiindcă în Jurnal nota se citește fără
+# întrebare — și adaugă ceva ce întrebarea NU cere: anul apariției la operă,
+# anii vieții și descrierea la autor.
+#
+# ── DE CE NICIUN PASIV ────────────────────────────────────────
+# „«Harap-Alb» a fost scrisă de…" e o capcană de gramatică, nu de date: la pasiv
+# participiul se acordă cu subiectul („scris" la masculin, „scrisă" la feminin),
+# iar genul gramatical al unui titlu nu se poate deduce din nimic ce am în tabel.
+# „Autorul «Harap-Alb» este…" merge la orice titlu. La fel „a apărut": cu
+# auxiliarul „a avea", participiul rămâne neschimbat.
+#
+# ── DE CE `descriere` DE LA WIKIDATA, ȘI NU O FRAZĂ DE-A MEA ──
+# Interogarea autorilor o cere filtrată pe română (`lang(?descriere) = "ro"`),
+# deci e text scris de editorii Wikidata, sub CC0 — o pot folosi ca DATĂ. „Poet,
+# scriitor și filosof florentin" e exact felul de cârlig pe care nu l-aș putea
+# scrie singur fără să devin sursa faptului. Parantezele cu anii se taie din ea:
+# le pune deja șablonul, și repetate ar face „(1265–1321) a fost poet (1265–1321)".
+# ─────────────────────────────────────────────────────────────
+
+# Cât are voie să fie descrierea luată de la Wikidata. Peste atât nu e o
+# apoziție, e o frază — și atunci nota ar depăși și ce poate citi cineva dintr-o
+# privire. Cele lungi se lasă deoparte, iar autorul primește nota scurtă.
+MAX_DESCRIERE = 70
+
+# Parantezele cu anii, de la finalul unei descrieri Wikidata: „(1265–1321)",
+# „(1802-1885)", „(n. 1947)". Se taie, fiindcă anii vin din câmpurile lor.
+_ANII_DIN_DESCRIERE = re.compile(r"\s*\((?:[^()]*\d{3,4}[^()]*)\)\s*$")
+
+
+def curata_descrierea(descriere):
+	"""Descrierea Wikidata → apoziția folosibilă, sau gol dacă nu e."""
+	if not descriere:
+		return ""
+	text = _ANII_DIN_DESCRIERE.sub("", descriere.strip()).strip(" .,;")
+	if not text or len(text) > MAX_DESCRIERE:
+		return ""
+	# O descriere care începe cu majusculă ar aduce în notă un nume propriu
+	# aparent, iar validatorul ar avea dreptate să se plângă. Minusculizăm doar
+	# prima literă: restul poate conține nume adevărate („scriitor din Oltenia").
+	return text[0].lower() + text[1:]
+
+
+def an_scris(an):
+	"""Un an de la Wikidata → text românesc.
+
+	Wikidata dă anii dinaintea erei ca numere NEGATIVE. Puse direct în șablon,
+	ieșea „Homer (-900–-800)": două minusuri care se citesc ca liniuțe și o
+	paranteză din care nu înțelegi nimic. Prima rulare a notelor a arătat-o pe
+	Homer, singurul autor antic din tabel — și exact de-aia se citesc mostrele
+	cu ochiul, nu doar verdictele.
+	"""
+	return "%d" % an if an > 0 else "%d î.Hr." % -an
+
+
+def anii_vietii(autor):
+	"""(anii pentru paranteză, valorile) pentru un autor. Gol dacă nu se știu.
+
+	„î.Hr." se scrie O DATĂ, la capăt, când amândoi anii sunt dinaintea erei:
+	„900–800 î.Hr.", nu „900 î.Hr.–800 î.Hr.". Când unul e înainte și celălalt
+	după, amândouă erele se spun — altfel „63–14" ar părea o viață de 49 de ani
+	trăită în ordine inversă.
+	"""
+	n, m = autor.get("nastere"), autor.get("moarte")
+	if n and m:
+		if n < 0 and m < 0:
+			return "%d–%d î.Hr." % (-n, -m), [n, m]
+		if n < 0:
+			return "%s–%d d.Hr." % (an_scris(n), m), [n, m]
+		return "%d–%d" % (n, m), [n, m]
+	if n:
+		return "n. %s" % an_scris(n), [n]
+	return "", []
+
+
+def nota_operei(e):
+	"""O operă → (nota, valorile din care e făcută). Sensul direct."""
+	autor = e["autor"]
+	nume = autor["nume"]
+	surse = [e["titlu"], nume]
+
+	ani, valori = anii_vietii(autor)
+	surse += valori
+	cine = "%s (%s)" % (nume, ani) if ani else nume
+
+	nota = "Autorul „%s” este %s." % (e["titlu"], cine)
+	if e["an"]:
+		nota += " Opera a apărut în %d." % e["an"]
+		surse.append(e["an"])
+	return nota, surse
+
+
+def nota_autorului(a):
+	"""Un autor → (nota, valorile din care e făcută). Sensul invers."""
+	nume = a["nume"]
+	surse = [nume]
+	ani, valori = anii_vietii(a)
+	surse += valori
+	descriere = curata_descrierea(a.get("descriere"))
+	if descriere:
+		surse.append(descriere)
+
+	if ani and descriere:
+		nota = "%s (%s) a fost %s." % (nume, ani, descriere)
+	elif ani:
+		# FĂRĂ DESCRIERE, anii devin propoziția întreagă — deci nu mai pot sta
+		# într-o paranteză. „Daniel Defoe a trăit: 1660–1731." a fost prima
+		# formă, și nu e românește: două puncte în mijlocul unei note o fac să
+		# arate ca un câmp de bază de date, nu ca o frază.
+		n, m = a.get("nastere"), a.get("moarte")
+		if n and m:
+			nota = "%s s-a născut în %s și a murit în %s." % (
+				nume, an_scris(n), an_scris(m))
+		else:
+			nota = "%s s-a născut în %s." % (nume, an_scris(n))
+	elif descriere:
+		nota = "%s a fost %s." % (nume, descriere)
+	else:
+		# Fără ani și fără descriere n-am din ce să compun un cârlig, deci nu
+		# compun nimic. O notă care doar repetă numele ar fi mai rea decât lipsa
+		# ei: ai apăsa „Află mai multe" și n-ai afla nimic.
+		return "", surse
+	return nota, surse
+
+
 def construieste(lista, autori):
 	"""Lista de opere alese → (întrebări, fapte, statistici).
 
@@ -1162,6 +1291,13 @@ def construieste(lista, autori):
 			"qid": a["qid"],
 			"cheie": a["qid"],
 			"nume": a["nume"],
+			# Cele trei de mai jos nu intră în alegerea distractorilor — intră în
+			# NOTĂ (`nota_autorului`). Până la note, candidatul purta doar ce
+			# trebuia ca să fie ales; acum poartă și ce trebuie ca să fie explicat.
+			# Fără ele, toate cele 40 de note de autor ieșeau goale, în tăcere.
+			"nastere": a["nastere"],
+			"moarte": a["moarte"],
+			"descriere": a["descriere"],
 			"limbi": set(a["limbi_sigure"]),
 			"an_reper": epoca(a, ale_lui),
 			# Nivelul unui autor = cel mai mic nivel al operelor lui alese. Dacă
@@ -1270,27 +1406,37 @@ def construieste(lista, autori):
 
 	comun.verifica_un_singur_raspuns(intrebari, este_corect)
 
-	# Faptele. Nota e goală: tabelul cere întrebări, nu note (aceeași decizie ca
-	# la elemente). Câmpul EXISTĂ fiindcă altfel încărcătorul din `trivia.gd` se
-	# plânge pentru fiecare întrebare care arată spre un fapt inexistent, iar de la
-	# al 180-lea avertisment consola nu mai e un loc unde se citește ceva.
+	# ── FAPTELE, CU NOTĂ ──
 	#
 	# DOUĂ FELURI DE FAPTE, fiindcă sunt două feluri de întrebări: opera (pentru
 	# sensul direct) și autorul (pentru cel invers). Amândouă sub `wd:Q…`, ca la
-	# elemente, deci nu se pot ciocni între ele.
+	# elemente, deci nu se pot ciocni între ele — și fiecare cu șablonul lui.
+	#
+	# Grija din `docs/progres.md` („fișierul se rescrie întreg, deci notele `wd:`
+	# nu pot sta în el") nu se mai aplică: o notă compusă de șablon se recompune
+	# la fiecare rulare, din aceleași date. Vezi comentariul mai lung din
+	# `elemente.py`.
 	folosite = {q["fapt"] for q in intrebari}
+	probleme = []
 	fapte = []
+
+	def adauga(qid, nota, surse, unde):
+		if nota:
+			comun.verifica_nota(nota, surse, unde, probleme)
+		fapte.append({"id": "wd:%s" % qid, "nota": nota,
+		              "surse": ["https://www.wikidata.org/wiki/%s" % qid],
+		              "verificat": False})
+
 	for e in lista:
 		if "wd:%s" % e["qid"] in folosite:
-			fapte.append({"id": "wd:%s" % e["qid"], "nota": "",
-			              "surse": ["https://www.wikidata.org/wiki/%s" % e["qid"]],
-			              "verificat": False})
+			nota, surse = nota_operei(e)
+			adauga(e["qid"], nota, surse, "wd:%s („%s”)" % (e["qid"], e["titlu"]))
 	for a in candidati_autori:
 		if "wd:%s" % a["qid"] in folosite:
-			fapte.append({"id": "wd:%s" % a["qid"], "nota": "",
-			              "surse": ["https://www.wikidata.org/wiki/%s" % a["qid"]],
-			              "verificat": False})
+			nota, surse = nota_autorului(a)
+			adauga(a["qid"], nota, surse, "wd:%s (%s)" % (a["qid"], a["nume"]))
 
+	statistici["note_probleme"] = probleme
 	return intrebari, fapte, statistici
 
 
@@ -1384,6 +1530,7 @@ def main():
 	inverse = len(intrebari) - directe
 	print("\n    generate: %d întrebări (%d directe, %d inverse), %d fapte"
 	      % (len(intrebari), directe, inverse, len(fapte)))
+	comun.raporteaza_notele(fapte, statistici.get("note_probleme", []), arg.scrie)
 	print("    „exact una din patru e corectă\": verificat pe toate %d, pe mulțimea"
 	      % len(intrebari))
 	print("      completă de autori de la Wikidata.")

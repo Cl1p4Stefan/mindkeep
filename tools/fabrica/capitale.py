@@ -270,7 +270,7 @@ CATE_PROPUNERI = 0  # 0 = toate
 # vechi dintre toate capitalele țării, iar tocmai ce vreau să știu e DACĂ UNA
 # ANUME s-a mutat recent.
 INTEROGARE_TARI = """
-SELECT ?tara ?eticheta ?iso ?sitelinks ?desfiintata ?istorica ?coord
+SELECT ?tara ?eticheta ?descriere ?iso ?sitelinks ?desfiintata ?istorica ?coord
        (GROUP_CONCAT(DISTINCT STR(?continent); separator=" ") AS ?continente)
        (GROUP_CONCAT(DISTINCT STR(?vecin); separator=" ") AS ?vecini)
 WHERE {
@@ -285,8 +285,9 @@ WHERE {
   OPTIONAL { ?tara wdt:P625 ?coord . }
   OPTIONAL { ?tara wdt:P31/wdt:P279* wd:Q3024240 . BIND(true AS ?istorica) }
   OPTIONAL { ?tara rdfs:label ?eticheta . FILTER(lang(?eticheta) = "ro") }
+  OPTIONAL { ?tara schema:description ?descriere . FILTER(lang(?descriere) = "ro") }
 }
-GROUP BY ?tara ?eticheta ?iso ?sitelinks ?desfiintata ?istorica ?coord
+GROUP BY ?tara ?eticheta ?descriere ?iso ?sitelinks ?desfiintata ?istorica ?coord
 """ % ONU
 
 # Eticheta capitalei o cerem cu `rdfs:label` filtrat EXPLICIT pe „ro", nu prin
@@ -354,6 +355,16 @@ def ia_datele(reincarca):
 				"cache-ul e luat înainte să existe interogarea steagurilor.\n"
 				"  Rulează cu --reincarca. (Fără oprirea asta, toate țările ar "
 				"apărea ca „fără steag”, ceea ce nu e același lucru.)")
+		# ACEEAȘI LECȚIE, A DOUA OARĂ: un câmp lipsă nu e un „nu". Un cache luat
+		# înainte să existe `?descriere` în interogare n-are coloana, iar fără
+		# oprirea asta toate cele 140 de țări ar fi arătat ca „fără descriere" —
+		# adică toate notele ar fi ieșit fără cârlig, în tăcere, și aș fi crezut
+		# că Wikidata nu are descrieri române. Are, pentru toate 140.
+		if "descriere" not in pachet["tari"].get("head", {}).get("vars", []):
+			raise Eroare(
+				"cache-ul e luat înainte să existe `?descriere` în interogarea țărilor.\n"
+				"  Rulează cu --reincarca. (Fără oprirea asta, toate notele ar ieși "
+				"fără cârlig, iar cifra ar arăta ca o lipsă de date la Wikidata.)")
 		return pachet
 
 	print("  Reîncarc din rețea.")
@@ -399,6 +410,9 @@ def desfa_tarile(pachet):
 		tari[qid] = {
 			"qid": qid,
 			"eticheta": r["eticheta"]["value"].strip() if "eticheta" in r else None,
+			# Descrierea română de la Wikidata, singurul cârlig pe care-l am pentru
+			# notă. Vezi secțiunea NOTA, mai jos, pentru ce s-a încercat înainte.
+			"descriere": r["descriere"]["value"].strip() if "descriere" in r else "",
 			"iso": r["iso"]["value"].strip() if "iso" in r else "",
 			"editii": int(r["sitelinks"]["value"]),
 			# Cele două semne că entitatea e un stat ÎNCHEIAT, nu unul de azi. Vezi
@@ -871,6 +885,7 @@ def leaga_tabelul(alese, tari, capitale, steaguri):
 			"qid": qid,
 			"tara": nume,
 			"tara_wd": t["eticheta"] or "",
+			"descriere": t["descriere"],
 			"tara_de_mana": tara_de_mana,
 			"genitiv": genitiv,
 			"capitala": nume_cap,
@@ -1422,6 +1437,112 @@ def alege_distractorii(tinta, candidati, sens):
 # CONSTRUIREA ÎNTREBĂRILOR
 # ─────────────────────────────────────────────────────────────
 
+# ─────────────────────────────────────────────────────────────
+# NOTA („AFLĂ MAI MULTE")
+#
+# „Capitala Franței este Paris. Franța este o țară transcontinentală din Europa
+# de Vest." Răspunsul o dată, natural (`ghid-note.md` §2.1), plus un cârlig care
+# nu e întrebat de niciunul din cele două sensuri: UNDE e țara.
+#
+# ── CE S-A ÎNCERCAT ÎNAINTE, ȘI DE CE A CĂZUT ─────────────────
+# Cache-ul avea deja două câmpuri care păreau cârlige mai bune. Măsurate, niciunul
+# nu ține:
+#
+#   `vecini` (P47) — „Franța are 11 state vecine". Wikidata numără și Brazilia și
+#     Surinamul, prin Guyana Franceză. Cifra e corectă pentru Wikidata și falsă
+#     pentru orice manual de geografie, deci ar fi predat exact genul de lucru
+#     pentru care există regula „modelul formulează, nu informează" — numai că
+#     greșeala ar fi venit din date, nu din mine. Rusia iese cu 18, Indonezia cu 10.
+#
+#   `de_cand` (calificatorul P580 de pe P36) — „Parisul e capitala Franței din
+#     …". Franța întoarce ZECE ani diferiți: 1682, 1789, 1871, 1940, 1942, 1944…
+#     Fiecare e o declarație adevărată despre o capitală de atunci (Versailles,
+#     Vichy), iar interogarea nu poate alege între ele. Un câmp cu zece valori
+#     dintre care una e luată la întâmplare nu e o dată, e un zar.
+#
+# `schema:description` filtrată pe română a trecut amândouă probele: există pentru
+# toate cele 140 de țări, are o singură valoare, e CC0 (deci se poate folosi ca
+# text, nu doar ca dată) și spune exact ce nu întreabă întrebarea.
+#
+# ── DE CE ARTICOLUL E O LISTĂ, NU O REGULĂ ────────────────────
+# „Franța este O țară…" dar „Singapore este UN oraș-stat…": articolul atârnă de
+# genul primului cuvânt al descrierii, iar genul nu se poate deduce din text.
+# Măsurat pe toate cele 140: primul cuvânt e „țară" la 137, iar la celelalte trei
+# e „oraș-stat", „stat" și „monarhie". Patru cuvinte, deci o listă scrisă, care
+# OPREȘTE scriptul la al cincilea — nu o euristică care ar ghici greșit în tăcere.
+# ─────────────────────────────────────────────────────────────
+
+ARTICOL = {
+	"țară": "o",
+	"stat": "un",
+	"oraș-stat": "un",
+	"monarhie": "o",
+}
+
+# ȚĂRILE CU NUME DE PLURAL, care cer „sunt" în loc de „este".
+#
+# Trei, din 140, și le-am găsit abia citind mostrele: „Statele Unite ale Americii
+# ESTE o țară din America de Nord" trecuse toate verificările, fiindcă validatorul
+# apără faptele, nu gramatica. De-aia mostrele se citesc cu ochiul la fiecare
+# rulare — un șablon stricat se vede în toate cele 127 de note deodată, dar un
+# acord stricat se vede doar în trei.
+PLURAL = {
+	"Emiratele Arabe Unite",
+	"Statele Unite ale Americii",
+	"Țările de Jos",
+}
+
+# SEMNUL CARE CERE O DECIZIE. În română, un prim cuvânt terminat în „-ele" sau
+# „-ile" e aproape sigur plural („Insulele Marshall", „Filipinele"). Niciunul din
+# cele 137 rămase nu arată așa, deci regula nu dă alarme false azi — iar ziua în
+# care intră o țară nouă cu nume de plural, scriptul OPREȘTE și cere s-o scriu în
+# `PLURAL`, în loc să genereze în tăcere un acord greșit.
+_PARE_PLURAL = re.compile(r"^[^\W\d_]+(ele|ile)\b")
+
+
+def acordul(tara, qid, probleme):
+	"""„este" sau „sunt", pentru numele unei țări. Gol = nu știu, și spun."""
+	if tara in PLURAL:
+		return "sunt"
+	if _PARE_PLURAL.match(tara):
+		probleme.append(
+			"%s (%s): numele pare plural, dar nu e în PLURAL — scrie-l acolo dacă "
+			"cere „sunt”, altfel lasă-l și spune-mi" % (qid, tara))
+		return ""
+	return "este"
+
+
+def compune_nota(e, probleme):
+	"""O țară → (nota, valorile din care e făcută)."""
+	# PUNCTUL NU SE PUNE DE DOUĂ ORI. „Washington, D.C." se termină deja cu
+	# punct, iar șablonul mai adăuga unul: „…este Washington, D.C.." Una din 127,
+	# găsită citind mostrele — niciun validator n-ar fi avut ce să spună despre ea.
+	capitala = e["capitala"]
+	baza = "Capitala %s este %s%s" % (
+		e["genitiv"], capitala, "" if capitala.endswith(".") else ".")
+	surse = [e["genitiv"], e["tara"], capitala]
+
+	descriere = (e.get("descriere") or "").strip()
+	if not descriere:
+		# Fără cârlig nu scriu nota: o propoziție care repetă răspunsul ar face ca
+		# „Află mai multe" să nu afle nimic (`ghid-note.md` §2.2).
+		return "", surse
+
+	cap = descriere.split()[0].lower()
+	if cap not in ARTICOL:
+		probleme.append(
+			"%s (%s): descrierea începe cu „%s”, pentru care nu știu articolul — "
+			"adaugă-l în ARTICOL" % (e["qid"], e["tara"], cap))
+		return "", surse
+
+	acord = acordul(e["tara"], e["qid"], probleme)
+	if not acord:
+		return "", surse
+
+	surse.append(descriere)
+	return "%s %s %s %s %s." % (baza, e["tara"], acord, ARTICOL[cap], descriere), surse
+
+
 def construieste(lista):
 	"""Lista de țări alese → (întrebări, fapte, statistici).
 
@@ -1492,18 +1613,15 @@ def construieste(lista):
 	# chiar același fapt („capitala Franței e Parisul"). La opere erau două feluri
 	# de fapte fiindcă entitățile celor două sensuri erau două, opera și autorul.
 	#
-	# Nota e goală: tabelul cere întrebări, nu note. Câmpul EXISTĂ fiindcă altfel
-	# încărcătorul din `trivia.gd` se plânge pentru fiecare întrebare care arată
-	# spre un fapt inexistent, iar de la al 180-lea avertisment consola nu mai e un
-	# loc unde se citește ceva.
-	#
 	folosite = {q["fapt"] for q in intrebari}
-	fapte = [fapt_cu_imagini(e) for e in lista if "wd:%s" % e["qid"] in folosite]
+	probleme = []
+	fapte = [fapt_cu_imagini(e, probleme) for e in lista
+	         if "wd:%s" % e["qid"] in folosite]
 
-	return intrebari, fapte, {"sarite": sarite}
+	return intrebari, fapte, {"sarite": sarite, "note_probleme": probleme}
 
 
-def fapt_cu_imagini(e):
+def fapt_cu_imagini(e, probleme):
 	"""Un fapt, cu lista lui de imagini.
 
 	─────────────────────────────────────────────────────────────
@@ -1566,9 +1684,13 @@ def fapt_cu_imagini(e):
 			intrare["licenta_url"] = m["licenta_url"]
 		imagini.append(intrare)
 
+	nota, surse_nota = compune_nota(e, probleme)
+	if nota:
+		comun.verifica_nota(nota, surse_nota, "%s (%s)" % (e["qid"], e["tara"]),
+		                    probleme)
 	fapt = {
 		"id": "wd:%s" % e["qid"],
-		"nota": "",
+		"nota": nota,
 		"surse": ["https://www.wikidata.org/wiki/%s" % e["qid"]],
 		"verificat": False,
 	}
@@ -1652,6 +1774,7 @@ def main():
 		intrebari, fapte, statistici = construieste(lista)
 
 	directe = sum(1 for q in intrebari if q["id"].endswith("cere_capitala"))
+	comun.raporteaza_notele(fapte, statistici.get("note_probleme", []), arg.scrie)
 	print("\n    generate: %d întrebări (%d directe, %d inverse), %d fapte"
 	      % (len(intrebari), directe, len(intrebari) - directe, len(fapte)))
 	print("    „exact una din patru e corectă”: verificat pe toate %d, pe mulțimea"

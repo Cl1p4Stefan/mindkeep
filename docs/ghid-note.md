@@ -213,11 +213,25 @@ filtrează nimic**: 2664 din cele 2692 de întrebări sunt neverificate, deci un
 ar goli ecranul. Decizia rămâne deschisă, dar locul ei e acum limpede — se ia când
 apare „Află mai multe”, fiindcă abia atunci nota se ȘI vede.
 
-**În fabrica de întrebări** (scriptul Python), verificarea devine parțial
-automată: nota e scrisă din faptele sursă, iar validatorul cere ca fiecare an,
-număr și nume propriu din notă să apară în acele fapte. Prinde exact greșeala
-tipică a unui model de limbaj, un an inventat care sună plauzibil. Nu prinde
-tot, deci o mostră din note se citește în continuare de mână.
+**În fabrica de întrebări** (scriptul Python), verificarea e parțial automată, și
+**de pe 12 octombrie 2026 chiar există**: `comun.verifica_nota()`. Nota e compusă din
+faptele sursă, iar validatorul cere ca fiecare bucată de cifre și fiecare nume
+propriu din notă să apară în acele fapte. Primul cuvânt al fiecărei propoziții e
+scutit (are majusculă din gramatică); singura excepție scrisă e `Hr`, din
+„î.Hr.". La `--scrie`, o notă care nu trece **oprește scrierea întregului fișier**.
+
+Prinde exact greșeala tipică a unui model de limbaj, un an inventat care sună
+plauzibil. **Nu prinde o afirmație falsă fără cifre** („Parisul se află în
+Spania"), fiindcă n-are de unde să știe geografie, și **nu prinde gramatica**: tot
+ce a scăpat la prima rulare — `Homer (-900–-800)`, `Washington, D.C..`, „Statele
+Unite ale Americii ESTE o țară" — a fost prins de ochi, citind mostrele. De-aia
+notele fabricate se compun din **ȘABLOANE**, nu propoziție cu propoziție: un șablon
+greșit se vede la prima rulare, în toate notele tabelului deodată, iar mostrele se
+citesc la fiecare rulare.
+
+Vezi sesiunea NOTELE SE FABRICă din `progres.md` pentru cele trei șabloane de azi și
+pentru două cârlige care arătau mai bune și au căzut la măsurătoare (`vecini` din
+Wikidata numără 11 vecini pentru Franța; `de_cand` întoarce zece ani diferiți).
 
 ---
 
@@ -418,7 +432,12 @@ fișierelor:
 ## 7. Ce rămâne de stabilit
 
 - **Lungimea reală.** 240 de caractere e o estimare; se reglează pe popup, pe
-  telefon.
+  telefon. *Observație de pe 12 octombrie 2026:* notele FABRICATE ies mult sub
+  cele 120–200 cerute la §2.3 — mediana e 69 la elemente, 71 la capitale, 79 la
+  opere. N-au fost umflate dinadins: un element are atâtea de spus câte scrie în
+  tabel, iar o propoziție pusă ca să ajungă la numărul de caractere e exact felul
+  de frază care sună bine și nu se poate verifica. Dacă pe ecran arată prea
+  sărace, leacul e o coloană nouă în tabel, nu un adjectiv.
 - **Logica și Cuvintele.** Au deja `explicatie`, dar la Logică e numele regulii cu
   majuscule („FIBONACCI”, „MIXT: x2, APOI +3”). E bun ca etichetă, nu ca notă. Dacă
   „Află mai multe” apare și acolo, va trebui o propoziție („Fiecare termen e suma

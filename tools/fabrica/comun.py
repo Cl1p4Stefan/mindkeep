@@ -170,6 +170,24 @@ NIVELURI = (1, 2, 3)
 # domenii când lupta împarte la 4.
 PRAG_DOMENIU = 8
 
+# CÂTE CARACTERE are voie o notă. AUTORITATEA E `MAX_NOTA` DIN
+# `scenes/trivia/trivia.gd`, la fel ca `PRAG_DOMENIU`: două limbi, o decizie.
+#
+# Acolo e un AVERTISMENT (nota intră în joc oricum, doar se plânge în consolă);
+# aici OPREȘTE. Diferența e cine citește: consola jocului o vede jucătorul, și
+# atunci nota e deja scrisă pe disc. Fabrica o vede autorul, înainte să scrie —
+# deci e singurul loc unde refuzul mai poate schimba ceva.
+MAX_NOTA = 240
+
+# Cuvintele care au voie să fie cu majusculă în mijlocul unei note FĂRĂ să vină
+# din datele sursă. Fiecare e o decizie scrisă, nu o scăpare — de-aia lista e
+# aici și nu o regulă generală de „sari peste abrevieri".
+#
+# `Hr` — din „î.Hr." și „d.Hr.", de care au nevoie autorii antici (Homer s-a
+# născut în 900 î.Hr.). Fără el, șablonul ar fi trebuit să scrie anii negativi
+# așa cum vin din Wikidata: „(-900–-800)", care nu e nici românește, nici citibil.
+PERMISE_IN_NOTA = frozenset(["Hr"])
+
 
 class Eroare(Exception):
 	"""Ceva ce scriptul nu recunoaște. Oprește tot, nu se sare peste."""
@@ -999,6 +1017,153 @@ def seamana(a, b, prag=0.62):
 	perechi bune. Unul care le ARATĂ lasă decizia la om.
 	"""
 	return difflib.SequenceMatcher(None, fara_semne(a), fara_semne(b)).ratio() >= prag
+
+
+# ─────────────────────────────────────────────────────────────
+# NOTELE FABRICATE
+#
+# „Modelul de limbaj formulează, nu informează" (`CLAUDE.md`) e o regulă despre
+# mine, nu despre cod — iar o regulă care se sprijină numai pe bunăvoința celui
+# care scrie se încalcă într-o zi obosită. Funcția de mai jos o face verificabilă:
+# nu te lasă să strecori într-o notă un an sau un nume care nu e în tabel.
+#
+# E chiar validatorul descris în `docs/ghid-note.md`, secțiunea 4: „nota e scrisă
+# din faptele sursă, iar validatorul cere ca fiecare an, număr și nume propriu din
+# notă să apară în acele fapte. Prinde exact greșeala tipică a unui model de
+# limbaj, un an inventat care sună plauzibil."
+#
+# CE PRINDE ȘI CE NU. Prinde cifra inventată — singura greșeală pe care o poate
+# prinde o mașină, și, din fericire, cea mai frecventă. NU prinde o afirmație
+# falsă fără cifre („Parisul se află în Spania"), fiindcă n-are de unde să știe
+# geografie. Pentru asta nu există plasă automată, și de-aia notele astea se
+# compun din ȘABLOANE scrise o dată și citite cu ochiul, nu propoziție cu
+# propoziție: un șablon greșit se vede la prima rulare, în toate cele 70 de note
+# deodată.
+# ─────────────────────────────────────────────────────────────
+
+# O bucată de cifre, oricât de lungă. Despărțitorul de mii NU intră: „2 100 000"
+# se sparge în trei bucăți, fiecare căutată separat, iar sursa care conține
+# numărul întreg le cuprinde pe toate.
+_CIFRE = re.compile(r"\d+")
+
+# Un cuvânt care începe cu majusculă, inclusiv formele cu cratimă („Harap-Alb”)
+# și cele cu diacritice („Șincai"). `[^\W\d_]` e „literă", oricare, fiindcă
+# `\w` ar fi prins și cifrele.
+_CU_MAJUSCULA = re.compile(r"[A-ZĂÂÎȘȚ][^\W\d_]*(?:-[A-ZĂÂÎȘȚ]?[^\W\d_]+)*")
+
+# Începuturile de propoziție: capătul textului și ce urmează după . ? ! sau după
+# ghilimelele de închidere ale unui titlu. Primul cuvânt de după ele are
+# majusculă din GRAMATICĂ, nu din date, deci nu se cere în surse.
+_DUPA_PUNCT = re.compile(r"(?:^|[.!?]\s+)\s*[„«\"']?")
+
+
+def _bucatile(valoare):
+	"""O valoare-sursă → cuvintele și cifrele din ea, ca mulțime de potriviri.
+
+	TĂIEREA SE FACE DE DOUĂ ORI, cu două asprimi, și amândouă sunt necesare —
+	prima rulare a validatorului a dovedit-o, oprind patru note bune:
+
+	  „Contele de Monte-Cristo" — tăiat și pe cratimă, sursa dă „monte" și
+	    „cristo", dar în notă numele apare întreg, „Monte-Cristo", și n-ar fi
+	    fost găsit.
+	  „J.R.R. Tolkien" — tăiat numai pe spații, sursa dă „j.r.r.", dar în notă
+	    inițiala se citește ca un cuvânt de o literă, „J".
+	  „N'Djamena" — apostroful face la fel: „N" și „Djamena" se citesc ca două
+	    cuvinte, deși sursa le dă lipite.
+
+	Deci: o dată pe spații și paranteze (cratimele și punctele rămân lipite), o
+	dată și pe cratimă și punct. Ce rămâne nu e o slăbire a verificării — un nume
+	care NU e în sursă (un „Madrid" pus în locul Parisului) cade în continuare,
+	fiindcă nicio tăiere a sursei nu-l produce.
+	"""
+	text = ca_text(valoare)
+	bucati = {fara_semne(text)}
+	for parte in re.split(r"[\s,;()\[\]/]+", text):
+		bucati.add(fara_semne(parte.strip(".,;:")))
+	for parte in re.split(r"[\s,;()\[\]/.’'–—-]+", text):
+		bucati.add(fara_semne(parte))
+	for cifre in _CIFRE.findall(text):
+		bucati.add(cifre)
+	bucati.discard("")
+	return bucati
+
+
+def ca_text(valoare):
+	"""Orice valoare-sursă → text. `None` devine gol, nu „None"."""
+	if valoare is None:
+		return ""
+	return valoare if isinstance(valoare, str) else str(valoare)
+
+
+def _pozitiile_de_inceput(nota):
+	"""Indicii caracterelor care încep o propoziție."""
+	return set(m.end() for m in _DUPA_PUNCT.finditer(nota))
+
+
+def verifica_nota(nota, surse, unde, probleme):
+	"""Nota e făcută DOAR din ce scrie în `surse`?
+
+	`surse` e lista valorilor din care șablonul a compus nota: numele, simbolul,
+	anul, orice. Pot fi numere sau text, în orice ordine — se tokenizează.
+
+	Întoarce `True` dacă nota e curată. Ce nu e curat se adaugă în `probleme`,
+	care e apoi raportată de apelant (și, la `--scrie`, oprește scrierea).
+	"""
+	if not nota:
+		probleme.append("%s: nota e goală" % unde)
+		return False
+
+	if len(nota) > MAX_NOTA:
+		probleme.append("%s: nota are %d caractere (maximum %d)"
+		                % (unde, len(nota), MAX_NOTA))
+		return False
+
+	permise = set()
+	for valoare in surse:
+		permise |= _bucatile(valoare)
+
+	curata = True
+
+	# ── CIFRELE ── orice bucată de cifre trebuie să existe în surse.
+	for cifre in _CIFRE.findall(nota):
+		if cifre not in permise:
+			probleme.append("%s: cifra %s din notă nu e în datele sursă" % (unde, cifre))
+			curata = False
+
+	# ── NUMELE PROPRII ── afară de primul cuvânt al fiecărei propoziții.
+	inceputuri = _pozitiile_de_inceput(nota)
+	for m in _CU_MAJUSCULA.finditer(nota):
+		if m.start() in inceputuri:
+			continue
+		cuvant = m.group(0)
+		if cuvant in PERMISE_IN_NOTA:
+			continue
+		if fara_semne(cuvant) not in permise:
+			probleme.append("%s: numele „%s” din notă nu e în datele sursă"
+			                % (unde, cuvant))
+			curata = False
+
+	return curata
+
+
+def raporteaza_notele(fapte, probleme, scrie):
+	"""Blocul de raport despre note. Oprește `--scrie` dacă ceva nu e curat."""
+	cu_nota = [f for f in fapte if f.get("nota")]
+	lungimi = sorted(len(f["nota"]) for f in cu_nota)
+	print("    note: %d din %d fapte" % (len(cu_nota), len(fapte)))
+	if lungimi:
+		print("          lungimea: %d–%d caractere, mediana %d (maximum %d)"
+		      % (lungimi[0], lungimi[-1], lungimi[len(lungimi) // 2], MAX_NOTA))
+	if probleme:
+		print("    NOTE CARE NU TREC VALIDATORUL: %d" % len(probleme))
+		for p in probleme[:10]:
+			print("      %s" % p)
+		if len(probleme) > 10:
+			print("      … și altele %d" % (len(probleme) - 10))
+		if scrie:
+			raise Eroare("nu scriu nimic: %d note nu trec validatorul din ghid §4"
+			             % len(probleme))
+	return len(cu_nota)
 
 
 # ─────────────────────────────────────────────────────────────
