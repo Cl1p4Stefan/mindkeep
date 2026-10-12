@@ -1,0 +1,159 @@
+[
+	{"qid": "Q746646", "titlu": "Dido și Aeneas", "compozitor_nume": "Henry Purcell", "nivel": 3},
+
+	{"qid": "Q208224", "titlu": "Concertele brandenburgice", "compozitor_nume": "Johann Sebastian Bach", "nivel": 2},
+	{"qid": "Q379111", "titlu": "Patimile după Matei", "compozitor_nume": "Johann Sebastian Bach", "nivel": 2},
+	{"qid": "Q392734", "titlu": "Toccata și fuga în re minor", "compozitor_nume": "Johann Sebastian Bach", "nivel": 2, "titlu_de_mana": true},
+	{"qid": "Q465878", "titlu": "Arta fugii", "compozitor_nume": "Johann Sebastian Bach", "nivel": 3},
+	{"qid": "Q1145620", "titlu": "Cantata cafelei", "compozitor_nume": "Johann Sebastian Bach", "nivel": 3},
+	{"qid": "Q211971", "titlu": "Clavecinul bine temperat", "compozitor_nume": "Johann Sebastian Bach", "nivel": 3, "titlu_de_mana": true},
+	{"qid": "Q693675", "titlu": "Ofranda Muzicală", "compozitor_nume": "Johann Sebastian Bach", "nivel": 3},
+	{"qid": "Q642010", "titlu": "Oratoriul de Crăciun", "compozitor_nume": "Johann Sebastian Bach", "nivel": 3},
+	{"qid": "Q865333", "titlu": "Patimile după Ioan", "compozitor_nume": "Johann Sebastian Bach", "nivel": 3},
+	{"qid": "Q213728", "titlu": "Variațiunile Goldberg", "compozitor_nume": "Johann Sebastian Bach", "nivel": 3},
+
+	{"qid": "Q278596", "titlu": "Muzica apelor", "compozitor_nume": "Georg Friedrich Händel", "nivel": 2},
+	{"qid": "Q397041", "titlu": "Agrippina", "compozitor_nume": "Georg Friedrich Händel", "nivel": 3},
+	{"qid": "Q275627", "titlu": "Alcina", "compozitor_nume": "Georg Friedrich Händel", "nivel": 3},
+	{"qid": "Q875563", "titlu": "Giulio Cesare in Egitto", "compozitor_nume": "Georg Friedrich Händel", "nivel": 3},
+	{"qid": "Q641095", "titlu": "Rodelinda", "compozitor_nume": "Georg Friedrich Händel", "nivel": 3},
+
+	{"qid": "Q723776", "titlu": "Orfeu și Euridice", "compozitor_nume": "Christoph Willibald Gluck", "nivel": 3},
+	{"qid": "Q3810521", "titlu": "Paris și Elena", "compozitor_nume": "Christoph Willibald Gluck", "nivel": 3},
+
+	{"qid": "Q30562", "titlu": "Imnul Imperiului Austriac", "compozitor_nume": "Joseph Haydn", "nivel": 3},
+
+	{"qid": "Q5064", "titlu": "Flautul fermecat", "compozitor_nume": "Wolfgang Amadeus Mozart", "nivel": 1},
+	{"qid": "Q201873", "titlu": "Nunta lui Figaro", "compozitor_nume": "Wolfgang Amadeus Mozart", "nivel": 1},
+	{"qid": "Q192039", "titlu": "Don Giovanni", "compozitor_nume": "Wolfgang Amadeus Mozart", "nivel": 2},
+	{"qid": "Q12025", "titlu": "Mica serenadă", "compozitor_nume": "Wolfgang Amadeus Mozart", "nivel": 2},
+	{"qid": "Q207410", "titlu": "Così fan tutte", "compozitor_nume": "Wolfgang Amadeus Mozart", "nivel": 3},
+	{"qid": "Q723559", "titlu": "Idomeneo", "compozitor_nume": "Wolfgang Amadeus Mozart", "nivel": 3},
+	{"qid": "Q210711", "titlu": "Răpirea din serai", "compozitor_nume": "Wolfgang Amadeus Mozart", "nivel": 3, "titlu_de_mana": true},
+
+	{"qid": "Q11980", "titlu": "Für Elise", "compozitor_nume": "Ludwig van Beethoven", "nivel": 1},
+	{"qid": "Q193778", "titlu": "Fidelio", "compozitor_nume": "Ludwig van Beethoven", "nivel": 2},
+	{"qid": "Q1156413", "titlu": "Egmont", "compozitor_nume": "Ludwig van Beethoven", "nivel": 3},
+
+	{"qid": "Q156435", "titlu": "Der Freischütz", "compozitor_nume": "Carl Maria von Weber", "nivel": 3},
+	{"qid": "Q1529152", "titlu": "Invitație la vals", "compozitor_nume": "Carl Maria von Weber", "nivel": 3},
+
+	{"qid": "Q1349941", "titlu": "Păstrăvul", "compozitor_nume": "Franz Schubert", "nivel": 3},
+
+	{"qid": "Q753123", "titlu": "La sonnambula", "compozitor_nume": "Vincenzo Bellini", "nivel": 3},
+	{"qid": "Q320353", "titlu": "Norma", "compozitor_nume": "Vincenzo Bellini", "nivel": 3},
+
+	{"qid": "Q723941", "titlu": "Don Pasquale", "compozitor_nume": "Gaetano Donizetti", "nivel": 3},
+	{"qid": "Q332536", "titlu": "Elixirul dragostei", "compozitor_nume": "Gaetano Donizetti", "nivel": 3},
+	{"qid": "Q729568", "titlu": "Fiica regimentului", "compozitor_nume": "Gaetano Donizetti", "nivel": 3},
+	{"qid": "Q244209", "titlu": "Lucia di Lammermoor", "compozitor_nume": "Gaetano Donizetti", "nivel": 3},
+
+	{"qid": "Q208659", "titlu": "Bărbierul din Sevilla", "compozitor_nume": "Gioachino Rossini", "nivel": 2},
+	{"qid": "Q729659", "titlu": "Wilhelm Tell", "compozitor_nume": "Gioachino Rossini", "nivel": 2},
+	{"qid": "Q472318", "titlu": "Coțofana hoață", "compozitor_nume": "Gioachino Rossini", "nivel": 3},
+	{"qid": "Q589932", "titlu": "Italianca în Alger", "compozitor_nume": "Gioachino Rossini", "nivel": 3},
+	{"qid": "Q176700", "titlu": "La Cenerentola", "compozitor_nume": "Gioachino Rossini", "nivel": 3},
+
+	{"qid": "Q580760", "titlu": "Album pentru tineret", "compozitor_nume": "Robert Schumann", "nivel": 3},
+	{"qid": "Q1043926", "titlu": "Carnaval", "compozitor_nume": "Robert Schumann", "nivel": 3},
+	{"qid": "Q635095", "titlu": "Frauenliebe und -leben", "compozitor_nume": "Robert Schumann", "nivel": 3},
+
+	{"qid": "Q462313", "titlu": "Simfonia fantastică", "compozitor_nume": "Hector Berlioz", "nivel": 2},
+
+	{"qid": "Q567462", "titlu": "Ani de pelerinaj", "compozitor_nume": "Franz Liszt", "nivel": 3},
+	{"qid": "Q1065305", "titlu": "Liebesträume", "compozitor_nume": "Franz Liszt", "nivel": 3},
+	{"qid": "Q580201", "titlu": "Simfonia Faust", "compozitor_nume": "Franz Liszt", "nivel": 3},
+
+	{"qid": "Q23085", "titlu": "Lohengrin", "compozitor_nume": "Richard Wagner", "nivel": 2},
+	{"qid": "Q324319", "titlu": "Walkiria", "compozitor_nume": "Richard Wagner", "nivel": 2},
+	{"qid": "Q272029", "titlu": "Amurgul zeilor", "compozitor_nume": "Richard Wagner", "nivel": 3},
+	{"qid": "Q327717", "titlu": "Aurul Rinului", "compozitor_nume": "Richard Wagner", "nivel": 3},
+	{"qid": "Q465540", "titlu": "Maeștrii cântăreți din Nürnberg", "compozitor_nume": "Richard Wagner", "nivel": 3},
+	{"qid": "Q114640", "titlu": "Olandezul zburător", "compozitor_nume": "Richard Wagner", "nivel": 3},
+	{"qid": "Q220340", "titlu": "Parsifal", "compozitor_nume": "Richard Wagner", "nivel": 3},
+	{"qid": "Q560619", "titlu": "Tannhäuser", "compozitor_nume": "Richard Wagner", "nivel": 3},
+
+	{"qid": "Q11949366", "titlu": "Vyšehrad", "compozitor_nume": "Bedřich Smetana", "nivel": 3},
+	{"qid": "Q10508471", "titlu": "Šárka", "compozitor_nume": "Bedřich Smetana", "nivel": 3},
+
+	{"qid": "Q185968", "titlu": "Carmen", "compozitor_nume": "Georges Bizet", "nivel": 2, "titlu_de_mana": true},
+	{"qid": "Q56159", "titlu": "Pescuitorii de perle", "compozitor_nume": "Georges Bizet", "nivel": 3},
+
+	{"qid": "Q171277", "titlu": "Aida", "compozitor_nume": "Giuseppe Verdi", "nivel": 1},
+	{"qid": "Q186162", "titlu": "La traviata", "compozitor_nume": "Giuseppe Verdi", "nivel": 2},
+	{"qid": "Q202230", "titlu": "Nabucco", "compozitor_nume": "Giuseppe Verdi", "nivel": 2},
+	{"qid": "Q189234", "titlu": "Rigoletto", "compozitor_nume": "Giuseppe Verdi", "nivel": 2},
+	{"qid": "Q179110", "titlu": "Don Carlos", "compozitor_nume": "Giuseppe Verdi", "nivel": 3},
+	{"qid": "Q211279", "titlu": "Ernani", "compozitor_nume": "Giuseppe Verdi", "nivel": 3},
+	{"qid": "Q318455", "titlu": "Falstaff", "compozitor_nume": "Giuseppe Verdi", "nivel": 3},
+	{"qid": "Q212451", "titlu": "Forța destinului", "compozitor_nume": "Giuseppe Verdi", "nivel": 3},
+	{"qid": "Q203470", "titlu": "Il trovatore", "compozitor_nume": "Giuseppe Verdi", "nivel": 3},
+
+	{"qid": "Q324459", "titlu": "Helgoland", "compozitor_nume": "Anton Bruckner", "nivel": 3},
+
+	{"qid": "Q482621", "titlu": "Dunărea albastră", "compozitor_nume": "Johann Strauss II", "nivel": 1},
+	{"qid": "Q464930", "titlu": "Liliacul", "compozitor_nume": "Johann Strauss II", "nivel": 2},
+	{"qid": "Q1931598", "titlu": "Sânge vienez", "compozitor_nume": "Johann Strauss II", "nivel": 3},
+	{"qid": "Q697018", "titlu": "Tritsch-Tratsch-Polka", "compozitor_nume": "Johann Strauss II", "nivel": 3},
+	{"qid": "Q1721565", "titlu": "Valsul împăratului", "compozitor_nume": "Johann Strauss II", "nivel": 3},
+	{"qid": "Q464511", "titlu": "Voievodul țiganilor", "compozitor_nume": "Johann Strauss II", "nivel": 3},
+
+	{"qid": "Q1065126", "titlu": "Dansuri ungare", "compozitor_nume": "Johannes Brahms", "nivel": 2},
+	{"qid": "Q756299", "titlu": "Requiem german", "compozitor_nume": "Johannes Brahms", "nivel": 3, "titlu_de_mana": true},
+
+	{"qid": "Q199786", "titlu": "Lacul lebedelor", "compozitor_nume": "Piotr Ilici Ceaikovski", "nivel": 1},
+	{"qid": "Q193705", "titlu": "Spărgătorul de nuci", "compozitor_nume": "Piotr Ilici Ceaikovski", "nivel": 1},
+	{"qid": "Q838051", "titlu": "Frumoasa din pădurea adormită", "compozitor_nume": "Piotr Ilici Ceaikovski", "nivel": 2},
+
+	{"qid": "Q852029", "titlu": "Trei culori", "compozitor_nume": "Ciprian Porumbescu", "nivel": 1},
+	{"qid": "Q12737709", "titlu": "Pe-al nostru steag e scris Unire", "compozitor_nume": "Ciprian Porumbescu", "nivel": 2},
+
+	{"qid": "Q831255", "titlu": "Rusalka", "compozitor_nume": "Antonín Dvořák", "nivel": 3},
+
+	{"qid": "Q14912776", "titlu": "Peer Gynt", "compozitor_nume": "Edvard Grieg", "nivel": 2},
+	{"qid": "Q956115", "titlu": "În peștera regelui munților", "compozitor_nume": "Edvard Grieg", "nivel": 2},
+
+	{"qid": "Q3959895", "titlu": "Șeherezada", "compozitor_nume": "Nikolai Andreevici Rimski-Korsakov", "nivel": 2},
+	{"qid": "Q900225", "titlu": "Mireasa țarului", "compozitor_nume": "Nikolai Andreevici Rimski-Korsakov", "nivel": 3},
+
+	{"qid": "Q941724", "titlu": "Carnavalul animalelor", "compozitor_nume": "Camille Saint-Saëns", "nivel": 2},
+	{"qid": "Q1164860", "titlu": "Danse macabre", "compozitor_nume": "Camille Saint-Saëns", "nivel": 3},
+	{"qid": "Q753152", "titlu": "Samson și Dalila", "compozitor_nume": "Camille Saint-Saëns", "nivel": 3},
+
+	{"qid": "Q847300", "titlu": "Children's Corner", "compozitor_nume": "Claude Debussy", "nivel": 3},
+	{"qid": "Q368019", "titlu": "Pelléas et Mélisande", "compozitor_nume": "Claude Debussy", "nivel": 3},
+	{"qid": "Q1367599", "titlu": "Suite bergamasque", "compozitor_nume": "Claude Debussy", "nivel": 3},
+
+	{"qid": "Q188621", "titlu": "La bohème", "compozitor_nume": "Giacomo Puccini", "nivel": 2},
+	{"qid": "Q19005", "titlu": "Madama Butterfly", "compozitor_nume": "Giacomo Puccini", "nivel": 2},
+	{"qid": "Q192941", "titlu": "Tosca", "compozitor_nume": "Giacomo Puccini", "nivel": 2},
+	{"qid": "Q207990", "titlu": "Turandot", "compozitor_nume": "Giacomo Puccini", "nivel": 2},
+	{"qid": "Q460319", "titlu": "Fata din Vest", "compozitor_nume": "Giacomo Puccini", "nivel": 3},
+	{"qid": "Q727868", "titlu": "Gianni Schicchi", "compozitor_nume": "Giacomo Puccini", "nivel": 3},
+	{"qid": "Q815342", "titlu": "Nessun dorma", "compozitor_nume": "Giacomo Puccini", "nivel": 3},
+
+	{"qid": "Q1201123", "titlu": "Daphnis și Chloe", "compozitor_nume": "Maurice Ravel", "nivel": 3},
+	{"qid": "Q2271923", "titlu": "Pavane pour une infante défunte", "compozitor_nume": "Maurice Ravel", "nivel": 3},
+
+	{"qid": "Q927503", "titlu": "Aleko", "compozitor_nume": "Serghei Rahmaninov", "nivel": 3},
+
+	{"qid": "Q791013", "titlu": "Dansuri populare românești", "compozitor_nume": "Béla Bartók", "nivel": 2},
+	{"qid": "Q249749", "titlu": "Castelul Prințului Barbă-Albastră", "compozitor_nume": "Béla Bartók", "nivel": 3},
+
+	{"qid": "Q740920", "titlu": "Porgy and Bess", "compozitor_nume": "George Gershwin", "nivel": 2},
+	{"qid": "Q853997", "titlu": "Un american la Paris", "compozitor_nume": "George Gershwin", "nivel": 3},
+
+	{"qid": "Q3401055", "titlu": "Poema română", "compozitor_nume": "George Enescu", "nivel": 2},
+	{"qid": "Q3107460", "titlu": "Oedip", "compozitor_nume": "George Enescu", "nivel": 3},
+
+	{"qid": "Q144545", "titlu": "Cenușăreasa", "compozitor_nume": "Serghei Prokofiev", "nivel": 3},
+	{"qid": "Q907735", "titlu": "Dragostea celor trei portocale", "compozitor_nume": "Serghei Prokofiev", "nivel": 3},
+	{"qid": "Q1197011", "titlu": "Jucătorul", "compozitor_nume": "Serghei Prokofiev", "nivel": 3},
+
+	{"qid": "Q2629948", "titlu": "Fanfară pentru un om obișnuit", "compozitor_nume": "Aaron Copland", "nivel": 3},
+	{"qid": "Q3832579", "titlu": "Lincoln Portrait", "compozitor_nume": "Aaron Copland", "nivel": 3},
+
+	{"qid": "Q669010", "titlu": "Poveste din cartierul de vest", "compozitor_nume": "Leonard Bernstein", "nivel": 2},
+	{"qid": "Q1033015", "titlu": "Candide", "compozitor_nume": "Leonard Bernstein", "nivel": 3},
+	{"qid": "Q1042113", "titlu": "Chichester Psalms", "compozitor_nume": "Leonard Bernstein", "nivel": 3}
+]

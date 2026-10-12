@@ -1150,59 +1150,12 @@ def alege_distractorii(tinta, candidati, sens, cheie_zar):
 # le pune deja șablonul, și repetate ar face „(1265–1321) a fost poet (1265–1321)".
 # ─────────────────────────────────────────────────────────────
 
-# Cât are voie să fie descrierea luată de la Wikidata. Peste atât nu e o
-# apoziție, e o frază — și atunci nota ar depăși și ce poate citi cineva dintr-o
-# privire. Cele lungi se lasă deoparte, iar autorul primește nota scurtă.
-MAX_DESCRIERE = 70
-
-# Parantezele cu anii, de la finalul unei descrieri Wikidata: „(1265–1321)",
-# „(1802-1885)", „(n. 1947)". Se taie, fiindcă anii vin din câmpurile lor.
-_ANII_DIN_DESCRIERE = re.compile(r"\s*\((?:[^()]*\d{3,4}[^()]*)\)\s*$")
-
-
-def curata_descrierea(descriere):
-	"""Descrierea Wikidata → apoziția folosibilă, sau gol dacă nu e."""
-	if not descriere:
-		return ""
-	text = _ANII_DIN_DESCRIERE.sub("", descriere.strip()).strip(" .,;")
-	if not text or len(text) > MAX_DESCRIERE:
-		return ""
-	# O descriere care începe cu majusculă ar aduce în notă un nume propriu
-	# aparent, iar validatorul ar avea dreptate să se plângă. Minusculizăm doar
-	# prima literă: restul poate conține nume adevărate („scriitor din Oltenia").
-	return text[0].lower() + text[1:]
-
-
-def an_scris(an):
-	"""Un an de la Wikidata → text românesc.
-
-	Wikidata dă anii dinaintea erei ca numere NEGATIVE. Puse direct în șablon,
-	ieșea „Homer (-900–-800)": două minusuri care se citesc ca liniuțe și o
-	paranteză din care nu înțelegi nimic. Prima rulare a notelor a arătat-o pe
-	Homer, singurul autor antic din tabel — și exact de-aia se citesc mostrele
-	cu ochiul, nu doar verdictele.
-	"""
-	return "%d" % an if an > 0 else "%d î.Hr." % -an
-
-
-def anii_vietii(autor):
-	"""(anii pentru paranteză, valorile) pentru un autor. Gol dacă nu se știu.
-
-	„î.Hr." se scrie O DATĂ, la capăt, când amândoi anii sunt dinaintea erei:
-	„900–800 î.Hr.", nu „900 î.Hr.–800 î.Hr.". Când unul e înainte și celălalt
-	după, amândouă erele se spun — altfel „63–14" ar părea o viață de 49 de ani
-	trăită în ordine inversă.
-	"""
-	n, m = autor.get("nastere"), autor.get("moarte")
-	if n and m:
-		if n < 0 and m < 0:
-			return "%d–%d î.Hr." % (-n, -m), [n, m]
-		if n < 0:
-			return "%s–%d d.Hr." % (an_scris(n), m), [n, m]
-		return "%d–%d" % (n, m), [n, m]
-	if n:
-		return "n. %s" % an_scris(n), [n]
-	return "", []
+# ── ANII ȘI APOZIȚIA AU URCAT ÎN `comun.py` ───────────────────
+# `MAX_DESCRIERE`, `curata_descrierea`, `an_scris`, `anii_vietii` și nota OMULUI
+# au fost scrise aici și stau acum în modulul comun: al patrulea tabel
+# (compozitorii) are nevoie de exact aceleași reguli, iar un om e un om. Lecția
+# cu Homer (anii negativi) a fost plătită o dată; o a doua copie ar fi însemnat
+# că se poate pierde a doua oară. Ce a rămas aici e vocea tabelului: nota OPEREI.
 
 
 def nota_operei(e):
@@ -1211,7 +1164,7 @@ def nota_operei(e):
 	nume = autor["nume"]
 	surse = [e["titlu"], nume]
 
-	ani, valori = anii_vietii(autor)
+	ani, valori = comun.anii_vietii(autor)
 	surse += valori
 	cine = "%s (%s)" % (nume, ani) if ani else nume
 
@@ -1224,35 +1177,7 @@ def nota_operei(e):
 
 def nota_autorului(a):
 	"""Un autor → (nota, valorile din care e făcută). Sensul invers."""
-	nume = a["nume"]
-	surse = [nume]
-	ani, valori = anii_vietii(a)
-	surse += valori
-	descriere = curata_descrierea(a.get("descriere"))
-	if descriere:
-		surse.append(descriere)
-
-	if ani and descriere:
-		nota = "%s (%s) a fost %s." % (nume, ani, descriere)
-	elif ani:
-		# FĂRĂ DESCRIERE, anii devin propoziția întreagă — deci nu mai pot sta
-		# într-o paranteză. „Daniel Defoe a trăit: 1660–1731." a fost prima
-		# formă, și nu e românește: două puncte în mijlocul unei note o fac să
-		# arate ca un câmp de bază de date, nu ca o frază.
-		n, m = a.get("nastere"), a.get("moarte")
-		if n and m:
-			nota = "%s s-a născut în %s și a murit în %s." % (
-				nume, an_scris(n), an_scris(m))
-		else:
-			nota = "%s s-a născut în %s." % (nume, an_scris(n))
-	elif descriere:
-		nota = "%s a fost %s." % (nume, descriere)
-	else:
-		# Fără ani și fără descriere n-am din ce să compun un cârlig, deci nu
-		# compun nimic. O notă care doar repetă numele ar fi mai rea decât lipsa
-		# ei: ai apăsa „Află mai multe" și n-ai afla nimic.
-		return "", surse
-	return nota, surse
+	return comun.nota_omului(a["nume"], a)
 
 
 def construieste(lista, autori):

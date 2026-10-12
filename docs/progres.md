@@ -17,8 +17,8 @@
 | 6. Harta de expediție | ✅ loadout „N din M" · **12-16 noduri**, ramificate, cu sămânță · Luptă / Elită / Odihnă / Eveniment / **Magazin** / **Boss** · **Monede + puteri temporare** · sumar de run · aspect: pergament, simboluri de cerneală, trasee punctate · **nodurile și drumurile stau pe o PANGLICĂ (curbă centrală + benzi)**, nu pe o grilă dreaptă · **patru trasee, toate verzi pe 300 de semințe** (POTCOAVĂ activă; POTCOAVA OGLINDITĂ e aceeași formă, întoarsă) · strat înclinat (forfecare) la ȘARPE · **drumuri care nu se încrucișează niciodată (0 la 300 de semințe)** · **nodul curent are și aură, și X, și stă nemișcat sub figurină** · **două surse de hartă: GENERATĂ (panglica) sau DESENATĂ dintr-un fișier `data/harti/*.json`** — comutatorul `Expeditie.SURSA_HARTII`; azi e pe DESENATĂ · **harta umple pergamentul**: pânza ține toată pagina, antetul plutește peste ea (805 × 427 px de hartă, de la 666 × 353) · **drumurile merg în amândouă sensurile**, cu nodul parcurs tăiat definitiv și cu garanția, verificată pe 16 000 de expediții simulate, că nu te poți înfunda · **figurina sare, cade ca un slam și zguduie ecranul la aterizare**, cu un răgaz de 0,5 s înainte să se deschidă nodul · **tipurile nodurilor se împart după o REȚETĂ fixă, nu se trag cu zarul**: 10 reguli de vecinătate, de început și de FINAL, plasare conștientă de reguli, verificare completă și reîncercare cu sub-sămânță (0 eșecuri pe 500 de semințe × 3 surse de hartă) · **la cel mult 2 pași de Boss e garantat un nod de bătaie** (100% pe 300 de semințe × 3 surse, de la 85% / 96% / 81%) · **niciun nod special nu mai are un geamăn lipit**, nici Evenimentul (0 pe 900 de hărți) · **rețeta nu se mai crede pe cuvânt: se PROBEAZĂ** — plafonul comun încearcă plasarea adevărată și taie un nod când forma nu le încape pe toate · rețeta se **plafonează după forma hărții**, nu după numărul de noduri · **nodul de Eveniment deschide Lacătul** (nivel din adâncime, sămânță din nodul, 6/10/14 Monede la succes) |
 | 7. Cetatea | ❌ |
 | 8. Save/Load | ✅ **pe disc**, de pe 12 octombrie 2026. `autoload/arhiva.gd` — singurul fișier din joc care atinge discul, fără nicio regulă de joc în el; dependența merge într-un singur sens (apelurile de salvare stau în SCENE, ca uneltele de verificare să rămână uscate) · **două fișiere în `user://`**: `permanent.json` (Tezaur + progresul din Antrenament + sacurile permanente) și `expeditie.json`, care există doar cât e un run viu · **scriere prin fișier temporar și redenumire**, cu adoptarea unui `.nou` orfan la citire · **`versiune` în save**: mai vechi se citește prin `_migreaza()`, mai nou se pune deoparte · **un fișier ilizibil nu se șterge și nu se suprascrie** — se redenumește `*.stricat.json` (cu data în nume dacă e deja unul pus deoparte), iar meniul o spune, cu mesaje separate pentru progres și pentru expediție · **butonul din meniu devine „Continua expeditia"**, cu nodurile în urmă și PV-ul pe rândul de sub el · **sacul are acum DURATĂ pe cheie** (`Sac.Durata`): rafturile din Practice sunt permanente, sacurile de luptă rămân pe expediție · **nodul se scrie pe disc la INTRARE**, deci a apărut `nod_nerezolvat` și coloana `reluabil` din `DATE_NOD` — altfel o luptă întreruptă era sărită, iar la Boss era chiar victorie · 54 de verdicte în `verifica_salvarea`, ~1 s · vezi sesiunea SAVE
-| 9. Celelalte discipline | 🟡 Cultură generală ✅ (**2692 de întrebări în joc, toate**: 2142 scrise de mână (`mana:0001`…) + **139 fabricate, elemente chimice** (`wd:Q897:simbol:…`) + **160 fabricate, operă → autor** (`wd:Q12730777:autor:…`) + **251 fabricate, țară ↔ capitală** (`wd:Q142:capitala:…`) — **conținutul fabricat stă într-un DOSAR**, `data/trivia_gen/`, citit întreg de încărcător: un tabel nou = două fișiere, zero linii de cod · **449 de fapte, TOATE cu notă** (92 scrise de mână + 357 fabricate din șabloane, de pe 12 octombrie: numărul atomic la elemente, anul apariției și anii autorului la opere, descrierea țării la capitale) — deci **646 din 2692 de întrebări ajung la o notă, de la 96**, iar un validator cere ca fiecare cifră și fiecare nume propriu dintr-o notă să existe în datele sursă · **OPT DOMENII** (Geografie și explorare, Istorie și societate, Știință și tehnologie, Artă și literatură, Divertisment și media, Sport și jocuri, Gastronomie și lifestyle, Diverse și curiozități), cu **31 de subcategorii** — **toate OPT domeniile sunt în luptă, niciunul din cele 31 de rafturi nu e gol și nicio întrebare nu e fără raft** (cele 135 scrise înaintea câmpului au fost clasificate, iar 21 de întrebări de mitologie au trecut de la Artă la Istorie); **toate cele 93 de celule (subdomeniu × nivel) au cel puțin 25 de întrebări** — treapta CONFORT din `plan-continut.md`, cea la care 4-5 expediții lungi nu repetă nimic; drumul până la 100 pe celulă cere încă 6631 și trece prin fabrică, nu prin scris de mână, tăiate după cum se joacă, nu după cum crescuse baza: artă + mitologie + literatură s-au unit, Divertisment și Sport pornesc goale · `CATEGORII` (listă) a devenit `DOMENII` (dicționar cheie → nume afișat), deci antetul scrie „ARTĂ ȘI LITERATURĂ”, nu cheia · **alegerea din luptă e în două trepte** — întâi domeniul, uniform, apoi întrebarea, cu sacul pe cheie de domeniu ȘI nivel — iar de azi **domeniul intră doar peste `PRAG_DOMENIU = 8` întrebări pe celulă**, cu plasă dacă nu trece niciunul; sub prag e sărit, nu golit (istoria trece cu rezerva ZERO, deci e următoarea țintă de conținut) · comutator `FOLOSESTE_WIKIDATA` · **fabrica are un modul comun**, `tools/fabrica/comun.py`, iar grila marchează celulele sărite · **faptele capitalelor au o LISTĂ de imagini**, `imagini: [{tip, …}]`: **126 de steaguri pe disc** (`assets/imagini_fapte/steaguri/`, PNG 320 px, 0,53 MB sursă, toate în domeniul public, cu manifest de credite), plus o intrare de hartă pe fiecare din cele 127 de fapte; Omanul e singurul refuzat, cu motivul scris · **fiecare întrebare are și o `subcategorie`**, una singură, din listă închisă pe domeniu (36 de chei, 4 folosite; la istorie sunt erele, tăiate pe dată) — cele 135 scrise de mână o primesc într-un lot de clasificare, cu un clichet în verificator · **istoria e la 18 pe toate trei nivelurile**, iar **Divertismentul și Sportul au câte 50 pe fiecare celulă**, pe 11 subcategorii cu care se poate filtra (filme 48, muzică 36, fotbal 30, olimpiade 30…) — deci **toate ȘASE domeniile sunt în luptă**, fiecare cu 1/6 din întrebări, și toate cele 11 subcategorii ale celor două domenii noi au conținut · **verificarea e un singur câmp**, `verificat: true/false` pe întrebare, pus de mână: întrebarea intră în joc oricum, iar flagul spune doar dacă i-am citit nota. Niciun script, niciun parametru — mecanismul de ciorne, al doilea flag de pe fapt și cele două unelte de confirmare s-au desfăcut (vezi UN SINGUR FLAG) · planul de conținut al tuturor celor șase domenii, cu subcategorii, tabele propuse și capcanele lor, e în **`docs/plan-continut.md`** · vezi sesiunile UN SINGUR FLAG, ȘASE DOMENII ÎN LUPTĂ, PLANUL ȘI CIORNELE, DOMENIILE, CONȚINUTUL, ID ȘI FAPT, FABRICA, AL DOILEA TABEL, MODULUL COMUN și STEAGURILE) · Logica ✅ (80 de categorii) · Cuvinte ✅ · toate trei fără repetiții pe expediție, **Cultura generală după `id`, nu după text** · celelalte 5 ❌ |
-| 10–13. Generator de inamici, artă, web | ❌ (artă parțial: figurile principale și piesele de pe butoanele de Obelisc au imagini reale · **arena are fundal: biblioteca gotică**, cu personajele așezate pe dalele din prim-plan, umbră de contact și lumină de sală) · Regina: **amânată**, vezi CLAUDE.md · **pasul 13 (Practice) — prima felie ✅**: **meniu de start** (`scenes/meniu/`, de azi `run/main_scene`) cu două butoane, și **Antrenament liber** (`scenes/practice/`) — alegi domeniul, apoi raftul, din `DOMENII` și `SUBCATEGORII`, cu cifrele pe butoane și rafturile goale stinse; întrebările vin prin **chiar scena de trivia a luptei**, fără cronometru (`cu_cronometru`, două linii în `puzzle.gd`); nivel pe DOMENIU, urcat singur la `PRAG_PRACTICE` = 60 de întrebări distincte știute; sac propriu, pe cheie cu filtru (`practice:<domeniu>:<raft>:<nivel>`); progres scris pe disc de la Save (12 octombrie), în `permanent.json` · **„Afla mai multe" ✓** (12 octombrie): după fiecare răspuns, corect sau greșit, un buton deschide nota faptului, citită din `explicatie` (contractul cu `puzzle.gd`), nu din `TRIVIA.fapte`; fără notă, butonul nu există — azi 96 din 2692 de întrebări ajung la una, deci apare la ~1 din 14; imaginea din popup e felia următoare · vezi sesiunile MENIUL ȘI PRACTICE și AFLĂ MAI MULTE |
+| 9. Celelalte discipline | 🟡 Cultură generală ✅ (**2839 de întrebări în joc, toate**: 2142 scrise de mână (`mana:0001`…) + **139 fabricate, elemente chimice** (`wd:Q897:simbol:…`) + **160 fabricate, operă → autor** (`wd:Q12730777:autor:…`) + **251 fabricate, țară ↔ capitală** (`wd:Q142:capitala:…`) + **147 fabricate, lucrare ↔ compozitor** (`wd:Q11980:compozitor:…`) — **conținutul fabricat stă într-un DOSAR**, `data/trivia_gen/`, citit întreg de încărcător: un tabel nou = două fișiere, zero linii de cod · **596 de fapte, TOATE cu notă** (92 scrise de mână + 504 fabricate din șabloane, de pe 12 octombrie: numărul atomic la elemente, anul apariției și anii autorului la opere, descrierea țării la capitale, anii compozitorului și anul compunerii la lucrările muzicale) — deci **793 din 2839 de întrebări ajung la o notă, de la 96**, iar un validator cere ca fiecare cifră și fiecare nume propriu dintr-o notă să existe în datele sursă · **OPT DOMENII** (Geografie și explorare, Istorie și societate, Știință și tehnologie, Artă și literatură, Divertisment și media, Sport și jocuri, Gastronomie și lifestyle, Diverse și curiozități), cu **31 de subcategorii** — **toate OPT domeniile sunt în luptă, niciunul din cele 31 de rafturi nu e gol și nicio întrebare nu e fără raft** (cele 135 scrise înaintea câmpului au fost clasificate, iar 21 de întrebări de mitologie au trecut de la Artă la Istorie); **toate cele 93 de celule (subdomeniu × nivel) au cel puțin 25 de întrebări** — treapta CONFORT din `plan-continut.md`, cea la care 4-5 expediții lungi nu repetă nimic; drumul până la 100 pe celulă cere încă 6631 și trece prin fabrică, nu prin scris de mână, tăiate după cum se joacă, nu după cum crescuse baza: artă + mitologie + literatură s-au unit, Divertisment și Sport pornesc goale · `CATEGORII` (listă) a devenit `DOMENII` (dicționar cheie → nume afișat), deci antetul scrie „ARTĂ ȘI LITERATURĂ”, nu cheia · **alegerea din luptă e în două trepte** — întâi domeniul, uniform, apoi întrebarea, cu sacul pe cheie de domeniu ȘI nivel — iar de azi **domeniul intră doar peste `PRAG_DOMENIU = 8` întrebări pe celulă**, cu plasă dacă nu trece niciunul; sub prag e sărit, nu golit (istoria trece cu rezerva ZERO, deci e următoarea țintă de conținut) · comutator `FOLOSESTE_WIKIDATA` · **fabrica are un modul comun**, `tools/fabrica/comun.py`, iar grila marchează celulele sărite · **faptele capitalelor au o LISTĂ de imagini**, `imagini: [{tip, …}]`: **126 de steaguri pe disc** (`assets/imagini_fapte/steaguri/`, PNG 320 px, 0,53 MB sursă, toate în domeniul public, cu manifest de credite), plus o intrare de hartă pe fiecare din cele 127 de fapte; Omanul e singurul refuzat, cu motivul scris · **fiecare întrebare are și o `subcategorie`**, una singură, din listă închisă pe domeniu (36 de chei, 4 folosite; la istorie sunt erele, tăiate pe dată) — cele 135 scrise de mână o primesc într-un lot de clasificare, cu un clichet în verificator · **istoria e la 18 pe toate trei nivelurile**, iar **Divertismentul și Sportul au câte 50 pe fiecare celulă**, pe 11 subcategorii cu care se poate filtra (filme 48, muzică 36, fotbal 30, olimpiade 30…) — deci **toate ȘASE domeniile sunt în luptă**, fiecare cu 1/6 din întrebări, și toate cele 11 subcategorii ale celor două domenii noi au conținut · **verificarea e un singur câmp**, `verificat: true/false` pe întrebare, pus de mână: întrebarea intră în joc oricum, iar flagul spune doar dacă i-am citit nota. Niciun script, niciun parametru — mecanismul de ciorne, al doilea flag de pe fapt și cele două unelte de confirmare s-au desfăcut (vezi UN SINGUR FLAG) · planul de conținut al tuturor celor șase domenii, cu subcategorii, tabele propuse și capcanele lor, e în **`docs/plan-continut.md`** · vezi sesiunile UN SINGUR FLAG, ȘASE DOMENII ÎN LUPTĂ, PLANUL ȘI CIORNELE, DOMENIILE, CONȚINUTUL, ID ȘI FAPT, FABRICA, AL DOILEA TABEL, MODULUL COMUN și STEAGURILE) · Logica ✅ (80 de categorii) · Cuvinte ✅ · toate trei fără repetiții pe expediție, **Cultura generală după `id`, nu după text** · celelalte 5 ❌ |
+| 10–13. Generator de inamici, artă, web | ❌ (artă parțial: figurile principale și piesele de pe butoanele de Obelisc au imagini reale · **arena are fundal: biblioteca gotică**, cu personajele așezate pe dalele din prim-plan, umbră de contact și lumină de sală) · Regina: **amânată**, vezi CLAUDE.md · **pasul 13 (Practice) — prima felie ✅**: **meniu de start** (`scenes/meniu/`, de azi `run/main_scene`) cu două butoane, și **Antrenament liber** (`scenes/practice/`) — alegi domeniul, apoi raftul, din `DOMENII` și `SUBCATEGORII`, cu cifrele pe butoane și rafturile goale stinse; întrebările vin prin **chiar scena de trivia a luptei**, fără cronometru (`cu_cronometru`, două linii în `puzzle.gd`); nivel pe DOMENIU, urcat singur la `PRAG_PRACTICE` = 60 de întrebări distincte știute; sac propriu, pe cheie cu filtru (`practice:<domeniu>:<raft>:<nivel>`); progres scris pe disc de la Save (12 octombrie), în `permanent.json` · **„Afla mai multe" ✓** (12 octombrie): după fiecare răspuns, corect sau greșit, un buton deschide nota faptului, citită din `explicatie` (contractul cu `puzzle.gd`), nu din `TRIVIA.fapte`; fără notă, butonul nu există — azi 793 din 2839 de întrebări ajung la una, deci apare la ~1 din 3,6 (era 1 din 28 dimineață); imaginea din popup e felia următoare · vezi sesiunile MENIUL ȘI PRACTICE și AFLĂ MAI MULTE |
 
 Nodul de **Eveniment** are primul lui conținut: **Lacătul** — un cufăr cu cifru,
 dedus din indicii, cu artă adevărată (roți care se învârt în spatele
@@ -37,6 +37,269 @@ buget, generare) rămâne acolo unde era.
 Am sărit peste ordinea recomandată la pasul 12 (artă): imaginile pentru rege,
 cavaler și pentru cele trei piese de șah de pe butoane au intrat mai devreme, dar
 restul rămâne placeholder. Bucla de luptă e în continuare cea validată, nu arta.
+
+---
+
+## AL PATRULEA TABEL (12 octombrie 2026) — compozitorii, și aritmetica lui „fiecare întrebare să aibă o notă"
+
+Cererea a venit a doua oară în aceeași zi, după sesiunea NOTELE SE FABRICĂ: *„vreau
+fiecare întrebare să aibă o notă, nu doar câteva."* Dimineața răspunsul fusese
+„jumătate se poate, jumătate nu". Sesiunea asta a început prin a măsura dacă
+jumătatea care nu se putea s-a mai mișcat de atunci. Nu s-a mișcat — dar acum
+există cifra care spune de ce, și un tabel în plus.
+
+### Aritmetica, scrisă o dată ca să nu se mai redeschidă din senin
+
+| întrebări fabricate adăugate | acoperire |
+|---|---|
+| azi, înainte de sesiune | 646 din 2692 (24%) |
+| +150 (un tabel) | ~28% |
+| +400 (două-trei tabele) | ~34% |
+| +1400 (5-7 tabele) | **50%** |
+| pentru 90% | +17 800 — nu se întâmplă |
+
+Socoteala e simplă și de-aia merită scrisă: fiecare tabel adaugă întrebări CU notă,
+dar numitorul crește cu ele, iar cele **2046 scrise de mână fără notă rămân în
+numitor pentru totdeauna.** „Fiecare întrebare" are, deci, exact două drumuri:
+cele 2046 primesc note din altă parte decât un tabel (adică de la mine, ceea ce
+`CLAUDE.md` interzice din motive scrise), sau ies din joc cu timpul, înlocuite de
+conținut fabricat. Al doilea e un drum de luni, nu de o sesiune.
+
+### Legarea retroactivă: ideea care părea gratuită și a căzut la măsurătoare
+
+Dacă 449 de fapte au deja note, de ce să nu prind întrebările de mână de faptele
+care există? „Cine a condus Franța ca împărat între 1804 și 1814?" ar deschide
+nota Franței, cu steag și hartă, fără nicio notă nouă scrisă.
+
+Probat pe toate 2046, cu potrivire pe cuvânt întreg și fără diacritice. **475 par
+să numească o țară din tabel, și printre ele:**
+
+```
+„Cine a scris romanul «Robinson Crusoe»?"      -> România   (din „romanul")
+„Ce zeu roman al războiului…"                  -> România   (din „roman")
+„Care este cel mai lung fluviu din Africa?"    -> Africa de Sud
+```
+
+Iar potrivirile CORECTE nu sunt mai bune: pentru întrebarea despre Napoleon, nota
+Franței spune „Capitala Franței este Paris". Adevărată, și un non-răspuns. Deci
+drumul e închis, cu măsurătoarea pe masă — nu din principiu, din cifre.
+
+Întrebările de mână nici nu se grupează pe subiecte: sunt întinse uniform pe toate
+31 de rafturi, ~70 pe fiecare. Nu există cinci tabele care să le acopere.
+
+### Tabelul: lucrare muzicală → compozitor, `P86`
+
+Ales fiindcă are exact forma tabelului operelor (mulți-la-unu, deci aproape fără
+cod nou) și fiindcă umple `cultura_clasica`, raftul care avea 75 de întrebări
+scrise de mână și zero fabricate.
+
+**147 de întrebări (109 directe, 38 inverse), 147 de fapte, TOATE cu notă.**
+120 de lucrări alese din 212 propuneri cu titlu românesc, 38 de compozitori din 41.
+
+Acoperirea notelor: **de la 646 din 2692 (24%) la 793 din 2839 (28%)**.
+
+### Trei măsurători care au schimbat codul, nu stilul
+
+**1. `P86` e pusă și pe FILME.** „Compozitor" la Wikidata înseamnă și „cine a scris
+muzica filmului". Pe 6579 de lucrări ale celor 41 de oameni:
+
+```
+Bach      -> „Hannah și surorile ei", „Sacrificiul"
+Gershwin  -> „Manhattan"
+Grieg     -> „M - Un oraș își caută ucigașul"
+Händel    -> „Imnul Ligii Campionilor UEFA"
+```
+
+De-aia `P31` e aici FILTRU — chiar proprietatea pe care `opere.py` a refuzat s-o
+pună în TEXT. Trei liste, nu două: `TIPURI_MUZICALE` (admit), `TIPURI_RESPINSE`
+(resping), `TIPURI_NEUTRE` (nu spun nimic). A treia nu e un lux: „operă creativă"
+și „serie de opere" stau pe Bolero și pe L'estro Armonico ALĂTURI de tipul
+muzical, deci în lista neagră ar fi aruncat lucrări bune, iar în lista albă ar fi
+primit orice item „creativ". Un tip necunoscut OPREȘTE când e pe o lucrare aleasă,
+și doar se raportează la `--propune`.
+
+Lista albă a crescut o dată, și măsurat: prima rulare a lui `--propune` a scos ~60
+de tipuri necunoscute, dar blocau doar **zece lucrări cu titlu românesc**, iar una
+singură conta — „La traviata" (64 de ediții), ținută afară de „Italian opera".
+Celelalte au confirmat că lista albă e lista bună: `P86` îl legase pe Schubert de
+un scurtmetraj de animație („Flowers and Trees") și pe Grieg de o emisiune
+norvegiană de televiziune.
+
+**2. `P27` nu poate fi axa distractorilor.** La opere, axa era limba autorului. Muzica
+nu are limbă, deci primul gând a fost cetățenia. Măsurată: **25 din 41 au mai
+multe cetățenii**, iar numele lor sunt „Cisleithania", „Regatul Saxoniei",
+„Episcopia Lübeckului", „principatul arhiepiscopal de Salzburg". O normalizare ar
+fi fost 25 de rânduri de PĂREREA MEA despre ce state istorice sunt „de fapt"
+aceeași țară — spre deosebire de `LIMBI_INRUDITE`, unde se contopesc variante ale
+ACELEIAȘI limbi, o chestiune de fapt.
+
+Deci distractorii se aleg pe EPOCĂ, singura axă, și e și cea adevărată la muzică:
+pentru „Cine a compus «Flautul fermecat»?", Haydn și Gluck sunt distractori mai
+buni decât „un alt austriac". Măsurat pe cele 147: **distanța până la cel mai
+apropiat distractor e median 9 ani, cea mai mare 29.** Toți cei 41 au amândoi anii
+vieții în Wikidata, deci epoca nu lipsește niciodată.
+
+**3. Titlul poate scurge răspunsul, sau poate să nu fie un titlu.** Din 371 de
+lucrări care trec filtrul de tip, rămân 264:
+
+| refuzate | de ce |
+|---|---|
+| 77 | numerotate („Nocturne, Op. 32", „Simfonia nr. 1") sau cu paranteză de dezambiguizare, care uneori ȚINE răspunsul („Summertime (arie de George Gershwin)") |
+| 26 | titlu purtat de mai mulți compozitori, pe 9 titluri |
+| 4 | **titlul conține numele compozitorului**: „Simfonia a V-a de Beethoven", „Foc de artificii de Händel" |
+
+### Opt opriri care au plătit în aceeași zi
+
+1. **Franz Schubert sunt DOI.** Austriacul (Q7312) și un compozitor german din
+   Dresda (Q322989), amândoi cu lucrări, amândoi cu aceeași etichetă română. Numele
+   nu mai e cheie. Nu l-am scos din listă: un rând din `compozitori.json` poate fi
+   acum un obiect, `{"nume": "Franz Schubert", "qid": "Q7312"}`, iar QID-ul trebuie
+   să fie printre candidații GĂSIȚI, altfel oprește. Toate rândurile așa se
+   tipăresc la fiecare rulare, cu ce s-a lăsat afară — aceeași regulă ca la
+   `titlu_de_mana`: un câmp care ocolește o verificare trebuie să fie ZGOMOTOS.
+
+2. **„Bolero" e și al lui Chopin.** Oprit, lucrarea scoasă. Chopin nu are nicio
+   lucrare aleasă, deci n-ar fi ajuns niciodată pe un buton — dar o întrebare cu
+   două răspunsuri adevărate în LUME nu intră, chiar dacă pe ecran ar fi unul.
+
+3. **„Otello" e și al lui Rossini** — și asta a cerut o reparație, nu doar o
+   ștergere. Verificarea titlurilor purtate de doi oameni se uita numai la
+   etichetele ROMÂNEȘTI, iar itemul lui Rossini n-are una: ambiguitatea era în date,
+   doar nu în limba în care mă uitam. Lărgită la toate trei etichetele (ro, mul,
+   en), **a prins OPT din 128 de lucrări alese**, toate adevărate:
+
+   | titlu | îl au |
+   |---|---|
+   | Clemența lui Titus | Mozart **și** Gluck |
+   | Romeo și Julieta | Prokofiev **și** Ceaikovski |
+   | Anotimpurile | Ceaikovski **și** Haydn |
+   | Concertul pentru violoncel | Dvořák, Prokofiev, Schumann, Ceaikovski |
+   | Otello · Rinaldo · Evgheni Oneghin · Dama de pică | +1 fiecare |
+
+4. **11 dubluri cu fișierul scris de mână**, din ȘASE întrebări — fiecare numește
+   câte două lucrări: „Ce compozitor italian a scris operele «Rigoletto» și
+   «Aida»?". Aia e o întrebare mai bună decât „Cine a compus «Aida»?", deci cea de
+   mână rămâne și sensul direct generat se sare.
+
+5. **Trei dubluri PESTE LIMBI, pe care mecanismul nu le poate ține.** Ieșite din
+   lista „de citit cu ochiul", care tocmai de-aia nu oprește, dar se tipărește:
+
+   ```
+   mana:0120  „Inelul Nibelungului"                eu aveam „Inelul Nibelungilor"
+   mana:1641  „Rhapsody in Blue"                   eu aveam „Rapsodia albastră"
+   mana:1630  „Preludiu la după-amiaza unui faun"  eu aveam titlul francez
+   ```
+
+   Nu se pot DECLARA în `DUBLURI`: `compara_dublurile` cere ca fiecare declarație
+   să fie și găsită, altfel e „fantomă" și oprește. Deci leacul e în date: cele
+   trei lucrări nu sunt în `lucrari.json`.
+
+6. **Verificarea fantomelor a prins-o pe a mea.** Am declarat o dublură de sens
+   invers pentru Ceaikovski (`mana:1050`, „Ce balet al lui Ceaikovski se joacă în
+   preajma Crăciunului?"), pe modelul lui Jules Verne de la opere. A căzut ca
+   fantomă: fișierul de mână scrie „Ceaikovski", iar numele meu e „Piotr Ilici
+   Ceaikovski". Și a fost bine că a căzut, fiindcă m-a pus să mă uit mai atent —
+   cele două întrebări au RĂSPUNSURI DIFERITE (cea de mână cere „Spărgătorul de
+   nuci", indiciul fiind Crăciunul; cea generată cere reprezentanta, „Lacul
+   lebedelor"). Nu e o repetiție, sunt două întrebări. Rămân amândouă.
+
+7. **Anul se verifică împotriva vieții omului.** `P571` pe un item muzical e uneori
+   anul unei prelucrări: „Rhapsody in Blue" iese 1973 (Gershwin a murit în 1937),
+   „Lied der Deutschen" 1841 (Haydn, 1809), „Imnul Ligii Campionilor" 1992 (Händel,
+   1759). Un an care nu încape nu intră în notă, lucrarea rămâne, iar cazul se
+   tipărește. Niciuna din cele 120 alese nu-l declanșează azi (le-am lăsat afară pe
+   toate trei din alte motive), deci garda e probată direct, nu prin date.
+
+8. **Răspunsuri contestate, lăsate afară de mână, cu motivul:** imnul Ligii
+   Campionilor (e aranjamentul lui Tony Britten pe Händel), imnul albanez atribuit
+   lui Porumbescu, „Silfidele" (baletul lui Fokine pe muzica lui Chopin). Aceeași
+   regulă ca la capitala Israelului din `capitale.py`.
+
+### Refactorul: anii și apoziția au urcat în `comun.py`
+
+`MAX_DESCRIERE`, `curata_descrierea`, `an_scris`, `anii_vietii` și nota OMULUI
+(acum `comun.nota_omului`) erau în `opere.py`, scrise pentru autori. Un om e un om:
+anii lui Mozart se scriu la fel ca anii lui Dostoievski, iar „-900" devine „900
+î.Hr." după aceeași regulă în orice tabel. O a doua copie ar fi însemnat că lecția
+cu Homer se poate pierde a doua oară.
+
+Ce NU a urcat: nota OPEREI și nota LUCRĂRII. Alea sunt vocea tabelului
+(„Autorul «…» este" / „Compozitorul «…» este") și stau lângă datele din care se
+compun.
+
+**Dovada că refactorul e neutru:** am regenerat cele 160 de întrebări de literatură
+cu `opere.py --scrie`, iar `git diff data/` a ieșit **gol**.
+
+### Șabloanele
+
+**Lucrarea:** „Compozitorul „Flautul fermecat” este Wolfgang Amadeus Mozart
+(1756–1791). Lucrarea a fost compusă în 1791." A doua propoziție o primesc 66 din
+109 (atât au `P571` valid).
+
+*Niciun pasiv cu titlul ca subiect*, din același motiv ca la opere: „«Aida» a fost
+compusă de…" cere acordul cu genul gramatical al titlului. „Compozitorul «Aida»
+este…" merge la orice titlu. A doua propoziție are subiectul „Lucrarea", cuvântul
+MEU, mereu feminin singular — deci acolo „a fost compusă" e în siguranță.
+
+**Compozitorul:** `comun.nota_omului`, același folosit de autori. „Piotr Ilici
+Ceaikovski (1840–1893) a fost compozitor rus." Trei oameni (Purcell, Saint-Saëns,
+Copland) cad pe forma de rezervă, fiindcă n-au apoziție română: „Henry Purcell s-a
+născut în 1659 și a murit în 1695."
+
+### De citit cu ochiul, rămas
+
+- **Händel și Gluck ies „compozitor german".** E descrierea Wikidata, folosită ca
+  dată (CC0), nu o clasificare de-a mea — dar Händel s-a naturalizat britanic și
+  Gluck a lucrat o viață la Viena. Aceeași formă ca „stat suveran" la Danemarca:
+  merită știut că e acolo.
+- **„Johann Strauss II"** pe un buton românesc. Numele AFIȘAT trebuie să fie o
+  etichetă Wikidata (așa se rezolvă), iar „Johann Strauss" în română îi duce și la
+  tată, și la fiu. „II" e prețul; alternativa ar fi un câmp în plus care desparte
+  numele căutat de numele afișat, și nu merită pentru un rând.
+- **Chopin nu are nicio lucrare în tabel.** Faima lui stă în piese numerotate
+  (nocturne, studii, poloneze op. …), iar regula care le refuză e corectă. Deci nu
+  poate fi nici distractor. Dacă deranjează, leacul e o lucrare cu titlu
+  („Marșul funebru"?), nu o slăbire a regulii.
+- **Toate cele 147 de note**, la un moment dat. `verificat` rămâne `false` pe toate
+  întrebările: notele sunt compuse din date verificate, dar n-a citit nimeni fiecare.
+
+### Verificat
+
+- `verifica_trivia`: **35/35 OK**, cod 0. Raportează acum „întrebări care ajung la o
+  notă: **793 din 2839**", „note sub limită: cea mai lungă 232 din 240" și „niciun
+  fapt nefolosit".
+- Încărcătorul jocului: „compozitori_fapte.json — 147 fapte, **0 fara nota**".
+- „Exact una din patru e corectă": verificat pe toate 147, pe mulțimea completă de
+  compozitori de la Wikidata (`P86` cerut și liber în aceeași interogare).
+- Id-uri și TEXTE unice peste tot conținutul (2142 + 550 + 147).
+- `opere.py --scrie` regenerat după refactor: `git diff` gol.
+- Garda de an, probată direct: 1797 trece pentru Haydn (1732–1809), 1841 nu, lipsa
+  anilor în Wikidata nu trece.
+
+### Fișiere
+
+Noi: `tools/fabrica/compozitori.py`, `tools/fabrica/date/compozitori.json` (41 de
+nume, unul ca obiect cu QID), `tools/fabrica/date/lucrari.json` (120 de rânduri, 5
+cu `titlu_de_mana`), `tools/fabrica/cache/wikidata_compozitori.json` (3,5 MB, comis
+ca celelalte), `data/trivia_gen/compozitori_intrebari.json`,
+`data/trivia_gen/compozitori_fapte.json`.
+Atinse: `tools/fabrica/comun.py` (cele cinci urcate), `tools/fabrica/opere.py`
+(acum le cheamă).
+
+### Rămas deschis
+
+- **Acoperirea notelor rămâne 28%**, și n-o duce la „fiecare" niciun tabel. Decizia
+  dintre cele două drumuri (note scrise de mână pentru cele 2046, sau înlocuirea
+  lor treptată cu conținut fabricat) nu s-a luat azi. Aritmetica de la începutul
+  sesiunii e materialul pentru ziua în care se ia.
+- **Următorul tabel, dacă ținta rămâne acoperirea:** tablou → pictor (`P170`), care
+  aduce și imagine (`P18`) — deci plătește și felia de IMAGINE din popup, nu doar
+  nota. Sau monedă/limbă oficială (`P37`/`P38`), cel mai ieftin la volum, fiindcă
+  lista de țări și cache-ul există deja; costul lui e că cere `id`-uri noi de fapt
+  pentru țări (`wd:Q40` e luat de capitală) și e un fapt CARE SE SCHIMBĂ.
+- **Încă ~90 de propuneri cu titlu românesc** au rămas nealese în
+  `lucrari_propuse.json` (operă italiană de nivel III, mai ales). Se adaugă oricând,
+  fără cod.
 
 ---
 

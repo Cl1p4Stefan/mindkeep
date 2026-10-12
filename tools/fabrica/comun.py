@@ -1167,6 +1167,115 @@ def raporteaza_notele(fapte, probleme, scrie):
 
 
 # ─────────────────────────────────────────────────────────────
+# ANII ȘI DESCRIEREA UNUI OM, PENTRU NOTĂ
+#
+# Cele patru de mai jos au fost scrise în `opere.py`, pentru autori. Au urcat aici
+# când a apărut al patrulea tabel (compozitorii), și nu ca să se scurteze un
+# fișier: un om e un om. Anii lui Mozart se scriu la fel ca anii lui Dostoievski,
+# iar „-900" devine „900 î.Hr." după aceeași regulă în orice tabel. O a doua copie
+# ar fi însemnat că lecția plătită o dată (Homer, la prima rulare a notelor) se
+# poate pierde a doua oară.
+#
+# Ce NU urcă aici: nota OPEREI și nota LUCRĂRII. Alea sunt vocea tabelului
+# („Autorul «…» este" / „Compozitorul «…» este"), și fiecare șablon trebuie să
+# rămână lângă datele din care e compus, ca să se poată citi într-un singur loc.
+# ─────────────────────────────────────────────────────────────
+
+# Cât are voie să fie descrierea luată de la Wikidata. Peste atât nu e o apoziție,
+# e o frază — și atunci nota ar depăși și ce poate citi cineva dintr-o privire.
+MAX_DESCRIERE = 70
+
+# Parantezele cu anii, de la finalul unei descrieri Wikidata: „(1265–1321)",
+# „(1802-1885)", „(n. 1947)". Se taie, fiindcă anii vin din câmpurile lor — altfel
+# șablonul ar scoate „(1265–1321) a fost poet (1265–1321)".
+_ANII_DIN_DESCRIERE = re.compile(r"\s*\((?:[^()]*\d{3,4}[^()]*)\)\s*$")
+
+
+def curata_descrierea(descriere):
+	"""Descrierea Wikidata → apoziția folosibilă, sau gol dacă nu e."""
+	if not descriere:
+		return ""
+	text = _ANII_DIN_DESCRIERE.sub("", descriere.strip()).strip(" .,;")
+	if not text or len(text) > MAX_DESCRIERE:
+		return ""
+	# O descriere care începe cu majusculă ar aduce în notă un nume propriu
+	# aparent, iar validatorul ar avea dreptate să se plângă. Minusculizăm doar
+	# prima literă: restul poate conține nume adevărate („scriitor din Oltenia").
+	return text[0].lower() + text[1:]
+
+
+def an_scris(an):
+	"""Un an de la Wikidata → text românesc.
+
+	Wikidata dă anii dinaintea erei ca numere NEGATIVE. Puse direct în șablon,
+	ieșea „Homer (-900–-800)": două minusuri care se citesc ca liniuțe și o
+	paranteză din care nu înțelegi nimic. Prima rulare a notelor a arătat-o pe
+	Homer, singurul autor antic din tabelul operelor — și exact de-aia se citesc
+	mostrele cu ochiul, nu doar verdictele.
+	"""
+	return "%d" % an if an > 0 else "%d î.Hr." % -an
+
+
+def anii_vietii(om):
+	"""(anii pentru paranteză, valorile) pentru un om. Gol dacă nu se știu.
+
+	„î.Hr." se scrie O DATĂ, la capăt, când amândoi anii sunt dinaintea erei:
+	„900–800 î.Hr.", nu „900 î.Hr.–800 î.Hr.". Când unul e înainte și celălalt
+	după, amândouă erele se spun — altfel „63–14" ar părea o viață de 49 de ani
+	trăită în ordine inversă.
+	"""
+	n, m = om.get("nastere"), om.get("moarte")
+	if n and m:
+		if n < 0 and m < 0:
+			return "%d–%d î.Hr." % (-n, -m), [n, m]
+		if n < 0:
+			return "%s–%d d.Hr." % (an_scris(n), m), [n, m]
+		return "%d–%d" % (n, m), [n, m]
+	if n:
+		return "n. %s" % an_scris(n), [n]
+	return "", []
+
+
+def nota_omului(nume, om):
+	"""Un om → (nota, valorile din care e făcută). Pentru sensul invers al unui
+	tabel: se arată omul, se cer lucrările lui.
+
+	Se compune la fel pentru un scriitor și pentru un compozitor, fiindcă nu spune
+	nimic despre meserie: spune anii (din `P569`/`P570`) și apoziția (din
+	`schema:description`, filtrată pe română, deci text CC0 pe care-l pot folosi
+	CA DATĂ). „compozitor austriac" și „poet florentin" trec prin același șablon.
+
+	`nume` vine separat, fiindcă numele AFIȘAT în joc e cel din tabelul meu, nu
+	eticheta de la Wikidata.
+	"""
+	surse = [nume]
+	ani, valori = anii_vietii(om)
+	surse += valori
+	descriere = curata_descrierea(om.get("descriere"))
+	if descriere:
+		surse.append(descriere)
+
+	if ani and descriere:
+		return "%s (%s) a fost %s." % (nume, ani, descriere), surse
+	if ani:
+		# FĂRĂ DESCRIERE, anii devin propoziția întreagă — deci nu mai pot sta într-o
+		# paranteză. „Daniel Defoe a trăit: 1660–1731." a fost prima formă, și nu e
+		# românește: două puncte în mijlocul unei note o fac să arate ca un câmp de
+		# bază de date, nu ca o frază.
+		n, m = om.get("nastere"), om.get("moarte")
+		if n and m:
+			return "%s s-a născut în %s și a murit în %s." % (
+				nume, an_scris(n), an_scris(m)), surse
+		return "%s s-a născut în %s." % (nume, an_scris(n)), surse
+	if descriere:
+		return "%s a fost %s." % (nume, descriere), surse
+	# Fără ani și fără descriere n-am din ce să compun un cârlig, deci nu compun
+	# nimic. O notă care doar repetă numele ar fi mai rea decât lipsa ei: ai apăsa
+	# „Află mai multe" și n-ai afla nimic.
+	return "", surse
+
+
+# ─────────────────────────────────────────────────────────────
 # DUBLURILE CU FIȘIERUL SCRIS DE MÂNĂ
 # ─────────────────────────────────────────────────────────────
 

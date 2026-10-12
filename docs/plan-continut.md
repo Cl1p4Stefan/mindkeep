@@ -264,9 +264,17 @@ desparte; până atunci stă acolo, și e scris aici ca să se vadă că e o ale
   fotografia stă pe Commons.
 - **`arte_vizuale` · ce muzeu deține un tablou** — `P195` sau `P276`. *Capcane:*
   împrumuturile și mutările, variantele în muzee diferite.
-- **`cultura_clasica` · operă → compozitor** — `P86`. Aceeași formă ca la operele
-  literare, deci aproape fără cod nou. *Capcane:* titlurile fără etichetă română
-  și numerotările („Simfonia a 5-a” a cui?).
+- **`cultura_clasica` — FĂCUT** (12 octombrie 2026). Lucrare muzicală → compozitor,
+  `P86`, 147 de întrebări, 120 de lucrări, 38 de compozitori. Amândouă capcanele
+  prevăzute aici s-au confirmat și au devenit reguli în cod: titlurile fără
+  etichetă română sunt 92% din pool (la muzică e normal — „String Quartet No. 14”
+  n-are de ce să fie tradus), iar numerotările taie 77 de lucrări. *Capcanele pe
+  care NU le prevăzusem, toate măsurate:* `P86` e pusă și pe FILME (muzica lor),
+  `P27` nu poate fi axa distractorilor (25 din 41 au mai multe cetățenii, cu nume
+  ca „Cisleithania”), titlul poate CONȚINE răspunsul („Simfonia a V-a de
+  Beethoven”), un titlu poate fi purtat de doi compozitori în altă limbă decât
+  româna („Otello” e și al lui Rossini) și `P571` poate cădea în afara vieții
+  omului. Vezi sesiunea AL PATRULEA TABEL din `progres.md`.
 - **`arhitectura_design` · clădire → arhitect** — `P84`. *Capcane:* clădirile cu
   mai mulți arhitecți și cele refăcute de altcineva peste secole.
 

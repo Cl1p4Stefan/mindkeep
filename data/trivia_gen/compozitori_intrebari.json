@@ -1,0 +1,1474 @@
+[
+	{
+		"id": "wd:Q11980:compozitor:cere_compozitor",
+		"fapt": "wd:Q11980",
+		"text": "Cine a compus „Für Elise”?",
+		"variante": ["Hector Berlioz", "Gioachino Rossini", "Ludwig van Beethoven", "Wolfgang Amadeus Mozart"],
+		"corect": 2,
+		"nivel": 1,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q193705:compozitor:cere_compozitor",
+		"fapt": "wd:Q193705",
+		"text": "Cine a compus „Spărgătorul de nuci”?",
+		"variante": ["Johann Strauss II", "Ciprian Porumbescu", "Piotr Ilici Ceaikovski", "Camille Saint-Saëns"],
+		"corect": 2,
+		"nivel": 1,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q201873:compozitor:cere_compozitor",
+		"fapt": "wd:Q201873",
+		"text": "Cine a compus „Nunta lui Figaro”?",
+		"variante": ["Ludwig van Beethoven", "Wolfgang Amadeus Mozart", "Gioachino Rossini", "Hector Berlioz"],
+		"corect": 1,
+		"nivel": 1,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q254:compozitor:cere_lucrare",
+		"fapt": "wd:Q254",
+		"text": "Care dintre aceste lucrări a fost compusă de Wolfgang Amadeus Mozart?",
+		"variante": ["Flautul fermecat", "Für Elise", "Bărbierul din Sevilla", "Fidelio"],
+		"corect": 0,
+		"nivel": 1,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q255:compozitor:cere_lucrare",
+		"fapt": "wd:Q255",
+		"text": "Care dintre aceste lucrări a fost compusă de Ludwig van Beethoven?",
+		"variante": ["Für Elise", "Nunta lui Figaro", "Flautul fermecat", "Wilhelm Tell"],
+		"corect": 0,
+		"nivel": 1,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q389000:compozitor:cere_lucrare",
+		"fapt": "wd:Q389000",
+		"text": "Care dintre aceste lucrări a fost compusă de Ciprian Porumbescu?",
+		"variante": ["Aida", "Dunărea albastră", "Trei culori", "Spărgătorul de nuci"],
+		"corect": 2,
+		"nivel": 1,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q482621:compozitor:cere_compozitor",
+		"fapt": "wd:Q482621",
+		"text": "Cine a compus „Dunărea albastră”?",
+		"variante": ["Piotr Ilici Ceaikovski", "Johann Strauss II", "Giuseppe Verdi", "Ciprian Porumbescu"],
+		"corect": 1,
+		"nivel": 1,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q5064:compozitor:cere_compozitor",
+		"fapt": "wd:Q5064",
+		"text": "Cine a compus „Flautul fermecat”?",
+		"variante": ["Ludwig van Beethoven", "Wolfgang Amadeus Mozart", "Hector Berlioz", "Gioachino Rossini"],
+		"corect": 1,
+		"nivel": 1,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q7315:compozitor:cere_lucrare",
+		"fapt": "wd:Q7315",
+		"text": "Care dintre aceste lucrări a fost compusă de Piotr Ilici Ceaikovski?",
+		"variante": ["Lacul lebedelor", "Aida", "Dunărea albastră", "Lohengrin"],
+		"corect": 0,
+		"nivel": 1,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q7317:compozitor:cere_lucrare",
+		"fapt": "wd:Q7317",
+		"text": "Care dintre aceste lucrări a fost compusă de Giuseppe Verdi?",
+		"variante": ["Aida", "Dunărea albastră", "Spărgătorul de nuci", "Peer Gynt"],
+		"corect": 0,
+		"nivel": 1,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q83309:compozitor:cere_lucrare",
+		"fapt": "wd:Q83309",
+		"text": "Care dintre aceste lucrări a fost compusă de Johann Strauss II?",
+		"variante": ["Aida", "Spărgătorul de nuci", "Dunărea albastră", "Carnavalul animalelor"],
+		"corect": 2,
+		"nivel": 1,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q852029:compozitor:cere_compozitor",
+		"fapt": "wd:Q852029",
+		"text": "Cine a compus „Trei culori”?",
+		"variante": ["Piotr Ilici Ceaikovski", "Johann Strauss II", "Giuseppe Verdi", "Ciprian Porumbescu"],
+		"corect": 3,
+		"nivel": 1,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+
+	{
+		"id": "wd:Q1065126:compozitor:cere_compozitor",
+		"fapt": "wd:Q1065126",
+		"text": "Cine a compus „Dansuri ungare”?",
+		"variante": ["Johannes Brahms", "Georges Bizet", "Camille Saint-Saëns", "Richard Wagner"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q1151:compozitor:cere_lucrare",
+		"fapt": "wd:Q1151",
+		"text": "Care dintre aceste lucrări a fost compusă de Hector Berlioz?",
+		"variante": ["Simfonia fantastică", "Bărbierul din Sevilla", "Nabucco", "Rigoletto"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q12025:compozitor:cere_compozitor",
+		"fapt": "wd:Q12025",
+		"text": "Cine a compus „Mica serenadă”?",
+		"variante": ["Wolfgang Amadeus Mozart", "Ludwig van Beethoven", "Hector Berlioz", "Gioachino Rossini"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q123829:compozitor:cere_lucrare",
+		"fapt": "wd:Q123829",
+		"text": "Care dintre aceste lucrări a fost compusă de George Gershwin?",
+		"variante": ["Dansuri populare românești", "Turandot", "Castelul Prințului Barbă-Albastră", "Porgy and Bess"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q12737709:compozitor:cere_compozitor",
+		"fapt": "wd:Q12737709",
+		"text": "Cine a compus „Pe-al nostru steag e scris Unire”?",
+		"variante": ["Ciprian Porumbescu", "Johann Strauss II", "Giuseppe Verdi", "Piotr Ilici Ceaikovski"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q1339:compozitor:cere_lucrare",
+		"fapt": "wd:Q1339",
+		"text": "Care dintre aceste lucrări a fost compusă de Johann Sebastian Bach?",
+		"variante": ["Concertele brandenburgice", "Giulio Cesare in Egitto", "Agrippina", "Alcina"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q14912776:compozitor:cere_compozitor",
+		"fapt": "wd:Q14912776",
+		"text": "Cine a compus „Peer Gynt”?",
+		"variante": ["Edvard Grieg", "Giacomo Puccini", "Nikolai Andreevici Rimski-Korsakov", "Johannes Brahms"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q150445:compozitor:cere_lucrare",
+		"fapt": "wd:Q150445",
+		"text": "Care dintre aceste lucrări a fost compusă de Camille Saint-Saëns?",
+		"variante": ["Poema română", "Peer Gynt", "Carmen", "Carnavalul animalelor"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q1511:compozitor:cere_lucrare",
+		"fapt": "wd:Q1511",
+		"text": "Care dintre aceste lucrări a fost compusă de Richard Wagner?",
+		"variante": ["Liliacul", "Lohengrin", "Carmen", "La traviata"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q152505:compozitor:cere_lucrare",
+		"fapt": "wd:Q152505",
+		"text": "Care dintre aceste lucrări a fost compusă de Leonard Bernstein?",
+		"variante": ["Porgy and Bess", "Lincoln Portrait", "Un american la Paris", "Poveste din cartierul de vest"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q185968:compozitor:cere_compozitor",
+		"fapt": "wd:Q185968",
+		"text": "Cine a compus „Carmen”?",
+		"variante": ["Giacomo Puccini", "Edvard Grieg", "Nikolai Andreevici Rimski-Korsakov", "Georges Bizet"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q186162:compozitor:cere_compozitor",
+		"fapt": "wd:Q186162",
+		"text": "Cine a compus „La traviata”?",
+		"variante": ["Ciprian Porumbescu", "Giuseppe Verdi", "Piotr Ilici Ceaikovski", "Johann Strauss II"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q188621:compozitor:cere_compozitor",
+		"fapt": "wd:Q188621",
+		"text": "Cine a compus „La bohème”?",
+		"variante": ["Giacomo Puccini", "Edvard Grieg", "Béla Bartók", "George Gershwin"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q192039:compozitor:cere_compozitor",
+		"fapt": "wd:Q192039",
+		"text": "Cine a compus „Don Giovanni”?",
+		"variante": ["Wolfgang Amadeus Mozart", "Ludwig van Beethoven", "Hector Berlioz", "Gioachino Rossini"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q193778:compozitor:cere_compozitor",
+		"fapt": "wd:Q193778",
+		"text": "Cine a compus „Fidelio”?",
+		"variante": ["Gioachino Rossini", "Wolfgang Amadeus Mozart", "Johann Strauss II", "Ludwig van Beethoven"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q202230:compozitor:cere_compozitor",
+		"fapt": "wd:Q202230",
+		"text": "Cine a compus „Nabucco”?",
+		"variante": ["Piotr Ilici Ceaikovski", "Johann Strauss II", "Giuseppe Verdi", "Ciprian Porumbescu"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q207990:compozitor:cere_compozitor",
+		"fapt": "wd:Q207990",
+		"text": "Cine a compus „Turandot”?",
+		"variante": ["Béla Bartók", "George Gershwin", "George Enescu", "Giacomo Puccini"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q208224:compozitor:cere_compozitor",
+		"fapt": "wd:Q208224",
+		"text": "Cine a compus „Concertele brandenburgice”?",
+		"variante": ["Georg Friedrich Händel", "Wolfgang Amadeus Mozart", "Henry Purcell", "Johann Sebastian Bach"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q23085:compozitor:cere_compozitor",
+		"fapt": "wd:Q23085",
+		"text": "Cine a compus „Lohengrin”?",
+		"variante": ["Georges Bizet", "Gioachino Rossini", "Richard Wagner", "Edvard Grieg"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q324319:compozitor:cere_compozitor",
+		"fapt": "wd:Q324319",
+		"text": "Cine a compus „Walkiria”?",
+		"variante": ["Gioachino Rossini", "Nikolai Andreevici Rimski-Korsakov", "Camille Saint-Saëns", "Richard Wagner"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q3401055:compozitor:cere_compozitor",
+		"fapt": "wd:Q3401055",
+		"text": "Cine a compus „Poema română”?",
+		"variante": ["Béla Bartók", "George Enescu", "Edvard Grieg", "Nikolai Andreevici Rimski-Korsakov"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q392734:compozitor:cere_compozitor",
+		"fapt": "wd:Q392734",
+		"text": "Cine a compus „Toccata și fuga în re minor”?",
+		"variante": ["Georg Friedrich Händel", "Johann Sebastian Bach", "Henry Purcell", "Christoph Willibald Gluck"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q3959895:compozitor:cere_compozitor",
+		"fapt": "wd:Q3959895",
+		"text": "Cine a compus „Șeherezada”?",
+		"variante": ["Edvard Grieg", "Nikolai Andreevici Rimski-Korsakov", "Georges Bizet", "Johannes Brahms"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q462313:compozitor:cere_compozitor",
+		"fapt": "wd:Q462313",
+		"text": "Cine a compus „Simfonia fantastică”?",
+		"variante": ["Hector Berlioz", "Georges Bizet", "Gioachino Rossini", "Richard Wagner"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q464930:compozitor:cere_compozitor",
+		"fapt": "wd:Q464930",
+		"text": "Cine a compus „Liliacul”?",
+		"variante": ["Giuseppe Verdi", "Piotr Ilici Ceaikovski", "Johann Strauss II", "Ciprian Porumbescu"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q56158:compozitor:cere_lucrare",
+		"fapt": "wd:Q56158",
+		"text": "Care dintre aceste lucrări a fost compusă de Georges Bizet?",
+		"variante": ["Rigoletto", "Lohengrin", "Carmen", "Madama Butterfly"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q669010:compozitor:cere_compozitor",
+		"fapt": "wd:Q669010",
+		"text": "Cine a compus „Poveste din cartierul de vest”?",
+		"variante": ["Aaron Copland", "George Enescu", "Béla Bartók", "Leonard Bernstein"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q7294:compozitor:cere_lucrare",
+		"fapt": "wd:Q7294",
+		"text": "Care dintre aceste lucrări a fost compusă de Johannes Brahms?",
+		"variante": ["Rigoletto", "Peer Gynt", "Dansuri ungare", "Nabucco"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q7302:compozitor:cere_lucrare",
+		"fapt": "wd:Q7302",
+		"text": "Care dintre aceste lucrări a fost compusă de Georg Friedrich Händel?",
+		"variante": ["Toccata și fuga în re minor", "Răpirea din serai", "Idomeneo", "Muzica apelor"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q7311:compozitor:cere_lucrare",
+		"fapt": "wd:Q7311",
+		"text": "Care dintre aceste lucrări a fost compusă de Giacomo Puccini?",
+		"variante": ["Carmen", "Peer Gynt", "Carnavalul animalelor", "Madama Butterfly"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q740920:compozitor:cere_compozitor",
+		"fapt": "wd:Q740920",
+		"text": "Cine a compus „Porgy and Bess”?",
+		"variante": ["George Gershwin", "George Enescu", "Leonard Bernstein", "Béla Bartók"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q77177:compozitor:cere_lucrare",
+		"fapt": "wd:Q77177",
+		"text": "Care dintre aceste lucrări a fost compusă de George Enescu?",
+		"variante": ["Dansuri populare românești", "Carnavalul animalelor", "Liliacul", "Poema română"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q791013:compozitor:cere_compozitor",
+		"fapt": "wd:Q791013",
+		"text": "Cine a compus „Dansuri populare românești”?",
+		"variante": ["George Enescu", "Béla Bartók", "Giacomo Puccini", "George Gershwin"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q80621:compozitor:cere_lucrare",
+		"fapt": "wd:Q80621",
+		"text": "Care dintre aceste lucrări a fost compusă de Edvard Grieg?",
+		"variante": ["Carmen", "Poema română", "Liliacul", "Peer Gynt"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q83326:compozitor:cere_lucrare",
+		"fapt": "wd:Q83326",
+		"text": "Care dintre aceste lucrări a fost compusă de Béla Bartók?",
+		"variante": ["Tosca", "Madama Butterfly", "Dansuri populare românești", "Porgy and Bess"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q93227:compozitor:cere_lucrare",
+		"fapt": "wd:Q93227",
+		"text": "Care dintre aceste lucrări a fost compusă de Nikolai Andreevici Rimski-Korsakov?",
+		"variante": ["Rigoletto", "Tosca", "La bohème", "Șeherezada"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q941724:compozitor:cere_compozitor",
+		"fapt": "wd:Q941724",
+		"text": "Cine a compus „Carnavalul animalelor”?",
+		"variante": ["Johannes Brahms", "Camille Saint-Saëns", "Nikolai Andreevici Rimski-Korsakov", "Edvard Grieg"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q956115:compozitor:cere_compozitor",
+		"fapt": "wd:Q956115",
+		"text": "Cine a compus „În peștera regelui munților”?",
+		"variante": ["Edvard Grieg", "Johannes Brahms", "Georges Bizet", "Richard Wagner"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q9726:compozitor:cere_lucrare",
+		"fapt": "wd:Q9726",
+		"text": "Care dintre aceste lucrări a fost compusă de Gioachino Rossini?",
+		"variante": ["Bărbierul din Sevilla", "Simfonia fantastică", "Mica serenadă", "Fidelio"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+
+	{
+		"id": "wd:Q101698:compozitor:cere_lucrare",
+		"fapt": "wd:Q101698",
+		"text": "Care dintre aceste lucrări a fost compusă de Gaetano Donizetti?",
+		"variante": ["Lucia di Lammermoor", "Carnaval", "Ernani", "Il trovatore"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q1033015:compozitor:cere_compozitor",
+		"fapt": "wd:Q1033015",
+		"text": "Cine a compus „Candide”?",
+		"variante": ["Leonard Bernstein", "Aaron Copland", "Béla Bartók", "George Enescu"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q1042113:compozitor:cere_compozitor",
+		"fapt": "wd:Q1042113",
+		"text": "Cine a compus „Chichester Psalms”?",
+		"variante": ["Aaron Copland", "George Enescu", "Leonard Bernstein", "George Gershwin"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q1043926:compozitor:cere_compozitor",
+		"fapt": "wd:Q1043926",
+		"text": "Cine a compus „Carnaval”?",
+		"variante": ["Franz Schubert", "Franz Liszt", "Robert Schumann", "Gaetano Donizetti"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q10508471:compozitor:cere_compozitor",
+		"fapt": "wd:Q10508471",
+		"text": "Cine a compus „Šárka”?",
+		"variante": ["Franz Liszt", "Anton Bruckner", "Antonín Dvořák", "Bedřich Smetana"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q1065305:compozitor:cere_compozitor",
+		"fapt": "wd:Q1065305",
+		"text": "Cine a compus „Liebesträume”?",
+		"variante": ["Franz Liszt", "Vincenzo Bellini", "Robert Schumann", "Gaetano Donizetti"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q1145620:compozitor:cere_compozitor",
+		"fapt": "wd:Q1145620",
+		"text": "Cine a compus „Cantata cafelei”?",
+		"variante": ["Georg Friedrich Händel", "Wolfgang Amadeus Mozart", "Johann Sebastian Bach", "Henry Purcell"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q114640:compozitor:cere_compozitor",
+		"fapt": "wd:Q114640",
+		"text": "Cine a compus „Olandezul zburător”?",
+		"variante": ["Edvard Grieg", "Georges Bizet", "Richard Wagner", "Camille Saint-Saëns"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q1156413:compozitor:cere_compozitor",
+		"fapt": "wd:Q1156413",
+		"text": "Cine a compus „Egmont”?",
+		"variante": ["Hector Berlioz", "Gioachino Rossini", "Giuseppe Verdi", "Ludwig van Beethoven"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q1164860:compozitor:cere_compozitor",
+		"fapt": "wd:Q1164860",
+		"text": "Cine a compus „Danse macabre”?",
+		"variante": ["Giacomo Puccini", "Nikolai Andreevici Rimski-Korsakov", "Camille Saint-Saëns", "Georges Bizet"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q1178:compozitor:cere_lucrare",
+		"fapt": "wd:Q1178",
+		"text": "Care dintre aceste lucrări a fost compusă de Maurice Ravel?",
+		"variante": ["Rusalka", "Falstaff", "Daphnis și Chloe", "Lincoln Portrait"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q11949366:compozitor:cere_compozitor",
+		"fapt": "wd:Q11949366",
+		"text": "Cine a compus „Vyšehrad”?",
+		"variante": ["Franz Liszt", "Bedřich Smetana", "Robert Schumann", "Anton Bruckner"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q1197011:compozitor:cere_compozitor",
+		"fapt": "wd:Q1197011",
+		"text": "Cine a compus „Jucătorul”?",
+		"variante": ["Serghei Prokofiev", "Serghei Rahmaninov", "Maurice Ravel", "Aaron Copland"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q1201123:compozitor:cere_compozitor",
+		"fapt": "wd:Q1201123",
+		"text": "Cine a compus „Daphnis și Chloe”?",
+		"variante": ["Serghei Prokofiev", "Claude Debussy", "Maurice Ravel", "Serghei Rahmaninov"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q130759:compozitor:cere_lucrare",
+		"fapt": "wd:Q130759",
+		"text": "Care dintre aceste lucrări a fost compusă de Christoph Willibald Gluck?",
+		"variante": ["Orfeu și Euridice", "Così fan tutte", "Idomeneo", "Răpirea din serai"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q131861:compozitor:cere_lucrare",
+		"fapt": "wd:Q131861",
+		"text": "Care dintre aceste lucrări a fost compusă de Serghei Rahmaninov?",
+		"variante": ["Aleko", "Samson și Dalila", "Pescuitorii de perle", "Daphnis și Chloe"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q1349941:compozitor:cere_compozitor",
+		"fapt": "wd:Q1349941",
+		"text": "Cine a compus „Păstrăvul”?",
+		"variante": ["Franz Schubert", "Gaetano Donizetti", "Vincenzo Bellini", "Robert Schumann"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q1367599:compozitor:cere_compozitor",
+		"fapt": "wd:Q1367599",
+		"text": "Cine a compus „Suite bergamasque”?",
+		"variante": ["Serghei Prokofiev", "Serghei Rahmaninov", "Maurice Ravel", "Claude Debussy"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q144545:compozitor:cere_compozitor",
+		"fapt": "wd:Q144545",
+		"text": "Cine a compus „Cenușăreasa”?",
+		"variante": ["Aaron Copland", "Maurice Ravel", "Serghei Prokofiev", "Serghei Rahmaninov"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q1529152:compozitor:cere_compozitor",
+		"fapt": "wd:Q1529152",
+		"text": "Cine a compus „Invitație la vals”?",
+		"variante": ["Gaetano Donizetti", "Carl Maria von Weber", "Vincenzo Bellini", "Franz Schubert"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q154812:compozitor:cere_lucrare",
+		"fapt": "wd:Q154812",
+		"text": "Care dintre aceste lucrări a fost compusă de Carl Maria von Weber?",
+		"variante": ["Carnaval", "Don Pasquale", "Der Freischütz", "La Cenerentola"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q156435:compozitor:cere_compozitor",
+		"fapt": "wd:Q156435",
+		"text": "Cine a compus „Der Freischütz”?",
+		"variante": ["Carl Maria von Weber", "Gaetano Donizetti", "Vincenzo Bellini", "Franz Schubert"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q170209:compozitor:cere_lucrare",
+		"fapt": "wd:Q170209",
+		"text": "Care dintre aceste lucrări a fost compusă de Vincenzo Bellini?",
+		"variante": ["Fiica regimentului", "Norma", "Carnaval", "Forța destinului"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q1721565:compozitor:cere_compozitor",
+		"fapt": "wd:Q1721565",
+		"text": "Cine a compus „Valsul împăratului”?",
+		"variante": ["Piotr Ilici Ceaikovski", "Johann Strauss II", "Giuseppe Verdi", "Ciprian Porumbescu"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q176700:compozitor:cere_compozitor",
+		"fapt": "wd:Q176700",
+		"text": "Cine a compus „La Cenerentola”?",
+		"variante": ["Hector Berlioz", "Gaetano Donizetti", "Ludwig van Beethoven", "Gioachino Rossini"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q179110:compozitor:cere_compozitor",
+		"fapt": "wd:Q179110",
+		"text": "Cine a compus „Don Carlos”?",
+		"variante": ["Johann Strauss II", "Ciprian Porumbescu", "Giuseppe Verdi", "Piotr Ilici Ceaikovski"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q192185:compozitor:cere_lucrare",
+		"fapt": "wd:Q192185",
+		"text": "Care dintre aceste lucrări a fost compusă de Aaron Copland?",
+		"variante": ["Daphnis și Chloe", "Fanfară pentru un om obișnuit", "Un american la Paris", "Dragostea celor trei portocale"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q1931598:compozitor:cere_compozitor",
+		"fapt": "wd:Q1931598",
+		"text": "Cine a compus „Sânge vienez”?",
+		"variante": ["Giacomo Puccini", "Nikolai Andreevici Rimski-Korsakov", "George Enescu", "Johann Strauss II"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q203470:compozitor:cere_compozitor",
+		"fapt": "wd:Q203470",
+		"text": "Cine a compus „Il trovatore”?",
+		"variante": ["Piotr Ilici Ceaikovski", "Johann Strauss II", "Giuseppe Verdi", "Ciprian Porumbescu"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q207410:compozitor:cere_compozitor",
+		"fapt": "wd:Q207410",
+		"text": "Cine a compus „Così fan tutte”?",
+		"variante": ["Ludwig van Beethoven", "Wolfgang Amadeus Mozart", "Hector Berlioz", "Gioachino Rossini"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q210711:compozitor:cere_compozitor",
+		"fapt": "wd:Q210711",
+		"text": "Cine a compus „Răpirea din serai”?",
+		"variante": ["Ludwig van Beethoven", "Wolfgang Amadeus Mozart", "Georg Friedrich Händel", "Hector Berlioz"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q211279:compozitor:cere_compozitor",
+		"fapt": "wd:Q211279",
+		"text": "Cine a compus „Ernani”?",
+		"variante": ["Giuseppe Verdi", "Ciprian Porumbescu", "Johann Strauss II", "Piotr Ilici Ceaikovski"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q212451:compozitor:cere_compozitor",
+		"fapt": "wd:Q212451",
+		"text": "Cine a compus „Forța destinului”?",
+		"variante": ["Ciprian Porumbescu", "Giuseppe Verdi", "Johann Strauss II", "Piotr Ilici Ceaikovski"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q213728:compozitor:cere_compozitor",
+		"fapt": "wd:Q213728",
+		"text": "Cine a compus „Variațiunile Goldberg”?",
+		"variante": ["Johann Sebastian Bach", "Georg Friedrich Händel", "Henry Purcell", "Wolfgang Amadeus Mozart"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q220340:compozitor:cere_compozitor",
+		"fapt": "wd:Q220340",
+		"text": "Cine a compus „Parsifal”?",
+		"variante": ["Richard Wagner", "Johannes Brahms", "Georges Bizet", "Giacomo Puccini"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q2271923:compozitor:cere_compozitor",
+		"fapt": "wd:Q2271923",
+		"text": "Cine a compus „Pavane pour une infante défunte”?",
+		"variante": ["Claude Debussy", "Antonín Dvořák", "Serghei Rahmaninov", "Maurice Ravel"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q244209:compozitor:cere_compozitor",
+		"fapt": "wd:Q244209",
+		"text": "Cine a compus „Lucia di Lammermoor”?",
+		"variante": ["Carl Maria von Weber", "Gaetano Donizetti", "Vincenzo Bellini", "Franz Liszt"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q249749:compozitor:cere_compozitor",
+		"fapt": "wd:Q249749",
+		"text": "Cine a compus „Castelul Prințului Barbă-Albastră”?",
+		"variante": ["George Gershwin", "Giacomo Puccini", "Béla Bartók", "George Enescu"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q2629948:compozitor:cere_compozitor",
+		"fapt": "wd:Q2629948",
+		"text": "Cine a compus „Fanfară pentru un om obișnuit”?",
+		"variante": ["Serghei Prokofiev", "Aaron Copland", "Leonard Bernstein", "Béla Bartók"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q272029:compozitor:cere_compozitor",
+		"fapt": "wd:Q272029",
+		"text": "Cine a compus „Amurgul zeilor”?",
+		"variante": ["Camille Saint-Saëns", "Georges Bizet", "Giacomo Puccini", "Richard Wagner"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q275627:compozitor:cere_compozitor",
+		"fapt": "wd:Q275627",
+		"text": "Cine a compus „Alcina”?",
+		"variante": ["Georg Friedrich Händel", "Johann Sebastian Bach", "Christoph Willibald Gluck", "Wolfgang Amadeus Mozart"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q30562:compozitor:cere_compozitor",
+		"fapt": "wd:Q30562",
+		"text": "Cine a compus „Imnul Imperiului Austriac”?",
+		"variante": ["Christoph Willibald Gluck", "Joseph Haydn", "Franz Schubert", "Carl Maria von Weber"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q3107460:compozitor:cere_compozitor",
+		"fapt": "wd:Q3107460",
+		"text": "Cine a compus „Oedip”?",
+		"variante": ["Béla Bartók", "George Enescu", "Giacomo Puccini", "George Gershwin"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q318455:compozitor:cere_compozitor",
+		"fapt": "wd:Q318455",
+		"text": "Cine a compus „Falstaff”?",
+		"variante": ["Johann Strauss II", "Ciprian Porumbescu", "Giuseppe Verdi", "Piotr Ilici Ceaikovski"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q320353:compozitor:cere_compozitor",
+		"fapt": "wd:Q320353",
+		"text": "Cine a compus „Norma”?",
+		"variante": ["Vincenzo Bellini", "Franz Liszt", "Gaetano Donizetti", "Bedřich Smetana"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q324459:compozitor:cere_compozitor",
+		"fapt": "wd:Q324459",
+		"text": "Cine a compus „Helgoland”?",
+		"variante": ["Serghei Prokofiev", "Maurice Ravel", "Anton Bruckner", "Antonín Dvořák"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q327717:compozitor:cere_compozitor",
+		"fapt": "wd:Q327717",
+		"text": "Cine a compus „Aurul Rinului”?",
+		"variante": ["Johannes Brahms", "Camille Saint-Saëns", "Richard Wagner", "Gioachino Rossini"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q332536:compozitor:cere_compozitor",
+		"fapt": "wd:Q332536",
+		"text": "Cine a compus „Elixirul dragostei”?",
+		"variante": ["Franz Schubert", "Gaetano Donizetti", "Robert Schumann", "Vincenzo Bellini"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q368019:compozitor:cere_compozitor",
+		"fapt": "wd:Q368019",
+		"text": "Cine a compus „Pelléas et Mélisande”?",
+		"variante": ["Serghei Rahmaninov", "Antonín Dvořák", "Maurice Ravel", "Claude Debussy"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q3810521:compozitor:cere_compozitor",
+		"fapt": "wd:Q3810521",
+		"text": "Cine a compus „Paris și Elena”?",
+		"variante": ["Joseph Haydn", "Christoph Willibald Gluck", "Georg Friedrich Händel", "Carl Maria von Weber"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q3832579:compozitor:cere_compozitor",
+		"fapt": "wd:Q3832579",
+		"text": "Cine a compus „Lincoln Portrait”?",
+		"variante": ["Serghei Prokofiev", "Leonard Bernstein", "Aaron Copland", "Béla Bartók"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q397041:compozitor:cere_compozitor",
+		"fapt": "wd:Q397041",
+		"text": "Cine a compus „Agrippina”?",
+		"variante": ["Johann Sebastian Bach", "Christoph Willibald Gluck", "Georg Friedrich Händel", "Henry Purcell"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q41309:compozitor:cere_lucrare",
+		"fapt": "wd:Q41309",
+		"text": "Care dintre aceste lucrări a fost compusă de Franz Liszt?",
+		"variante": ["Pescuitorii de perle", "Ani de pelerinaj", "Amurgul zeilor", "Danse macabre"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q460319:compozitor:cere_compozitor",
+		"fapt": "wd:Q460319",
+		"text": "Cine a compus „Fata din Vest”?",
+		"variante": ["Béla Bartók", "George Enescu", "George Gershwin", "Giacomo Puccini"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q464511:compozitor:cere_compozitor",
+		"fapt": "wd:Q464511",
+		"text": "Cine a compus „Voievodul țiganilor”?",
+		"variante": ["Giuseppe Verdi", "Piotr Ilici Ceaikovski", "Ciprian Porumbescu", "Johann Strauss II"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q465540:compozitor:cere_compozitor",
+		"fapt": "wd:Q465540",
+		"text": "Cine a compus „Maeștrii cântăreți din Nürnberg”?",
+		"variante": ["Edvard Grieg", "Hector Berlioz", "Georges Bizet", "Richard Wagner"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q465878:compozitor:cere_compozitor",
+		"fapt": "wd:Q465878",
+		"text": "Cine a compus „Arta fugii”?",
+		"variante": ["Georg Friedrich Händel", "Johann Sebastian Bach", "Joseph Haydn", "Christoph Willibald Gluck"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q4700:compozitor:cere_lucrare",
+		"fapt": "wd:Q4700",
+		"text": "Care dintre aceste lucrări a fost compusă de Claude Debussy?",
+		"variante": ["Castelul Prințului Barbă-Albastră", "Suite bergamasque", "Helgoland", "Aleko"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q472318:compozitor:cere_compozitor",
+		"fapt": "wd:Q472318",
+		"text": "Cine a compus „Coțofana hoață”?",
+		"variante": ["Hector Berlioz", "Gioachino Rossini", "Robert Schumann", "Vincenzo Bellini"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q48173:compozitor:cere_lucrare",
+		"fapt": "wd:Q48173",
+		"text": "Care dintre aceste lucrări a fost compusă de Bedřich Smetana?",
+		"variante": ["Maeștrii cântăreți din Nürnberg", "Šárka", "Voievodul țiganilor", "Aleko"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q49481:compozitor:cere_lucrare",
+		"fapt": "wd:Q49481",
+		"text": "Care dintre aceste lucrări a fost compusă de Serghei Prokofiev?",
+		"variante": ["Pavane pour une infante défunte", "Castelul Prințului Barbă-Albastră", "Dragostea celor trei portocale", "Falstaff"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q560619:compozitor:cere_compozitor",
+		"fapt": "wd:Q560619",
+		"text": "Cine a compus „Tannhäuser”?",
+		"variante": ["Edvard Grieg", "Richard Wagner", "Nikolai Andreevici Rimski-Korsakov", "Gioachino Rossini"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q56159:compozitor:cere_compozitor",
+		"fapt": "wd:Q56159",
+		"text": "Cine a compus „Pescuitorii de perle”?",
+		"variante": ["Johannes Brahms", "Nikolai Andreevici Rimski-Korsakov", "Georges Bizet", "Richard Wagner"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q567462:compozitor:cere_compozitor",
+		"fapt": "wd:Q567462",
+		"text": "Cine a compus „Ani de pelerinaj”?",
+		"variante": ["Vincenzo Bellini", "Bedřich Smetana", "Franz Liszt", "Robert Schumann"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q580201:compozitor:cere_compozitor",
+		"fapt": "wd:Q580201",
+		"text": "Cine a compus „Simfonia Faust”?",
+		"variante": ["Gaetano Donizetti", "Antonín Dvořák", "Vincenzo Bellini", "Franz Liszt"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q580760:compozitor:cere_compozitor",
+		"fapt": "wd:Q580760",
+		"text": "Cine a compus „Album pentru tineret”?",
+		"variante": ["Franz Liszt", "Anton Bruckner", "Bedřich Smetana", "Robert Schumann"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q589932:compozitor:cere_compozitor",
+		"fapt": "wd:Q589932",
+		"text": "Cine a compus „Italianca în Alger”?",
+		"variante": ["Georges Bizet", "Richard Wagner", "Hector Berlioz", "Gioachino Rossini"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q635095:compozitor:cere_compozitor",
+		"fapt": "wd:Q635095",
+		"text": "Cine a compus „Frauenliebe und -leben”?",
+		"variante": ["Anton Bruckner", "Bedřich Smetana", "Vincenzo Bellini", "Robert Schumann"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q641095:compozitor:cere_compozitor",
+		"fapt": "wd:Q641095",
+		"text": "Cine a compus „Rodelinda”?",
+		"variante": ["Johann Sebastian Bach", "Georg Friedrich Händel", "Christoph Willibald Gluck", "Wolfgang Amadeus Mozart"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q642010:compozitor:cere_compozitor",
+		"fapt": "wd:Q642010",
+		"text": "Cine a compus „Oratoriul de Crăciun”?",
+		"variante": ["Johann Sebastian Bach", "Georg Friedrich Händel", "Wolfgang Amadeus Mozart", "Christoph Willibald Gluck"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q693675:compozitor:cere_compozitor",
+		"fapt": "wd:Q693675",
+		"text": "Cine a compus „Ofranda Muzicală”?",
+		"variante": ["Johann Sebastian Bach", "Georg Friedrich Händel", "Joseph Haydn", "Christoph Willibald Gluck"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q697018:compozitor:cere_compozitor",
+		"fapt": "wd:Q697018",
+		"text": "Cine a compus „Tritsch-Tratsch-Polka”?",
+		"variante": ["Johann Strauss II", "Giuseppe Verdi", "Ciprian Porumbescu", "Piotr Ilici Ceaikovski"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q723559:compozitor:cere_compozitor",
+		"fapt": "wd:Q723559",
+		"text": "Cine a compus „Idomeneo”?",
+		"variante": ["Wolfgang Amadeus Mozart", "Ludwig van Beethoven", "Gioachino Rossini", "Georg Friedrich Händel"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q723776:compozitor:cere_compozitor",
+		"fapt": "wd:Q723776",
+		"text": "Cine a compus „Orfeu și Euridice”?",
+		"variante": ["Christoph Willibald Gluck", "Joseph Haydn", "Vincenzo Bellini", "Franz Schubert"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q723941:compozitor:cere_compozitor",
+		"fapt": "wd:Q723941",
+		"text": "Cine a compus „Don Pasquale”?",
+		"variante": ["Vincenzo Bellini", "Gaetano Donizetti", "Franz Schubert", "Robert Schumann"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q727868:compozitor:cere_compozitor",
+		"fapt": "wd:Q727868",
+		"text": "Cine a compus „Gianni Schicchi”?",
+		"variante": ["Edvard Grieg", "George Gershwin", "Giacomo Puccini", "Johannes Brahms"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q729568:compozitor:cere_compozitor",
+		"fapt": "wd:Q729568",
+		"text": "Cine a compus „Fiica regimentului”?",
+		"variante": ["Franz Liszt", "Franz Schubert", "Bedřich Smetana", "Gaetano Donizetti"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q7298:compozitor:cere_lucrare",
+		"fapt": "wd:Q7298",
+		"text": "Care dintre aceste lucrări a fost compusă de Antonín Dvořák?",
+		"variante": ["Suite bergamasque", "Rusalka", "Voievodul țiganilor", "Sânge vienez"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q7312:compozitor:cere_lucrare",
+		"fapt": "wd:Q7312",
+		"text": "Care dintre aceste lucrări a fost compusă de Franz Schubert?",
+		"variante": ["Fiica regimentului", "Norma", "Der Freischütz", "Păstrăvul"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q7349:compozitor:cere_lucrare",
+		"fapt": "wd:Q7349",
+		"text": "Care dintre aceste lucrări a fost compusă de Joseph Haydn?",
+		"variante": ["Idomeneo", "Così fan tutte", "Imnul Imperiului Austriac", "Orfeu și Euridice"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q7351:compozitor:cere_lucrare",
+		"fapt": "wd:Q7351",
+		"text": "Care dintre aceste lucrări a fost compusă de Robert Schumann?",
+		"variante": ["Carnaval", "La Cenerentola", "Forța destinului", "Aurul Rinului"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q746646:compozitor:cere_compozitor",
+		"fapt": "wd:Q746646",
+		"text": "Cine a compus „Dido și Aeneas”?",
+		"variante": ["Johann Sebastian Bach", "Henry Purcell", "Georg Friedrich Händel", "Carl Maria von Weber"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q753123:compozitor:cere_compozitor",
+		"fapt": "wd:Q753123",
+		"text": "Cine a compus „La sonnambula”?",
+		"variante": ["Gaetano Donizetti", "Vincenzo Bellini", "Franz Liszt", "Franz Schubert"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q753152:compozitor:cere_compozitor",
+		"fapt": "wd:Q753152",
+		"text": "Cine a compus „Samson și Dalila”?",
+		"variante": ["Edvard Grieg", "Camille Saint-Saëns", "Johannes Brahms", "Richard Wagner"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q756299:compozitor:cere_compozitor",
+		"fapt": "wd:Q756299",
+		"text": "Cine a compus „Requiem german”?",
+		"variante": ["Johannes Brahms", "Camille Saint-Saëns", "Giacomo Puccini", "Edvard Grieg"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q815342:compozitor:cere_compozitor",
+		"fapt": "wd:Q815342",
+		"text": "Cine a compus „Nessun dorma”?",
+		"variante": ["Béla Bartók", "Giacomo Puccini", "Camille Saint-Saëns", "George Enescu"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q81752:compozitor:cere_lucrare",
+		"fapt": "wd:Q81752",
+		"text": "Care dintre aceste lucrări a fost compusă de Anton Bruckner?",
+		"variante": ["Helgoland", "Rusalka", "Falstaff", "Castelul Prințului Barbă-Albastră"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q831255:compozitor:cere_compozitor",
+		"fapt": "wd:Q831255",
+		"text": "Cine a compus „Rusalka”?",
+		"variante": ["Serghei Prokofiev", "Maurice Ravel", "Serghei Rahmaninov", "Antonín Dvořák"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q847300:compozitor:cere_compozitor",
+		"fapt": "wd:Q847300",
+		"text": "Cine a compus „Children's Corner”?",
+		"variante": ["Serghei Rahmaninov", "Claude Debussy", "Anton Bruckner", "Antonín Dvořák"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q853997:compozitor:cere_compozitor",
+		"fapt": "wd:Q853997",
+		"text": "Cine a compus „Un american la Paris”?",
+		"variante": ["Béla Bartók", "Leonard Bernstein", "George Enescu", "George Gershwin"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q865333:compozitor:cere_compozitor",
+		"fapt": "wd:Q865333",
+		"text": "Cine a compus „Patimile după Ioan”?",
+		"variante": ["Georg Friedrich Händel", "Johann Sebastian Bach", "Henry Purcell", "Joseph Haydn"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q875563:compozitor:cere_compozitor",
+		"fapt": "wd:Q875563",
+		"text": "Cine a compus „Giulio Cesare in Egitto”?",
+		"variante": ["Johann Sebastian Bach", "Christoph Willibald Gluck", "Henry Purcell", "Georg Friedrich Händel"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q900225:compozitor:cere_compozitor",
+		"fapt": "wd:Q900225",
+		"text": "Cine a compus „Mireasa țarului”?",
+		"variante": ["Edvard Grieg", "Camille Saint-Saëns", "Richard Wagner", "Nikolai Andreevici Rimski-Korsakov"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q907735:compozitor:cere_compozitor",
+		"fapt": "wd:Q907735",
+		"text": "Cine a compus „Dragostea celor trei portocale”?",
+		"variante": ["Serghei Rahmaninov", "Claude Debussy", "Serghei Prokofiev", "Maurice Ravel"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q927503:compozitor:cere_compozitor",
+		"fapt": "wd:Q927503",
+		"text": "Cine a compus „Aleko”?",
+		"variante": ["Serghei Rahmaninov", "Maurice Ravel", "Claude Debussy", "Antonín Dvořák"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	},
+	{
+		"id": "wd:Q9695:compozitor:cere_lucrare",
+		"fapt": "wd:Q9695",
+		"text": "Care dintre aceste lucrări a fost compusă de Henry Purcell?",
+		"variante": ["Agrippina", "Toccata și fuga în re minor", "Dido și Aeneas", "Giulio Cesare in Egitto"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "cultura_clasica",
+		"categorie": "arta_literatura"
+	}
+]
