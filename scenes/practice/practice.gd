@@ -325,8 +325,8 @@ func _ready() -> void:
 
 	# ÎNCĂRCAREA, CHEMATĂ DE AICI. În luptă o cheamă scena de trivia, în
 	# `_pregateste_datele()`. Aici avem nevoie de întrebări ÎNAINTE să existe
-	# vreo scenă de trivia: ecranul de alegere scrie pe fiecare buton câte
-	# întrebări are raftul, deci trebuie să le poată număra.
+	# vreo scenă de trivia: ecranul de alegere stinge rafturile goale, deci
+	# trebuie să poată număra câte întrebări are fiecare.
 	# Funcția e idempotentă (iese din prima linie a doua oară), deci chemarea de
 	# aici nu face munca de două ori.
 	TRIVIA.incarca_intrebari()
@@ -354,16 +354,19 @@ func _arata_domenii() -> void:
 	buton_inapoi.visible = false
 
 	alegere_titlu.text = "ALEGE DOMENIUL"
-	alegere_subtitlu.text = "Nivelul urca singur, pe fiecare domeniu. Fara cronometru."
+	# Fără subtitlu: iconițele și nivelul din dreapta spun deja ce e de spus.
+	alegere_subtitlu.visible = false
 
 	_goleste(lista)
 	for cheie in TRIVIA.DOMENII:
 		var domeniu := String(cheie)
 		var nivel := nivelul(domeniu)
 		var cate := TRIVIA.raftul(nivel, domeniu).size()
-		lista.add_child(_buton_raft(
+		var buton := _buton_raft(
 			String(TRIVIA.DOMENII[cheie]), cate, nivel,
-			_pe_domeniu_ales.bind(domeniu)))
+			_pe_domeniu_ales.bind(domeniu), true)
+		buton.icon = _iconita(domeniu)
+		lista.add_child(buton)
 
 	_actualizeaza_antet()
 
@@ -395,6 +398,7 @@ func _arata_rafturile() -> void:
 	var nivel := nivelul(domeniu_ales)
 	alegere_titlu.text = String(TRIVIA.DOMENII.get(domeniu_ales, domeniu_ales)).to_upper()
 	alegere_subtitlu.text = "Alege raftul. Primul cuprinde tot domeniul, inclusiv intrebarile fara raft."
+	alegere_subtitlu.visible = true
 
 	_goleste(lista)
 	lista.add_child(_buton_raft(
@@ -434,29 +438,78 @@ func _anunta(text: String) -> void:
 # UN BUTON DE RAFT
 # ─────────────────────────────────────────────────────────────
 
-## Numele raftului plus câte întrebări are. Gol = buton DEZACTIVAT, nu ascuns.
+## Numele raftului, și în dreapta, mărunt, ce mai e de spus. Gol = buton
+## DEZACTIVAT, nu ascuns.
 ##
 ## ─── DE CE DEZACTIVAT ȘI NU ASCUNS ────────────────────────────
 ## Un raft ascuns e un raft despre care nu afli niciodată nimic: nu știi dacă
 ## nu există, dacă l-ai pierdut sau dacă n-am scris încă nimic în el. Unul
-## stins, cu „0 întrebări" pe el, e o hartă a conținutului care lipsește —
+## stins, cu „gol la nivelul I" pe el, e o hartă a conținutului care lipsește —
 ## aceeași decizie ca la `PRAG_DOMENIU`, unde domeniile subțiri sunt SĂRITE,
 ## nu scoase din date.
 ##
-## ─── CE CIFRĂ SCRIE PE EL ─────────────────────────────────────
-## Câte întrebări are raftul LA NIVELUL TĂU CURENT, nu totalul pe trei niveluri.
-## Fiindcă aia e cifra care se și joacă: un buton pe care scrie 500 și care
-## n-are nimic de dat la nivelul I ar fi o minciună, iar aceeași cifră decide
-## dacă butonul e activ. Prețul, spus pe față: când deblochezi nivelul II la un
-## domeniu, un raft care are conținut doar la nivelul I se stinge.
-func _buton_raft(nume: String, cate: int, nivel: int, la_apasare: Callable) -> Button:
+## ─── CE SCRIE ÎN DREAPTA (de pe 21 octombrie 2026) ────────────
+## Până azi, pe fiecare buton: „117 la nivelul I". Era zgomot: pe un raft activ
+## cifra nu decide nimic din ce faci, iar opt rânduri de cifre se citeau ca un
+## tabel, nu ca un meniu. Au rămas doar cele două lucruri care spun ceva:
+##
+##   — pe un buton STINS, de ce e stins: „gol la nivelul II". Fără asta, un raft
+##     stins n-ar mai fi harta de mai sus, ci doar un buton care nu merge.
+##   — pe DOMENII (`arata_nivel`), nivelul tău, ca cifră romană. Nivelul e pe
+##     domeniu, iar antetul îl arată abia după ce ai ales unul, deci ecranul cu
+##     domenii e singurul loc unde le vezi pe toate opt odată.
+##
+## „Gol" se judecă tot LA NIVELUL TĂU CURENT, ca înainte. Prețul, spus pe față:
+## când deblochezi nivelul II la un domeniu, un raft care are conținut doar la
+## nivelul I se stinge.
+##
+## Eticheta din dreapta e un COPIL al butonului, nu un al doilea text: un Button
+## are un singur `text` și o singură aliniere. Ignoră mouse-ul, deci click-ul
+## trece la buton. Nu intră în lățimea minimă a butonului — panoul are 560 px,
+## iar cel mai lung nume plus „gol la nivelul III" încap cu rezervă.
+func _buton_raft(nume: String, cate: int, nivel: int, la_apasare: Callable,
+		arata_nivel := false) -> Button:
 	var buton := Button.new()
 	buton.custom_minimum_size = Vector2(0, 42)
-	buton.text = "%s   —   %d la nivelul %s" % [nume, cate, _roman(nivel)]
+	buton.text = nume
 	buton.disabled = cate == 0
 	buton.alignment = HORIZONTAL_ALIGNMENT_LEFT
+	# Iconița (când există) se micșorează la înălțimea butonului.
+	buton.expand_icon = true
 	buton.pressed.connect(la_apasare)
+
+	var dreapta := ""
+	if cate == 0:
+		dreapta = "gol la nivelul %s" % _roman(nivel)
+	elif arata_nivel:
+		dreapta = _roman(nivel)
+	if dreapta != "":
+		var eticheta := Label.new()
+		eticheta.text = dreapta
+		eticheta.theme_type_variation = &"SubtitluPergament"
+		eticheta.add_theme_font_size_override("font_size", 15)
+		eticheta.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+		eticheta.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+		eticheta.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		eticheta.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		eticheta.offset_right = -14
+		buton.add_child(eticheta)
 	return buton
+
+
+## Iconița domeniului, sau `null` dacă nu are.
+##
+## NICIUN TABEL: fișierul se numește după CHEIA domeniului, care nu se schimbă
+## niciodată (vezi `DOMENII` din `trivia.gd`). Un domeniu nou rămâne un rând
+## acolo plus un fișier aici; fără fișier, butonul iese fără iconiță, nu cu o
+## eroare. Sursa și licența (CC BY 3.0, game-icons.net) sunt în `CREDITE.txt`
+## din același dosar. Culoarea nu e în fișier (iconițele sunt albe): o dă tema,
+## `Button/colors/icon_*`.
+func _iconita(domeniu: String) -> Texture2D:
+	var cale := "res://assets/iconite/domenii/%s.svg" % domeniu
+	if not ResourceLoader.exists(cale):
+		return null
+	return load(cale)
 
 
 # ─────────────────────────────────────────────────────────────

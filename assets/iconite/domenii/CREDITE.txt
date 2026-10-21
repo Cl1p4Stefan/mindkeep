@@ -1,0 +1,22 @@
+ICONIȚELE DOMENIILOR (Practice, ecranul „Alege domeniul")
+
+Sursa: game-icons.net — https://github.com/game-icons/icons
+Licența: Creative Commons Attribution 3.0 (CC BY 3.0)
+         https://creativecommons.org/licenses/by/3.0/
+
+Fișierul se numește după CHEIA domeniului din `DOMENII` (trivia.gd); așa îl
+găsește `practice.gd`, fără niciun tabel. Singura schimbare față de original:
+pătratul negru de fundal a fost scos, ca iconița să fie albă pe transparent și
+s-o poată colora tema.
+
+  geografie.svg              world              Lorc   http://lorcblog.blogspot.com
+  istorie.svg                crown              Lorc   http://lorcblog.blogspot.com
+  stiinta_tehnologie.svg     round-bottom-flask Lorc   http://lorcblog.blogspot.com
+  arta_literatura.svg        quill-ink          Lorc   http://lorcblog.blogspot.com
+  divertisment.svg           drama-masks        Lorc   http://lorcblog.blogspot.com
+  sport_jocuri.svg           laurels            Lorc   http://lorcblog.blogspot.com
+  gastronomie_lifestyle.svg  jeweled-chalice    Lorc   http://lorcblog.blogspot.com
+  diverse.svg                hourglass          Lorc   http://lorcblog.blogspot.com
+
+CC BY cere ca autorii să fie creditați. Până există un ecran de credite în joc,
+fișierul ăsta e creditul; când apare ecranul, rândurile de mai sus intră în el.
