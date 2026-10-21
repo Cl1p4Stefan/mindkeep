@@ -18,7 +18,7 @@
 | 7. Cetatea | ❌ |
 | 8. Save/Load | ✅ **pe disc**, de pe 12 octombrie 2026. `autoload/arhiva.gd` — singurul fișier din joc care atinge discul, fără nicio regulă de joc în el; dependența merge într-un singur sens (apelurile de salvare stau în SCENE, ca uneltele de verificare să rămână uscate) · **două fișiere în `user://`**: `permanent.json` (Tezaur + progresul din Antrenament + sacurile permanente) și `expeditie.json`, care există doar cât e un run viu · **scriere prin fișier temporar și redenumire**, cu adoptarea unui `.nou` orfan la citire · **`versiune` în save**: mai vechi se citește prin `_migreaza()`, mai nou se pune deoparte · **un fișier ilizibil nu se șterge și nu se suprascrie** — se redenumește `*.stricat.json` (cu data în nume dacă e deja unul pus deoparte), iar meniul o spune, cu mesaje separate pentru progres și pentru expediție · **butonul din meniu devine „Continua expeditia"**, cu nodurile în urmă și PV-ul pe rândul de sub el · **sacul are acum DURATĂ pe cheie** (`Sac.Durata`): rafturile din Practice sunt permanente, sacurile de luptă rămân pe expediție · **nodul se scrie pe disc la INTRARE**, deci a apărut `nod_nerezolvat` și coloana `reluabil` din `DATE_NOD` — altfel o luptă întreruptă era sărită, iar la Boss era chiar victorie · 54 de verdicte în `verifica_salvarea`, ~1 s · vezi sesiunea SAVE
 | 9. Celelalte discipline | 🟡 Cultură generală ✅ (**2839 de întrebări în joc, toate**: 2142 scrise de mână (`mana:0001`…) + **139 fabricate, elemente chimice** (`wd:Q897:simbol:…`) + **160 fabricate, operă → autor** (`wd:Q12730777:autor:…`) + **251 fabricate, țară ↔ capitală** (`wd:Q142:capitala:…`) + **147 fabricate, lucrare ↔ compozitor** (`wd:Q11980:compozitor:…`) — **conținutul fabricat stă într-un DOSAR**, `data/trivia_gen/`, citit întreg de încărcător: un tabel nou = două fișiere, zero linii de cod · **2138 de fapte, TOATE cu notă** (504 fabricate din șabloane: numărul atomic la elemente, anul apariției și anii autorului la opere, descrierea țării la capitale, anii compozitorului la lucrările muzicale · 92 scrise mai devreme de mână · **2046 scrise de mână în sesiunea TOATE AU NOTĂ**, câte una pentru fiecare întrebare rămasă fără) — deci **2839 din 2839 de întrebări ajung la o notă, de la 96 dimineață**, fiecare domeniu și fiecare dintre cele 31 de rafturi; sursa celor 2046 sunt EU, nu un tabel, deci nu le poate bate niciun validator și singura verificare e citirea (28 citite din 2142), iar un validator cere ca fiecare cifră și fiecare nume propriu dintr-o notă să existe în datele sursă · **OPT DOMENII** (Geografie și explorare, Istorie și societate, Știință și tehnologie, Artă și literatură, Divertisment și media, Sport și jocuri, Gastronomie și lifestyle, Diverse și curiozități), cu **31 de subcategorii** — **toate OPT domeniile sunt în luptă, niciunul din cele 31 de rafturi nu e gol și nicio întrebare nu e fără raft** (cele 135 scrise înaintea câmpului au fost clasificate, iar 21 de întrebări de mitologie au trecut de la Artă la Istorie); **toate cele 93 de celule (subdomeniu × nivel) au cel puțin 25 de întrebări** — treapta CONFORT din `plan-continut.md`, cea la care 4-5 expediții lungi nu repetă nimic; drumul până la 100 pe celulă cere încă 6631 și trece prin fabrică, nu prin scris de mână, tăiate după cum se joacă, nu după cum crescuse baza: artă + mitologie + literatură s-au unit, Divertisment și Sport pornesc goale · `CATEGORII` (listă) a devenit `DOMENII` (dicționar cheie → nume afișat), deci antetul scrie „ARTĂ ȘI LITERATURĂ”, nu cheia · **alegerea din luptă e în două trepte** — întâi domeniul, uniform, apoi întrebarea, cu sacul pe cheie de domeniu ȘI nivel — iar de azi **domeniul intră doar peste `PRAG_DOMENIU = 8` întrebări pe celulă**, cu plasă dacă nu trece niciunul; sub prag e sărit, nu golit (istoria trece cu rezerva ZERO, deci e următoarea țintă de conținut) · comutator `FOLOSESTE_WIKIDATA` · **fabrica are un modul comun**, `tools/fabrica/comun.py`, iar grila marchează celulele sărite · **faptele capitalelor au o LISTĂ de imagini**, `imagini: [{tip, …}]`: **126 de steaguri pe disc** (`assets/imagini_fapte/steaguri/`, PNG 320 px, 0,53 MB sursă, toate în domeniul public, cu manifest de credite), plus o intrare de hartă pe fiecare din cele 127 de fapte; Omanul e singurul refuzat, cu motivul scris · **fiecare întrebare are și o `subcategorie`**, una singură, din listă închisă pe domeniu (36 de chei, 4 folosite; la istorie sunt erele, tăiate pe dată) — cele 135 scrise de mână o primesc într-un lot de clasificare, cu un clichet în verificator · **istoria e la 18 pe toate trei nivelurile**, iar **Divertismentul și Sportul au câte 50 pe fiecare celulă**, pe 11 subcategorii cu care se poate filtra (filme 48, muzică 36, fotbal 30, olimpiade 30…) — deci **toate ȘASE domeniile sunt în luptă**, fiecare cu 1/6 din întrebări, și toate cele 11 subcategorii ale celor două domenii noi au conținut · **verificarea e un singur câmp**, `verificat: true/false` pe întrebare, pus de mână: întrebarea intră în joc oricum, iar flagul spune doar dacă i-am citit nota. Niciun script, niciun parametru — mecanismul de ciorne, al doilea flag de pe fapt și cele două unelte de confirmare s-au desfăcut (vezi UN SINGUR FLAG) · planul de conținut al tuturor celor șase domenii, cu subcategorii, tabele propuse și capcanele lor, e în **`docs/plan-continut.md`** · vezi sesiunile UN SINGUR FLAG, ȘASE DOMENII ÎN LUPTĂ, PLANUL ȘI CIORNELE, DOMENIILE, CONȚINUTUL, ID ȘI FAPT, FABRICA, AL DOILEA TABEL, MODULUL COMUN și STEAGURILE) · Logica ✅ (80 de categorii) · Cuvinte ✅ · toate trei fără repetiții pe expediție, **Cultura generală după `id`, nu după text** · celelalte 5 ❌ |
-| 10–13. Generator de inamici, artă, web | ❌ (artă parțial: figurile principale și piesele de pe butoanele de Obelisc au imagini reale · **arena are fundal: biblioteca gotică**, cu personajele așezate pe dalele din prim-plan, umbră de contact și lumină de sală) · Regina: **amânată**, vezi CLAUDE.md · **pasul 13 (Practice) — prima felie ✅**: **meniu de start** (`scenes/meniu/`, de azi `run/main_scene`) cu două butoane, și **Antrenament liber** (`scenes/practice/`) — alegi domeniul, apoi raftul, din `DOMENII` și `SUBCATEGORII`, cu cifrele pe butoane și rafturile goale stinse; întrebările vin prin **chiar scena de trivia a luptei**, fără cronometru (`cu_cronometru`, două linii în `puzzle.gd`); nivel pe DOMENIU, urcat singur la `PRAG_PRACTICE` = 60 de întrebări distincte știute; sac propriu, pe cheie cu filtru (`practice:<domeniu>:<raft>:<nivel>`); progres scris pe disc de la Save (12 octombrie), în `permanent.json` · **„Afla mai multe" ✓** (12 octombrie): după fiecare răspuns, corect sau greșit, un buton deschide nota faptului, citită din `explicatie` (contractul cu `puzzle.gd`), nu din `TRIVIA.fapte`; fără notă, butonul nu există — de azi apare la **TOATE cele 2839 de întrebări** (era 1 din 28 dimineață, apoi 1 din 3,6); imaginea din popup e felia următoare · **neștiutele întâi ✓** (21 octombrie): greșitele revin la distanță, iar raftul știut tot se anunță și trece în recapitulare · **trecerea singură ✓** (21 octombrie): după un răspuns CORECT, „Următoarea" se umple în 2 s și trece fără click; orice gest spre „Află mai multe" o oprește, iar la greșit nu curge nimic · vezi sesiunile MENIUL ȘI PRACTICE, AFLĂ MAI MULTE, TOATE AU NOTĂ, RAFTUL PARCURS și TRECEREA SINGURĂ |
+| 10–13. Generator de inamici, artă, web | ❌ (artă parțial: figurile principale și piesele de pe butoanele de Obelisc au imagini reale · **arena are fundal: biblioteca gotică**, cu personajele așezate pe dalele din prim-plan, umbră de contact și lumină de sală) · Regina: **amânată**, vezi CLAUDE.md · **pasul 13 (Practice) — prima felie ✅**: **meniu de start** (`scenes/meniu/`, de azi `run/main_scene`) cu două butoane, și **Antrenament liber** (`scenes/practice/`) — alegi domeniul, apoi raftul, din `DOMENII` și `SUBCATEGORII`, cu cifrele pe butoane și rafturile goale stinse; întrebările vin prin **chiar scena de trivia a luptei**, fără cronometru (`cu_cronometru`, două linii în `puzzle.gd`); nivel pe DOMENIU, urcat singur la `PRAG_PRACTICE` = 60 de întrebări distincte știute; sac propriu, pe cheie cu filtru (`practice:<domeniu>:<raft>:<nivel>`); progres scris pe disc de la Save (12 octombrie), în `permanent.json` · **„Afla mai multe" ✓** (12 octombrie): după fiecare răspuns, corect sau greșit, un buton deschide nota faptului, citită din `explicatie` (contractul cu `puzzle.gd`), nu din `TRIVIA.fapte`; fără notă, butonul nu există — de azi apare la **TOATE cele 2839 de întrebări** (era 1 din 28 dimineață, apoi 1 din 3,6); imaginea din popup e felia următoare · **neștiutele întâi ✓** (21 octombrie): greșitele revin la distanță, iar raftul știut tot se anunță și trece în recapitulare · **trecerea singură ✓** (21 octombrie): după un răspuns CORECT, „Următoarea" se umple în 2 s și trece fără click; orice gest spre „Află mai multe" o oprește, iar la greșit nu curge nimic · **pergament în bibliotecă ✓** (21 octombrie): o temă comună (`assets/tema/pergament.tres`), fonturile Cinzel + Alegreya (OFL) și biblioteca din luptă estompată ca fundal; scena de trivia se îmbracă singură în Practice și rămâne neschimbată în luptă · vezi sesiunile MENIUL ȘI PRACTICE, AFLĂ MAI MULTE, TOATE AU NOTĂ, RAFTUL PARCURS, TRECEREA SINGURĂ și PERGAMENT ÎN BIBLIOTECĂ |
 
 Nodul de **Eveniment** are primul lui conținut: **Lacătul** — un cufăr cu cifru,
 dedus din indicii, cu artă adevărată (roți care se învârt în spatele
@@ -37,6 +37,61 @@ buget, generare) rămâne acolo unde era.
 Am sărit peste ordinea recomandată la pasul 12 (artă): imaginile pentru rege,
 cavaler și pentru cele trei piese de șah de pe butoane au intrat mai devreme, dar
 restul rămâne placeholder. Bucla de luptă e în continuare cea validată, nu arta.
+
+---
+
+## PERGAMENT ÎN BIBLIOTECĂ (21 octombrie 2026) — Practice primește înfățișarea hărții
+
+### Problema
+
+Practice și meniul arătau ca un formular: panouri gri-albăstrui pe fond plat,
+butoanele implicite din Godot. Harta are pergament pe masă, cerneală și obiecte
+pictate. Am propus patru pași (temă și font · progres vizibil · artă proprie ·
+„juice"); sesiunea asta e **pasul 1**.
+
+### Ce s-a făcut
+
+- **O temă comună**, `assets/tema/pergament.tres`, pusă pe rădăcina din
+  `practice.tscn`: pagini de pergament cu umbră, butoane de hârtie cu ramă de
+  cerneală, titluri în roșu de rubrică. Etichetele își iau rolul din
+  `theme_type_variation` (`TitluPergament`, `SubtitluPergament`,
+  `RubricaPergament`, `AntetPergament`, `AntetSecundar`, `ChenarPergament`,
+  `LegaturaPergament`), nu din `modulate`.
+- **Fonturi**: Cinzel (titluri) și Alegreya (text), variabile, din repo-ul
+  Google Fonts, în `assets/fonturi/`, cu `OFL.txt` lângă fiecare. Au fost
+  verificate pe glife înainte de folosire: ș, ț cu virgulă, Ă, Â, Î, „”, —, ·
+  există toate. Licența permite vânzarea jocului cu ele înăuntru. Condiția e
+  ca textul licenței să rămână lângă fișiere.
+- **Fundalul**: `fight_background.jpg`, prin shaderul
+  `assets/tema/fundal_estompat.gdshader` (estompare pe spirală, tentă caldă,
+  vinietă pe ecran). Aceeași poză din luptă, fără o a doua copie.
+- **Pagina întrebării**: tot panoul de întrebare (anunț, chenar, „Află mai
+  multe", butoanele de jos) stă acum pe o singură pagină, `Pagina`, nu pe fond.
+- **Culorile de verdict vin din temă**, când tema le dă: `_culoare()` în
+  `puzzle.gd`, tipul „Puzzle” în temă. Verdele luptei, înmulțit prin
+  `modulate` cu pergamentul, ieșea verde de semafor. Lupta nu pune nicio temă,
+  deci acolo nu s-a schimbat nimic.
+- **`Anunt` gol e ascuns** (`_anunta()` în `practice.gd`): un Label gol cerea
+  un rând și lăsa o bandă goală pe pagină.
+
+### Verificat
+
+`verifica_trivia` 38, `verifica_salvarea` 54, `verifica_eveniment` 22, toate cu
+cod 0; lupta pornește fără erori. Ecranele au fost capturate cu
+`--write-movie` (domenii, rafturi, întrebare, verdict greșit, notă). Răspunsul
+CORECT n-a fost capturat (ar fi scris pe disc), dar folosește aceleași culori.
+
+### Rămas deschis
+
+- **Meniul de start** e încă formular. Tema i se pune cu un rând, dar are
+  propriul `StyleBoxFlat` în scenă care trebuie scos.
+- **Variantele de răspuns au 14 px**, scrise pe noduri în `puzzle.tscn`; tema
+  nu le poate bate. Alegreya are litere mici mai scunde decât fontul implicit,
+  deci arată mai mărunt. Se rezolvă scoțând override-ul din `puzzle.tscn` și
+  dându-i luptei mărimea ei, nu aici.
+- Pașii 2-4 din propunere (progres vizibil, artă proprie, „juice").
+- Textele scrise fără diacritice („Inapoi", „Afla mai multe") se văd mai tare
+  cu un font cu serife.
 
 ---
 

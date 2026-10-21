@@ -119,6 +119,38 @@ extends Control
 ## nu o rescriere.
 ##
 ## ─────────────────────────────────────────────────────────────
+## ÎMBRĂCĂMINTEA: PERGAMENT ÎN BIBLIOTECĂ (21 octombrie 2026)
+##
+## Practice se petrece în biblioteca din luptă: `fight_background.jpg`, dar
+## estompat, întunecat și cu colțurile stinse (`assets/tema/fundal_estompat
+## .gdshader`). Peste ea stau PAGINI de pergament, scrise cu cerneală, cu
+## titlurile în roșu de rubrică — culorile hărții de expediție.
+##
+## TOT ASPECTUL STĂ ÎNTR-O TEMĂ, `assets/tema/pergament.tres`, pusă pe
+## rădăcina scenei. Trei lucruri merită știute despre ea:
+##
+##   1. O TEMĂ COBOARĂ ÎN ARBORE, inclusiv în scenele instanțiate. Scena de
+##      trivia pusă în `ZonaPuzzle` se îmbracă singură în pergament, iar în
+##      luptă, unde nimeni nu pune tema, rămâne exact cum era. Un singur ecran
+##      de întrebare, două înfățișări, nicio linie de cod care să le aleagă.
+##   2. FONTURILE SUNT DOUĂ: Cinzel pentru titluri, Alegreya pentru text, în
+##      `assets/fonturi/`, amândouă sub licența OFL (textul ei e lângă ele și
+##      trebuie să rămână acolo). Amândouă au ș și ț cu virgulă dedesubt.
+##   3. VARIAȚIILE DE TIP. Un Label nu e „titlu" prin poziție, ci prin
+##      `theme_type_variation`: `TitluPergament`, `SubtitluPergament`,
+##      `RubricaPergament`, `AntetPergament` (text deschis, pe fundalul închis),
+##      `ChenarPergament` (zona întrebării), `LegaturaPergament` („Află mai
+##      multe"). Culorile nu se mai pun cu `modulate` pe noduri: `modulate`
+##      ÎNMULȚEȘTE, iar auriul de pe un text închis la culoare iese maro.
+##
+## Culorile de verdict (verde, roșu, rama) le dă tot tema, sub tipul „Puzzle"
+## — vezi `_culoare()` din `puzzle.gd`. Verdele luptei, înmulțit cu pergamentul,
+## ieșea verde de semafor.
+##
+## Același `.tres`, pus pe rădăcina meniului de start, l-ar îmbrăca și pe el:
+## e un rând, nefăcut încă.
+##
+## ─────────────────────────────────────────────────────────────
 ## CE NU INTRĂ ÎN FELIA ASTA (e în plan, în felii separate)
 ##
 ## „Învățat" și Jurnalul (greșitele revin de pe 21 octombrie, pe raftul ales —
@@ -386,8 +418,16 @@ func _pe_raft_ales(raft: String) -> void:
 	panou_intrebare.visible = true
 	# Un raft parcurs deja (într-o sesiune de ieri) se anunță de la intrare: altfel
 	# ai afla abia din contorul care nu se mișcă.
-	eticheta_anunt.text = _anunt_raft_parcurs() if _raft_stiut() else ""
+	_anunta(_anunt_raft_parcurs() if _raft_stiut() else "")
 	_intrebare_noua()
+
+
+## Rândul de anunț de deasupra întrebării. Gol = ASCUNS, nu doar fără text:
+## un Label gol tot cere înălțimea unui rând, iar pe pagina de pergament asta
+## se vedea ca o bandă goală deasupra chenarului.
+func _anunta(text: String) -> void:
+	eticheta_anunt.text = text
+	eticheta_anunt.visible = text != ""
 
 
 # ─────────────────────────────────────────────────────────────
@@ -438,7 +478,7 @@ func _intrebare_noua() -> void:
 	# doar n-am scris încă întrebările.
 	if TRIVIA.raftul(nivel, domeniu_ales, subcategorie_aleasa).is_empty():
 		zona_puzzle.visible = false
-		eticheta_anunt.text = "Raftul asta nu are intrebari la nivelul %s. Alege altul." % _roman(nivel)
+		_anunta("Raftul asta nu are intrebari la nivelul %s. Alege altul." % _roman(nivel))
 		buton_schimba.grab_focus()
 		return
 
@@ -499,7 +539,7 @@ func _pe_raspuns(succes: bool, de_la: Node) -> void:
 		# răspuns a deschis și nivelul următor, anunțul de nivel rămâne: e vestea
 		# mai mare, iar raftul, la nivelul nou, nu mai e parcurs.
 		if not era_stiut and nivelul(domeniu_ales) == nivel and _raft_stiut():
-			eticheta_anunt.text = _anunt_raft_parcurs()
+			_anunta(_anunt_raft_parcurs())
 
 	# NOTA, ACUM. `explicatie` e câmpul din contractul cu `puzzle.gd`, pus de
 	# `porneste()` din ce a întors disciplina — deci aici nu se întreabă nicio
@@ -684,8 +724,8 @@ func _inregistreaza(domeniu: String, nivel: int, id: String) -> void:
 	Arhiva.salveaza_permanent()
 	# Un nivel deblocat în tăcere e o răsplată pe care n-o observi. Rândul se
 	# șterge la întrebarea următoare (vezi `_pe_raft_ales`).
-	eticheta_anunt.text = "Nivelul %s deblocat la %s." % [
-		_roman(nivel + 1), TRIVIA.DOMENII.get(domeniu, domeniu)]
+	_anunta("Nivelul %s deblocat la %s." % [
+		_roman(nivel + 1), TRIVIA.DOMENII.get(domeniu, domeniu)])
 
 
 ## Cheia unei celule. Într-un singur loc, ca la cheile sacului: două locuri care

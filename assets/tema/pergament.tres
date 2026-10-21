@@ -1,0 +1,194 @@
+[gd_resource type="Theme" format=3]
+
+; TEMA PERGAMENT — hârtie, cerneală și rubrică, în culorile hărții de expediție.
+; Se pune pe RĂDĂCINA unei scene (`theme = ...`) și coboară singură în tot
+; arborele, inclusiv în scenele instanțiate dedesubt (trivia din Practice).
+; De ce și cum se folosește: antetul `ÎMBRĂCĂMINTEA` din `practice.gd`.
+;
+; ATENȚIE: comentariile cu `;` dispar dacă tema se salvează din editor.
+; Explicația care contează stă în `practice.gd`, nu aici.
+
+[ext_resource type="FontFile" path="res://assets/fonturi/Alegreya.ttf" id="1_alegreya"]
+[ext_resource type="FontFile" path="res://assets/fonturi/Cinzel.ttf" id="2_cinzel"]
+
+; Fonturile sunt VARIABILE: un singur fișier ține toate grosimile, iar
+; `variation_opentype` alege una. Cheia 2003265652 e eticheta „wght” scrisă
+; ca număr (0x77676874), așa cum o salvează Godot.
+[sub_resource type="FontVariation" id="FontVariation_text"]
+base_font = ExtResource("1_alegreya")
+variation_opentype = {
+2003265652: 500
+}
+
+[sub_resource type="FontVariation" id="FontVariation_titlu"]
+base_font = ExtResource("2_cinzel")
+variation_opentype = {
+2003265652: 700
+}
+
+; PAGINA: panoul de pergament, cu umbră, ca o foaie pusă pe masă.
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pagina"]
+content_margin_left = 6.0
+content_margin_top = 6.0
+content_margin_right = 6.0
+content_margin_bottom = 6.0
+bg_color = Color(0.91, 0.84, 0.69, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.34, 0.22, 0.12, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+shadow_color = Color(0, 0, 0, 0.55)
+shadow_size = 18
+shadow_offset = Vector2(0, 6)
+
+; CHENARUL: o zonă trasă cu cerneală PE pagină (locul întrebării).
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_chenar"]
+bg_color = Color(0.87, 0.79, 0.62, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.34, 0.22, 0.12, 0.45)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+; BUTOANELE rămân StyleBoxFlat, DINADINS: `_stil_contur_pentru` din `puzzle.gd`
+; copiază stilul `disabled` și-i animă rama, iar o textură ar opri efectul.
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_buton"]
+content_margin_left = 12.0
+content_margin_top = 4.0
+content_margin_right = 12.0
+content_margin_bottom = 4.0
+bg_color = Color(0.85, 0.76, 0.58, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.34, 0.22, 0.12, 0.55)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_buton_hover"]
+content_margin_left = 12.0
+content_margin_top = 4.0
+content_margin_right = 12.0
+content_margin_bottom = 4.0
+bg_color = Color(0.79, 0.68, 0.48, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.34, 0.22, 0.12, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_buton_apasat"]
+content_margin_left = 12.0
+content_margin_top = 5.0
+content_margin_right = 12.0
+content_margin_bottom = 3.0
+bg_color = Color(0.71, 0.59, 0.4, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.26, 0.16, 0.08, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+; Stins: aproape hârtia paginii, cu rama abia schițată. Tot de aici pleacă
+; și butoanele de răspuns după verdict (atunci sunt toate `disabled`), deci
+; fundalul nu se schimbă mult — verdele și roșul vin peste el, prin `modulate`.
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_buton_stins"]
+content_margin_left = 12.0
+content_margin_top = 4.0
+content_margin_right = 12.0
+content_margin_bottom = 4.0
+bg_color = Color(0.88, 0.8, 0.64, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.34, 0.22, 0.12, 0.25)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_buton_focus"]
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.5, 0.14, 0.08, 0.8)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gol"]
+
+[resource]
+default_font = SubResource("FontVariation_text")
+default_font_size = 17
+Button/colors/font_color = Color(0.2, 0.12, 0.06, 1)
+Button/colors/font_disabled_color = Color(0.2, 0.12, 0.06, 0.6)
+Button/colors/font_focus_color = Color(0.2, 0.12, 0.06, 1)
+Button/colors/font_hover_color = Color(0.12, 0.07, 0.03, 1)
+Button/colors/font_hover_pressed_color = Color(0.12, 0.07, 0.03, 1)
+Button/colors/font_pressed_color = Color(0.12, 0.07, 0.03, 1)
+Button/styles/disabled = SubResource("StyleBoxFlat_buton_stins")
+Button/styles/focus = SubResource("StyleBoxFlat_buton_focus")
+Button/styles/hover = SubResource("StyleBoxFlat_buton_hover")
+Button/styles/hover_pressed = SubResource("StyleBoxFlat_buton_apasat")
+Button/styles/normal = SubResource("StyleBoxFlat_buton")
+Button/styles/pressed = SubResource("StyleBoxFlat_buton_apasat")
+Label/colors/font_color = Color(0.2, 0.12, 0.06, 1)
+PanelContainer/styles/panel = SubResource("StyleBoxFlat_pagina")
+; Culorile de verdict ale lui `puzzle.gd` (vezi `_culoare()` acolo). Se
+; ÎNMULȚESC cu fondul stins al butonului (0.88, 0.8, 0.64), deci s-au ales
+; după produs: verde de cerneală veche și roșu de rubrică, nu de semafor.
+Puzzle/colors/asteptare = Color(0.8, 0.76, 0.72, 1)
+Puzzle/colors/verdict_bun = Color(0.64, 0.88, 0.62, 1)
+Puzzle/colors/verdict_bun_varf = Color(0.78, 0.97, 0.74, 1)
+Puzzle/colors/verdict_contur = Color(0.31, 0.4, 0.24, 1)
+Puzzle/colors/verdict_rau = Color(0.92, 0.58, 0.58, 1)
+Puzzle/colors/verdict_rau_varf = Color(1, 0.72, 0.68, 1)
+AntetPergament/base_type = &"Label"
+AntetPergament/colors/font_color = Color(0.93, 0.86, 0.7, 1)
+AntetPergament/colors/font_outline_color = Color(0.06, 0.04, 0.02, 0.9)
+AntetPergament/constants/outline_size = 6
+AntetPergament/fonts/font = SubResource("FontVariation_titlu")
+AntetSecundar/base_type = &"Label"
+AntetSecundar/colors/font_color = Color(0.82, 0.74, 0.58, 1)
+AntetSecundar/colors/font_outline_color = Color(0.06, 0.04, 0.02, 0.9)
+AntetSecundar/constants/outline_size = 5
+ChenarPergament/base_type = &"PanelContainer"
+ChenarPergament/styles/panel = SubResource("StyleBoxFlat_chenar")
+LegaturaPergament/base_type = &"Button"
+LegaturaPergament/colors/font_color = Color(0.5, 0.14, 0.08, 1)
+LegaturaPergament/colors/font_focus_color = Color(0.5, 0.14, 0.08, 1)
+LegaturaPergament/colors/font_hover_color = Color(0.32, 0.07, 0.03, 1)
+LegaturaPergament/colors/font_pressed_color = Color(0.32, 0.07, 0.03, 1)
+LegaturaPergament/styles/focus = SubResource("StyleBoxEmpty_gol")
+RubricaPergament/base_type = &"Label"
+RubricaPergament/colors/font_color = Color(0.5, 0.14, 0.08, 1)
+SubtitluPergament/base_type = &"Label"
+SubtitluPergament/colors/font_color = Color(0.38, 0.28, 0.17, 1)
+TitluPergament/base_type = &"Label"
+TitluPergament/colors/font_color = Color(0.5, 0.14, 0.08, 1)
+TitluPergament/fonts/font = SubResource("FontVariation_titlu")

@@ -188,6 +188,16 @@ const CULOARE_CONTUR := Color(0.85, 1, 0.9)
 # ea: două mișcări care se opresc în același moment se citesc ca una singură.
 const DURATA_CONTUR := DURATA_URCARE + DURATA_ASEZARE
 
+# ── O TEMĂ LE POATE ÎNLOCUI ───────────────────────────────────
+# Toate culorile de verdict de mai sus sunt doar IMPLICITE. O temă pusă
+# deasupra scenei (Practice o pune pe a ei, `assets/tema/pergament.tres`)
+# le poate da altele, sub tipul „Puzzle”: `verdict_bun`, `verdict_bun_varf`,
+# `verdict_rau`, `verdict_rau_varf`, `verdict_contur`, `asteptare`. Vezi
+# `_culoare()`. De ce: culorile cad prin `modulate`, adică se ÎNMULȚESC cu
+# fondul butonului. Verdele de mai sus e gândit pentru butoanele închise la
+# culoare din luptă; înmulțit cu un pergament deschis iese verde de semafor.
+# Lupta nu pune nicio temă, deci acolo nu se schimbă nimic.
+
 # ── FULGERUL BAREI DE TIMP (doar la timp expirat) ─────────────
 # Dacă n-ai apăsat nimic, niciun buton nu poate purta vina, iar verdele singur
 # arată ca un răspuns bun dat de altcineva: lipsește exact ce s-a întâmplat.
@@ -968,10 +978,10 @@ func _aprinde_raspunsul(ales: int, succes: bool) -> void:
 	# culoare să plece: un tween citește valoarea în clipa în care PORNEȘTE el,
 	# deci va găsi acolo vârful, oricare ar fi fost punctul de plecare.
 	tween_raspuns.tween_property(
-		buton_corect, "modulate", CULOARE_BUN_VARF, DURATA_URCARE
+		buton_corect, "modulate", _culoare("verdict_bun_varf", CULOARE_BUN_VARF), DURATA_URCARE
 	).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 	tween_raspuns.tween_property(
-		buton_corect, "modulate", CULOARE_BUN, DURATA_ASEZARE
+		buton_corect, "modulate", _culoare("verdict_bun", CULOARE_BUN), DURATA_ASEZARE
 	).set_delay(DURATA_URCARE).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 
 	# 2. RAMA, pe același buton, crescând în același timp cu fondul.
@@ -980,7 +990,7 @@ func _aprinde_raspunsul(ales: int, succes: bool) -> void:
 	stil_contur = _stil_contur_pentru(buton_corect)
 	if stil_contur != null:
 		tween_raspuns.tween_property(
-			stil_contur, "border_color", CULOARE_CONTUR, DURATA_CONTUR
+			stil_contur, "border_color", _culoare("verdict_contur", CULOARE_CONTUR), DURATA_CONTUR
 		).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 
 	# 3. GREȘEALA, dacă e cazul: roșul urcă pe butonul tău exact cu aceleași
@@ -993,10 +1003,10 @@ func _aprinde_raspunsul(ales: int, succes: bool) -> void:
 	if not succes and ales >= 0:
 		var buton_gresit: Button = butoane[ales]
 		tween_raspuns.tween_property(
-			buton_gresit, "modulate", CULOARE_RAU_VARF, DURATA_URCARE
+			buton_gresit, "modulate", _culoare("verdict_rau_varf", CULOARE_RAU_VARF), DURATA_URCARE
 		).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 		tween_raspuns.tween_property(
-			buton_gresit, "modulate", CULOARE_RAU, DURATA_ASEZARE
+			buton_gresit, "modulate", _culoare("verdict_rau", CULOARE_RAU), DURATA_ASEZARE
 		).set_delay(DURATA_URCARE).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 
 
@@ -1021,9 +1031,22 @@ func _stil_contur_pentru(buton: Button) -> StyleBoxFlat:
 	# Rama pleacă TRANSPARENTĂ: există de la primul cadru, dar nu se vede.
 	# `Color(CULOARE_CONTUR, 0.0)` = aceeași culoare, cu alfa 0. Tween-ul de
 	# afară nu face decât s-o aducă la alfa 1.
-	stil.border_color = Color(CULOARE_CONTUR, 0.0)
+	stil.border_color = Color(_culoare("verdict_contur", CULOARE_CONTUR), 0.0)
 	buton.add_theme_stylebox_override("disabled", stil)
 	return stil
+
+
+## O culoare de verdict: a TEMEI, dacă tema o dă, altfel constanta implicită.
+##
+## `has_theme_color` caută în tot lanțul de teme, de la nodul ăsta în sus până
+## la rădăcina scenei care l-a instanțiat — de-aia tema pusă pe `Practice`
+## ajunge până aici fără ca Practice să știe cum se numesc butoanele.
+## Tipul „Puzzle” nu există în tema implicită a lui Godot, deci fără o temă a
+## noastră răspunsul e mereu „nu”, și se folosește constanta.
+func _culoare(nume: String, implicita: Color) -> Color:
+	if has_theme_color(nume, "Puzzle"):
+		return get_theme_color(nume, "Puzzle")
+	return implicita
 
 
 ## Singura ieșire din scenă. `ales` = ce a apăsat jucătorul (-1 la timeout).
@@ -1044,7 +1067,7 @@ func _termina(succes: bool, ales: int) -> void:
 	# întunecă, atât. În clipa asta jocul ȘTIE deja dacă ai nimerit, dar nu
 	# spune — și tocmai tăcerea lui e efectul cerut.
 	if ales >= 0:
-		butoane[ales].modulate = CULOARE_ASTEPTARE
+		butoane[ales].modulate = _culoare("asteptare", CULOARE_ASTEPTARE)
 	else:
 		# TIMP EXPIRAT. N-ai apăsat nimic, deci niciun buton nu poate purta
 		# vina — iar verdele singur, apărut de nicăieri, arată exact ca un
