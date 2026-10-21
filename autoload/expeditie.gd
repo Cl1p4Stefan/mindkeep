@@ -373,6 +373,29 @@ const PASI_MINIMI_ODIHNA := 3
 ## acolo. La 2 pași regula se poate ține pe toate cele trei forme de hartă.
 const PASI_MAXIMI_PANA_LA_BATAIE := 2
 
+## Câte noduri de BĂTAIE (Luptă sau Elită, Startul inclus) cere cel mai ieftin
+## drum de la Start până la Boss.
+##
+## Celelalte praguri apără ÎNCEPUTUL drumului (Magazinul, Elita, Odihna nu prea
+## devreme) și FINALUL lui (o bătaie aproape de Boss). Niciunul nu întreba câte
+## lupte are drumul întreg — iar răspunsul, măsurat pe 21 octombrie 2026 pe 500
+## de semințe, era 2 pe 10% din hărțile `harta_01` și pe 41% din `harta_02`.
+## Adică Startul și încă o luptă, apoi Odihnă → Magazin → Eveniment → Odihnă →
+## Boss (sămânța 1000 pe `harta_01`). La un joc de antrenament, lupta E
+## antrenamentul: un drum de două lupte e o sesiune de trei minute deghizată în
+## expediție, iar ocolul devine strategia corectă, nu o alegere.
+##
+## 3, nu 4: pragul 4 dădea ZERO plasări valabile din 4000 pe ambele planșe, cu
+## rețeta de azi. Planșele se despică devreme în brațe, iar fiecare braț ar cere
+## propria bătaie — aceeași poveste ca la `LUPTE_MINIME_ELITA`. La 3, `harta_02`
+## stă la limită (~9% din plasări, față de cele 8% cerute de `REUSITE_LA_PROBA`);
+## pârghia, dacă proba începe să taie, e un Eveniment mutat în Luptă în rețetă.
+##
+## Ocolul rămâne posibil și e bine să rămână: Elitele se pot evita, iar ce face
+## luptele TENTANTE sunt recompensele (pasul 4 din rută), nu regula asta. Ea
+## pune doar o podea.
+const LUPTE_MINIME_PANA_LA_BOSS := 3
+
 ## Câte aranjări se încearcă până să ne dăm bătuți pe o sămânță.
 ##
 ## Nu e o limită de timp, ci o plasă împotriva buclei infinite: dacă regulile
@@ -2445,6 +2468,8 @@ static func _reguli_picate(
 		picate.append("boss fără odihnă alături")
 	if not _regula_bataie_aproape_de_boss(noduri, pasi_pana_la_boss):
 		picate.append("nicio bătaie aproape de boss")
+	if not _regula_podea_de_lupte(lupte, id_boss):
+		picate.append("prea puține lupte până la boss")
 	return picate
 
 
@@ -2625,6 +2650,21 @@ static func _regula_bataie_aproape_de_boss(
 		if int(pasi_pana_la_boss[int(nod["id"])]) <= PASI_MAXIMI_PANA_LA_BATAIE:
 			return true
 	return false
+
+
+## Nici cel mai ieftin drum până la Boss nu trece prin mai puțin de
+## `LUPTE_MINIME_PANA_LA_BOSS` bătăi.
+##
+## Citește aceleași „lupte minime” ca pragurile Magazinului și Elitei, doar că
+## în capătul celălalt: acolo întrebarea era „câte lupte AI ÎN SPATE aici?”,
+## aici e „câte NU POȚI ocoli?”. Bossul însuși nu se numără — `_lupte_minime`
+## adună costul nodului din care PLECI, deci la Boss ajunge suma drumului fără el.
+static func _regula_podea_de_lupte(
+	lupte_minime: PackedInt32Array, id_boss: int
+) -> bool:
+	if id_boss < 0 or id_boss >= lupte_minime.size():
+		return true
+	return int(lupte_minime[id_boss]) >= LUPTE_MINIME_PANA_LA_BOSS
 
 
 # ─────────────────────────────────────────────────────────────
