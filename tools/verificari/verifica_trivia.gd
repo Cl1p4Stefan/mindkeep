@@ -171,6 +171,7 @@ func _ready() -> void:
 	tot_bun = _sacul(intrebari) and tot_bun
 	tot_bun = _sacurile_nu_se_amesteca(intrebari) and tot_bun
 	tot_bun = _rafturile(intrebari) and tot_bun
+	tot_bun = _nestiutele_intai() and tot_bun
 	tot_bun = _imaginile() and tot_bun
 	# ULTIMA, fiindcă e singura care ÎNLOCUIEȘTE `TRIVIA.intrebari` cu o bază
 	# sintetică. O pune la loc când termină, dar o verificare care mișcă pământul
@@ -1046,6 +1047,117 @@ func _proba_cheilor(domeniu: String, nivel: int, martor: String, epuizat: String
 	elif repetat_in_lupta:
 		amanunt = "sacul de LUPTĂ a uitat (%s a ieșit de două ori)" % id_lupta
 	return _verdict("cheile sunt separate pe filtru", bun, amanunt)
+
+
+# ─────────────────────────────────────────────────────────────
+# 9b. NEȘTIUTELE ÎNTÂI, GREȘITA LA DISTANȚĂ, RAFTUL PARCURS
+#
+# O sesiune de Practice jucată de un script, pe un raft adevărat, prin chiar
+# `trage_din_raft`: răspunde corect la tot, mai puțin la O întrebare, pe care o
+# greșește de două ori. Două ori, fiindcă abia a doua greșeală o lasă ULTIMA
+# neștiută, adică exact cazul în care distanța nu mai vine de la sine și e
+# nevoie de umplutură.
+#
+# CE SE CERE:
+#   NEȘTIUTELE ÎNTÂI. O întrebare știută iese doar când toate neștiutele sunt în
+#   fereastra celor recente — adică doar ca umplutură.
+#   DISTANȚA. Nicio întrebare nu iese dacă a ieșit în ultimele
+#   `DISTANTA_PRACTICE` trageri. Pe toată sesiunea, deci și în recapitulare.
+#   GREȘITA REVINE, și raftul ajunge știut tot.
+#   UMPLUTURA CHIAR APARE. Altfel proba n-a atins cazul pentru care există.
+#   `raft_parcurs` din Practice spune „nu" cu o neștiută și „da" cu zero.
+# ─────────────────────────────────────────────────────────────
+
+const PRACTICE := preload("res://scenes/practice/practice.gd")
+
+func _nestiutele_intai() -> bool:
+	print("\n  NEȘTIUTELE ÎNTÂI (o sesiune de Practice jucată de script)")
+
+	# Primul raft de nivelul I cu destule întrebări cât să aibă rost distanța.
+	var domeniu := ""
+	var raft := ""
+	for cheie in TRIVIA.DOMENII:
+		for r in TRIVIA.SUBCATEGORII.get(String(cheie), {}):
+			if domeniu == "" and TRIVIA.raftul(1, String(cheie), String(r)).size() >= 10:
+				domeniu = String(cheie)
+				raft = String(r)
+	if domeniu == "":
+		return _verdict("neștiutele întâi", false, "niciun raft cu 10 întrebări la nivelul I")
+
+	var pool := TRIVIA.raftul(1, domeniu, raft)
+	var n := pool.size()
+	var k := mini(TRIVIA.DISTANTA_PRACTICE, n - 1)
+	var gresita := String(pool[0]["id"])
+
+	Sac.goleste_tot()
+	var stiute := {}
+	var recente: Array = []
+	var trase: Array[String] = []
+	var greseli_ramase := 2
+	var stiute_inainte_de_tot := true
+	var distanta_incalcata: Array[String] = []
+	var umplutura := 0
+	var aparitii_gresita := 0
+
+	# 3n trageri: destule ca raftul să ajungă știut, și apoi o recapitulare lungă.
+	for i in range(3 * n):
+		var q := TRIVIA.trage_din_raft(1, domeniu, raft, stiute, recente)
+		var id := String(q.get("id", ""))
+		if id == "":
+			return _verdict("neștiutele întâi", false, "tragerea %d a întors gol" % i)
+
+		if trase.slice(maxi(0, trase.size() - k)).has(id):
+			distanta_incalcata.append("%s la tragerea %d" % [id, i])
+
+		if stiute.has(id) and stiute.size() < n:
+			# Știută cât mai sunt neștiute: e voie doar dacă TOATE neștiutele erau
+			# în fereastra recentă.
+			umplutura += 1
+			for alt in pool:
+				var aid := String(alt["id"])
+				if not stiute.has(aid) and not recente.has(aid):
+					stiute_inainte_de_tot = false
+
+		trase.append(id)
+		recente.append(id)
+		if recente.size() > TRIVIA.DISTANTA_PRACTICE:
+			recente.pop_front()
+
+		if id == gresita:
+			aparitii_gresita += 1
+			if greseli_ramase > 0:
+				greseli_ramase -= 1
+				continue
+		stiute[id] = true
+
+	# `raft_parcurs` citește progresul STATIC din Practice. Se pune deoparte cel
+	# adevărat (l-a adus Arhiva la pornire) și se pune la loc la final.
+	var salvat := PRACTICE.spre_dictionar()
+	var celula := "%s:1" % domeniu
+	var aproape := stiute.duplicate()
+	aproape.erase(gresita)
+	PRACTICE.din_dictionar({"stiute": {celula: aproape}})
+	var cu_una := PRACTICE.raft_parcurs(1, domeniu, raft)
+	PRACTICE.din_dictionar({"stiute": {celula: stiute}})
+	var cu_zero := PRACTICE.raft_parcurs(1, domeniu, raft)
+	PRACTICE.din_dictionar(salvat)
+	Sac.goleste_tot()
+
+	var tot_bun := true
+	tot_bun = _verdict("neștiutele întâi, știutele doar ca umplutură", stiute_inainte_de_tot,
+		"%s:%s, %d întrebări" % [domeniu, raft, n]) and tot_bun
+	tot_bun = _verdict("nicio întrebare în ultimele %d trageri" % k, distanta_incalcata.is_empty(),
+		"%d trageri" % trase.size() if distanta_incalcata.is_empty()
+		else _primele(distanta_incalcata, 4)) and tot_bun
+	tot_bun = _verdict("greșita revine, raftul ajunge știut tot",
+		aparitii_gresita >= 3 and stiute.size() == n,
+		"%s a ieșit de %d ori, %d/%d știute" % [gresita, aparitii_gresita, stiute.size(), n]) \
+		and tot_bun
+	tot_bun = _verdict("umplutura chiar apare", umplutura > 0,
+		"%d știute puse ca distanță" % umplutura) and tot_bun
+	tot_bun = _verdict("raftul e parcurs abia cu zero neștiute", not cu_una and cu_zero,
+		"cu una: %s, cu zero: %s" % [cu_una, cu_zero]) and tot_bun
+	return tot_bun
 
 
 # ─────────────────────────────────────────────────────────────

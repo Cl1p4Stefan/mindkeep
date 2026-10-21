@@ -367,6 +367,15 @@ const SAC := "cultura_generala"
 # pe care n-o poți citi într-un raport și n-o poți deosebi de o greșeală.
 const SAC_PRACTICE := "practice"
 
+# Câte ALTE întrebări trebuie să treacă pe un raft din Practice înainte ca una
+# să poată reveni — greșită sau nu. Motivul e la `trage_din_raft`.
+#
+# 3 e cifră de pornire, nejucată: destul cât varianta corectă văzută la feedback
+# să nu mai fie „pe ecran" în memorie, puțin cât umplutura de la finalul unui
+# raft (întrebări știute, puse doar ca să creeze distanța) să nu se simtă ca o
+# pedeapsă.
+const DISTANTA_PRACTICE := 3
+
 # `static var` = aparține SCRIPTULUI, nu fiecărei copii a scenei.
 # Deschizi puzzle-ul de ~7 ori pe rundă; fără `static`, fișierul ar fi citit
 # de pe disc de fiecare dată. Așa, se citește o singură dată pe rulare,
@@ -410,7 +419,7 @@ static var _plasa_spusa := {}
 # ─────────────────────────────────────────────────────────────
 # FILTRUL DIN PRACTICE
 #
-# Două variabile de INSTANȚĂ (nu `static`): sunt ale copiei de scenă care stă
+# Variabile de INSTANȚĂ (nu `static`): sunt ale copiei de scenă care stă
 # chiar acum pe ecran, nu ale scriptului. Lupta nu le atinge niciodată, deci
 # rămân goale acolo, iar `_compune_intrebare` trage ca întotdeauna.
 # ─────────────────────────────────────────────────────────────
@@ -422,6 +431,11 @@ var filtru_domeniu := ""
 ## e pus: un raft fără domeniu n-ar însemna nimic, fiindcă cheile de
 ## subcategorie se repetă între domenii doar prin accident, nu prin regulă.
 var filtru_subcategorie := ""
+
+## Ce știi deja la nivelul ăsta, și ce s-a tras ultima oară. Le pune Practice,
+## ca pe filtre; sensul lor e la `trage_din_raft`. Goale în luptă.
+var stiute_raft := {}
+var recente_raft: Array = []
 
 ## ÎNTREBAREA BRUTĂ care stă chiar acum pe ecran, așa cum e în fișier.
 ##
@@ -454,7 +468,8 @@ func _compune_intrebare(nivel: int) -> Dictionary:
 	# „de unde vine întrebarea", deci aici e locul cinstit pentru a doua sursă.
 	# Filtru gol = lupta, cu echilibrul pe domenii și pragul ei; filtru pus =
 	# Practice, unde domeniul l-a ales jucătorul, deci n-are ce echilibra nimeni.
-	var q := trage_din_raft(nivel, filtru_domeniu, filtru_subcategorie) \
+	var q := trage_din_raft(nivel, filtru_domeniu, filtru_subcategorie,
+			stiute_raft, recente_raft) \
 		if filtru_domeniu != "" else trage_intrebarea(nivel)
 
 	# Reținem BRUTA înainte de orice împachetare — vezi `ultima_trasa`. Se scrie
@@ -678,8 +693,38 @@ static func cheia_raftului(domeniu: String, subcategorie: String, nivel: int) ->
 	return "%s:%s:%s:%d" % [SAC_PRACTICE, domeniu, raft, nivel]
 
 
-## Trage o întrebare din raft, fără repetiții cât timp mai există una nevăzută.
-## Întoarce întrebarea BRUTĂ (ca `trage_intrebarea`), sau dicționar gol.
+## Trage o întrebare din raft: întâi dintre cele NEȘTIUTE, și niciodată una
+## dintre ultimele trase. Întoarce întrebarea BRUTĂ (ca `trage_intrebarea`), sau
+## dicționar gol.
+##
+##   `stiute`  — id → true, ce ai răspuns deja corect la nivelul ăsta (mulțimea
+##               celulei din `practice.gd`, nu a raftului: filtrul pe raft îl
+##               face oricum `raftul`). Gol = nimic știut, deci tragerea e cea de
+##               dinainte, pe tot raftul.
+##   `recente` — id-urile trase ultimele, cea mai nouă la coadă. Se iau în seamă
+##               ultimele `DISTANTA_PRACTICE`.
+##
+## ─── TREI LISTE, ÎN ORDINE ────────────────────────────────────
+##   1. neștiutele care nu sunt printre cele recente — drumul obișnuit;
+##   2. dacă nu e niciuna: tot raftul, fără cele recente. Asta e UMPLUTURA de la
+##      final, când singura neștiută rămasă e chiar cea greșită acum o clipă, și
+##      tot asta e RECAPITULAREA, după ce raftul e știut tot;
+##   3. raftul întreg, dacă e atât de mic încât n-a rămas nimic (vezi `k`).
+##
+## ─── DE CE O GREȘITĂ NU REVINE IMEDIAT ────────────────────────
+## După un răspuns greșit, ecranul ți-a arătat varianta corectă. Pusă din nou la
+## tragerea următoare, întrebarea s-ar rezolva din ce ai văzut acum zece secunde,
+## nu din ce știi — o întrebare GRATIS, exact ce sacul există ca să împiedice
+## (antetul din `sac.gd`). Iar Practice i-ar fi trecut-o la „știute", adică
+## pragul de nivel ar fi numărat un răspuns pe care nu l-ai știut.
+##
+## ─── DE CE ACEEAȘI CHEIE DE SAC PENTRU TOATE TREI ─────────────
+## Sacul e un registru de „ce s-a pus pe masă", nu de „ce știi", deci rămâne
+## unul singur pe raft, oricare listă i s-ar da. Lista de neștiute scade pe
+## măsură ce răspunzi; sacul se descurcă: când a dat tot ce era în ea, o ia de
+## la capăt — și ăla e chiar momentul în care greșitele revin, DUPĂ toate
+## celelalte neștiute. Distanța minimă de mai sus contează doar la final, când
+## neștiutele sunt prea puține ca s-o dea singure.
 ##
 ## SACUL RAFTULUI E PERMANENT, și ăsta e singurul loc din joc care declară asta.
 ## `sac.gd` nu știe ce e „practice" și nu trebuie să afle (vezi `Sac.Durata`);
@@ -691,13 +736,31 @@ static func cheia_raftului(domeniu: String, subcategorie: String, nivel: int) ->
 ## Sacul de LUPTĂ, dimpotrivă, rămâne pe expediție (`cheia_sacului`, mai sus):
 ## la un joc de învățare, o întrebare care revine peste câteva runuri e exact ce
 ## vrei. Vezi sesiunea SAVE pentru de ce nu s-au făcut amândouă permanente.
-static func trage_din_raft(nivel: int, domeniu: String, subcategorie := "") -> Dictionary:
+static func trage_din_raft(nivel: int, domeniu: String, subcategorie := "",
+		stiute := {}, recente: Array = []) -> Dictionary:
 	var pool := raftul(nivel, domeniu, subcategorie)
 	if pool.is_empty():
 		return {}
+
+	# Cât de departe se uită înapoi: cel mult `DISTANTA_PRACTICE`, dar mereu cu
+	# măcar o întrebare lăsată afară din fereastră. Pe un raft de 3, o fereastră
+	# de 3 ar fi exclus tot raftul.
+	var k := mini(DISTANTA_PRACTICE, pool.size() - 1)
+	var oprite := {}
+	for id in recente.slice(maxi(0, recente.size() - k)):
+		oprite[String(id)] = true
+
+	var candidate := pool.filter(func(q):
+		var id := String(q["id"])
+		return not stiute.has(id) and not oprite.has(id))
+	if candidate.is_empty():
+		candidate = pool.filter(func(q): return not oprite.has(String(q["id"])))
+	if candidate.is_empty():
+		candidate = pool
+
 	# „id" e câmpul după care sacul recunoaște o întrebare — nu poziția în listă,
 	# care se mută, și nu textul, care se schimbă la reformulare. Vezi `sac.gd`.
-	var tras = Sac.extrage(cheia_raftului(domeniu, subcategorie, nivel), pool, "id",
+	var tras = Sac.extrage(cheia_raftului(domeniu, subcategorie, nivel), candidate, "id",
 		Sac.Durata.PERMANENT)
 	if tras == null:
 		return {}

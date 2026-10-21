@@ -29,9 +29,22 @@ extends Control
 ## fiecare lustruire viitoare (un sunet, o animație, „Află mai multe") să se
 ## facă de două ori, cu două șanse să se despartă pe furiș.
 ##
-## Tot ce-i spune ecranul ăsta scenei de trivia sunt TREI VALORI puse înainte de
-## `porneste()`: `cu_cronometru`, `filtru_domeniu`, `filtru_subcategorie`.
-## Nicio linie din `trage_intrebarea` (alegerea din luptă) nu e atinsă.
+## Tot ce-i spune ecranul ăsta scenei de trivia sunt CINCI VALORI puse înainte de
+## `porneste()`: `cu_cronometru`, `filtru_domeniu`, `filtru_subcategorie`, plus
+## `stiute_raft` și `recente_raft` (neștiutele întâi, greșitele la distanță —
+## vezi `trage_din_raft`). Nicio linie din `trage_intrebarea` (alegerea din
+## luptă) nu e atinsă.
+##
+## ─────────────────────────────────────────────────────────────
+## RAFTUL PARCURS (21 octombrie 2026)
+##
+## Tragerea pune întâi întrebările pe care nu le-ai răspuns încă corect, deci
+## fiecare răspuns bun mișcă pragul de nivel. O greșită rămâne neștiută și
+## revine — dar abia după `DISTANTA_PRACTICE` alte întrebări, iar la finalul
+## raftului distanța se umple cu întrebări știute. Când n-a mai rămas nicio
+## neștiută, ecranul o spune (`_anunt_raft_parcurs`) și raftul continuă ca
+## recapitulare. „Știut" înseamnă aici „corect o dată": regula mai strictă,
+## „învățat", e felia următoare și schimbă doar cine iese din neștiute.
 ##
 ## ─────────────────────────────────────────────────────────────
 ## PROGRESUL TRECE PE DISC, DAR ÎNCĂ STĂ ÎN `static var`
@@ -86,7 +99,8 @@ extends Control
 ## ─────────────────────────────────────────────────────────────
 ## CE NU INTRĂ ÎN FELIA ASTA (e în plan, în felii separate)
 ##
-## Greșitele care revin, „învățat" și Jurnalul, amestecul de niveluri după
+## „Învățat" și Jurnalul (greșitele revin de pe 21 octombrie, pe raftul ales —
+## vezi „Raftul parcurs" mai sus), amestecul de niveluri după
 ## deblocare, istoricul comun cu expedițiile. Și IMAGINEA din popup (hartă
 ## desenată din date sau imagine reală cu licență): `imagini` e deja un câmp al
 ## faptului, dar `_incarca_fapte` citește doar nota, deci imaginea n-are încă pe
@@ -194,6 +208,15 @@ var nota_curenta := ""
 ## lucruri, iar cifra n-ar mai spune „cât am lucrat azi".
 var corecte_sesiune := 0
 var total_sesiune := 0
+
+## Id-urile trase ultimele pe raftul ales, cea mai nouă la coadă. Le citește
+## `trage_din_raft`, ca să nu pună o întrebare înapoi pe masă prea repede.
+##
+## NU SE SCRIE PE DISC, dinadins. E o distanță de câteva întrebări, nu un
+## istoric: cine închide jocul și revine mâine n-are cum să-și mai amintească
+## varianta corectă de aseară. Se golește la schimbarea raftului, din același
+## motiv — e un alt raft, alte întrebări.
+var recente: Array = []
 
 @onready var eticheta_titlu: Label = %Titlu
 @onready var eticheta_stare: Label = %Stare
@@ -317,9 +340,12 @@ func _arata_rafturile() -> void:
 
 func _pe_raft_ales(raft: String) -> void:
 	subcategorie_aleasa = raft
+	recente.clear()
 	panou_alegere.visible = false
 	panou_intrebare.visible = true
-	eticheta_anunt.text = ""
+	# Un raft parcurs deja (într-o sesiune de ieri) se anunță de la intrare: altfel
+	# ai afla abia din contorul care nu se mișcă.
+	eticheta_anunt.text = _anunt_raft_parcurs() if _raft_stiut() else ""
 	_intrebare_noua()
 
 
@@ -377,15 +403,25 @@ func _intrebare_noua() -> void:
 
 	zona_puzzle.visible = true
 
-	# Cele trei valori pe care le pune Practice, TOATE înainte de `porneste()`:
-	# acolo se compune întrebarea și (în luptă) pornește cronometrul.
+	# Valorile pe care le pune Practice, TOATE înainte de `porneste()`: acolo se
+	# compune întrebarea și (în luptă) pornește cronometrul.
 	var nou := SCENA_TRIVIA.instantiate()
 	nou.cu_cronometru = false
 	nou.filtru_domeniu = domeniu_ales
 	nou.filtru_subcategorie = subcategorie_aleasa
+	nou.stiute_raft = _stiute.get(_cheia_celulei(domeniu_ales, nivel), {})
+	nou.recente_raft = recente
 	zona_puzzle.add_child(nou)
 	puzzle = nou
 	nou.porneste(nivel)
+
+	# Tras ACUM, nu la răspuns: o întrebare rămasă fără răspuns (ai apăsat
+	# „Schimbă domeniul") tot a fost pe masă. Lista ține doar cât se folosește.
+	var id_tras := String(nou.ultima_trasa.get("id", ""))
+	if id_tras != "":
+		recente.append(id_tras)
+		if recente.size() > TRIVIA.DISTANTA_PRACTICE:
+			recente.pop_front()
 
 	# `await` pe semnalul scenei, exact ca în `ruleaza_lant` din `lupta.gd`:
 	# funcția asta se suspendă aici, restul jocului merge înainte, iar firul se
@@ -414,7 +450,13 @@ func _pe_raspuns(succes: bool, de_la: Node) -> void:
 	var bruta: Dictionary = de_la.ultima_trasa
 	var id := String(bruta.get("id", ""))
 	if succes and id != "":
+		var era_stiut := _raft_stiut()
 		_inregistreaza(domeniu_ales, nivel, id)
+		# Anunțul, în clipa în care raftul a devenit știut tot. Dacă același
+		# răspuns a deschis și nivelul următor, anunțul de nivel rămâne: e vestea
+		# mai mare, iar raftul, la nivelul nou, nu mai e parcurs.
+		if not era_stiut and nivelul(domeniu_ales) == nivel and _raft_stiut():
+			eticheta_anunt.text = _anunt_raft_parcurs()
 
 	# NOTA, ACUM. `explicatie` e câmpul din contractul cu `puzzle.gd`, pus de
 	# `porneste()` din ce a întors disciplina — deci aici nu se întreabă nicio
@@ -573,8 +615,64 @@ func _inregistreaza(domeniu: String, nivel: int, id: String) -> void:
 
 ## Cheia unei celule. Într-un singur loc, ca la cheile sacului: două locuri care
 ## compun același text ajung, într-o zi, să-l compună altfel.
-func _cheia_celulei(domeniu: String, nivel: int) -> String:
+static func _cheia_celulei(domeniu: String, nivel: int) -> String:
 	return "%s:%d" % [domeniu, nivel]
+
+
+## Câte întrebări din raft n-ai răspuns încă corect, la nivelul ăsta.
+## Raftul gol = 0 neștiute, dar NU „parcurs" — vezi `raft_parcurs`.
+##
+## Statică, pe progresul static, ca s-o poată întreba și `verifica_trivia`
+## fără un ecran deschis.
+static func nestiute(nivel: int, domeniu: String, subcategorie := "") -> int:
+	var pe_celula: Dictionary = _stiute.get(_cheia_celulei(domeniu, nivel), {})
+	var cate := 0
+	for q in TRIVIA.raftul(nivel, domeniu, subcategorie):
+		if not pe_celula.has(String(q["id"])):
+			cate += 1
+	return cate
+
+
+## Ai răspuns corect la TOATE întrebările raftului, la nivelul ăsta?
+##
+## Un raft gol nu e parcurs: n-ai ce anunța despre el, iar ecranul spune deja,
+## altfel, că n-are întrebări (vezi `_intrebare_noua`).
+static func raft_parcurs(nivel: int, domeniu: String, subcategorie := "") -> bool:
+	return not TRIVIA.raftul(nivel, domeniu, subcategorie).is_empty() \
+		and nestiute(nivel, domeniu, subcategorie) == 0
+
+
+func _raft_stiut() -> bool:
+	return raft_parcurs(nivelul(domeniu_ales), domeniu_ales, subcategorie_aleasa)
+
+
+## Ce spune ecranul când raftul e știut tot.
+##
+## ─── DE CE E NEVOIE DE EL ─────────────────────────────────────
+## Pragul de nivel numără întrebări DISTINCTE pe domeniu. Pe un raft știut tot,
+## niciun răspuns nu-l mai mișcă — iar fără anunț, asta arată ca un contor
+## stricat și ca un raft care a început să se repete. Anunțul spune ce s-a
+## întâmplat (ai trecut prin tot), ce urmează (recapitulare, nu o ușă închisă:
+## „Ton sănătos") și unde e drumul spre nivelul următor, cu cifra.
+##
+## Cifra din a doua propoziție e CINSTITĂ și când domeniul nu ajunge: dacă
+## neștiutele rămase în tot domeniul sunt mai puține decât cere pragul, se spune
+## asta, în loc să trimiți jucătorul după întrebări care nu există.
+func _anunt_raft_parcurs() -> String:
+	var nivel := nivelul(domeniu_ales)
+	var ce := "tot domeniul" if subcategorie_aleasa == "" else "tot raftul"
+	var inceput := "Ai raspuns corect la %s, la nivelul %s. De aici e recapitulare." % [
+		ce, _roman(nivel)]
+	if nivel >= _nivel_maxim():
+		return inceput
+
+	var lipsa := PRAG_PRACTICE - cate_stiute(domeniu_ales, nivel)
+	var ramase := nestiute(nivel, domeniu_ales)
+	if ramase >= lipsa:
+		return "%s\nPentru nivelul %s mai ai nevoie de %d, din restul domeniului." % [
+			inceput, _roman(nivel + 1), lipsa]
+	return "%s\nNivelul %s cere inca %d, iar domeniul mai are doar %d nestiute." % [
+		inceput, _roman(nivel + 1), lipsa, ramase]
 
 
 func _nivel_maxim() -> int:
