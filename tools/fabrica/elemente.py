@@ -538,37 +538,161 @@ def verifica_dublurile(lista, intrebari_mana):
 # DISTRACTORII
 # ─────────────────────────────────────────────────────────────
 
-def punctaj(tinta, e, sens):
-	"""Cât de plauzibil e `e` ca distractor la întrebarea despre `tinta`.
+def punctaj(tinta, e):
+	"""Cât de plauzibil e `e` ca distractor la `cere_nume` (numele pe butoane).
 
 	Regula pornește de la cerința ta: la „simbolul aurului", Ag și Al, nu Xe.
 
-	  +100  la `cere_simbol`: simbol cu aceeași primă literă ca cel corect
-	        (Au → Ag, Al, Ar, As). La `cere_nume`: element al cărui simbol
-	        începe cu litera simbolului cerut (Hg → hidrogen, heliu) — adică
-	        exact confuzia „H trebuie să fie hidrogen".
-	  +50   la `cere_simbol`: simbol care ar putea fi o prescurtare a numelui
-	        cerut (sodiu → S, Si, Sc, Se), adică întrebarea „de ce nu e S?".
-	        La `cere_nume`: nume care începe cu litera simbolului cerut.
-	  +10/5 același nivel / nivel vecin.
+	  +100  element al cărui simbol începe cu litera simbolului cerut
+	        (Hg → hidrogen, heliu) — adică exact confuzia „H trebuie să fie
+	        hidrogen".
+	  +50   nume care începe cu litera simbolului cerut.
+	  +10/5 același nivel / nivel vecin; 0 la doi niveluri distanță.
+
+	La `cere_simbol` (simbolurile pe butoane) e `punctaj_simbol`, mai jos.
 	"""
 	p = 0
 	if e["simbol"][0] == tinta["simbol"][0]:
 		p += 100
-	if sens == "cere_simbol":
-		if e["simbol"][0].lower() == tinta["nume"][0].lower():
-			p += 50
-	else:
-		if e["nume"][0].lower() == tinta["simbol"][0].lower():
-			p += 50
-	p += 10 if e["nivel"] == tinta["nivel"] else 5
+	if e["nume"][0].lower() == tinta["simbol"][0].lower():
+		p += 50
+	if e["nivel"] == tinta["nivel"]:
+		p += 10
+	elif abs(e["nivel"] - tinta["nivel"]) == 1:
+		p += 5
 	return p
 
 
-def alege_distractorii(tinta, lista, sens):
-	"""Cei trei distractori, deterministic.
+# ── LA `cere_simbol`: TOATE CELE 118, PLUS SIMBOLURI INVENTATE ──
+#
+# Până pe 21 octombrie 2026 și simbolurile se alegeau dintre cele 70 din tabel,
+# în banda de nivel. Așa a ieșit, în Practice:
+#
+#   Care este simbolul chimic al iodului?   Ne / C / I / Ni
+#
+# Iodul n-avea niciun frate pe litera I în bandă, deci distractorii au ieșit din
+# ruperea egalităților, iar răspunsul era singurul buton care seamănă cu
+# „iod”. Măsurat pe toate 69 (aurul e în fișierul de mână): la 20 răspunsul era
+# SINGURUL buton care se poate citi ca prescurtare a numelui (`seamana`) — de la
+# litiu, oxigen, iod și uraniu până la galiu, rubidiu și osmiu. După: la 0, cu
+# 21 de simboluri inventate în 13 întrebări.
+#
+# DOUĂ SCHIMBĂRI, și amândouă țin numai de sensul ăsta:
+#
+# 1. FONDUL SUNT TOATE CELE 118 ELEMENTE DESCOPERITE, nu cele 70. Banda de nivel
+#    apără de „trei nume obscure lângă unul celebru”, dar pe butoane stau
+#    SIMBOLURI, iar In și Ir nu arată mai obscur decât I. Iodul primește așa In
+#    și Ir, oxigenul Os și Og.
+#
+# 2. UNDE ALFABETUL REAL SE TERMINĂ, SIMBOLURI INVENTATE. U, W, X și Z n-au
+#    frați deloc printre cele 118 (Zn are doar Zr), deci la uraniu, wolfram,
+#    xenon și zinc niciun fond real nu poate ascunde răspunsul. Atunci se
+#    inventează din numele cerut: litera lui întâi plus una din literele lui
+#    (uraniu → Ur, Un, Ua). Numai la elementele al căror simbol pornește de la
+#    numele românesc, fiindcă acolo e scurtătura; nu la cele din `DIN_LATINA`.
+#
+#    E singurul loc din fabrică în care pe un buton stă ceva ce nu există, și
+#    l-am cântărit: nu predă nimic fals, fiindcă stă doar pe un buton GREȘIT, iar
+#    întrebarea pe care o pune („U sau Ur?”) e exact cea pe care trebuie s-o
+#    știi. Un „inventat” care se întâmplă să fie real (Ir la iod) nu e lăsat
+#    să treacă drept inventat: `simbolurile_inventate` scade toate cele 118.
+#
+# Ordinea: întâi simbolurile reale cu litera răspunsului, apoi cele inventate,
+# apoi restul. Deci inventatele apar DOAR unde cele reale nu ajung.
 
-	SINGURA PLASĂ E BANDA DE NIVEL, și merită spus de ce nu e alta. Am scris
+def seamana(simbol, nume):
+	"""Se poate citi `simbol` ca prescurtare a lui `nume`? (Og ← oxigen, Ag ← argint)
+
+	Prima literă a simbolului e prima a numelui, iar celelalte apar în nume, în
+	ordine. E testul „subșir” pe care docstring-ul de sus îl respinge ca măsură a
+	NIVELULUI — acolo greșea în ambele direcții. Aici nu decide nimic despre
+	element, doar ordonează distractorii: un simbol care SEAMĂNĂ cu numele e mai
+	tentant decât unul care doar începe la fel.
+	"""
+	s = simbol.lower()
+	n = nume.lower()
+	if s[0] != n[0]:
+		return False
+	de_la = 1
+	for litera in s[1:]:
+		gasit = n.find(litera, de_la)
+		if gasit < 0:
+			return False
+		de_la = gasit + 1
+	return True
+
+
+def simbolurile_inventate(tinta, reale):
+	"""Simbolurile care NU există, făcute din numele cerut. Vezi mai sus.
+
+	Doar litere fără diacritice: un simbol chimic n-are niciodată „ț” sau „ă”.
+	Și fără litera întâi dublată: „Uu” din uraniu și „Ii” din indiu se văd de
+	departe că nu sunt simboluri, deci n-ar ascunde nimic.
+	"""
+	if tinta["simbol"] in DIN_LATINA:
+		return []
+	if tinta["simbol"][0].lower() != tinta["nume"][0].lower():
+		return []
+	prima = tinta["nume"][0].upper()
+	inventate = {prima} | {prima + l for l in tinta["nume"][1:]
+	                         if "a" <= l <= "z" and l != prima.lower()}
+	inventate.discard(tinta["simbol"])
+	return sorted(inventate - reale)
+
+
+def punctaj_simbol(tinta, simbol, inventat, alese):
+	"""Cât de plauzibil e `simbol` ca distractor la `cere_simbol`.
+
+	  +100  aceeași primă literă ca simbolul corect (I → In, Ir)
+	  +50   seamănă cu numele cerut (oxigen → Og)
+	  +20   prima lui literă apare în numele cerut (zinc → Nb)
+	  +5    e unul din cele 70 din tabel: un distractor pe care-l vei întâlni și
+	        ca răspuns devine o lecție mai târziu
+	  110   fix, pentru unul inventat: sub orice simbol real cu litera
+	        răspunsului (cel puțin 120), peste orice alt simbol real (cel mult 25)
+	"""
+	if inventat:
+		return 110
+	p = 0
+	if simbol[0] == tinta["simbol"][0]:
+		p += 100
+	if seamana(simbol, tinta["nume"]):
+		p += 50
+	if simbol[0].lower() in tinta["nume"]:
+		p += 20
+	if simbol in alese:
+		p += 5
+	return p
+
+
+def alege_simbolurile(tinta, lista, reale):
+	"""Cei trei distractori la `cere_simbol`, deterministic. Întoarce simboluri."""
+	alese = {e["simbol"] for e in lista}
+	inventate = simbolurile_inventate(tinta, reale)
+	candidati = ([(s, False) for s in sorted(reale) if s != tinta["simbol"]]
+	             + [(s, True) for s in inventate])
+	candidati.sort(key=lambda c: (-punctaj_simbol(tinta, c[0], c[1], alese),
+	                              comun.zar(tinta["qid"], "cere_simbol", c[0])))
+	ordonati = [s for s, _ in candidati]
+	alesi = rupe_grupul_strain(tinta, ordonati)
+
+	# A DOUA GARDĂ, numai aici: răspunsul n-are voie să fie SINGURUL buton care
+	# seamănă cu numele. Punctajul nu ajunge singur la sulf: S, Sb, Sc, Sn sunt
+	# toate reale și pe litera S, deci trec înaintea celor inventate, dar niciunul
+	# nu se citește din „sulf”. Atunci ultimul se schimbă cu primul care seamănă,
+	# real dacă există, inventat dacă nu.
+	if not any(seamana(s, tinta["nume"]) for s in alesi):
+		for candidat in ordonati[3:]:
+			if seamana(candidat, tinta["nume"]):
+				alesi[2] = candidat
+				break
+	return alesi
+
+
+def alege_distractorii(tinta, lista, rezerva):
+	"""Cei trei distractori la `cere_nume`, deterministic. Întoarce nume.
+
+	PRIMA PLASĂ E BANDA DE NIVEL, și merită spus de ce nu e alta. Am scris
 	întâi o gardă „dacă toți trei distractorii încep cu o literă pe care
 	răspunsul n-o are, schimbă unul" — și am aruncat-o. „Ce element are simbolul
 	Hg?" cu mercur / hidrogen / heliu e o întrebare bună, iar garda ar fi
@@ -579,6 +703,23 @@ def alege_distractorii(tinta, lista, sens):
 	apare aici e disparitatea de familiaritate: trei nume obscure lângă unul
 	celebru se recunoaște fără să știi nimic. De-aia toate patru opțiunile stau
 	în aceeași bandă de nivel (±1).
+
+	A DOUA PLASĂ, de pe 21 octombrie 2026: banda poate tăia ALFABETUL. Jucând
+	s-a văzut „Ce element chimic are simbolul U?” cu siliciu / uraniu / litiu /
+	neon: răspunsul era singurul nume pe litera simbolului. Măsurat, așa erau 10
+	din 70 (litiu, oxigen, titan, zinc, iod, uraniu, kripton, xenon, wolfram,
+	osmiu), fiindcă frații lor de literă (indiu și iridiu lângă iod, tantal lângă
+	titan) stăteau la doi niveluri distanță.
+
+	Deci, dacă niciun distractor nu e pe litera simbolului, ULTIMUL se schimbă cu
+	un frate de literă: întâi din restul tabelului, apoi din `rezerva` —
+	celelalte elemente descoperite, cu eticheta lor română de la Wikidata
+	(lutețiu lângă litiu, zirconiu lângă zinc). UNUL SINGUR, dinadins. Prima
+	probă a lăsat literele să bată nivelul peste tot, și a stricat întrebări bune:
+	neonul își pierdea capcanele (azot, sodiu) pentru niobiu și neodim, iar
+	litiul primea trei nume pe care nu le-a auzit nimeni. Cu un singur frate,
+	alfabetul nu mai ajunge, iar familiaritatea nici ea: lângă lutețiu mai stau
+	titan și heliu, la fel de cunoscute ca litiul.
 	"""
 	banda = [e for e in lista
 	         if e["simbol"] != tinta["simbol"] and abs(e["nivel"] - tinta["nivel"]) <= 1]
@@ -587,9 +728,27 @@ def alege_distractorii(tinta, lista, sens):
 	if len(banda) < 3:
 		raise Eroare("%s: mai puțin de 3 distractori posibili" % tinta["simbol"])
 
-	banda.sort(key=lambda e: (-punctaj(tinta, e, sens),
-	                          comun.zar(tinta["qid"], sens, e["qid"])))
-	alesi = banda[:3]
+	banda.sort(key=lambda e: (-punctaj(tinta, e),
+	                          comun.zar(tinta["qid"], "cere_nume", e["qid"])))
+	alesi = rupe_grupul_strain(tinta, [e["nume"] for e in banda])
+
+	litera = tinta["simbol"][0].lower()
+	if not any(n[0] == litera for n in alesi):
+		din_banda = {e["simbol"] for e in banda}
+		restul_tabelului = sorted(
+			(e for e in lista if e["simbol"] != tinta["simbol"] and e["simbol"] not in din_banda),
+			key=lambda e: (-punctaj(tinta, e), comun.zar(tinta["qid"], "cere_nume", e["qid"])))
+		din_rezerva = sorted(rezerva, key=lambda e: comun.zar(tinta["qid"], "cere_nume", e["qid"]))
+		for e in restul_tabelului + din_rezerva:
+			if e["nume"][0] == litera:
+				alesi[2] = e["nume"]
+				break
+	return alesi
+
+
+def rupe_grupul_strain(tinta, ordonati):
+	"""Primii trei din `ordonati` (textele de pe butoane), cu singura gardă a ambelor sensuri."""
+	alesi = ordonati[:3]
 
 	# ── SINGURA GARDĂ: GRUPUL DE LITERE CARE NU E DESPRE ÎNTREBARE ──
 	#
@@ -615,14 +774,13 @@ def alege_distractorii(tinta, lista, sens):
 	# Deci regula nu e „nu lăsa un grup de litere", e: UN GRUP DE LITERE E
 	# LEGITIM DACĂ LITERA LUI E DESPRE ÎNTREBARE — prima literă a simbolului
 	# cerut sau a numelui cerut. Altfel e o coincidență și se rupe.
-	fata = (lambda e: e["simbol"]) if sens == "cere_simbol" else (lambda e: e["nume"])
-	litere = {fata(e)[0].lower() for e in alesi}
+	litere = {a[0].lower() for a in alesi}
 	if len(litere) == 1:
 		litera = next(iter(litere))
 		despre_intrebare = {tinta["simbol"][0].lower(), tinta["nume"][0].lower()}
 		if litera not in despre_intrebare:
-			for candidat in banda[3:]:
-				if fata(candidat)[0].lower() != litera:
+			for candidat in ordonati[3:]:
+				if candidat[0].lower() != litera:
 					alesi[2] = candidat
 					break
 
@@ -692,23 +850,41 @@ def compune_nota(e):
 # CONSTRUIREA ÎNTREBĂRILOR
 # ─────────────────────────────────────────────────────────────
 
-def construieste(lista):
-	"""Lista de elemente → (întrebări, fapte)."""
+def construieste(lista, reale, rezerva):
+	"""Lista de elemente + cele 118 → (întrebări, fapte, probleme, fără pereche).
+
+	`reale` sunt simbolurile tuturor celor 118, `rezerva` cele care nu sunt în
+	tabel, cu nume (vezi `alege_distractorii`).
+	"""
+	fara_pereche = []
 	intrebari = []
 	for e in lista:
 		for sens in SENSURI:
 			if (e["simbol"], sens) in DUBLURI:
 				continue
 
-			distractorii = alege_distractorii(e, lista, sens)
 			if sens == "cere_simbol":
 				text = "Care este simbolul chimic al %s?" % e["genitiv"]
 				bun = e["simbol"]
-				restul = [d["simbol"] for d in distractorii]
+				restul = alege_simbolurile(e, lista, reale)
 			else:
 				text = "Ce element chimic are simbolul %s?" % e["simbol"]
 				bun = e["nume"]
-				restul = [d["nume"] for d in distractorii]
+				restul = alege_distractorii(e, lista, rezerva)
+				# ── FĂRĂ PERECHE: ÎNTREBAREA NU SE SCRIE ──
+				# U, W, X și K n-au niciun alt element pe litera lor, printre
+				# toate cele 118. „Ce element are simbolul U?” se rezolvă atunci
+				# din alfabet, oricare ar fi distractorii, iar un nume de element
+				# INVENTAT nu e o ieșire: la `cere_simbol` „Ur” e o prescurtare
+				# care nu există, aici ar fi un element care nu există — un lucru
+				# fals de ținut minte. Deci întrebarea lipsește, iar sensul
+				# celălalt („simbolul uraniului”) rămâne. Regula e o măsurătoare,
+				# nu o listă: dacă tabelul primește un frate de literă, întrebarea
+				# revine singură, cu același `id`.
+				litera = e["simbol"][0].lower()
+				if not any(n[0] == litera for n in restul):
+					fara_pereche.append(e["simbol"])
+					continue
 
 			# Poziția răspunsului bun, `id`-ul și verificarea celor patru variante
 			# distincte stau în `comun.pune_la_locul_lui` — sunt aceleași la toate
@@ -740,7 +916,8 @@ def construieste(lista):
 	def este_corect(q, varianta):
 		qid = q["id"].split(":")[1]
 		if q["id"].endswith("cere_simbol"):
-			# Varianta e un simbol. E al elementului întrebat?
+			# Varianta e un simbol. E al elementului întrebat? Unul din afara
+			# tabelului, sau unul inventat, nu e al nimănui din tabel — deci greșit.
 			gasit = pe_simbol_ales.get(varianta)
 		else:
 			# Varianta e un nume de element. E numele elementului întrebat?
@@ -775,7 +952,7 @@ def construieste(lista):
 			"verificat": False,
 		})
 
-	return intrebari, fapte, probleme
+	return intrebari, fapte, probleme, fara_pereche
 
 
 
@@ -823,8 +1000,25 @@ def main():
 		", ".join("%s/%s ← %s" % (s, sens, id_) for (s, sens), id_ in sorted(dubluri.items()))
 		or "niciuna"))
 
-	intrebari, fapte, probleme_note = construieste(lista)
+	# Fondul de distractori la `cere_simbol`: cele 118 descoperite, nu doar cele
+	# alese (vezi `alege_simbolurile`). Fără căsuțele ipotetice, din același
+	# motiv ca la ZMAX.
+	reale = {e["simbol"] for e in elemente.values()
+	         if e["numar"] and 1 <= e["numar"] <= ZMAX}
+	# Rezerva de NUME la `cere_nume`: cele descoperite care nu sunt în tabel, cu
+	# eticheta română a Wikidata. Unul fără etichetă română nu poate sta pe un
+	# buton, deci nu intră.
+	din_tabel = {e["simbol"] for e in lista_toata}
+	rezerva = sorted(({"qid": e["qid"], "simbol": e["simbol"],
+	                   "nume": e["eticheta"].lower(), "nivel": None}
+	                  for e in elemente.values()
+	                  if e["simbol"] in reale and e["simbol"] not in din_tabel
+	                  and e["eticheta"]),
+	                 key=lambda e: e["qid"])
+	intrebari, fapte, probleme_note, fara_pereche = construieste(lista, reale, rezerva)
 	print("    generate: %d întrebări, %d fapte" % (len(intrebari), len(fapte)))
+	print("    fără pereche, „ce element are simbolul…” nescrise: %d  (%s)"
+	      % (len(fara_pereche), ", ".join(fara_pereche) or "niciuna"))
 	print("    „exact una din patru e corectă”: verificat pe toate %d" % len(intrebari))
 	comun.raporteaza_notele(fapte, probleme_note, arg.scrie)
 	din_latina = sum(1 for e in lista if e["simbol"] in DIN_LATINA)

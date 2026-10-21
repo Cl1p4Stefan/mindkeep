@@ -17,7 +17,7 @@
 | 6. Harta de expediție | ✅ loadout „N din M" · **12-16 noduri**, ramificate, cu sămânță · Luptă / Elită / Odihnă / Eveniment / **Magazin** / **Boss** · **Monede + puteri temporare** · sumar de run · aspect: pergament, simboluri de cerneală, trasee punctate · **nodurile și drumurile stau pe o PANGLICĂ (curbă centrală + benzi)**, nu pe o grilă dreaptă · **patru trasee, toate verzi pe 300 de semințe** (POTCOAVĂ activă; POTCOAVA OGLINDITĂ e aceeași formă, întoarsă) · strat înclinat (forfecare) la ȘARPE · **drumuri care nu se încrucișează niciodată (0 la 300 de semințe)** · **nodul curent are și aură, și X, și stă nemișcat sub figurină** · **două surse de hartă: GENERATĂ (panglica) sau DESENATĂ dintr-un fișier `data/harti/*.json`** — comutatorul `Expeditie.SURSA_HARTII`; azi e pe DESENATĂ · **harta umple pergamentul**: pânza ține toată pagina, antetul plutește peste ea (805 × 427 px de hartă, de la 666 × 353) · **drumurile merg în amândouă sensurile**, cu nodul parcurs tăiat definitiv și cu garanția, verificată pe 16 000 de expediții simulate, că nu te poți înfunda · **figurina sare, cade ca un slam și zguduie ecranul la aterizare**, cu un răgaz de 0,5 s înainte să se deschidă nodul · **tipurile nodurilor se împart după o REȚETĂ fixă, nu se trag cu zarul**: 11 reguli de vecinătate, de început și de FINAL, printre ele **o podea de 3 lupte pe cel mai ieftin drum Start → Boss** (21 octombrie), plasare conștientă de reguli, verificare completă și reîncercare cu sub-sămânță (0 eșecuri pe 500 de semințe × 3 surse de hartă) · **la cel mult 2 pași de Boss e garantat un nod de bătaie** (100% pe 300 de semințe × 3 surse, de la 85% / 96% / 81%) · **niciun nod special nu mai are un geamăn lipit**, nici Evenimentul (0 pe 900 de hărți) · **rețeta nu se mai crede pe cuvânt: se PROBEAZĂ** — plafonul comun încearcă plasarea adevărată și taie un nod când forma nu le încape pe toate · rețeta se **plafonează după forma hărții**, nu după numărul de noduri · **nodul de Eveniment deschide Lacătul** (nivel din adâncime, sămânță din nodul, 6/10/14 Monede la succes) |
 | 7. Cetatea | ❌ |
 | 8. Save/Load | ✅ **pe disc**, de pe 12 octombrie 2026. `autoload/arhiva.gd` — singurul fișier din joc care atinge discul, fără nicio regulă de joc în el; dependența merge într-un singur sens (apelurile de salvare stau în SCENE, ca uneltele de verificare să rămână uscate) · **două fișiere în `user://`**: `permanent.json` (Tezaur + progresul din Antrenament + sacurile permanente) și `expeditie.json`, care există doar cât e un run viu · **scriere prin fișier temporar și redenumire**, cu adoptarea unui `.nou` orfan la citire · **`versiune` în save**: mai vechi se citește prin `_migreaza()`, mai nou se pune deoparte · **un fișier ilizibil nu se șterge și nu se suprascrie** — se redenumește `*.stricat.json` (cu data în nume dacă e deja unul pus deoparte), iar meniul o spune, cu mesaje separate pentru progres și pentru expediție · **butonul din meniu devine „Continua expeditia"**, cu nodurile în urmă și PV-ul pe rândul de sub el · **sacul are acum DURATĂ pe cheie** (`Sac.Durata`): rafturile din Practice sunt permanente, sacurile de luptă rămân pe expediție · **nodul se scrie pe disc la INTRARE**, deci a apărut `nod_nerezolvat` și coloana `reluabil` din `DATE_NOD` — altfel o luptă întreruptă era sărită, iar la Boss era chiar victorie · 54 de verdicte în `verifica_salvarea`, ~1 s · vezi sesiunea SAVE
-| 9. Celelalte discipline | 🟡 Cultură generală ✅ (**2839 de întrebări în joc, toate**: 2142 scrise de mână (`mana:0001`…) + **139 fabricate, elemente chimice** (`wd:Q897:simbol:…`) + **160 fabricate, operă → autor** (`wd:Q12730777:autor:…`) + **251 fabricate, țară ↔ capitală** (`wd:Q142:capitala:…`) + **147 fabricate, lucrare ↔ compozitor** (`wd:Q11980:compozitor:…`) — **conținutul fabricat stă într-un DOSAR**, `data/trivia_gen/`, citit întreg de încărcător: un tabel nou = două fișiere, zero linii de cod · **2138 de fapte, TOATE cu notă** (504 fabricate din șabloane: la elemente **la ce folosește elementul** (o propoziție scrisă de mână pe element, coloana `folosinta`, de pe 21 octombrie) plus simbolul și numărul atomic, anul apariției și anii autorului la opere, descrierea țării la capitale, anii compozitorului la lucrările muzicale · 92 scrise mai devreme de mână · **2046 scrise de mână în sesiunea TOATE AU NOTĂ**, câte una pentru fiecare întrebare rămasă fără) — deci **2839 din 2839 de întrebări ajung la o notă, de la 96 dimineață**, fiecare domeniu și fiecare dintre cele 31 de rafturi; sursa celor 2046 sunt EU, nu un tabel, deci nu le poate bate niciun validator și singura verificare e citirea (28 citite din 2142), iar un validator cere ca fiecare cifră și fiecare nume propriu dintr-o notă să existe în datele sursă · **OPT DOMENII** (Geografie și explorare, Istorie și societate, Știință și tehnologie, Artă și literatură, Divertisment și media, Sport și jocuri, Gastronomie și lifestyle, Diverse și curiozități), cu **31 de subcategorii** — **toate OPT domeniile sunt în luptă, niciunul din cele 31 de rafturi nu e gol și nicio întrebare nu e fără raft** (cele 135 scrise înaintea câmpului au fost clasificate, iar 21 de întrebări de mitologie au trecut de la Artă la Istorie); **toate cele 93 de celule (subdomeniu × nivel) au cel puțin 25 de întrebări** — treapta CONFORT din `plan-continut.md`, cea la care 4-5 expediții lungi nu repetă nimic; drumul până la 100 pe celulă cere încă 6631 și trece prin fabrică, nu prin scris de mână, tăiate după cum se joacă, nu după cum crescuse baza: artă + mitologie + literatură s-au unit, Divertisment și Sport pornesc goale · `CATEGORII` (listă) a devenit `DOMENII` (dicționar cheie → nume afișat), deci antetul scrie „ARTĂ ȘI LITERATURĂ”, nu cheia · **alegerea din luptă e în două trepte** — întâi domeniul, uniform, apoi întrebarea, cu sacul pe cheie de domeniu ȘI nivel — iar de azi **domeniul intră doar peste `PRAG_DOMENIU = 8` întrebări pe celulă**, cu plasă dacă nu trece niciunul; sub prag e sărit, nu golit (istoria trece cu rezerva ZERO, deci e următoarea țintă de conținut) · comutator `FOLOSESTE_WIKIDATA` · **fabrica are un modul comun**, `tools/fabrica/comun.py`, iar grila marchează celulele sărite · **faptele capitalelor au o LISTĂ de imagini**, `imagini: [{tip, …}]`: **126 de steaguri pe disc** (`assets/imagini_fapte/steaguri/`, PNG 320 px, 0,53 MB sursă, toate în domeniul public, cu manifest de credite), plus o intrare de hartă pe fiecare din cele 127 de fapte; Omanul e singurul refuzat, cu motivul scris · **fiecare întrebare are și o `subcategorie`**, una singură, din listă închisă pe domeniu (36 de chei, 4 folosite; la istorie sunt erele, tăiate pe dată) — cele 135 scrise de mână o primesc într-un lot de clasificare, cu un clichet în verificator · **istoria e la 18 pe toate trei nivelurile**, iar **Divertismentul și Sportul au câte 50 pe fiecare celulă**, pe 11 subcategorii cu care se poate filtra (filme 48, muzică 36, fotbal 30, olimpiade 30…) — deci **toate ȘASE domeniile sunt în luptă**, fiecare cu 1/6 din întrebări, și toate cele 11 subcategorii ale celor două domenii noi au conținut · **verificarea e un singur câmp**, `verificat: true/false` pe întrebare, pus de mână: întrebarea intră în joc oricum, iar flagul spune doar dacă i-am citit nota. Niciun script, niciun parametru — mecanismul de ciorne, al doilea flag de pe fapt și cele două unelte de confirmare s-au desfăcut (vezi UN SINGUR FLAG) · planul de conținut al tuturor celor șase domenii, cu subcategorii, tabele propuse și capcanele lor, e în **`docs/plan-continut.md`** · vezi sesiunile UN SINGUR FLAG, ȘASE DOMENII ÎN LUPTĂ, PLANUL ȘI CIORNELE, DOMENIILE, CONȚINUTUL, ID ȘI FAPT, FABRICA, AL DOILEA TABEL, MODULUL COMUN și STEAGURILE) · Logica ✅ (80 de categorii) · Cuvinte ✅ · toate trei fără repetiții pe expediție, **Cultura generală după `id`, nu după text** · celelalte 5 ❌ |
+| 9. Celelalte discipline | 🟡 Cultură generală ✅ (**2835 de întrebări în joc, toate**: 2142 scrise de mână (`mana:0001`…) + **135 fabricate, elemente chimice** (`wd:Q897:simbol:…`) + **160 fabricate, operă → autor** (`wd:Q12730777:autor:…`) + **251 fabricate, țară ↔ capitală** (`wd:Q142:capitala:…`) + **147 fabricate, lucrare ↔ compozitor** (`wd:Q11980:compozitor:…`) — **conținutul fabricat stă într-un DOSAR**, `data/trivia_gen/`, citit întreg de încărcător: un tabel nou = două fișiere, zero linii de cod · **2138 de fapte, TOATE cu notă** (504 fabricate din șabloane: la elemente **la ce folosește elementul** (o propoziție scrisă de mână pe element, coloana `folosinta`, de pe 21 octombrie) plus simbolul și numărul atomic, anul apariției și anii autorului la opere, descrierea țării la capitale, anii compozitorului la lucrările muzicale · 92 scrise mai devreme de mână · **2046 scrise de mână în sesiunea TOATE AU NOTĂ**, câte una pentru fiecare întrebare rămasă fără) — deci **2835 din 2835 de întrebări ajung la o notă, de la 96 dimineață**, fiecare domeniu și fiecare dintre cele 31 de rafturi; sursa celor 2046 sunt EU, nu un tabel, deci nu le poate bate niciun validator și singura verificare e citirea (28 citite din 2142), iar un validator cere ca fiecare cifră și fiecare nume propriu dintr-o notă să existe în datele sursă · **OPT DOMENII** (Geografie și explorare, Istorie și societate, Știință și tehnologie, Artă și literatură, Divertisment și media, Sport și jocuri, Gastronomie și lifestyle, Diverse și curiozități), cu **31 de subcategorii** — **toate OPT domeniile sunt în luptă, niciunul din cele 31 de rafturi nu e gol și nicio întrebare nu e fără raft** (cele 135 scrise înaintea câmpului au fost clasificate, iar 21 de întrebări de mitologie au trecut de la Artă la Istorie); **toate cele 93 de celule (subdomeniu × nivel) au cel puțin 25 de întrebări** — treapta CONFORT din `plan-continut.md`, cea la care 4-5 expediții lungi nu repetă nimic; drumul până la 100 pe celulă cere încă 6631 și trece prin fabrică, nu prin scris de mână, tăiate după cum se joacă, nu după cum crescuse baza: artă + mitologie + literatură s-au unit, Divertisment și Sport pornesc goale · `CATEGORII` (listă) a devenit `DOMENII` (dicționar cheie → nume afișat), deci antetul scrie „ARTĂ ȘI LITERATURĂ”, nu cheia · **alegerea din luptă e în două trepte** — întâi domeniul, uniform, apoi întrebarea, cu sacul pe cheie de domeniu ȘI nivel — iar de azi **domeniul intră doar peste `PRAG_DOMENIU = 8` întrebări pe celulă**, cu plasă dacă nu trece niciunul; sub prag e sărit, nu golit (istoria trece cu rezerva ZERO, deci e următoarea țintă de conținut) · comutator `FOLOSESTE_WIKIDATA` · **fabrica are un modul comun**, `tools/fabrica/comun.py`, iar grila marchează celulele sărite · **faptele capitalelor au o LISTĂ de imagini**, `imagini: [{tip, …}]`: **126 de steaguri pe disc** (`assets/imagini_fapte/steaguri/`, PNG 320 px, 0,53 MB sursă, toate în domeniul public, cu manifest de credite), plus o intrare de hartă pe fiecare din cele 127 de fapte; Omanul e singurul refuzat, cu motivul scris · **fiecare întrebare are și o `subcategorie`**, una singură, din listă închisă pe domeniu (36 de chei, 4 folosite; la istorie sunt erele, tăiate pe dată) — cele 135 scrise de mână o primesc într-un lot de clasificare, cu un clichet în verificator · **istoria e la 18 pe toate trei nivelurile**, iar **Divertismentul și Sportul au câte 50 pe fiecare celulă**, pe 11 subcategorii cu care se poate filtra (filme 48, muzică 36, fotbal 30, olimpiade 30…) — deci **toate ȘASE domeniile sunt în luptă**, fiecare cu 1/6 din întrebări, și toate cele 11 subcategorii ale celor două domenii noi au conținut · **verificarea e un singur câmp**, `verificat: true/false` pe întrebare, pus de mână: întrebarea intră în joc oricum, iar flagul spune doar dacă i-am citit nota. Niciun script, niciun parametru — mecanismul de ciorne, al doilea flag de pe fapt și cele două unelte de confirmare s-au desfăcut (vezi UN SINGUR FLAG) · planul de conținut al tuturor celor șase domenii, cu subcategorii, tabele propuse și capcanele lor, e în **`docs/plan-continut.md`** · vezi sesiunile UN SINGUR FLAG, ȘASE DOMENII ÎN LUPTĂ, PLANUL ȘI CIORNELE, DOMENIILE, CONȚINUTUL, ID ȘI FAPT, FABRICA, AL DOILEA TABEL, MODULUL COMUN și STEAGURILE) · Logica ✅ (80 de categorii) · Cuvinte ✅ · toate trei fără repetiții pe expediție, **Cultura generală după `id`, nu după text** · celelalte 5 ❌ |
 | 10–13. Generator de inamici, artă, web | ❌ (artă parțial: figurile principale și piesele de pe butoanele de Obelisc au imagini reale · **arena are fundal: biblioteca gotică**, cu personajele așezate pe dalele din prim-plan, umbră de contact și lumină de sală) · Regina: **amânată**, vezi CLAUDE.md · **pasul 13 (Practice) — prima felie ✅**: **meniu de start** (`scenes/meniu/`, de azi `run/main_scene`) cu două butoane, și **Antrenament liber** (`scenes/practice/`) — alegi domeniul, apoi raftul, din `DOMENII` și `SUBCATEGORII`, cu o iconiță și nivelul pe fiecare domeniu și rafturile goale stinse („gol la nivelul II”); întrebările vin prin **chiar scena de trivia a luptei**, fără cronometru (`cu_cronometru`, două linii în `puzzle.gd`); nivel pe DOMENIU, urcat singur la `PRAG_PRACTICE` = 60 de întrebări distincte știute; sac propriu, pe cheie cu filtru (`practice:<domeniu>:<raft>:<nivel>`); progres scris pe disc de la Save (12 octombrie), în `permanent.json` · **„Afla mai multe" ✓** (12 octombrie): după fiecare răspuns, corect sau greșit, un buton deschide nota faptului, citită din `explicatie` (contractul cu `puzzle.gd`), nu din `TRIVIA.fapte`; **de pe 21 octombrie butonul e un CREIER în colțul chenarului**, stins până la verdict și aprins când există notă — de azi apare la **TOATE cele 2839 de întrebări** (era 1 din 28 dimineață, apoi 1 din 3,6); imaginea din popup e felia următoare · **neștiutele întâi ✓** (21 octombrie): greșitele revin la distanță, iar raftul știut tot se anunță o singură dată și apoi poartă „Nivel I · 100%" în lista de rafturi · **trecerea singură ✓** (21 octombrie): după un răspuns CORECT, „Următoarea" se umple în 2 s și trece fără click; o oprește doar apăsarea creierului (sau un anunț), iar la greșit nu curge nimic · **pergament în bibliotecă ✓** (21 octombrie): o temă comună (`assets/tema/pergament.tres`), fonturile Cinzel + Alegreya (OFL) și biblioteca din luptă estompată ca fundal; scena de trivia se îmbracă singură în Practice și rămâne neschimbată în luptă · vezi sesiunile MENIUL ȘI PRACTICE, AFLĂ MAI MULTE, TOATE AU NOTĂ, RAFTUL PARCURS, TRECEREA SINGURĂ, PERGAMENT ÎN BIBLIOTECĂ, ICONIȚE PE DOMENII și CREIERUL DIN CHENAR |
 
 Nodul de **Eveniment** are primul lui conținut: **Lacătul** — un cufăr cu cifru,
@@ -37,6 +37,94 @@ buget, generare) rămâne acolo unde era.
 Am sărit peste ordinea recomandată la pasul 12 (artă): imaginile pentru rege,
 cavaler și pentru cele trei piese de șah de pe butoane au intrat mai devreme, dar
 restul rămâne placeholder. Bucla de luptă e în continuare cea validată, nu arta.
+
+---
+
+## SIMBOLURI CARE SEAMĂNĂ (21 octombrie 2026) — distractorii elementelor nu mai lasă răspunsul ghicit din alfabet
+
+### Ce s-a văzut jucând
+
+În Practice, Știință și tehnologie → Științe exacte: „Care este simbolul chimic al
+iodului?” cu `Ne / C / I / Ni`. Răspunsul se ghicea fără să știi nimic: era
+singurul buton care seamănă cu „iod”.
+
+### Ce era, de fapt
+
+La `cere_simbol` distractorii se alegeau dintre cele 70 de elemente din tabel, în
+banda de nivel ±1. Iodul n-avea acolo niciun frate pe litera I, deci punctajul nu
+deosebea pe nimeni și au ieșit cei aleși de zar. Măsurat pe toate 69 de întrebări
+(aurul e în fișierul de mână), cu testul `seamana` (prima literă e a numelui, iar
+celelalte apar în nume, în ordine): **la 20 răspunsul era singurul buton care se
+poate citi ca prescurtare a numelui** (litiu, oxigen, iod, uraniu, zinc, xenon,
+wolfram, cobalt, galiu, rubidiu, osmiu…).
+
+### Ce s-a schimbat (doar `tools/fabrica/elemente.py` și fișierul de întrebări)
+
+- **Fondul la `cere_simbol` sunt toate cele 118 elemente descoperite**, nu cele
+  70. Banda de nivel apără de „trei nume obscure lângă unul celebru”, dar pe
+  butoane stau simboluri, iar In și Ir nu arată mai obscur decât I.
+- **Punctaj nou, `punctaj_simbol`**: aceeași primă literă ca răspunsul +100,
+  seamănă cu numele +50 (oxigen → Og), prima literă apare în nume +20, e unul din
+  cele 70 +5.
+- **Unde alfabetul real se termină, simboluri INVENTATE din nume**: U, W și X
+  n-au niciun frate printre cele 118, Z doar unul. Atunci litera întâi a numelui
+  plus una din literele lui (uraniu → Ur, Un, Ua), fără diacritice și fără litera
+  dublată (`Uu`, `Ii` se vedeau de departe). Stau sub orice simbol real cu litera
+  răspunsului, deci apar doar unde cele reale nu ajung, și doar la elementele al
+  căror simbol pornește de la numele românesc (nu la `DIN_LATINA`). Din cele
+  inventate se scad toate cele 118 simboluri reale. Sunt **21 în 13
+  întrebări**. E singurul loc din fabrică în care pe un buton stă ceva ce nu
+  există. Nu predă nimic fals, fiindcă stă doar pe un buton greșit, iar întrebarea
+  pe care o pune („U sau Ur?”) e chiar cea pe care trebuie s-o știi.
+- **O a doua gardă, numai la sensul ăsta**: dacă niciun distractor nu seamănă cu
+  numele, ultimul se schimbă cu primul care seamănă. Fără ea, sulful ieșea `S / Sb
+  / Sc / Sn`: toate reale, toate pe S, niciunul citibil din „sulf”. Acum e `Sl`.
+- Garda veche („grupul de litere care nu e despre întrebare”) a ieșit într-o
+  funcție, `rupe_grupul_strain`, folosită de ambele sensuri.
+
+Rezultatul: `iod → Ir / In / Io / I`, `uraniu → Ur / U / Un / Ua`, `oxigen → Og /
+O / Os / Ox`, `zinc → Zn / Zr / Zi / Z`. **Ghicibile după `seamana`: de la 20 la
+0.** S-au schimbat exact cele 69 de rânduri `cere_simbol`, niciun `cere_nume`, și
+niciun `id`. Se schimbă doar ce e pe butoane, deci save-ul nu simte nimic.
+
+### Verificat
+
+- `elemente.py --scrie`: „exact una din patru e corectă” pe toate 139.
+- `verifica_trivia`: TOTUL E BUN, cod 0.
+- **Nevăzut în joc.** Cifrele vin din fișier, nu de pe ecran.
+
+### Sensul invers, tot azi: „Ce element chimic are simbolul…?”
+
+Jucând, imediat după: „Ce element chimic are simbolul U?” cu `siliciu / uraniu /
+litiu / neon`. Răspunsul era singurul nume pe litera simbolului, la **10 din 70**
+(litiu, oxigen, titan, zinc, iod, uraniu, kripton, xenon, wolfram, osmiu). Frații
+de literă existau des, dar la doi niveluri distanță (indiu și iridiu lângă iod,
+tantal lângă titan), iar banda de nivel îi tăia.
+
+- **Banda de nivel rămâne**, cu motivul ei (trei nume obscure lângă unul celebru
+  se recunosc). Dar dacă niciun distractor nu e pe litera simbolului, **ultimul se
+  schimbă cu UN frate de literă**: întâi din restul tabelului, apoi dintr-o
+  rezervă nouă — celelalte elemente descoperite, cu eticheta română de la
+  Wikidata (lutețiu, zirconiu). Rezultat: `iod → siliciu / iod / sulf / iridiu`,
+  `zinc → aluminiu / cupru / zinc / zirconiu`.
+- **Unul singur, fiindcă prima probă a lăsat literele să bată nivelul peste tot**
+  și a stricat 9 întrebări bune: neonul își pierdea capcanele (azot, sodiu)
+  pentru niobiu și neodim, iar litiul primea trei nume pe care nu le-a auzit
+  nimeni. Acum s-au schimbat exact 6 întrebări, restul sunt octet cu octet ca
+  înainte.
+- **Patru întrebări nu se mai scriu: U, Kr, Xe, W.** Printre toate cele 118 nu
+  există niciun alt element pe U, K, X sau W, deci „ce element are simbolul U?” se
+  rezolvă din alfabet, oricare ar fi distractorii. Un nume de element INVENTAT nu
+  e o ieșire: „Ur” e o prescurtare care nu există, dar un element care nu există e
+  un lucru fals de ținut minte. Sensul celălalt („simbolul uraniului”) rămâne. E o
+  măsurătoare, nu o listă: dacă tabelul primește un frate de literă, întrebarea
+  revine singură, cu același `id`. Scriptul tipărește la fiecare rulare câte a
+  lăsat afară.
+- **Elementele trec de la 139 la 135 de întrebări**, iar jocul de la 2839 la 2835.
+  Un `id` dispărut care era deja în progresul din Practice rămâne acolo inofensiv
+  (`din_dictionar` îl citește ca orice text), deci nimic nu se pierde.
+
+`verifica_trivia`: TOTUL E BUN, cod 0. Nevăzut în joc nici sensul ăsta.
 
 ---
 

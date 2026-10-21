@@ -95,7 +95,7 @@ vine cu o convenție nouă de linie de comandă):
 
 | script | relația | întrebări |
 |---|---|---|
-| `elemente.py` | element ↔ simbol chimic | 139 |
+| `elemente.py` | element ↔ simbol chimic | 135 |
 | `opere.py` | operă ↔ autor (`P50`) | 160 |
 | `capitale.py` | țară ↔ capitală (`P36`), plus steagurile | 251 |
 | `compozitori.py` | lucrare muzicală ↔ compozitor (`P86`) | 147 |

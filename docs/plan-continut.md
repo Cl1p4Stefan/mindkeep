@@ -229,7 +229,7 @@ desparte; până atunci stă acolo, și e scris aici ca să se vadă că e o ale
 
 **Tabele de fabrică:**
 
-- **`stiinte_exacte` — FĂCUT.** Element ↔ simbol, 139 de întrebări, 70 de elemente.
+- **`stiinte_exacte` — FĂCUT.** Element ↔ simbol, 135 de întrebări, 70 de elemente (patru „ce element are simbolul…” nu se pot scrie: U, Kr, Xe, W n-au frați de literă).
 - **`stiinte_exacte` · formula unei substanțe** — `P274`. *Capcane:* organicele au
   mai multe forme de formulă, iar indicii în Unicode nu se compară naiv.
 - **`lumea_vie` · din ce clasă face parte un animal** — `P171` + `P105`. *Capcane:*
