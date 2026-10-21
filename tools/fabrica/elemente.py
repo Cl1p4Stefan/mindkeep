@@ -41,6 +41,11 @@ Ce NU poate aduce, și de-aia sunt scrise de mână în
   GRAMATICA. „Care este simbolul chimic al aurului?" cere genitivul cu articol,
   iar el nu se poate calcula din nominativ: aur→aurului, platină→platinei.
 
+  LA CE FOLOSEȘTE elementul (coloana `folosinta`, de pe 21 octombrie 2026).
+  Wikidata are o proprietate pentru asta, „has use” (`P366`), dar e goală la 51
+  din cele 70 de elemente, iar unde e plină e de nefolosit: aluminiului îi
+  spune „colorant”, oxigenului „aditiv alimentar”. Vezi NOTA.
+
 Asta e, cred, lecția pilotului, scrisă înainte să-l rulez: Wikidata îți dă
 faptul, niciodată pedagogia și niciodată gramatica.
 
@@ -188,7 +193,7 @@ SENSURI = ["cere_simbol", "cere_nume"]
 # cod — și, mai important, e ce face ca `ciorna` să însemne același lucru la toate
 # trei. Un câmp de date nu poate trăi într-o listă de tuple.
 # ─────────────────────────────────────────────────────────────
-CAMPURI = {"simbol", "nume", "genitiv", "nivel", "ciorna"}
+CAMPURI = {"simbol", "nume", "genitiv", "nivel", "folosinta", "ciorna"}
 
 
 # Interogarea. `wdt:P31 wd:Q11344` = „instanță de element chimic", `P246` =
@@ -416,10 +421,22 @@ def leaga_tabelul(randuri, elemente, pe_simbol):
 		nume_asteptat = str(rand.get("nume", "")).strip()
 		genitiv = str(rand.get("genitiv", "")).strip()
 		nivel = rand.get("nivel")
+		folosinta = str(rand.get("folosinta", "")).strip()
 		ciorna = bool(rand.get("ciorna", False))
 
 		if not simbol or not nume_asteptat or not genitiv:
 			probleme.append("%s: simbol, nume sau genitiv gol" % unde)
+			continue
+		# Propoziția începe cu elementul ei („Platina…", „Aurul…"), fiindcă
+		# șablonul o continuă cu „Are simbolul…" — subiectul e ea. Verificarea
+		# prinde și o propoziție lipită pe rândul vecinului, cea mai probabilă
+		# greșeală într-un fișier de 70 de rânduri care arată toate la fel.
+		if not folosinta.endswith("."):
+			probleme.append("%s: `folosinta` lipsește sau nu se termină cu punct" % simbol)
+			continue
+		if not folosinta.lower().startswith(nume_asteptat.lower().rstrip("ă")):
+			probleme.append("%s: `folosinta` nu începe cu numele elementului (%s)"
+			                % (simbol, nume_asteptat))
 			continue
 		if nivel not in (1, 2, 3):
 			probleme.append("%s: nivelul %r nu e 1, 2 sau 3" % (simbol, nivel))
@@ -460,6 +477,7 @@ def leaga_tabelul(randuri, elemente, pe_simbol):
 			"nume": e["eticheta"].lower(),
 			"genitiv": genitiv,
 			"nivel": nivel,
+			"folosinta": folosinta,
 			"ciorna": ciorna,
 			"numar": e["numar"],
 			"sitelinks": e["sitelinks"],
@@ -614,10 +632,31 @@ def alege_distractorii(tinta, lista, sens):
 # ─────────────────────────────────────────────────────────────
 # NOTA („AFLĂ MAI MULTE")
 #
-# UN ȘABLON, NU 70 DE PROPOZIȚII. Nota se compune din câmpurile care sunt deja
-# verificate: `genitiv` (din tabelul meu, confirmat prin eticheta română de la
-# Wikidata), `simbol` și `numar` (de la Wikidata). Nimic nu vine din afara lor —
-# `comun.verifica_nota` o și probează, cifră cu cifră și nume cu nume.
+# TREI BUCĂȚI: la ce folosește elementul, simbolul cu numărul atomic, și, la
+# cele 9 din `DIN_LATINA`, de unde vine simbolul.
+#
+# ── ÎNTÂI FOLOSINȚA, SCRISĂ DE MÂNĂ (21 octombrie 2026) ───────
+# Până azi nota era doar „Simbolul chimic al aluminiului este Al, iar numărul lui
+# atomic este 13." — corectă, dar goală: îți spunea înapoi răspunsul de pe
+# buton. Cererea a fost „vreau să aflu la ce e folosit aluminiul". Wikidata nu
+# poate răspunde (vezi docstring-ul, la `P366`), deci propoziția stă în coloana
+# `folosinta` din `elemente.json`, una pe element, scrisă de mână.
+#
+# Asta calcă principiul „modelul de limbaj formulează, nu informează", și o spun
+# pe față: sursa propozițiilor sunt eu, ca la cele 2046 de note din TOATE AU
+# NOTĂ. Prețul e ținut mic în două feluri:
+#
+#   - conținutul e de manual: folosințele cunoscute ale fiecărui element (doze
+#     de aluminiu, filamente de wolfram, ceasuri cu cesiu), nu detalii fine;
+#   - `folosinta` NU intră în `surse` când se validează nota. Deci validatorul o
+#     ține în continuare din scurt: nicio cifră și niciun nume propriu în ea,
+#     fiindcă n-ar avea în ce date să se sprijine. Exact acolo stau greșelile
+#     care sună bine („un număr cu o jumătate de grad pe lângă", vezi TOATE AU
+#     NOTĂ). Ce rămâne neapărat de nimic e afirmația în cuvinte — aia se citește.
+#
+# Simbolul și numărul atomic rămân, dar trec pe locul doi și se scurtează: „Are
+# simbolul chimic Al și numărul atomic 13." N-are gen, deci repară și „numărul
+# lui atomic" spus platinei.
 #
 # ── DE CE NUMĂRUL ATOMIC E UN CÂRLIG, ȘI NU O REPETIȚIE ───────
 # `ghid-note.md` §2.2 cere ca nota să adauge ceva, nu să repete întrebarea.
@@ -633,21 +672,19 @@ def alege_distractorii(tinta, lista, sens):
 # scris de mână și folosit deja ca regulă de nivel (vezi `leaga_tabelul`). O
 # folosesc ca dată, nu ca amintire.
 #
-# Notele ies scurte: 70 de caractere fără a doua propoziție, ~130 cu ea, față de
-# cele 120–200 cerute de §2.3. Nu le umflu. Un element are atâtea de spus câte
-# scrie în tabel, iar o propoziție pusă ca să ajung la numărul de caractere ar
-# fi exact felul de frază care sună bine și nu se poate verifica.
+# Lungimea: cu folosința, notele ajung la 150–240 de caractere, în §2.3. La cele
+# 9 din `DIN_LATINA` folosința e scrisă mai scurt, ca să încapă și propoziția
+# despre latină sub `MAX_NOTA`; validatorul oprește dacă nu încape.
 # ─────────────────────────────────────────────────────────────
 
 def compune_nota(e):
 	"""Un element → (nota, valorile din care e făcută)."""
-	nota = ("Simbolul chimic al %s este %s, iar numărul lui atomic este %d."
-	        % (e["genitiv"], e["simbol"], e["numar"]))
+	nota = ("%s Are simbolul chimic %s și numărul atomic %d."
+	        % (e["folosinta"], e["simbol"], e["numar"]))
 	if e["simbol"] in DIN_LATINA:
 		nota += " Simbolul vine din numele latin, nu din cel românesc."
-	# Valorile îi ajung validatorului exact așa cum au intrat în șablon. `nume` e
-	# aici deși șablonul nu-l folosește: e același cuvânt ca rădăcina genitivului,
-	# iar fără el o notă care ar începe cu numele n-ar mai trece.
+	# Valorile îi ajung validatorului exact așa cum au intrat în șablon — fără
+	# `folosinta`, dinadins (vezi mai sus).
 	return nota, [e["genitiv"], e["nume"], e["simbol"], e["numar"]]
 
 
