@@ -97,6 +97,28 @@ extends Control
 ##      eticheta `Anunt`, deci nu e o mișcare nouă.
 ##
 ## ─────────────────────────────────────────────────────────────
+## TRECEREA SINGURĂ, LA RĂSPUNS CORECT (21 octombrie 2026)
+##
+## După un răspuns CORECT, „Următoarea" se umple ca o bară în `PAUZA_AUTO`
+## secunde, iar când s-a umplut vine întrebarea următoare fără niciun click.
+## Trei reguli, fiecare cu motivul ei:
+##
+##   1. NUMAI LA CORECT. La greșit ai cea mai mare nevoie de notă (punctul de
+##      mai sus), deci acolo nu curge nimic: citești în ritmul tău și apeși tu.
+##      La corect știai deja, așa că nota pierdută e cea mai ieftină — iar
+##      clicul care enerva era aproape tot aici.
+##   2. SE VEDE. Un timer invizibil e o capcană: n-ai ști dacă mai apuci să
+##      deschizi nota. Bara îți arată că urmează ceva, și cât mai ai.
+##   3. ORICE GEST SPRE NOTĂ O OPREȘTE: mouse-ul pe „Află mai multe", focusul
+##      pe el (Tab) sau apăsarea lui. Oprită, bara dispare și rămâi pe manual,
+##      exact ca înainte. Click pe „Următoarea" trece imediat, ca întotdeauna.
+##
+## FĂRĂ COMUTATOR ON/OFF, dinadins: cu regulile de mai sus, cazul în care l-ai
+## fi vrut oprit aproape dispare, iar o setare înseamnă un câmp în
+## `permanent.json` și un loc în UI. Dacă se dovedește că trebuie, e o adăugare,
+## nu o rescriere.
+##
+## ─────────────────────────────────────────────────────────────
 ## CE NU INTRĂ ÎN FELIA ASTA (e în plan, în felii separate)
 ##
 ## „Învățat" și Jurnalul (greșitele revin de pe 21 octombrie, pe raftul ales —
@@ -140,6 +162,16 @@ const TRIVIA := preload("res://scenes/trivia/trivia.gd")
 ## 60 e CIFRĂ DE PORNIRE, nejucată (scrie și în `docs/progres.md`), reglabilă ca
 ## `DISCIPLINE_IN_LOADOUT`.
 const PRAG_PRACTICE := 60
+
+## CÂT STĂ BARA PÂNĂ SĂ TREACĂ SINGURĂ, după un răspuns corect (vezi antetul).
+##
+## Se adună PESTE `PAUZA_SUSPANS` din `puzzle.gd` (0,35 s până încep culorile),
+## fiindcă „Află mai multe" și bara apar odată cu verdictul. Pauza de citire a
+## luptei nu se mai adaugă: Practice o stinge (`cu_pauza_citire`, din 21
+## octombrie — înainte butonul apărea abia la 1,8 s după click). Deci de la click
+## la întrebarea următoare trec ~2,35 s, iar fereastra în care poți opri bara e
+## de 2 s. Cifră de pornire, nejucată: se reglează aici, jucând.
+const PAUZA_AUTO := 2.0
 
 ## Nivelul scris cu cifre romane, ca în pitch. Lista e o PLASĂ, nu o regulă: dacă
 ## apare vreodată un al patrulea nivel, `_roman` întoarce cifra arabă în loc să
@@ -218,6 +250,10 @@ var total_sesiune := 0
 ## motiv — e un alt raft, alte întrebări.
 var recente: Array = []
 
+## Bara care curge pe „Următoarea", cât timp curge. `null` = nu curge nimic.
+## Un Tween ucis nu mai cheamă nimic, deci a-l opri înseamnă și a opri trecerea.
+var tween_auto: Tween = null
+
 @onready var eticheta_titlu: Label = %Titlu
 @onready var eticheta_stare: Label = %Stare
 
@@ -232,6 +268,7 @@ var recente: Array = []
 @onready var eticheta_anunt: Label = %Anunt
 @onready var zona_puzzle: PanelContainer = %ZonaPuzzle
 @onready var buton_urmatoarea: Button = %ButonUrmatoarea
+@onready var bara_auto: ColorRect = %BaraAuto
 @onready var buton_schimba: Button = %ButonSchimba
 @onready var buton_afla: Button = %ButonAfla
 
@@ -247,6 +284,10 @@ func _ready() -> void:
 	buton_schimba.pressed.connect(_arata_domenii)
 	buton_afla.pressed.connect(_deschide_nota)
 	buton_inchide_nota.pressed.connect(_inchide_nota)
+	# Gesturile care opresc bara înainte de click: mouse-ul ajuns pe „Află mai
+	# multe" și focusul mutat pe el cu Tab. Apăsarea trece prin `_deschide_nota`.
+	buton_afla.mouse_entered.connect(_opreste_auto)
+	buton_afla.focus_entered.connect(_opreste_auto)
 
 	Muzica.reda(Muzica.Piesa.CETATE)
 
@@ -407,6 +448,7 @@ func _intrebare_noua() -> void:
 	# compune întrebarea și (în luptă) pornește cronometrul.
 	var nou := SCENA_TRIVIA.instantiate()
 	nou.cu_cronometru = false
+	nou.cu_pauza_citire = false
 	nou.filtru_domeniu = domeniu_ales
 	nou.filtru_subcategorie = subcategorie_aleasa
 	nou.stiute_raft = _stiute.get(_cheia_celulei(domeniu_ales, nivel), {})
@@ -425,7 +467,8 @@ func _intrebare_noua() -> void:
 
 	# `await` pe semnalul scenei, exact ca în `ruleaza_lant` din `lupta.gd`:
 	# funcția asta se suspendă aici, restul jocului merge înainte, iar firul se
-	# reia când jucătorul a răspuns ȘI s-a terminat pauza de feedback.
+	# reia când jucătorul a răspuns ȘI s-a dat verdictul (suspansul, fără pauza
+	# de citire a luptei — vezi `cu_pauza_citire` mai sus).
 	var succes: bool = await nou.rezolvat
 
 	# PLASA: între întrebare și răspuns, jucătorul a putut apăsa „Schimbă
@@ -476,6 +519,30 @@ func _pe_raspuns(succes: bool, de_la: Node) -> void:
 	buton_urmatoarea.grab_focus()
 	_actualizeaza_antet()
 
+	if succes:
+		_porneste_auto()
+
+
+## Pornește bara pe „Următoarea". Vezi „Trecerea singură" din antet.
+##
+## `scale.x` de la 0 la 1, nu lățimea: bara e ancorată pe tot butonul, cu
+## pivotul în stânga (implicit), deci scala o face să crească de la stânga fără
+## să știe cât de lat e butonul.
+func _porneste_auto() -> void:
+	_opreste_auto()
+	tween_auto = create_tween()
+	tween_auto.tween_property(bara_auto, "scale:x", 1.0, PAUZA_AUTO).from(0.0)
+	tween_auto.tween_callback(_intrebare_noua)
+
+
+## Oprește bara și o face să dispară. Ieftină de chemat de câte ori vrei, ca
+## `_inchide_nota`: un semnal de focus sau de mouse poate veni când nu curge nimic.
+func _opreste_auto() -> void:
+	if tween_auto != null:
+		tween_auto.kill()
+		tween_auto = null
+	bara_auto.scale.x = 0.0
+
 
 ## Scoate întrebarea de pe ecran.
 ##
@@ -496,6 +563,10 @@ func _inchide_puzzle() -> void:
 	nota_curenta = ""
 	buton_afla.visible = false
 	_inchide_nota()
+	# Și bara, din același motiv: e trecerea DE LA întrebarea asta. Rămasă vie
+	# după „Schimbă domeniul", ar fi adus peste un minut o întrebare pe ecranul
+	# de rafturi. Aici, nu în fiecare buton, ca să nu existe un drum care o uită.
+	_opreste_auto()
 
 	if puzzle == null:
 		return
@@ -528,6 +599,10 @@ func _inchide_puzzle() -> void:
 func _deschide_nota() -> void:
 	if nota_curenta == "":
 		return
+	# Prima linie după gardă: o notă deschisă nu are voie să fie schimbată de
+	# sub tine. Mouse-ul și focusul au oprit-o de obicei deja; asta e plasa
+	# pentru un click venit pe alt drum.
+	_opreste_auto()
 	nota_text.text = nota_curenta
 	panou_nota.visible = true
 	# Focusul trece pe „Închide", deci Enter sau Space închid nota — tasta care

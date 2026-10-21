@@ -23,6 +23,8 @@ extends Control
 ##   6. `cu_cronometru`                      — curge timpul? Vezi variabila.
 ##      Lupta n-o atinge (e `true` din start); Practice o stinge înainte de
 ##      `porneste()`, fiindcă presiunea de timp e a luptei, nu a întrebării.
+##   7. `cu_pauza_citire`                    — se așteaptă după verdict? Vezi
+##      variabila. Tot `true` în luptă, tot stinsă de Practice.
 ##
 ## ── CONTRACTUL CĂTRE O DISCIPLINĂ (nou) ───────────────────────
 ## O disciplină nouă e un script care scrie `extends Puzzle` și implementează
@@ -288,6 +290,24 @@ var explicatie := ""       # regula rezolvării; azi neafișată (vezi `_termina
 ##
 ## Se pune ÎNAINTE de `porneste()`, ca orice altceva din contract.
 var cu_cronometru := true
+
+## SE AȘTEAPTĂ `PAUZA_CITIRE` ÎNTRE VERDICT ȘI `rezolvat`? `true` în luptă,
+## `false` în Practice.
+##
+## În luptă pauza e singurul timp în care vezi răspunsul corect: după
+## `rezolvat`, lupta închide panoul și trece la daune. În Practice nu se închide
+## nimic — răspunsurile colorate rămân pe ecran până apeși „Următoarea" — deci
+## pauza nu mai dădea timp de citit, doar ținea „Află mai multe" ascuns 1,45 s.
+##
+## SUSPANSUL RĂMÂNE și aici, dinadins: `rezolvat` vine odată cu culorile, nu
+## în cadrul clickului. Practice pornește bara de trecere numai la CORECT, deci
+## un `rezolvat` strigat înaintea culorilor ar spune verdictul prin bară —
+## exact scurgerea pe care o interzice regula de la TIMPUL 2.
+##
+## Un comutator separat, nu legat de `cu_cronometru`: sunt două întrebări
+## diferite („curge timpul?" și „unde mă întorc după?"), care azi doar se
+## întâmplă să aibă același răspuns.
+var cu_pauza_citire := true
 
 @onready var eticheta_categorie: Label = %CategorieEticheta
 @onready var eticheta_context: Label = %ContextEticheta
@@ -1078,8 +1098,10 @@ func _termina(succes: bool, ales: int) -> void:
 	if not succes:
 		_scrie_context("")
 
-	# ȘI ABIA ACUM începe pauza în care citești răspunsul corect.
-	await get_tree().create_timer(PAUZA_CITIRE).timeout
+	# ȘI ABIA ACUM începe pauza în care citești răspunsul corect — în luptă.
+	# În Practice răspunsul stă pe ecran oricum (vezi `cu_pauza_citire`).
+	if cu_pauza_citire:
+		await get_tree().create_timer(PAUZA_CITIRE).timeout
 
 	# ȘI ABIA ACUM strigăm rezultatul. Cine ne-a deschis primește `succes`.
 	rezolvat.emit(succes)
