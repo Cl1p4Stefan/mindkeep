@@ -43,8 +43,11 @@ extends Control
 ## revine — dar abia după `DISTANTA_PRACTICE` alte întrebări, iar la finalul
 ## raftului distanța se umple cu întrebări știute. Când n-a mai rămas nicio
 ## neștiută, ecranul o spune (`_anunt_raft_parcurs`) și raftul continuă ca
-## recapitulare. „Știut" înseamnă aici „corect o dată": regula mai strictă,
-## „învățat", e felia următoare și schimbă doar cine iese din neștiute.
+## recapitulare. Anunțul vine O SINGURĂ DATĂ, în clipa în care ai terminat
+## raftul, și pleacă la întrebarea următoare; de atunci încolo, faptul că
+## raftul e parcurs îl spune butonul lui din lista de rafturi („Nivel I · 100%").
+## „Știut" înseamnă aici „corect o dată": regula mai strictă, „învățat", e
+## felia următoare și schimbă doar cine iese din neștiute.
 ##
 ## ─────────────────────────────────────────────────────────────
 ## PROGRESUL TRECE PE DISC, DAR ÎNCĂ STĂ ÎN `static var`
@@ -66,8 +69,10 @@ extends Control
 ## ─────────────────────────────────────────────────────────────
 ## „AFLĂ MAI MULTE" — NOTA FAPTULUI (felia din 12 octombrie 2026)
 ##
-## După fiecare răspuns, corect SAU greșit, apare un buton care deschide nota
-## faptului. Patru lucruri merită spuse despre el:
+## După fiecare răspuns, corect SAU greșit, se aprinde CREIERUL din colțul
+## chenarului, și el deschide nota faptului. Până pe 21 octombrie 2026 era un
+## buton „Afla mai multe" sub chenar (vezi punctul 4 pentru de ce s-a mutat).
+## Patru lucruri merită spuse despre el:
 ##
 ##   1. VINE DIN CONTRACT, NU DIN DATE. Nota se citește din `explicatie`, câmpul
 ##      pe care `puzzle.gd` îl primește de la disciplină (vezi `_compune_intrebare`
@@ -87,14 +92,19 @@ extends Control
 ##      Flagul spune dacă AM CITIT nota, nu dacă nota e bună — vezi `neverificate`
 ##      din `trivia.gd`. Nu există, și nu trebuie să existe, nicio linie aici
 ##      care să-l pomenească.
-##   4. FĂRĂ NOTĂ, FĂRĂ URMĂ. Butonul e `visible = false`, nu dezactivat: într-un
-##      VBoxContainer un copil invizibil nu ocupă loc, deci o întrebare fără notă
-##      arată exact ca înainte. E pe dos față de rafturile goale din ecranul de
-##      alegere, care apar STINSE — și dinadins: acolo un buton stins e o
-##      informație („raftul există, dar e gol"), aici n-ar fi niciuna, doar o
-##      promisiune care nu se ține. Prețul, spus pe față: când butonul apare,
-##      rândul de dedesubt coboară cu ~44px. Ecranul face deja asta pentru
-##      eticheta `Anunt`, deci nu e o mișcare nouă.
+##   4. MEREU ACOLO, APRINS DOAR CÂND ARE CE SPUNE. Creierul stă tot timpul în
+##      colțul din dreapta-sus al chenarului: STINS cât timp n-ai răspuns (nota
+##      ți-ar da răspunsul — nota Franței spune că Parisul e capitala), APRINS
+##      după verdict dacă întrebarea are notă, și STINS în continuare dacă n-are.
+##      Până pe 21 octombrie a fost pe dos: un buton sub chenar, ascuns când
+##      lipsea nota, cu motivul că „un buton stins n-ar fi nicio informație".
+##      S-a schimbat din două motive. Butonul ascuns, când apărea, împingea
+##      rândul de dedesubt cu ~44px — chiar sub cursorul cu care tocmai
+##      răspunseseși, deci mouse-ul ajungea pe el fără să-l miști și oprea
+##      trecerea singură (vezi mai jos). Și o iconiță pe loc fix, care „nu se
+##      aprinde", spune la fel de clar ca un buton ascuns că nota lipsește, fără
+##      să miște nimic pe ecran. Iconița e a ecranului ăstuia, pusă PESTE
+##      chenar (`StratNota`), nu în `trivia.tscn`: acolo ar fi apărut și în luptă.
 ##
 ## ─────────────────────────────────────────────────────────────
 ## TRECEREA SINGURĂ, LA RĂSPUNS CORECT (21 octombrie 2026)
@@ -109,9 +119,18 @@ extends Control
 ##      clicul care enerva era aproape tot aici.
 ##   2. SE VEDE. Un timer invizibil e o capcană: n-ai ști dacă mai apuci să
 ##      deschizi nota. Bara îți arată că urmează ceva, și cât mai ai.
-##   3. ORICE GEST SPRE NOTĂ O OPREȘTE: mouse-ul pe „Află mai multe", focusul
-##      pe el (Tab) sau apăsarea lui. Oprită, bara dispare și rămâi pe manual,
-##      exact ca înainte. Click pe „Următoarea" trece imediat, ca întotdeauna.
+##   3. NUMAI APĂSAREA CREIERULUI O OPREȘTE (cu mouse-ul sau cu tastatura).
+##      Până pe 21 octombrie o opreau și mouse-ul ajuns pe „Afla mai multe" și
+##      focusul pus pe el cu Tab — iar butonul apărea sub cursor (punctul 4 de
+##      mai sus), deci bara se oprea singură când nu voiai. Survolarea apăra de
+##      un lucru real (întrebarea să plece exact când întinzi mâna spre notă),
+##      dar cu iconița pe loc fix, la care ajungi într-o clipă, riscul e mic.
+##      Oprită, bara dispare și rămâi pe manual. Click pe „Următoarea" trece
+##      imediat, ca întotdeauna.
+##   4. UN ANUNȚ OPREȘTE ȘI EL TRECEREA. Când răspunsul a terminat raftul sau a
+##      deschis un nivel, rândul de deasupra chenarului spune asta o singură
+##      dată, iar două propoziții nu se citesc în 2 secunde. Bara nu pornește:
+##      treci tu, după ce ai citit.
 ##
 ## FĂRĂ COMUTATOR ON/OFF, dinadins: cu regulile de mai sus, cazul în care l-ai
 ## fi vrut oprit aproape dispare, iar o setare înseamnă un câmp în
@@ -139,8 +158,8 @@ extends Control
 ##   3. VARIAȚIILE DE TIP. Un Label nu e „titlu" prin poziție, ci prin
 ##      `theme_type_variation`: `TitluPergament`, `SubtitluPergament`,
 ##      `RubricaPergament`, `AntetPergament` (text deschis, pe fundalul închis),
-##      `ChenarPergament` (zona întrebării), `LegaturaPergament` („Află mai
-##      multe"). Culorile nu se mai pun cu `modulate` pe noduri: `modulate`
+##      `ChenarPergament` (zona întrebării), `LegaturaPergament` (creierul
+##      notei). Culorile nu se mai pun cu `modulate` pe noduri: `modulate`
 ##      ÎNMULȚEȘTE, iar auriul de pe un text închis la culoare iese maro.
 ##
 ## Culorile de verdict (verde, roșu, rama) le dă tot tema, sub tipul „Puzzle"
@@ -198,7 +217,7 @@ const PRAG_PRACTICE := 60
 ## CÂT STĂ BARA PÂNĂ SĂ TREACĂ SINGURĂ, după un răspuns corect (vezi antetul).
 ##
 ## Se adună PESTE `PAUZA_SUSPANS` din `puzzle.gd` (0,35 s până încep culorile),
-## fiindcă „Află mai multe" și bara apar odată cu verdictul. Pauza de citire a
+## fiindcă creierul se aprinde și bara pornește odată cu verdictul. Pauza de citire a
 ## luptei nu se mai adaugă: Practice o stinge (`cu_pauza_citire`, din 21
 ## octombrie — înainte butonul apărea abia la 1,8 s după click). Deci de la click
 ## la întrebarea următoare trec ~2,35 s, iar fereastra în care poți opri bara e
@@ -291,7 +310,6 @@ var tween_auto: Tween = null
 
 @onready var panou_alegere: Control = %PanouAlegere
 @onready var alegere_titlu: Label = %AlegereTitlu
-@onready var alegere_subtitlu: Label = %AlegereSubtitlu
 @onready var lista: VBoxContainer = %Lista
 @onready var buton_inapoi: Button = %ButonInapoi
 @onready var buton_meniu: Button = %ButonMeniu
@@ -302,7 +320,7 @@ var tween_auto: Tween = null
 @onready var buton_urmatoarea: Button = %ButonUrmatoarea
 @onready var bara_auto: ColorRect = %BaraAuto
 @onready var buton_schimba: Button = %ButonSchimba
-@onready var buton_afla: Button = %ButonAfla
+@onready var buton_nota: Button = %ButonNota
 
 @onready var panou_nota: Control = %PanouNota
 @onready var nota_text: Label = %NotaText
@@ -314,12 +332,10 @@ func _ready() -> void:
 	buton_inapoi.pressed.connect(_arata_domenii)
 	buton_urmatoarea.pressed.connect(_intrebare_noua)
 	buton_schimba.pressed.connect(_arata_domenii)
-	buton_afla.pressed.connect(_deschide_nota)
+	# Apăsarea e și SINGURUL gest care oprește bara (prin `_deschide_nota`).
+	# Mouse-ul și focusul pe creier nu mai opresc nimic — vezi „Trecerea singură".
+	buton_nota.pressed.connect(_deschide_nota)
 	buton_inchide_nota.pressed.connect(_inchide_nota)
-	# Gesturile care opresc bara înainte de click: mouse-ul ajuns pe „Află mai
-	# multe" și focusul mutat pe el cu Tab. Apăsarea trece prin `_deschide_nota`.
-	buton_afla.mouse_entered.connect(_opreste_auto)
-	buton_afla.focus_entered.connect(_opreste_auto)
 
 	Muzica.reda(Muzica.Piesa.CETATE)
 
@@ -354,8 +370,6 @@ func _arata_domenii() -> void:
 	buton_inapoi.visible = false
 
 	alegere_titlu.text = "ALEGE DOMENIUL"
-	# Fără subtitlu: iconițele și nivelul din dreapta spun deja ce e de spus.
-	alegere_subtitlu.visible = false
 
 	_goleste(lista)
 	for cheie in TRIVIA.DOMENII:
@@ -387,6 +401,12 @@ func _pe_domeniu_ales(domeniu: String) -> void:
 ## (vezi `_intrebare_valida` din `trivia.gd`), deci fără butonul ăsta ar putea
 ## exista întrebări pe care niciun raft nu le arată — exact ce nu vrei de la un
 ## meniu care pretinde că împarte tot conținutul.
+##
+## FĂRĂ SUBTITLU (de pe 21 octombrie 2026). Până atunci, sub titlu scria „Alege
+## raftul. Primul cuprinde tot domeniul, inclusiv intrebarile fara raft." —
+## o explicație citită o dată și apoi doar text în plus pe fereastră. Ecranul
+## de domenii pierduse deja subtitlul, din același motiv, deci nodul a ieșit cu
+## totul din scenă.
 func _arata_rafturile() -> void:
 	subcategorie_aleasa = ""
 	_inchide_puzzle()
@@ -397,20 +417,19 @@ func _arata_rafturile() -> void:
 
 	var nivel := nivelul(domeniu_ales)
 	alegere_titlu.text = String(TRIVIA.DOMENII.get(domeniu_ales, domeniu_ales)).to_upper()
-	alegere_subtitlu.text = "Alege raftul. Primul cuprinde tot domeniul, inclusiv intrebarile fara raft."
-	alegere_subtitlu.visible = true
 
 	_goleste(lista)
 	lista.add_child(_buton_raft(
 		"Tot domeniul", TRIVIA.raftul(nivel, domeniu_ales).size(), nivel,
-		_pe_raft_ales.bind("")))
+		_pe_raft_ales.bind(""), false, raft_parcurs(nivel, domeniu_ales)))
 
 	var rafturi: Dictionary = TRIVIA.SUBCATEGORII.get(domeniu_ales, {})
 	for cheie in rafturi:
 		var raft := String(cheie)
 		var cate := TRIVIA.raftul(nivel, domeniu_ales, raft).size()
 		lista.add_child(_buton_raft(
-			String(rafturi[cheie]), cate, nivel, _pe_raft_ales.bind(raft)))
+			String(rafturi[cheie]), cate, nivel, _pe_raft_ales.bind(raft),
+			false, raft_parcurs(nivel, domeniu_ales, raft)))
 
 	_actualizeaza_antet()
 
@@ -420,9 +439,9 @@ func _pe_raft_ales(raft: String) -> void:
 	recente.clear()
 	panou_alegere.visible = false
 	panou_intrebare.visible = true
-	# Un raft parcurs deja (într-o sesiune de ieri) se anunță de la intrare: altfel
-	# ai afla abia din contorul care nu se mișcă.
-	_anunta(_anunt_raft_parcurs() if _raft_stiut() else "")
+	# Un raft parcurs deja NU se mai anunță la intrare: o spune butonul lui din
+	# lista de rafturi, înainte să intri. Anunțul e pentru clipa în care l-ai
+	# terminat, nu pentru fiecare vizită de după.
 	_intrebare_noua()
 
 
@@ -458,6 +477,12 @@ func _anunta(text: String) -> void:
 ##   — pe DOMENII (`arata_nivel`), nivelul tău, ca cifră romană. Nivelul e pe
 ##     domeniu, iar antetul îl arată abia după ce ai ales unul, deci ecranul cu
 ##     domenii e singurul loc unde le vezi pe toate opt odată.
+##   — pe un raft PARCURS (`parcurs`), „Nivel I · 100%": ai răspuns corect la
+##     tot ce are, la nivelul tău, deci ce urmează acolo e recapitulare și nu-ți
+##     mai mișcă pragul. Până pe 21 octombrie asta o spunea un anunț deasupra
+##     întrebării, la fiecare intrare pe raft; acum anunțul vine o singură dată,
+##     iar butonul ține minte restul. Procentul apare DOAR la 100%, dinadins:
+##     pe toate rafturile, ar fi fost din nou un tabel de cifre în loc de meniu.
 ##
 ## „Gol" se judecă tot LA NIVELUL TĂU CURENT, ca înainte. Prețul, spus pe față:
 ## când deblochezi nivelul II la un domeniu, un raft care are conținut doar la
@@ -468,7 +493,7 @@ func _anunta(text: String) -> void:
 ## trece la buton. Nu intră în lățimea minimă a butonului — panoul are 560 px,
 ## iar cel mai lung nume plus „gol la nivelul III" încap cu rezervă.
 func _buton_raft(nume: String, cate: int, nivel: int, la_apasare: Callable,
-		arata_nivel := false) -> Button:
+		arata_nivel := false, parcurs := false) -> Button:
 	var buton := Button.new()
 	buton.custom_minimum_size = Vector2(0, 42)
 	buton.text = nume
@@ -481,6 +506,8 @@ func _buton_raft(nume: String, cate: int, nivel: int, la_apasare: Callable,
 	var dreapta := ""
 	if cate == 0:
 		dreapta = "gol la nivelul %s" % _roman(nivel)
+	elif parcurs:
+		dreapta = "Nivel %s · 100%%" % _roman(nivel)
 	elif arata_nivel:
 		dreapta = _roman(nivel)
 	if dreapta != "":
@@ -520,6 +547,9 @@ func _iconita(domeniu: String) -> Texture2D:
 func _intrebare_noua() -> void:
 	_inchide_puzzle()
 	buton_urmatoarea.disabled = true
+	# Anunțul (raft parcurs, nivel deblocat) ține o singură întrebare: e despre
+	# răspunsul de dinainte, nu despre cea care vine.
+	_anunta("")
 
 	var nivel := nivelul(domeniu_ales)
 
@@ -547,6 +577,10 @@ func _intrebare_noua() -> void:
 	nou.stiute_raft = _stiute.get(_cheia_celulei(domeniu_ales, nivel), {})
 	nou.recente_raft = recente
 	zona_puzzle.add_child(nou)
+	# ÎN SPATELE creierului, nu peste el. `add_child` o pune ultima, adică
+	# deasupra lui `StratNota`, iar rădăcina scenei de trivia prinde mouse-ul pe
+	# toată suprafața — click-ul pe creier ar fi ajuns la ea.
+	zona_puzzle.move_child(nou, 0)
 	puzzle = nou
 	nou.porneste(nivel)
 
@@ -601,19 +635,44 @@ func _pe_raspuns(succes: bool, de_la: Node) -> void:
 	# SE ÎNTÂMPLĂ LA FEL LA CORECT ȘI LA GREȘIT, și asta e chiar rostul feliei:
 	# momentul în care ai cea mai mare nevoie de notă e cel în care n-ai știut.
 	# „Ton sănătos" din CLAUDE.md — înveți ceva și când greșești.
-	nota_curenta = String(de_la.explicatie)
-	buton_afla.visible = nota_curenta != ""
+	_seteaza_nota(String(de_la.explicatie), true)
 
-	# FOCUSUL RĂMÂNE PE „URMĂTOAREA", chiar dacă butonul notei tocmai a apărut
-	# deasupra lui. Drumul obișnuit e „răspund, merg înainte", iar un Enter care
-	# deschide brusc un popup ar fi o surpriză plătită de cel care citea repede.
-	# Nota e o alegere, nu un pas.
+	# FOCUSUL RĂMÂNE PE „URMĂTOAREA", chiar dacă creierul tocmai s-a aprins.
+	# Drumul obișnuit e „răspund, merg înainte", iar un Enter care deschide brusc
+	# un popup ar fi o surpriză plătită de cel care citea repede. Nota e o
+	# alegere, nu un pas.
 	buton_urmatoarea.disabled = false
 	buton_urmatoarea.grab_focus()
 	_actualizeaza_antet()
 
-	if succes:
+	# Un anunț vizibil acum e al răspunsului ăstuia (`_intrebare_noua` îl
+	# golește), deci bara nu pornește: vezi punctul 4 din „Trecerea singură".
+	if succes and not eticheta_anunt.visible:
 		_porneste_auto()
+
+
+## Aprinde sau stinge creierul, după nota pe care o primește. Gol = stins.
+##
+## `raspuns_dat` alege doar ce spune iconița la survolare: înainte de verdict
+## e stinsă fiindcă nota ți-ar da răspunsul, după el fiindcă nota nu există.
+## Același aspect, două motive — iar fără text, al doilea ar fi arătat ca un
+## buton care nu merge.
+##
+## La aprindere, un puls scurt: creierul se umflă și revine. E singurul semn
+## că s-a schimbat ceva în colțul în care nu te uiți când răspunzi.
+func _seteaza_nota(nota: String, raspuns_dat: bool) -> void:
+	nota_curenta = nota
+	buton_nota.disabled = nota == ""
+	if nota != "":
+		buton_nota.tooltip_text = "Afla mai multe"
+		var puls := create_tween()
+		puls.tween_property(buton_nota, "scale", Vector2.ONE, 0.3) \
+			.from(Vector2.ONE * 1.3) \
+			.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	elif raspuns_dat:
+		buton_nota.tooltip_text = "Intrebarea asta nu are inca nota"
+	else:
+		buton_nota.tooltip_text = "Nota se aprinde dupa raspuns"
 
 
 ## Pornește bara pe „Următoarea". Vezi „Trecerea singură" din antet.
@@ -629,7 +688,7 @@ func _porneste_auto() -> void:
 
 
 ## Oprește bara și o face să dispară. Ieftină de chemat de câte ori vrei, ca
-## `_inchide_nota`: un semnal de focus sau de mouse poate veni când nu curge nimic.
+## `_inchide_nota`: o apăsare pe creier poate veni când nu curge nimic.
 func _opreste_auto() -> void:
 	if tween_auto != null:
 		tween_auto.kill()
@@ -647,14 +706,13 @@ func _inchide_puzzle() -> void:
 	# NOTA PLEACĂ ÎNTÂI, și ÎNAINTE de ieșirea de mai jos. Dacă ștergerea ar fi
 	# scrisă după `if puzzle == null`, un drum pe care nu există scenă de puzzle
 	# (de pildă „raft gol la nivelul ăsta", care cheamă funcția și apoi se
-	# oprește) ar lăsa pe ecran butonul notei de la întrebarea de dinainte —
-	# adică o notă care nu mai are nicio întrebare deasupra ei.
+	# oprește) ar lăsa aprins creierul întrebării de dinainte — adică o notă
+	# care nu mai are nicio întrebare deasupra ei.
 	#
 	# Un singur loc pentru amândouă fiindcă sunt un singur lucru: întrebarea și
 	# nota ei se nasc și mor împreună. Despărțite în două funcții, ar fi existat
 	# un drum din care se poate uita a doua.
-	nota_curenta = ""
-	buton_afla.visible = false
+	_seteaza_nota("", false)
 	_inchide_nota()
 	# Și bara, din același motiv: e trecerea DE LA întrebarea asta. Rămasă vie
 	# după „Schimbă domeniul", ar fi adus peste un minut o întrebare pe ecranul
@@ -686,15 +744,14 @@ func _inchide_puzzle() -> void:
 
 ## Deschide nota întrebării la care s-a răspuns.
 ##
-## Garda nu e paranoia: butonul e ascuns când nota lipsește, dar o tastă
-## (Enter pe un buton care tocmai s-a ascuns) poate ajunge la un semnal cu un
+## Garda nu e paranoia: creierul e stins când nota lipsește, dar o tastă
+## (Enter pe un buton care tocmai s-a stins) poate ajunge la un semnal cu un
 ## cadru întârziere. Un popup gol ar fi arătat ca un bug.
 func _deschide_nota() -> void:
 	if nota_curenta == "":
 		return
 	# Prima linie după gardă: o notă deschisă nu are voie să fie schimbată de
-	# sub tine. Mouse-ul și focusul au oprit-o de obicei deja; asta e plasa
-	# pentru un click venit pe alt drum.
+	# sub tine. E singurul loc care oprește bara la cererea ta.
 	_opreste_auto()
 	nota_text.text = nota_curenta
 	panou_nota.visible = true
@@ -776,7 +833,7 @@ func _inregistreaza(domeniu: String, nivel: int, id: String) -> void:
 	# ar încerca să le unească și care s-ar putea încurca în ce s-a schimbat.
 	Arhiva.salveaza_permanent()
 	# Un nivel deblocat în tăcere e o răsplată pe care n-o observi. Rândul se
-	# șterge la întrebarea următoare (vezi `_pe_raft_ales`).
+	# șterge la întrebarea următoare (vezi `_intrebare_noua`).
 	_anunta("Nivelul %s deblocat la %s." % [
 		_roman(nivel + 1), TRIVIA.DOMENII.get(domeniu, domeniu)])
 

@@ -4,6 +4,7 @@
 [ext_resource type="Theme" path="res://assets/tema/pergament.tres" id="2_tema"]
 [ext_resource type="Texture2D" path="res://assets/art/fight_background.jpg" id="3_biblioteca"]
 [ext_resource type="Shader" path="res://assets/tema/fundal_estompat.gdshader" id="4_estompat"]
+[ext_resource type="Texture2D" uid="uid://coyxbfoi512nf" path="res://assets/iconite/practice/nota.svg" id="5_nota"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_estompat"]
 shader = ExtResource("4_estompat")
@@ -126,14 +127,6 @@ theme_type_variation = &"TitluPergament"
 theme_override_font_sizes/font_size = 26
 text = "ALEGE DOMENIUL"
 
-[node name="AlegereSubtitlu" type="Label" parent="Margini/Coloana/Corp/PanouAlegere/Centru/Panou/Margini/Coloana" unique_id=1592368246]
-unique_name_in_owner = true
-layout_mode = 2
-theme_type_variation = &"SubtitluPergament"
-theme_override_font_sizes/font_size = 15
-text = "..."
-autowrap_mode = 3
-
 [node name="Lista" type="VBoxContainer" parent="Margini/Coloana/Corp/PanouAlegere/Centru/Panou/Margini/Coloana" unique_id=1843355255]
 unique_name_in_owner = true
 layout_mode = 2
@@ -207,15 +200,27 @@ custom_minimum_size = Vector2(560, 360)
 layout_mode = 2
 theme_type_variation = &"ChenarPergament"
 
-[node name="ButonAfla" type="Button" parent="Margini/Coloana/Corp/PanouIntrebare/Centru/Pagina/Margini/Coloana" unique_id=902727758]
-unique_name_in_owner = true
-visible = false
-custom_minimum_size = Vector2(0, 34)
+[node name="StratNota" type="Control" parent="Margini/Coloana/Corp/PanouIntrebare/Centru/Pagina/Margini/Coloana/ZonaPuzzle" unique_id=1406385217]
 layout_mode = 2
+mouse_filter = 2
+
+[node name="ButonNota" type="Button" parent="Margini/Coloana/Corp/PanouIntrebare/Centru/Pagina/Margini/Coloana/ZonaPuzzle/StratNota" unique_id=902727758]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -38.0
+offset_top = 6.0
+offset_right = -8.0
+offset_bottom = 36.0
+grow_horizontal = 0
+pivot_offset = Vector2(15, 15)
 theme_type_variation = &"LegaturaPergament"
-theme_override_font_sizes/font_size = 16
-text = "Afla mai multe"
+disabled = true
+icon = ExtResource("5_nota")
 flat = true
+expand_icon = true
 
 [node name="RandDupa" type="HBoxContainer" parent="Margini/Coloana/Corp/PanouIntrebare/Centru/Pagina/Margini/Coloana" unique_id=2058219179]
 layout_mode = 2
