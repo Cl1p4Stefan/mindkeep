@@ -1,18 +1,45 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene format=3]
 
 [ext_resource type="Script" path="res://scenes/meniu/meniu.gd" id="1_meniu"]
+[ext_resource type="Theme" path="res://assets/tema/pergament.tres" id="2_tema"]
+[ext_resource type="Texture2D" path="res://assets/art/fight_background.jpg" id="3_biblioteca"]
+[ext_resource type="Shader" path="res://assets/tema/fundal_estompat.gdshader" id="4_estompat"]
+[ext_resource type="Texture2D" path="res://assets/art/campaign_token.png" id="5_figurina"]
+[ext_resource type="Texture2D" path="res://assets/iconite/practice/nota.svg" id="6_creier"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panou"]
-bg_color = Color(0.13, 0.13, 0.17, 1)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0.32, 0.32, 0.4, 1)
-corner_radius_top_left = 14
-corner_radius_top_right = 14
-corner_radius_bottom_right = 14
-corner_radius_bottom_left = 14
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_estompat"]
+shader = ExtResource("4_estompat")
+shader_parameter/raza = 4.0
+shader_parameter/luminozitate = 0.62
+shader_parameter/tenta = Color(1, 0.88, 0.72, 1)
+shader_parameter/vinieta = 0.85
+
+[sub_resource type="Gradient" id="Gradient_fir"]
+offsets = PackedFloat32Array(0, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_fir"]
+gradient = SubResource("Gradient_fir")
+width = 32
+height = 32
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+
+[sub_resource type="Gradient" id="Gradient_viata"]
+offsets = PackedFloat32Array(0, 0.2, 0.75, 1)
+colors = PackedColorArray(1, 0.86, 0.6, 0, 1, 0.86, 0.6, 0.55, 1, 0.86, 0.6, 0.4, 1, 0.86, 0.6, 0)
+
+[sub_resource type="Gradient" id="Gradient_umbra_jos"]
+offsets = PackedFloat32Array(0, 1)
+colors = PackedColorArray(0.03, 0.02, 0.015, 0, 0.03, 0.02, 0.015, 0.85)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_umbra_jos"]
+gradient = SubResource("Gradient_umbra_jos")
+width = 8
+height = 64
+fill_from = Vector2(0, 0)
+fill_to = Vector2(0, 1)
 
 [node name="Meniu" type="Control"]
 layout_mode = 3
@@ -21,6 +48,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("2_tema")
 script = ExtResource("1_meniu")
 
 [node name="Fundal" type="ColorRect" parent="."]
@@ -30,89 +58,248 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.08, 0.08, 0.11, 1)
+mouse_filter = 2
+color = Color(0.06, 0.045, 0.035, 1)
 
-[node name="Centru" type="CenterContainer" parent="."]
+[node name="Biblioteca" type="TextureRect" parent="."]
+material = SubResource("ShaderMaterial_estompat")
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("3_biblioteca")
+expand_mode = 1
+stretch_mode = 6
 
-[node name="Panou" type="PanelContainer" parent="Centru"]
-custom_minimum_size = Vector2(420, 0)
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_panou")
+[node name="UmbraJos" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_top = 0.45
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = SubResource("GradientTexture2D_umbra_jos")
+expand_mode = 1
 
-[node name="Margini" type="MarginContainer" parent="Centru/Panou"]
-layout_mode = 2
-theme_override_constants/margin_left = 34
-theme_override_constants/margin_top = 32
-theme_override_constants/margin_right = 34
-theme_override_constants/margin_bottom = 32
+[node name="Praf" type="CPUParticles2D" parent="."]
+unique_name_in_owner = true
+amount = 46
+lifetime = 11.0
+preprocess = 11.0
+texture = SubResource("GradientTexture2D_fir")
+emission_shape = 3
+emission_rect_extents = Vector2(576, 324)
+direction = Vector2(0.3, -1)
+spread = 60.0
+gravity = Vector2(0, -3)
+initial_velocity_min = 4.0
+initial_velocity_max = 12.0
+angular_velocity_min = 0.0
+angular_velocity_max = 0.0
+scale_amount_min = 0.08
+scale_amount_max = 0.22
+color_ramp = SubResource("Gradient_viata")
 
-[node name="Coloana" type="VBoxContainer" parent="Centru/Panou/Margini"]
-layout_mode = 2
-theme_override_constants/separation = 16
+[node name="Margini" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 34
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 26
 
-[node name="Titlu" type="Label" parent="Centru/Panou/Margini/Coloana"]
-modulate = Color(1, 0.85, 0.45, 1)
+[node name="Coloana" type="VBoxContainer" parent="Margini"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 44
+mouse_filter = 2
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="Antet" type="VBoxContainer" parent="Margini/Coloana"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="Titlu" type="Label" parent="Margini/Coloana/Antet"]
+layout_mode = 2
+theme_type_variation = &"TitluMeniu"
+theme_override_font_sizes/font_size = 78
 text = "MINDKEEP"
 horizontal_alignment = 1
 
-[node name="Subtitlu" type="Label" parent="Centru/Panou/Margini/Coloana"]
-modulate = Color(0.58, 0.58, 0.66, 1)
-layout_mode = 2
-theme_override_font_sizes/font_size = 15
-text = "Antrenament mental, deghizat in expeditie."
-horizontal_alignment = 1
-autowrap_mode = 3
-
-[node name="Spatiu" type="Control" parent="Centru/Panou/Margini/Coloana"]
-custom_minimum_size = Vector2(0, 8)
+[node name="Ornament" type="Control" parent="Margini/Coloana/Antet"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 16)
 layout_mode = 2
 mouse_filter = 2
 
-[node name="ButonExpeditie" type="Button" parent="Centru/Panou/Margini/Coloana"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 54)
+[node name="Subtitlu" type="Label" parent="Margini/Coloana/Antet"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 18
-text = "Expeditie"
+theme_type_variation = &"AntetSecundar"
+theme_override_font_sizes/font_size = 19
+text = "Antrenament mental, deghizat în expediție."
+horizontal_alignment = 1
 
-[node name="ExpeditieRol" type="Label" parent="Centru/Panou/Margini/Coloana"]
-unique_name_in_owner = true
-modulate = Color(0.52, 0.52, 0.6, 1)
+[node name="Spatiu" type="Control" parent="Margini/Coloana"]
+custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
-theme_override_font_sizes/font_size = 13
-text = "Harta, lupte, recompense. Cu cronometru."
+mouse_filter = 2
+
+[node name="Carti" type="HBoxContainer" parent="Margini/Coloana"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 40
+alignment = 1
+
+[node name="CarteExpeditie" type="PanelContainer" parent="Margini/Coloana/Carti"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(330, 0)
+layout_mode = 2
+
+[node name="Margini" type="MarginContainer" parent="Margini/Coloana/Carti/CarteExpeditie"]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 18
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 22
+
+[node name="Coloana" type="VBoxContainer" parent="Margini/Coloana/Carti/CarteExpeditie/Margini"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Icoana" type="TextureRect" parent="Margini/Coloana/Carti/CarteExpeditie/Margini/Coloana"]
+custom_minimum_size = Vector2(0, 104)
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("5_figurina")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Nume" type="Label" parent="Margini/Coloana/Carti/CarteExpeditie/Margini/Coloana"]
+layout_mode = 2
+theme_type_variation = &"TitluPergament"
+theme_override_font_sizes/font_size = 26
+text = "EXPEDIȚIE"
+horizontal_alignment = 1
+
+[node name="ExpeditieRol" type="Label" parent="Margini/Coloana/Carti/CarteExpeditie/Margini/Coloana"]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+theme_type_variation = &"SubtitluPergament"
+theme_override_font_sizes/font_size = 16
+text = "Hartă, lupte, recompense.
+Cu cronometru."
 horizontal_alignment = 1
 autowrap_mode = 3
 
-[node name="ButonPractice" type="Button" parent="Centru/Panou/Margini/Coloana"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 54)
-layout_mode = 2
-theme_override_font_sizes/font_size = 18
-text = "Practice"
-
-[node name="PracticeRol" type="Label" parent="Centru/Panou/Margini/Coloana"]
-modulate = Color(0.52, 0.52, 0.6, 1)
-layout_mode = 2
-theme_override_font_sizes/font_size = 13
-text = "Cultura generala, pe domeniul ales. Fara cronometru."
-horizontal_alignment = 1
-autowrap_mode = 3
-
-[node name="Avertisment" type="Label" parent="Centru/Panou/Margini/Coloana"]
+[node name="ExpeditieStare" type="Label" parent="Margini/Coloana/Carti/CarteExpeditie/Margini/Coloana"]
 unique_name_in_owner = true
 visible = false
-modulate = Color(1, 0.62, 0.35, 1)
 layout_mode = 2
-theme_override_font_sizes/font_size = 13
-text = ""
+theme_type_variation = &"RubricaPergament"
+theme_override_font_sizes/font_size = 15
 horizontal_alignment = 1
 autowrap_mode = 3
+
+[node name="Spatiu" type="Control" parent="Margini/Coloana/Carti/CarteExpeditie/Margini/Coloana"]
+custom_minimum_size = Vector2(0, 6)
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="ButonExpeditie" type="Button" parent="Margini/Coloana/Carti/CarteExpeditie/Margini/Coloana"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 46)
+layout_mode = 2
+theme_type_variation = &"ButonRubrica"
+theme_override_font_sizes/font_size = 17
+text = "Pornește expediția"
+
+[node name="CartePractice" type="PanelContainer" parent="Margini/Coloana/Carti"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(330, 0)
+layout_mode = 2
+
+[node name="Margini" type="MarginContainer" parent="Margini/Coloana/Carti/CartePractice"]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 18
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 22
+
+[node name="Coloana" type="VBoxContainer" parent="Margini/Coloana/Carti/CartePractice/Margini"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Icoana" type="TextureRect" parent="Margini/Coloana/Carti/CartePractice/Margini/Coloana"]
+modulate = Color(0.5, 0.14, 0.08, 1)
+custom_minimum_size = Vector2(0, 104)
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("6_creier")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Nume" type="Label" parent="Margini/Coloana/Carti/CartePractice/Margini/Coloana"]
+layout_mode = 2
+theme_type_variation = &"TitluPergament"
+theme_override_font_sizes/font_size = 26
+text = "PRACTICE"
+horizontal_alignment = 1
+
+[node name="PracticeRol" type="Label" parent="Margini/Coloana/Carti/CartePractice/Margini/Coloana"]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+theme_type_variation = &"SubtitluPergament"
+theme_override_font_sizes/font_size = 16
+text = "Cultură generală, pe domeniul ales.
+Fără cronometru."
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Spatiu" type="Control" parent="Margini/Coloana/Carti/CartePractice/Margini/Coloana"]
+custom_minimum_size = Vector2(0, 6)
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="ButonPractice" type="Button" parent="Margini/Coloana/Carti/CartePractice/Margini/Coloana"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 46)
+layout_mode = 2
+theme_type_variation = &"ButonRubrica"
+theme_override_font_sizes/font_size = 17
+text = "Începe antrenamentul"
+
+[node name="Avertisment" type="Label" parent="Margini/Coloana"]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_type_variation = &"AntetSecundar"
+theme_override_colors/font_color = Color(1, 0.66, 0.4, 1)
+theme_override_font_sizes/font_size = 15
+horizontal_alignment = 1
+vertical_alignment = 2
+autowrap_mode = 3
+
+[node name="Voal" type="ColorRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.03, 0.02, 0.015, 1)
