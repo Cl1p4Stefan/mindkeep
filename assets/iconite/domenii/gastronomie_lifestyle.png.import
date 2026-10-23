@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bxg16dn0rxa02"
-path="res://.godot/imported/sport_jocuri.svg-5ddc4b40751ef5c9b7b88a9328eb88aa.ctex"
+uid="uid://dkhjmgkxp5cbp"
+path="res://.godot/imported/gastronomie_lifestyle.png-ff640ef7b2779164e2de68b09d4338b0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/iconite/domenii/sport_jocuri.svg"
-dest_files=["res://.godot/imported/sport_jocuri.svg-5ddc4b40751ef5c9b7b88a9328eb88aa.ctex"]
+source_file="res://assets/iconite/domenii/gastronomie_lifestyle.png"
+dest_files=["res://.godot/imported/gastronomie_lifestyle.png-ff640ef7b2779164e2de68b09d4338b0.ctex"]
 
 [params]
 
@@ -23,7 +23,7 @@ compress/rdo_quality_loss=0.0
 compress/hdr_compression=1
 compress/normal_map=0
 compress/channel_pack=0
-mipmaps/generate=false
+mipmaps/generate=true
 mipmaps/limit=-1
 roughness/mode=0
 roughness/src_normal=""
@@ -38,6 +38,3 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
-svg/scale=0.125
-editor/scale_with_editor_scale=false
-editor/convert_colors_with_editor_theme=false

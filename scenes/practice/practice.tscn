@@ -4,7 +4,7 @@
 [ext_resource type="Theme" path="res://assets/tema/pergament.tres" id="2_tema"]
 [ext_resource type="Texture2D" path="res://assets/art/fight_background.jpg" id="3_biblioteca"]
 [ext_resource type="Shader" path="res://assets/tema/fundal_estompat.gdshader" id="4_estompat"]
-[ext_resource type="Texture2D" uid="uid://coyxbfoi512nf" path="res://assets/iconite/practice/nota.svg" id="5_nota"]
+[ext_resource type="Texture2D" path="res://assets/iconite/practice/nota.png" id="5_nota"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_estompat"]
 shader = ExtResource("4_estompat")

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://coyxbfoi512nf"
-path="res://.godot/imported/nota.svg-74012b2e44d83be616ba172504521273.ctex"
+uid="uid://bd0k8kv7vmwpt"
+path="res://.godot/imported/arta_literatura.png-ac3c900d719d5750bc431c7cdb8af6f8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/iconite/practice/nota.svg"
-dest_files=["res://.godot/imported/nota.svg-74012b2e44d83be616ba172504521273.ctex"]
+source_file="res://assets/iconite/domenii/arta_literatura.png"
+dest_files=["res://.godot/imported/arta_literatura.png-ac3c900d719d5750bc431c7cdb8af6f8.ctex"]
 
 [params]
 
@@ -38,6 +38,3 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
-svg/scale=0.375
-editor/scale_with_editor_scale=false
-editor/convert_colors_with_editor_theme=false

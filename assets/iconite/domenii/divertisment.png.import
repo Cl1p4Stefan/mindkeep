@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c6650ir1qm2k7"
-path="res://.godot/imported/divertisment.svg-24d402453eaeb6947171fcd54fc8f6f7.ctex"
+uid="uid://cdrn2kqdojvp7"
+path="res://.godot/imported/divertisment.png-07e41230b1caa3fe6f2c1009868f7ed0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/iconite/domenii/divertisment.svg"
-dest_files=["res://.godot/imported/divertisment.svg-24d402453eaeb6947171fcd54fc8f6f7.ctex"]
+source_file="res://assets/iconite/domenii/divertisment.png"
+dest_files=["res://.godot/imported/divertisment.png-07e41230b1caa3fe6f2c1009868f7ed0.ctex"]
 
 [params]
 
@@ -23,7 +23,7 @@ compress/rdo_quality_loss=0.0
 compress/hdr_compression=1
 compress/normal_map=0
 compress/channel_pack=0
-mipmaps/generate=false
+mipmaps/generate=true
 mipmaps/limit=-1
 roughness/mode=0
 roughness/src_normal=""
@@ -38,6 +38,3 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
-svg/scale=0.125
-editor/scale_with_editor_scale=false
-editor/convert_colors_with_editor_theme=false

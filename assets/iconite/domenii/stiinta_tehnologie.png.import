@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bodwxr44glhju"
-path="res://.godot/imported/geografie.svg-84c834f56cb6d6c3db387dce3ba09b0c.ctex"
+uid="uid://jmfnvfm2atu4"
+path="res://.godot/imported/stiinta_tehnologie.png-9c37b977e21528133c5c9e245f7353ac.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/iconite/domenii/geografie.svg"
-dest_files=["res://.godot/imported/geografie.svg-84c834f56cb6d6c3db387dce3ba09b0c.ctex"]
+source_file="res://assets/iconite/domenii/stiinta_tehnologie.png"
+dest_files=["res://.godot/imported/stiinta_tehnologie.png-9c37b977e21528133c5c9e245f7353ac.ctex"]
 
 [params]
 
@@ -23,7 +23,7 @@ compress/rdo_quality_loss=0.0
 compress/hdr_compression=1
 compress/normal_map=0
 compress/channel_pack=0
-mipmaps/generate=false
+mipmaps/generate=true
 mipmaps/limit=-1
 roughness/mode=0
 roughness/src_normal=""
@@ -38,6 +38,3 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
-svg/scale=0.125
-editor/scale_with_editor_scale=false
-editor/convert_colors_with_editor_theme=false

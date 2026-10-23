@@ -1,17 +1,13 @@
 ICONIȚELE ECRANULUI DE PRACTICE
 
-Sursa: game-icons.net — https://github.com/game-icons/icons
-Licența: Creative Commons Attribution 3.0 (CC BY 3.0)
-         https://creativecommons.org/licenses/by/3.0/
+Aceeași sursă și aceeași prelucrare ca la `../domenii/` (vezi CREDITE.txt de
+acolo): imagine generată cu o unealtă AI, fundalul decupat cu rembg, 256 px.
 
-Aceeași sursă și aceeași modificare ca la `../domenii/`: pătratul negru de
-fundal a fost scos, ca iconița să fie albă pe transparent și s-o poată colora
-tema (`LegaturaPergament`, aprinsă / stinsă).
-
-  nota.svg    brain    Lorc   http://lorcblog.blogspot.com
+  nota.png    creier
 
 Fișierul se numește după ROLUL lui (deschide nota), nu după desen: dacă într-o
-zi creierul se schimbă cu altceva, codul nu află.
+zi creierul se schimbă cu altceva, codul nu află. Același fișier e și pe pagina
+Practice din meniul de start.
 
-CC BY cere ca autorii să fie creditați. Până există un ecran de credite în joc,
-fișierul ăsta e creditul; când apare ecranul, rândul de mai sus intră în el.
+Până pe 23 octombrie aici era `nota.svg` (brain, Lorc, game-icons.net,
+CC BY 3.0), alb și colorat de temă; a ieșit din proiect, deci și creditul lui.

@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" path="res://assets/art/fight_background.jpg" id="3_biblioteca"]
 [ext_resource type="Shader" path="res://assets/tema/fundal_estompat.gdshader" id="4_estompat"]
 [ext_resource type="Texture2D" path="res://assets/art/campaign_token.png" id="5_figurina"]
-[ext_resource type="Texture2D" path="res://assets/iconite/practice/nota.svg" id="6_creier"]
+[ext_resource type="Texture2D" path="res://assets/iconite/practice/nota.png" id="6_creier"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_estompat"]
 shader = ExtResource("4_estompat")
@@ -242,7 +242,6 @@ layout_mode = 2
 theme_override_constants/separation = 6
 
 [node name="Icoana" type="TextureRect" parent="Margini/Coloana/Carti/CartePractice/Margini/Coloana"]
-modulate = Color(0.5, 0.14, 0.08, 1)
 custom_minimum_size = Vector2(0, 104)
 layout_mode = 2
 mouse_filter = 2

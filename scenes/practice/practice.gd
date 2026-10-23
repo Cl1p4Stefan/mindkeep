@@ -529,11 +529,12 @@ func _buton_raft(nume: String, cate: int, nivel: int, la_apasare: Callable,
 ## NICIUN TABEL: fișierul se numește după CHEIA domeniului, care nu se schimbă
 ## niciodată (vezi `DOMENII` din `trivia.gd`). Un domeniu nou rămâne un rând
 ## acolo plus un fișier aici; fără fișier, butonul iese fără iconiță, nu cu o
-## eroare. Sursa și licența (CC BY 3.0, game-icons.net) sunt în `CREDITE.txt`
-## din același dosar. Culoarea nu e în fișier (iconițele sunt albe): o dă tema,
-## `Button/colors/icon_*`.
+## eroare. De pe 23 octombrie 2026 sunt PNG-uri pictate (256 px, generate cu
+## AI, decupate pe transparent), nu SVG-uri albe: culoarea e în fișier, iar tema
+## doar le estompează când butonul e stins. Sursa e în `CREDITE.txt`. Se văd la
+## ~30 px, deci importul le cere mipmap-uri — fără ele, micșorarea fâlfâie.
 func _iconita(domeniu: String) -> Texture2D:
-	var cale := "res://assets/iconite/domenii/%s.svg" % domeniu
+	var cale := "res://assets/iconite/domenii/%s.png" % domeniu
 	if not ResourceLoader.exists(cale):
 		return null
 	return load(cale)

@@ -1,22 +1,33 @@
 ICONIȚELE DOMENIILOR (Practice, ecranul „Alege domeniul")
 
-Sursa: game-icons.net — https://github.com/game-icons/icons
-Licența: Creative Commons Attribution 3.0 (CC BY 3.0)
-         https://creativecommons.org/licenses/by/3.0/
+Sursa: imagini generate cu o unealtă AI de imagini, de mine (Ștefan), pe
+23 octombrie 2026. Numele uneltei: DE COMPLETAT — și, odată cu el, dacă
+termenii ei permit folosirea comercială a imaginilor.
 
 Fișierul se numește după CHEIA domeniului din `DOMENII` (trivia.gd); așa îl
-găsește `practice.gd`, fără niciun tabel. Singura schimbare față de original:
-pătratul negru de fundal a fost scos, ca iconița să fie albă pe transparent și
-s-o poată colora tema.
+găsește `practice.gd`, fără niciun tabel.
 
-  geografie.svg              world              Lorc   http://lorcblog.blogspot.com
-  istorie.svg                crown              Lorc   http://lorcblog.blogspot.com
-  stiinta_tehnologie.svg     round-bottom-flask Lorc   http://lorcblog.blogspot.com
-  arta_literatura.svg        quill-ink          Lorc   http://lorcblog.blogspot.com
-  divertisment.svg           drama-masks        Lorc   http://lorcblog.blogspot.com
-  sport_jocuri.svg           laurels            Lorc   http://lorcblog.blogspot.com
-  gastronomie_lifestyle.svg  jeweled-chalice    Lorc   http://lorcblog.blogspot.com
-  diverse.svg                hourglass          Lorc   http://lorcblog.blogspot.com
+Ce s-a schimbat față de imaginile primite (JPG 2000 px, cu fundal):
+  - fundalul a fost decupat (rembg, modelul isnet-general-use). Mai multe
+    imagini aveau o „tablă de șah" de transparență PICTATĂ în JPG, nu
+    transparență adevărată;
+  - istorie (coroana, a patra variantă, de aur neted): fundal gri cu
+    strălucire caldă. Nici rembg singur, nici o cheie de culoare singură nu
+    mergeau la variantele de dinainte, deci s-au combinat: se păstrează ce nu e
+    gri neutru, dar numai înăuntrul siluetei date de rembg, cu găurile umplute;
+  - diverse (lupa): prin lentilă se vedea tabla de șah pictată; a fost
+    înlocuită cu sticlă netedă, semitransparentă, iar semnul întrebării a rămas;
+  - decupate pe obiect, puse în pătrat cu 4% margine, micșorate la 256 px.
 
-CC BY cere ca autorii să fie creditați. Până există un ecran de credite în joc,
-fișierul ăsta e creditul; când apare ecranul, rândurile de mai sus intră în el.
+  geografie.png              glob pictat ca o hartă veche
+  istorie.png                coroană gotică de aur, netedă
+  stiinta_tehnologie.png     sferă armilară, compas și carte
+  arta_literatura.png        pană în călimară
+  divertisment.png           măștile teatrului
+  sport_jocuri.png           cunună de lauri
+  gastronomie_lifestyle.png  bonetă de bucătar
+  diverse.png                lupă cu semn de întrebare
+
+Până pe 23 octombrie aici erau SVG-uri albe de la game-icons.net (Lorc,
+CC BY 3.0), colorate de temă. Nu mai e niciunul în proiect, deci creditul lor
+a ieșit odată cu ele.
