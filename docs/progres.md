@@ -90,8 +90,8 @@ figurina și creierul stau una lângă alta.
 - **`nota.svg` → `nota.png`**, în ambele scene care îl folosesc (`meniu.tscn` și
   `practice.tscn`). SVG-urile vechi și `.import`-urile lor au ieșit.
 - **Creditele**: CC BY pentru Lorc a ieșit odată cu fișierele lui. În
-  `CREDITE.txt` scrie acum de unde vin imaginile și ce prelucrare au primit.
-  **Numele uneltei AI e încă „DE COMPLETAT”.**
+  `CREDITE.txt` scrie acum de unde vin imaginile (**Gemini**, Google) și ce
+  prelucrare au primit.
 
 ### Verificat
 
@@ -103,8 +103,8 @@ fost capturată.
 
 ### Rămas deschis
 
-- **Numele uneltei AI în `CREDITE.txt`**, și verificat dacă termenii ei permit
-  folosirea comercială a imaginilor, înainte de orice export public.
+- **De verificat termenii Gemini** pentru folosirea comercială a imaginilor
+  generate, înainte de orice export public. Unealta e trecută în `CREDITE.txt`.
 - Scriptul de decupare a stat în afara proiectului: reparațiile pentru coroană și
   lupă sunt făcute pe imaginile astea anume. Dacă iconițele se regenerează des,
   merită o unealtă în `tools/`. Altfel, nu.

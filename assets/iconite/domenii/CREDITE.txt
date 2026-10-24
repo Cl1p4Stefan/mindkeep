@@ -1,8 +1,8 @@
 ICONIȚELE DOMENIILOR (Practice, ecranul „Alege domeniul")
 
-Sursa: imagini generate cu o unealtă AI de imagini, de mine (Ștefan), pe
-23 octombrie 2026. Numele uneltei: DE COMPLETAT — și, odată cu el, dacă
-termenii ei permit folosirea comercială a imaginilor.
+Sursa: imagini generate cu Gemini (Google), de mine (Ștefan), pe 23–24
+octombrie 2026. Înainte de orice export public: de verificat ce spun termenii
+Gemini despre folosirea comercială a imaginilor generate.
 
 Fișierul se numește după CHEIA domeniului din `DOMENII` (trivia.gd); așa îl
 găsește `practice.gd`, fără niciun tabel.

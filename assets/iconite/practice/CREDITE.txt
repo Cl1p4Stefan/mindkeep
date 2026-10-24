@@ -1,7 +1,7 @@
 ICONIȚELE ECRANULUI DE PRACTICE
 
 Aceeași sursă și aceeași prelucrare ca la `../domenii/` (vezi CREDITE.txt de
-acolo): imagine generată cu o unealtă AI, fundalul decupat cu rembg, 256 px.
+acolo): imagine generată cu Gemini, fundalul decupat cu rembg, 256 px.
 
   nota.png    creier
 
