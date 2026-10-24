@@ -1,6 +1,6 @@
 # MINDKEEP — Jurnal de progres
 
-*Ultima actualizare: 23 octombrie 2026*
+*Ultima actualizare: 24 octombrie 2026*
 *Atașează acest fișier la începutul fiecărei sesiuni noi, împreună cu `CLAUDE.md` și `docs/pitch-document.md`.*
 
 ---
@@ -61,12 +61,16 @@ figurina și creierul stau una lângă alta.
     fundalul. Fundalul ei e un gri neted, deci s-a scos după culoare (gri neutru
     legat de margini), iar umbrele închise din coroană au rămas. **În aceeași zi
     coroana a fost înlocuită de trei ori** (albastru cu aur, apoi toată de aur
-    cu gravuri, apoi de aur netedă — cea rămasă).
-    Strălucirea aurului încălzește fundalul din jur, deci cheia de culoare
-    singură lăsa pete. Soluția a fost să le combin: se păstrează ce nu e gri
-    neutru, dar numai înăuntrul siluetei date de rembg, cu găurile umplute.
-    Prețul variantei aurii: pe butonul bej se desprinde mai slab decât celelalte
-    iconițe;
+    cu gravuri, apoi de aur netedă). La cele aurii, strălucirea încălzește
+    fundalul din jur, deci cheia de culoare singură lăsa pete; soluția a fost
+    s-o combin cu rembg: ce nu e gri neutru, dar numai înăuntrul siluetei, cu
+    găurile umplute. Prețul aurului simplu: pe butonul bej se desprinde slab.
+    **Pe 24 octombrie, a patra înlocuire**: aur cu pietre și perle, cea rămasă
+    (pietrele colorate o desprind de bej; fiind lată, iese mai joasă pe buton).
+    Ea stătea pe o tablă de șah pictată, care se vedea și prin golurile dintre
+    vârfuri și flori, deci s-a scos tot griul neutru din plaja tablei, numai
+    înăuntrul siluetei rembg, FĂRĂ să umplu găurile; perlele, mai luminoase
+    decât tabla, au rămas;
   - **lupa**: prin lentilă se vedea tabla pictată. A fost înlocuită cu sticlă
     netedă, pe jumătate transparentă, iar semnul întrebării (auriu, deci ușor de
     separat de sticla rece) a rămas.
