@@ -380,6 +380,9 @@ func _arata_domenii() -> void:
 			String(TRIVIA.DOMENII[cheie]), cate, nivel,
 			_pe_domeniu_ales.bind(domeniu), true)
 		buton.icon = _iconita(domeniu)
+		# Aerul dintre iconiță și nume. Implicit, Godot lasă 4 px — iconița
+		# părea lipită de text.
+		buton.add_theme_constant_override("h_separation", 10)
 		lista.add_child(buton)
 
 	_actualizeaza_antet()
