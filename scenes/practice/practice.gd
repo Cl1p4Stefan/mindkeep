@@ -224,6 +224,19 @@ const PRAG_PRACTICE := 60
 ## de 2 s. Cifră de pornire, nejucată: se reglează aici, jucând.
 const PAUZA_AUTO := 2.0
 
+## LA CÂTE ÎNTREBĂRI ȘTIUTE VINE O FELICITARE, pe secțiunile doar-Practice
+## (Alergologia — vezi `ALERGOLOGIE` din `trivia.gd`).
+##
+## Secțiunile astea n-au niveluri de deblocat (treci prin toate), deci n-ar avea
+## niciun prag de atins. Felicitarea pune unul la fiecare 20: „ai atins nivelul
+## 2". E doar o răsplată, nu deschide nimic — dinadins, ca să nu apară un zid.
+##
+## Se numără întrebări DISTINCTE știute (`cate_stiute`), nu răspunsuri: altfel
+## recapitularea aceleiași întrebări de 20 de ori ar urca un nivel, iar nivelul
+## n-ar mai spune nimic despre cât știi. Merge și pe disc, gratis: e o împărțire
+## a unui număr care se salvează deja. La 300 de întrebări, ultimul e nivelul 15.
+const PAS_FELICITARE := 20
+
 ## Nivelul scris cu cifre romane, ca în pitch. Lista e o PLASĂ, nu o regulă: dacă
 ## apare vreodată un al patrulea nivel, `_roman` întoarce cifra arabă în loc să
 ## iasă din listă.
@@ -323,6 +336,7 @@ var tween_auto: Tween = null
 @onready var buton_nota: Button = %ButonNota
 
 @onready var panou_nota: Control = %PanouNota
+@onready var nota_titlu: Label = %NotaTitlu
 @onready var nota_text: Label = %NotaText
 @onready var buton_inchide_nota: Button = %ButonInchideNota
 
@@ -372,13 +386,17 @@ func _arata_domenii() -> void:
 	alegere_titlu.text = "ALEGE DOMENIUL"
 
 	_goleste(lista)
-	for cheie in TRIVIA.DOMENII:
+	# `domenii_practice`, nu `DOMENII`: cuprinde și Alergologia, când comutatorul
+	# ei e aprins (vezi `ALERGOLOGIE` din `trivia.gd`).
+	var domenii := TRIVIA.domenii_practice()
+	for cheie in domenii:
 		var domeniu := String(cheie)
 		var nivel := nivelul(domeniu)
 		var cate := TRIVIA.raftul(nivel, domeniu).size()
+		# O secțiune fără niveluri n-are ce cifră romană să poarte.
 		var buton := _buton_raft(
-			String(TRIVIA.DOMENII[cheie]), cate, nivel,
-			_pe_domeniu_ales.bind(domeniu), true)
+			String(domenii[cheie]), cate, nivel,
+			_pe_domeniu_ales.bind(domeniu), not TRIVIA.doar_practice(domeniu))
 		buton.icon = _iconita(domeniu)
 		# Aerul dintre iconiță și nume. Implicit, Godot lasă 4 px — iconița
 		# părea lipită de text.
@@ -419,14 +437,14 @@ func _arata_rafturile() -> void:
 	buton_inapoi.visible = true
 
 	var nivel := nivelul(domeniu_ales)
-	alegere_titlu.text = String(TRIVIA.DOMENII.get(domeniu_ales, domeniu_ales)).to_upper()
+	alegere_titlu.text = String(TRIVIA.domenii_practice().get(domeniu_ales, domeniu_ales)).to_upper()
 
 	_goleste(lista)
 	lista.add_child(_buton_raft(
 		"Tot domeniul", TRIVIA.raftul(nivel, domeniu_ales).size(), nivel,
 		_pe_raft_ales.bind(""), false, raft_parcurs(nivel, domeniu_ales)))
 
-	var rafturi: Dictionary = TRIVIA.SUBCATEGORII.get(domeniu_ales, {})
+	var rafturi: Dictionary = TRIVIA.subcategorii_practice(domeniu_ales)
 	for cheie in rafturi:
 		var raft := String(cheie)
 		var cate := TRIVIA.raftul(nivel, domeniu_ales, raft).size()
@@ -509,6 +527,8 @@ func _buton_raft(nume: String, cate: int, nivel: int, la_apasare: Callable,
 	var dreapta := ""
 	if cate == 0:
 		dreapta = "gol la nivelul %s" % _roman(nivel)
+	elif parcurs and TRIVIA.doar_practice(domeniu_ales):
+		dreapta = "100%"
 	elif parcurs:
 		dreapta = "Nivel %s · 100%%" % _roman(nivel)
 	elif arata_nivel:
@@ -623,9 +643,17 @@ func _pe_raspuns(succes: bool, de_la: Node) -> void:
 	# se poate afla `id`-ul ei (vezi variabila, în `trivia.gd`).
 	var bruta: Dictionary = de_la.ultima_trasa
 	var id := String(bruta.get("id", ""))
+	var felicitare := 0   # nivelul de anunțat, 0 = nimic (vezi `PAS_FELICITARE`)
 	if succes and id != "":
 		var era_stiut := _raft_stiut()
+		var stiute_inainte := cate_stiute(domeniu_ales, nivel)
 		_inregistreaza(domeniu_ales, nivel, id)
+		# Numai când numărul a CRESCUT: o întrebare știută deja, răspunsă din
+		# nou, lasă numărul pe 40 — și fără garda asta ar felicita a doua oară.
+		var stiute_acum := cate_stiute(domeniu_ales, nivel)
+		if TRIVIA.doar_practice(domeniu_ales) and stiute_acum > stiute_inainte \
+				and stiute_acum % PAS_FELICITARE == 0:
+			felicitare = stiute_acum / PAS_FELICITARE
 		# Anunțul, în clipa în care raftul a devenit știut tot. Dacă același
 		# răspuns a deschis și nivelul următor, anunțul de nivel rămâne: e vestea
 		# mai mare, iar raftul, la nivelul nou, nu mai e parcurs.
@@ -649,9 +677,15 @@ func _pe_raspuns(succes: bool, de_la: Node) -> void:
 	buton_urmatoarea.grab_focus()
 	_actualizeaza_antet()
 
+	# DUPĂ focus: felicitarea îl mută pe butonul ei, iar la închidere el se
+	# întoarce pe „Următoarea" (vezi `_inchide_nota`).
+	if felicitare > 0:
+		_felicita(felicitare)
+
 	# Un anunț vizibil acum e al răspunsului ăstuia (`_intrebare_noua` îl
 	# golește), deci bara nu pornește: vezi punctul 4 din „Trecerea singură".
-	if succes and not eticheta_anunt.visible:
+	# La fel cu felicitarea: întrebarea nu pleacă de sub un popup deschis.
+	if succes and not eticheta_anunt.visible and not panou_nota.visible:
 		_porneste_auto()
 
 
@@ -757,10 +791,32 @@ func _deschide_nota() -> void:
 	# Prima linie după gardă: o notă deschisă nu are voie să fie schimbată de
 	# sub tine. E singurul loc care oprește bara la cererea ta.
 	_opreste_auto()
-	nota_text.text = nota_curenta
+	_arata_panou("AFLA MAI MULTE", nota_curenta, "Inchide")
+
+
+## Felicitarea de la fiecare `PAS_FELICITARE` întrebări știute. Același panou ca
+## nota: e tot „un mesaj peste întrebare, care se citește și se închide", cu
+## umbra care-l face modal și cu Escape. Un al doilea panou ar fi fost o a doua
+## copie a acelorași trei noduri și a acelorași reguli de focus.
+func _felicita(treapta: int) -> void:
+	var nume := String(TRIVIA.domenii_practice().get(domeniu_ales, domeniu_ales)).to_lower()
+	var total := TRIVIA.raftul(1, domeniu_ales).size()
+	_arata_panou("FELICITĂRI!",
+		"Felicitări, ai atins nivelul %d la %s!\n\nAi răspuns corect la %d din %d întrebări." % [
+			treapta, nume, cate_stiute(domeniu_ales, 1), total],
+		"Continuă")
+
+
+## Deschide panoul cu titlul, textul și butonul date. Toate trei se pun de
+## fiecare dată: panoul e folosit de două mesaje, iar unul care și-ar lăsa
+## titlul în urmă ar face ca nota următoare să se cheme „FELICITĂRI!".
+func _arata_panou(titlu: String, text: String, buton: String) -> void:
+	nota_titlu.text = titlu
+	nota_text.text = text
+	buton_inchide_nota.text = buton
 	panou_nota.visible = true
-	# Focusul trece pe „Închide", deci Enter sau Space închid nota — tasta care
-	# a deschis-o o și închide, fără să fie nevoie de mouse.
+	# Focusul trece pe buton, deci Enter sau Space închid panoul — tasta care
+	# l-a deschis îl și închide, fără să fie nevoie de mouse.
 	buton_inchide_nota.grab_focus()
 
 
@@ -829,7 +885,7 @@ func _inregistreaza(domeniu: String, nivel: int, id: String) -> void:
 
 	if pe_celula.size() < PRAG_PRACTICE:
 		return
-	if nivel >= _nivel_maxim():
+	if nivel >= _nivel_maxim(domeniu):
 		return
 	_nivel_atins[domeniu] = nivel + 1
 	# A doua scriere, fiindcă s-a schimbat încă ceva: nivelul. Două scrieri la
@@ -890,9 +946,11 @@ func _raft_stiut() -> bool:
 func _anunt_raft_parcurs() -> String:
 	var nivel := nivelul(domeniu_ales)
 	var ce := "tot domeniul" if subcategorie_aleasa == "" else "tot raftul"
+	if TRIVIA.doar_practice(domeniu_ales):
+		return "Ai raspuns corect la %s. De aici e recapitulare." % ce
 	var inceput := "Ai raspuns corect la %s, la nivelul %s. De aici e recapitulare." % [
 		ce, _roman(nivel)]
-	if nivel >= _nivel_maxim():
+	if nivel >= _nivel_maxim(domeniu_ales):
 		return inceput
 
 	var lipsa := PRAG_PRACTICE - cate_stiute(domeniu_ales, nivel)
@@ -904,7 +962,11 @@ func _anunt_raft_parcurs() -> String:
 		inceput, _roman(nivel + 1), lipsa, ramase]
 
 
-func _nivel_maxim() -> int:
+func _nivel_maxim(domeniu: String) -> int:
+	# Secțiunile doar-Practice (Alergologia) au un singur nivel: nu se deschide
+	# nimic după 60, treci prin toate. Vezi `ALERGOLOGIE` din `trivia.gd`.
+	if TRIVIA.doar_practice(domeniu):
+		return 1
 	# Citit din `puzzle.gd`, nu scris aici: nivelurile sunt o proprietate a
 	# disciplinei, iar un „3" scris în două locuri e un „3" care se desparte.
 	return Puzzle.TIMP_PE_NIVEL.size()
@@ -933,7 +995,14 @@ func _actualizeaza_antet() -> void:
 ## „Nivel I · 12 / 60 pana la nivelul II", sau „Nivel III · nivelul maxim".
 func _progresul(domeniu: String) -> String:
 	var nivel := nivelul(domeniu)
-	if nivel >= _nivel_maxim():
+	# Fără niveluri de deblocat, progresul e cât din secțiune ai știut, cu
+	# nivelul felicitărilor în față: „Nivel 2 · 45 / 300 stiute". Fără el,
+	# nivelul ar exista doar cât stă deschis popup-ul.
+	if TRIVIA.doar_practice(domeniu):
+		var stiute := cate_stiute(domeniu, 1)
+		return "Nivel %d · %d / %d stiute" % [
+			stiute / PAS_FELICITARE, stiute, TRIVIA.raftul(1, domeniu).size()]
+	if nivel >= _nivel_maxim(domeniu):
 		return "Nivel %s · nivelul maxim" % _roman(nivel)
 	return "Nivel %s · %d / %d pana la nivelul %s" % [
 		_roman(nivel), cate_stiute(domeniu, nivel), PRAG_PRACTICE, _roman(nivel + 1)]

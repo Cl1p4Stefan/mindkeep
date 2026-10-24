@@ -28,6 +28,16 @@ Ce s-a schimbat față de imaginile primite (JPG 2000 px, cu fundal):
   sport_jocuri.png           cunună de lauri
   gastronomie_lifestyle.png  bonetă de bucătar
   diverse.png                lupă cu semn de întrebare
+  alergologie.png            albină (24 octombrie 2026, vezi mai jos)
+
+ALBINA (alergologie.png) — secțiunea doar pentru Practice, stinsă implicit.
+Primită de la Ștefan ca JPG de 2000 px, pe fundal alb neted. SURSA ȘI LICENȚA
+NU SUNT SCRISE ÎNCĂ: de completat aici înainte de orice export public.
+Decupată fără rembg, prin „dezamestecare” din alb: opacitatea vine din cât de
+departe e pixelul de alb (prag 60, zgomotul JPEG sub 6 ignorat), culoarea se
+scoate de sub alb, iar reflexele mici de pe corp sunt umplute. Corpul iese opac,
+membrana aripilor pe jumătate străvezie. Apoi, ca la celelalte: 4% margine,
+256 px.
 
 Până pe 23 octombrie aici erau SVG-uri albe de la game-icons.net (Lorc,
 CC BY 3.0), colorate de temă. Nu mai e niciunul în proiect, deci creditul lor

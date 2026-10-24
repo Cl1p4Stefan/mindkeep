@@ -272,6 +272,55 @@ const SUBCATEGORII := {
 	},
 }
 
+# ─────────────────────────────────────────────────────────────
+# SECȚIUNILE DOAR PENTRU PRACTICE (24 octombrie 2026)
+#
+# Conținut care se exersează în Practice și NU intră niciodată în luptă. Prima,
+# și azi singura: ALERGOLOGIE — 300 de întrebări pentru o rezidentă de anul I,
+# ca să aibă pe ce exersa. Nu e cultură generală, deci n-are ce căuta nici în
+# alegerea din luptă, nici în echilibrul pe domenii, nici în grila de conținut.
+#
+# TREI LUCRURI O ȚIN DEPARTE DE LUPTĂ, și fiecare ar ajunge singur:
+#   1. Întrebările stau în `intrebari_doar_practice`, nu în `intrebari` — iar
+#      `trage_intrebarea` citește numai `intrebari`.
+#   2. Cheia `alergologie` nu e în `DOMENII`, deci verificatorul, echilibrul și
+#      grila nu știu că există.
+#   3. COMUTATORUL `ALERGOLOGIE`: stins, fișierul nici nu se citește, iar
+#      butonul nu apare în Practice. Aprins doar cât joacă ea.
+#
+# FĂRĂ NIVELURI, dinadins: toate au `nivel: 1`, iar Practice nu deschide un
+# nivel II pe secțiunile astea (vezi `doar_practice`). Scopul e să treci prin
+# toate întrebările, nu să urci trepte. Rafturile rămân: „Tot domeniul" le
+# cuprinde pe toate, iar celelalte șase taie pe capitole.
+#
+# SURSA, spusă pe față: întrebările le-a scris un model de limbaj, din memorie
+# — exact ce regula „Modelul de limbaj formulează, nu informează" interzice la
+# cultura generală. E o excepție CONȘTIENTĂ, și ține din două motive: le
+# citește un medic, care vede o greșeală mai repede decât oricine, iar
+# comutatorul le ține afară din jocul tuturor celorlalți. De-aia n-au nici
+# note, și de-aia toate au `verificat: false` până le citește ea.
+# ─────────────────────────────────────────────────────────────
+const ALERGOLOGIE := false
+
+const CALE_ALERGOLOGIE := "res://data/alergologie.json"
+
+## Aceeași formă ca `DOMENII` și `SUBCATEGORII`, dar separate de ele: tot ce
+## citește tabelele alea (lupta, verificatorul) rămâne neatins.
+const DOMENII_DOAR_PRACTICE := {
+	"alergologie": "Alergologie",
+}
+
+const SUBCATEGORII_DOAR_PRACTICE := {
+	"alergologie": {
+		"imunologie": "Imunologie de bază",
+		"astm_rinita": "Astm și rinită",
+		"alergii_alimentare": "Alergii alimentare",
+		"anafilaxie_medicamente": "Anafilaxie, medicamente, venin",
+		"urticarie_dermatite": "Urticarie, angioedem, dermatite",
+		"diagnostic_imunoterapie": "Diagnostic și imunoterapie",
+	},
+}
+
 # CÂMPURILE pe care le poate avea o întrebare. Lista e ÎNCHISĂ, iar un câmp
 # necunoscut REFUZĂ întrebarea — un câmp scris greșit („verifcat”) ar fi o
 # întrebare care se poartă altfel decât crezi, fără ca nimic să spună nimic.
@@ -381,6 +430,10 @@ const DISTANTA_PRACTICE := 3
 # de pe disc de fiecare dată. Așa, se citește o singură dată pe rulare,
 # iar toate instanțele viitoare folosesc aceeași listă.
 static var intrebari: Array[Dictionary] = []
+
+# Întrebările secțiunilor doar-Practice (vezi `ALERGOLOGIE`). O listă A DOUA, nu
+# un filtru pe prima: așa lupta nu le poate trage nici printr-un bug.
+static var intrebari_doar_practice: Array[Dictionary] = []
 static var incarcare_incercata := false
 
 ## Câte întrebări n-au încă `subcategorie`. Cele 135 scrise de mână înaintea
@@ -494,7 +547,7 @@ func _compune_intrebare(nivel: int) -> Dictionary:
 		# n-ar trebui să prindă niciodată — încărcătorul refuză deja întrebările
 		# cu domeniu necunoscut — dar, dacă prinde, pe ecran apare ceva citibil
 		# în loc de gol.
-		"categorie": String(DOMENII.get(String(q["categorie"]), q["categorie"])).to_upper(),
+		"categorie": String(domenii_practice().get(String(q["categorie"]), q["categorie"])).to_upper(),
 		"text": q["text"],
 		"variante": amestecate["variante"],
 		"corect": amestecate["corect"],
@@ -671,7 +724,8 @@ static func cheia_sacului(domeniu: String, nivel: int) -> String:
 ## felul cel mai simplu de a avea un buton pe care scrie 136 și un sac cu 140.
 static func raftul(nivel: int, domeniu: String, subcategorie := "") -> Array[Dictionary]:
 	var pe_raft: Array[Dictionary] = []
-	for q in intrebari:
+	var sursa := intrebari_doar_practice if doar_practice(domeniu) else intrebari
+	for q in sursa:
 		if int(q["nivel"]) != nivel:
 			continue
 		if String(q["categorie"]) != domeniu:
@@ -680,6 +734,25 @@ static func raftul(nivel: int, domeniu: String, subcategorie := "") -> Array[Dic
 			continue
 		pe_raft.append(q)
 	return pe_raft
+
+
+## Domeniile pe care le arată Practice: cele din `DOMENII`, plus secțiunile
+## doar-Practice cu comutatorul aprins. Lupta nu cheamă funcția asta.
+static func domenii_practice() -> Dictionary:
+	var toate := DOMENII.duplicate()
+	if ALERGOLOGIE:
+		toate.merge(DOMENII_DOAR_PRACTICE)
+	return toate
+
+
+## Rafturile unui domeniu, oricare din cele două tabele l-ar avea.
+static func subcategorii_practice(domeniu: String) -> Dictionary:
+	return SUBCATEGORII_DOAR_PRACTICE.get(domeniu, SUBCATEGORII.get(domeniu, {}))
+
+
+## E o secțiune doar-Practice? Atunci n-are niveluri (vezi `ALERGOLOGIE`).
+static func doar_practice(domeniu: String) -> bool:
+	return DOMENII_DOAR_PRACTICE.has(domeniu)
 
 
 ## Cheia sacului pentru un raft. Într-un singur loc, ca `cheia_sacului`:
@@ -871,6 +944,14 @@ static func incarca_intrebari() -> void:
 	print("Trivia: %d intrebari incarcate (din %d gasite), %d neverificate." % [
 		intrebari.size(), cate_gasite, neverificate
 	])
+
+	# Prin același validator și același registru de `id`-uri ca restul, dar în
+	# lista lor. Vezi `ALERGOLOGIE`.
+	if ALERGOLOGIE:
+		var gasite_alergologie := _incarca_fisier(CALE_ALERGOLOGIE, folosite, id_uri, true)
+		print("Trivia: alergologie — %d intrebari (din %d gasite), doar in Practice." % [
+			intrebari_doar_practice.size(), gasite_alergologie
+		])
 	# UN RÂND, nu un avertisment pe întrebare. Cele 135 scrise înaintea câmpului
 	# `subcategorie` îl vor primi într-un lot de clasificare; până atunci lipsa e o
 	# muncă rămasă, nu o greșeală — iar 135 de avertismente ar îngropa consola și
@@ -929,11 +1010,12 @@ static func fisierele_generate(sufix: String) -> Array[String]:
 ## care contează e că `folosite` și `id_uri` vin din AFARĂ: sunt registre comune
 ## celor două fișiere, nu ale unuia. Un al treilea fișier de conținut n-ar trebui
 ## să adauge cod aici, doar o linie sus — aceeași regulă ca la Obeliscuri.
-static func _incarca_fisier(cale: String, folosite: Dictionary, id_uri: Dictionary) -> int:
+static func _incarca_fisier(cale: String, folosite: Dictionary, id_uri: Dictionary,
+		pentru_practice := false) -> int:
 	var brute := Puzzle.citeste_lista_json(cale, "Trivia")
 	for i in range(brute.size()):
 		var q = brute[i]
-		if not _intrebare_valida(q, i, id_uri, cale):
+		if not _intrebare_valida(q, i, id_uri, cale, pentru_practice):
 			continue
 		# ATENȚIE, capcană clasică: JSON nu are numere întregi, doar zecimale.
 		# „corect": 2 ajunge în Godot ca 2.0 (float), iar un float nu poate
@@ -942,6 +1024,11 @@ static func _incarca_fisier(cale: String, folosite: Dictionary, id_uri: Dictiona
 		q["corect"] = int(q["corect"])
 		q["nivel"] = int(q["nivel"])
 		id_uri[String(q["id"])] = "intrarea %d din %s" % [i, cale.get_file()]
+		# Secțiunile doar-Practice ies AICI: n-au fapte, iar bilanțurile de mai
+		# jos (fără subcategorie, neverificate) sunt despre cultura generală.
+		if pentru_practice:
+			intrebari_doar_practice.append(q)
+			continue
 		if q.get("fapt", "") != "":
 			folosite[String(q["fapt"])] = true
 		if String(q.get("subcategorie", "")) == "":
@@ -1022,7 +1109,12 @@ static func _incarca_fapte(cale: String) -> void:
 ##
 ## `id_uri` e registrul întrebărilor acceptate până acum, ca să se poată prinde
 ## un `id` folosit de două ori.
-static func _intrebare_valida(q, i: int, id_uri: Dictionary, cale := CALE_INTREBARI) -> bool:
+static func _intrebare_valida(q, i: int, id_uri: Dictionary, cale := CALE_INTREBARI,
+		pentru_practice := false) -> bool:
+	# Domeniile admise depind de fișier: unul de luptă n-are voie să aducă o
+	# întrebare de alergologie, iar invers.
+	var domenii: Dictionary = DOMENII_DOAR_PRACTICE if pentru_practice else DOMENII
+	var subcategorii: Dictionary = SUBCATEGORII_DOAR_PRACTICE if pentru_practice else SUBCATEGORII
 	# Numele fișierului intră în fiecare mesaj de acum, fiindcă sunt două fișiere:
 	# „intrarea 47" singură n-ar spune în care să te uiți, iar unul din ele nici
 	# nu se editează de mână.
@@ -1101,7 +1193,7 @@ static func _intrebare_valida(q, i: int, id_uri: Dictionary, cale := CALE_INTREB
 		return false
 
 	var domeniu := String(q["categorie"])
-	if not DOMENII.has(domeniu):
+	if not domenii.has(domeniu):
 		push_warning("Trivia: %s are domeniul necunoscut '%s'." % [unde, domeniu])
 		return false
 
@@ -1114,7 +1206,7 @@ static func _intrebare_valida(q, i: int, id_uri: Dictionary, cale := CALE_INTREB
 	# nimeni niciodată.
 	var subcategorie := String(q.get("subcategorie", ""))
 	if subcategorie != "":
-		var ale_domeniului: Dictionary = SUBCATEGORII.get(domeniu, {})
+		var ale_domeniului: Dictionary = subcategorii.get(domeniu, {})
 		if not ale_domeniului.has(subcategorie):
 			push_warning("Trivia: %s are subcategoria '%s', care nu e a domeniului '%s'." % [
 				unde, subcategorie, domeniu

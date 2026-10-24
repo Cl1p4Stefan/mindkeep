@@ -40,6 +40,90 @@ restul rămâne placeholder. Bucla de luptă e în continuare cea validată, nu 
 
 ---
 
+## ALERGOLOGIE (24 octombrie 2026) — o secțiune doar pentru Practice, cu comutator
+
+### Cererea
+
+O rezidentă de anul I la alergologie vrea să exerseze pe întrebări. 300 de
+întrebări, fără niveluri, ca să poată trece prin toate. Secțiunea nu intră în
+joc decât cât o las pe ea să joace: un buton aprins sau stins din cod.
+
+### Ce s-a făcut
+
+- **`data/alergologie.json`**: 300 de întrebări, `alerg:0001`…`alerg:0300`,
+  toate cu `nivel: 1`, `verificat: false`, `corect: 0` (variantele se amestecă
+  oricum la afișare), fără `fapt`. **Șase rafturi a câte 50**: imunologie de
+  bază (inclusiv imunodeficiențe și mastocitoză), astm și rinită, alergii
+  alimentare, anafilaxie/medicamente/venin, urticarie/angioedem/dermatite,
+  diagnostic și imunoterapie.
+- **Comutatorul `ALERGOLOGIE`** în `trivia.gd`, lângă `FOLOSESTE_WIKIDATA`.
+  Stins (implicit), fișierul nici nu se citește și butonul nu apare.
+- **Trei lucruri o țin departe de luptă**, fiecare suficient singur: întrebările
+  stau în `intrebari_doar_practice`, nu în `intrebari`; cheia e în
+  `DOMENII_DOAR_PRACTICE`, nu în `DOMENII` (deci verificatorul și echilibrul n-o
+  văd); și comutatorul.
+- **Practice citește `domenii_practice()` și `subcategorii_practice()`** în loc
+  de `DOMENII` și `SUBCATEGORII`, iar `raftul()` alege lista după domeniu.
+- **Fără niveluri**: `_nivel_maxim(domeniu)` întoarce 1 pentru secțiunile
+  doar-Practice. Antetul scrie „45 / 300 stiute” în loc de „Nivel I · 45 / 60”,
+  butonul domeniului n-are cifră romană, raftul parcurs scrie „100%”, iar
+  anunțul de raft parcurs nu mai pomenește nivelul.
+- Progresul ei intră în același `permanent.json`, pe celula `alergologie:1`.
+
+### Principiul călcat, spus pe față
+
+**Întrebările le-am scris eu, din memorie** — exact ce interzice „Modelul de
+limbaj formulează, nu informează”. Excepția e conștientă: le citește un medic,
+iar comutatorul le ține afară din jocul oricui altcuiva. De-aia n-au note (o
+notă ar fi dublat numărul de afirmații nesusținute) și au toate `verificat: false`.
+Am evitat cifrele care se schimbă des (dozele din ghiduri, treptele GINA pe
+ani), dar ce e în ghiduri (praguri GINA, pași EAACI pentru urticarie, criterii
+OMS pentru mastocitoză) poate fi depășit de o ediție nouă.
+
+### Verificat
+
+- `verifica_trivia` (38 de verdicte) și `verifica_salvarea` (54) trec cu
+  comutatorul STINS; `verifica_trivia` trece și cu el APRINS, cu linia
+  „alergologie — 300 intrebari (din 300 gasite), doar in Practice”.
+- Capturi cu comutatorul aprins: lista de domenii (Alergologie e ultimul, fără
+  iconiță), cele șase rafturi plus „Tot domeniul”, întrebări pe ecran, inclusiv
+  cea cu variantele cele mai lungi (marșul atopic) — încap pe un rând. Scena de
+  captură a fost ștearsă; nu s-a dat niciun răspuns, deci `permanent.json` n-a
+  fost atins.
+
+### Rămas deschis
+
+- **Să le citească ea.** Ce găsește greșit se corectează direct în JSON; ce
+  găsește corect primește `verificat: true`.
+- ~~Iconiță pentru Alergologie~~ — **făcută în aceeași zi**: o albină,
+  `assets/iconite/domenii/alergologie.png`, 256 px, cu mipmap-uri, ca
+  celelalte. Fundalul era alb neted, deci s-a decupat fără rembg, prin
+  „dezamestecare” din alb: corpul opac, aripile pe jumătate străvezii (detalii
+  în `CREDITE.txt`). Văzută într-o captură, lângă nume, cu comutatorul aprins
+  temporar. **Sursa și licența imaginii nu sunt scrise încă** — de completat în
+  `CREDITE.txt` înainte de orice export public.
+- ~~O răsplată ca să continue~~ — **făcută în aceeași zi: felicitarea la
+  fiecare 20.** La a 20-a, a 40-a… întrebare DISTINCTĂ știută
+  (`PAS_FELICITARE` = 20 în `practice.gd`), un popup: „Felicitări, ai atins
+  nivelul X la alergologie!", cu „Ai răspuns corect la 40 din 300 întrebări."
+  dedesubt. Nivelul pornește de la 0, deci 300 de întrebări înseamnă 15
+  niveluri, și stă și în antet („Nivel 2 · 45 / 300 stiute"), ca să nu existe
+  doar cât e deschis popup-ul. **Distincte, nu răspunsuri**: altfel
+  recapitularea aceleiași întrebări ar urca nivelul. Doar pe secțiunile
+  doar-Practice. Popup-ul e CHIAR panoul notei (titlul, textul și butonul se
+  pun la fiecare deschidere), cu umbra modală și Escape; cât e deschis, bara
+  „trecerii singure" nu pornește. Verificat cu o scenă temporară care a mutat
+  `Arhiva.dosar` pe un dosar de probă, a pus 19 știute false și a răspuns
+  corect o dată: popup-ul apare, bara nu curge, antetul scrie „Nivel 1 · 20 /
+  300", iar nota deschisă după aceea are din nou „AFLA MAI MULTE". Scena și
+  dosarul au fost șterse; `permanent.json` a rămas neatins. Cine are deja
+  progres nu primește felicitările din urmă: următoarea vine la multiplul
+  următor de 20.
+- Dacă vrea explicații după răspuns, ar fi o notă pe întrebare. Merită doar
+  scrise sau citite de ea, din același motiv ca mai sus.
+
+---
+
 ## ICONIȚE PICTATE (23 octombrie 2026) — domeniile și creierul ies din alb, ca figurina
 
 ### Problema
