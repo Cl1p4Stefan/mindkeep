@@ -286,7 +286,7 @@ const SUBCATEGORII := {
 #   2. Cheia `alergologie` nu e în `DOMENII`, deci verificatorul, echilibrul și
 #      grila nu știu că există.
 #   3. COMUTATORUL `ALERGOLOGIE`: stins, fișierul nici nu se citește, iar
-#      butonul nu apare în Practice. Aprins doar cât joacă ea.
+#      butonul nu apare în Practice. Aprins doar în build-ul ei (vezi mai jos).
 #
 # FĂRĂ NIVELURI, dinadins: toate au `nivel: 1`, iar Practice nu deschide un
 # nivel II pe secțiunile astea (vezi `doar_practice`). Scopul e să treci prin
@@ -299,8 +299,26 @@ const SUBCATEGORII := {
 # citește un medic, care vede o greșeală mai repede decât oricine, iar
 # comutatorul le ține afară din jocul tuturor celorlalți. De-aia n-au nici
 # note, și de-aia toate au `verificat: false` până le citește ea.
+#
+# CINE APRINDE COMUTATORUL (25 octombrie 2026): nu o constantă schimbată de
+# mână, ci PRESETUL DE EXPORT. Presetul „Web” din `export_presets.cfg` poartă
+# o etichetă proprie, `alergologie` (Custom Features), iar `OS.has_feature()`
+# întreabă jocul, la pornire, dacă a fost exportat cu ea. Deci:
+#   - în editor și pe desktop: eticheta nu există → secțiunea e stinsă;
+#   - în build-ul de pe itch.io: există → aprinsă.
+# Înainte era o constantă: aprinsă pentru build, apoi uitată aprinsă în repo.
+# Eticheta e a PRESETULUI, nu `"web"`: un build web public (pasul 14) se face
+# cu alt preset, fără ea, și nu primește Alergologia pe nesimțite.
+#
+# `ALERGOLOGIE_LOCAL` o aprinde și în editor, cât testezi ceva la ea. Se pune
+# înapoi pe false înainte de commit.
+#
+# E un `static var`, nu `const`, fiindcă `OS.has_feature()` se poate întreba
+# abia când rulează jocul. Se calculează o dată, la încărcarea scriptului, și
+# nu se mai schimbă — de-aia păstrează numele cu majuscule al unei constante.
 # ─────────────────────────────────────────────────────────────
-const ALERGOLOGIE := false
+const ALERGOLOGIE_LOCAL := false
+static var ALERGOLOGIE: bool = ALERGOLOGIE_LOCAL or OS.has_feature("alergologie")
 
 const CALE_ALERGOLOGIE := "res://data/alergologie.json"
 

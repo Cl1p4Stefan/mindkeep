@@ -55,6 +55,22 @@ Visibility = Restricted, cu parolă (întrebările de alergologie au
 `verificat: false`, deci nu public). O versiune nouă = alt zip pe aceeași
 pagină, linkul rămâne.
 
+**O versiune nouă, dintr-o comandă:** `python tools/exporta_web.py` face
+exportul și zip-ul (~5 s). Oprește dacă eticheta `alergologie` lipsește din
+preset sau din pachet ori dacă JSON-urile n-au intrat în pachet, și arată ce
+nu e comis, fiindcă exportul ia proiectul de pe disc. Rămâne de mână doar
+urcarea pe itch.io.
+
+**Web aprins, local stins, fără să schimbi nimic de mână.** `ALERGOLOGIE` nu
+mai e o constantă, ci `static var ALERGOLOGIE = ALERGOLOGIE_LOCAL or
+OS.has_feature("alergologie")`. Eticheta `alergologie` stă în Custom Features
+ale presetului „Web”; Godot o scrie în `project.binary` din pachet, iar jocul
+o vede la pornire. Verificat în ambele sensuri: local, Practice nu încarcă
+alergologia; în build, consola din browser spune „alergologie — 300 intrebari”
+și butonul apare. Eticheta e proprie, nu `"web"`: pasul 14 va avea alt preset,
+fără ea. Prețul: presetul e în `.gitignore`, deci eticheta trăiește doar pe
+mașina asta — de-aia scriptul o caută și în preset, și în pachet.
+
 **Presetul** (`export_presets.cfg`, în `.gitignore`, deci stă doar local):
 Web, **fără fire** (`variant/thread_support=false` — merge pe itch.io și pe
 iPhone fără anteturi speciale), `*.json` în filtrul de fișiere care nu sunt
@@ -89,8 +105,6 @@ pieselor de șah (`pawn/knight/bishop.png`) și `demons_hand_reference.png`
 ### Rămas deschis
 
 - **Telefonul n-a fost încercat.** Peisaj, nu portret: pânza e 1152×648.
-- **`ALERGOLOGIE := true` nu e comis**: e aprins doar pentru build. Înainte de
-  un commit, hotărăște dacă rămâne aprins în repo.
 - Lupta folosește `fight_background.jpg` fără estompare, deci n-are costul
   ăsta; Lacătul folosește fire (`WorkerThreadPool`), care în build-ul fără fire
   nu există — expedițiile pe web sunt neîncercate.

@@ -79,6 +79,20 @@ Nu se șterge niciuna fără să dispară o verificare: toate bat sisteme care s
 încă în joc, iar cele două care par lente sunt lente fiindcă rulează mii de
 semințe.
 
+**Build-ul web** (demo pe https://gyarados9.itch.io/mindkeep, Restricted, cu parolă):
+
+```bash
+python tools/exporta_web.py      # export + ../mindkeep_web.zip
+```
+
+Exportă cu presetul „Web” (`export_presets.cfg`, local, în `.gitignore`) în
+`../mindkeep_web/`, verifică că JSON-urile au intrat în pachet și face zip-ul cu
+`index.html` la rădăcină. Presetul poartă eticheta `alergologie` (Custom
+Features), care aprinde Alergologia DOAR în build; scriptul oprește dacă
+eticheta lipsește din preset sau din pachet. Exportul ia
+proiectul de pe DISC, nu din Git. `../mindkeep_web/` e o ieșire: nu se
+modifică de mână. Urcarea zip-ului pe itch.io rămâne manuală.
+
 **Fabrica de întrebări** (Python, nu are nevoie de Godot):
 
 ```bash
@@ -141,7 +155,7 @@ Fiecare din astea a fost dezbătută și decisă conștient. Dacă propui altcev
 | **Apelurile de salvare stau în SCENE**   | `Arhiva` adună dicționarele celorlalți și nu știe nicio regulă de joc; nimeni nu depinde de ea. Dacă salvarea ar fi în autoload-uri, `verifica_drumuri` (~20.000 de expediții jucate, adică sute de mii de intrări în noduri) ar bate discul și ar scrie peste save-ul adevărat |
 | **Nodul se scrie pe disc la INTRARE**    | Înainte să se deschidă ce te așteaptă, nu la finalul nodului — altfel un lacăt ratat se reia cu codul deja văzut pe roți. Consecința: un nod poate fi „intrat dar nerezolvat", iar ce se întâmplă la reluare e coloana `reluabil` din `DATE_NOD` (Evenimentul NU se reia; lupta repornește de la zero) |
 | **Un save mai nou NU se citește**        | Vechi se deschide chiar și strâmb (cheie lipsă = implicit, cheie necunoscută = ignorată). Mai nou se pune deoparte: cheile pe care nu le știu pot însemna altceva decât cred. Un fișier ilizibil se redenumește, nu se șterge, și faptul se spune în meniu |
-| **Alergologia: secțiune doar pentru Practice, stinsă implicit** | 300 de întrebări (`data/alergologie.json`) pentru o rezidentă la alergologie, pe 6 rafturi, fără niveluri. Comutatorul `ALERGOLOGIE` din `trivia.gd` o aprinde doar cât joacă ea. Nu intră în luptă: listă separată (`intrebari_doar_practice`), domeniu separat (`DOMENII_DOAR_PRACTICE`). Excepție conștientă de la „modelul de limbaj nu informează”: le-a scris Claude din memorie, le citește un medic. Vezi sesiunea ALERGOLOGIE |
+| **Alergologia: secțiune doar pentru Practice, stinsă implicit** | 300 de întrebări (`data/alergologie.json`) pentru o rezidentă la alergologie, pe 6 rafturi, fără niveluri. Comutatorul `ALERGOLOGIE` din `trivia.gd` o aprinde DOAR în build-ul de pe itch.io: e `OS.has_feature("alergologie")`, iar eticheta o poartă presetul de export „Web”, nu codul. În editor și pe desktop e stinsă; `ALERGOLOGIE_LOCAL` o aprinde pentru un test și se pune înapoi pe false. Eticheta e a presetului, nu `"web"`, ca un build web public să nu o primească pe nesimțite. Nu intră în luptă: listă separată (`intrebari_doar_practice`), domeniu separat (`DOMENII_DOAR_PRACTICE`). Excepție conștientă de la „modelul de limbaj nu informează”: le-a scris Claude din memorie, le citește un medic. Vezi sesiunea ALERGOLOGIE |
 | **Meniul de start e scena principală**   | Două moduri de joc înseamnă o răscruce, iar răscrucea trebuie să fie un ecran, nu un `run/main_scene` schimbat de mână. Meniul ÎNCARCĂ o scenă și nu știe nimic despre ea: harta își alege singură ecranul (loadout / hartă / sumar) din starea lui `Expeditie`, exact ca până acum — deci `harta.tscn` și `lupta.tscn` pornesc în continuare singure cu F6. Ieșire spre meniu doar de pe loadout și de pe sumar: din mijlocul unei expediții, fără Save, ar fi o abandonare deghizată în pauză. **De la Save (12 octombrie 2026) ieșirea de pe hartă ar fi ieftină și cinstită — butonul nu s-a adăugat încă, e la „Rămas deschis" în sesiunea SAVE** |
 
 
