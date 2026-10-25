@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" path="res://assets/art/fight_background.jpg" id="3_biblioteca"]
 [ext_resource type="Shader" path="res://assets/tema/fundal_estompat.gdshader" id="4_estompat"]
 [ext_resource type="Texture2D" path="res://assets/iconite/practice/nota.png" id="5_nota"]
+[ext_resource type="Script" path="res://assets/tema/fundal_estompat.gd" id="9_fundal_o_data"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_estompat"]
 shader = ExtResource("4_estompat")
@@ -44,6 +45,7 @@ mouse_filter = 2
 texture = ExtResource("3_biblioteca")
 expand_mode = 1
 stretch_mode = 6
+script = ExtResource("9_fundal_o_data")
 
 [node name="Margini" type="MarginContainer" parent="." unique_id=1761820753]
 layout_mode = 1

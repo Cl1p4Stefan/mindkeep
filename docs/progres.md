@@ -1,6 +1,6 @@
 # MINDKEEP — Jurnal de progres
 
-*Ultima actualizare: 24 octombrie 2026*
+*Ultima actualizare: 25 octombrie 2026*
 *Atașează acest fișier la începutul fiecărei sesiuni noi, împreună cu `CLAUDE.md` și `docs/pitch-document.md`.*
 
 ---
@@ -37,6 +37,56 @@ buget, generare) rămâne acolo unde era.
 Am sărit peste ordinea recomandată la pasul 12 (artă): imaginile pentru rege,
 cavaler și pentru cele trei piese de șah de pe butoane au intrat mai devreme, dar
 restul rămâne placeholder. Bucla de luptă e în continuare cea validată, nu arta.
+
+---
+
+## PRIMUL BUILD WEB (25 octombrie 2026) — Practice pe itch.io, cu Alergologia aprinsă
+
+**Ce s-a făcut:** un export web, urcat pe itch.io (Restricted, cu parolă), ca
+să poată juca Alergologia și de pe telefon. Nu e pasul 14: e un demo pentru o
+singură persoană.
+
+**Presetul** (`export_presets.cfg`, în `.gitignore`, deci stă doar local):
+Web, **fără fire** (`variant/thread_support=false` — merge pe itch.io și pe
+iPhone fără anteturi speciale), `*.json` în filtrul de fișiere care nu sunt
+resurse (altfel jocul pornea fără întrebări), iar afară: `tools/*`, sursele
+pieselor de șah (`pawn/knight/bishop.png`) și `demons_hand_reference.png`
+(pomenită doar într-un comentariu). Ieșirea: `../mindkeep_web/index.html`,
+în afara repo-ului. Comanda:
+`Godot_..._console.exe --headless --path . --export-release "Web" ../mindkeep_web/index.html`.
+
+**Două probleme găsite abia în browser:**
+
+- **Litere ciupite** („n” cu un picior șters, litere tăiate jos) în chenarul de
+  pe itch.io, nu și pe ecran complet. Cauza: `default_texture_filter=3` în
+  `project.godot` înseamnă **Nearest Mipmap**, nu Linear Mipmap (ăla e 2) —
+  verificat în binarul Godot, lista e „Nearest, Linear, Linear Mipmap, Nearest
+  Mipmap”. Sesiunea din septembrie voia Linear Mipmap și a scris 3. Pe desktop
+  nu se vedea, fiindcă literele cad 1:1 pe pixeli; în browser, cu scalarea de
+  125% din Windows, cad între pixeli, iar filtrul „cel mai apropiat” sare
+  rânduri întregi. Acum e 2. **Schimbă și desktopul**: toate imaginile se
+  filtrează acum liniar, cum fusese gândit.
+- **Sacadare pe ecran complet** (și sunetul odată cu ea: în build-ul fără fire
+  sunetul se amestecă pe același fir cu desenul). Cauza probabilă:
+  `fundal_estompat.gdshader` rula la fiecare cadru, 24 de probe pe pixel, pe o
+  imagine care nu se schimbă. Acum `assets/tema/fundal_estompat.gd` (pus pe
+  `Biblioteca` din meniu și din Practice) îl desenează O DATĂ într-un
+  `SubViewport` (`UPDATE_ONCE`) și arată poza; redesenează doar la
+  redimensionare. **Nemăsurat**: panoul de browser era ascuns, deci cadrele
+  erau frânate și FPS-ul n-a putut fi citit. Se confirmă pe ecran complet, pe
+  itch.io.
+
+### Rămas deschis
+
+- **Telefonul n-a fost încercat.** Peisaj, nu portret: pânza e 1152×648.
+- **`ALERGOLOGIE := true` nu e comis**: e aprins doar pentru build. Înainte de
+  un commit, hotărăște dacă rămâne aprins în repo.
+- Lupta folosește `fight_background.jpg` fără estompare, deci n-are costul
+  ăsta; Lacătul folosește fire (`WorkerThreadPool`), care în build-ul fără fire
+  nu există — expedițiile pe web sunt neîncercate.
+- Lipsesc `dial_click.ogg` și `chest_open.ogg` din `assets/audio/` (și pe
+  desktop): Lacătul rămâne mut la cele două efecte.
+- Progresul de pe web stă în browserul ei (IndexedDB), nu se sincronizează.
 
 ---
 
