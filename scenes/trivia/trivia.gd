@@ -321,6 +321,36 @@ const SUBCATEGORII_DOAR_PRACTICE := {
 	},
 }
 
+## TITLURILE NIVELURILOR din felicitare (vezi `PAS_FELICITARE` din
+## `practice.gd`): poziția în listă = nivelul, de la 0. O cifră spune cât ai
+## urcat; un titlu îți dă ceva de dorit pentru treapta următoare.
+##
+## Scara amestecă două lucruri, dinadins: cariera adevărată (rezident,
+## specialist, primar, profesor — puse cam unde ar cădea pe 15 trepte) și
+## glume de meserie între ele, ca să nu fie doar un CV. Sunt TEXT, deci se
+## rescriu oricând, fără nicio altă schimbare. Un nivel peste capătul listei
+## primește ultimul titlu.
+const TITLURI_DOAR_PRACTICE := {
+	"alergologie": [
+		"Proaspăt sosit în clinică",      # 0
+		"Alergolog începător",            # 1
+		"Vânător de polen",               # 2
+		"Cititor de prick-uri",           # 3
+		"Îmblânzitor de histamină",       # 4
+		"Rezident cu experiență",         # 5
+		"Stăpânul antihistaminicelor",    # 6
+		"Detectiv al IgE",                # 7
+		"Medic specialist",               # 8
+		"Mâna sigură cu adrenalina",      # 9
+		"Imunoterapeut desăvârșit",       # 10
+		"Medic primar",                   # 11
+		"Șef de secție",                  # 12
+		"Profesor de alergologie",        # 13
+		"Legendă a alergologiei",         # 14
+		"Marele Maestru al Mastocitelor", # 15 — toate cele 300 știute
+	],
+}
+
 # CÂMPURILE pe care le poate avea o întrebare. Lista e ÎNCHISĂ, iar un câmp
 # necunoscut REFUZĂ întrebarea — un câmp scris greșit („verifcat”) ar fi o
 # întrebare care se poartă altfel decât crezi, fără ca nimic să spună nimic.
@@ -748,6 +778,14 @@ static func domenii_practice() -> Dictionary:
 ## Rafturile unui domeniu, oricare din cele două tabele l-ar avea.
 static func subcategorii_practice(domeniu: String) -> Dictionary:
 	return SUBCATEGORII_DOAR_PRACTICE.get(domeniu, SUBCATEGORII.get(domeniu, {}))
+
+
+## Titlul unui nivel de felicitare, sau gol dacă domeniul n-are titluri.
+static func titlul(domeniu: String, treapta: int) -> String:
+	var titluri: Array = TITLURI_DOAR_PRACTICE.get(domeniu, [])
+	if titluri.is_empty():
+		return ""
+	return String(titluri[clampi(treapta, 0, titluri.size() - 1)])
 
 
 ## E o secțiune doar-Practice? Atunci n-are niveluri (vezi `ALERGOLOGIE`).

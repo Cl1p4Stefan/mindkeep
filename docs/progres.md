@@ -119,6 +119,18 @@ OMS pentru mastocitoză) poate fi depășit de o ediție nouă.
   dosarul au fost șterse; `permanent.json` a rămas neatins. Cine are deja
   progres nu primește felicitările din urmă: următoarea vine la multiplul
   următor de 20.
+- **Titluri pe niveluri** (tot 24 octombrie): `TITLURI_DOAR_PRACTICE` în
+  `trivia.gd`, 16 nume pentru nivelurile 0–15, de la „Proaspăt sosit în
+  clinică" și „Alergolog începător" (1) până la „Marele Maestru al
+  Mastocitelor" (15, toate 300 știute). Scara amestecă cariera reală (rezident
+  cu experiență la 5, specialist la 8, primar la 11, șef de secție, profesor)
+  cu glume de meserie între ele („Vânător de polen", „Îmblânzitor de
+  histamină", „Detectiv al IgE"). Popup-ul scrie „Noul tău titlu: …", iar la
+  ultimul nivel „Ai răspuns corect la toate cele 300 de întrebări!"; antetul
+  devine „Nivel 3 · Cititor de prick-uri · 60 / 300 stiute". Numele sunt doar
+  text, se rescriu fără nicio altă schimbare. Verificat la fel ca felicitarea
+  (dosar de probă, 59 și 299 de știute false): ambele popup-uri și antetul
+  încap; `permanent.json` neatins.
 - Dacă vrea explicații după răspuns, ar fi o notă pe întrebare. Merită doar
   scrise sau citite de ea, din același motiv ca mai sus.
 

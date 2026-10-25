@@ -801,10 +801,19 @@ func _deschide_nota() -> void:
 func _felicita(treapta: int) -> void:
 	var nume := String(TRIVIA.domenii_practice().get(domeniu_ales, domeniu_ales)).to_lower()
 	var total := TRIVIA.raftul(1, domeniu_ales).size()
-	_arata_panou("FELICITĂRI!",
-		"Felicitări, ai atins nivelul %d la %s!\n\nAi răspuns corect la %d din %d întrebări." % [
-			treapta, nume, cate_stiute(domeniu_ales, 1), total],
-		"Continuă")
+	var stiute := cate_stiute(domeniu_ales, 1)
+	var text := "Felicitări, ai atins nivelul %d la %s!" % [treapta, nume]
+	# Titlul nou pe rândul lui: e vestea, nu o paranteză. Fără titluri (un
+	# domeniu viitor fără listă), felicitarea rămâne cum era.
+	var titlu := TRIVIA.titlul(domeniu_ales, treapta)
+	if titlu != "":
+		text += "\n\nNoul tău titlu: %s" % titlu
+	# Ultima treaptă se spune altfel: nu „mai ai", ci „ai terminat".
+	if stiute >= total:
+		text += "\n\nAi răspuns corect la toate cele %d de întrebări!" % total
+	else:
+		text += "\n\nAi răspuns corect la %d din %d întrebări." % [stiute, total]
+	_arata_panou("FELICITĂRI!", text, "Continuă")
 
 
 ## Deschide panoul cu titlul, textul și butonul date. Toate trei se pun de
@@ -1000,8 +1009,12 @@ func _progresul(domeniu: String) -> String:
 	# nivelul ar exista doar cât stă deschis popup-ul.
 	if TRIVIA.doar_practice(domeniu):
 		var stiute := cate_stiute(domeniu, 1)
-		return "Nivel %d · %d / %d stiute" % [
-			stiute / PAS_FELICITARE, stiute, TRIVIA.raftul(1, domeniu).size()]
+		var treapta := stiute / PAS_FELICITARE
+		# Cu titlu, dacă domeniul are: „Nivel 3 · Cititor de prick-uri · 60 / 300".
+		var titlu := TRIVIA.titlul(domeniu, treapta)
+		var nivel_scris := "Nivel %d" % treapta if titlu == "" \
+			else "Nivel %d · %s" % [treapta, titlu]
+		return "%s · %d / %d stiute" % [nivel_scris, stiute, TRIVIA.raftul(1, domeniu).size()]
 	if nivel >= _nivel_maxim(domeniu):
 		return "Nivel %s · nivelul maxim" % _roman(nivel)
 	return "Nivel %s · %d / %d pana la nivelul %s" % [
