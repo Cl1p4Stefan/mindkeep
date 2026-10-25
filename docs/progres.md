@@ -42,9 +42,18 @@ restul rămâne placeholder. Bucla de luptă e în continuare cea validată, nu 
 
 ## PRIMUL BUILD WEB (25 octombrie 2026) — Practice pe itch.io, cu Alergologia aprinsă
 
-**Ce s-a făcut:** un export web, urcat pe itch.io (Restricted, cu parolă), ca
-să poată juca Alergologia și de pe telefon. Nu e pasul 14: e un demo pentru o
-singură persoană.
+**Ce s-a făcut:** un export web, urcat pe itch.io, ca să poată juca
+Alergologia și de pe telefon. Nu e pasul 14: e un demo pentru o singură
+persoană.
+
+**Pagina:** https://gyarados9.itch.io/mindkeep
+
+**Setările de pe itch.io** (nu stau nicăieri în repo, deci aici): Kind of
+project = HTML; zip-ul din `../mindkeep_web/` cu „played in the browser”;
+viewport 1152 × 648; Mobile friendly, orientare Landscape; Fullscreen button;
+Visibility = Restricted, cu parolă (întrebările de alergologie au
+`verificat: false`, deci nu public). O versiune nouă = alt zip pe aceeași
+pagină, linkul rămâne.
 
 **Presetul** (`export_presets.cfg`, în `.gitignore`, deci stă doar local):
 Web, **fără fire** (`variant/thread_support=false` — merge pe itch.io și pe
@@ -72,9 +81,10 @@ pieselor de șah (`pawn/knight/bishop.png`) și `demons_hand_reference.png`
   imagine care nu se schimbă. Acum `assets/tema/fundal_estompat.gd` (pus pe
   `Biblioteca` din meniu și din Practice) îl desenează O DATĂ într-un
   `SubViewport` (`UPDATE_ONCE`) și arată poza; redesenează doar la
-  redimensionare. **Nemăsurat**: panoul de browser era ascuns, deci cadrele
-  erau frânate și FPS-ul n-a putut fi citit. Se confirmă pe ecran complet, pe
-  itch.io.
+  redimensionare. FPS-ul nu s-a măsurat (panoul de browser era ascuns, deci
+  cadrele erau frânate), dar **pe itch.io, pe ecran complet, lag-ul a
+  dispărut** după al doilea upload — confirmat cu ochiul, tot pe 25 octombrie.
+  Literele arată și ele corect.
 
 ### Rămas deschis
 
