@@ -1003,7 +1003,9 @@ func _arata_harta() -> void:
 ##
 ## Stările stau pe o PLĂCUȚĂ de piele, pe un singur rând: fiecare cifră cu
 ## iconița ei pictată (`iconita_resursa.gd`), deci fără cuvânt („PV”,
-## „Monede”) — numele complet e în tooltip. Plăcuța le adună într-un singur
+## „Monede”) — numele complet e în tooltip. Tooltip-ul stă pe GRUP (iconiță +
+## cifră), nu pe cifră: iconița e lucrul pe care-l întrebi „ce-i asta?”, iar
+## copiii lasă mouse-ul să treacă spre grup. Plăcuța le adună într-un singur
 ## obiect; direct pe pergament, cifrele stăteau peste marginea ruptă a hârtiei.
 ## Uneltele — care nu se schimbă pe drum — stau în piciorul hărții, ca plăcuța
 ## să rămână de un rând (cu ele dedesubt lua un colț din hartă).
