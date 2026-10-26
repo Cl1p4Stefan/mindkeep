@@ -40,6 +40,36 @@ restul rămâne placeholder. Bucla de luptă e în continuare cea validată, nu 
 
 ---
 
+## ANTETUL HĂRȚII (26 octombrie 2026) — fără titlu, resursele pe o plăcuță cu iconițe pictate
+
+**Problema:** antetul hărții era un șir de text pe pergament — „EXPEDITIE — nodul
+2, Bossul la cel putin 6 pasi” în stânga, „23 / 15 PV 37 Monede 297 Fragmente
+samanta 4242” și „Unelte: …” în dreapta. Arăta ca o notă de depanare.
+
+**Ce s-a făcut:**
+
+- **Titlul a ieșit de tot.** Spunea ce arată deja harta. Distanța până la Boss a
+  rămas în sumarul unei expediții pierdute, unde înseamnă ceva.
+- **PV, Monede, Fragmente pe o PLĂCUȚĂ de piele**, un singur rând în dreapta-sus,
+  cu ramă aurie și despărțitoare. Fiecare cifră are iconița ei, fără cuvânt;
+  numele complet e în tooltip. PV-ul se înroșește sub o treime.
+- **Iconițele sunt imagini pictate** (`assets/art/resurse/pv.png`, `monede.png`,
+  `fragmente.png`): JPG-uri de 2000 px pe fundal închis, decupate (fundalul scos
+  pornind de pe contur, ca umbrele din obiect să nu devină găuri), tăiate la
+  obiect, 256×256, PNG cu alfa, **cu mipmap-uri la import** — altfel o imagine de
+  256 px desenată la 26 px tremură pe margini. `iconita_resursa.gd` le încarcă o
+  singură dată, după modelul din `simbol_nod.gd`, și desenează forma din cod dacă
+  fișierul lipsește.
+- **Uneltele au coborât în piciorul hărții**, stânga, ca etichete în culoarea
+  disciplinei; **sămânța** stă mică în dreapta-jos (rămâne la vedere dinadins).
+
+**Drumul, ca să nu se reia:** întâi iconițe desenate din poligoane (prea „joc 2D
+ieftin” lângă figurină și noduri), apoi rândul fără cutie direct pe pergament,
+apoi o coloană în colț — s-a ales plăcuța pe un rând. Cu uneltele în ea pe al
+doilea rând, plăcuța lua prea mult din hartă.
+
+---
+
 ## IEȘIRILE DIN EXPEDIȚIE (26 octombrie 2026) — „HARTA" din luptă, „Meniu" de pe hartă
 
 **Problema:** dintr-o expediție începută ieșeai doar terminând-o sau închizând

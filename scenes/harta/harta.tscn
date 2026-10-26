@@ -1,8 +1,10 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene load_steps=9 format=3]
 
 [ext_resource type="Script" path="res://scenes/harta/harta.gd" id="1_harta"]
 [ext_resource type="Script" path="res://scenes/harta/panza.gd" id="2_panza"]
 [ext_resource type="Texture2D" path="res://assets/art/campaign_map.jpg" id="3_pergament"]
+[ext_resource type="Script" path="res://scenes/harta/iconita_resursa.gd" id="4_iconita"]
+[ext_resource type="FontFile" path="res://assets/fonturi/Cinzel.ttf" id="5_cinzel"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panou"]
 bg_color = Color(0.13, 0.13, 0.17, 1)
@@ -15,6 +17,31 @@ corner_radius_top_left = 14
 corner_radius_top_right = 14
 corner_radius_bottom_right = 14
 corner_radius_bottom_left = 14
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_placuta"]
+content_margin_left = 14.0
+content_margin_top = 5.0
+content_margin_right = 16.0
+content_margin_bottom = 5.0
+bg_color = Color(0.17, 0.11, 0.06, 0.88)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.78, 0.62, 0.34, 0.85)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+shadow_color = Color(0.08, 0.05, 0.02, 0.45)
+shadow_size = 8
+shadow_offset = Vector2(0, 3)
+
+[sub_resource type="FontVariation" id="FontVariation_cifre"]
+base_font = ExtResource("5_cinzel")
+variation_opentype = {
+2003265652: 700
+}
 
 [node name="Harta" type="Control"]
 layout_mode = 3
@@ -90,40 +117,106 @@ size_flags_vertical = 0
 theme_override_font_sizes/font_size = 14
 text = "Meniu"
 
-[node name="Titlu" type="Label" parent="Margini/Coloana/Antet"]
-unique_name_in_owner = true
+[node name="Spatiu" type="Control" parent="Margini/Coloana/Antet"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_colors/font_color = Color(0.16, 0.1, 0.05, 1)
-theme_override_colors/font_outline_color = Color(0.99, 0.95, 0.84, 0.9)
-theme_override_constants/outline_size = 7
-theme_override_font_sizes/font_size = 22
-text = "EXPEDITIE"
+mouse_filter = 2
 
-[node name="Dreapta" type="VBoxContainer" parent="Margini/Coloana/Antet"]
+[node name="Placuta" type="PanelContainer" parent="Margini/Coloana/Antet"]
+layout_mode = 2
+size_flags_vertical = 0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_placuta")
+
+[node name="Resurse" type="HBoxContainer" parent="Margini/Coloana/Antet/Placuta"]
 layout_mode = 2
 mouse_filter = 2
-theme_override_constants/separation = 2
+theme_override_constants/separation = 14
 
-[node name="Stare" type="Label" parent="Margini/Coloana/Antet/Dreapta"]
+[node name="GrupPV" type="HBoxContainer" parent="Margini/Coloana/Antet/Placuta/Resurse"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 6
+
+[node name="IconitaPV" type="Control" parent="Margini/Coloana/Antet/Placuta/Resurse/GrupPV"]
+custom_minimum_size = Vector2(26, 26)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+texture_filter = 4
+script = ExtResource("4_iconita")
+
+[node name="PV" type="Label" parent="Margini/Coloana/Antet/Placuta/Resurse/GrupPV"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_colors/font_color = Color(0.24, 0.16, 0.09, 1)
-theme_override_colors/font_outline_color = Color(0.99, 0.95, 0.84, 0.9)
-theme_override_constants/outline_size = 7
-theme_override_font_sizes/font_size = 16
-text = "..."
-horizontal_alignment = 2
+tooltip_text = "Viata regelui. La zero, expeditia e pierduta."
+mouse_filter = 1
+theme_override_colors/font_color = Color(0.96, 0.9, 0.76, 1)
+theme_override_fonts/font = SubResource("FontVariation_cifre")
+theme_override_font_sizes/font_size = 18
+text = "0 / 0"
 
-[node name="Loadout" type="Label" parent="Margini/Coloana/Antet/Dreapta"]
+[node name="Despartitor1" type="ColorRect" parent="Margini/Coloana/Antet/Placuta/Resurse"]
+custom_minimum_size = Vector2(1, 18)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+color = Color(0.78, 0.62, 0.34, 0.4)
+
+[node name="GrupMonede" type="HBoxContainer" parent="Margini/Coloana/Antet/Placuta/Resurse"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 6
+
+[node name="IconitaMonede" type="Control" parent="Margini/Coloana/Antet/Placuta/Resurse/GrupMonede"]
+custom_minimum_size = Vector2(26, 26)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+texture_filter = 4
+script = ExtResource("4_iconita")
+fel = 1
+
+[node name="Monede" type="Label" parent="Margini/Coloana/Antet/Placuta/Resurse/GrupMonede"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_colors/font_color = Color(0.3, 0.21, 0.13, 1)
-theme_override_colors/font_outline_color = Color(0.99, 0.95, 0.84, 0.85)
-theme_override_constants/outline_size = 6
-theme_override_font_sizes/font_size = 14
-text = "..."
-horizontal_alignment = 2
+tooltip_text = "Monede: ce ai pe drumul asta. Se cheltuie la Magazin."
+mouse_filter = 1
+theme_override_colors/font_color = Color(0.96, 0.9, 0.76, 1)
+theme_override_fonts/font = SubResource("FontVariation_cifre")
+theme_override_font_sizes/font_size = 18
+text = "0"
+
+[node name="Despartitor2" type="ColorRect" parent="Margini/Coloana/Antet/Placuta/Resurse"]
+custom_minimum_size = Vector2(1, 18)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+color = Color(0.78, 0.62, 0.34, 0.4)
+
+[node name="GrupFragmente" type="HBoxContainer" parent="Margini/Coloana/Antet/Placuta/Resurse"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 6
+
+[node name="IconitaFragmente" type="Control" parent="Margini/Coloana/Antet/Placuta/Resurse/GrupFragmente"]
+custom_minimum_size = Vector2(26, 26)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+texture_filter = 4
+script = ExtResource("4_iconita")
+fel = 2
+
+[node name="Fragmente" type="Label" parent="Margini/Coloana/Antet/Placuta/Resurse/GrupFragmente"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Fragmente: averea care ramane, si dupa expeditie."
+mouse_filter = 1
+theme_override_colors/font_color = Color(0.96, 0.9, 0.76, 1)
+theme_override_fonts/font = SubResource("FontVariation_cifre")
+theme_override_font_sizes/font_size = 18
+text = "0"
 
 [node name="Gol" type="Control" parent="Margini/Coloana"]
 layout_mode = 2
@@ -139,6 +232,34 @@ theme_override_constants/outline_size = 6
 theme_override_font_sizes/font_size = 14
 text = "..."
 horizontal_alignment = 1
+
+[node name="Unelte" type="HBoxContainer" parent="Margini/Coloana/Picior"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 260.0
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 6
+
+[node name="Samanta" type="Label" parent="Margini/Coloana/Picior"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -160.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.8, 0.71, 0.55, 0.6)
+theme_override_colors/font_outline_color = Color(0.09, 0.06, 0.04, 0.8)
+theme_override_constants/outline_size = 5
+theme_override_font_sizes/font_size = 12
+text = "..."
+horizontal_alignment = 2
+vertical_alignment = 1
 
 [node name="PanouLoadout" type="Control" parent="."]
 unique_name_in_owner = true

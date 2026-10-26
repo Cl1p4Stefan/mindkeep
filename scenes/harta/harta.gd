@@ -692,9 +692,22 @@ const CULOARE_CONTUR := Color(0.99, 0.95, 0.84, 0.90)
 const GROSIME_CONTUR := 7
 const LATIME_ETICHETA := 230.0
 
-@onready var eticheta_titlu: Label = %Titlu
-@onready var eticheta_stare: Label = %Stare
-@onready var eticheta_loadout: Label = %Loadout
+## Cifrele din antet: crem pe pielea plăcuței; PV-ul se înroșește sub o treime.
+const CULOARE_CIFRE := Color(0.96, 0.90, 0.76)
+const CULOARE_PV_PUTIN := Color(1.00, 0.52, 0.45)
+## Culoarea unei unelte fără fișă (o disciplină dintr-un save vechi).
+const CULOARE_UNEALTA := Color(0.80, 0.71, 0.55)
+## Fontul etichetelor de unealtă — același Alegreya ca în Practice.
+const FONT_UNELTE := preload("res://assets/fonturi/Alegreya.ttf")
+
+## Plăcuța de stare din dreapta-sus: trei cifre cu iconița lor, pe un rând. Uneltele stau
+## în piciorul hărții, ca etichete colorate. Vezi `_actualizeaza_antet`.
+@onready var eticheta_pv: Label = %PV
+@onready var eticheta_monede: Label = %Monede
+@onready var eticheta_fragmente: Label = %Fragmente
+@onready var rand_unelte: HBoxContainer = %Unelte
+@onready var placuta: PanelContainer = $Margini/Coloana/Antet/Placuta
+@onready var eticheta_samanta: Label = %Samanta
 @onready var eticheta_picior: Label = %Picior
 @onready var pergament: TextureRect = $Pergament
 @onready var panza: Control = %Panza
@@ -877,9 +890,11 @@ func _arata_loadout() -> void:
 	alese.clear()
 	panou_loadout.visible = true
 	buton_harta_meniu.visible = false
-	eticheta_titlu.text = "EXPEDITIE"
-	eticheta_stare.text = ""
-	eticheta_loadout.text = ""
+	# Fără expediție nu e nimic de numărat: plăcuța dispare cu totul, nu
+	# rămâne cu niște zerouri care ar arăta ca o expediție goală.
+	placuta.visible = false
+	rand_unelte.visible = false
+	eticheta_samanta.text = ""
 	eticheta_picior.text = ""
 	_goleste_panza()
 	var fara_muchii: Array[Dictionary] = []
@@ -979,44 +994,43 @@ func _arata_harta() -> void:
 	_actualizeaza_antet()
 
 
-## Antetul: unde ești, cât PV ai, ce ai adunat, cu ce lupți, din ce sămânță.
+## Antetul: cât PV ai, ce ai adunat, cu ce lupți, din ce sămânță.
+##
+## Nu mai are titlu. Până pe 26 octombrie 2026 scria „EXPEDITIE — nodul 2,
+## Bossul la cel putin 6 pasi”: textul lung era primul lucru citit pe ecran și
+## spunea ce arată deja harta, unde Bossul se vede cu ochiul. Distanța a rămas
+## în sumar (`_arata_sumar`), unde e o cifră despre cât de departe ai ajuns.
+##
+## Stările stau pe o PLĂCUȚĂ de piele, pe un singur rând: fiecare cifră cu
+## iconița ei pictată (`iconita_resursa.gd`), deci fără cuvânt („PV”,
+## „Monede”) — numele complet e în tooltip. Plăcuța le adună într-un singur
+## obiect; direct pe pergament, cifrele stăteau peste marginea ruptă a hârtiei.
+## Uneltele — care nu se schimbă pe drum — stau în piciorul hărții, ca plăcuța
+## să rămână de un rând (cu ele dedesubt lua un colț din hartă).
+##
 ## Sămânța stă la vedere DINADINS — un bug raportat ca „se blochează la nodul
-## 6" nu se poate reproduce dacă numărul ăla e ascuns în cod.
-## CE S-A ÎNTÂMPLAT CU „NODUL X DIN Y”.
-##
-## Scria „nodul 4 din 12”, unde 12 erau straturile hărții. Pe harta generată era
-## adevărat oricum ai fi mers: toate traseele aveau exact câte un nod pe strat,
-## deci și exact aceeași lungime. Pe o planșă desenată de mână, un traseu are
-## șapte noduri și altul nouă — iar un antet care scrie „din 9” în timp ce tu
-## mergi pe drumul de 7 minte la fiecare pas, și nu se poate repara alegând
-## celălalt număr: niciunul nu e al DRUMULUI TĂU, fiindcă drumul tău nu e ales
-## încă.
-##
-## Numărul care rămâne adevărat pe orice hartă și pe orice drum e CÂT MAI AI
-## PÂNĂ LA BOSS, pe cel mai scurt drum. „Cel puțin”, fiindcă poți alege și
-## ocolul. Pe harta generată dă exact câte straturi au rămas — adică fix
-## informația veche — deci nu s-a pierdut nimic; s-a pierdut doar presupunerea
-## că toate drumurile sunt la fel de lungi.
+## 6" nu se poate reproduce dacă numărul ăla e ascuns în cod. Dar e un număr
+## pentru mine, nu pentru joc, deci stă mic, în colțul de jos.
 func _actualizeaza_antet() -> void:
-	var pas := Expeditie.parcurse.size()
-	var ramas := Expeditie.pasi_pana_la_boss()
-	if ramas <= 0:
-		eticheta_titlu.text = "EXPEDITIE  —  nodul %d: Bossul" % (pas + 1)
-	else:
-		eticheta_titlu.text = "EXPEDITIE  —  nodul %d, Bossul la cel putin %d pasi" % [
-			pas + 1, ramas]
-	# Monedele stau lângă Fragmente, dar înseamnă altceva, și antetul o spune:
+	placuta.visible = true
+	rand_unelte.visible = true
+	eticheta_pv.text = "%d / %d" % [Expeditie.pv, Expeditie.pv_max]
+	# Sub o treime, cifra se înroșește: e singurul semn de pe hartă care îți
+	# spune că o Odihnă ar fi mai înțeleaptă decât încă o luptă.
+	var pv_putin := Expeditie.pv * 3 <= Expeditie.pv_max
+	eticheta_pv.add_theme_color_override("font_color",
+		CULOARE_PV_PUTIN if pv_putin else CULOARE_CIFRE)
+	# Monedele stau lângă Fragmente, dar înseamnă altceva:
 	# Fragmentele sunt averea care rămâne, Monedele sunt ce ai pe drumul ăsta.
 	# Un jucător care nu le vede crescând n-o să caute niciodată un Magazin.
-	eticheta_stare.text = "%d / %d PV     %d Monede     %d Fragmente     samanta %d" % [
-		Expeditie.pv, Expeditie.pv_max, Expeditie.monede,
-		Tezaur.cat(Tezaur.Resursa.FRAGMENTE), Expeditie.samanta
-	]
+	eticheta_monede.text = str(Expeditie.monede)
+	eticheta_fragmente.text = str(Tezaur.cat(Tezaur.Resursa.FRAGMENTE))
+	eticheta_samanta.text = "samanta %d" % Expeditie.samanta
 
-	var nume: Array[String] = []
+	for copil in rand_unelte.get_children():
+		copil.queue_free()
 	for cheie in Expeditie.loadout:
-		nume.append(Discipline.nume(cheie))
-	eticheta_loadout.text = "Unelte: " + ", ".join(nume)
+		rand_unelte.add_child(_eticheta_unealta(cheie))
 
 	# Acum că numele nodurilor apar doar la survolare, piciorul e locul în care
 	# scrie CUM se citește harta. Un semn pe care nu știi să-l interoghezi e un
@@ -1030,6 +1044,35 @@ func _actualizeaza_antet() -> void:
 		eticheta_picior.text = "%s te asteapta. Apasa pe piesa ca sa intri din nou." % String(fisa["nume"])
 	else:
 		eticheta_picior.text = "Treci peste un semn ca sa vezi ce te asteapta. Drumul nu se poate reface."
+
+
+## O unealtă din loadout, ca o etichetă mică în culoarea disciplinei — aceeași
+## culoare pe care o are Obeliscul ei în luptă, deci se recunosc între ele.
+func _eticheta_unealta(cheie: String) -> PanelContainer:
+	var fisa := Discipline.dupa_cheie(cheie)
+	var culoare: Color = fisa.get("culoare", CULOARE_UNEALTA)
+
+	var stil := StyleBoxFlat.new()
+	stil.bg_color = Color(culoare, 0.14)
+	stil.border_color = Color(culoare, 0.55)
+	stil.set_border_width_all(1)
+	stil.set_corner_radius_all(9)
+	stil.content_margin_left = 9
+	stil.content_margin_right = 9
+	stil.content_margin_top = 1
+	stil.content_margin_bottom = 2
+
+	var eticheta := Label.new()
+	eticheta.text = Discipline.nume(cheie)
+	eticheta.add_theme_font_override("font", FONT_UNELTE)
+	eticheta.add_theme_font_size_override("font_size", 13)
+	eticheta.add_theme_color_override("font_color", culoare)
+
+	var panou := PanelContainer.new()
+	panou.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	panou.add_theme_stylebox_override("panel", stil)
+	panou.add_child(eticheta)
+	return panou
 
 
 ## Șterge tot ce e desenat pe pânză: simbolurile și eticheta lor.
@@ -3149,9 +3192,10 @@ func _arata_sumar() -> void:
 		sumar_text.text = "Ai mers drumul pana la capat, cu %d / %d PV." % [
 			Expeditie.pv, Expeditie.pv_max]
 	else:
-		# Tot fără „din câte”: vezi nota de la `_actualizeaza_antet`. Aici e și
-		# mai la locul lui — „Bossul mai era la 4 pași” spune cât de aproape ai
-		# fost, ceea ce „nodul 8 din 12” nu spunea niciodată.
+		# Fără „din câte”: pe o planșă desenată de mână drumurile au lungimi
+		# diferite, deci „nodul 8 din 12” n-ar fi al drumului tău. „Bossul mai
+		# era la 4 pași” (pe cel mai scurt drum) e adevărat pe orice hartă și
+		# spune cât de aproape ai fost.
 		sumar_text.text = "Regele a cazut dupa %d noduri. Bossul mai era la %d pasi." % [
 			Expeditie.parcurse.size(), Expeditie.pasi_pana_la_boss()]
 
