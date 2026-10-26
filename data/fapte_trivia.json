@@ -8564,5 +8564,2405 @@
 	{
 		"id": "mana:1917",
 		"nota": "Jocul vine din China, se joacă în patru și cere adunarea unor combinații de plăcuțe. Varianta de un singur jucător, cu plăcuțe suprapuse, e un joc de calculator târziu, nu originalul."
+	},
+	{
+		"id": "mana:2143",
+		"nota": "Prefixul vine din grecescul „hex”, șase. Hexagonul regulat apare des în natură, de la fagurii albinelor la cristalele de zăpadă, fiindcă acoperă un plan fără goluri."
+	},
+	{
+		"id": "mana:2144",
+		"nota": "Împărțirea cercului în 360 de părți vine de la babilonieni, care socoteau în baza 60. Numărul se împarte exact la foarte mulți divizori, ceea ce face comode calculele cu unghiuri."
+	},
+	{
+		"id": "mana:2145",
+		"nota": "Regula e valabilă pe o suprafață plană. Pe o sferă, cum e Pământul, unghiurile unui triunghi foarte mare însumează mai mult de 180 de grade."
+	},
+	{
+		"id": "mana:2146",
+		"nota": "Unghiul drept e colțul unui pătrat sau al unei foi de hârtie. La geometrie se verifică cu echerul și se marchează pe desen cu un mic pătrat în colț."
+	},
+	{
+		"id": "mana:2147",
+		"nota": "Numele vine din latină și înseamnă „cu laturi egale”. Triunghiul isoscel are doar două laturi egale, iar cel scalen niciuna."
+	},
+	{
+		"id": "mana:2148",
+		"nota": "Diametrul e cea mai lungă coardă a unui cerc și are exact dublul razei. Lungimea cercului e de aproximativ 3,14 ori diametrul lui."
+	},
+	{
+		"id": "mana:2149",
+		"nota": "Cuvântul vine din latinescul „radius”, spiță de roată. Aria unui disc se calculează din rază: π înmulțit cu raza la pătrat."
+	},
+	{
+		"id": "mana:2150",
+		"nota": "Fiecare față a cubului e un pătrat. Zarul de joc e un cub, iar pe el suma punctelor de pe două fețe opuse dă întotdeauna 7."
+	},
+	{
+		"id": "mana:2151",
+		"nota": "Muchiile sunt liniile în care se întâlnesc două fețe. Patru sunt sus, patru jos și patru verticale, care le leagă."
+	},
+	{
+		"id": "mana:2152",
+		"nota": "Vârfurile sunt colțurile cubului; în fiecare se întâlnesc trei muchii și trei fețe. Patru vârfuri sunt pe fața de sus și patru pe cea de jos."
+	},
+	{
+		"id": "mana:2153",
+		"nota": "Pătratul e în același timp romb, fiindcă are laturile egale, și dreptunghi, fiindcă are unghiurile drepte. E singura figură care e amândouă."
+	},
+	{
+		"id": "mana:2154",
+		"nota": "Indicatorul are opt laturi tocmai ca să fie recunoscut după formă, chiar dacă e privit din spate sau e acoperit de zăpadă."
+	},
+	{
+		"id": "mana:2155",
+		"nota": "Numele vine din grecescul „pente”, cinci. Clădirea Departamentului Apărării al SUA are forma asta, și de aici i se trage numele."
+	},
+	{
+		"id": "mana:2156",
+		"nota": "Șinele de cale ferată sunt exemplul obișnuit. Postulatul paralelelor al lui Euclid a fost discutat timp de două milenii, până la apariția geometriilor neeuclidiene."
+	},
+	{
+		"id": "mana:2157",
+		"nota": "Axele unui grafic obișnuit sunt două drepte perpendiculare, una orizontală și una verticală. Tot perpendiculare sunt, de obicei, peretele și podeaua."
+	},
+	{
+		"id": "mana:2158",
+		"nota": "Dintre toate corpurile cu aceeași suprafață, sfera cuprinde cel mai mare volum. De aceea picăturile mici și bulele de săpun tind să ia forma ei."
+	},
+	{
+		"id": "mana:2159",
+		"nota": "Cilindrul are două baze care sunt cercuri egale și o suprafață laterală curbă. Volumul lui e aria bazei înmulțită cu înălțimea."
+	},
+	{
+		"id": "mana:2160",
+		"nota": "Conul are o bază circulară și un vârf. Volumul lui e exact o treime din volumul cilindrului cu aceeași bază și aceeași înălțime."
+	},
+	{
+		"id": "mana:2161",
+		"nota": "Unghiurile se clasifică după cum stau față de unghiul drept: ascuțit sub 90 de grade, obtuz între 90 și 180. Un triunghi poate avea cel mult un unghi obtuz."
+	},
+	{
+		"id": "mana:2162",
+		"nota": "Cuvântul vine din latinescul „obtusus”, tocit, opusul unghiului ascuțit. Acele unui ceas la ora patru fix formează un unghi obtuz, de 120 de grade."
+	},
+	{
+		"id": "mana:2163",
+		"nota": "Aria se măsoară în unități pătrate, de pildă metri pătrați. O cameră de 4 pe 5 metri are 20 de metri pătrați, iar perimetrul ei e de 18 metri."
+	},
+	{
+		"id": "mana:2164",
+		"nota": "Cuvântul vine din greacă și înseamnă „măsura din jur”. Dintre figurile plane cu același perimetru, cercul e cel care are aria cea mai mare."
+	},
+	{
+		"id": "mana:2165",
+		"nota": "π e raportul dintre lungimea unui cerc și diametrul lui, același pentru orice cerc. Zecimalele lui nu se termină și nu se repetă niciodată."
+	},
+	{
+		"id": "mana:2166",
+		"nota": "2 e singurul număr prim par: orice alt număr par se împarte și la 2. 1 nu e considerat număr prim, fiindcă are un singur divizor."
+	},
+	{
+		"id": "mana:2167",
+		"nota": "Un milion e o mie de mii, adică 10 la puterea a șasea. Un miliard are trei zerouri în plus, adică nouă."
+	},
+	{
+		"id": "mana:2168",
+		"nota": "Tabla înmulțirii se învață de obicei până la 10 × 10. 12 × 12 vine din vechile socoteli în duzini, unde o duzină de duzini era o unitate în sine."
+	},
+	{
+		"id": "mana:2169",
+		"nota": "Rădăcina pătrată e numărul care, înmulțit cu el însuși, dă numărul de la început: 9 × 9 = 81. Numerele ca 81, cu rădăcină întreagă, se numesc pătrate perfecte."
+	},
+	{
+		"id": "mana:2170",
+		"nota": "Procent înseamnă „la sută”, deci 25% e un sfert din întreg. Un sfert din 200 e 50."
+	},
+	{
+		"id": "mana:2171",
+		"nota": "Numerele adunate se numesc termeni. Adunarea e comutativă: ordinea termenilor nu schimbă rezultatul."
+	},
+	{
+		"id": "mana:2172",
+		"nota": "Numerele înmulțite se numesc factori. Orice înmulțire în care unul dintre factori e zero dă zero."
+	},
+	{
+		"id": "mana:2173",
+		"nota": "Numărul care se împarte se numește deîmpărțit, iar cel la care împarți, împărțitor. Când împărțirea nu se face exact, rămâne și un rest."
+	},
+	{
+		"id": "mana:2174",
+		"nota": "Din descăzut se scade scăzătorul. Spre deosebire de adunare, la scădere ordinea contează: 7 − 3 nu e totuna cu 3 − 7."
+	},
+	{
+		"id": "mana:2175",
+		"nota": "Romanii foloseau șapte semne: I, V, X, L, C, D și M. Sistemul lor nu avea niciun semn pentru zero."
+	},
+	{
+		"id": "mana:2176",
+		"nota": "M e pus de obicei în legătură cu latinescul „mille”, o mie. Anul 2026 se scrie în cifre romane MMXXVI."
+	},
+	{
+		"id": "mana:2177",
+		"nota": "Duzina vine din obiceiul vechi de a număra în doisprezece, un număr ușor de împărțit în jumătăți, treimi și sferturi. Ouăle se vând și azi la duzină în multe țări."
+	},
+	{
+		"id": "mana:2178",
+		"nota": "Zero ca număr de sine stătător a fost lucrat în India: Brahmagupta i-a dat reguli de calcul în secolul VII. Europa l-a preluat mult mai târziu, prin matematicienii arabi."
+	},
+	{
+		"id": "mana:2179",
+		"nota": "Un număr e par dacă ultima lui cifră e 0, 2, 4, 6 sau 8. Zero e și el un număr par."
+	},
+	{
+		"id": "mana:2180",
+		"nota": "Împărțirea la zero nu are niciun rezultat care să se potrivească: niciun număr înmulțit cu zero nu dă, de pildă, 5. De aceea operația rămâne nedefinită."
+	},
+	{
+		"id": "mana:2181",
+		"nota": "Pătrimea e totuna cu un sfert, adică 25%. Pe ceas, un sfert de oră înseamnă 15 minute."
+	},
+	{
+		"id": "mana:2182",
+		"nota": "Numărătorul spune câte părți iei, iar numitorul, de sub linie, în câte părți egale a fost împărțit întregul."
+	},
+	{
+		"id": "mana:2183",
+		"nota": "Puterile lui 2 se dublează la fiecare pas: 2, 4, 8, 16, 32. Povestea boabelor de grâu dublate pe fiecare pătrat al tablei de șah arată cât de repede ajung la numere uriașe."
+	},
+	{
+		"id": "mana:2184",
+		"nota": "E unul dintre produsele la care se greșește cel mai des din tabla înmulțirii. Un truc de ținut minte: cifrele 5, 6, 7, 8, în ordine, adică 56 = 7 × 8."
+	},
+	{
+		"id": "mana:2185",
+		"nota": "Numerele prime sunt infinit de multe, lucru demonstrat de Euclid acum mai bine de două mii de ani. Primele dintre ele sunt 2, 3, 5, 7, 11 și 13."
+	},
+	{
+		"id": "mana:2186",
+		"nota": "Metrul a fost definit în Franța, la sfârșitul secolului XVIII, ca o zece-milionime din distanța de la Polul Nord la Ecuator. Azi se definește prin viteza luminii."
+	},
+	{
+		"id": "mana:2187",
+		"nota": "Prefixul „kilo” înseamnă o mie, la orice unitate: un kilogram are o mie de grame, iar un kilowatt o mie de wați."
+	},
+	{
+		"id": "mana:2188",
+		"nota": "Kilogramul a fost ultima unitate definită printr-un obiect, un cilindru de platină și iridiu păstrat lângă Paris. Din 2019 e definit prin constanta lui Planck."
+	},
+	{
+		"id": "mana:2189",
+		"nota": "Un litru e volumul unui cub cu latura de 10 centimetri. Un litru de apă cântărește, foarte aproape, un kilogram."
+	},
+	{
+		"id": "mana:2190",
+		"nota": "O oră are 60 de minute, iar fiecare minut 60 de secunde, deci 60 × 60. Împărțirea în 60 vine, ca la grade, din socotelile babilonienilor."
+	},
+	{
+		"id": "mana:2191",
+		"nota": "Tona e unitatea pentru mase mari: o mașină mică are puțin peste o tonă. În Statele Unite se folosește și o „tonă scurtă”, de circa 907 kilograme."
+	},
+	{
+		"id": "mana:2192",
+		"nota": "Un centimetru are zece milimetri, iar un metru o sută de centimetri. Pe o riglă obișnuită, liniuțele cele mai mici sunt milimetrii."
+	},
+	{
+		"id": "mana:2193",
+		"nota": "Kilogramul e singura unitate de bază a Sistemului Internațional care are un prefix în nume. Newtonul, una dintre variante, măsoară forța, nu masa."
+	},
+	{
+		"id": "mana:2194",
+		"nota": "Secunda e definită prin oscilațiile atomului de cesiu: 9 192 631 770 într-o secundă. Ceasurile atomice construite așa greșesc cu mai puțin de o secundă în milioane de ani."
+	},
+	{
+		"id": "mana:2195",
+		"nota": "Rigla obișnuită are gradații în centimetri și milimetri. Pentru lungimi mai mari se folosește ruleta, iar pentru zecimi de milimetru, șublerul."
+	},
+	{
+		"id": "mana:2196",
+		"nota": "Cronometrul pornește și se oprește la comandă. La competițiile mari, timpul se măsoară electronic, până la miimea de secundă."
+	},
+	{
+		"id": "mana:2197",
+		"nota": "O săptămână are 7 zile de câte 24 de ore. Calculul se poate face în minte: 7 × 24 = 140 + 28."
+	},
+	{
+		"id": "mana:2198",
+		"nota": "O milă terestră are circa 1,6 kilometri. Statele Unite sunt una dintre puținele țări care nu folosesc sistemul metric în viața de zi cu zi."
+	},
+	{
+		"id": "mana:2199",
+		"nota": "Pe scara Fahrenheit apa îngheață la 32 de grade și fierbe la 212. Cele două scări se întâlnesc la minus 40: acolo, gradele Celsius și Fahrenheit arată același număr."
+	},
+	{
+		"id": "mana:2200",
+		"nota": "Prefixul vine din latinescul „mille”, o mie: un milimetru e a mia parte dintr-un metru, iar un mililitru, a mia parte dintr-un litru."
+	},
+	{
+		"id": "mana:2201",
+		"nota": "„Centi” vine din latinescul „centum”, o sută. Un centimetru e a suta parte dintr-un metru, la fel cum un cent e a suta parte dintr-un euro."
+	},
+	{
+		"id": "mana:2202",
+		"nota": "Povestea mărului o spunea chiar Newton, la bătrânețe, unui biograf; mărul nu l-a lovit în cap, cum se spune adesea. Legea atracției universale a publicat-o în 1687."
+	},
+	{
+		"id": "mana:2203",
+		"nota": "Pe lângă fier, magnetul atrage nichelul și cobaltul. Cuprul și aluminiul, deși sunt metale, nu se lipesc de un magnet de frigider."
+	},
+	{
+		"id": "mana:2204",
+		"nota": "Orice magnet are un pol nord și unul sud. Dacă rupi un magnet în două, nu obții doi poli separați, ci doi magneți mai mici, fiecare cu ambii poli."
+	},
+	{
+		"id": "mana:2205",
+		"nota": "Polii de același fel se resping, iar cei diferiți se atrag. Din același motiv acul unei busole se întoarce după câmpul magnetic al Pământului."
+	},
+	{
+		"id": "mana:2206",
+		"nota": "Sunetul parcurge cam un kilometru în trei secunde, iar lumina ajunge practic pe loc. Numărând secundele dintre fulger și tunet și împărțind la trei, afli cam câți kilometri e furtuna."
+	},
+	{
+		"id": "mana:2207",
+		"nota": "Fiecare substanță pură se topește la o temperatură anume. Gheața se topește la 0 °C, iar fierul abia pe la 1538 °C."
+	},
+	{
+		"id": "mana:2208",
+		"nota": "Așa apar picăturile pe oglindă după duș sau pe un pahar rece, vara: vaporii din aer se răcesc la atingerea suprafeței. Tot prin condensare se formează norii și roua."
+	},
+	{
+		"id": "mana:2209",
+		"nota": "Solidificarea are loc la aceeași temperatură ca topirea, doar în sens invers. Pe ea se bazează turnarea metalelor topite în forme."
+	},
+	{
+		"id": "mana:2210",
+		"nota": "Sunetul e o vibrație care are nevoie de materie ca să se transmită. În spațiu, exploziile din filme ar fi, de fapt, complet tăcute."
+	},
+	{
+		"id": "mana:2211",
+		"nota": "Newton a arătat cu o prismă că lumina albă se desface în culori și că, adunate la loc, culorile refac albul. La vopsele e pe dos: amestecate toate, dau o culoare închisă."
+	},
+	{
+		"id": "mana:2212",
+		"nota": "Cuprul conduce electricitatea aproape la fel de bine ca argintul, dar costă mult mai puțin. La liniile de înaltă tensiune se folosește adesea aluminiul, mai ușor."
+	},
+	{
+		"id": "mana:2213",
+		"nota": "Plasticul, cauciucul, sticla și lemnul uscat sunt izolatori. De aceea firele electrice sunt îmbrăcate în plastic, iar uneltele electricienilor au mânere de cauciuc."
+	},
+	{
+		"id": "mana:2214",
+		"nota": "La reflexie, unghiul sub care lumina cade pe oglindă e egal cu cel sub care pleacă. Imaginea din oglindă pare întoarsă stânga-dreapta, dar nu și sus-jos."
+	},
+	{
+		"id": "mana:2215",
+		"nota": "Un corp plutește dacă e mai puțin dens decât apa. Lemnul uscat are pori plini cu aer și e, de obicei, mai ușor decât același volum de apă."
+	},
+	{
+		"id": "mana:2216",
+		"nota": "Vitezometrul arată viteza din clipa aceea, în kilometri pe oră. Distanța totală parcursă o ține minte kilometrajul, iar turația motorului o arată turometrul."
+	},
+	{
+		"id": "mana:2217",
+		"nota": "Motorul electric folosește forța dintre magneți și curentul care trece printr-o bobină. Îl găsești în mașina de spălat, în ventilator și în orice jucărie cu baterii."
+	},
+	{
+		"id": "mana:2218",
+		"nota": "Frecarea transformă o parte din mișcare în căldură. Tot așa se aprindea focul în vechime, prin frecarea a două bucăți de lemn."
+	},
+	{
+		"id": "mana:2219",
+		"nota": "Sarea dizolvată face apa mai densă, așa că o împinge pe cea a corpului mai tare în sus. În Marea Moartă, de aproape zece ori mai sărată decât oceanul, plutești fără niciun efort."
+	},
+	{
+		"id": "mana:2220",
+		"nota": "Wattul măsoară puterea, adică energia folosită în fiecare secundă. Poartă numele lui James Watt, inginerul scoțian care a perfecționat mașina cu abur."
+	},
+	{
+		"id": "mana:2221",
+		"nota": "La căldură, particulele se mișcă mai repede și se depărtează unele de altele. De aceea șinele de cale ferată și podurile au mici rosturi lăsate dinadins."
+	},
+	{
+		"id": "mana:2222",
+		"nota": "Galileo a observat că durata unei oscilații depinde de lungimea pendulului, nu de cât de larg se leagănă, cel puțin la oscilații mici. Pe asta s-au construit ceasurile cu pendul."
+	},
+	{
+		"id": "mana:2223",
+		"nota": "Sodiul e un metal care reacționează violent cu apa, iar clorul e un gaz otrăvitor. Legați împreună, dau cristalele albe pe care le punem în mâncare."
+	},
+	{
+		"id": "mana:2224",
+		"nota": "Un foc are nevoie de combustibil, căldură și oxigen. Stingătoarele cu dioxid de carbon sting flacăra tocmai pentru că alungă oxigenul din jurul ei."
+	},
+	{
+		"id": "mana:2225",
+		"nota": "Gazul e dizolvat sub presiune în sticlă. Când deschizi capacul presiunea scade, iar gazul iese din lichid sub formă de bule, cu atât mai repede cu cât băutura e mai caldă."
+	},
+	{
+		"id": "mana:2226",
+		"nota": "Rugina e un oxid de fier care apare când fierul stă în contact cu oxigenul și apa. Ea se cojește și lasă metalul de dedesubt expus, așa că ruginirea continuă."
+	},
+	{
+		"id": "mana:2227",
+		"nota": "Lămâia își datorează gustul acidului citric. Bazele, opusul acizilor, au mai degrabă un gust amar și se simt alunecoase la atingere, ca săpunul."
+	},
+	{
+		"id": "mana:2228",
+		"nota": "Ideea că materia e făcută din bucăți care nu se mai pot tăia vine de la grecii antici; „atomos” înseamnă „indivizibil”. Azi se știe că atomul are și el părți."
+	},
+	{
+		"id": "mana:2229",
+		"nota": "Heliul e al doilea cel mai ușor gaz și, spre deosebire de hidrogen, nu arde. Respirat dintr-un balon, face vocea subțire, fiindcă sunetul circulă mai repede prin el."
+	},
+	{
+		"id": "mana:2230",
+		"nota": "Oțelul e fier cu puțin carbon, sub 2%. Cel inoxidabil mai conține crom, care formează la suprafață un strat foarte subțire ce oprește rugina."
+	},
+	{
+		"id": "mana:2231",
+		"nota": "Nisipul de cuarț se topește la temperaturi foarte mari, de obicei amestecat cu sodă și calcar ca să coboare punctul de topire. Răcit repede, nu mai apucă să formeze cristale."
+	},
+	{
+		"id": "mana:2232",
+		"nota": "Diamantul și grafitul din creion sunt amândouă carbon pur; diferă doar felul în care sunt legați atomii. Diamantul e cel mai dur material natural."
+	},
+	{
+		"id": "mana:2233",
+		"nota": "Flacăra albastră arată că gazul are destul oxigen și arde complet. Una galbenă, care face funingine, înseamnă ardere incompletă, cu mai mult monoxid de carbon."
+	},
+	{
+		"id": "mana:2234",
+		"nota": "Într-o soluție, substanța dizolvată nu se mai vede și nu se depune. Într-o suspensie, cum e apa cu nisip, particulele se așază pe fund dacă lași vasul în pace."
+	},
+	{
+		"id": "mana:2235",
+		"nota": "Clorul omoară bacteriile și algele. Mirosul „de piscină” vine, de fapt, mai ales din compușii pe care clorul îi formează cu transpirația și urina înotătorilor."
+	},
+	{
+		"id": "mana:2236",
+		"nota": "Uleiul nu se amestecă cu apa, iar fiind mai ușor la același volum, se strânge deasupra. De aceea o pată de petrol pe mare se întinde la suprafață."
+	},
+	{
+		"id": "mana:2237",
+		"nota": "Gazul natural e în cea mai mare parte metan, care nu are miros. Mirosul neplăcut i se adaugă dinadins, ca o scăpare să fie simțită la timp."
+	},
+	{
+		"id": "mana:2238",
+		"nota": "Aluminiul e ușor, nu ruginește și se poate recicla aproape la nesfârșit. Reciclarea unei doze consumă doar o mică parte din energia necesară pentru aluminiu nou."
+	},
+	{
+		"id": "mana:2239",
+		"nota": "Electronul a fost descoperit în 1897 de J. J. Thomson. Sarcina lui e egală cu a protonului, dar de semn opus, așa că un atom cu tot atâția electroni câți protoni e neutru."
+	},
+	{
+		"id": "mana:2240",
+		"nota": "Apa de la robinet conține săruri de calciu și magneziu, care la fierbere se depun ca o crustă albă. Cu cât apa e mai „dură”, cu atât crusta se formează mai repede."
+	},
+	{
+		"id": "mana:2241",
+		"nota": "O moleculă de apă are trei atomi: doi de hidrogen și unul de oxigen. Moleculele unor proteine din corp au zeci de mii de atomi."
+	},
+	{
+		"id": "mana:2242",
+		"nota": "Protonii și neutronii stau în nucleul din centru, iar electronii în jurul lui. Aproape toată masa atomului e în nucleu, deși nucleul ocupă o parte infimă din volum."
+	},
+	{
+		"id": "mana:2243",
+		"nota": "Nucleul e de zeci de mii de ori mai mic decât atomul întreg. Dacă atomul ar fi cât un stadion, nucleul ar fi cam cât un bob de mazăre în centrul terenului."
+	},
+	{
+		"id": "mana:2244",
+		"nota": "Neutronul a fost descoperit abia în 1932, de James Chadwick, tocmai pentru că lipsa sarcinii îl face greu de observat. Are aproape aceeași masă ca protonul."
+	},
+	{
+		"id": "mana:2245",
+		"nota": "Molecula are un atom de carbon și doi de oxigen. CO, una dintre variante, e monoxidul de carbon, un gaz fără miros și foarte toxic."
+	},
+	{
+		"id": "mana:2246",
+		"nota": "Cifrele de la 0 la 9 au ajuns în Europa din India, prin matematicienii arabi, de aceea le spunem „cifre arabe”. Probabil numărăm în zece fiindcă avem zece degete."
+	},
+	{
+		"id": "mana:2247",
+		"nota": "Sistemul binar scrie orice număr doar cu 0 și 1. Calculatoarele îl folosesc fiindcă un circuit are, simplu, două stări: trece curent sau nu trece."
+	},
+	{
+		"id": "mana:2248",
+		"nota": "Echerul de la geometrie e un triunghi dreptunghic. Celelalte două unghiuri ale unui astfel de triunghi însumează și ele, împreună, 90 de grade."
+	},
+	{
+		"id": "mana:2249",
+		"nota": "Pătratul ipotenuzei e egal cu suma pătratelor catetelor. Babilonienii foloseau relația cu peste o mie de ani înainte de Pitagora; grecii i-au dat o demonstrație."
+	},
+	{
+		"id": "mana:2250",
+		"nota": "A ridica la pătrat înseamnă a înmulți numărul cu el însuși. Numele vine din geometrie: un pătrat cu latura 5 are aria 25."
+	},
+	{
+		"id": "mana:2251",
+		"nota": "Ridicarea la cub înseamnă trei factori egali: 3 × 3 × 3. Ca la pătrat, numele vine din geometrie: un cub cu latura 3 are volumul 27."
+	},
+	{
+		"id": "mana:2252",
+		"nota": "Mulțimea numerelor naturale se notează cu N și nu are un ultim element: oricât de mare ar fi un număr, îi poți adăuga 1."
+	},
+	{
+		"id": "mana:2253",
+		"nota": "Multă vreme, mulți matematicieni europeni au privit numerele negative cu neîncredere. Azi le folosim zilnic, la temperaturile de sub zero sau la datorii."
+	},
+	{
+		"id": "mana:2254",
+		"nota": "Media notelor din catalog e o medie aritmetică. Ea poate fi trasă puternic de o singură valoare foarte mare sau foarte mică, de aceea uneori se preferă mediana."
+	},
+	{
+		"id": "mana:2255",
+		"nota": "Diagonalele pătratului sunt egale, se taie una pe alta la jumătate și sunt perpendiculare. Fiecare e de circa 1,41 ori mai lungă decât latura."
+	},
+	{
+		"id": "mana:2256",
+		"nota": "Un cerc are o infinitate de axe de simetrie, un pătrat patru, iar un triunghi echilateral trei. Litera A are una singură, verticală."
+	},
+	{
+		"id": "mana:2257",
+		"nota": "Compasul desenează cercul exact pe principiul ăsta: un vârf fix și unul care se rotește la distanță constantă. Elipsa are în schimb două puncte speciale, numite focare."
+	},
+	{
+		"id": "mana:2258",
+		"nota": "Laturile paralele ale trapezului se numesc baze. Aria lui se află înmulțind media celor două baze cu înălțimea."
+	},
+	{
+		"id": "mana:2259",
+		"nota": "Cele trei unghiuri sunt egale și împart 180 de grade în trei. Șase triunghiuri echilaterale puse în jurul unui punct formează un hexagon regulat."
+	},
+	{
+		"id": "mana:2260",
+		"nota": "O zi are 24 de ore de câte 60 de minute. Față de stele, Pământul face de fapt o rotație completă în circa 23 de ore și 56 de minute."
+	},
+	{
+		"id": "mana:2261",
+		"nota": "Semnele < și > au apărut într-o carte a matematicianului englez Thomas Harriot, publicată în 1631, după moartea lui. Deschiderea semnului e mereu spre numărul mai mare."
+	},
+	{
+		"id": "mana:2262",
+		"nota": "La înmulțirea fracțiilor se înmulțesc numărătorii între ei și numitorii între ei: 1/2 × 1/2 = 1/4. Încă o jumătate din rezultat ar da o optime."
+	},
+	{
+		"id": "mana:2263",
+		"nota": "Compasul are două brațe: unul cu vârf fix, în centru, și unul cu mina care desenează. Grecii antici făceau construcții geometrice doar cu compasul și cu rigla negradată."
+	},
+	{
+		"id": "mana:2264",
+		"nota": "Raportorul obișnuit e un semicerc gradat de la 0 la 180 de grade. Există și raportoare circulare, cu toate cele 360 de grade."
+	},
+	{
+		"id": "mana:2265",
+		"nota": "Voltul măsoară tensiunea electrică, adică „împingerea” care pune curentul în mișcare. Două baterii de 1,5 V legate una după alta dau 3 V."
+	},
+	{
+		"id": "mana:2266",
+		"nota": "O kilocalorie e cantitatea de căldură care încălzește cu un grad un litru de apă. Pe etichetele europene apare, alături, și echivalentul în kilojouli."
+	},
+	{
+		"id": "mana:2267",
+		"nota": "Kilowattul măsoară puterea, iar kilowatt-ora energia: un aparat de 1000 de wați care merge o oră consumă un kilowatt-oră."
+	},
+	{
+		"id": "mana:2268",
+		"nota": "Sus, presiunea aerului e mai mică, iar apa fierbe mai ușor. Pe Everest fierbe pe la 70 de grade, așa că acolo gătitul durează mult mai mult."
+	},
+	{
+		"id": "mana:2269",
+		"nota": "Apa e o excepție: gheața ocupă cu aproape 9% mai mult loc decât apa din care s-a format. De aceea gheața plutește, iar sticlele uitate în congelator crapă."
+	},
+	{
+		"id": "mana:2270",
+		"nota": "Frecarea mută electroni de pe păr pe balon. Încărcat, balonul se lipește de perete și ridică firele de păr, care s-au încărcat și ele, cu semn opus."
+	},
+	{
+		"id": "mana:2271",
+		"nota": "Paratrăsnetul e o tijă de metal legată de pământ printr-un cablu; fulgerul trece pe acolo în loc să lovească zidurile. L-a inventat Benjamin Franklin, pe la 1750."
+	},
+	{
+		"id": "mana:2272",
+		"nota": "Obiectele negre absorb aproape toată lumina care cade pe ele și o transformă în căldură. Cele albe o reflectă, de aceea hainele deschise sunt mai răcoroase vara."
+	},
+	{
+		"id": "mana:2273",
+		"nota": "Frecarea apare între două suprafețe care alunecă una pe alta. Pe gheață e foarte mică, de aceea patinele alunecă ușor, dar și frânarea e greu de făcut."
+	},
+	{
+		"id": "mana:2274",
+		"nota": "Apa care cade de la înălțime învârte turbine legate de generatoare. La Porțile de Fier, pe Dunăre, funcționează una dintre cele mai mari hidrocentrale din Europa, inaugurată în 1972."
+	},
+	{
+		"id": "mana:2275",
+		"nota": "Dinamul unei biciclete e un generator mic: roata învârte un magnet lângă o bobină și aprinde farul. Centralele electrice fac același lucru, la scară uriașă."
+	},
+	{
+		"id": "mana:2276",
+		"nota": "Neonul strălucește roșu-portocaliu când prin el trece curent. Celelalte culori ale „reclamelor cu neon” vin, de fapt, din alte gaze sau din straturi colorate pe tub."
+	},
+	{
+		"id": "mana:2277",
+		"nota": "Corpul tău tinde să-și păstreze mișcarea, chiar dacă autobuzul încetinește. Tot inerția e motivul pentru care centura de siguranță contează atât de mult."
+	},
+	{
+		"id": "mana:2278",
+		"nota": "În baterie, două substanțe diferite reacționează și trimit electroni printr-un circuit exterior. Când reacția se încheie, bateria s-a descărcat."
+	},
+	{
+		"id": "mana:2279",
+		"nota": "Energia cinetică crește cu pătratul vitezei: la viteză dublă, o mașină are de patru ori mai multă energie. De aceea și distanța de frânare crește atât de repede."
+	},
+	{
+		"id": "mana:2280",
+		"nota": "Metalele transmit repede căldura, de aceea coada unei linguri de metal se încălzește în ceai. Lemnul și plasticul sunt izolatori, potriviți pentru mânerele cratițelor."
+	},
+	{
+		"id": "mana:2281",
+		"nota": "Încălzit, aerul se dilată, iar același volum cântărește mai puțin. Primul zbor cu oameni a avut loc la Paris, în 1783, într-un balon construit de frații Montgolfier."
+	},
+	{
+		"id": "mana:2282",
+		"nota": "Lupa e o lentilă mai groasă la mijloc decât la margini. Ținută în soare, adună lumina într-un punct atât de fierbinte, încât poate aprinde hârtia."
+	},
+	{
+		"id": "mana:2283",
+		"nota": "Periscopul are două oglinzi sau prisme înclinate la 45 de grade, una sus și una jos. Lumina intră pe deschiderea de sus, se reflectă de două ori și ajunge la ochi."
+	},
+	{
+		"id": "mana:2284",
+		"nota": "Urechea omului aude cam între 20 și 20 000 de vibrații pe secundă. Liliecii și delfinii folosesc ultrasunetele ca să se orienteze, iar medicii, la ecografie."
+	},
+	{
+		"id": "mana:2285",
+		"nota": "Apa sărată îngheață sub 0 °C, așa că gheața se topește chiar și pe un ger ușor. La geruri mari, pe sub −10 °C, sarea obișnuită nu mai ajută aproape deloc."
+	},
+	{
+		"id": "mana:2286",
+		"nota": "Celulele fotovoltaice sunt făcute de obicei din siliciu. Lumina scoate electroni din atomii lui și îi pune în mișcare, adică produce curent."
+	},
+	{
+		"id": "mana:2287",
+		"nota": "Siguranța taie curentul înainte ca firele să se încălzească periculos. Un scurtcircuit apare când curentul găsește un drum aproape fără nicio rezistență."
+	},
+	{
+		"id": "mana:2288",
+		"nota": "Piramida are baza pătrată și patru fețe triunghiulare care se întâlnesc în vârf. Marile piramide de la Giza au exact forma asta."
+	},
+	{
+		"id": "mana:2289",
+		"nota": "9 nu e prim, fiindcă se împarte la 3, iar 10 se împarte la 2 și la 5. După 11 urmează, printre prime, 13, 17 și 19."
+	},
+	{
+		"id": "mana:2290",
+		"nota": "La cifrele romane, un semn mai mic pus înaintea unuia mai mare se scade din el: IX înseamnă zece minus unu. XI, în schimb, înseamnă zece plus unu."
+	},
+	{
+		"id": "mana:2291",
+		"nota": "Orice patrulater, oricât de strâmb, are suma unghiurilor de 360 de grade: o diagonală îl taie în două triunghiuri de câte 180."
+	},
+	{
+		"id": "mana:2292",
+		"nota": "Fiecare aruncare e independentă: moneda nu ține minte ce a ieșit înainte. Chiar și după cinci „cap” la rând, următoarea aruncare are tot o șansă din două."
+	},
+	{
+		"id": "mana:2293",
+		"nota": "Regula obișnuită: de la ,5 în sus se rotunjește în sus, sub ,5 în jos. Așa, 4,7 devine 5, iar 4,3 ar fi devenit 4."
+	},
+	{
+		"id": "mana:2294",
+		"nota": "O sută de sute înseamnă 100 × 100. Grecii aveau un cuvânt anume pentru zece mii, de la care vine „miriadă”, folosit azi pentru o mulțime foarte mare."
+	},
+	{
+		"id": "mana:2295",
+		"nota": "Cadranul are 12 ore, deci fiecare oră ocupă 360 : 12 = 30 de grade. La ora 3, acele sunt la trei ore distanță unul de altul."
+	},
+	{
+		"id": "mana:2296",
+		"nota": "Un hectar e un pătrat cu latura de 100 de metri, adică 10 000 de metri pătrați. Un teren de fotbal are cam trei sferturi de hectar."
+	},
+	{
+		"id": "mana:2297",
+		"nota": "Un metru cub ține o mie de litri. Un bazin olimpic, de 50 pe 25 de metri și adânc de cel puțin 2 metri, are cel puțin 2500 de metri cubi de apă."
+	},
+	{
+		"id": "mana:2298",
+		"nota": "Seismografele înregistrează undele care pornesc din focarul cutremurului. Comparând ora la care ajung la mai multe stații, se află unde s-a produs cutremurul."
+	},
+	{
+		"id": "mana:2299",
+		"nota": "Scara Richter e logaritmică: o treaptă în plus înseamnă unde de zece ori mai mari și cam de 32 de ori mai multă energie. Seismologii folosesc azi mai ales magnitudinea de moment, urmașa ei."
+	},
+	{
+		"id": "mana:2300",
+		"nota": "Ozonul e o formă de oxigen cu trei atomi în moleculă, în loc de doi. Gaura din stratul de ozon, descoperită deasupra Antarcticii în anii ’80, a dus la interzicerea freonilor."
+	},
+	{
+		"id": "mana:2301",
+		"nota": "Aliajele au adesea proprietăți mai bune decât metalele din care sunt făcute. Bronzul, din cupru și staniu, a fost atât de important încât a dat numele unei epoci întregi."
+	},
+	{
+		"id": "mana:2302",
+		"nota": "În saline, apa mării se lasă să se evapore la soare, iar sarea rămâne. În România, sarea se scoate mai ales din zăcăminte de sub pământ, ca la Slănic sau la Praid."
+	},
+	{
+		"id": "mana:2303",
+		"nota": "Se cunosc puțin peste o sută de elemente, iar din ele se formează toate substanțele. Apa nu e element, ci compus: are două feluri de atomi."
+	},
+	{
+		"id": "mana:2304",
+		"nota": "Acetona e un solvent puternic, care se evaporă repede și dizolvă multe materiale plastice. Corpul omului o produce și el, în cantități mici, când arde grăsimi."
+	},
+	{
+		"id": "mana:2305",
+		"nota": "Formula spune că masa e o formă extrem de concentrată de energie: c, viteza luminii, ridicată la pătrat, e un număr uriaș. A apărut într-un articol din 1905."
+	},
+	{
+		"id": "mana:2306",
+		"nota": "Povestea spune că Arhimede și-a dat seama, la baie, cum să verifice dacă o coroană e din aur curat, după apa pe care o dislocuia. Legenda a fost scrisă la două secole după el."
+	},
+	{
+		"id": "mana:2307",
+		"nota": "Experimentul din turn e probabil o legendă povestită de un elev al lui. Galileo a studiat căderea mai ales cu bile rostogolite pe planuri înclinate."
+	},
+	{
+		"id": "mana:2308",
+		"nota": "Solidă, lichidă și gazoasă. Fizica mai numără și plasma, gazul fierbinte și ionizat din fulgere și din stele, iar în laborator au fost obținute și altele, mai ciudate."
+	},
+	{
+		"id": "mana:2309",
+		"nota": "Aliajele de lipit se topesc pe la 200 de grade, așa că un ciocan de lipit le topește ușor. Multă vreme au conținut și plumb, înlocuit azi cu alte metale."
+	},
+	{
+		"id": "mana:2310",
+		"nota": "Când întrerupătorul e deschis, circuitul are o „gaură” și curentul nu mai trece. Când e închis, drumul e complet, iar becul se aprinde."
+	},
+	{
+		"id": "mana:2311",
+		"nota": "Firul de împământare duce curentul în pământ dacă un aparat se defectează și carcasa lui ajunge sub tensiune. Culoarea galben-verde e aceeași în toată Europa."
+	},
+	{
+		"id": "mana:2312",
+		"nota": "Argonul face aproape 1% din aerul uscat, de peste douăzeci de ori mai mult decât dioxidul de carbon. E un gaz nobil, care nu reacționează aproape cu nimic."
+	},
+	{
+		"id": "mana:2313",
+		"nota": "Antonie van Leeuwenhoek, un negustor olandez de stofe, a văzut primul bacterii, prin microscoape făcute de el, în secolul XVII. Le-a numit „animalcule”."
+	},
+	{
+		"id": "mana:2314",
+		"nota": "Gravitația îl accelerează tot timpul căderii: fără aer, viteza ar crește cu aproape 10 metri pe secundă în fiecare secundă. Aerul o limitează, de aceea parașuta salvează."
+	},
+	{
+		"id": "mana:2315",
+		"nota": "Combustibilii fosili s-au format din resturi de plante și animale îngropate acum milioane de ani. Arderea lor eliberează căldură, dar și dioxid de carbon."
+	},
+	{
+		"id": "mana:2316",
+		"nota": "Fiecare picătură se comportă ca o prismă mică: lumina intră, se reflectă în interior și iese desfăcută în culori. Curcubeul se vede doar cu Soarele în spate."
+	},
+	{
+		"id": "mana:2317",
+		"nota": "Desenul obișnuit, cu vârf ascuțit, e greșit. Picăturile mici sunt aproape sfere, ținute așa de tensiunea superficială, iar cele mari se turtesc la bază din cauza aerului."
+	},
+	{
+		"id": "mana:2318",
+		"nota": "Acidul din oțet reacționează cu bicarbonatul și eliberează gazul în bule, de aici spuma. Pe aceeași reacție se bazează praful de copt, care face prăjiturile să crească."
+	},
+	{
+		"id": "mana:2319",
+		"nota": "Platina e mai rară și mai grea decât aurul. Argintul, una dintre variante, se înnegrește în timp, fiindcă reacționează cu urmele de sulf din aer."
+	},
+	{
+		"id": "mana:2320",
+		"nota": "Sub pământ, roca topită se numește magmă; odată ieșită la suprafață, devine lavă. Lava bazaltică poate avea peste 1100 de grade."
+	},
+	{
+		"id": "mana:2321",
+		"nota": "Talcul are duritatea 1 și se zgârie cu unghia. Gipsul, al doilea pe scară, se zgârie și el cu unghia, dar mai greu."
+	},
+	{
+		"id": "mana:2322",
+		"nota": "Stratul verde, numit patină, e un amestec de carbonați și sulfați de cupru. Statuia Libertății e din cupru și a devenit verde în primele decenii de la ridicare."
+	},
+	{
+		"id": "mana:2323",
+		"nota": "Adăugând 1 la 999 999, toate cifrele de 9 devin 0 și apare un 1 în față: 1 000 000. E același mecanism ca la kilometrajul unei mașini care trece de zero."
+	},
+	{
+		"id": "mana:2324",
+		"nota": "10% înseamnă o zecime, deci e suficient să tai un zero sau să muți virgula cu o poziție. 10% din 300 e 30, iar 20% ar fi 60."
+	},
+	{
+		"id": "mana:2325",
+		"nota": "Un nod înseamnă o milă marină pe oră, adică 1,852 kilometri pe oră. Numele vine de la frânghia cu noduri pe care marinarii o aruncau în apă ca să-și măsoare viteza."
+	},
+	{
+		"id": "mana:2326",
+		"nota": "Nivela are o fiolă curbată cu lichid și o bulă de aer. Bula urcă mereu în punctul cel mai înalt, deci stă exact la mijloc doar când suprafața e orizontală."
+	},
+	{
+		"id": "mana:2327",
+		"nota": "Celsius a ales punctele de îngheț și de fierbere ale apei ca repere pentru scara lui. Sub presiune sau cu sare dizolvată, apa îngheață la temperaturi puțin diferite."
+	},
+	{
+		"id": "mana:2328",
+		"nota": "Triunghiul e cel mai simplu poligon și singurul care nu se poate deforma fără să-i schimbi laturile. De aceea podurile și macaralele sunt făcute din grinzi așezate în triunghiuri."
+	},
+	{
+		"id": "mana:2329",
+		"nota": "Amoniacul e format din azot și hidrogen și se folosește mai ales la fabricarea îngrășămintelor. Nu se amestecă niciodată cu înălbitorul pe bază de clor: împreună degajă gaze toxice."
+	},
+	{
+		"id": "mana:2330",
+		"nota": "Pentru 4 și 6, cel mai mic multiplu comun e 12. Îl folosești când aduci fracții la același numitor, ca să le poți aduna."
+	},
+	{
+		"id": "mana:2331",
+		"nota": "Jumătate de kilogram înseamnă 1000 : 2. În unele țări se vinde încă la livră, o unitate puțin mai mică, de circa 454 de grame."
+	},
+	{
+		"id": "mana:2332",
+		"nota": "Cântarul de baie măsoară de fapt forța cu care apeși pe el și o transformă în kilograme. Pe Lună, același cântar ar arăta de vreo șase ori mai puțin."
+	},
+	{
+		"id": "mana:2333",
+		"nota": "Semnul arată rădăcina pătrată: √9 = 3. Forma lui pare să vină dintr-un „r” stilizat, de la latinescul „radix”, rădăcină."
+	},
+	{
+		"id": "mana:2334",
+		"nota": "O mașină care face 120 de kilometri în două ore are o viteză medie de 60 de kilometri pe oră. Viteza din fiecare clipă poate fi mai mare sau mai mică decât media."
+	},
+	{
+		"id": "mana:2335",
+		"nota": "Bicarbonatul e o bază slabă: neutralizează o parte din acidul din stomac și, încălzit sau amestecat cu un acid, eliberează bule de gaz."
+	},
+	{
+		"id": "mana:2336",
+		"nota": "Nu e o valoare fixă, ci o convenție: chimiștii și inginerii folosesc de obicei 20 sau 25 de grade. Corpul omului, la circa 37 de grade, e mai cald decât camera."
+	},
+	{
+		"id": "mana:2337",
+		"nota": "Presiunea din anvelope se dă de obicei în bari, în jur de 2 la o mașină obișnuită. Un bar e cam presiunea atmosferei la nivelul mării."
+	},
+	{
+		"id": "mana:2338",
+		"nota": "Aria pătratului e latura înmulțită cu ea însăși. Perimetrul aceluiași pătrat e tot 16, dar în centimetri: la latura 4, cele două cifre se întâmplă să fie egale."
+	},
+	{
+		"id": "mana:2339",
+		"nota": "Un număr impar se termină în 1, 3, 5, 7 sau 9. Suma primelor numere impare dă mereu un pătrat: 1 + 3 = 4, 1 + 3 + 5 = 9."
+	},
+	{
+		"id": "mana:2340",
+		"nota": "Regula „minus cu minus dă plus” păstrează legile obișnuite ale calculului. Se poate vedea ca o întoarcere de două ori: o datorie anulată e, de fapt, un câștig."
+	},
+	{
+		"id": "mana:2341",
+		"nota": "Cât timp fierbe, căldura primită se duce la transformarea apei în abur, nu la încălzire. De aceea apa care fierbe nu se încălzește mai tare, oricât de mare ar fi focul."
+	},
+	{
+		"id": "mana:2342",
+		"nota": "Un număr împărțit la el însuși dă 1, oricât de mare ar fi. Singura excepție e zero: 0 împărțit la 0 nu are niciun rezultat definit."
+	},
+	{
+		"id": "mana:2343",
+		"nota": "„Elementele” lui Euclid, scrise pe la 300 î.Hr., au fost manualul de geometrie al lumii aproape două mii de ani. Cartea pornește de la cinci postulate și deduce din ele sute de teoreme."
+	},
+	{
+		"id": "mana:2344",
+		"nota": "Ipotenuza e mereu cea mai lungă latură a triunghiului dreptunghic. Celelalte două, care formează unghiul drept, se numesc catete."
+	},
+	{
+		"id": "mana:2345",
+		"nota": "Orice număr diferit de zero, ridicat la puterea zero, dă 1. Regula păstrează simplă împărțirea puterilor: 10 la a treia împărțit la 10 la a treia trebuie să dea 1."
+	},
+	{
+		"id": "mana:2346",
+		"nota": "Laturile unghiului alungit formează o linie dreaptă. Unghiul de 360 de grade, care face înconjurul complet, se numește unghi plin."
+	},
+	{
+		"id": "mana:2347",
+		"nota": "Abscisa unui punct se citește pe axa orizontală, notată de obicei Ox, iar ordonata pe cea verticală, Oy. Un punct se scrie ca pereche (x, y)."
+	},
+	{
+		"id": "mana:2348",
+		"nota": "Originea are coordonatele (0, 0). La dreapta ei, pe axa orizontală, sunt numerele pozitive, iar la stânga cele negative."
+	},
+	{
+		"id": "mana:2349",
+		"nota": "Descartes a legat geometria de algebră în 1637, într-o anexă a „Discursului asupra metodei”. Așa, o curbă a putut fi scrisă ca o ecuație."
+	},
+	{
+		"id": "mana:2350",
+		"nota": "Numele l-a inventat nepotul de nouă ani al matematicianului american Edward Kasner. De la el vine, cu o greșeală de scriere, numele companiei Google."
+	},
+	{
+		"id": "mana:2351",
+		"nota": "„Deca” înseamnă zece în greacă, ca în decalitru sau decadă. Un poligon cu 12 laturi se numește dodecagon."
+	},
+	{
+		"id": "mana:2352",
+		"nota": "Zarul are șase fețe la fel de probabile. Ca să ai mai mult de 50% șanse să dai măcar un 6, îți trebuie patru aruncări."
+	},
+	{
+		"id": "mana:2353",
+		"nota": "La mărimile de pantofi vândute într-un magazin, moda e mărimea cerută cel mai des. Un set de date poate avea și mai multe mode."
+	},
+	{
+		"id": "mana:2354",
+		"nota": "Mediana nu e trasă de valorile extreme. De aceea venitul median spune mai bine decât venitul mediu cât câștigă un om obișnuit."
+	},
+	{
+		"id": "mana:2355",
+		"nota": "Suma 7 se poate obține în șase feluri din 36: 1+6, 2+5, 3+4 și inversele lor. 2 și 12 au câte un singur fel."
+	},
+	{
+		"id": "mana:2356",
+		"nota": "Ele sunt 2, 3, 5, 7, 11, 13, 17 și 19. Numerele prime se răresc pe măsură ce urci, dar nu se termină niciodată."
+	},
+	{
+		"id": "mana:2357",
+		"nota": "Formula pentru un poligon cu n laturi e (n − 2) × 180 de grade: pentagonul se poate tăia, dintr-un vârf, în trei triunghiuri."
+	},
+	{
+		"id": "mana:2358",
+		"nota": "10% din 80 e 8, iar 5% e jumătate din atât, adică 4. Împreună, 8 + 4 = 12."
+	},
+	{
+		"id": "mana:2359",
+		"nota": "Diagonalele rombului sunt perpendiculare și se taie la jumătate. Simbolul „caro” de pe cărțile de joc e un romb."
+	},
+	{
+		"id": "mana:2360",
+		"nota": "Numărul e apare la creșterea continuă, cum e dobânda compusă la fiecare clipă. Notația cu litera e i se datorează lui Leonhard Euler."
+	},
+	{
+		"id": "mana:2361",
+		"nota": "Un segment e împărțit după numărul de aur când partea mare față de cea mică e ca întregul față de partea mare. Raportul dintre doi termeni vecini din șirul lui Fibonacci se apropie de el."
+	},
+	{
+		"id": "mana:2362",
+		"nota": "Fiecare termen e suma celor doi dinaintea lui. Leonardo din Pisa l-a făcut cunoscut în Europa, în 1202, printr-o problemă despre înmulțirea iepurilor."
+	},
+	{
+		"id": "mana:2363",
+		"nota": "Logaritmul în baza 10 al lui 1000 e 3. Logaritmii au transformat înmulțirile lungi în adunări și au ușurat enorm calculele astronomilor, din secolul XVII."
+	},
+	{
+		"id": "mana:2364",
+		"nota": "Factorialul înmulțește toate numerele de la 1 la n. Arată în câte feluri poți așeza n obiecte în rând: cinci cărți pe un raft se pot așeza în 120 de feluri."
+	},
+	{
+		"id": "mana:2365",
+		"nota": "Zecimalele unui număr irațional nu se termină și nu se repetă niciodată. π și rădăcina pătrată din 2 sunt cele mai cunoscute exemple."
+	},
+	{
+		"id": "mana:2366",
+		"nota": "Tradiția spune că iraționalitatea lui a fost descoperită de pitagoreici și le-a stricat credința că totul se poate exprima prin rapoarte de numere întregi."
+	},
+	{
+		"id": "mana:2367",
+		"nota": "Tangenta e perpendiculară pe raza care duce în punctul de contact. O dreaptă care taie cercul în două puncte se numește secantă."
+	},
+	{
+		"id": "mana:2368",
+		"nota": "Suma unghiurilor unui hexagon e 720 de grade, împărțită în șase unghiuri egale. Trei hexagoane regulate se potrivesc perfect în jurul unui punct."
+	},
+	{
+		"id": "mana:2369",
+		"nota": "Dacă discriminantul e pozitiv, ecuația are două soluții reale, dacă e zero una singură, iar dacă e negativ niciuna. Se calculează ca b² − 4ac."
+	},
+	{
+		"id": "mana:2370",
+		"nota": "Parabola are o proprietate folosită la antenele de satelit și la faruri: razele paralele care o lovesc se adună toate într-un singur punct, numit focar."
+	},
+	{
+		"id": "mana:2371",
+		"nota": "Semnul a fost introdus de matematicianul englez John Wallis, în 1655. Infinitul nu e un număr obișnuit: nu poți calcula cu el ca, de pildă, cu 8."
+	},
+	{
+		"id": "mana:2372",
+		"nota": "Există o singură mulțime vidă și e submulțime a oricărei alte mulțimi. Cu ea, teoria mulțimilor poate construi chiar și numerele naturale."
+	},
+	{
+		"id": "mana:2373",
+		"nota": "3, 4 și 5 e cel mai mic triplet pitagoreic: 9 + 16 = 25. Altele sunt 5, 12, 13 sau 8, 15, 17."
+	},
+	{
+		"id": "mana:2374",
+		"nota": "Divizorii lui 12 sunt 1, 2, 3, 4, 6 și 12. Numerele cu mulți divizori, ca 12, 60 sau 360, au fost alese de multe ori pentru unități de măsură."
+	},
+	{
+		"id": "mana:2375",
+		"nota": "6 e cel mai mare număr care le împarte exact pe amândouă. Se folosește la simplificarea fracțiilor: 12/18 devine 2/3."
+	},
+	{
+		"id": "mana:2376",
+		"nota": "64 e 8 × 8, dar și 4 × 4 × 4, deci e în același timp pătrat și cub perfect. Pe tabla de șah sunt exact 64 de pătrățele."
+	},
+	{
+		"id": "mana:2377",
+		"nota": "Produsul a două numere negative e pozitiv. Semnul rezultatului se află numărând factorii negativi: un număr par dă plus, unul impar dă minus."
+	},
+	{
+		"id": "mana:2378",
+		"nota": "Arhimede a demonstrat că aria unui disc e egală cu cea a unui triunghi care are ca bază lungimea cercului și ca înălțime raza."
+	},
+	{
+		"id": "mana:2379",
+		"nota": "Lungimea cercului e π înmulțit cu diametrul, iar diametrul e dublul razei. Un cerc cu raza de un metru are aproape 6,28 metri."
+	},
+	{
+		"id": "mana:2380",
+		"nota": "Tetraedrul are patru fețe triunghiulare, patru vârfuri și șase muchii. E cea mai simplă piramidă, cu baza tot un triunghi."
+	},
+	{
+		"id": "mana:2381",
+		"nota": "Povestea spune că a observat perechile 1 + 100, 2 + 99 și așa mai departe, fiecare egală cu 101. Cincizeci de perechi dau 5050."
+	},
+	{
+		"id": "mana:2382",
+		"nota": "Sinusul, cosinusul și tangenta leagă unghiurile de laturi. Cu ele se calculează înălțimi și distanțe care nu pot fi măsurate direct, ca înălțimea unui munte."
+	},
+	{
+		"id": "mana:2383",
+		"nota": "Sinusul crește de la 0, la zero grade, până la 1, la 90 de grade. Valoarea lui nu depășește niciodată 1, fiindcă o catetă nu poate fi mai lungă decât ipotenuza."
+	},
+	{
+		"id": "mana:2384",
+		"nota": "În binar, fiecare poziție valorează dublul celei din dreapta: 4, 2, 1. Cinci înseamnă 4 + 1, adică 101."
+	},
+	{
+		"id": "mana:2385",
+		"nota": "1024 e puterea lui 2 cea mai apropiată de o mie. De aceea, în informatică, un kilobyte a însemnat multă vreme 1024 de octeți, nu 1000."
+	},
+	{
+		"id": "mana:2386",
+		"nota": "Un newton e cam forța cu care apasă pe palmă un măr mic, de o sută de grame. Unitatea poartă numele lui Isaac Newton."
+	},
+	{
+		"id": "mana:2387",
+		"nota": "Unitatea poartă numele fizicianului englez James Joule, care a arătat că lucrul mecanic și căldura sunt forme ale aceleiași energii. O kilocalorie are circa 4184 de jouli."
+	},
+	{
+		"id": "mana:2388",
+		"nota": "Un pascal e o presiune foarte mică, așa că se folosesc des kilopascali sau bari. Presiunea atmosferică normală e de circa 101 325 de pascali."
+	},
+	{
+		"id": "mana:2389",
+		"nota": "Un hertz înseamnă o oscilație pe secundă. Unitatea poartă numele lui Heinrich Hertz, care a produs primul, în laborator, undele radio."
+	},
+	{
+		"id": "mana:2390",
+		"nota": "Amperul e una dintre cele șapte unități de bază ale Sistemului Internațional. Numele vine de la André-Marie Ampère, unul dintre întemeietorii electromagnetismului."
+	},
+	{
+		"id": "mana:2391",
+		"nota": "Un coulomb e sarcina dusă de un curent de un amper într-o secundă. E o cantitate mare: un fulger obișnuit transportă câțiva coulombi, sau câteva zeci."
+	},
+	{
+		"id": "mana:2392",
+		"nota": "Georg Simon Ohm a publicat legea în 1827, iar colegii lui germani au primit-o la început cu răceală. Azi e prima formulă din orice curs de electricitate."
+	},
+	{
+		"id": "mana:2393",
+		"nota": "Presiunea normală la nivelul mării ține în echilibru o coloană de mercur de 760 de milimetri. Când presiunea scade brusc, urmează de obicei vreme rea."
+	},
+	{
+		"id": "mana:2394",
+		"nota": "Valoarea exactă e 299 792 458 de metri pe secundă. Lumina Lunii ajunge la noi în puțin peste o secundă."
+	},
+	{
+		"id": "mana:2395",
+		"nota": "Viteza crește puțin cu temperatura aerului. În apă, sunetul e de peste patru ori mai rapid, iar în oțel, de peste cincisprezece ori."
+	},
+	{
+		"id": "mana:2396",
+		"nota": "Ochiul miop strânge imaginea înaintea retinei. Lentila divergentă, mai subțire la mijloc, împrăștie puțin lumina și mută imaginea înapoi, pe retină."
+	},
+	{
+		"id": "mana:2397",
+		"nota": "Când sursa se apropie, undele se înghesuie și sunetul pare mai înalt; când se depărtează, pare mai jos. Radarele de viteză folosesc același efect, cu unde radio."
+	},
+	{
+		"id": "mana:2398",
+		"nota": "Un corp rămâne în repaus sau în mișcare uniformă în linie dreaptă până când o forță îl obligă să se schimbe. Galileo ajunsese deja la o formă a ideii."
+	},
+	{
+		"id": "mana:2399",
+		"nota": "Racheta zboară pe principiul ăsta: împinge gazele în jos, iar gazele o împing în sus. De aceea merge și în vid, unde nu are de ce să se sprijine."
+	},
+	{
+		"id": "mana:2400",
+		"nota": "Robert Hooke a anunțat-o în 1676 printr-o anagramă latinească și a dezvăluit-o doi ani mai târziu. Pe ea se bazează cântarele cu arc și dinamometrele."
+	},
+	{
+		"id": "mana:2401",
+		"nota": "Presiunea dintr-un lichid închis se transmite la fel în toate direcțiile. Apăsând un piston mic, obții o forță mare pe unul mare, pe același principiu ca la frânele mașinii."
+	},
+	{
+		"id": "mana:2402",
+		"nota": "Daniel Bernoulli l-a publicat în 1738. E una dintre explicațiile, nu singura, pentru felul în care aripa unui avion e împinsă în sus."
+	},
+	{
+		"id": "mana:2403",
+		"nota": "Impulsul unui sistem izolat se conservă. De aceea o pușcă se smucește înapoi când glonțul pleacă înainte."
+	},
+	{
+		"id": "mana:2404",
+		"nota": "Energia potențială e „depozitată” în poziția corpului și se transformă în energie cinetică la cădere. Hidrocentralele folosesc exact apa ținută sus de baraj."
+	},
+	{
+		"id": "mana:2405",
+		"nota": "Scara Kelvin pornește de la cea mai joasă temperatură posibilă și nu are valori negative. O diferență de un kelvin e la fel de mare ca una de un grad Celsius."
+	},
+	{
+		"id": "mana:2406",
+		"nota": "Electronii se mișcă prin fir surprinzător de încet, de ordinul milimetrilor pe secundă. Becul se aprinde imediat fiindcă semnalul se propagă aproape cu viteza luminii."
+	},
+	{
+		"id": "mana:2407",
+		"nota": "Curentul continuu curge mereu în același sens, de la o bornă la alta. Încărcătoarele de telefon transformă curentul alternativ din priză în curent continuu."
+	},
+	{
+		"id": "mana:2408",
+		"nota": "Tensiunea de 230 de volți e standardul european. În Statele Unite și în Japonia, prizele au în jur de 100–120 de volți."
+	},
+	{
+		"id": "mana:2409",
+		"nota": "Curentul alternativ își schimbă sensul de 100 de ori pe secundă, în 50 de cicluri complete. În America de Nord frecvența e de 60 Hz."
+	},
+	{
+		"id": "mana:2410",
+		"nota": "Curentul e trimis pe distanțe mari la tensiuni foarte înalte, ca să se piardă mai puțină energie în fire. Transformatoarele o coboară apoi, pas cu pas, până la cea din priză."
+	},
+	{
+		"id": "mana:2411",
+		"nota": "Fiecare punct al ecranului are trei surse mici, câte una pentru fiecare culoare. La tipar se folosesc alte trei, cyan, magenta și galben, fiindcă cerneala scade lumină, nu adaugă."
+	},
+	{
+		"id": "mana:2412",
+		"nota": "Razele X trec ușor prin țesuturile moi, dar sunt oprite de oase, care sunt mai dense. De aceea, pe radiografie, scheletul apare alb."
+	},
+	{
+		"id": "mana:2413",
+		"nota": "Le-a spus „X” fiindcă nu știa ce sunt. Pentru ele a primit primul premiu Nobel pentru fizică, în 1901."
+	},
+	{
+		"id": "mana:2414",
+		"nota": "Faraday știa foarte puțină matematică și și-a început cariera ca ucenic legător de cărți. Descoperirea lui stă la baza oricărui generator electric de azi."
+	},
+	{
+		"id": "mana:2415",
+		"nota": "E viteza de evadare, numită și a doua viteză cosmică. Prima, de circa 7,9 km/s, ajunge doar pentru a rămâne pe o orbită joasă în jurul Pământului."
+	},
+	{
+		"id": "mana:2416",
+		"nota": "Fără aer, orice corp cade la fel, oricât ar cântări. Astronautul David Scott a arătat asta pe Lună, în 1971, lăsând să cadă împreună un ciocan și o pană."
+	},
+	{
+		"id": "mana:2417",
+		"nota": "Un astronaut care pe Pământ cântărește 90 de kilograme apasă pe Lună cât 15. De aceea astronauții misiunilor Apollo săreau ușor, chiar și în costume grele."
+	},
+	{
+		"id": "mana:2418",
+		"nota": "Masa e cantitatea de materie și nu depinde de loc. Greutatea e forța cu care planeta trage de corp, deci se schimbă de la o lume la alta."
+	},
+	{
+		"id": "mana:2419",
+		"nota": "Oglinda concavă e curbată spre interior, ca o lingură privită pe partea din față. Aceeași formă concentrează lumina în farurile mașinilor și în cuptoarele solare."
+	},
+	{
+		"id": "mana:2420",
+		"nota": "Oglinda convexă arată o porțiune mare de drum, dar micșorează imaginea. De aceea, pe unele oglinzi laterale ale mașinilor scrie că obiectele sunt mai aproape decât par."
+	},
+	{
+		"id": "mana:2421",
+		"nota": "Plasma e numită adesea a patra stare de agregare. Aproape toată materia vizibilă din univers, adică stelele, e în starea asta."
+	},
+	{
+		"id": "mana:2422",
+		"nota": "Gheața carbonică, adică dioxidul de carbon solid, nu se topește, ci trece direct în gaz. Tot așa scade zăpada pe un ger uscat, fără să se topească."
+	},
+	{
+		"id": "mana:2423",
+		"nota": "Apa are o densitate de circa un kilogram pe litru. Corpurile mai dense decât ea se scufundă, iar cele mai puțin dense plutesc."
+	},
+	{
+		"id": "mana:2424",
+		"nota": "Nucleele grele sunt sparte în bucăți mai mici, iar căldura eliberată fierbe apa care învârte turbinele. Centrala de la Cernavodă are două reactoare, puse în funcțiune în 1996 și 2007."
+	},
+	{
+		"id": "mana:2425",
+		"nota": "În centrul Soarelui, la circa 15 milioane de grade, nucleele de hidrogen se unesc în heliu. Masa care lipsește la final se transformă în energie."
+	},
+	{
+		"id": "mana:2426",
+		"nota": "Particulele alfa sunt grele și încărcate, așa că se opresc repede. Radiația gama, în schimb, cere ziduri groase de beton sau plumb."
+	},
+	{
+		"id": "mana:2427",
+		"nota": "Timpul de înjumătățire poate fi de fracțiuni de secundă sau de miliarde de ani. După două asemenea intervale mai rămâne un sfert, după trei, o optime."
+	},
+	{
+		"id": "mana:2428",
+		"nota": "Metoda a fost pusă la punct de Willard Libby, în anii ’40, iar el a primit pentru ea Nobelul pentru chimie, în 1960. Funcționează pentru resturi de până la vreo 50 000 de ani."
+	},
+	{
+		"id": "mana:2429",
+		"nota": "Cele mai multe particule treceau prin foiță, dar câteva ricoșau înapoi. Rutherford a spus că a fost ca și cum un obuz ar fi ricoșat dintr-o foaie de hârtie."
+	},
+	{
+		"id": "mana:2430",
+		"nota": "Sub 7, soluțiile sunt acide, peste 7 sunt bazice. Scara e logaritmică: un pH de 3 e de zece ori mai acid decât unul de 4."
+	},
+	{
+		"id": "mana:2431",
+		"nota": "Turnesolul e un colorant scos din licheni. Se înroșește în acizi și se albăstrește în baze, de aceea e unul dintre cei mai vechi indicatori de laborator."
+	},
+	{
+		"id": "mana:2432",
+		"nota": "Oțetul de masă are de obicei între 4 și 9% acid acetic. Bacteriile îl produc din alcool, de aceea vinul lăsat la aer se oțetește."
+	},
+	{
+		"id": "mana:2433",
+		"nota": "Acumulatorul cu plumb și acid sulfuric a fost inventat în 1859 și e încă folosit la pornirea motoarelor. E greu, dar dă un curent mare pe moment."
+	},
+	{
+		"id": "mana:2434",
+		"nota": "Nasul omului simte hidrogenul sulfurat chiar și în urme infime. În concentrații mari însă îl amorțește, așa că mirosul dispare tocmai când gazul devine periculos."
+	},
+	{
+		"id": "mana:2435",
+		"nota": "Formula ei e H2O2: un atom de oxigen în plus față de apă. Pe o rană face spumă fiindcă o enzimă din sânge o descompune în apă și oxigen."
+	},
+	{
+		"id": "mana:2436",
+		"nota": "Alama e galbenă și ușor de prelucrat, de aceea se folosește la clanțe, robinete și instrumente de suflat. Bronzul, înrudit, se face din cupru cu staniu."
+	},
+	{
+		"id": "mana:2437",
+		"nota": "Benzina cu plumb a fost scoasă treptat din uz pentru că plumbul afectează creierul, mai ales la copii. Simbolul lui, Pb, vine din latinescul „plumbum”, de la care vine și „instalator” în engleză."
+	},
+	{
+		"id": "mana:2438",
+		"nota": "Varul nestins se obține arzând calcar. Stins cu apă, se încălzește puternic și devine hidroxid de calciu, folosit de secole la tencuieli și la văruit."
+	},
+	{
+		"id": "mana:2439",
+		"nota": "Calcarul s-a format în mare parte din cochilii și schelete de viețuitoare marine. Cheile și peșterile din Apuseni sunt săpate de apă tocmai în calcar."
+	},
+	{
+		"id": "mana:2440",
+		"nota": "Izotopii au același număr de protoni, deci se comportă la fel chimic, dar au mase diferite. Hidrogenul are trei: obișnuitul, deuteriul și tritiul."
+	},
+	{
+		"id": "mana:2441",
+		"nota": "Un atom care pierde electroni devine ion pozitiv, iar unul care primește electroni devine ion negativ. În sarea dizolvată în apă, sodiul și clorul plutesc separat, ca ioni."
+	},
+	{
+		"id": "mana:2442",
+		"nota": "Sodiul dă un electron clorului, iar ionii de semn opus se atrag puternic. De aceea sarea are un punct de topire înalt, de peste 800 de grade."
+	},
+	{
+		"id": "mana:2443",
+		"nota": "În molecula de apă, oxigenul împarte câte o pereche de electroni cu fiecare atom de hidrogen. Aproape toate moleculele din corpul omului sunt ținute de legături covalente."
+	},
+	{
+		"id": "mana:2444",
+		"nota": "Atomii lor au ultimul strat de electroni complet, așa că n-au „nevoie” să se lege de alții. Mult timp s-a crezut că nu formează niciun compus, până în 1962."
+	},
+	{
+		"id": "mana:2445",
+		"nota": "Litiul, sodiul și potasiul sunt atât de moi că se taie cu cuțitul și se păstrează sub ulei. Cu cât cobori în coloană, cu atât reacția cu apa e mai violentă."
+	},
+	{
+		"id": "mana:2446",
+		"nota": "Carbonul formează lanțuri și inele aproape nelimitate, de aceea are mai mulți compuși decât toate celelalte elemente la un loc. Viața, așa cum o știm, e construită pe el."
+	},
+	{
+		"id": "mana:2447",
+		"nota": "Experimentul clasic se face cu zinc și acid clorhidric: bulele care apar ard cu o mică pocnitură dacă apropii o flacără. Așa se umpleau primele baloane cu hidrogen."
+	},
+	{
+		"id": "mana:2448",
+		"nota": "Lavoisier a arătat că arderea e o combinare cu oxigenul și a dat numele elementului. A fost ghilotinat în 1794, în timpul Terorii, ca fost perceptor de impozite."
+	},
+	{
+		"id": "mana:2449",
+		"nota": "Formula populară „nimic nu se pierde, nimic nu se creează, totul se transformă” i se atribuie lui Lavoisier. Pentru reacțiile nucleare, legea trebuie corectată după Einstein."
+	},
+	{
+		"id": "mana:2450",
+		"nota": "Hidrogenul e mai ușor decât heliul și era mult mai ieftin, dar arde. Germania nu putea cumpăra heliu, pe care atunci doar Statele Unite îl aveau din belșug."
+	},
+	{
+		"id": "mana:2451",
+		"nota": "Bromul e un lichid roșu-brun, cu vapori înțepători; numele lui vine din grecescul pentru „duhoare”. Singurul metal lichid în aceleași condiții e mercurul."
+	},
+	{
+		"id": "mana:2452",
+		"nota": "Armata germană l-a folosit pe scară mare la Ypres, în aprilie 1915. Fiind mai greu decât aerul, gazul cobora și umplea tranșeele."
+	},
+	{
+		"id": "mana:2453",
+		"nota": "Un atom de azot legat de trei de hidrogen. Aproape tot amoniacul produs industrial ajunge în îngrășăminte, fără de care n-ar putea fi hrănită populația de azi a lumii."
+	},
+	{
+		"id": "mana:2454",
+		"nota": "Metanul e cea mai simplă hidrocarbură: un carbon și patru hidrogeni. Prinde căldura în atmosferă mult mai puternic decât dioxidul de carbon, deși rămâne acolo mai puțin timp."
+	},
+	{
+		"id": "mana:2455",
+		"nota": "Acidul clorhidric se găsește și în stomacul omului, unde ajută la digestie și omoară microbii. Peretele stomacului se apără de el cu un strat de mucus."
+	},
+	{
+		"id": "mana:2456",
+		"nota": "Oxidarea și reducerea merg mereu împreună: ce pierde o substanță primește alta. Ruginirea fierului și arderea lemnului sunt amândouă oxidări."
+	},
+	{
+		"id": "mana:2457",
+		"nota": "Catalizatorul unei mașini conține metale ca platina, paladiul și rodiul, care transformă gazele toxice din evacuare în unele mai puțin nocive. Enzimele sunt catalizatorii corpului."
+	},
+	{
+		"id": "mana:2458",
+		"nota": "Soda caustică desface grăsimile și formează săpun și glicerină, într-o reacție numită saponificare. Săpunul de casă se făcea așa, din seu și leșie."
+	},
+	{
+		"id": "mana:2459",
+		"nota": "Arderea e cel mai cunoscut exemplu. Pungile care încălzesc mâinile iarna folosesc tot o reacție exotermă, de obicei oxidarea pulberii de fier."
+	},
+	{
+		"id": "mana:2460",
+		"nota": "Creta naturală e făcută din scheletele unor alge microscopice marine. Faleza albă de la Dover e o uriașă grămadă de astfel de schelete."
+	},
+	{
+		"id": "mana:2461",
+		"nota": "Siliciul se obține din nisip și e purificat până la un atom străin la un miliard. De la el și-a luat numele Silicon Valley, din California."
+	},
+	{
+		"id": "mana:2462",
+		"nota": "Etanolul se obține prin fermentarea zaharurilor de către drojdii. E folosit și ca dezinfectant și ca adaos în benzină."
+	},
+	{
+		"id": "mana:2463",
+		"nota": "Metanolul seamănă la miros și la gust cu etanolul, dar ficatul îl transformă în substanțe care atacă nervul optic. Apare uneori în băuturile distilate prost."
+	},
+	{
+		"id": "mana:2464",
+		"nota": "Lămpile stradale vechi, portocaliu-gălbui, foloseau vapori de sodiu. Un vârf de cuțit de sare aruncat în flacăra aragazului o îngălbenește pentru o clipă."
+	},
+	{
+		"id": "mana:2465",
+		"nota": "Formula lui e N2O. A fost unul dintre primele anestezice folosite de dentiști, în secolul XIX, iar azi se folosește și ca gaz pentru frișca din spray."
+	},
+	{
+		"id": "mana:2466",
+		"nota": "Lichidul care fierbe mai ușor se evaporă primul și e condensat într-un vas separat. Așa se face țuica, dar și rafinarea petrolului, pe scară mare."
+	},
+	{
+		"id": "mana:2467",
+		"nota": "Hârtia de filtru lasă lichidul să treacă și reține particulele solide. Cafeaua la filtru e o filtrare de fiecare dimineață."
+	},
+	{
+		"id": "mana:2468",
+		"nota": "Componentele cernelii urcă cu viteze diferite odată cu solventul și se opresc în dungi colorate. Numele înseamnă „scriere cu culori”."
+	},
+	{
+		"id": "mana:2469",
+		"nota": "Numele vine din latinescul „formica”, furnică, fiindcă acidul a fost obținut prima dată prin distilarea furnicilor. Se găsește și în firele de urzică."
+	},
+	{
+		"id": "mana:2470",
+		"nota": "Bacteriile transformă zahărul din lapte, lactoza, în acid lactic. Așa se fac iaurtul și brânza, iar mușchii îl produc și ei, la efort intens."
+	},
+	{
+		"id": "mana:2471",
+		"nota": "Litiul e cel mai ușor metal. Pentru bateriile cu ioni de litiu, John Goodenough, Stanley Whittingham și Akira Yoshino au primit Nobelul pentru chimie în 2019."
+	},
+	{
+		"id": "mana:2472",
+		"nota": "Nobel a îmbibat nitroglicerina, foarte instabilă, într-un pământ poros, ca să poată fi manevrată. Averea făcută din explozivi a lăsat-o pentru premiile care îi poartă numele."
+	},
+	{
+		"id": "mana:2473",
+		"nota": "Marmura e calcar transformat de căldură și presiune în adâncul Pământului. Marmura de la Ruschița, din Banat, a fost folosită la multe clădiri din București."
+	},
+	{
+		"id": "mana:2474",
+		"nota": "Wegener a observat că țărmurile Americii de Sud și Africii se potrivesc ca un puzzle. Ideea a fost respinsă decenii la rând și acceptată abia în anii ’60, ca tectonică a plăcilor."
+	},
+	{
+		"id": "mana:2475",
+		"nota": "Cuarțul e dur și rezistent la apă, așa că supraviețuiește după ce restul rocilor s-au fărâmițat. Plajele de pe insulele vulcanice au, în schimb, nisip negru, de bazalt."
+	},
+	{
+		"id": "mana:2476",
+		"nota": "Pirita e o sulfură de fier, galbenă și lucioasă. Se recunoaște ușor: e mult mai dură decât aurul, iar lovită de oțel scoate scântei."
+	},
+	{
+		"id": "mana:2477",
+		"nota": "Se formează din calcarul dizolvat în apa care picură, foarte încet, de obicei câțiva milimetri sau centimetri pe secol. Cele care cresc din podea se numesc stalagmite."
+	},
+	{
+		"id": "mana:2478",
+		"nota": "În paralel, fiecare bec are drumul lui spre priză, așa că, dacă se arde unul, celelalte rămân aprinse. La ghirlandele vechi, legate în serie, un bec ars stingea tot șirul."
+	},
+	{
+		"id": "mana:2479",
+		"nota": "Viteza e vectorială, iar temperatura e scalară: are doar o valoare. Două forțe egale trase în sensuri opuse se anulează, de aceea direcția contează."
+	},
+	{
+		"id": "mana:2480",
+		"nota": "Higrometrele vechi foloseau un fir de păr omenesc, care se lungește la umezeală. Pluviometrul, una dintre variante, măsoară cantitatea de ploaie căzută."
+	},
+	{
+		"id": "mana:2481",
+		"nota": "Cel mai obișnuit are trei sau patru cupe care se învârt în vânt. Numele vine din grecescul „anemos”, vânt."
+	},
+	{
+		"id": "mana:2482",
+		"nota": "Aerul fierbinte de lângă asfalt curbează lumina venită de la cer, iar ochiul o vede ca pe o reflexie în apă. În deșert, fenomenul a păcălit generații de călători."
+	},
+	{
+		"id": "mana:2483",
+		"nota": "Lumina violetă are lungimea de undă cea mai scurtă dintre culorile vizibile. Dincolo de ea începe ultravioletul, pe care ochiul nu-l mai vede."
+	},
+	{
+		"id": "mana:2484",
+		"nota": "Ultravioletele au destulă energie să strice moleculele din celulele pielii. Cremele de protecție au filtre care le absorb sau le reflectă."
+	},
+	{
+		"id": "mana:2485",
+		"nota": "Astronomul William Herschel a descoperit-o în 1800, punând un termometru dincolo de roșul unui spectru. Camerele de termoviziune „văd” în infraroșu."
+	},
+	{
+		"id": "mana:2486",
+		"nota": "Undele radio sunt de aceeași natură ca lumina, doar cu lungimi de undă mult mai mari. Merg cu viteza luminii și n-au nevoie de aer ca să se propage."
+	},
+	{
+		"id": "mana:2487",
+		"nota": "Reactoarele de tip CANDU pot folosi uraniu natural, neîmbogățit, fiindcă încetinesc neutronii cu apă grea. Combustibilul vine sub formă de pastile ceramice, în fascicule."
+	},
+	{
+		"id": "mana:2488",
+		"nota": "Un condensator are două plăci conductoare despărțite de un izolator. Blițul unui aparat foto descarcă într-o clipă energia strânsă încet într-un condensator."
+	},
+	{
+		"id": "mana:2489",
+		"nota": "Diodele transformă curentul alternativ în curent continuu, în orice încărcător. LED-urile sunt diode care, la trecerea curentului, emit lumină."
+	},
+	{
+		"id": "mana:2490",
+		"nota": "Conductivitatea lor se poate regla adăugând urme de alte elemente. Pe asta se bazează tranzistorul, piesa de bază a oricărui calculator."
+	},
+	{
+		"id": "mana:2491",
+		"nota": "La 10 metri, un scafandru suportă deja dublul presiunii de la suprafață. De aceea, la urcare, trebuie să facă opriri, ca gazele dizolvate în sânge să iasă încet."
+	},
+	{
+		"id": "mana:2492",
+		"nota": "Ca să treacă un curent, e nevoie de o diferență de tensiune între două puncte. Pasărea atinge un singur fir, așa că tot corpul ei e la aceeași tensiune."
+	},
+	{
+		"id": "mana:2493",
+		"nota": "Nobelul pentru 1921 a fost dat „mai ales pentru descoperirea legii efectului fotoelectric”. Relativitatea era încă prea disputată ca juriul să o premieze."
+	},
+	{
+		"id": "mana:2494",
+		"nota": "Eratostene a comparat unghiul umbrelor de la Siena și de la Alexandria, în aceeași zi, și a calculat de aici înconjurul Pământului. Rezultatul lui era surprinzător de aproape de cel real."
+	},
+	{
+		"id": "mana:2495",
+		"nota": "Torricelli a făcut experimentul în 1643: deasupra coloanei de mercur din tub a rămas un spațiu gol, primul vid obținut de om."
+	},
+	{
+		"id": "mana:2496",
+		"nota": "Celsius și-a propus scara în 1742, dar inițial pe dos: 0 la fierberea apei și 100 la îngheț. A fost întoarsă după moartea lui."
+	},
+	{
+		"id": "mana:2497",
+		"nota": "Numele vine din latinescul „ratio”, raport. Orice număr cu zecimale care se termină sau se repetă la nesfârșit e rațional; π și rădăcina din 2 nu sunt."
+	},
+	{
+		"id": "mana:2498",
+		"nota": "Pătratul și triunghiul echilateral sunt poligoane regulate. Rombul nu e: are laturile egale, dar unghiurile nu."
+	},
+	{
+		"id": "mana:2499",
+		"nota": "Cele trei mediane ale unui triunghi se întâlnesc într-un singur punct. Un triunghi de carton se poate ține în echilibru pe vârful unui creion exact în punctul acela."
+	},
+	{
+		"id": "mana:2500",
+		"nota": "Cele trei bisectoare ale unui triunghi se întâlnesc în centrul cercului înscris, cercul care atinge toate cele trei laturi."
+	},
+	{
+		"id": "mana:2501",
+		"nota": "Aria unui triunghi e baza înmulțită cu înălțimea, totul împărțit la doi. La un triunghi obtuzunghic, unele înălțimi cad în afara lui."
+	},
+	{
+		"id": "mana:2502",
+		"nota": "Arhimede a socotit că volumul sferei e două treimi din cel al cilindrului în care încape exact. A cerut ca pe mormântul lui să fie gravate o sferă și un cilindru."
+	},
+	{
+		"id": "mana:2503",
+		"nota": "Aria triunghiului e jumătate din aria dreptunghiului cu aceeași bază și înălțime: 10 × 6 = 60, împărțit la doi."
+	},
+	{
+		"id": "mana:2504",
+		"nota": "Unghiurile ascuțite ale unui triunghi dreptunghic sunt mereu complementare. Două unghiuri care însumează 180 de grade se numesc suplementare."
+	},
+	{
+		"id": "mana:2505",
+		"nota": "Orice număr cu zecimale care se repetă la nesfârșit poate fi scris ca fracție. Înmulțind 1/3 cu 3, iese 0,999…, care e de fapt egal cu 1."
+	},
+	{
+		"id": "mana:2506",
+		"nota": "3/4 înseamnă 3 împărțit la 4, adică 0,75. Înmulțit cu 100, dă 75%."
+	},
+	{
+		"id": "mana:2507",
+		"nota": "Numărul a, numit pantă, arată cât de înclinată e dreapta, iar b arată unde taie ea axa verticală. Când a e zero, dreapta e orizontală."
+	},
+	{
+		"id": "mana:2508",
+		"nota": "Modulul, sau valoarea absolută, arată distanța de la număr la zero, fără semn. Se scrie între două bare verticale: |−5| = 5."
+	},
+	{
+		"id": "mana:2509",
+		"nota": "Șirul 3, 7, 11, 15 are rația 4. Suma unei progresii aritmetice se calculează ca la Gauss: primul termen plus ultimul, înmulțit cu numărul de termeni și împărțit la doi."
+	},
+	{
+		"id": "mana:2510",
+		"nota": "Unghiul exterior e suplementul celui interior: 180 − 60 = 120. Suma unghiurilor exterioare ale oricărui poligon convex e 360 de grade."
+	},
+	{
+		"id": "mana:2511",
+		"nota": "Corpurile obținute prin rotirea unei figuri plane se numesc corpuri de rotație. Un triunghi dreptunghic rotit în jurul unei catete dă un con."
+	},
+	{
+		"id": "mana:2512",
+		"nota": "Piatra ponce se formează când lava plină de gaze se răcește brusc, prinzând bule în ea. Se folosește la îndepărtarea pielii aspre de pe tălpi."
+	},
+	{
+		"id": "mana:2513",
+		"nota": "Bazaltul se formează din lava care se răcește repede. Coloanele hexagonale de la Giant's Causeway, în Irlanda de Nord, sunt din bazalt."
+	},
+	{
+		"id": "mana:2514",
+		"nota": "Gipsul e un sulfat de calciu cu apă în cristale. Încălzit, pierde o parte din apă; amestecat din nou cu apă, se întărește repede, de aceea se folosește la mulaje."
+	},
+	{
+		"id": "mana:2515",
+		"nota": "Energia potențială a apei ținute sus devine energie cinetică la cădere, apoi mișcare de rotație în turbină și, în generator, curent. Fiecare transformare pierde puțin."
+	},
+	{
+		"id": "mana:2516",
+		"nota": "Legea mai e numită și primul principiu al termodinamicii. Din ea rezultă că o mașină care să meargă la nesfârșit fără nicio sursă de energie e imposibilă."
+	},
+	{
+		"id": "mana:2517",
+		"nota": "De secole, inventatorii au propus asemenea mașini, iar fiecare încălca o lege a fizicii. Oficiul de brevete din Statele Unite cere un model funcțional pentru orice astfel de cerere."
+	},
+	{
+		"id": "mana:2518",
+		"nota": "Robert Boyle și Edme Mariotte au găsit legea independent, în secolul XVII. O pompă de bicicletă o arată la fiecare apăsare."
+	},
+	{
+		"id": "mana:2519",
+		"nota": "Puterea se măsoară în wați. Un om antrenat poate da câteva sute de wați pe bicicletă pentru o vreme, iar un motor de mașină obișnuit, de o sută de ori mai mult."
+	},
+	{
+		"id": "mana:2520",
+		"nota": "James Watt a inventat unitatea ca să-și poată vinde motoarele cu abur, comparându-le cu caii care învârteau pompele în mine. Un cal-putere are circa 735 de wați."
+	},
+	{
+		"id": "mana:2521",
+		"nota": "Forța e egală cu greutatea lichidului dislocuit de corp. Un vapor de oțel plutește fiindcă forma lui dislocuiește foarte multă apă."
+	},
+	{
+		"id": "mana:2522",
+		"nota": "La o mașină care ia o curbă, frecarea dintre roți și asfalt dă forța centripetă. Dacă drumul e ud și frecarea scade, mașina iese din curbă."
+	},
+	{
+		"id": "mana:2523",
+		"nota": "Aerul din jurul paharului se răcește și nu mai poate ține toți vaporii, care se depun în picături. Temperatura la care începe asta se numește punct de rouă."
+	},
+	{
+		"id": "mana:2524",
+		"nota": "Cu cât punctul de rouă e mai aproape de temperatura aerului, cu atât aerul pare mai umed și mai apăsător. Noaptea, când iarba se răcește sub el, apare roua."
+	},
+	{
+		"id": "mana:2525",
+		"nota": "La mișcarea uniformă viteza nu se schimbă deloc. Un tren care merge constant cu 100 de kilometri pe oră pe o linie dreaptă e cel mai apropiat exemplu de zi cu zi."
+	},
+	{
+		"id": "mana:2526",
+		"nota": "Accelerația se măsoară în metri pe secundă la pătrat. O mașină sport care ajunge de la 0 la 100 km/h în 3 secunde are o accelerație apropiată de cea a căderii libere."
+	},
+	{
+		"id": "mana:2527",
+		"nota": "Toate aparatele de încălzit cu rezistență, de la fierbătorul de apă la uscătorul de păr, se bazează pe el. La fire, aceeași căldură e o pierdere."
+	},
+	{
+		"id": "mana:2528",
+		"nota": "Filamentul ajunge la peste 2500 de grade, iar puține metale rezistă la așa ceva fără să se topească. Becul e umplut cu gaz inert ca filamentul să nu ardă."
+	},
+	{
+		"id": "mana:2529",
+		"nota": "Fără oxigen, filamentul fierbinte nu poate arde. Gazul inert încetinește și evaporarea metalului, care în timp înnegrește sticla becului."
+	},
+	{
+		"id": "mana:2530",
+		"nota": "Nivelul lichidului se citește la baza curburii pe care o face suprafața, numită menisc. Pentru precizie mai mare se folosesc pipete și biurete."
+	},
+	{
+		"id": "mana:2531",
+		"nota": "Fiecare moleculă de hemoglobină are patru atomi de fier, care leagă oxigenul. Caracatițele și unele crustacee au sânge albastru, pe bază de cupru."
+	},
+	{
+		"id": "mana:2532",
+		"nota": "Molecula de apă are doi atomi de hidrogen la unul de oxigen, așa că volumul de hidrogen iese de două ori mai mare. Curentul electric desface apa în elementele ei."
+	},
+	{
+		"id": "mana:2533",
+		"nota": "Fără legăturile de hidrogen, apa ar fierbe la aproape 80 de grade sub zero și n-ar exista lichidă pe Pământ. Tot ele țin împreună cele două fire ale ADN-ului."
+	},
+	{
+		"id": "mana:2534",
+		"nota": "Vanadiul poartă numele zeiței nordice Vanadís, adică Freya. Toriul, una dintre variante, e numit după zeul Thor, dar se folosește mai ales în cercetarea nucleară."
+	},
+	{
+		"id": "mana:2535",
+		"nota": "Cei doi atomi de hidrogen fac între ei un unghi de circa 104,5 grade. Forma asta face ca molecula să aibă un capăt ușor negativ și unul ușor pozitiv."
+	},
+	{
+		"id": "mana:2536",
+		"nota": "Apa dizolvă mai multe substanțe decât orice alt lichid obișnuit, datorită moleculei ei polare. Grăsimile și uleiurile sunt printre puținele care îi rezistă."
+	},
+	{
+		"id": "mana:2537",
+		"nota": "Săpunul, soda caustică și bicarbonatul sunt baze. Un acid și o bază se neutralizează, dând o sare și apă."
+	},
+	{
+		"id": "mana:2538",
+		"nota": "Becul Bunsen, cel mai cunoscut, amestecă gazul cu o cantitate reglabilă de aer, ca să dea o flacără fierbinte și fără funingine. Poartă numele chimistului german Robert Bunsen."
+	},
+	{
+		"id": "mana:2539",
+		"nota": "La electroliză, curentul forțează o reacție care n-ar avea loc singură. Aluminiul se obține industrial tot prin electroliză, cu un consum uriaș de electricitate."
+	},
+	{
+		"id": "mana:2540",
+		"nota": "În cramele cu must care fierbe, gazul se adună la podea și poate fi periculos. Șampania își păstrează o parte din el în sticlă, prin a doua fermentație."
+	},
+	{
+		"id": "mana:2541",
+		"nota": "Imaginea pare așezată în spatele oglinzii, la aceeași distanță la care stai tu în fața ei. Nu poate fi prinsă pe un ecran, de aceea se numește virtuală."
+	},
+	{
+		"id": "mana:2542",
+		"nota": "Eclipsele satelitului Io veneau cu întârziere când Pământul era mai departe de Jupiter. Rømer a dedus că lumina are nevoie de timp ca să străbată distanța, deci nu ajunge instantaneu."
+	},
+	{
+		"id": "mana:2543",
+		"nota": "Fermat scrisese pe marginea unei cărți, pe la 1637, că are o demonstrație care nu încape acolo. Wiles a lucrat la ea în secret șapte ani, iar prima versiune avea o greșeală, reparată un an mai târziu."
+	},
+	{
+		"id": "mana:2544",
+		"nota": "Perelman și-a pus demonstrația pe internet în 2002 și 2003, fără să o trimită la vreo revistă. A refuzat apoi și premiul de un milion de dolari al Institutului Clay."
+	},
+	{
+		"id": "mana:2545",
+		"nota": "Egalitatea e la puterea iπ, plus 1, egal 0 adună cinci dintre cele mai importante constante ale matematicii. E citată des drept cea mai frumoasă formulă scrisă vreodată."
+	},
+	{
+		"id": "mana:2546",
+		"nota": "Bernhard Riemann a formulat-o în 1859, într-un articol de doar câteva pagini despre numerele prime. E una dintre cele șapte Probleme ale Mileniului, cu un premiu de un milion de dolari."
+	},
+	{
+		"id": "mana:2547",
+		"nota": "Medalia a fost acordată prima dată în 1936. Limita de vârstă o face mai degrabă o încurajare decât o încununare a unei cariere."
+	},
+	{
+		"id": "mana:2548",
+		"nota": "Premiul poartă numele lui Niels Henrik Abel, mort la 26 de ani. Spre deosebire de Medalia Fields, nu are limită de vârstă și răsplătește de obicei o carieră întreagă."
+	},
+	{
+		"id": "mana:2549",
+		"nota": "Tetraedrul, cubul, octaedrul, dodecaedrul și icosaedrul. Platon le lega de elemente, iar Euclid a demonstrat, la finalul „Elementelor”, că nu pot exista altele."
+	},
+	{
+		"id": "mana:2550",
+		"nota": "Relația îi poartă numele lui Euler. La cub: 8 vârfuri minus 12 muchii plus 6 fețe dau 2, iar la un tetraedru: 4 − 6 + 4."
+	},
+	{
+		"id": "mana:2551",
+		"nota": "În noaptea dinaintea duelului din 1832, Galois și-a rescris în grabă rezultatele într-o scrisoare către un prieten. Ideile lui au fost înțelese abia peste câteva decenii."
+	},
+	{
+		"id": "mana:2552",
+		"nota": "Când Hardy i-a spus că taxiul cu care venise avea numărul plictisitor 1729, Ramanujan a răspuns că e cel mai mic număr care se scrie în două feluri ca sumă de două cuburi."
+	},
+	{
+		"id": "mana:2553",
+		"nota": "Întrebarea era dacă poți traversa toate cele șapte poduri o singură dată. Euler a arătat că nu, fiindcă prea multe maluri aveau un număr impar de poduri."
+	},
+	{
+		"id": "mana:2554",
+		"nota": "Teorema a fost demonstrată în 1976 de Kenneth Appel și Wolfgang Haken, cu ajutorul unui calculator care a verificat sute de configurații. A fost prima demonstrație celebră de felul ăsta."
+	},
+	{
+		"id": "mana:2555",
+		"nota": "Benoît Mandelbrot a desenat-o pe calculatoarele IBM în 1980. Oricât ai mări marginea ei, apar mereu noi detalii, inclusiv copii mici ale formei întregi."
+	},
+	{
+		"id": "mana:2556",
+		"nota": "Cantor a arătat că numerele reale nu pot fi puse în corespondență cu cele naturale, deci infinitul lor e „mai mare”. Ideea a fost primită cu ostilitate de mulți contemporani."
+	},
+	{
+		"id": "mana:2557",
+		"nota": "Corespondența a pornit de la o problemă de jocuri de noroc: cum împarți corect miza unui joc întrerupt înainte de final."
+	},
+	{
+		"id": "mana:2558",
+		"nota": "Rândurile lui dau coeficienții de la ridicarea unei sume la putere. Matematicienii chinezi și persani îl cunoșteau cu secole înainte de Pascal."
+	},
+	{
+		"id": "mana:2559",
+		"nota": "Țițeica și-a susținut doctoratul la Paris, în 1899, și a creat la București o școală de geometrie. Suprafețele care îi poartă numele au fost studiate apoi și în fizica matematică."
+	},
+	{
+		"id": "mana:2560",
+		"nota": "Moisil a lucrat la logica circuitelor și a sprijinit construirea primelor calculatoare românești, în anii ’50 și ’60. A primit postum, în 1996, premiul Computer Pioneer al IEEE."
+	},
+	{
+		"id": "mana:2561",
+		"nota": "Teorema lui Pompeiu spune că distanțele de la orice punct al planului la vârfurile unui triunghi echilateral pot forma, la rândul lor, un triunghi. Excepție fac punctele de pe cercul circumscris."
+	},
+	{
+		"id": "mana:2562",
+		"nota": "Teza lui Haret, despre stabilitatea orbitelor planetare, a fost citată de Henri Poincaré. Ca ministru, a extins rețeaua de școli de la sate și a sprijinit învățătorii."
+	},
+	{
+		"id": "mana:2563",
+		"nota": "Lalescu și-a scris teza la Paris, despre ecuația lui Volterra. Concursul național de matematică pentru studenți îi poartă numele."
+	},
+	{
+		"id": "mana:2564",
+		"nota": "Al-Khwarizmi a scris la Bagdad o carte despre calculul cu cifre indiene; traducerea ei latină îi deforma numele în „Algoritmi”. Titlul altei cărți a lui a dat cuvântul „algebră”."
+	},
+	{
+		"id": "mana:2565",
+		"nota": "Poartă numele călugărului francez Marin Mersenne, din secolul XVII. Cele mai mari numere prime găsite vreodată sunt de forma asta, fiindcă se pot verifica relativ ușor."
+	},
+	{
+		"id": "mana:2566",
+		"nota": "Christian Goldbach a propus-o într-o scrisoare către Euler, în 1742. A fost verificată pe calculator pentru numere uriașe, fără să i se fi găsit vreo excepție."
+	},
+	{
+		"id": "mana:2567",
+		"nota": "Panta graficului lui e la puterea x e egală, în fiecare punct, cu înălțimea lui. De aceea funcția apare oriunde ceva crește proporțional cu cât există deja."
+	},
+	{
+		"id": "mana:2568",
+		"nota": "Disputa dintre cei doi despre întâietate a fost una dintre cele mai aprige din istoria științei. Notațiile lui Leibniz, ca dx și semnul integralei, sunt cele folosite și azi."
+	},
+	{
+		"id": "mana:2569",
+		"nota": "Formula leagă cele două mari operații ale analizei: derivarea și integrarea sunt, în esență, inverse una alteia. În alte țări e numită teorema fundamentală a analizei."
+	},
+	{
+		"id": "mana:2570",
+		"nota": "Galileo credea că e o parabolă, dar curba e alta, descrisă de o funcție cu exponențiale. Răsturnată, dă cea mai stabilă formă pentru un arc de zidărie."
+	},
+	{
+		"id": "mana:2571",
+		"nota": "Problema „curbei celei mai rapide coborâri” a fost lansată ca provocare de Johann Bernoulli, în 1696. Newton a rezolvat-o într-o singură noapte."
+	},
+	{
+		"id": "mana:2572",
+		"nota": "O furnică ce merge pe mijlocul benzii ajunge înapoi de unde a plecat după ce a trecut pe „ambele” fețe. Simbolul reciclării e desenat ca o astfel de bandă."
+	},
+	{
+		"id": "mana:2573",
+		"nota": "Bertrand Russell l-a trimis în 1902 lui Gottlob Frege, chiar când acesta își tipărea opera de construire a matematicii din logică. Versiunea populară e cea cu bărbierul satului."
+	},
+	{
+		"id": "mana:2574",
+		"nota": "Alegerea inițială are o șansă din trei. Prezentatorul, care știe unde e premiul, deschide mereu o ușă goală, așa că restul de două treimi se mută pe ușa rămasă."
+	},
+	{
+		"id": "mana:2575",
+		"nota": "Cifra pare mică fiindcă nu contează o zi anume, ci orice pereche: la 23 de oameni sunt 253 de perechi. La 70 de oameni, șansa trece de 99,9%."
+	},
+	{
+		"id": "mana:2576",
+		"nota": "Arhimede a încadrat π între 223/71 și 22/7, înscriind și circumscriind cercului poligoane cu 96 de laturi."
+	},
+	{
+		"id": "mana:2577",
+		"nota": "Hilbert a prezentat lista la Congresul internațional de la Paris. Unele probleme au fost rezolvate de mult, altele, ca ipoteza lui Riemann, au rămas deschise."
+	},
+	{
+		"id": "mana:2578",
+		"nota": "Din teorema ei, din 1918, reiese că dacă legile fizicii nu se schimbă în timp, energia se conservă. Einstein a numit-o un geniu matematic creator."
+	},
+	{
+		"id": "mana:2579",
+		"nota": "Problema cerea un pătrat cu aceeași arie ca un cerc dat, doar cu rigla și compasul. Ferdinand von Lindemann a închis-o după mai bine de două mii de ani."
+	},
+	{
+		"id": "mana:2580",
+		"nota": "Gauss i-a dat o demonstrație în teza lui de doctorat, din 1799, deși aceasta avea o mică lacună. Din teoremă rezultă că un polinom de gradul n are exact n rădăcini complexe."
+	},
+	{
+		"id": "mana:2581",
+		"nota": "Lucrarea lui a apărut în 1832, ca anexă la un manual scris de tatăl lui, Farkas. Gauss i-a răspuns că ajunsese la aceleași idei, dar nu le publicase, ceea ce l-a amărât profund."
+	},
+	{
+		"id": "mana:2582",
+		"nota": "1 + 2 + 3 = 6. Următoarele sunt 28, 496 și 8128. Nu se știe dacă există vreun număr perfect impar."
+	},
+	{
+		"id": "mana:2583",
+		"nota": "Divizorii lui 220 mai mici decât el însumează 284, iar ai lui 284 dau 220. Pitagoreicii vedeau în această pereche un simbol al prieteniei."
+	},
+	{
+		"id": "mana:2584",
+		"nota": "Scrii numerele în ordine, apoi tai multiplii lui 2, ai lui 3, ai lui 5 și tot așa. Ce rămâne netăiat sunt numerele prime."
+	},
+	{
+		"id": "mana:2585",
+		"nota": "Shannon a arătat cum se măsoară informația în biți și cât de mult poate duce un canal cu zgomot. Toate telecomunicațiile moderne se sprijină pe articolul lui."
+	},
+	{
+		"id": "mana:2586",
+		"nota": "Erdős n-a avut casă stabilă și călătorea de la un coleg la altul cu o valiză. Numărul Erdős arată prin câți coautori te leagă de el."
+	},
+	{
+		"id": "mana:2587",
+		"nota": "Regula e atât de simplă încât o poate verifica un copil, dar nicio demonstrație generală n-a fost găsită. Paul Erdős spunea că matematica nu e încă pregătită pentru astfel de probleme."
+	},
+	{
+		"id": "mana:2588",
+		"nota": "Poartă numele matematicianului polonez Wacław Sierpiński, care l-a descris în 1915. Apare, curios, și când colorezi numerele impare din triunghiul lui Pascal."
+	},
+	{
+		"id": "mana:2589",
+		"nota": "La fiecare pas, mijlocul fiecărei laturi e înlocuit cu un vârf triunghiular. Helge von Koch a descris-o în 1904."
+	},
+	{
+		"id": "mana:2590",
+		"nota": "A fost primul număr celebru, neconstruit special pentru asta, dovedit transcendent. Lindemann a folosit ideile lui Hermite ca să demonstreze același lucru despre π."
+	},
+	{
+		"id": "mana:2591",
+		"nota": "Pornești de la o estimare, tragi tangenta, iar locul unde aceasta taie axa e o estimare mai bună. Calculatoarele scot așa rădăcini pătrate în câțiva pași."
+	},
+	{
+		"id": "mana:2592",
+		"nota": "Joseph Fourier a dezvoltat ideea în studiul căldurii, la începutul secolului XIX. Fără ea n-ar exista formatele MP3 și JPEG."
+	},
+	{
+		"id": "mana:2593",
+		"nota": "Curba apare peste tot unde un rezultat e suma multor influențe mici, independente: înălțimea oamenilor, erorile de măsurare. Era desenată pe bancnota germană de 10 mărci."
+	},
+	{
+		"id": "mana:2594",
+		"nota": "Jakob Bernoulli a demonstrat o primă formă a ei, publicată postum în 1713. Legea nu spune că un șir de pierderi „trebuie” compensat curând, ci doar că pe termen lung se diluează."
+	},
+	{
+		"id": "mana:2595",
+		"nota": "Thomas Bayes era preot presbiterian, iar lucrarea lui a fost publicată postum, în 1763. Filtrele de spam și diagnosticele medicale folosesc azi ideea lui."
+	},
+	{
+		"id": "mana:2596",
+		"nota": "Pare contraintuitiv, dar prima cifră nu e uniformă în populații, prețuri sau lungimi de râuri. Contabilii judiciari folosesc legea ca să găsească cifre inventate."
+	},
+	{
+		"id": "mana:2597",
+		"nota": "Teza lui de doctorat avea doar 28 de pagini și i-a adus, în 1994, Nobelul pentru economie. În 2015 a primit și Premiul Abel."
+	},
+	{
+		"id": "mana:2598",
+		"nota": "Așa cum cubul e o mutare a pătratului în a treia dimensiune, tesseractul e o mutare a cubului într-a patra. Are 16 vârfuri și 32 de muchii."
+	},
+	{
+		"id": "mana:2599",
+		"nota": "Napier a lucrat douăzeci de ani la tabele. Henry Briggs le-a refăcut apoi în baza 10, mai comodă pentru calcul."
+	},
+	{
+		"id": "mana:2600",
+		"nota": "Rigla de calcul transformă înmulțirea în adunarea a două lungimi. Inginerii programului Apollo o foloseau încă, la sfârșitul anilor ’60."
+	},
+	{
+		"id": "mana:2601",
+		"nota": "Hypatia preda filozofie și matematică și a comentat lucrări de astronomie și geometrie. Moartea ei a devenit un simbol al conflictului dintre fanatism și învățătură."
+	},
+	{
+		"id": "mana:2602",
+		"nota": "Formula o aflase de la Tartaglia, sub jurământ că nu o va dezvălui. Cardano a publicat-o în „Ars Magna” și s-a iscat unul dintre cele mai faimoase scandaluri ale matematicii."
+	},
+	{
+		"id": "mana:2603",
+		"nota": "Abel a tipărit demonstrația pe cheltuiala lui, în 1824, scurtată la șase pagini ca să coste mai puțin. A murit de tuberculoză la 26 de ani, în sărăcie."
+	},
+	{
+		"id": "mana:2604",
+		"nota": "Între 0,999… și 1 nu se poate strecura niciun alt număr, deci sunt egale. Un argument simplu: o treime e 0,333…, iar trei treimi fac 1."
+	},
+	{
+		"id": "mana:2605",
+		"nota": "Solomon Marcus a aplicat metode matematice la limbă, teatru și poezie. A rămas cunoscut și ca un mare popularizator al matematicii pentru elevi."
+	},
+	{
+		"id": "mana:2606",
+		"nota": "Prima ediție, la Brașov și București, a avut doar șapte țări participante, toate din Europa de Est. Azi participă peste o sută de țări."
+	},
+	{
+		"id": "mana:2607",
+		"nota": "Împreună cu Gheorghe Mihoc, a studiat lanțurile cu legături complete, o generalizare a lanțurilor lui Markov. A introdus și o măsură a informației numită energie informațională."
+	},
+	{
+		"id": "mana:2608",
+		"nota": "Din el decurge felul în care electronii se așază pe straturi în jurul nucleului, deci toată structura tabelului periodic. Fără el, materia s-ar prăbuși în ea însăși."
+	},
+	{
+		"id": "mana:2609",
+		"nota": "Schrödinger voia, în 1935, să arate cât de absurdă pare mecanica cuantică dacă o aplici la obiecte mari. Pisica e, după calcul, și vie și moartă până se deschide cutia."
+	},
+	{
+		"id": "mana:2610",
+		"nota": "Din ele, James Clerk Maxwell a calculat, în anii 1860, viteza undelor electromagnetice și a văzut că e chiar viteza luminii. Lumina s-a dovedit a fi o undă electromagnetică."
+	},
+	{
+		"id": "mana:2611",
+		"nota": "Ludwig Boltzmann a legat entropia de numărul de feluri în care pot fi așezate particulele unui sistem. Formula lui e gravată pe mormântul său din Viena."
+	},
+	{
+		"id": "mana:2612",
+		"nota": "Principiul explică de ce căldura trece singură de la cald la rece și nu invers. E și motivul pentru care timpul pare să curgă într-o singură direcție."
+	},
+	{
+		"id": "mana:2613",
+		"nota": "Sadi Carnot l-a descris în 1824, la 28 de ani. Randamentul lui depinde doar de temperaturile sursei calde și ale celei reci, nu de materialul motorului."
+	},
+	{
+		"id": "mana:2614",
+		"nota": "E numărul de particule dintr-un mol. Un mol de apă cântărește doar 18 grame, dar conține tot atâtea molecule."
+	},
+	{
+		"id": "mana:2615",
+		"nota": "Molul face legătura dintre lumea atomilor și cea a cântarului. Din 2019, e definit printr-un număr fix de particule."
+	},
+	{
+		"id": "mana:2616",
+		"nota": "Mișcarea browniană a fost explicată abia în 1905, de Einstein, prin ciocnirile cu moleculele de apă. Explicația a fost una dintre primele dovezi că atomii există cu adevărat."
+	},
+	{
+		"id": "mana:2617",
+		"nota": "Viteza luminii a ieșit aceeași în toate direcțiile, oricum s-ar fi mișcat Pământul. Rezultatul a pregătit terenul pentru teoria relativității restrânse."
+	},
+	{
+		"id": "mana:2618",
+		"nota": "Sateliții GPS trebuie să-și corecteze ceasurile atât pentru viteza lor, cât și pentru gravitația mai slabă de la înălțime. Fără corecții, pozițiile ar greși cu kilometri pe zi."
+	},
+	{
+		"id": "mana:2619",
+		"nota": "Pauli a numit-o „un remediu disperat” și se temea că nu va putea fi detectată niciodată. Neutrinul a fost găsit experimental în 1956."
+	},
+	{
+		"id": "mana:2620",
+		"nota": "Reactorul era o grămadă de blocuri de grafit și uraniu, ridicată sub tribunele unui stadion. A pornit pe 2 decembrie 1942, prima reacție în lanț controlată."
+	},
+	{
+		"id": "mana:2621",
+		"nota": "Meitner fugise din Germania nazistă, iar colaboratorul ei Otto Hahn a primit singur Nobelul pentru chimie. Elementul 109, meitneriul, îi poartă numele."
+	},
+	{
+		"id": "mana:2622",
+		"nota": "Planck a numit ideea „un act de disperare”, făcut ca să potrivească teoria cu măsurătorile radiației termice. Cu ea a început mecanica cuantică."
+	},
+	{
+		"id": "mana:2623",
+		"nota": "Protonul are doi quarci de tip „sus” și unul de tip „jos”. Quarcii nu au fost observați niciodată singuri, ci doar legați câte doi sau câte trei."
+	},
+	{
+		"id": "mana:2624",
+		"nota": "Numele vine dintr-un vers din „Finnegans Wake”: „Three quarks for Muster Mark!”. Gell-Mann a primit Nobelul pentru fizică în 1969."
+	},
+	{
+		"id": "mana:2625",
+		"nota": "Prezicerile ei se potrivesc cu experimentele la a zecea zecimală, ceea ce o face una dintre cele mai precise teorii din știință. Feynman, Schwinger și Tomonaga au împărțit Nobelul în 1965."
+	},
+	{
+		"id": "mana:2626",
+		"nota": "Atomii răciți aproape de zero absolut se comportă ca o singură „super-particulă”. A fost obținut prima dată în 1995, la Boulder, de Eric Cornell și Carl Wieman."
+	},
+	{
+		"id": "mana:2627",
+		"nota": "Fără efectul tunel, Soarele n-ar străluci: nucleele de hidrogen din centrul lui nu au destulă energie să se apropie altfel. Memoriile flash folosesc și ele fenomenul."
+	},
+	{
+		"id": "mana:2628",
+		"nota": "Supraconductorul împinge afară câmpul magnetic din interiorul lui. Walther Meissner și Robert Ochsenfeld au descoperit efectul în 1933."
+	},
+	{
+		"id": "mana:2629",
+		"nota": "Procopiu a obținut valoarea magnetonului cu doi ani înainte de Niels Bohr, care a ajuns independent la ea. A descoperit și un efect optic care îi poartă numele."
+	},
+	{
+		"id": "mana:2630",
+		"nota": "Hulubei a lucrat la Paris, cu Jean Perrin, în spectroscopia razelor X. Institutul de la Măgurele, înființat în 1949, a avut primul reactor nuclear din România, din 1957."
+	},
+	{
+		"id": "mana:2631",
+		"nota": "Din 1983, valoarea nu mai e măsurată, ci fixată prin definiție. Metrul e acum distanța parcursă de lumină în 1/299 792 458 dintr-o secundă."
+	},
+	{
+		"id": "mana:2632",
+		"nota": "Forța scade cu pătratul distanței, exact ca gravitația lui Newton, dar e de nenumărate ori mai puternică. Charles-Augustin de Coulomb a măsurat-o în 1785, cu o balanță de torsiune."
+	},
+	{
+		"id": "mana:2633",
+		"nota": "Millikan a ținut picături minuscule de ulei suspendate între două plăci încărcate. A arătat că sarcina vine mereu în multipli ai unei valori de bază."
+	},
+	{
+		"id": "mana:2634",
+		"nota": "În modelul lui Bohr, electronul emite lumină doar când sare de pe o orbită pe alta. Modelul explica liniile din spectrul hidrogenului, dar nu și pe ale atomilor mai grei."
+	},
+	{
+		"id": "mana:2635",
+		"nota": "Ideea a apărut în teza lui de doctorat și a fost confirmată experimental trei ani mai târziu. Microscopul electronic se bazează pe ea."
+	},
+	{
+		"id": "mana:2636",
+		"nota": "Lumina trecută prin două fante apropiate face pe ecran dungi alternative, luminoase și întunecate. Făcut cu electroni, experimentul arată aceleași dungi."
+	},
+	{
+		"id": "mana:2637",
+		"nota": "Becquerel a găsit că sărurile de uraniu înnegresc o placă fotografică învelită, chiar fără lumină. A împărțit Nobelul pentru fizică din 1903 cu soții Curie."
+	},
+	{
+		"id": "mana:2638",
+		"nota": "Sievertul ține cont și de tipul radiației, nu doar de energia absorbită. O radiografie pulmonară dă o doză de ordinul zecilor de microsieverți."
+	},
+	{
+		"id": "mana:2639",
+		"nota": "Ecuația lui Dirac, din 1928, avea soluții care cereau o particulă ca electronul, dar cu sarcină pozitivă. Pozitronul a fost găsit patru ani mai târziu."
+	},
+	{
+		"id": "mana:2640",
+		"nota": "Carl Anderson a văzut, într-o cameră cu ceață, urma unei particule ca electronul, dar curbată în sens opus. Tomografia PET din spitale folosește azi pozitroni."
+	},
+	{
+		"id": "mana:2641",
+		"nota": "Un magnet mic ridică un cui, învingând gravitația întregului Pământ. Gravitația domină totuși universul la scară mare, fiindcă e mereu atractivă și ajunge foarte departe."
+	},
+	{
+		"id": "mana:2642",
+		"nota": "Schwarzschild a găsit soluția ecuațiilor lui Einstein în timp ce era soldat pe frontul de est, în Primul Război Mondial. A murit în același an."
+	},
+	{
+		"id": "mana:2643",
+		"nota": "Radiația Hawking vine din efecte cuantice lângă orizontul găurii negre. Pentru găurile negre obișnuite e atât de slabă încât n-a putut fi observată."
+	},
+	{
+		"id": "mana:2644",
+		"nota": "Strângând brațele, patinatorul își aduce masa mai aproape de axă, iar viteza de rotație crește ca momentul total să rămână același. Pisicile care cad se întorc folosind aceeași lege."
+	},
+	{
+		"id": "mana:2645",
+		"nota": "În emisfera nordică mișcările sunt deviate spre dreapta, iar în cea sudică spre stânga. Efectul e prea slab ca să decidă sensul în care se scurge apa din chiuvetă."
+	},
+	{
+		"id": "mana:2646",
+		"nota": "Léon Foucault a atârnat de cupola Panteonului o bilă de 28 de kilograme, pe un fir de 67 de metri. Planul în care oscila se rotea încet, de fapt Pământul se rotea sub el."
+	},
+	{
+		"id": "mana:2647",
+		"nota": "Experimentul a permis calculul densității Pământului, de aceea a fost numit „cântărirea Pământului”. Cavendish era atât de timid încât le lăsa servitorilor bilete, ca să nu le vorbească."
+	},
+	{
+		"id": "mana:2648",
+		"nota": "Interacțiunea slabă poate transforma un neutron într-un proton, eliberând un electron și un antineutrino. Fără ea, fuziunea din Soare n-ar putea porni."
+	},
+	{
+		"id": "mana:2649",
+		"nota": "Bombardând aluminiu cu particule alfa, au obținut un izotop radioactiv al fosforului, care nu există în natură. Au primit Nobelul pentru chimie în 1935."
+	},
+	{
+		"id": "mana:2650",
+		"nota": "Edwin Hall l-a descoperit în 1879, ca student. Senzorii Hall detectează în telefoane dacă husa e închisă și, în mașini, poziția arborelui cotit."
+	},
+	{
+		"id": "mana:2651",
+		"nota": "Frații Pierre și Jacques Curie l-au descoperit în 1880, în cristale de cuarț. Ceasurile cu cuarț folosesc fenomenul invers: tensiunea face cristalul să vibreze foarte regulat."
+	},
+	{
+		"id": "mana:2652",
+		"nota": "Pe efectul Seebeck funcționează termocuplurile, care măsoară temperaturi foarte mari. Sondele Voyager își iau curentul din căldura plutoniului, tot prin el."
+	},
+	{
+		"id": "mana:2653",
+		"nota": "La valori mici, fluidul curge în straturi ordonate; peste un prag, apar vârtejuri. Fumul unei țigări urcă întâi drept, apoi se încolăcește, exact când trece pragul."
+	},
+	{
+		"id": "mana:2654",
+		"nota": "Poartă numele fizicianului austriac Ernst Mach. Avionul de linie Concorde zbura la peste Mach 2, adică mai mult decât dublul vitezei sunetului."
+	},
+	{
+		"id": "mana:2655",
+		"nota": "Legea fusese găsită deja de Ibn Sahl, la Bagdad, în secolul X. Snell a redescoperit-o în 1621, iar Descartes a publicat-o în 1637."
+	},
+	{
+		"id": "mana:2656",
+		"nota": "Din el decurg atât legea reflexiei, cât și cea a refracției. E ca un salvamar care aleargă mai mult pe plajă și înoată mai puțin, ca să ajungă cel mai repede la înecat."
+	},
+	{
+		"id": "mana:2657",
+		"nota": "E un număr pur, fără unități, deci are aceeași valoare oricum ai măsura. Fizicienii, Feynman printre ei, s-au întrebat de ce are tocmai valoarea asta."
+	},
+	{
+		"id": "mana:2658",
+		"nota": "De aceea un fier încins trece de la roșu la galben și apoi la alb. Stelele albastre sunt mai fierbinți decât cele roșii din același motiv."
+	},
+	{
+		"id": "mana:2659",
+		"nota": "Dacă temperatura absolută se dublează, radiația crește de șaisprezece ori. Așa se calculează cât de luminoasă e o stea din temperatura și raza ei."
+	},
+	{
+		"id": "mana:2660",
+		"nota": "Semnalul venea de la două găuri negre care s-au contopit acum circa 1,3 miliarde de ani. Rainer Weiss, Barry Barish și Kip Thorne au primit Nobelul pentru fizică în 2017."
+	},
+	{
+		"id": "mana:2661",
+		"nota": "Christiaan Huygens l-a propus în 1678, când mulți, Newton printre ei, credeau că lumina e făcută din particule. Principiul explică frumos refracția și difracția."
+	},
+	{
+		"id": "mana:2662",
+		"nota": "Lumina reflectată de o suprafață orizontală vibrează mai ales într-un singur plan. Lentilele polarizante lasă să treacă doar planul celălalt, așa că strălucirea dispare."
+	},
+	{
+		"id": "mana:2663",
+		"nota": "Arthur Compton a observat în 1923 că razele X împrăștiate de electroni ies cu lungime de undă mai mare. A fost una dintre dovezile decisive că lumina e făcută și din fotoni."
+	},
+	{
+		"id": "mana:2664",
+		"nota": "Pieter Zeeman l-a observat în 1896 și a primit pentru el Nobelul pentru fizică, în 1902, împreună cu Hendrik Lorentz. Astronomii măsoară așa câmpurile magnetice ale petelor solare."
+	},
+	{
+		"id": "mana:2665",
+		"nota": "Nimic nu întrece lumina în vid, dar în apă lumina merge cu doar trei sferturi din viteza ei. Bazinele reactoarelor nucleare strălucesc albastru tocmai din acest motiv."
+	},
+	{
+		"id": "mana:2666",
+		"nota": "Gustav Kirchhoff le-a formulat în 1845, încă student. Prima spune că tot curentul care intră într-un nod trebuie să și iasă, iar a doua e o formă a conservării energiei."
+	},
+	{
+		"id": "mana:2667",
+		"nota": "Până atunci se credea că substanțele organismelor vii nu pot fi făcute decât de o „forță vitală”. Wöhler i-a scris colegului său Berzelius că a obținut uree fără să aibă nevoie de rinichi."
+	},
+	{
+		"id": "mana:2668",
+		"nota": "Povestea visului a spus-o chiar Kekulé, la o aniversare din 1890, la 25 de ani după publicarea structurii. Istoricii nu știu cât e amintire și cât e anecdotă."
+	},
+	{
+		"id": "mana:2669",
+		"nota": "Nenițescu a condus zeci de ani catedra de chimie organică de la Politehnica din București. O reacție de sinteză a indolilor îi poartă numele."
+	},
+	{
+		"id": "mana:2670",
+		"nota": "Procedeul Edeleanu, brevetat în 1908, scotea din petrol hidrocarburile care ard cu fum. Tot el obținuse, ca student la Berlin, în 1887, prima sinteză a amfetaminei."
+	},
+	{
+		"id": "mana:2671",
+		"nota": "Becul Teclu, prezentat în 1892, reglează separat gazul și aerul, așa că dă o flacără mai fierbinte decât becul Bunsen. Teclu a predat aproape toată viața la Viena."
+	},
+	{
+		"id": "mana:2672",
+		"nota": "Dalton a propus că fiecare element are atomi de un singur fel, cu masă proprie. A descris și propria lui incapacitate de a distinge culorile, de unde vine cuvântul „daltonism”."
+	},
+	{
+		"id": "mana:2673",
+		"nota": "Îngrășămintele făcute cu el hrănesc, după estimări, aproape jumătate din omenire. Același Fritz Haber a condus și programul german de arme chimice din Primul Război Mondial."
+	},
+	{
+		"id": "mana:2674",
+		"nota": "L-a descoperit Franz-Joseph Müller von Reichenstein, inspector al minelor. Numele, dat mai târziu de Martin Klaproth, vine din latinescul „tellus”, pământ."
+	},
+	{
+		"id": "mana:2675",
+		"nota": "Elementul 101 a fost obținut în 1955, în Statele Unite, în plin Război Rece; numele rus a fost un gest remarcat. S-au produs vreodată doar cantități infime din el."
+	},
+	{
+		"id": "mana:2676",
+		"nota": "Soții Curie l-au descoperit în 1898 și i-au dat numele Poloniei, pe atunci împărțită între imperii vecine. A fost primul element numit cu un scop politic."
+	},
+	{
+		"id": "mana:2677",
+		"nota": "Fluorul trage electronii spre el mai puternic decât orice alt atom și reacționează cu aproape orice. Izolarea lui, în 1886, i-a adus lui Henri Moissan Nobelul pentru chimie."
+	},
+	{
+		"id": "mana:2678",
+		"nota": "Wolframul se topește abia pe la 3400 de grade Celsius. Numele vine din germană și înseamnă cam „spumă de lup”, de la felul în care minereul lui strica topirea cositorului."
+	},
+	{
+		"id": "mana:2679",
+		"nota": "Un litru de osmiu ar cântări peste 22 de kilograme, cam de două ori cât unul de plumb. Iridiul e foarte aproape, iar ordinea dintre ei a fost discutată multă vreme."
+	},
+	{
+		"id": "mana:2680",
+		"nota": "Deuteriul are un neutron în plus, așa că apa grea e cu circa 11% mai densă. România a produs-o la Drobeta-Turnu Severin, pentru reactoarele de tip CANDU."
+	},
+	{
+		"id": "mana:2681",
+		"nota": "Tritiul e radioactiv, cu un timp de înjumătățire de vreo 12 ani. Se folosește la unele ceasuri și semne de ieșire care luminează în întuneric fără curent."
+	},
+	{
+		"id": "mana:2682",
+		"nota": "Sørensen lucra la laboratorul fabricii de bere Carlsberg, unde aciditatea conta la fermentație. Nu se știe sigur de la ce vine „p”-ul din pH."
+	},
+	{
+		"id": "mana:2683",
+		"nota": "A fost descoperită în 1985 și numită după arhitectul Buckminster Fuller, care construia cupole din același tipar de pentagoane și hexagoane. A adus un Nobel pentru chimie în 1996."
+	},
+	{
+		"id": "mana:2684",
+		"nota": "Apa regală e un amestec de acid azotic și acid clorhidric. În 1940, chimistul George de Hevesy a dizolvat în ea medaliile Nobel ale doi colegi, ca naziștii să nu le găsească."
+	},
+	{
+		"id": "mana:2685",
+		"nota": "Enantiomerii au aceleași proprietăți fizice, dar corpul îi poate trata foarte diferit. De aceea multe medicamente se fabrică doar în forma „stângă” sau doar în cea „dreaptă”."
+	},
+	{
+		"id": "mana:2686",
+		"nota": "Pasteur le-a separat de mână, cu o pensetă și o lupă. Abia apoi a ajuns la microbiologie, la vaccinuri și la procedeul care îi poartă numele."
+	},
+	{
+		"id": "mana:2687",
+		"nota": "Primele produse de nailon vândute au fost periuțele de dinți, apoi ciorapii de damă, în 1940. În război, întreaga producție a mers la parașute."
+	},
+	{
+		"id": "mana:2688",
+		"nota": "Roy Plunkett a găsit o butelie de gaz care, deși plină, nu mai scotea nimic: gazul se transformase într-o pulbere albă și alunecoasă. Teflonul acoperă azi tigăile."
+	},
+	{
+		"id": "mana:2689",
+		"nota": "Lantanidele fac parte din „pământurile rare”, deși unele nu sunt deloc rare. Neodimul din ele face magneții puternici din căști și din motoarele electrice."
+	},
+	{
+		"id": "mana:2690",
+		"nota": "Ca să obțină o zecime de gram de clorură de radiu, Marie Curie a prelucrat tone de minereu. Radiul strălucește slab în întuneric și a fost folosit, cu urmări tragice, la cadranele ceasurilor."
+	},
+	{
+		"id": "mana:2691",
+		"nota": "TNT-ul e surprinzător de stabil: se poate topi și turna în forme fără să explodeze. Energia bombelor atomice se măsoară în echivalent de tone de TNT."
+	},
+	{
+		"id": "mana:2692",
+		"nota": "Legea spune că un compus pur conține mereu aceleași elemente în aceleași proporții de masă. Berthollet a contestat-o ani de zile, iar disputa dintre ei a rămas celebră."
+	},
+	{
+		"id": "mana:2693",
+		"nota": "Regula explică de ce sodiul cedează ușor un electron, iar clorul primește unul. Are multe excepții, mai ales la elementele mai grele."
+	},
+	{
+		"id": "mana:2694",
+		"nota": "Johannes Brønsted și Thomas Lowry au propus-o independent, în același an, 1923. Teoria lui Lewis, una dintre variante, e și mai generală: vorbește de perechi de electroni."
+	},
+	{
+		"id": "mana:2695",
+		"nota": "Dacă mărești presiunea, echilibrul se mută spre partea cu mai puține molecule de gaz. Procedeul Haber–Bosch folosește presiuni mari tocmai din acest motiv."
+	},
+	{
+		"id": "mana:2696",
+		"nota": "Ipoteza lui, din 1811, a fost ignorată aproape cincizeci de ani. Stanislao Cannizzaro a readus-o în atenție la un congres din 1860 și a lămurit astfel masele atomice."
+	},
+	{
+		"id": "mana:2697",
+		"nota": "Mendeleev îi lăsase un loc gol în tabel, sub mangan. Numele vine din grecescul „technetos”, artificial; azi e folosit zilnic în medicina nucleară, la scintigrafii."
+	},
+	{
+		"id": "mana:2698",
+		"nota": "Perkin încerca să facă chinină, leacul malariei, și a obținut în schimb mauveina. Colorantul a devenit la modă după ce l-a purtat regina Victoria."
+	},
+	{
+		"id": "mana:2699",
+		"nota": "Fără vulcanizare, cauciucul se lipea vara și crăpa iarna. Goodyear a murit plin de datorii; compania de anvelope a fost doar numită în cinstea lui, după moartea sa."
+	},
+	{
+		"id": "mana:2700",
+		"nota": "Hodgkin a folosit difracția razelor X pe cristale. A descifrat și structura insulinei, după 35 de ani de muncă la ea."
+	},
+	{
+		"id": "mana:2701",
+		"nota": "Lutetia era numele orașului galo-roman. Galiul, una dintre variante, e numit după Galia, adică Franța, deși unii au bănuit că descoperitorul s-a gândit și la numele lui."
+	},
+	{
+		"id": "mana:2702",
+		"nota": "Din minereurile unei cariere de lângă Ytterby au fost scoase elemente numite ytriu, yterbiu, terbiu și erbiu. Holmiul și tuliul au fost găsite și ele în minerale din aceeași carieră."
+	},
+	{
+		"id": "mana:2703",
+		"nota": "Undele P sunt unde de compresie și merg prin solide, lichide și gaze. Undele S nu trec prin lichide, iar asta a arătat că nucleul exterior al Pământului e lichid."
+	},
+	{
+		"id": "mana:2704",
+		"nota": "Seismologul croat Andrija Mohorovičić a observat-o în 1909, după un cutremur din Croația: undele își schimbau brusc viteza la o anumită adâncime."
+	},
+	{
+		"id": "mana:2705",
+		"nota": "Curenții de fier topit din nucleul extern produc câmpul magnetic al Pământului. Nucleul intern e tot din fier, dar rămâne solid, fiindcă presiunea e enormă."
+	},
+	{
+		"id": "mana:2706",
+		"nota": "Feldspații fac cam jumătate din scoarță. Prin alterare se transformă în argilă, de aceea sunt materia primă a ceramicii și a porțelanului."
+	},
+	{
+		"id": "mana:2707",
+		"nota": "Cutremurele de Vrancea se produc într-o bucată de placă scufundată aproape vertical sub curbura Carpaților. Fiind adânci, se simt pe o suprafață foarte mare, până la Moscova sau Istanbul."
+	},
+	{
+		"id": "mana:2708",
+		"nota": "Uraniul-238 se transformă în plumb în miliarde de ani, așa că metoda merge pentru cele mai vechi roci. Cu ea s-a aflat că Pământul are circa 4,5 miliarde de ani."
+	},
+	{
+		"id": "mana:2709",
+		"nota": "Măsurătorile lui au dat 4,55 miliarde de ani. Lucrând la ele, Patterson a descoperit cât de mult plumb ajunsese peste tot din benzină și a luptat ani de zile pentru interzicerea lui."
+	},
+	{
+		"id": "mana:2710",
+		"nota": "În 1843, în timp ce se plimba cu soția, Hamilton a găsit formula și a scrijelit-o cu briceagul pe Podul Broom. Cuaternionii rotesc azi obiectele 3D în jocurile video."
+	},
+	{
+		"id": "mana:2711",
+		"nota": "Boole a publicat „Legile gândirii” în 1854. Peste opt decenii, Claude Shannon a arătat că algebra lui descrie perfect circuitele cu întrerupătoare."
+	},
+	{
+		"id": "mana:2712",
+		"nota": "Thomson a fost înnobilat pentru munca la primul cablu telegrafic transatlantic și a devenit mai târziu baron Kelvin, după râul care trece pe lângă universitatea din Glasgow."
+	},
+	{
+		"id": "mana:2713",
+		"nota": "Rayleigh observase că azotul scos din aer e puțin mai greu decât cel obținut chimic. Diferența venea de la un gaz necunoscut, numit „cel leneș”, fiindcă nu reacționa."
+	},
+	{
+		"id": "mana:2714",
+		"nota": "Creșterea depinde doar de câte particule sunt dizolvate, nu de natura lor. Efectul invers, coborârea punctului de îngheț, se numește crioscopie."
+	},
+	{
+		"id": "mana:2715",
+		"nota": "Osmoza umflă o stafidă pusă în apă și deshidratează un castravete pus în saramură. Desalinizarea prin osmoză inversă forțează apa să treacă în sens opus."
+	},
+	{
+		"id": "mana:2716",
+		"nota": "Sifonul și berea țin dioxidul de carbon dizolvat sub presiune. La scafandri, aceeași lege explică boala de decompresie, când azotul iese brusc din sânge."
+	},
+	{
+		"id": "mana:2717",
+		"nota": "Clemens Winkler l-a găsit într-un mineral din Saxonia și i-a dat numele țării lui. Germaniul a fost materialul primelor tranzistoare, înainte de siliciu."
+	},
+	{
+		"id": "mana:2718",
+		"nota": "32 768 e 2 la puterea a cincisprezecea, așa că un circuit simplu, care împarte de 15 ori la 2, obține exact o bătaie pe secundă."
+	},
+	{
+		"id": "mana:2719",
+		"nota": "Pe efectul Peltier funcționează frigiderele mici de mașină și răcitoarele unor procesoare. N-au piese în mișcare, dar sunt mai puțin eficiente decât compresoarele."
+	},
+	{
+		"id": "mana:2720",
+		"nota": "Aluminiul e atât de legat chimic în roci încât a fost multă vreme mai scump decât aurul. Napoleon al III-lea își servea oaspeții de seamă în tacâmuri de aluminiu."
+	},
+	{
+		"id": "mana:2721",
+		"nota": "Gay-Lussac a urcat în 1804 cu balonul la peste 7000 de metri, ca să ia probe de aer. A arătat că, de exemplu, doi litri de hidrogen se combină cu exact unul de oxigen."
+	},
+	{
+		"id": "mana:2722",
+		"nota": "Nucleul e un aliaj de fier cu nichel și mici cantități de elemente mai ușoare. Meteoriții metalici, rămășițe ale unor corpuri distruse, au o compoziție asemănătoare."
+	},
+	{
+		"id": "mana:2723",
+		"nota": "Svante Arrhenius a propus în teza lui, din 1884, că sărurile se desfac în apă în ioni. Comisia abia i-a acceptat teza, iar în 1903 a primit pentru ea Nobelul pentru chimie."
+	},
+	{
+		"id": "mana:2724",
+		"nota": "Arrhenius a făcut calculele de mână, luni de zile, și a obținut câteva grade de încălzire. Cifra lui e surprinzător de aproape de estimările moderne."
+	},
+	{
+		"id": "mana:2725",
+		"nota": "Înainte de Berzelius, alchimiștii și chimiștii foloseau semne desenate, ca pentru planete. Sistemul lui, din 1813, e motivul pentru care sodiul e Na, de la „natrium”."
+	},
+	{
+		"id": "mana:2726",
+		"nota": "Teoria explica bine multe observații, dar nu și faptul că metalele cântăresc mai mult după ardere. Lavoisier a înlocuit-o cu explicația prin oxigen."
+	},
+	{
+		"id": "mana:2727",
+		"nota": "Halitul e sarea gemă. În salinele de la Praid sau de la Slănic, straturile au grosimi de sute de metri, rămase din mări evaporate acum milioane de ani."
+	},
+	{
+		"id": "mana:2728",
+		"nota": "E cea mai slab cunoscută dintre constantele fundamentale: măsurătorile diferitelor laboratoare nu se potrivesc decât la a treia sau a patra zecimală."
+	},
+	{
+		"id": "mana:2729",
+		"nota": "Primul laser a funcționat abia în 1960, construit de Theodore Maiman cu un cristal de rubin. Numele e un acronim englezesc pentru amplificarea luminii prin emisie stimulată."
+	},
+	{
+		"id": "mana:2730",
+		"nota": "La punctul triplu, gheața, apa lichidă și vaporii coexistă în echilibru. Până în 2019 a servit la definirea kelvinului, iar presiunea lui e de doar 611 pascali."
+	},
+	{
+		"id": "mana:2731",
+		"nota": "Sub 4 grade, apa se dilată din nou. De aceea lacurile îngheață de sus în jos, iar apa de pe fundul lor rămâne, iarna, la vreo 4 grade, unde peștii supraviețuiesc."
+	},
+	{
+		"id": "mana:2732",
+		"nota": "Black a observat, pe la 1754, că gazul e mai greu decât aerul și stinge flacăra. Tot el a descoperit căldura latentă, absorbită la topire fără ca temperatura să crească."
+	},
+	{
+		"id": "mana:2733",
+		"nota": "Scheele obținuse oxigenul pe la 1772, dar cartea lui a apărut abia în 1777, după ce Priestley își publicase descoperirea. A găsit și clorul, și mai mulți acizi organici."
+	},
+	{
+		"id": "mana:2734",
+		"nota": "Cavendish a arătat că gazul arde și formează apă. Numele de hidrogen, adică „care face apă”, i l-a dat mai târziu Lavoisier."
+	},
+	{
+		"id": "mana:2735",
+		"nota": "Charles Martin Hall și Paul Héroult aveau 22 și 23 de ani și s-au născut și au murit în aceiași ani, 1863 și 1914. Procedeul lor a făcut din aluminiu un metal ieftin."
+	},
+	{
+		"id": "mana:2736",
+		"nota": "Din 2019, constanta lui Boltzmann are o valoare fixată exact, iar kelvinul e definit pornind de la ea. Boltzmann a fost unul dintre cei mai aprigi apărători ai existenței atomilor."
+	},
+	{
+		"id": "mana:2737",
+		"nota": "Viteza de difuzie e invers proporțională cu rădăcina pătrată a masei molare. Proiectul Manhattan a folosit-o ca să separe izotopii uraniului, sub formă de gaz."
+	},
+	{
+		"id": "mana:2738",
+		"nota": "Fiecare gaz din amestec se poartă ca și cum ar fi singur în vas. Scafandrii o folosesc ca să calculeze cât oxigen respiră la adâncime."
+	},
+	{
+		"id": "mana:2739",
+		"nota": "François-Marie Raoult a formulat-o în anii 1880. Din ea decurg și creșterea punctului de fierbere și coborârea celui de îngheț la soluții."
+	},
+	{
+		"id": "mana:2740",
+		"nota": "Recorde a ales două linii paralele de aceeași lungime, explicând că nimic nu poate fi mai egal decât ele. Înainte, egalitatea se scria în cuvinte."
+	},
+	{
+		"id": "mana:2741",
+		"nota": "Legenda spune că oracolul din Delos a cerut dublarea altarului cubic al lui Apollo. Pierre Wantzel a demonstrat în 1837 că problema nu are soluție cu aceste unelte."
+	},
+	{
+		"id": "mana:2742",
+		"nota": "Euler își dicta calculele, făcute în minte, unui secretar. Lucrările lui adunate au peste 80 de volume, iar multe notații de azi, ca f(x) sau i, vin de la el."
 	}
 ]
