@@ -695,25 +695,25 @@ const LATIME_ETICHETA := 230.0
 ## Cifrele din antet: crem pe pielea plăcuței; PV-ul se înroșește sub o treime.
 const CULOARE_CIFRE := Color(0.96, 0.90, 0.76)
 const CULOARE_PV_PUTIN := Color(1.00, 0.52, 0.45)
-## Culoarea unei unelte fără fișă (o disciplină dintr-un save vechi).
-const CULOARE_UNEALTA := Color(0.80, 0.71, 0.55)
-## Fontul etichetelor de unealtă — același Alegreya ca în Practice.
-const FONT_UNELTE := preload("res://assets/fonturi/Alegreya.ttf")
 
-## Plăcuța de stare din dreapta-sus: trei cifre cu iconița lor, pe un rând. Uneltele stau
-## în piciorul hărții, ca etichete colorate. Vezi `_actualizeaza_antet`.
+## Plăcuța de stare din dreapta-sus: trei cifre cu iconița lor, pe un rând.
+## Vezi `_actualizeaza_antet`.
 @onready var eticheta_pv: Label = %PV
 @onready var eticheta_monede: Label = %Monede
 @onready var eticheta_fragmente: Label = %Fragmente
-@onready var rand_unelte: HBoxContainer = %Unelte
 @onready var placuta: PanelContainer = $Margini/Coloana/Antet/Placuta
-@onready var eticheta_samanta: Label = %Samanta
-@onready var eticheta_picior: Label = %Picior
 @onready var pergament: TextureRect = $Pergament
 @onready var panza: Control = %Panza
-## Ieșirea spre meniu din MIJLOCUL expediției, în antet. Se vede doar pe hartă:
+## Ieșirea spre meniu din MIJLOCUL expediției, sub hartă. Se vede doar pe hartă:
 ## loadout-ul și sumarul își au butonul lor, în panou.
 @onready var buton_harta_meniu: Button = %HartaMeniu
+## Cartea pictată în colț, făcută apăsabilă (`carte_harta.gd`), și panoul pe
+## care-l deschide: uneltele cu care ai plecat și ce întrebări pun.
+@onready var carte: Control = %Carte
+@onready var panou_carte: Control = %PanouCarte
+@onready var carte_subtitlu: Label = %CarteSubtitlu
+@onready var carte_lista: VBoxContainer = %CarteLista
+@onready var buton_carte: Button = %CarteButon
 
 @onready var panou_loadout: Control = %PanouLoadout
 @onready var loadout_subtitlu: Label = %LoadoutSubtitlu
@@ -811,6 +811,10 @@ func _ready() -> void:
 	buton_sumar_meniu.pressed.connect(_pe_meniu)
 	buton_harta_meniu.pressed.connect(_pe_meniu)
 	buton_harta_meniu.visible = false
+	carte.visible = false
+	carte.apasata.connect(_arata_cartea)
+	buton_carte.pressed.connect(_inchide_cartea)
+	%CarteVoal.gui_input.connect(_pe_voal_carte)
 	buton_mesaj.pressed.connect(_pe_mesaj_inchis)
 	buton_magazin.pressed.connect(_pe_magazin_inchis)
 	# Fereastra redimensionată ⇒ nodurile trebuie reașezate. Semnalul vine de
@@ -822,6 +826,7 @@ func _ready() -> void:
 	panou_sumar.visible = false
 	panou_mesaj.visible = false
 	panou_magazin.visible = false
+	panou_carte.visible = false
 
 	# `_process` stă oprit cât nu se zguduie nimic: o hartă liniștită n-are de
 	# ce să consume un cadru. `_zguduie()` îl pornește, el se oprește singur.
@@ -890,12 +895,10 @@ func _arata_loadout() -> void:
 	alese.clear()
 	panou_loadout.visible = true
 	buton_harta_meniu.visible = false
+	carte.visible = false
 	# Fără expediție nu e nimic de numărat: plăcuța dispare cu totul, nu
 	# rămâne cu niște zerouri care ar arăta ca o expediție goală.
 	placuta.visible = false
-	rand_unelte.visible = false
-	eticheta_samanta.text = ""
-	eticheta_picior.text = ""
 	_goleste_panza()
 	var fara_muchii: Array[Dictionary] = []
 	panza.arata(fara_muchii)
@@ -990,11 +993,12 @@ func _arata_harta() -> void:
 	panou_loadout.visible = false
 	panou_sumar.visible = false
 	buton_harta_meniu.visible = true
+	carte.visible = true
 	_construieste_harta()
 	_actualizeaza_antet()
 
 
-## Antetul: cât PV ai, ce ai adunat, cu ce lupți, din ce sămânță.
+## Antetul: cât PV ai și ce ai adunat.
 ##
 ## Nu mai are titlu. Până pe 26 octombrie 2026 scria „EXPEDITIE — nodul 2,
 ## Bossul la cel putin 6 pasi”: textul lung era primul lucru citit pe ecran și
@@ -1007,15 +1011,15 @@ func _arata_harta() -> void:
 ## cifră), nu pe cifră: iconița e lucrul pe care-l întrebi „ce-i asta?”, iar
 ## copiii lasă mouse-ul să treacă spre grup. Plăcuța le adună într-un singur
 ## obiect; direct pe pergament, cifrele stăteau peste marginea ruptă a hârtiei.
-## Uneltele — care nu se schimbă pe drum — stau în piciorul hărții, ca plăcuța
-## să rămână de un rând (cu ele dedesubt lua un colț din hartă).
 ##
-## Sămânța stă la vedere DINADINS — un bug raportat ca „se blochează la nodul
-## 6" nu se poate reproduce dacă numărul ăla e ascuns în cod. Dar e un număr
-## pentru mine, nu pentru joc, deci stă mic, în colțul de jos.
+## Piciorul hărții e doar butonul „Meniu”. Pe 26 octombrie 2026 au ieșit de
+## acolo uneltele din loadout (le-ai ales chiar tu, nu se schimbă pe drum),
+## sămânța (rămâne în sumar, unde e utilă la un bug raportat) și rândul „Treci
+## peste un semn…”, care explica un gest pe care-l descoperi singur. Tot atunci
+## a ieșit și „X te asteapta. Apasa pe piesa…”, la cerere: nodul care te
+## așteaptă se vede pe hartă (piesa stă pe el, e singurul apăsabil).
 func _actualizeaza_antet() -> void:
 	placuta.visible = true
-	rand_unelte.visible = true
 	eticheta_pv.text = "%d / %d" % [Expeditie.pv, Expeditie.pv_max]
 	# Sub o treime, cifra se înroșește: e singurul semn de pe hartă care îți
 	# spune că o Odihnă ar fi mai înțeleaptă decât încă o luptă.
@@ -1027,54 +1031,6 @@ func _actualizeaza_antet() -> void:
 	# Un jucător care nu le vede crescând n-o să caute niciodată un Magazin.
 	eticheta_monede.text = str(Expeditie.monede)
 	eticheta_fragmente.text = str(Tezaur.cat(Tezaur.Resursa.FRAGMENTE))
-	eticheta_samanta.text = "samanta %d" % Expeditie.samanta
-
-	for copil in rand_unelte.get_children():
-		copil.queue_free()
-	for cheie in Expeditie.loadout:
-		rand_unelte.add_child(_eticheta_unealta(cheie))
-
-	# Acum că numele nodurilor apar doar la survolare, piciorul e locul în care
-	# scrie CUM se citește harta. Un semn pe care nu știi să-l interoghezi e un
-	# semn degeaba.
-	#
-	# Cu un nod care te așteaptă (vezi `_optiuni`), harta are drumurile stinse
-	# și o singură mișcare posibilă. Fără rândul ăsta, o hartă pe care nu se
-	# aprinde nimic arată ca o hartă blocată.
-	if Expeditie.nod_nerezolvat >= 0:
-		var fisa := Expeditie.date_nod(int(Expeditie.nod_curent().get("tip", Expeditie.Nod.LUPTA)))
-		eticheta_picior.text = "%s te asteapta. Apasa pe piesa ca sa intri din nou." % String(fisa["nume"])
-	else:
-		eticheta_picior.text = "Treci peste un semn ca sa vezi ce te asteapta. Drumul nu se poate reface."
-
-
-## O unealtă din loadout, ca o etichetă mică în culoarea disciplinei — aceeași
-## culoare pe care o are Obeliscul ei în luptă, deci se recunosc între ele.
-func _eticheta_unealta(cheie: String) -> PanelContainer:
-	var fisa := Discipline.dupa_cheie(cheie)
-	var culoare: Color = fisa.get("culoare", CULOARE_UNEALTA)
-
-	var stil := StyleBoxFlat.new()
-	stil.bg_color = Color(culoare, 0.14)
-	stil.border_color = Color(culoare, 0.55)
-	stil.set_border_width_all(1)
-	stil.set_corner_radius_all(9)
-	stil.content_margin_left = 9
-	stil.content_margin_right = 9
-	stil.content_margin_top = 1
-	stil.content_margin_bottom = 2
-
-	var eticheta := Label.new()
-	eticheta.text = Discipline.nume(cheie)
-	eticheta.add_theme_font_override("font", FONT_UNELTE)
-	eticheta.add_theme_font_size_override("font_size", 13)
-	eticheta.add_theme_color_override("font_color", culoare)
-
-	var panou := PanelContainer.new()
-	panou.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	panou.add_theme_stylebox_override("panel", stil)
-	panou.add_child(eticheta)
-	return panou
 
 
 ## Șterge tot ce e desenat pe pânză: simbolurile și eticheta lor.
@@ -3008,6 +2964,7 @@ func _deschide_lacatul() -> void:
 	# deci o ieșire de aici ar pierde cufărul. Butonul revine cu harta
 	# (`_arata_harta`), după verdict.
 	buton_harta_meniu.visible = false
+	carte.visible = false
 
 	# TASTATURA. Lacătul citește săgețile și cifrele din `_unhandled_input()`,
 	# adică din evenimentele pe care nu le-a luat NIMENI înainte. Dacă un buton
@@ -3174,6 +3131,108 @@ func _pe_mesaj_inchis() -> void:
 
 
 # ─────────────────────────────────────────────────────────────
+# CARTEA: „CRONICILE"
+# ─────────────────────────────────────────────────────────────
+
+## Uneltele cu care ai plecat, fiecare cu ce întrebări pune.
+##
+## Pe hartă nu se mai văd uneltele (au ieșit din piciorul hărții pe 26
+## octombrie 2026): le-ai ales chiar tu, iar pe drum nu se schimbă. Dar „ce
+## întrebări pune Logica?” e o întrebare legitimă la mijlocul unei expediții,
+## mai ales cu opt discipline — și răspunsul stă în carte, la un clic.
+##
+## Totul vine din `Discipline.CATALOG` („rol”, „sarcini”, „culoare”,
+## „imagine”), deci a patra disciplină apare aici fără nicio linie schimbată.
+## Nivelul de dificultate se citește din regulile luptei, nu se scrie de mână.
+func _arata_cartea() -> void:
+	# Cât sare piesa, harta nu primește comenzi — vezi `_sare`.
+	if _sare:
+		return
+	var reguli: Dictionary = load("res://scenes/lupta/lupta.gd").get_script_constant_map()
+	var romane := ["I", "II", "III", "IV", "V"]
+	carte_subtitlu.text = "Le-ai ales la plecare si raman fixe pe toata expeditia. Intr-un lant, intrebarile urca un nivel la fiecare %d raspunsuri bune, pana la nivelul %s." % [
+		int(reguli["TREPTE_PE_NIVEL"]),
+		romane[clampi(int(reguli["NIVEL_MAX"]), 1, romane.size()) - 1],
+	]
+	for copil in carte_lista.get_children():
+		carte_lista.remove_child(copil)
+		copil.queue_free()
+	for cheie in Expeditie.loadout:
+		var fisa := Discipline.dupa_cheie(cheie)
+		if fisa.is_empty():
+			continue
+		carte_lista.add_child(_fila_cartii(fisa))
+	panou_carte.visible = true
+	buton_carte.grab_focus()
+	# Voalul acoperă cartea, deci mouse-ul „pleacă” de pe ea chiar acum. Fără
+	# asta, cartea ar coborî exact când se deschide.
+	carte.tine_ridicata(true)
+
+
+## O filă din carte: piesa disciplinei, numele în culoarea ei, rolul și felurile
+## de întrebări, câte un rând.
+func _fila_cartii(fisa: Dictionary) -> Control:
+	var culoare: Color = fisa["culoare"]
+	var rand := HBoxContainer.new()
+	rand.add_theme_constant_override("separation", 14)
+
+	var piesa := TextureRect.new()
+	piesa.custom_minimum_size = Vector2(44, 44)
+	piesa.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	piesa.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	piesa.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
+	piesa.modulate = culoare
+	var cale := String(fisa.get("imagine", ""))
+	if cale != "" and ResourceLoader.exists(cale):
+		piesa.texture = load(cale)
+	rand.add_child(piesa)
+
+	var text := VBoxContainer.new()
+	text.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	text.add_theme_constant_override("separation", 3)
+	rand.add_child(text)
+
+	var nume := Label.new()
+	nume.text = String(fisa["nume"]).to_upper()
+	nume.add_theme_font_size_override("font_size", 17)
+	nume.add_theme_color_override("font_color", culoare)
+	text.add_child(nume)
+
+	var rol := Label.new()
+	rol.text = String(fisa["rol"])
+	rol.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	rol.add_theme_font_size_override("font_size", 14)
+	rol.add_theme_color_override("font_color", CULOARE_CIFRE)
+	text.add_child(rol)
+
+	for sarcina in fisa.get("sarcini", []):
+		var linie := Label.new()
+		linie.text = "•  %s" % String(sarcina)
+		linie.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		linie.add_theme_font_size_override("font_size", 13)
+		linie.add_theme_color_override("font_color", Color(0.8, 0.71, 0.55))
+		text.add_child(linie)
+	return rand
+
+
+func _inchide_cartea() -> void:
+	panou_carte.visible = false
+	carte.tine_ridicata(false)
+
+
+## Un clic pe voalul din jurul paginii închide cartea, ca Esc.
+func _pe_voal_carte(eveniment: InputEvent) -> void:
+	if eveniment is InputEventMouseButton and eveniment.pressed:
+		_inchide_cartea()
+
+
+func _unhandled_input(eveniment: InputEvent) -> void:
+	if panou_carte.visible and eveniment.is_action_pressed("ui_cancel"):
+		_inchide_cartea()
+		get_viewport().set_input_as_handled()
+
+
+# ─────────────────────────────────────────────────────────────
 # ECRANUL 3: SUMARUL
 # ─────────────────────────────────────────────────────────────
 
@@ -3184,6 +3243,7 @@ func _arata_sumar() -> void:
 	panou_mesaj.visible = false
 	panou_sumar.visible = true
 	buton_harta_meniu.visible = false
+	carte.visible = false
 	_actualizeaza_antet()
 	_construieste_harta()   # harta rămâne dedesubt: vezi drumul pe care l-ai mers
 

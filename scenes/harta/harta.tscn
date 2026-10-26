@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=3]
+[gd_scene load_steps=13 format=3]
 
 [ext_resource type="Script" path="res://scenes/harta/harta.gd" id="1_harta"]
 [ext_resource type="Script" path="res://scenes/harta/panza.gd" id="2_panza"]
 [ext_resource type="Texture2D" path="res://assets/art/campaign_map.jpg" id="3_pergament"]
 [ext_resource type="Script" path="res://scenes/harta/iconita_resursa.gd" id="4_iconita"]
 [ext_resource type="FontFile" path="res://assets/fonturi/Cinzel.ttf" id="5_cinzel"]
+[ext_resource type="Script" path="res://scenes/harta/carte_harta.gd" id="6_carte"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panou"]
 bg_color = Color(0.13, 0.13, 0.17, 1)
@@ -42,6 +43,40 @@ base_font = ExtResource("5_cinzel")
 variation_opentype = {
 2003265652: 700
 }
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_meniu"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_meniu_survolat"]
+content_margin_left = 14.0
+content_margin_top = 4.0
+content_margin_right = 14.0
+content_margin_bottom = 4.0
+bg_color = Color(0.17, 0.11, 0.06, 0.88)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.78, 0.62, 0.34, 0.85)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_meniu_apasat"]
+content_margin_left = 14.0
+content_margin_top = 4.0
+content_margin_right = 14.0
+content_margin_bottom = 4.0
+bg_color = Color(0.11, 0.07, 0.04, 0.92)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.78, 0.62, 0.34, 0.85)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
 
 [node name="Harta" type="Control"]
 layout_mode = 3
@@ -97,7 +132,7 @@ mouse_filter = 2
 theme_override_constants/margin_left = 32
 theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 32
-theme_override_constants/margin_bottom = 24
+theme_override_constants/margin_bottom = 12
 
 [node name="Coloana" type="VBoxContainer" parent="Margini"]
 layout_mode = 2
@@ -108,14 +143,6 @@ theme_override_constants/separation = 12
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 18
-
-[node name="HartaMeniu" type="Button" parent="Margini/Coloana/Antet"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(76, 32)
-layout_mode = 2
-size_flags_vertical = 0
-theme_override_font_sizes/font_size = 14
-text = "Meniu"
 
 [node name="Spatiu" type="Control" parent="Margini/Coloana/Antet"]
 layout_mode = 2
@@ -223,43 +250,39 @@ layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 2
 
-[node name="Picior" type="Label" parent="Margini/Coloana"]
+[node name="HartaMeniu" type="Button" parent="Margini/Coloana"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(110, 34)
 layout_mode = 2
-theme_override_colors/font_color = Color(0.8, 0.71, 0.55, 1)
+size_flags_horizontal = 4
+focus_mode = 0
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(0.96, 0.9, 0.76, 1)
+theme_override_colors/font_hover_color = Color(1, 0.95, 0.82, 1)
+theme_override_colors/font_pressed_color = Color(0.9, 0.8, 0.6, 1)
 theme_override_colors/font_outline_color = Color(0.09, 0.06, 0.04, 0.9)
 theme_override_constants/outline_size = 6
-theme_override_font_sizes/font_size = 14
-text = "..."
-horizontal_alignment = 1
+theme_override_fonts/font = SubResource("FontVariation_cifre")
+theme_override_font_sizes/font_size = 15
+theme_override_styles/normal = SubResource("StyleBoxEmpty_meniu")
+theme_override_styles/hover = SubResource("StyleBoxFlat_meniu_survolat")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_meniu_apasat")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_meniu")
+text = "Meniu"
 
-[node name="Unelte" type="HBoxContainer" parent="Margini/Coloana/Picior"]
+[node name="Carte" type="Control" parent="."]
 unique_name_in_owner = true
+visible = false
 layout_mode = 1
-anchors_preset = 9
-anchor_bottom = 1.0
-offset_right = 260.0
-grow_vertical = 2
-mouse_filter = 2
-theme_override_constants/separation = 6
-
-[node name="Samanta" type="Label" parent="Margini/Coloana/Picior"]
-unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = 11
-anchor_left = 1.0
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -160.0
-grow_horizontal = 0
+grow_horizontal = 2
 grow_vertical = 2
-theme_override_colors/font_color = Color(0.8, 0.71, 0.55, 0.6)
-theme_override_colors/font_outline_color = Color(0.09, 0.06, 0.04, 0.8)
-theme_override_constants/outline_size = 5
-theme_override_font_sizes/font_size = 12
-text = "..."
-horizontal_alignment = 2
-vertical_alignment = 1
+tooltip_text = "Cronicile: uneltele cu care ai plecat"
+mouse_default_cursor_shape = 2
+script = ExtResource("6_carte")
+fundal = ExtResource("3_pergament")
 
 [node name="PanouLoadout" type="Control" parent="."]
 unique_name_in_owner = true
@@ -573,3 +596,86 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 44)
 layout_mode = 2
 text = "Pleaca mai departe"
+
+[node name="PanouCarte" type="Control" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CarteVoal" type="ColorRect" parent="PanouCarte"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.04, 0.03, 0.02, 0.72)
+
+[node name="Centru" type="CenterContainer" parent="PanouCarte"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Panou" type="PanelContainer" parent="PanouCarte/Centru"]
+custom_minimum_size = Vector2(560, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_placuta")
+
+[node name="Margini" type="MarginContainer" parent="PanouCarte/Centru/Panou"]
+layout_mode = 2
+theme_override_constants/margin_left = 22
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 22
+theme_override_constants/margin_bottom = 14
+
+[node name="Coloana" type="VBoxContainer" parent="PanouCarte/Centru/Panou/Margini"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="CarteTitlu" type="Label" parent="PanouCarte/Centru/Panou/Margini/Coloana"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.96, 0.9, 0.76, 1)
+theme_override_fonts/font = SubResource("FontVariation_cifre")
+theme_override_font_sizes/font_size = 24
+text = "CRONICILE"
+horizontal_alignment = 1
+
+[node name="CarteSubtitlu" type="Label" parent="PanouCarte/Centru/Panou/Margini/Coloana"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(516, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.71, 0.55, 1)
+theme_override_font_sizes/font_size = 14
+text = "..."
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="CarteLista" type="VBoxContainer" parent="PanouCarte/Centru/Panou/Margini/Coloana"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="CarteButon" type="Button" parent="PanouCarte/Centru/Panou/Margini/Coloana"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(140, 36)
+layout_mode = 2
+size_flags_horizontal = 4
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(0.96, 0.9, 0.76, 1)
+theme_override_fonts/font = SubResource("FontVariation_cifre")
+theme_override_font_sizes/font_size = 15
+theme_override_styles/normal = SubResource("StyleBoxFlat_meniu_apasat")
+theme_override_styles/hover = SubResource("StyleBoxFlat_meniu_survolat")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_meniu_apasat")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_meniu")
+text = "Inchide cartea"

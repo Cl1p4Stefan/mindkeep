@@ -62,6 +62,50 @@ samanta 4242” și „Unelte: …” în dreapta. Arăta ca o notă de depanare
   fișierul lipsește.
 - **Uneltele au coborât în piciorul hărții**, stânga, ca etichete în culoarea
   disciplinei; **sămânța** stă mică în dreapta-jos (rămâne la vedere dinadins).
+- **Apoi, tot azi, piciorul s-a golit:** au ieșit uneltele (le-ai ales chiar tu,
+  nu se schimbă pe drum), sămânța din colț (rămâne în SUMAR, unde ajută la un bug
+  raportat) și rândul „Treci peste un semn ca sa vezi ce te asteapta”. În locul
+  rândului stă acum **butonul „Meniu”**, centrat sub hartă — a plecat din stânga
+  antetului, care a rămas doar cu plăcuța. Singurul text care mai apărea acolo, deasupra
+  butonului, era „X te asteapta. Apasa pe piesa…” când un nod e nerezolvat — și a
+  ieșit și el, la cerere, tot azi: nodul care te așteaptă se vede pe hartă (piesa
+  stă pe el și e singurul apăsabil). `verifica_retragerea`: 27 OK.
+- **Butonul „Meniu” n-are fundal în repaus** (`StyleBoxEmpty`): text Cinzel crem
+  cu contur, direct pe masă, iar plăcuța de piele apare doar sub mouse. Marginea
+  de jos a coloanei a scăzut de la 24 la 12 px, ca butonul să stea pe lemn.
+- **Cartea din colț („Cronicile”) se deschide la clic.** Arată uneltele cu care ai
+  plecat: piesa în culoarea disciplinei, rolul și felurile de întrebări, plus
+  cum urcă nivelul într-un lanț (citit din `TREPTE_PE_NIVEL` / `NIVEL_MAX` din
+  `lupta.gd`, nu scris de mână). Cartea e pictată în fundal, deci
+  `tools/decupeaza_cartea.py` o taie într-un PNG cu transparență
+  (`assets/art/carte_cronici.png`), iar `scenes/harta/carte_harta.gd` îl desenează
+  exact peste ea. **Sub mouse, cartea se ridică:** crește cu 7% dintr-un punct de
+  pe marginea din dreapta a ecranului, deci alunecă spre stânga, cu umbră. O
+  alunecare simplă ar fi dezvelit cartea pictată de dedesubt (două muchii);
+  crescând din marginea ei, decupajul o acoperă mereu. Zona de clic e
+  transparența PNG-ului (`_has_point`), deci conturul stă o singură dată, în
+  scriptul Python. Drumul, ca să nu se reia: întâi un contur aprins sub mouse,
+  care a prins întâi masă de sub carte, apoi a lăsat afară muchia groasă a
+  copertei; cotorul și muchia de sus s-au măsurat în cele din urmă din pixeli
+  (pergament deschis / piele închisă), nu din ochi. **La coborâre, cartea
+  părea dublă sus**, din două cauze: conturul tăia SUB chenarul muchiei de sus
+  (o dungă închisă și una aurie, 3-4 px), care ieșea apoi pe sub decupaj cât
+  mai era ridicat puțin; iar decupajul n-avea mipmaps, deci la ~40% din mărime
+  ieșea grăunțos față de fundal, și la capătul coborârii se vedea saltul.
+  Muchia de sus a urcat cu 0,003, iar `carte_cronici.png` se importă cu
+  mipmaps, ca fundalul. **Tot dublat la colțul de sus**, și aici s-au oprit
+  măsurătorile: colțul cotorului e rotunjit și iese din orice contur din
+  puncte, iar umbra era decupajul colorat în negru — o siluetă tăiată precis
+  care, mutată spre stânga-jos, arăta ca o a doua carte. Scriptul scrie acum
+  trei imagini din aceeași cutie: cartea (contur strâns, și zona de clic), o
+  MARGINE lățită cu 6 px și estompată, desenată sub carte (acoperă orice rest
+  al cărții pictate; ce ia în plus e hârtie peste hârtie), și UMBRA, silueta
+  estompată cu 9 px. Ordinea la desen: margine, umbră, carte. Felurile de întrebări sunt câmpul nou „sarcini” din
+  `Discipline.CATALOG`. Se închide din buton, cu Esc sau cu clic pe voal. Cât
+  e deschisă, cartea rămâne RIDICATĂ (`tine_ridicata()`): voalul o acoperă,
+  deci Godot anunță că mouse-ul a plecat, și ar fi coborât exact la deschidere.
+  Coboară la închidere, oricum ai închis-o, dacă mouse-ul nu e pe ea. Se vede
+  doar pe hartă, ca butonul Meniu.
 
 **Drumul, ca să nu se reia:** întâi iconițe desenate din poligoane (prea „joc 2D
 ieftin” lângă figurină și noduri), apoi rândul fără cutie direct pe pergament,

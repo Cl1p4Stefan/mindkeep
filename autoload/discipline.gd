@@ -39,6 +39,11 @@ extends Node
 ##   „piesa"      — piesa de șah desenată pe buton (`glifa_sah.gd`)
 ##   „imagine"    — PNG-ul, dacă există. Lipsă = se desenează „piesa".
 ##   „culoare"    — identitatea vizuală: bordura, numele, halo-ul, piesa
+##   „sarcini"    — ce FELURI de întrebări pune, câte un rând pe fel. Le arată
+##                  cartea de pe hartă („Cronicile"): „rol" spune într-o frază
+##                  ce antrenează, „sarcini" spune ce o să ai în față. Scrise
+##                  după generatoarele din scena disciplinei, nu după dorințe —
+##                  un fel nou de întrebare e un rând nou și aici.
 ##   „scena"      — disciplina propriu-zisă. Toate respectă același contract
 ##                  (`porneste`, `arata_stare`, semnalul `rezolvat`), deci
 ##                  lupta le tratează la fel și nu știe ce e înăuntru.
@@ -57,7 +62,10 @@ const CULOARE_CUVINTE := Color(1.00, 0.85, 0.55)   # auriu
 const CATALOG := [
 	{
 		"cheie": "memorie", "nume": "Memorie",
-		"rol": "Cultura generala: intrebari cu patru variante, din sase domenii.",
+		"rol": "Cultura generala: intrebari cu patru variante, din opt domenii.",
+		"sarcini": [
+			"Opt domenii: geografie, istorie, stiinta, arta si literatura, divertisment, sport, gastronomie, diverse.",
+		],
 		"piesa": GlifaSah.Piesa.PION,
 		"imagine": "res://assets/art/pion_sah.png",
 		"culoare": CULOARE_MEMORIE, "scena": SCENA_TRIVIA,
@@ -65,6 +73,13 @@ const CATALOG := [
 	{
 		"cheie": "logica", "nume": "Logica",
 		"rol": "Siruri, intrusul, analogii, silogisme, ordonari.",
+		"sarcini": [
+			"Siruri de numere: gasesti termenul care urmeaza.",
+			"Intrusul: care dintre patru nu e din aceeasi familie.",
+			"Analogii: A e fata de B cum e C fata de ...",
+			"Silogisme: ce rezulta sigur din doua premise.",
+			"Ordonari: din cateva comparatii, afli cine sta unde.",
+		],
 		"piesa": GlifaSah.Piesa.CAL,
 		"imagine": "res://assets/art/cal_sah.png",
 		"culoare": CULOARE_LOGICA, "scena": SCENA_LOGICA,
@@ -72,6 +87,11 @@ const CATALOG := [
 	{
 		"cheie": "cuvinte", "nume": "Cuvinte",
 		"rol": "Sinonime, antonime, definitii, analogii de vocabular.",
+		"sarcini": [
+			"Sinonime si antonime.",
+			"Definitii: ce inseamna un cuvant, si invers, cuvantul dupa definitie.",
+			"Cuvantul lipsa: deduci relatia din prima pereche.",
+		],
 		"piesa": GlifaSah.Piesa.NEBUN,
 		"imagine": "res://assets/art/nebun_sah.png",
 		"culoare": CULOARE_CUVINTE, "scena": SCENA_CUVINTE,
