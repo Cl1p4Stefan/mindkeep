@@ -6,10 +6,10 @@
 [ext_resource type="Script" uid="uid://dqftvq1clv26c" path="res://scenes/lupta/impact.gd" id="5_impact"]
 [ext_resource type="Texture2D" uid="uid://cd0p0tg2xv8cq" path="res://assets/art/rege.png" id="6_rege"]
 [ext_resource type="Texture2D" uid="uid://dqkst7wja0gd1" path="res://assets/art/cavaler_sters.png" id="7_cavaler"]
-[ext_resource type="Texture2D" path="res://assets/art/fight_background.jpg" id="8_peisaj"]
-[ext_resource type="Script" path="res://scenes/lupta/umbra_contact.gd" id="9_umbra"]
-[ext_resource type="Script" path="res://scenes/lupta/asezare_coloana.gd" id="10_asezare"]
-[ext_resource type="Script" path="res://scenes/lupta/semn_inspectare.gd" id="11_semn"]
+[ext_resource type="Texture2D" uid="uid://bme0pesh3ehds" path="res://assets/art/fight_background.jpg" id="8_peisaj"]
+[ext_resource type="Script" uid="uid://dxgfim8abg6r1" path="res://scenes/lupta/umbra_contact.gd" id="9_umbra"]
+[ext_resource type="Script" uid="uid://cmccsbcgowxc0" path="res://scenes/lupta/asezare_coloana.gd" id="10_asezare"]
+[ext_resource type="Script" uid="uid://dubqytdg8dfwr" path="res://scenes/lupta/semn_inspectare.gd" id="11_semn"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_puzzle"]
 content_margin_left = 0.0
@@ -66,7 +66,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.09, 0.09, 0.12, 1)
 
-[node name="Peisaj" type="TextureRect" parent="."]
+[node name="Peisaj" type="TextureRect" parent="." unique_id=1513208696]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -78,7 +78,7 @@ texture = ExtResource("8_peisaj")
 expand_mode = 1
 stretch_mode = 6
 
-[node name="Voal" type="ColorRect" parent="."]
+[node name="Voal" type="ColorRect" parent="." unique_id=1800312697]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -135,11 +135,8 @@ script = ExtResource("10_asezare")
 coloana = NodePath("ColoanaJucator")
 imagine = NodePath("ColoanaJucator/ArenaJucator/FiguraJucator/JucatorImagine")
 panou = NodePath("../ZonaPuzzle")
-panoul_la_dreapta = true
-deplasare_de_baza = 0.15
-aer_langa_panou = 12.0
 
-[node name="ColoanaJucator" type="VBoxContainer" parent="Margini/Coloana/Arena/ZonaJucator"]
+[node name="ColoanaJucator" type="VBoxContainer" parent="Margini/Coloana/Arena/ZonaJucator" unique_id=1577931430]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -153,7 +150,7 @@ custom_minimum_size = Vector2(0, 84)
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="Spatiu" type="Control" parent="Margini/Coloana/Arena/ZonaJucator/ColoanaJucator/InfoJucator"]
+[node name="Spatiu" type="Control" parent="Margini/Coloana/Arena/ZonaJucator/ColoanaJucator/InfoJucator" unique_id=1900077989]
 layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 2
@@ -181,12 +178,12 @@ horizontal_alignment = 1
 vertical_alignment = 1
 clip_text = true
 
-[node name="ArenaJucator" type="Control" parent="Margini/Coloana/Arena/ZonaJucator/ColoanaJucator"]
+[node name="ArenaJucator" type="Control" parent="Margini/Coloana/Arena/ZonaJucator/ColoanaJucator" unique_id=1385098637]
 layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 2
 
-[node name="UmbraJucator" type="Control" parent="Margini/Coloana/Arena/ZonaJucator/ColoanaJucator/ArenaJucator"]
+[node name="UmbraJucator" type="Control" parent="Margini/Coloana/Arena/ZonaJucator/ColoanaJucator/ArenaJucator" unique_id=1245526802]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -196,10 +193,7 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("9_umbra")
 imagine = NodePath("../FiguraJucator/JucatorImagine")
-talpa = 0.9514
 latime = 0.68
-centru = 0.5
-turtire = 0.25
 opacitate = 0.85
 
 [node name="FiguraJucator" type="Control" parent="Margini/Coloana/Arena/ZonaJucator/ColoanaJucator/ArenaJucator" unique_id=1730462313]
@@ -254,10 +248,8 @@ coloana = NodePath("ColoanaInamic")
 imagine = NodePath("ColoanaInamic/ArenaInamic/FiguraInamic/InamicImagine")
 panou = NodePath("../ZonaPuzzle")
 panoul_la_dreapta = false
-deplasare_de_baza = 0.15
-aer_langa_panou = 12.0
 
-[node name="ColoanaInamic" type="VBoxContainer" parent="Margini/Coloana/Arena/ZonaInamic"]
+[node name="ColoanaInamic" type="VBoxContainer" parent="Margini/Coloana/Arena/ZonaInamic" unique_id=1101201522]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -271,7 +263,7 @@ custom_minimum_size = Vector2(0, 84)
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="Spatiu" type="Control" parent="Margini/Coloana/Arena/ZonaInamic/ColoanaInamic/InfoInamic"]
+[node name="Spatiu" type="Control" parent="Margini/Coloana/Arena/ZonaInamic/ColoanaInamic/InfoInamic" unique_id=1272859597]
 layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 2
@@ -309,12 +301,12 @@ horizontal_alignment = 1
 vertical_alignment = 1
 clip_text = true
 
-[node name="ArenaInamic" type="Control" parent="Margini/Coloana/Arena/ZonaInamic/ColoanaInamic"]
+[node name="ArenaInamic" type="Control" parent="Margini/Coloana/Arena/ZonaInamic/ColoanaInamic" unique_id=564894665]
 layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 2
 
-[node name="UmbraInamic" type="Control" parent="Margini/Coloana/Arena/ZonaInamic/ColoanaInamic/ArenaInamic"]
+[node name="UmbraInamic" type="Control" parent="Margini/Coloana/Arena/ZonaInamic/ColoanaInamic/ArenaInamic" unique_id=965410785]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -327,7 +319,6 @@ imagine = NodePath("../FiguraInamic/InamicImagine")
 talpa = 0.9454
 latime = 0.5
 centru = 0.462
-turtire = 0.25
 opacitate = 0.85
 
 [node name="FiguraInamic" type="Control" parent="Margini/Coloana/Arena/ZonaInamic/ColoanaInamic/ArenaInamic" unique_id=1988581682]
@@ -421,6 +412,25 @@ offset_bottom = 36.0
 grow_horizontal = 0
 theme_override_font_sizes/font_size = 12
 text = "JURNAL"
+
+[node name="ButonHarta" type="Button" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+offset_left = 12.0
+offset_top = 8.0
+offset_right = 92.0
+offset_bottom = 36.0
+theme_override_font_sizes/font_size = 12
+text = "HARTA"
+
+[node name="ConfirmaRetragerea" type="ConfirmationDialog" parent="."]
+unique_name_in_owner = true
+title = "Inapoi pe harta?"
+size = Vector2i(420, 160)
+ok_button_text = "Retrage-te"
+dialog_text = "Lupta se lasa aici. Inamicul o ia de la capat cand revii, iar PV-ul pierdut pana acum ramane pierdut."
+dialog_autowrap = true
+cancel_button_text = "Ramai"
 
 [node name="JurnalPanou" type="Control" parent="." unique_id=2026529169]
 unique_name_in_owner = true

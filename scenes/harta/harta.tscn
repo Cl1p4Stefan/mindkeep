@@ -82,6 +82,14 @@ layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 18
 
+[node name="HartaMeniu" type="Button" parent="Margini/Coloana/Antet"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(76, 32)
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_font_sizes/font_size = 14
+text = "Meniu"
+
 [node name="Titlu" type="Label" parent="Margini/Coloana/Antet"]
 unique_name_in_owner = true
 layout_mode = 2

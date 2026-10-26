@@ -443,15 +443,20 @@ func are_cerneala(punct_local: Vector2) -> bool:
 ## `terminat` vine ultimul și cu valoare implicită fiindcă e informație EN
 ## PLUS, nu una de care desenul are neapărat nevoie: un apel vechi, cu patru
 ## argumente, se comportă exact ca înainte.
+##
+## `apasabil` face nodul apăsabil oricare i-ar fi starea. Azi are un singur
+## folos: nodul CURENT în care te așteaptă o luptă din care te-ai retras (vezi
+## `_optiuni` în `harta.gd`). Starea rămâne CURENT — aura spune „aici ești",
+## mâna de pe cursor spune „și poți intra".
 func configureaza(
 	id_nou: int, tip_nou: int, stare_noua: Stare, samanta: int,
-	terminat_nou := false
+	terminat_nou := false, apasabil := false
 ) -> void:
 	id = id_nou
 	tip = tip_nou
 	stare = stare_noua
 	terminat = terminat_nou
-	activ = stare == Stare.ACCESIBIL
+	activ = stare == Stare.ACCESIBIL or apasabil
 
 	var infatisare: Dictionary = INFATISARI[stare]
 

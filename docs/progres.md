@@ -1,6 +1,6 @@
 # MINDKEEP — Jurnal de progres
 
-*Ultima actualizare: 25 octombrie 2026*
+*Ultima actualizare: 26 octombrie 2026*
 *Atașează acest fișier la începutul fiecărei sesiuni noi, împreună cu `CLAUDE.md` și `docs/pitch-document.md`.*
 
 ---
@@ -37,6 +37,99 @@ buget, generare) rămâne acolo unde era.
 Am sărit peste ordinea recomandată la pasul 12 (artă): imaginile pentru rege,
 cavaler și pentru cele trei piese de șah de pe butoane au intrat mai devreme, dar
 restul rămâne placeholder. Bucla de luptă e în continuare cea validată, nu arta.
+
+---
+
+## IEȘIRILE DIN EXPEDIȚIE (26 octombrie 2026) — „HARTA" din luptă, „Meniu" de pe hartă
+
+**Problema:** dintr-o expediție începută ieșeai doar terminând-o sau închizând
+jocul forțat. Decizia veche („din mijlocul expediției, fără Save, ar fi o
+abandonare deghizată în pauză”) își pierduse motivul de la Save (12 octombrie),
+iar butonul stătea la „Rămas deschis” de două săptămâni.
+
+**Ce s-a făcut:** două uși, care se înlănțuie — luptă → hartă → meniu.
+
+- **„Meniu” în antetul hărții** (stânga, lângă titlu). Se vede doar pe ecranul
+  de hartă: loadout-ul și sumarul își au butonul lor, iar cât e Lacătul deschis
+  butonul se ascunde (Evenimentul nu e `reluabil`, deci o ieșire de acolo ar
+  pierde cufărul). `_pe_meniu()` întreabă acum STAREA: o expediție vie se mai
+  scrie o dată pe disc și NU se golește (meniul citește chiar starea din
+  memorie ca să scrie „Continua expeditia”); una moartă se golește, ca înainte.
+- **„HARTA” în colțul stânga-sus al luptei**, simetric cu JURNAL, cu o
+  întrebare înainte (`ConfirmationDialog`: „Retrage-te” / „Ramai”) — un clic
+  scăpat în colț n-are voie să-ți ia lupta. Stins cu o întrebare pe ecran, în
+  pauza dinaintea loviturii inamicului și după verdict. Ascuns cu F6 (fără
+  expediție n-ai unde te întoarce).
+
+### Ce costă retragerea — decis azi, la întrebare
+
+**PV-ul pierdut în lupta lăsată rămâne pierdut; inamicul o ia de la capăt.**
+Lupta tot nu se salvează (decizia rămâne), dar PV-ul regelui se predă
+expediției la retragere (`Expeditie.seteaza_pv(pv_jucator)` + salvare).
+Alternativa, „pauză gratuită” (PV-ul de la intrare, ca la închiderea jocului),
+ar fi făcut din buton o reîncercare: o luptă care merge prost se lasă și se
+reia proaspătă până iese bine. Așa nu câștigi nimic retrăgându-te — inamicul
+își recapătă PV-ul, tu nu — deci rămâne o pauză, nu o tactică.
+
+Prețul, scris: **închiderea forțată a jocului în luptă e în continuare o
+reîncercare gratuită** (PV-ul de pe disc e cel de la intrare). Butonul n-a
+deschis gaura, doar a pus lângă ea o ușă cinstită.
+
+### Nu e o fugă: nodul TE AȘTEAPTĂ pe hartă
+
+Retragerea nu încheie nodul (`nod_nerezolvat` rămâne). Până azi, harta
+redeschidea pe loc orice nod reluabil nerezolvat — cu butonul nou ar fi fost un
+cerc: apeși „HARTA”, harta te trimite înapoi în luptă în același cadru. Acum:
+
+- `_reia_nodul()` doar arată harta; **nodul se redeschide la clic pe piesă**
+  (fără salt și fără `intra_in_nod`, deci nu intră a doua oară în `parcurse`);
+- **`_optiuni()`** în `harta.gd` e `accesibile()` cât timp nu stai pe un nod
+  nerezolvat, și listă goală cât stai: drumurile spre vecini sunt stinse și
+  niciun alt nod nu e apăsabil;
+- nodul care așteaptă nu poartă X (e în `parcurse`, dar nu e încheiat) și e
+  apăsabil prin parametrul nou `apasabil` din `SimbolNod.configureaza()`;
+- piciorul hărții scrie „Lupta te asteapta. Apasa pe piesa ca sa intri din nou.”
+
+**De ce `_optiuni()` stă în hartă și nu în `Expeditie.accesibile()`:**
+`verifica_drumuri` joacă zeci de mii de expediții cu `intra_in_nod()` fără să
+cheme vreodată `incheie_nodul()`, iar `la_capat()` întreabă și el
+`accesibile()`. Pentru ele un nod nerezolvat nu există; regula e a ecranului.
+
+**Se schimbă și reluarea după un joc închis în luptă:** înainte lupta pornea
+singură la „Continua expeditia”; acum vezi întâi harta, cu nodul care te
+așteaptă. Aceeași ramură pentru amândouă drumurile, fiindcă ecranul nu știe pe
+care ai venit — starea spune tot. La Odihnă și Magazin la fel (acolo fereastra
+nerezolvată e practic de un cadru).
+
+### Verificat
+
+| unealtă | rezultat |
+|---|---|
+| `verifica_retragerea` | **nouă — 27/27 OK**, ~2 s, cod 0. Joacă cu scenele adevărate luptă → „HARTA” → hartă → clic pe piesă → victorie → hartă → „Meniu”, într-un dosar de probă. Ruptă o dată (`_optiuni()` lăsat să întoarcă vecinii): pică „niciun drum deschis spre vecini” și „niciun alt nod nu e apăsabil”, cod 1 |
+| `verifica_salvarea` | 54/54 OK |
+| `verifica_drumuri` · `verifica_eveniment` · `verifica_plansa` · `verifica_harta` | 0 picate |
+
+**Nu s-a văzut cu ochiul:** nici butonul din antetul hărții, nici fereastra de
+confirmare din luptă (tema implicită Godot, într-o scenă care n-are temă).
+Nicio partidă jucată pe mână.
+
+### Rămas deschis
+
+- **Fereastra de confirmare are înfățișarea implicită Godot.** Dacă arată străin
+  în luptă, se înlocuiește cu un panou ca verdictul sau cardul inamicului.
+- **Abandonarea unui run** tot nu există: poți ieși, dar nu poți renunța la o
+  expediție ca să pornești alta (SAVE, „Ce NU s-a făcut”).
+- **Ieșire din Lacăt** nu există, dinadins (vezi mai sus).
+
+### Fișiere
+
+| fișier | ce |
+|---|---|
+| `scenes/harta/harta.tscn`, `harta.gd` | butonul `HartaMeniu`, `_pe_meniu()` pe stare, `_optiuni()`, nodul care așteaptă, piciorul |
+| `scenes/harta/simbol_nod.gd` | parametrul `apasabil` |
+| `scenes/lupta/lupta.tscn`, `lupta.gd` | `ButonHarta`, `ConfirmaRetragerea`, `_se_poate_retrage()`, retragerea |
+| `tools/verificari/verifica_retragerea.gd`, `.tscn` | **nouă** — 27 de verdicte |
+| `CLAUDE.md` | rândul despre meniu, decizia retragerii, rândul din tabelul verificărilor |
 
 ---
 
@@ -337,8 +430,8 @@ expediție și avertismentul pentru un save stricat n-au fost capturate.
 
 ### Rămas deschis
 
-- **Butonul de ieșire de pe hartă spre meniu** (de la Save e ieftin și cinstit,
-  vezi CLAUDE.md) — încă neadăugat.
+- ~~**Butonul de ieșire de pe hartă spre meniu**~~ — **făcut** pe 26 octombrie,
+  vezi sesiunea IEȘIRILE DIN EXPEDIȚIE.
 - Pagina Practice ar putea spune ceva viu (nivelul cel mai înalt, câte rafturi
   știute), dar asta ar fi meniul care începe să știe despre ecranul de după.
   Lăsat dinadins.

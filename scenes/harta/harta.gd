@@ -698,6 +698,9 @@ const LATIME_ETICHETA := 230.0
 @onready var eticheta_picior: Label = %Picior
 @onready var pergament: TextureRect = $Pergament
 @onready var panza: Control = %Panza
+## Ieșirea spre meniu din MIJLOCUL expediției, în antet. Se vede doar pe hartă:
+## loadout-ul și sumarul își au butonul lor, în panou.
+@onready var buton_harta_meniu: Button = %HartaMeniu
 
 @onready var panou_loadout: Control = %PanouLoadout
 @onready var loadout_subtitlu: Label = %LoadoutSubtitlu
@@ -789,10 +792,12 @@ var lacat: Control = null
 func _ready() -> void:
 	buton_loadout.pressed.connect(_pe_pornire)
 	buton_sumar.pressed.connect(_pe_expeditie_noua)
-	# Cele două ieșiri spre meniu. DOAR de pe ecranele în care nu e nimic de
-	# pierdut — vezi `_pe_meniu`.
+	# Cele trei ieșiri spre meniu: de pe loadout, de pe sumar și de pe hartă.
+	# Toate duc în aceeași funcție — vezi `_pe_meniu`.
 	buton_loadout_meniu.pressed.connect(_pe_meniu)
 	buton_sumar_meniu.pressed.connect(_pe_meniu)
+	buton_harta_meniu.pressed.connect(_pe_meniu)
+	buton_harta_meniu.visible = false
 	buton_mesaj.pressed.connect(_pe_mesaj_inchis)
 	buton_magazin.pressed.connect(_pe_magazin_inchis)
 	# Fereastra redimensionată ⇒ nodurile trebuie reașezate. Semnalul vine de
@@ -836,17 +841,23 @@ func _ready() -> void:
 ## Răspunsul vine din DATE, nu de aici: coloana „reluabil" din `DATE_NOD` spune
 ## care noduri se pot redeschide fără să se scurgă nimic (lupta repornește de la
 ## zero) și care nu (Evenimentul ți-a arătat codul pe roți).
+##
+## ─── NODUL REDESCHIS NU SE MAI DESCHIDE SINGUR ─────────────────
+## Până la retragere, nodul reluabil se deschidea pe loc. De când lupta are un
+## buton „HARTA", drumul ăsta are DOI apelanți — jocul închis în luptă și
+## retragerea din luptă — iar pentru al doilea, o deschidere pe loc ar fi fost
+## un cerc: apeși „HARTA", harta te trimite înapoi în luptă în același cadru.
+##
+## Deci harta se arată, iar nodul te AȘTEAPTĂ: piesa stă pe el, drumurile spre
+## vecini sunt închise (vezi `_optiuni`), iar un clic pe piesă îl redeschide.
+## Aceeași ramură pentru ambii apelanți, fiindcă ecranul nu știe și n-are de ce
+## să știe pe care drum ai venit — starea spune deja tot: nodul e nerezolvat.
 func _reia_nodul() -> void:
 	var nod := Expeditie.nod_curent()
 	var fisa := Expeditie.date_nod(int(nod.get("tip", Expeditie.Nod.LUPTA)))
 
 	if bool(fisa.get("reluabil", true)):
-		# Harta se desenează ÎNTÂI, deși nodul o acoperă imediat: la Odihnă și
-		# la Magazin, panoul e un voal peste pergament, iar sub voal trebuie să
-		# fie o hartă, nu un ecran gol. La luptă nu se vede oricum — scena se
-		# schimbă în același cadru.
 		_arata_harta()
-		_deschide_nodul()
 		return
 
 	# Nod neredeschis: a fost consumat la intrare și rămâne consumat. Se spune,
@@ -865,6 +876,7 @@ func _reia_nodul() -> void:
 func _arata_loadout() -> void:
 	alese.clear()
 	panou_loadout.visible = true
+	buton_harta_meniu.visible = false
 	eticheta_titlu.text = "EXPEDITIE"
 	eticheta_stare.text = ""
 	eticheta_loadout.text = ""
@@ -962,6 +974,7 @@ func _pe_pornire() -> void:
 func _arata_harta() -> void:
 	panou_loadout.visible = false
 	panou_sumar.visible = false
+	buton_harta_meniu.visible = true
 	_construieste_harta()
 	_actualizeaza_antet()
 
@@ -1008,7 +1021,15 @@ func _actualizeaza_antet() -> void:
 	# Acum că numele nodurilor apar doar la survolare, piciorul e locul în care
 	# scrie CUM se citește harta. Un semn pe care nu știi să-l interoghezi e un
 	# semn degeaba.
-	eticheta_picior.text = "Treci peste un semn ca sa vezi ce te asteapta. Drumul nu se poate reface."
+	#
+	# Cu un nod care te așteaptă (vezi `_optiuni`), harta are drumurile stinse
+	# și o singură mișcare posibilă. Fără rândul ăsta, o hartă pe care nu se
+	# aprinde nimic arată ca o hartă blocată.
+	if Expeditie.nod_nerezolvat >= 0:
+		var fisa := Expeditie.date_nod(int(Expeditie.nod_curent().get("tip", Expeditie.Nod.LUPTA)))
+		eticheta_picior.text = "%s te asteapta. Apasa pe piesa ca sa intri din nou." % String(fisa["nume"])
+	else:
+		eticheta_picior.text = "Treci peste un semn ca sa vezi ce te asteapta. Drumul nu se poate reface."
 
 
 ## Șterge tot ce e desenat pe pânză: simbolurile și eticheta lor.
@@ -1048,7 +1069,7 @@ func _goleste_panza() -> void:
 ## înainte să fi fost jucat.
 func _construieste_harta() -> void:
 	_goleste_panza()
-	var accesibile := Expeditie.accesibile()
+	var accesibile := _optiuni()
 
 	for nod in Expeditie.harta:
 		var id := int(nod["id"])
@@ -1065,12 +1086,17 @@ func _construieste_harta() -> void:
 		# A doua întrebare, independentă de lanțul de sus: nodul e consumat?
 		# `parcurse` îl conține și pe cel curent, deci răspunsul e da și pentru
 		# el — fix ce ne trebuie ca să-i desenăm X-ul fără să-i luăm aura.
-		var terminat := id in Expeditie.parcurse
+		#
+		# Excepția e nodul care te AȘTEAPTĂ (o luptă din care te-ai retras): e
+		# în `parcurse`, dar nu e încheiat. Fără X, și apăsabil — e singurul
+		# loc în care poți merge. Vezi `_optiuni`.
+		var asteapta := id == Expeditie.nod_nerezolvat
+		var terminat := id in Expeditie.parcurse and not asteapta
 
 		var simbol := SimbolNod.new()
 		simbol.size = MARIME_NOD
 		simbol.configureaza(
-			id, int(nod["tip"]), stare, int(nod["samanta"]), terminat
+			id, int(nod["tip"]), stare, int(nod["samanta"]), terminat, asteapta
 		)
 		simbol.apasat.connect(_pe_nod_apasat)
 		simbol.survolat.connect(_pe_nod_survolat)
@@ -2340,7 +2366,7 @@ static func _in_zona(punct: Vector2, zona: Rect2) -> Vector2:
 ## culoarea și grosimea. Funcția asta nu mai știe nici ce e o panglică, nici ce
 ## e o planșă — știe doar cine e în urma ta și încotro poți merge.
 func _muchii(drumuri: Dictionary) -> Array[Dictionary]:
-	var accesibile := Expeditie.accesibile()
+	var accesibile := _optiuni()
 	var muchii: Array[Dictionary] = []
 
 	for nod in Expeditie.harta:
@@ -2672,6 +2698,24 @@ func _process(delta: float) -> void:
 # INTRAREA ÎNTR-UN NOD
 # ─────────────────────────────────────────────────────────────
 
+## ÎNCOTRO POȚI MERGE DE PE ECRANUL ĂSTA.
+##
+## De obicei exact `Expeditie.accesibile()`. Excepția e un nod NEREZOLVAT pe
+## care stai — o luptă din care te-ai retras, sau una întreruptă de închiderea
+## jocului: atunci nu pleci nicăieri până nu-l duci la capăt. Altfel butonul
+## „HARTA" din luptă ar fi o fugă, adică un fel de a sări peste orice luptă.
+##
+## De ce aici și nu în `accesibile()`: acolo e întrebarea „ce drumuri are harta
+## din nodul ăsta", pusă de `la_capat()` și de verificări care joacă zeci de mii
+## de expediții fără să încheie vreodată un nod (`verifica_drumuri`). Pentru
+## ele, un nod nerezolvat nu există. Pentru ecran, e chiar starea în care ești.
+func _optiuni() -> Array[int]:
+	if Expeditie.nod_nerezolvat >= 0:
+		var niciuna: Array[int] = []
+		return niciuna
+	return Expeditie.accesibile()
+
+
 func _pe_nod_apasat(id: int) -> void:
 	# ORDINEA E TOT ROSTUL FUNCȚIEI ĂSTEIA. Mai întâi se vede mutarea, abia apoi
 	# se deschide ce te așteaptă la nodul nou. Invers — fereastra întâi, piesa
@@ -2684,6 +2728,14 @@ func _pe_nod_apasat(id: int) -> void:
 	# schimba ce găsim aici după ce ne întoarcem.
 	if _sare:
 		return
+
+	# Clic pe nodul care te AȘTEAPTĂ (vezi `_optiuni`): piesa e deja pe el, iar
+	# nodul e deja intrat și scris pe disc. Fără salt, fără `intra_in_nod` —
+	# altfel nodul ar intra a doua oară în `parcurse`. Doar se redeschide.
+	if id == Expeditie.nod_nerezolvat:
+		_deschide_nodul()
+		return
+
 	await _sari_pe(id)
 
 	Expeditie.intra_in_nod(id)
@@ -2907,6 +2959,10 @@ func _deschide_lacatul() -> void:
 	# ADĂUGAT ULTIMUL, deci desenat peste tot restul. Ordinea copiilor e ordinea
 	# de desenare într-un `Control`; n-avem nevoie de niciun `z_index`.
 	add_child(lacat)
+	# Fără ieșire spre meniu cât te uiți la roți: Evenimentul nu e `reluabil`,
+	# deci o ieșire de aici ar pierde cufărul. Butonul revine cu harta
+	# (`_arata_harta`), după verdict.
+	buton_harta_meniu.visible = false
 
 	# TASTATURA. Lacătul citește săgețile și cifrele din `_unhandled_input()`,
 	# adică din evenimentele pe care nu le-a luat NIMENI înainte. Dacă un buton
@@ -3082,6 +3138,7 @@ func _arata_sumar() -> void:
 	panou_loadout.visible = false
 	panou_mesaj.visible = false
 	panou_sumar.visible = true
+	buton_harta_meniu.visible = false
 	_actualizeaza_antet()
 	_construieste_harta()   # harta rămâne dedesubt: vezi drumul pe care l-ai mers
 
@@ -3167,25 +3224,36 @@ func _pe_expeditie_noua() -> void:
 
 ## Înapoi în meniul de start.
 ##
-## ─── DE CE NUMAI DE PE LOADOUT ȘI DE PE SUMAR ─────────────────
-## Fiindcă alea sunt singurele două ecrane pe care nu e nimic de pierdut: pe
-## loadout expediția nici n-a început, pe sumar s-a terminat deja. Din MIJLOCUL
-## unei expediții nu există ieșire, și nu din uitare: fără Save (pasul 8), tot
-## ce ține expediția trăiește în autoload, deci un buton de acolo n-ar fi o
-## pauză, ar fi o abandonare deghizată în pauză. Când apare Save-ul, butonul
-## devine ieftin și cinstit — atunci se adaugă, nu acum.
+## ─── TREI BUTOANE: LOADOUT, SUMAR, HARTĂ ──────────────────────
+## Până la Save existau doar primele două, pe ecranele pe care nu e nimic de
+## pierdut. Din mijlocul expediției nu exista ieșire, dinadins: tot ce ținea
+## expediția trăia în autoload, deci un buton de acolo ar fi fost o abandonare
+## deghizată în pauză. De la Save, expediția e pe disc după fiecare lucru
+## terminat, deci ieșirea de pe hartă e o pauză adevărată: meniul spune
+## „Continua expeditia", iar harta se redeschide exact cum ai lăsat-o.
 ##
-## ─── DE CE SE GOLEȘTE EXPEDIȚIA ───────────────────────────────
-## `Expeditie.final` rămâne setat după un run încheiat, iar `_ready` îl citește
-## ca pe „arată sumarul". Fără `goleste()`, ieși în meniu de pe sumar, apeși din
-## nou „Expediție" — și primești sumarul aceleiași expediții moarte, fără nicio
-## cale de a porni una nouă. Golirea e aceeași pe care o face deja butonul
-## „Expediție nouă"; aici e doar strămutată înaintea schimbării de scenă.
+## ─── CE SE GOLEȘTE, ȘI CE NU ──────────────────────────────────
+## O expediție MOARTĂ se golește: `Expeditie.final` rămâne setat după un run
+## încheiat, iar `_ready` îl citește ca pe „arată sumarul". Fără `goleste()`,
+## ieși în meniu de pe sumar, apeși din nou „Expediție" — și primești sumarul
+## aceleiași expediții moarte, fără nicio cale de a porni una nouă.
 ##
-## Pe loadout, `final` e oricum gol, deci golirea nu face nimic — și e bine că
-## nu face nimic într-un singur loc, în loc să întrebe „de pe care ecran am fost
-## chemat?". Un ecran care trebuie să știe pe ce drum a fost deschis e un ecran
-## care se va deschide greșit, într-o zi, pe al treilea drum.
+## O expediție VIE nu se golește niciodată aici: meniul citește chiar starea din
+## memorie ca să scrie „Continua expeditia". Se mai scrie o dată pe disc, ca
+## plasă — fiecare lucru terminat s-a scris deja, dar ieșirea nu trebuie să
+## depindă de faptul că niciun loc n-a uitat.
+##
+## Întrebarea e despre STARE (`activa`), nu despre ecranul de pe care ai apăsat:
+## pe loadout expediția nu e activă și golirea nu face nimic, pe sumar nu mai e
+## activă, pe hartă e. Un ecran care trebuie să știe pe ce drum a fost deschis e
+## un ecran care se va deschide greșit, într-o zi, pe al patrulea drum.
 func _pe_meniu() -> void:
-	Expeditie.goleste()
+	# În timpul săriturii, `_pe_nod_apasat` așteaptă aterizarea ca să intre în
+	# nod; o scenă schimbată sub el ar lăsa mutarea făcută pe jumătate.
+	if _sare or lacat != null:
+		return
+	if Expeditie.activa:
+		Arhiva.salveaza_expeditia()
+	else:
+		Expeditie.goleste()
 	get_tree().change_scene_to_file(SCENA_MENIU)

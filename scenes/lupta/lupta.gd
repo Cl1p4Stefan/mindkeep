@@ -498,6 +498,10 @@ var panoul_e_pe_ecran := false
 @onready var eticheta_jurnal: Label = %JurnalText
 @onready var derulare_jurnal: ScrollContainer = %Derulare
 @onready var buton_inchide_jurnal: Button = %ButonInchide
+# Retragerea: butonul din colțul stânga-sus, simetric cu JURNAL, și întrebarea
+# de dinaintea ei. Vezi `_pe_retragere_confirmata()`.
+@onready var buton_harta: Button = %ButonHarta
+@onready var confirma_retragerea: ConfirmationDialog = %ConfirmaRetragerea
 # Cardul de inamic: titlu și rândurile generate din date.
 #
 # `descriere` NU mai ajunge aici. Era un paragraf de atmosferă care ținea
@@ -573,6 +577,11 @@ func _ready() -> void:
 	# Voalul nu e buton, deci nu are "pressed" — ascultam direct evenimentul.
 	voal_card.gui_input.connect(_pe_voal_card_apasat)
 	buton_verdict.pressed.connect(_pe_verdict_apasat)
+	buton_harta.pressed.connect(_pe_harta_apasat)
+	confirma_retragerea.confirmed.connect(_pe_retragere_confirmata)
+	# Fără expediție (F6 pe scena asta) n-ai de pe ce hartă să vii și n-ai ce
+	# lăsa în urmă: butonul nu se arată.
+	buton_harta.visible = Expeditie.activa
 	panou_jurnal.visible = false
 	card_inamic.visible = false
 	panou_verdict.visible = false
@@ -841,6 +850,9 @@ func _pe_obelisc_apasat(index: int) -> void:
 		disponibil_din[index] = runda + 1 + RUNDE_RECARCARE
 
 	puzzle_activ = true
+	# Stinsă pe loc, nu la următorul `actualizeaza_ui()`: acela vine abia după
+	# lanț, iar cât curge cronometrul retragerea n-are ce căuta aprinsă.
+	buton_harta.disabled = true
 	# `await`: întâi se deschide panoul, ABIA APOI apare prima întrebare.
 	# Vezi `deschide_panou()` pentru de ce contează ordinea.
 	await deschide_panou()
@@ -1750,6 +1762,53 @@ func _inapoi_la_harta() -> void:
 	get_tree().change_scene_to_file(SCENA_HARTA)
 
 
+# ─────────────────────────────────────────────────────────────
+# RETRAGEREA — „HARTA" din mijlocul luptei
+#
+# Ușa care lipsea: până acum, dintr-o luptă începută ieșeai doar câștigând,
+# pierzând sau închizând jocul. Retragerea te duce pe hartă, de unde ajungi în
+# meniu, iar expediția rămâne vie pe disc.
+#
+# ─── CE COSTĂ ───────────────────────────────────────────────────
+# Lupta NU se salvează — decizia rămâne: inamicul o ia de la capăt, cu PV-ul
+# întreg. Dar PV-ul TĂU pierdut până aici rămâne pierdut. Fără asta, retragerea
+# ar fi o reîncercare gratuită: o luptă care merge prost se lasă, se reia
+# proaspătă, și se repetă până iese bine. Cu prețul ăsta nu câștigi nimic
+# retrăgându-te — inamicul își recapătă PV-ul, tu nu — deci rămâne ce trebuia
+# să fie: o pauză, nu o tactică.
+#
+# Și nu e o fugă: nodul rămâne NEREZOLVAT, iar harta nu te lasă să pleci
+# nicăieri altundeva până nu-l duci la capăt (`_optiuni()` în `harta.gd`).
+# ─────────────────────────────────────────────────────────────
+
+## Se poate lăsa lupta ACUM? Un singur răspuns, pentru buton și pentru handler.
+func _se_poate_retrage() -> bool:
+	return Expeditie.activa and not (lupta_terminata or puzzle_activ or tura_se_incheie)
+
+
+## Întâi întrebarea. Un clic scăpat în colț n-are voie să-ți ia lupta.
+func _pe_harta_apasat() -> void:
+	if not _se_poate_retrage():
+		return
+	confirma_retragerea.popup_centered()
+
+
+func _pe_retragere_confirmata() -> void:
+	# A doua oară aceeași întrebare: între clic și confirmare starea nu se
+	# poate schimba azi (nimic nu curge fără întrebare pe ecran), dar o
+	# fereastră deschisă e exact locul în care o regulă de mâine s-ar strecura.
+	if not _se_poate_retrage():
+		return
+	# PV-ul de acum, nu cel de la intrare. Vezi „CE COSTĂ", mai sus.
+	Expeditie.seteaza_pv(pv_jucator)
+	# Doar expediția: Tezaurul nu s-a mișcat (Fragmentele se plătesc la
+	# victorie). Sacul expediției intră și el, deci întrebările deja văzute în
+	# lupta asta nu revin la reluare. `incheie_nodul()` NU se cheamă — nodul te
+	# așteaptă pe hartă.
+	Arhiva.salveaza_expeditia()
+	_inapoi_la_harta()
+
+
 ## Readuce starea la valorile de start. Ca să testezi rapid, fără să dai F5.
 func reseteaza_lupta() -> void:
 	runda = 1
@@ -2172,6 +2231,12 @@ func actualizeaza_ui() -> void:
 	# continuare drumul prin care se încheie o tură din cod, și e util să ai
 	# un buton de pornit înapoi când testezi. Doar nu se vede.
 	buton_incheie_tura.visible = false
+
+	# Retragerea, stinsă exact când n-ar fi o pauză: cu o întrebare pe ecran
+	# (cronometrul curge), în pauza dinaintea loviturii inamicului (tura ta s-a
+	# terminat deja) și după verdict (lupta e scrisă, drumul spre hartă e
+	# butonul verdictului). Vezi `_pe_harta_apasat()`.
+	buton_harta.disabled = not _se_poate_retrage()
 
 	for index in range(butoane_obelisc.size()):
 		var buton: Obelisc = butoane_obelisc[index]
