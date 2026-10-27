@@ -40,6 +40,80 @@ restul rămâne placeholder. Bucla de luptă e în continuare cea validată, nu 
 
 ---
 
+## DIVERSE, +375 (27 octombrie 2026) — de la 225 la 600, scrise de mână
+
+### Cererea
+
+Din socoteala echilibrului pe domenii (ținta ~600 pe domeniu, 200 pe nivel),
+punctul 1: *„genereaza intrebarile de la punctul 1: diverse +375. intrebarile noi
+generate sa fie diferite fata de intrebarile existente in domeniul diverse”*.
+
+### Ce s-a făcut
+
+- **375 de întrebări noi**, `mana:2743`…`mana:3117`, toate `diverse`, toate
+  `verificat: false`, fiecare cu nota ei în `fapte_trivia.json` (`fapt` = propriul
+  `id`, ca la ȘTIINȚE EXACTE, 600). Ordinea în fișier: nivelul I (lingvistică,
+  logică, curiozități), apoi II, apoi III.
+- Domeniul trece de la **75 / 75 / 75** la **200 / 199 / 201**. Pe rafturi:
+  lingvistica 42 / 42 / 41, logica 30 / 47 / 48, curiozitățile 53 / 35 / 37.
+  Logica are mai puține la nivelul I fiindcă acolo „un fapt despre logică pe care
+  îl știe orice adult” se termină repede, iar curiozitățile le-au preluat.
+- Diff-ul e **numai inserții** la coada celor două fișiere, scrise ca text.
+  `CATE_INTREBARI_MANA`: 2742 → 3117.
+
+Ce acoperă:
+
+| raft | ce intră |
+|---|---|
+| lingvistica | punctuație și părți de vorbire, expresii și proverbe românești, figuri de stil, etimologii (grecești, latinești, cuvinte venite din japoneză, swahili, nahuatl, taino, turcă, maghiară, slavă), scrieri (hangul, devanagari, glagolitică, ogham, Linear B), dicționare (Johnson, Webster, DLR, DOOM, Lexiconul de la Buda), lingviști (Jones, Grimm, Coșeriu, Pușcariu, Whorf) |
+| logica_perspicacitate | puzzle-uri cu nume (tangram, nonograme, criptaritme, jocul de 15), erori de raționament (pantă alunecoasă, tu quoque, heringul roșu, afirmarea consecventului), erori cognitive (ancorare, halo, Dunning-Kruger, supraviețuitorul), paradoxuri (Tezeu, Buridan, Newcomb, Braess, Condorcet, Berry), logicieni (Frege, Boole, De Morgan, Łukasiewicz, Smullyan, Gardner) |
+| curiozitati | semne (@, &, *, #), calendar și măsuri (luni, ani bisecți, carat, țol, milă, chenzină), fobii și colecționari, nume de obiecte (agletă, muselet, ferulă), legi glumețe (Murphy, Parkinson, Peter, Goodhart), iluzii și efecte de memorie, nume de mărci, hărți și calendare ciudate |
+
+**Curiozitățile noi țin regula domeniului** („intră aici numai dacă nu încape în
+niciunul din primele șapte”), spre deosebire de cele 75 vechi, care sunt mai ales
+știință de manual (organe, animale, elemente). Ce era la graniță s-a lăsat pe
+dinafară: invenții (tehnologie), steaguri (geografie), superstiții și sărbători
+(gastronomie și lifestyle), televiziune (divertisment).
+
+### „Să fie diferite”: ce s-a verificat
+
+Un script de lot (în scratchpad, nu în `tools/`) a comparat fiecare întrebare nouă
+cu **toată baza**, nu doar cu Diverse: text identic, același răspuns cu cuvinte
+comune, răspunsul în text, variante duble, notă peste 240. A prins **19 dubluri**,
+toate înlocuite. Aproape toate erau în lotul de științe exacte de ieri, nu în
+Diverse: duzina, STOP-ul octogonal, minutele zilei, L roman, zerourile milionului,
+orele săptămânii, googol, nodul, Rubik, cuvintele încrucișate, paradoxul zilelor de
+naștere, Boole, Turing 1936, podurile din Königsberg. Plus filatelistul,
+numismatul, Bluetooth, Ianus și Sudoku, din alte domenii. S-au mai scos câteva note
+care dădeau răspunsul altei întrebări din lot.
+
+### Principiul călcat, spus pe față
+
+Ca la ȘTIINȚE EXACTE, 600: **întrebările și notele sunt scrise de mine, din
+memorie**, deci exact ce interzice „Modelul de limbaj formulează, nu informează”.
+Domeniul n-are tabele de fabrică (`plan-continut.md` o spune), deci nu exista altă
+cale pentru cifra cerută. Ce l-a făcut mai mic: unde un fapt e disputat, nota spune
+„potrivit legendei” sau „cel mai probabil” (SOS, Wi-Fi, „duzina brutarului”,
+silueta, 10:10 pe ceasuri, „ghicitoarea lui Einstein”). Am evitat recordurile care
+se mișcă și am scos din note câteva cifre de care nu eram sigur.
+
+### Verificat
+
+`verifica_trivia`: **TOTUL E BUN**, cod 0. Toate întrebările ajung la o notă, iar
+cea mai lungă are 238 de caractere din 240. Echilibrul din luptă e în limită la
+toate trei nivelurile (abatere maximă 6,3%). Cifrele totale includ și tabelele
+Divertisment / Sport din fabrică, făcute în paralel (secțiunea de mai jos).
+
+### Rămas deschis
+
+- **Citirea.** 375 de întrebări și 375 de note, niciuna citită de un om.
+- Nivelurile II și III au 199 și 201, nu 200 și 200: o întrebare de logică de
+  nivel III s-ar putea muta la II.
+- Cele 75 de curiozități vechi încalcă regula domeniului (sunt știință).
+  Mutarea lor la `lumea_vie` / `stiinte_exacte` ar scădea Diverse înapoi la ~525.
+
+---
+
 ## UN SENS PE ELEMENT (27 octombrie 2026) — elementele chimice, de la 135 la 69 de întrebări
 
 ### Cererea

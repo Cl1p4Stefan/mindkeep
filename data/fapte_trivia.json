@@ -10964,5 +10964,1505 @@
 	{
 		"id": "mana:2742",
 		"nota": "Euler își dicta calculele, făcute în minte, unui secretar. Lucrările lui adunate au peste 80 de volume, iar multe notații de azi, ca f(x) sau i, vin de la el."
+	},
+	{
+		"id": "mana:2743",
+		"nota": "Punctul și virgula (;) desparte părți mai lungi ale unei fraze, care au deja virgule înăuntru. E o pauză mai mare decât virgula și mai mică decât punctul."
+	},
+	{
+		"id": "mana:2744",
+		"nota": "Cratima (-) leagă cuvinte rostite împreună, ca în „dă-mi” sau „într-o”. Seamănă cu linia de dialog, dar e mai scurtă și nu are spații în jur."
+	},
+	{
+		"id": "mana:2745",
+		"nota": "Două puncte (:) deschid o enumerare („am cumpărat: mere, pere, prune”) sau o explicație. Tot ele anunță vorbirea directă, înaintea liniei de dialog."
+	},
+	{
+		"id": "mana:2746",
+		"nota": "În română, ghilimelele se deschid jos („) și se închid sus (”), spre deosebire de engleză, unde amândouă stau sus. Ele marchează un citat exact sau un titlu."
+	},
+	{
+		"id": "mana:2747",
+		"nota": "Numeralul arată fie câte lucruri sunt („trei mere”), fie al câtelea e ceva în ordine („al treilea”). Primele sunt numerale cardinale, celelalte ordinale."
+	},
+	{
+		"id": "mana:2748",
+		"nota": "Adverbul determină de obicei un verb: spune cum („repede”), când („ieri”) sau unde („aici”) se petrece acțiunea. Spre deosebire de adjectiv, nu se acordă."
+	},
+	{
+		"id": "mana:2749",
+		"nota": "Interjecția exprimă o stare („vai!”, „of!”), un îndemn („hai!”) sau imită un sunet („miau”). Se scrie des urmată de semnul exclamării."
+	},
+	{
+		"id": "mana:2750",
+		"nota": "Conjuncția leagă cuvinte („mere și pere”) sau propoziții („știu că vine”). Prepoziția, cu care se confundă des, leagă doar cuvinte, ca „pe”, „la”, „cu”."
+	},
+	{
+		"id": "mana:2751",
+		"nota": "Prepozițiile leagă un cuvânt de altul și arată relația dintre ele: „cartea de pe masă”, „merg la școală”. Singure, nu au un înțeles deplin."
+	},
+	{
+		"id": "mana:2752",
+		"nota": "„Ca-să” are două silabe. În română, centrul fiecărei silabe e o vocală, iar despărțirea în silabe e chiar regula după care se taie un cuvânt la capăt de rând."
+	},
+	{
+		"id": "mana:2753",
+		"nota": "Prefixul se pune înaintea rădăcinii: „ne-” din „necunoscut”, „re-” din „reface”. Sufixul face același lucru la coada cuvântului: „-ar” din „morar”."
+	},
+	{
+		"id": "mana:2754",
+		"nota": "Diminutivele se fac de obicei cu sufixe: „-uță”, „-el”, „-ișor”. Opusul lor, augmentativul, mărește în loc să micșoreze: „băiețoi”, „căsoaie”."
+	},
+	{
+		"id": "mana:2755",
+		"nota": "Cele cinci sunt ă, â, î, ș și ț. „Â” și „î” notează același sunet; regula de folosire a lui „â” a fost reintrodusă de Academia Română în 1993."
+	},
+	{
+		"id": "mana:2756",
+		"nota": "La început și la sfârșit de cuvânt se scrie „î”: „înger”, „a urî”. „Â” stă numai în interior, ca în „pâine”. „Ă” poate începe un cuvânt: „ăsta”."
+	},
+	{
+		"id": "mana:2757",
+		"nota": "„A tăia frunză la câini” înseamnă a lenevi, a nu face nimic util. Imaginea e a unei munci fără niciun rost: câinii nu mănâncă frunze."
+	},
+	{
+		"id": "mana:2758",
+		"nota": "Cine are „mâna spartă” cheltuiește banii repede, ca și cum i-ar curge printre degete. Opusul lui e cel „strâns la pungă”."
+	},
+	{
+		"id": "mana:2759",
+		"nota": "„A face din țânțar armăsar” înseamnă a umfla un lucru mărunt până pare o problemă uriașă. Imaginea e chiar o exagerare: o insectă transformată în cal."
+	},
+	{
+		"id": "mana:2760",
+		"nota": "Piua era vasul în care se pisau grăunțele. Apa bătută acolo rămâne tot apă, de aceea expresia înseamnă a repeta aceleași vorbe fără niciun rezultat."
+	},
+	{
+		"id": "mana:2761",
+		"nota": "„A trage chiulul” înseamnă a lipsi de la școală sau de la muncă fără motiv. Cine o face des e numit, în glumă, „chiulangiu”."
+	},
+	{
+		"id": "mana:2762",
+		"nota": "Pofta e agățată în cui ca o haină care nu mai e purtată. Expresia se spune cuiva care trebuie să renunțe la ceva ce își dorea, fiindcă nu-l poate avea."
+	},
+	{
+		"id": "mana:2763",
+		"nota": "Cine „dă din colț în colț” nu găsește un răspuns și se învârte pe loc, ca un om prins într-o cameră. Se spune des despre cineva care se încurcă în explicații."
+	},
+	{
+		"id": "mana:2764",
+		"nota": "Ortul era o monedă măruntă. „A da ortul popii” înseamnă, în glumă, a muri: ultimul bănuț ajunge la preotul care face slujba de înmormântare."
+	},
+	{
+		"id": "mana:2765",
+		"nota": "Cine e „cu musca pe căciulă” se știe vinovat și se trădează ușor, fiindcă reacționează la orice aluzie. O expresie înrudită spune: „pe hoț îl arde căciula”."
+	},
+	{
+		"id": "mana:2766",
+		"nota": "Ulciorul dus mereu la fântână se sparge până la urmă. Proverbul avertizează că o faptă riscantă, repetată, va fi descoperită sau va ieși prost."
+	},
+	{
+		"id": "mana:2767",
+		"nota": "„Graba strică treaba” e unul dintre cele mai scurte proverbe românești și se sprijină pe rimă. Același sfat apare în latină: „Festina lente”, adică „grăbește-te încet”."
+	},
+	{
+		"id": "mana:2768",
+		"nota": "Proverbul laudă hărnicia: cine începe ziua devreme are timp să facă mai mult. Engleza are o variantă în care pasărea trezită devreme prinde viermele."
+	},
+	{
+		"id": "mana:2769",
+		"nota": "Abia când ai necazuri vezi cine rămâne lângă tine. Proverbul are echivalente în multe limbi; în engleză, prietenul la nevoie e „prieten cu adevărat”."
+	},
+	{
+		"id": "mana:2770",
+		"nota": "Vrabia e mică, dar e sigură; cioara e mai mare, dar stă pe gard. Proverbul sfătuiește să nu riști ce ai pentru ceva mai bun, dar nesigur."
+	},
+	{
+		"id": "mana:2771",
+		"nota": "Rădăcina e partea care rămâne aceeași în toată familia de cuvinte și poartă sensul de bază. „Floare”, „florar” și „înflorit” sunt rude prin ea."
+	},
+	{
+		"id": "mana:2772",
+		"nota": "Alfabetul englez are 26 de litere și niciun semn diacritic obișnuit. J și U s-au desprins abia în epoca modernă timpurie din I și V, cu care erau o singură literă."
+	},
+	{
+		"id": "mana:2773",
+		"nota": "„Un copil” are articol nehotărât, iar „copilul” are articol hotărât, lipit la coada cuvântului. Româna e singura mare limbă romanică ce pune articolul hotărât după substantiv."
+	},
+	{
+		"id": "mana:2774",
+		"nota": "Consoanele se rostesc cu aerul oprit sau strâmtat undeva în gură, de buze, dinți sau limbă. Numele vine din latinescul „consonare”, adică „a suna împreună” cu o vocală."
+	},
+	{
+		"id": "mana:2775",
+		"nota": "Cine traduce scrisul e traducător, iar cine traduce vorbirea, pe loc, e interpret. Ziua traducerii e 30 septembrie, ziua Sfântului Ieronim, care a tradus Biblia în latină."
+	},
+	{
+		"id": "mana:2776",
+		"nota": "„A urca sus”, „a coborî jos” sau „cel mai optim” sunt pleonasme: un cuvânt repetă ce spunea deja celălalt. Numele vine dintr-un cuvânt grecesc care înseamnă „prisos”."
+	},
+	{
+		"id": "mana:2777",
+		"nota": "„Post scriptum” înseamnă în latină „scris după”: e un adaos pus după semnătură. Pe vremea scrisului de mână, era singurul fel de a mai adăuga ceva fără să rescrii scrisoarea."
+	},
+	{
+		"id": "mana:2778",
+		"nota": "„Etc.” vine din latinescul „et cetera”, adică „și celelalte”. Se pune la capătul unei enumerări care ar putea continua."
+	},
+	{
+		"id": "mana:2779",
+		"nota": "„Poliglot” vine din greacă: „poly”, mult, și „glotta”, limbă. Polimatul, cu care se confundă, e cineva care știe multe în domenii foarte diferite."
+	},
+	{
+		"id": "mana:2780",
+		"nota": "Alfa și beta, primele două litere grecești, au dat chiar cuvântul „alfabet”. Ultima literă e omega, de unde expresia „alfa și omega”, adică începutul și sfârșitul."
+	},
+	{
+		"id": "mana:2781",
+		"nota": "SOS a fost ales fiindcă e ușor de transmis și de recunoscut, nu pentru că ar fi o prescurtare. „Save Our Souls” e o explicație găsită ulterior."
+	},
+	{
+		"id": "mana:2782",
+		"nota": "Compunerea lipește cuvinte întregi: „floarea-soarelui”, „bunăvoință”, „untdelemn”. Derivarea, cealaltă cale de a face cuvinte noi, adaugă doar prefixe sau sufixe."
+	},
+	{
+		"id": "mana:2783",
+		"nota": "„Carpe diem” înseamnă literal „culege ziua”. Vine dintr-o odă a poetului latin Horațiu, care îndemna la bucuria prezentului."
+	},
+	{
+		"id": "mana:2784",
+		"nota": "Iulius Caesar și-a anunțat astfel victoria rapidă de la Zela, din anul 47 î.Hr. Trei cuvinte, care încep cu aceeași literă, pentru o campanie de doar câteva zile."
+	},
+	{
+		"id": "mana:2785",
+		"nota": "Să ții pumnii ca să câștige echipa e gândire magică: gestul n-are cum să schimbe meciul. Psihologii o găsesc la toți oamenii, mai ales în momentele de neliniște."
+	},
+	{
+		"id": "mana:2786",
+		"nota": "Grila are 9 rânduri și 9 coloane, adică 81 de căsuțe, împărțite în 9 pătrate de 3×3. Fiecare rând, coloană și pătrat trebuie să conțină cifrele de la 1 la 9."
+	},
+	{
+		"id": "mana:2787",
+		"nota": "Să crezi că nu va ploua pentru că ai plănuit un picnic e o eroare de gândire: dorința nu e o dovadă. În engleză, greșeala se numește „wishful thinking”."
+	},
+	{
+		"id": "mana:2788",
+		"nota": "Tangramul are șapte piese: cinci triunghiuri, un pătrat și un paralelogram. Din ele se pot forma mii de siluete, de la animale la oameni."
+	},
+	{
+		"id": "mana:2789",
+		"nota": "Primul detectiv al literaturii e socotit C. Auguste Dupin, creat de Edgar Allan Poe în 1841. Sherlock Holmes, al lui Arthur Conan Doyle, a apărut în 1887."
+	},
+	{
+		"id": "mana:2790",
+		"nota": "Cu 20 de întrebări bune, de tip da/nu, se pot deosebi peste un milion de variante, fiindcă fiecare întrebare bună înjumătățește posibilitățile."
+	},
+	{
+		"id": "mana:2791",
+		"nota": "Cine nu găsește cuvânt primește o literă din „F-A-Z-A-N”, iar la a cincea iese din joc. Cuvintele fără continuare, care „închid”, sunt arma jucătorilor buni."
+	},
+	{
+		"id": "mana:2792",
+		"nota": "Aristotel a scris, în secolul IV î.Hr., primele tratate despre raționament, adunate mai târziu sub numele „Organon”, adică „unealtă”. Silogismul e invenția lui."
+	},
+	{
+		"id": "mana:2793",
+		"nota": "Un kilogram de fier și unul de pene cântăresc la fel. Întrebarea-capcană mizează pe faptul că mintea răspunde la imagine („fierul e greu”), nu la cuvinte."
+	},
+	{
+		"id": "mana:2794",
+		"nota": "Brainstormingul a fost popularizat de publicitarul american Alex Osborn, la mijlocul secolului XX. Regula de bază: criticile se lasă pentru după ce s-au strâns ideile."
+	},
+	{
+		"id": "mana:2795",
+		"nota": "Harta mentală pune ideea principală în centru și ramifică restul în jurul ei. A fost popularizată de britanicul Tony Buzan, în anii ’70."
+	},
+	{
+		"id": "mana:2796",
+		"nota": "Logicianul englez John Venn a publicat-o în 1880. Partea comună a două cercuri arată elementele care aparțin ambelor mulțimi."
+	},
+	{
+		"id": "mana:2797",
+		"nota": "O demonstrație pornește de la lucruri deja dovedite și ajunge, pas cu pas, la concluzie. Un exemplu nu e o demonstrație, dar un contraexemplu poate dărâma o regulă."
+	},
+	{
+		"id": "mana:2798",
+		"nota": "„Mnemos” înseamnă memorie în greacă. Un exemplu clasic e fraza ale cărei inițiale dau ordinea planetelor față de Soare."
+	},
+	{
+		"id": "mana:2799",
+		"nota": "Expresia ar veni de la problema celor nouă puncte, care se rezolvă doar cu linii ce ies din pătratul format de ele. Înseamnă a ieși din tiparele obișnuite."
+	},
+	{
+		"id": "mana:2800",
+		"nota": "IQ vine din englezescul „intelligence quotient”. Testele sunt reglate astfel încât media populației să iasă 100."
+	},
+	{
+		"id": "mana:2801",
+		"nota": "În cifrul lui Caesar, A devine D, B devine E și așa mai departe. E ușor de spart: la alfabetul latin, există doar 25 de mutări posibile."
+	},
+	{
+		"id": "mana:2802",
+		"nota": "„Criptografie” înseamnă în greacă „scriere ascunsă”. Azi, fiecare plată cu cardul pe internet e protejată de criptografie."
+	},
+	{
+		"id": "mana:2803",
+		"nota": "O prejudecată e o judecată făcută înainte, cum spune chiar cuvântul. Spre deosebire de o ipoteză, nu e pusă la încercare."
+	},
+	{
+		"id": "mana:2804",
+		"nota": "O discuție bună pune față în față argumente și contraargumente. Un contraexemplu, mai precis, arată un caz concret în care o regulă nu se potrivește."
+	},
+	{
+		"id": "mana:2805",
+		"nota": "În multe concursuri școlare de dezbateri, echipele își află poziția prin tragere la sorți. Scopul e să înveți să argumentezi, nu doar să crezi."
+	},
+	{
+		"id": "mana:2806",
+		"nota": "Metoda lui Socrate se numește „maieutică”, adică „arta moașei”: el spunea că doar ajută ideile să se nască. Socrate n-a scris nimic; îl cunoaștem mai ales din Platon."
+	},
+	{
+		"id": "mana:2807",
+		"nota": "„Ți-a plăcut filmul?” e o întrebare închisă; „Ce ți-a plăcut la film?” e una deschisă. Jurnaliștii și medicii învață să le folosească pe amândouă."
+	},
+	{
+		"id": "mana:2808",
+		"nota": "„Logos” înseamnă în greacă și „cuvânt”, și „rațiune”. Din aceeași rădăcină vin științele în „-logie”: biologie, geologie, psihologie."
+	},
+	{
+		"id": "mana:2809",
+		"nota": "„Toate pisicile sunt mamifere” e universală; „unele pisici sunt negre” e particulară. Un singur contraexemplu ajunge ca să dărâme o propoziție universală."
+	},
+	{
+		"id": "mana:2810",
+		"nota": "Fiecare ramificație e o alegere sau o întâmplare, iar fiecare capăt e un rezultat posibil. Așa se calculează și probabilitățile unor evenimente legate între ele."
+	},
+	{
+		"id": "mana:2811",
+		"nota": "Expresia vine de la Biserica Catolică, unde un oficial căuta argumente împotriva declarării cuiva drept sfânt. Funcția a fost mult redusă în 1983."
+	},
+	{
+		"id": "mana:2812",
+		"nota": "Franklin împărțea foaia în două coloane, pro și contra, apoi tăia argumentele care se anulau reciproc. Ce rămânea arăta încotro înclină balanța."
+	},
+	{
+		"id": "mana:2813",
+		"nota": "Fizicianul Enrico Fermi le cerea studenților estimări din cap, de pildă câți acordori de piane sunt în Chicago. Asemenea întrebări se numesc azi „probleme Fermi”."
+	},
+	{
+		"id": "mana:2814",
+		"nota": "Gândirea critică cere să verifici sursa, să cauți dovezi și să deosebești faptele de păreri. Nu înseamnă a respinge totul, ci a nu accepta nimic fără motiv."
+	},
+	{
+		"id": "mana:2815",
+		"nota": "Româna îi spune „coadă de maimuță”, italiana „melc”, iar ebraica „strudel”. Negustorii foloseau semnul cu secole înainte de e-mail, ca prescurtare pentru „la prețul de”."
+	},
+	{
+		"id": "mana:2816",
+		"nota": "„&” e o legătură a literelor „e” și „t”, din latinescul „et”. Numele englezesc vine dintr-o formulă pe care o recitau școlarii la capătul alfabetului."
+	},
+	{
+		"id": "mana:2817",
+		"nota": "„Asterisc” vine din grecescul „asteriskos”, adică „stea mică”. Personajul Asterix, din benzile desenate franceze, își are numele de la el."
+	},
+	{
+		"id": "mana:2818",
+		"nota": "În muzică, diezul urcă o notă cu un semiton. Pe rețelele sociale, același semn pus în fața unui cuvânt îl transformă într-un hashtag."
+	},
+	{
+		"id": "mana:2819",
+		"nota": "Semnul ♀ e oglinda de mână a zeiței Venus, iar ♂ e scutul și sulița lui Marte. Botanistul Carl Linné le-a folosit pentru sexele plantelor, în secolul XVIII."
+	},
+	{
+		"id": "mana:2820",
+		"nota": "„Mileniu” vine din latinescul „mille”, o mie. Al treilea mileniu a început, la rigoare, pe 1 ianuarie 2001, fiindcă numărătoarea anilor nu are an zero."
+	},
+	{
+		"id": "mana:2821",
+		"nota": "Cei de dimineață sunt numiți „ciocârlii”, iar cei care se culcă târziu, „bufnițe”. Cronotipul, adică ora la care ești cel mai activ, e în parte moștenit."
+	},
+	{
+		"id": "mana:2822",
+		"nota": "Giruetele aveau adesea formă de cocoș, mai ales pe turlele bisericilor. Anemometrul, cu care se confundă, măsoară viteza vântului, nu direcția lui."
+	},
+	{
+		"id": "mana:2823",
+		"nota": "„Arachne” înseamnă păianjen în greacă. În mitologie, Arahne era o țesătoare pricepută, transformată în păianjen de zeița Atena."
+	},
+	{
+		"id": "mana:2824",
+		"nota": "Cuvântul vine din latinescul „claustrum”, loc închis, de unde vine și „claustru”, adică mănăstire."
+	},
+	{
+		"id": "mana:2825",
+		"nota": "„Akron” înseamnă vârf în greacă, ca în „Acropole”, orașul de sus. Amețeala de la înălțime, în schimb, se numește vertij și nu e o fobie."
+	},
+	{
+		"id": "mana:2826",
+		"nota": "Teama de a vorbi în fața unui public e una dintre cele mai răspândite frici. Numele vine din grecescul „glossa”, limbă."
+	},
+	{
+		"id": "mana:2827",
+		"nota": "Februarie e singura lună cu mai puțin de 30 de zile. Explicația vine din vechiul calendar roman, unde februarie era luna de la sfârșitul anului."
+	},
+	{
+		"id": "mana:2828",
+		"nota": "Iulie se numea înainte „Quintilis”, a cincea lună. A fost redenumită în cinstea lui Caesar, iar „Sextilis” a devenit august, după împăratul Augustus."
+	},
+	{
+		"id": "mana:2829",
+		"nota": "Zilele românești poartă nume de zei romani: luni de la Lună, marți de la Marte, miercuri de la Mercur, joi de la Jupiter, vineri de la Venus."
+	},
+	{
+		"id": "mana:2830",
+		"nota": "„Nyx” era, în mitologia greacă, zeița nopții. Frica de întuneric e foarte obișnuită la copii și trece, de cele mai multe ori, odată cu vârsta."
+	},
+	{
+		"id": "mana:2831",
+		"nota": "„Kyon, kynos” înseamnă câine în greacă, de unde vine și „chinologie”, știința despre rasele de câini. Ailurofobia, alt distractor, e frica de pisici."
+	},
+	{
+		"id": "mana:2832",
+		"nota": "Pe un zar obișnuit, fețele opuse adună mereu 7: 1 cu 6, 2 cu 5, 3 cu 4. Cele mai vechi zaruri cunoscute au în jur de 5000 de ani."
+	},
+	{
+		"id": "mana:2833",
+		"nota": "Foaia A4 are 21 × 29,7 cm. Fiecare format A e jumătate din cel dinainte, iar foaia A0 are exact un metru pătrat."
+	},
+	{
+		"id": "mana:2834",
+		"nota": "Așezarea QWERTY a apărut la mașinile de scris, în anii 1870. Franța folosește o variantă, AZERTY, iar Germania pe alta, QWERTZ."
+	},
+	{
+		"id": "mana:2835",
+		"nota": "Cutiile negre sunt vopsite în portocaliu aprins, ca să fie găsite ușor după un accident. Ele înregistrează datele zborului și conversațiile din cabină."
+	},
+	{
+		"id": "mana:2836",
+		"nota": "„A.m.” vine din latinescul „ante meridiem”, înainte de amiază, iar „p.m.” din „post meridiem”, după amiază."
+	},
+	{
+		"id": "mana:2837",
+		"nota": "La 112 se sună gratuit în toată Uniunea Europeană. În SUA și Canada, numărul de urgență e 911, iar în Marea Britanie, pe lângă 112, merge și 999."
+	},
+	{
+		"id": "mana:2838",
+		"nota": "Umbra bățului se mișcă odată cu Soarele, iar semnele de pe cadran arată ora. Egiptenii foloseau asemenea ceasuri acum peste 3000 de ani."
+	},
+	{
+		"id": "mana:2839",
+		"nota": "Clepsidra cu nisip măsura pe corăbii timpul de veghe. Numele grecesc a desemnat la început un ceas cu apă."
+	},
+	{
+		"id": "mana:2840",
+		"nota": "Papa Grigore al XIII-lea l-a introdus în 1582, ca să corecteze o abatere de zece zile a calendarului iulian. România l-a adoptat abia în 1919."
+	},
+	{
+		"id": "mana:2841",
+		"nota": "Tripleții pot fi identici, dacă provin din același ovul, sau, mult mai des, frați diferiți născuți deodată. Patru copii născuți deodată sunt cvadrupleți."
+	},
+	{
+		"id": "mana:2842",
+		"nota": "Galbenul e culoarea poștei în multe țări europene, ca Germania sau Franța. Marea Britanie e o excepție cunoscută, cu cutii poștale roșii."
+	},
+	{
+		"id": "mana:2843",
+		"nota": "Triunghiurile cu vârful în sus avertizează un pericol. Cel întors, cu vârful în jos, cere să-i lași pe alții să treacă."
+	},
+	{
+		"id": "mana:2844",
+		"nota": "Cutiile poștale britanice sunt roșii din 1874. În Germania sunt galbene, iar în Statele Unite, albastre."
+	},
+	{
+		"id": "mana:2845",
+		"nota": "Limita de 160 a fost aleasă după lungimea obișnuită a cărților poștale și a telegramelor. Primul SMS, trimis în 1992, spunea „Merry Christmas”."
+	},
+	{
+		"id": "mana:2846",
+		"nota": "Legea poartă numele inginerului american Edward Murphy, care lucra la teste cu sănii-rachetă la sfârșitul anilor ’40. Expresia s-a răspândit apoi printre ingineri."
+	},
+	{
+		"id": "mana:2847",
+		"nota": "„Déjà vu” înseamnă în franceză „deja văzut”. Aproape toți oamenii îl trăiesc din când în când, mai des la tinerețe."
+	},
+	{
+		"id": "mana:2848",
+		"nota": "Căscatul se ia de la ceilalți oameni, de la animalele de companie și chiar din citit despre el. Și câinii par să-l „prindă” de la stăpâni."
+	},
+	{
+		"id": "mana:2849",
+		"nota": "În 1902, Theodore „Teddy” Roosevelt a refuzat să împuște un urs legat, la o vânătoare. Scena a fost desenată în ziare, iar un negustor a numit „Teddy” un ursuleț de jucărie."
+	},
+	{
+		"id": "mana:2850",
+		"nota": "Ținta de 10.000 de pași pe zi a pornit dintr-o campanie publicitară japoneză din anii ’60, pentru un pedometru, nu dintr-un studiu medical."
+	},
+	{
+		"id": "mana:2851",
+		"nota": "Codul 404 înseamnă că serverul funcționează, dar pagina cerută nu există. Povestea cu o cameră 404 de la CERN, unde ar fi stat primul server, e o legendă."
+	},
+	{
+		"id": "mana:2852",
+		"nota": "Steagul alb e cunoscut ca semn de predare din Antichitate, din China până la Roma. Convențiile de la Haga îl protejează: cine îl poartă nu trebuie atacat."
+	},
+	{
+		"id": "mana:2853",
+		"nota": "Crucea verde a farmaciilor s-a răspândit în Europa în secolul XX. Crucea roșie, în schimb, e emblema protejată a organizației umanitare și nu se folosește la farmacii."
+	},
+	{
+		"id": "mana:2854",
+		"nota": "România a pus în circulație bancnote din polimer din 1999, printre primele țări din lume. Sunt mai rezistente la apă și la uzură decât cele de hârtie."
+	},
+	{
+		"id": "mana:2855",
+		"nota": "Înainte de 112, Poliția avea 955, Ambulanța 961, iar Pompierii 981. Numerele vechi au fost înlocuite treptat de 112, numărul unic european."
+	},
+	{
+		"id": "mana:2856",
+		"nota": "Pentru noi gestul înseamnă „bine”, dar în câteva țări, ca Iranul, e jignitor. Legătura lui cu luptele de gladiatori de la Roma e mai degrabă o legendă."
+	},
+	{
+		"id": "mana:2857",
+		"nota": "Ceasornicăria s-a dezvoltat la Geneva în secolul XVI, după ce reforma lui Calvin a interzis podoabele, iar mulți bijutieri s-au apucat de ceasuri."
+	},
+	{
+		"id": "mana:2858",
+		"nota": "„Ambidextru” înseamnă în latină „cu două mâini drepte”. Oamenii cu adevărat ambidextri sunt rari, cam unul din o sută."
+	},
+	{
+		"id": "mana:2859",
+		"nota": "Cam 10% dintre oameni sunt stângaci, un procent aproape la fel în toate culturile. Pe 13 august e Ziua internațională a stângacilor."
+	},
+	{
+		"id": "mana:2860",
+		"nota": "Ziua de opt ore a fost cerută de mișcarea muncitorească din secolul XIX, cu lozinca „opt ore de muncă, opt de odihnă, opt pentru ce vrem”."
+	},
+	{
+		"id": "mana:2861",
+		"nota": "Se circulă pe stânga în Marea Britanie, Japonia, India și Australia. Suedia a trecut de pe stânga pe dreapta într-o singură zi, în 1967."
+	},
+	{
+		"id": "mana:2862",
+		"nota": "Galbenul a fost ales la începutul secolului XX fiindcă se vede de departe. Din 1967, toate taxiurile cu licență din New York trebuie să fie galbene."
+	},
+	{
+		"id": "mana:2863",
+		"nota": "Trimestrul are trei luni, semestrul șase. Firmele își socotesc de obicei rezultatele pe trimestre."
+	},
+	{
+		"id": "mana:2864",
+		"nota": "În formatul de 24 de ore, miezul nopții e 00:00, iar amiaza e 12:00. Țări ca SUA folosesc mai ales formatul de 12 ore."
+	},
+	{
+		"id": "mana:2865",
+		"nota": "Numele vine de la forma desenului, cu „petale” ascuțite îndreptate în toate direcțiile. Pe hărțile vechi, nordul era marcat adesea cu o floare de crin."
+	},
+	{
+		"id": "mana:2866",
+		"nota": "Florile de gheață apar când vaporii din cameră îngheață direct pe geamul rece. Geamurile termopan, care nu se răcesc atât, le-au făcut tot mai rare."
+	},
+	{
+		"id": "mana:2867",
+		"nota": "Lunile cu 31 de zile sunt ianuarie, martie, mai, iulie, august, octombrie și decembrie. Se pot număra pe încheieturile pumnului: fiecare „deal” e o lună lungă."
+	},
+	{
+		"id": "mana:2868",
+		"nota": "„A evoca” înseamnă a aminti, „a invoca” a chema în ajutor. Alte perechi de paronime care se încurcă des: „original” și „originar”, „familiar” și „familial”."
+	},
+	{
+		"id": "mana:2869",
+		"nota": "Eufemismul îndulcește un cuvânt aspru sau neplăcut. Numele vine dintr-un cuvânt grecesc care înseamnă „vorbire frumoasă”."
+	},
+	{
+		"id": "mana:2870",
+		"nota": "Comparația spune „păr galben ca aurul”; metafora sare peste „ca” și spune direct „păr de aur”. De aceea metafora e numită uneori o comparație prescurtată."
+	},
+	{
+		"id": "mana:2871",
+		"nota": "Epitetul e de obicei un adjectiv care colorează un substantiv. Nu orice adjectiv e epitet: „masa pătrată” doar descrie, pe când „codrul fremătător” dă o impresie."
+	},
+	{
+		"id": "mana:2872",
+		"nota": "„Oximoron” e el însuși un oximoron: în greacă, „oxys” înseamnă ascuțit, iar „moros” înseamnă prost. Alte exemple: „dulce povară”, „frig arzător”."
+	},
+	{
+		"id": "mana:2873",
+		"nota": "Antiteza așază alături contrarii: bogat și sărac, lumină și întuneric. Eminescu o folosește în „Împărat și proletar” chiar din titlu."
+	},
+	{
+		"id": "mana:2874",
+		"nota": "Întrebarea retorică are răspunsul subînțeles și servește la convingere. Retorica, arta de a convinge prin vorbire, era o materie de studiu în Grecia și Roma antică."
+	},
+	{
+		"id": "mana:2875",
+		"nota": "Româna folosește conjunctivul acolo unde franceza sau italiana pun infinitivul: „vreau să plec” față de „je veux partir”. E o trăsătură comună limbilor din Balcani."
+	},
+	{
+		"id": "mana:2876",
+		"nota": "Imperativul exprimă un ordin sau un îndemn. La persoana a doua singular, forma negativă se face cu infinitivul: „Nu veni!”, „Nu citi!”."
+	},
+	{
+		"id": "mana:2877",
+		"nota": "Vocativul e cazul strigării: „Ioane!”, „Mario!”, „domnule!”. Româna e singura mare limbă romanică ce i-a păstrat forme proprii."
+	},
+	{
+		"id": "mana:2878",
+		"nota": "Dativul arată cui îi e destinat ceva: „i-am dat cartea prietenului”. Genitivul, ușor de confundat cu el, răspunde la „al cui?”."
+	},
+	{
+		"id": "mana:2879",
+		"nota": "Desinența arată forma gramaticală: „pom” – „pomi”, „cânt” – „cânți”. Sufixul face un cuvânt nou; desinența doar schimbă forma aceluiași cuvânt."
+	},
+	{
+		"id": "mana:2880",
+		"nota": "Expresia înseamnă a prezenta un lucru fals drept bun. O cioară vopsită trece drept altă pasăre doar până o privește cineva cu atenție."
+	},
+	{
+		"id": "mana:2881",
+		"nota": "„A trage pe sfoară” înseamnă a înșela pe cineva care are încredere în tine. Cel păcălit nu bagă de seamă decât după ce paguba e făcută."
+	},
+	{
+		"id": "mana:2882",
+		"nota": "Paiele aprind focul și mai tare. Expresia se spune despre cine adaugă motive noi unei certe deja aprinse, în loc s-o liniștească."
+	},
+	{
+		"id": "mana:2883",
+		"nota": "Cine „și-a luat nasul la purtare” a devenit obraznic sau îngâmfat, uitând cu cine vorbește. Se spune des despre un copil sau un subaltern."
+	},
+	{
+		"id": "mana:2884",
+		"nota": "Luntrea și puntea sunt două căi de a trece o apă. Cine „se face luntre și punte” încearcă orice mijloc ca să ajungă la un rezultat sau ca să ajute pe cineva."
+	},
+	{
+		"id": "mana:2885",
+		"nota": "Caii n-au Paști, deci „la Paștele cailor” înseamnă „niciodată”. O expresie cu același sens este „la sfântul așteaptă”."
+	},
+	{
+		"id": "mana:2886",
+		"nota": "Răul pregătit pentru altul se întoarce împotriva celui care l-a plănuit. O idee asemănătoare apare și în Biblie, în Cartea Proverbelor."
+	},
+	{
+		"id": "mana:2887",
+		"nota": "Proverbul e „regula de aur” a moralei, prezentă în aproape toate culturile. Varianta ei pozitivă spune: „fă altora ce ai vrea să-ți facă ție”."
+	},
+	{
+		"id": "mana:2888",
+		"nota": "Apa e ceea ce trece și se uită, iar pietrele sunt ceea ce rămâne statornic. Proverbul pune necazurile de moment în balanță cu ce contează cu adevărat."
+	},
+	{
+		"id": "mana:2889",
+		"nota": "„Democrație” înseamnă „puterea poporului”: „demos” e poporul, iar „kratos” e puterea. Aceeași rădăcină apare în „demografie”, descrierea populației."
+	},
+	{
+		"id": "mana:2890",
+		"nota": "„Filozofie” înseamnă „iubire de înțelepciune”: „philos” e prietenul sau iubitorul, iar „sophia” e înțelepciunea. Un bibliofil e un iubitor de cărți."
+	},
+	{
+		"id": "mana:2891",
+		"nota": "„Graphein” înseamnă „a scrie” sau „a desena”: geografia e descrierea Pământului, caligrafia e scrisul frumos. „Grafit”, mina creionului, are aceeași rădăcină."
+	},
+	{
+		"id": "mana:2892",
+		"nota": "Telefonul aduce sunetul de departe, iar telescopul îți arată ce e departe. „Phone” e sunetul, iar „skopein” înseamnă a privi."
+	},
+	{
+		"id": "mana:2893",
+		"nota": "Cronometrul măsoară timpul, cronologia îl pune în ordine. Un anacronism e un lucru așezat într-o epocă în care nu putea exista."
+	},
+	{
+		"id": "mana:2894",
+		"nota": "Un manuscris e „scris cu mâna”, iar o manufactură e „făcută cu mâna”. Din același „manus” vine și cuvântul românesc „mână”."
+	},
+	{
+		"id": "mana:2895",
+		"nota": "„Tsunami” înseamnă în japoneză „val de port”. Explicația obișnuită: pescarii nu simțeau valul în larg și găseau, la întoarcere, portul distrus."
+	},
+	{
+		"id": "mana:2896",
+		"nota": "În swahili, „safari” înseamnă pur și simplu „călătorie”. Cuvântul a venit acolo din arabul „safar”, cu același înțeles."
+	},
+	{
+		"id": "mana:2897",
+		"nota": "În limba inuiților, „iglu” înseamnă orice casă, nu doar cea din zăpadă. Tot de la ei vine și „caiac”, barca îngustă de vânătoare."
+	},
+	{
+		"id": "mana:2898",
+		"nota": "„Cafea” a venit în română prin turcă, din „kahve”. Cuvântul turcesc venea, la rândul lui, din arabul „qahwa”."
+	},
+	{
+		"id": "mana:2899",
+		"nota": "Aztecii, care vorbeau nahuatl, îi spuneau „tomatl”. Spaniolii au adus în Europa și planta, și numele. Tot din nahuatl vin „avocado” și „chili”."
+	},
+	{
+		"id": "mana:2900",
+		"nota": "Cuvântul norvegian vine dintr-unul vechi, care însemna „bucată de lemn despicată”. Norvegienii au răspândit sportul în Europa în secolul XIX, iar numele a plecat odată cu el."
+	},
+	{
+		"id": "mana:2901",
+		"nota": "„Mayday” vine din francezul „m'aidez”, adică „ajutați-mă”. „Pan-pan”, alt semnal, anunță o urgență mai puțin gravă, fără pericol imediat de moarte."
+	},
+	{
+		"id": "mana:2902",
+		"nota": "„E” e cea mai frecventă literă din engleză. Frecvența literelor a fost, timp de secole, prima unealtă a celor care spărgeau cifruri."
+	},
+	{
+		"id": "mana:2903",
+		"nota": "Cea mai cunoscută pangramă engleză e „The quick brown fox jumps over the lazy dog”. Se folosea ca să se încerce toate tastele unei mașini de scris."
+	},
+	{
+		"id": "mana:2904",
+		"nota": "Alfabetul grec are 24 de litere. Multe sunt folosite și azi în știință: π pentru cerc, Σ pentru sumă, Ω pentru rezistența electrică."
+	},
+	{
+		"id": "mana:2905",
+		"nota": "Hangulul a fost creat în secolul XV, la porunca regelui Sejong, ca să poată învăța să scrie și oamenii simpli. Literele se grupează în blocuri, câte unul pe silabă."
+	},
+	{
+		"id": "mana:2906",
+		"nota": "Devanagari se scrie de la stânga la dreapta, cu o linie orizontală pe deasupra care leagă literele unui cuvânt. Cu aceeași scriere se notează și sanscrita."
+	},
+	{
+		"id": "mana:2907",
+		"nota": "Araba se scrie de la dreapta la stânga, iar literele se leagă între ele chiar și în tipar. Numerele, în schimb, se citesc de la stânga la dreapta."
+	},
+	{
+		"id": "mana:2908",
+		"nota": "Spaniola deschide întrebarea cu „¿” și o închide cu „?”, ca să știi din primul cuvânt pe ce ton se citește. La fel face cu exclamația: „¡Hola!”."
+	},
+	{
+		"id": "mana:2909",
+		"nota": "„Sau” și „s-au”, „iau” și „i-au”, „ia” și „i-a” au aceeași pronunție și scriere diferită. De aceea sunt printre cele mai dese greșeli de ortografie din română."
+	},
+	{
+		"id": "mana:2910",
+		"nota": "Nonogramele au apărut în Japonia la sfârșitul anilor ’80. Numerele de pe margini spun câte căsuțe colorate, la rând, are fiecare linie și fiecare coloană."
+	},
+	{
+		"id": "mana:2911",
+		"nota": "Triunghiul lui Penrose pare făcut din trei bare legate în unghiuri drepte, ceea ce în spațiu e imposibil. Gravorul olandez M.C. Escher a construit lucrări întregi pe asemenea figuri."
+	},
+	{
+		"id": "mana:2912",
+		"nota": "„Quod erat demonstrandum” e latină pentru „ceea ce era de demonstrat”. Formula traduce o expresie grecească folosită de Euclid la capătul demonstrațiilor."
+	},
+	{
+		"id": "mana:2913",
+		"nota": "Jocul de 15 a fost o adevărată modă în anii 1880. Jumătate din amestecările posibile ale pieselor nu se pot rezolva deloc, oricât ai muta."
+	},
+	{
+		"id": "mana:2914",
+		"nota": "Cele nouă puncte stau într-un pătrat de 3×3. Soluția clasică, cu patru linii, cere ca liniile să iasă din pătrat, adică „în afara cutiei”."
+	},
+	{
+		"id": "mana:2915",
+		"nota": "Edward de Bono a introdus termenul în 1967. Ideea lui: în loc să sapi mai adânc aceeași groapă, încerci să sapi în alt loc."
+	},
+	{
+		"id": "mana:2916",
+		"nota": "Koanul nu are o soluție logică: rostul lui e să blocheze gândirea obișnuită și să ducă la o înțelegere directă. Întrebarea despre o singură palmă e atribuită maestrului Hakuin."
+	},
+	{
+		"id": "mana:2917",
+		"nota": "Contradicția e falsă orice s-ar întâmpla în lume. Opusul ei e tautologia, adevărată în orice situație."
+	},
+	{
+		"id": "mana:2918",
+		"nota": "La labirinturile de pe hârtie, pornirea de la ieșire e adesea mai ușoară. Matematicianul George Pólya recomanda metoda în cartea „Cum rezolvi o problemă”, din 1945."
+	},
+	{
+		"id": "mana:2919",
+		"nota": "Pe numele lui adevărat Charles Dodgson, a predat matematică la Oxford și a publicat cărți de logică, pline de silogisme amuzante."
+	},
+	{
+		"id": "mana:2920",
+		"nota": "Potrivit legendei, poetul grec Simonide și-a amintit locul fiecărui invitat după prăbușirea unei săli de banchet. Campionii de memorie folosesc metoda și azi."
+	},
+	{
+		"id": "mana:2921",
+		"nota": "Plutarh povestește că atenienii au păstrat corabia eroului Tezeu, înlocuind scândurile putrede una câte una. Filozofii s-au întrebat apoi dacă e tot aceeași corabie."
+	},
+	{
+		"id": "mana:2922",
+		"nota": "Paradoxul poartă numele filozofului francez Jean Buridan, din secolul XIV, deși exemplul nu apare ca atare în scrierile lui. Arată că o voință fără niciun motiv de a alege poate rămâne blocată."
+	},
+	{
+		"id": "mana:2923",
+		"nota": "Numele vine din grecescul „para”, alături, și „eidolon”, imagine. Creierul e atât de pregătit să găsească fețe, încât le vede și acolo unde nu sunt."
+	},
+	{
+		"id": "mana:2924",
+		"nota": "Oxigenul e necesar ca să ardă un foc, dar nu e suficient: mai trebuie combustibil și căldură. O condiție suficientă, în schimb, garantează singură rezultatul."
+	},
+	{
+		"id": "mana:2925",
+		"nota": "Mulți oameni rămân ani la rând la aceeași bancă sau la același abonament, chiar când există variante mai bune. Schimbarea pare un risc, iar neschimbarea, o alegere sigură."
+	},
+	{
+		"id": "mana:2926",
+		"nota": "„Tertium non datur”, spuneau logicienii latini: a treia variantă nu e dată. Unele logici moderne, numite intuiționiste, renunță totuși la el."
+	},
+	{
+		"id": "mana:2927",
+		"nota": "Lema e o teoremă-unealtă: se demonstrează ca să ajute la altceva. Corolarul e invers: o consecință care decurge aproape imediat dintr-o teoremă deja dovedită."
+	},
+	{
+		"id": "mana:2928",
+		"nota": "„Dacă îi dai voie să mănânce o bomboană, mâine va vrea tot dulapul” e o pantă alunecoasă. Greșeala nu e grija, ci certitudinea: lanțul de pași nu e dovedit."
+	},
+	{
+		"id": "mana:2929",
+		"nota": "Secole la rând, majoritatea a crezut că Soarele se învârte în jurul Pământului. În latină, greșeala se numește „argumentum ad populum”."
+	},
+	{
+		"id": "mana:2930",
+		"nota": "Banii și timpul cheltuiți deja nu se mai întorc, oricum ai decide. Contează doar ce urmează, dar mintea simte renunțarea ca pe o risipă."
+	},
+	{
+		"id": "mana:2931",
+		"nota": "Tendința ne face să vedem peste tot dovezi pentru ce credem deja. Remediul clasic din știință e să cauți dinadins faptele care ți-ar putea dărâma ipoteza."
+	},
+	{
+		"id": "mana:2932",
+		"nota": "Psihologul Edward Thorndike l-a numit așa în 1920: ofițerii își notau soldații fie bine la toate, fie prost la toate, ca și cum o impresie le colora pe celelalte."
+	},
+	{
+		"id": "mana:2933",
+		"nota": "Dacă Epimenide, el însuși cretan, spune adevărul, atunci minte. Fraza lui e socotită strămoșul paradoxului mincinosului, deși, strict, poate fi pur și simplu falsă."
+	},
+	{
+		"id": "mana:2934",
+		"nota": "Șahul și pokerul sunt jocuri cu sumă nulă: ce câștigă unul pierde altul. Comerțul, în schimb, poate aduce câștig ambelor părți."
+	},
+	{
+		"id": "mana:2935",
+		"nota": "Mensa primește membri care trec de pragul celor mai buni 2% la un test de inteligență. Numele înseamnă „masă” în latină: o masă rotundă, fără locuri de onoare."
+	},
+	{
+		"id": "mana:2936",
+		"nota": "Enigma schimba cifrul la fiecare literă apăsată. Lucrul matematicienilor polonezi, continuat apoi la Bletchley Park, a permis citirea mesajelor germane."
+	},
+	{
+		"id": "mana:2937",
+		"nota": "SEND + MORE = MONEY a fost publicat de englezul Henry Dudeney în 1924. Fiecare literă ascunde o cifră, iar literele diferite ascund cifre diferite."
+	},
+	{
+		"id": "mana:2938",
+		"nota": "La solitar, piesa peste care s-a sărit e scoasă de pe tablă. Pe tabla englezească, cu 33 de găuri, scopul e să rămână o singură piesă, în centru."
+	},
+	{
+		"id": "mana:2939",
+		"nota": "„Ai încetat să minți?” te prinde oricum ai răspunde: și „da”, și „nu” recunosc că ai mințit. Logicienii o mai numesc „întrebare complexă”."
+	},
+	{
+		"id": "mana:2940",
+		"nota": "Desenul rață-iepure a apărut într-o revistă germană de umor în 1892. Mintea vede pe rând rața și iepurele, dar nu le poate vedea pe amândouă deodată."
+	},
+	{
+		"id": "mana:2941",
+		"nota": "După ce afli rezultatul unui meci sau al unor alegeri, ți se pare că „se vedea de la o poștă”. Mintea rescrie amintirea a ce credeai înainte."
+	},
+	{
+		"id": "mana:2942",
+		"nota": "Economistul italian Vilfredo Pareto a observat, pe la 1900, că 80% din pământul Italiei era al unei cincimi din populație. Cifrele sunt o regulă aproximativă, nu o lege exactă."
+	},
+	{
+		"id": "mana:2943",
+		"nota": "Autoreferința e sursa multor paradoxuri, de la cel al mincinosului la teoremele lui Gödel. Nu e însă mereu paradoxală: propoziția din întrebare e pur și simplu adevărată."
+	},
+	{
+		"id": "mana:2944",
+		"nota": "La Socrate și Platon, dialectica e căutarea adevărului prin întrebări și răspunsuri. Mai târziu, Hegel a folosit cuvântul pentru mersul ideilor prin contradicții."
+	},
+	{
+		"id": "mana:2945",
+		"nota": "„A dacă și numai dacă B” înseamnă că A implică B și B implică A. În manualele românești de matematică se prescurtează „ddacă”."
+	},
+	{
+		"id": "mana:2946",
+		"nota": "Vânzările de înghețată și înecurile cresc împreună vara, dar înghețata nu provoacă înecuri: amândouă vin din căldură. O a treia cauză, ascunsă, explică legătura."
+	},
+	{
+		"id": "mana:2947",
+		"nota": "„Am muncit toată noaptea, merit nota maximă” e un apel la milă: efortul nu spune nimic despre calitatea lucrării. În latină, greșeala se numește „ad misericordiam”."
+	},
+	{
+		"id": "mana:2948",
+		"nota": "„Euristică” vine dintr-un verb grecesc care înseamnă „a găsi”. Multe erori de gândire sunt, de fapt, euristici bune folosite unde nu se potrivesc."
+	},
+	{
+		"id": "mana:2949",
+		"nota": "Einstein și-a imaginat, la 16 ani, cum ar fi să alerge alături de o rază de lumină. Experimentele de gândire testează o idee acolo unde un experiment real e imposibil."
+	},
+	{
+		"id": "mana:2950",
+		"nota": "O cunoaștere „a priori” nu are nevoie de observație: „orice burlac e necăsătorit” e adevărat din definiție. Opusul ei, „a posteriori”, vine din experiență."
+	},
+	{
+		"id": "mana:2951",
+		"nota": "„Non sequitur” înseamnă „nu urmează”. „Afară plouă, deci mâine iau zece la matematică” e un non sequitur: concluzia n-are legătură cu ce s-a spus."
+	},
+	{
+		"id": "mana:2952",
+		"nota": "În varianta clasică, cu 12 monede dintre care una e falsă, mai ușoară sau mai grea, trei cântăriri ajung ca s-o găsești și să afli cum e."
+	},
+	{
+		"id": "mana:2953",
+		"nota": "Cei patru, cu 1, 2, 5 și 10 minute fiecare, pot trece în 17 minute. Trucul e ca cei doi mai lenți să treacă împreună."
+	},
+	{
+		"id": "mana:2954",
+		"nota": "Soluția clasică: îl întrebi pe oricare ce ar spune celălalt că e ușa bună, apoi o alegi pe cealaltă. Enigma a ajuns celebră prin filmul „Labyrinth”, din 1986."
+	},
+	{
+		"id": "mana:2955",
+		"nota": "Psihologii au descris peste o sută de erori cognitive. Ele nu sunt semne de prostie, ci scurtături ale minții, folosite unde nu se potrivesc."
+	},
+	{
+		"id": "mana:2956",
+		"nota": "Într-un experiment din 2000, studenții puși să poarte un tricou jenant au crezut că i-a observat jumătate din sală. În realitate, i-a observat cam un sfert."
+	},
+	{
+		"id": "mana:2957",
+		"nota": "Filumenia vine din latinescul „lumen”, lumină, cu prefixul grecesc „fil-”, iubitor. Colecțiile mari ajung la zeci de mii de etichete din toată lumea."
+	},
+	{
+		"id": "mana:2958",
+		"nota": "Inventatorul, John Shepherd-Barron, a vrut un cod de șase cifre, dar soția lui spunea că ține minte doar patru. Așa a rămas PIN-ul de patru cifre."
+	},
+	{
+		"id": "mana:2959",
+		"nota": "Pe 26 iunie 1974, într-un supermarket din Ohio, s-a scanat un pachet de gumă Wrigley's. Pachetul e păstrat azi la un muzeu din Washington."
+	},
+	{
+		"id": "mana:2960",
+		"nota": "„Wi-Fi” a fost ales în 1999 de o firmă de branding, ca nume ușor de ținut minte. Explicația „wireless fidelity” a apărut după și nu e corectă."
+	},
+	{
+		"id": "mana:2961",
+		"nota": "Din 1949, toată China folosește ora Beijingului. În vestul țării, Soarele răsare uneori abia pe la ora 10."
+	},
+	{
+		"id": "mana:2962",
+		"nota": "Acele așezate la 10 și 10 încadrează sigla de sub ele și amintesc de un zâmbet. Poveștile care leagă ora de o moarte celebră sunt legende fără temei."
+	},
+	{
+		"id": "mana:2963",
+		"nota": "Istoricul britanic C. Northcote Parkinson a scris-o în 1955, într-un eseu ironic din The Economist. Exemplul lui: o doamnă care petrece o zi întreagă trimițând o carte poștală."
+	},
+	{
+		"id": "mana:2964",
+		"nota": "Laurence J. Peter l-a descris în 1969. Ideea: oamenii sunt promovați pentru ce fac bine, până ajung acolo unde nu mai fac bine."
+	},
+	{
+		"id": "mana:2965",
+		"nota": "Psihologul danez Edgar Rubin a studiat-o în 1915. Ochiul alege, pe rând, ce e figură și ce e fundal, dar nu le poate vedea pe amândouă deodată."
+	},
+	{
+		"id": "mana:2966",
+		"nota": "„Lego” vine din danezul „leg godt”, adică „joacă bine”. Firma, înființată în 1932, a început cu jucării de lemn, înainte de cărămizile de plastic."
+	},
+	{
+		"id": "mana:2967",
+		"nota": "Fiecare caracter Braille e o celulă de 2 × 3 puncte, adică 64 de combinații posibile. Louis Braille a creat sistemul la 15 ani, în 1824."
+	},
+	{
+		"id": "mana:2968",
+		"nota": "Data a fost aleasă fiindcă emoji-ul cu calendar arată, pe multe telefoane, ziua de 17 iulie. Ziua a fost lansată în 2014."
+	},
+	{
+		"id": "mana:2969",
+		"nota": "Ward Cunningham a luat cuvântul de la autobuzele „Wiki Wiki” ale aeroportului din Honolulu, când și-a numit în 1995 primul site editabil de oricine."
+	},
+	{
+		"id": "mana:2970",
+		"nota": "Anul roman începea odinioară în martie, așa că „december” era a zecea lună. Septembrie, octombrie și noiembrie poartă și ele, în latină, numerele șapte, opt și nouă."
+	},
+	{
+		"id": "mana:2971",
+		"nota": "Ingvar Kamprad a format numele din inițialele lui, ale fermei Elmtaryd și ale satului Agunnaryd. A fondat firma în 1943, la 17 ani."
+	},
+	{
+		"id": "mana:2972",
+		"nota": "Adolf „Adi” Dassler și-a lipit porecla de primele litere ale numelui de familie. Explicația „All Day I Dream About Sports” e o glumă de mai târziu."
+	},
+	{
+		"id": "mana:2973",
+		"nota": "Secunda „intercalară” se adaugă de obicei la 30 iunie sau 31 decembrie. Din 1972 s-au adăugat 27, dar s-a hotărât ca practica să fie abandonată până în 2035."
+	},
+	{
+		"id": "mana:2974",
+		"nota": "Pentru prima dată, „cuvântul anului” n-a fost un cuvânt, ci un emoji. Alegerea s-a bazat pe cât de des a fost folosit în acel an."
+	},
+	{
+		"id": "mana:2975",
+		"nota": "Richard James a văzut un arc căzut de pe raft „mergând”. La prima vânzare, în 1945, într-un magazin din Philadelphia, s-au dus 400 de bucăți în 90 de minute."
+	},
+	{
+		"id": "mana:2976",
+		"nota": "Larry Page și Sergey Brin și-au numit proiectul „BackRub” în 1996, după felul în care număra legăturile dintre pagini. Numele Google a venit în 1997."
+	},
+	{
+		"id": "mana:2977",
+		"nota": "Caratul arată câte părți de aur sunt din 24: aurul de 18 carate are 18 părți, adică 75%, iar aurul pur are 24. La pietrele prețioase, caratul e altceva: o unitate de masă."
+	},
+	{
+		"id": "mana:2978",
+		"nota": "Țolul a fost fixat exact la 2,54 centimetri în 1959, printr-un acord între țările vorbitoare de engleză. Diagonalele ecranelor se măsoară și azi în țoli."
+	},
+	{
+		"id": "mana:2979",
+		"nota": "Mila romană avea o mie de pași dubli, de unde și numele, de la „mille”. Mila terestră de azi are 1609 metri, iar cea marină, 1852."
+	},
+	{
+		"id": "mana:2980",
+		"nota": "„QR” vine din englezescul „Quick Response”. Codul a fost inventat în 1994 în Japonia, ca să urmărească piese auto în fabrici, și se citește chiar dacă e parțial stricat."
+	},
+	{
+		"id": "mana:2981",
+		"nota": "Lustrul era la romani perioada de cinci ani dintre două recensăminte, încheiată cu o ceremonie de purificare. Azi cuvântul e rar și se folosește mai ales în scris."
+	},
+	{
+		"id": "mana:2982",
+		"nota": "„Chenzină” vine din francezul „quinzaine”, cincisprezece zile. Salariile se plăteau „pe chenzină”, adică de două ori pe lună."
+	},
+	{
+		"id": "mana:2983",
+		"nota": "„Nomofobie” vine din englezescul „no mobile phobia”. Cuvântul a apărut într-un studiu britanic din 2008."
+	},
+	{
+		"id": "mana:2984",
+		"nota": "Desenatorii foloseau miez de pâine până în secolul XVIII, când a apărut radiera de cauciuc. În engleză ea se numește și azi „rubber”, de la „to rub”, a freca."
+	},
+	{
+		"id": "mana:2985",
+		"nota": "Conservele de metal au apărut la începutul secolului XIX, iar deschizătorul abia pe la jumătatea lui. Până atunci, unele etichete recomandau dalta și ciocanul."
+	},
+	{
+		"id": "mana:2986",
+		"nota": "Româna folosește „scara lungă”: milion, miliard, bilion (12 zerouri), biliard, trilion (18 zerouri). Englezescul „trillion” înseamnă la noi bilion."
+	},
+	{
+		"id": "mana:2987",
+		"nota": "Pe multe cadrane, ora 4 e scrisă „IIII”, nu „IV”. Explicațiile sunt mai multe, de la echilibrul vizual cu „VIII” la tradiție, și niciuna nu e sigură."
+	},
+	{
+		"id": "mana:2988",
+		"nota": "Britanicii au trecut direct de la 2 la 14 septembrie 1752. Legenda spune că unii au cerut înapoi cele „11 zile furate”, dar dovezile pentru revolte sunt slabe."
+	},
+	{
+		"id": "mana:2989",
+		"nota": "Iconița arată o dischetă de 3,5 țoli, un suport de memorie abandonat de mult. Mulți utilizatori tineri n-au ținut niciodată una în mână."
+	},
+	{
+		"id": "mana:2990",
+		"nota": "Unele discuri de piatră erau mai mari decât un om. Proprietatea se schimba fără ca piatra să fie mutată: toată lumea știa al cui e."
+	},
+	{
+		"id": "mana:2991",
+		"nota": "„Salariu” vine din latinescul „salarium”, legat de „sal”, sare. Ideea că soldații romani erau plătiți direct în sare nu e însă dovedită."
+	},
+	{
+		"id": "mana:2992",
+		"nota": "Aliterația repetă consoane, ca „v” în „vâjâind ca vijelia”. Repetarea vocalelor are un nume separat: asonanță."
+	},
+	{
+		"id": "mana:2993",
+		"nota": "„Cópii” sunt reproduceri, „copíi” sunt cei mici: aceeași scriere, alt accent. Accentul se scrie doar când, fără el, textul ar putea fi înțeles greșit."
+	},
+	{
+		"id": "mana:2994",
+		"nota": "Taino era limba vorbită în Antile când a ajuns Columb. Spaniolii au preluat de la ei „hamaca” și „huracán”, care au intrat apoi în toate limbile europene."
+	},
+	{
+		"id": "mana:2995",
+		"nota": "Geysir e numele unui izvor fierbinte din Islanda, primul de acest fel cunoscut în Europa. Numele lui, legat de un verb care înseamnă „a țâșni”, a ajuns numele tuturor."
+	},
+	{
+		"id": "mana:2996",
+		"nota": "Samuel Johnson a lucrat nouă ani la dicționar, care a avut peste 40.000 de cuvinte. Unele definiții sunt glumețe: lexicograful e „un truditor inofensiv”."
+	},
+	{
+		"id": "mana:2997",
+		"nota": "Noah Webster a simplificat ortografia americană. De la el vin „color” în loc de „colour” și „center” în loc de „centre”."
+	},
+	{
+		"id": "mana:2998",
+		"nota": "Dicționarul limbii române al Academiei, numit și „Dicționarul tezaur”, a fost lucrat de mai multe generații de lingviști, timp de peste un secol. Are zeci de volume."
+	},
+	{
+		"id": "mana:2999",
+		"nota": "DOOM înseamnă „Dicționarul ortografic, ortoepic și morfologic al limbii române”. Ediția a treia a apărut în 2021."
+	},
+	{
+		"id": "mana:3000",
+		"nota": "Autorii, din Școala Ardeleană, au scris-o în latină și au notat cuvintele românești cu litere latine, nu chirilice. Voiau să arate originea romană a limbii."
+	},
+	{
+		"id": "mana:3001",
+		"nota": "Lexiconul de la Buda a apărut în 1825 și a fost unul dintre primele dicționare tipărite ale românei. Folosea litere latine, într-o ortografie apropiată de latină."
+	},
+	{
+		"id": "mana:3002",
+		"nota": "Neacșu din Câmpulung îl avertiza pe judele Brașovului despre mișcările armatei turcești. Scrisoarea e în română, dar cu litere chirilice."
+	},
+	{
+		"id": "mana:3003",
+		"nota": "Ramura care studiază numele de locuri e toponimia, iar cea pentru numele de persoane, antroponimia. „Onomastică” vine din grecescul „onoma”, nume."
+	},
+	{
+		"id": "mana:3004",
+		"nota": "Morfologia studiază forma cuvântului; sintaxa, felul în care cuvintele se leagă între ele. „Sintaxă” vine din greacă și înseamnă „așezare împreună”."
+	},
+	{
+		"id": "mana:3005",
+		"nota": "Semiotica studiază orice semn care înlocuiește altceva: un cuvânt, un semafor, un gest. Umberto Eco, autorul romanului „Numele trandafirului”, a fost și semiotician."
+	},
+	{
+		"id": "mana:3006",
+		"nota": "„Pară” și „bară” diferă printr-un singur fonem. Fonemul e o unitate abstractă: un „r” rostit diferit de doi oameni rămâne același fonem."
+	},
+	{
+		"id": "mana:3007",
+		"nota": "În „pomii” sunt trei morfeme: rădăcina „pom-”, desinența de plural și articolul. Un morfem poate fi și o singură literă."
+	},
+	{
+		"id": "mana:3008",
+		"nota": "Sinecdoca înlocuiește întregul cu o parte a lui, sau invers. E rudă apropiată cu metonimia, care înlocuiește un lucru cu altul legat de el, ca „a citi un Eminescu”."
+	},
+	{
+		"id": "mana:3009",
+		"nota": "Litota e opusul hiperbolei: micșorează în cuvinte ca să sublinieze în înțeles. „Nu e prost deloc” spune, de fapt, că cineva e foarte isteț."
+	},
+	{
+		"id": "mana:3010",
+		"nota": "Anafora repetă cuvântul la început, iar epifora, la sfârșit. Numele vine dintr-un cuvânt grecesc care înseamnă „ducere înapoi”."
+	},
+	{
+		"id": "mana:3011",
+		"nota": "Proto-indo-europeana n-a lăsat niciun text: e reconstruită comparând limbile care descind din ea. Se crede că era vorbită acum cinci-șase mii de ani."
+	},
+	{
+		"id": "mana:3012",
+		"nota": "Sir William Jones a spus, într-o conferință ținută la Calcutta în 1786, că cele trei limbi par să vină dintr-o sursă comună. Ideea a pus bazele lingvisticii comparate."
+	},
+	{
+		"id": "mana:3013",
+		"nota": "Legea lui Grimm explică de ce latinescul „pater” corespunde englezescului „father”: „p” a devenit „f”. Jacob a formulat-o în 1822, în gramatica lui germană."
+	},
+	{
+		"id": "mana:3014",
+		"nota": "Mulți credeau că Linear B ascunde o limbă necunoscută. Michael Ventris, arhitect de meserie, a arătat în 1952 că e o formă foarte veche de greacă."
+	},
+	{
+		"id": "mana:3015",
+		"nota": "Champollion a pornit de la Piatra din Rosetta, care avea același text în trei scrieri. Și-a anunțat descoperirea în 1822, într-o scrisoare către o academie franceză."
+	},
+	{
+		"id": "mana:3016",
+		"nota": "Glagolitica e atribuită lui Chiril, iar chirilica, care a înlocuit-o, a primit numele în cinstea lui. Literele glagolitice au forme rotunjite, cu bucle."
+	},
+	{
+		"id": "mana:3017",
+		"nota": "Liniile ogham erau trase de o parte și de alta a unei muchii. Inscripțiile s-au păstrat mai ales pe pietre funerare și de hotar și sunt, de obicei, nume de oameni."
+	},
+	{
+		"id": "mana:3018",
+		"nota": "În mandarină, aceeași silabă „ma” poate însemna „mamă”, „cal” sau „a certa”, după ton. Mandarina are patru tonuri, plus unul neutru."
+	},
+	{
+		"id": "mana:3019",
+		"nota": "În limbile aglutinante, sufixele se înșiră ca mărgelele. Un singur cuvânt turcesc lung poate ține locul unei propoziții întregi din română."
+	},
+	{
+		"id": "mana:3020",
+		"nota": "Latina clasică avea șase cazuri, între ele ablativul. Româna l-a pierdut și exprimă aceleași înțelesuri cu prepoziții: „cu”, „de la”, „din”."
+	},
+	{
+		"id": "mana:3021",
+		"nota": "Eugen Coșeriu s-a născut în 1921, în Basarabia, și a predat aproape trei decenii la Tübingen. A scris în multe limbi și a primit zeci de titluri de doctor honoris causa."
+	},
+	{
+		"id": "mana:3022",
+		"nota": "Muzeul Limbii Române, întemeiat de Sextil Pușcariu, a pregătit atât Dicționarul Academiei, cât și Atlasul lingvistic român."
+	},
+	{
+		"id": "mana:3023",
+		"nota": "Whorf lucra la o companie de asigurări și făcea lingvistică în timpul liber. Forma tare a ipotezei, după care limba hotărăște gândirea, e respinsă de majoritatea lingviștilor."
+	},
+	{
+		"id": "mana:3024",
+		"nota": "Tolkien era filolog și a inventat limbile înaintea poveștilor. Quenya e inspirată din finlandeză, iar Sindarin, cealaltă limbă elfică, din galeză."
+	},
+	{
+		"id": "mana:3025",
+		"nota": "„A închiria” înseamnă și a da, și a lua cu chirie, iar înțelesul îl alege contextul. Engleza are exemple celebre, ca „to sanction”: a aproba și a pedepsi."
+	},
+	{
+		"id": "mana:3026",
+		"nota": "Georges Perec a scris în 1969 un roman întreg fără litera „e”, „La Disparition”. A fost tradus în engleză, tot fără nicio literă „e”."
+	},
+	{
+		"id": "mana:3027",
+		"nota": "Acrostihul ascunde un nume sau un mesaj în primele litere ale versurilor. Unii psalmi din Biblie sunt acrostihuri: fiecare strofă începe cu următoarea literă ebraică."
+	},
+	{
+		"id": "mana:3028",
+		"nota": "„A iubi” vine din slavul „ljubiti”, la fel ca „drag” și „nevastă”. Româna a primit multe cuvinte de bază din slavă, deși gramatica ei a rămas latină."
+	},
+	{
+		"id": "mana:3029",
+		"nota": "„Oraș” vine din maghiarul „város”. Tot din maghiară au intrat în română „a cheltui”, „gând” și „hotar”."
+	},
+	{
+		"id": "mana:3030",
+		"nota": "„Papuc” vine din turcă, iar turcii îl luaseră din persană. Tot din turcă au intrat „ciorbă”, „cerdac” și „dulap”."
+	},
+	{
+		"id": "mana:3031",
+		"nota": "Căpitanul Charles Boycott refuza să scadă arenzile. Vecinii, servitorii și negustorii au rupt orice legătură cu el, iar numele lui a devenit un cuvânt în multe limbi."
+	},
+	{
+		"id": "mana:3032",
+		"nota": "Étienne de Silhouette a impus economii drastice și a rămas ministru doar câteva luni. Explicația cea mai răspândită: portretele ieftine, doar din contur, au ajuns numite după el."
+	},
+	{
+		"id": "mana:3033",
+		"nota": "Raymond Smullyan a publicat în 1978 cartea „Cum se numește cartea asta?”. Enigmele lui cu cavaleri și mincinoși duc, pas cu pas, până la teoremele lui Gödel."
+	},
+	{
+		"id": "mana:3034",
+		"nota": "Sam Loyd a început cu probleme de șah, la 14 ani. „Cyclopedia of Puzzles”, cu sute de probleme ale lui, a apărut în 1914, după moartea lui."
+	},
+	{
+		"id": "mana:3035",
+		"nota": "Martin Gardner a scris rubrica „Mathematical Games” între 1956 și 1981. Deși nu studiase matematica, a inspirat generații de matematicieni."
+	},
+	{
+		"id": "mana:3036",
+		"nota": "Enigma a apărut în 1962 în revista Life International și întreabă, la final, cine ține zebra. Legătura cu Einstein și afirmația că doar 2% o pot rezolva nu au nicio sursă."
+	},
+	{
+		"id": "mana:3037",
+		"nota": "Problema a fost propusă în 1848 și are 92 de soluții. Dacă nu numeri separat rotirile și oglindirile, rămân doar 12 cu adevărat diferite."
+	},
+	{
+		"id": "mana:3038",
+		"nota": "Turul calului e cunoscut de peste o mie de ani, iar Euler i-a dedicat o lucrare în 1759. Dacă ultima săritură revine la pătratul de plecare, turul se numește închis."
+	},
+	{
+		"id": "mana:3039",
+		"nota": "Argumentul apare în „Cugetări”, carte publicată după moartea lui Pascal, în 1670. E socotit unul dintre primele exemple de teoria deciziei."
+	},
+	{
+		"id": "mana:3040",
+		"nota": "Problema a fost formulată de filozoafa britanică Philippa Foot, în 1967. Variante ale ei se discută azi la programarea mașinilor care se conduc singure."
+	},
+	{
+		"id": "mana:3041",
+		"nota": "„Toți corbii sunt negri” e logic echivalent cu „tot ce nu e negru nu e corb”. Deci, ciudat, orice măr verde ar confirma puțin afirmația despre corbi."
+	},
+	{
+		"id": "mana:3042",
+		"nota": "Prizonierul exclude pe rând vineri, joi, miercuri și conchide că nu poate fi executat. Când călăul vine miercuri, e cu adevărat surprins."
+	},
+	{
+		"id": "mana:3043",
+		"nota": "Socoteala naivă spune că schimbul câștigă în medie, dar atunci ar merita să schimbi la nesfârșit. Greșeala stă în felul în care sunt puse probabilitățile."
+	},
+	{
+		"id": "mana:3044",
+		"nota": "„Modus ponens” înseamnă în latină „modul care afirmă”. Fratele lui, modus tollens, merge invers: dacă A implică B și B e fals, atunci și A e fals."
+	},
+	{
+		"id": "mana:3045",
+		"nota": "Strada poate fi udă și din alt motiv: o stropitoare, o țeavă spartă. Greșeala citește o implicație invers, ca și cum ar merge în ambele sensuri."
+	},
+	{
+		"id": "mana:3046",
+		"nota": "Augustus De Morgan le-a formulat în secolul XIX. Exemplu: „nu e adevărat că e și cald, și soare” înseamnă „ori nu e cald, ori nu e soare”."
+	},
+	{
+		"id": "mana:3047",
+		"nota": "Pe el se sprijină întrebarea celebră a lui Leibniz: „De ce există ceva, mai degrabă decât nimic?”."
+	},
+	{
+		"id": "mana:3048",
+		"nota": "„Socrate e om, deci e muritor” e o entimemă: premisa „toți oamenii sunt muritori” e subînțeleasă. Aproape toate argumentele de zi cu zi au forma asta."
+	},
+	{
+		"id": "mana:3049",
+		"nota": "„Tu quoque” înseamnă în latină „și tu”. Un medic fumător care spune că fumatul dăunează are totuși dreptate: ipocrizia lui nu schimbă faptele."
+	},
+	{
+		"id": "mana:3050",
+		"nota": "Numele vine din englezescul „red herring”, un pește afumat, cu miros puternic. Explicația obișnuită: era folosit ca să abată câinii de pe o urmă."
+	},
+	{
+		"id": "mana:3051",
+		"nota": "Avioanele lovite în motor nu se mai întorceau, deci nu apăreau în statistică. Wald a înțeles că locurile fără găuri erau tocmai cele vitale."
+	},
+	{
+		"id": "mana:3052",
+		"nota": "David Dunning și Justin Kruger au publicat studiul în 1999. Explicația lor: cine nu știe destul nu are nici uneltele cu care să-și vadă greșelile."
+	},
+	{
+		"id": "mana:3053",
+		"nota": "Amos Tversky și Daniel Kahneman l-au descris în 1974. Un preț de pornire mare face ca orice reducere să pară o afacere, chiar dacă prețul final rămâne mare."
+	},
+	{
+		"id": "mana:3054",
+		"nota": "Psihologul Bertram Forer a dat în 1948 tuturor studenților același „profil de personalitate”, iar ei l-au găsit foarte potrivit. Pe același efect se sprijină horoscoapele."
+	},
+	{
+		"id": "mana:3055",
+		"nota": "În experimentul cu „Linda”, mulți au socotit mai probabil ca ea să fie „casieră și feministă” decât doar „casieră”. E imposibil: a doua variantă o cuprinde pe prima."
+	},
+	{
+		"id": "mana:3056",
+		"nota": "„Theory of Games and Economic Behavior” a apărut în 1944. John von Neumann, de origine maghiară, a lucrat și la proiectarea primelor calculatoare moderne."
+	},
+	{
+		"id": "mana:3057",
+		"nota": "Paradoxul a fost gândit de fizicianul William Newcomb și făcut cunoscut de filozoful Robert Nozick, în 1969. Fiecare tabără consideră alegerea ei evidentă."
+	},
+	{
+		"id": "mana:3058",
+		"nota": "Matematicianul german Dietrich Braess l-a descris în 1968. Fiecare șofer alege drumul cel mai bun pentru el, iar suma alegerilor poate fi mai proastă pentru toți."
+	},
+	{
+		"id": "mana:3059",
+		"nota": "Marchizul de Condorcet l-a descris în 1785. Chiar dacă fiecare votant are preferințe logice, majoritatea poate ajunge la un cerc fără câștigător."
+	},
+	{
+		"id": "mana:3060",
+		"nota": "Alfred Binet a creat testul împreună cu Théodore Simon, la cererea școlilor franceze. Binet nu credea că inteligența e un număr fix, dat o dată pentru totdeauna."
+	},
+	{
+		"id": "mana:3061",
+		"nota": "Criptografia face mesajul de neînțeles, pe când steganografia ascunde chiar faptul că există un mesaj. Herodot povestește despre un mesaj tatuat pe capul ras al unui sclav."
+	},
+	{
+		"id": "mana:3062",
+		"nota": "În experimentul lui Solomon Asch, ceilalți din sală erau actori care răspundeau greșit dinadins. Cam trei sferturi dintre participanți au cedat măcar o dată."
+	},
+	{
+		"id": "mana:3063",
+		"nota": "Și otrava unei ciuperci e naturală, iar ochelarii nu sunt. Ce e natural nu e, doar prin asta, nici bun, nici sigur."
+	},
+	{
+		"id": "mana:3064",
+		"nota": "Exemplul e al filozofului Antony Flew. Când apare un scoțian care pune zahăr, regula nu e retrasă: scoțianul e declarat „neadevărat”, ca să nu cadă afirmația."
+	},
+	{
+		"id": "mana:3065",
+		"nota": "Principiul îi poartă numele unui american, Robert Hanlon, care l-a trimis într-o culegere de glume în 1980. Ideea însă e mult mai veche."
+	},
+	{
+		"id": "mana:3066",
+		"nota": "Jurnalistul britanic Christopher Hitchens l-a formulat la începutul anilor 2000. Pune povara dovezii pe cel care afirmă, nu pe cel care se îndoiește."
+	},
+	{
+		"id": "mana:3067",
+		"nota": "Într-un experiment celebru, cei care primiseră o cană cereau pe ea cam de două ori mai mult decât erau dispuși să plătească cei care n-aveau."
+	},
+	{
+		"id": "mana:3068",
+		"nota": "Vocalele din „Barbara”, „Celarent” sau „Darii” arată tipul fiecărei propoziții din silogism. Numele sunt ajutoare de memorare inventate de logicienii medievali."
+	},
+	{
+		"id": "mana:3069",
+		"nota": "Psihologul american J.P. Guilford a deosebit, în anii ’50, gândirea convergentă, care caută un răspuns, de cea divergentă, care caută cât mai multe idei."
+	},
+	{
+		"id": "mana:3070",
+		"nota": "Chiar fraza din paradox definește numărul, în mai puțin de o sută de cuvinte. Russell l-a publicat în 1906 și l-a atribuit unui bibliotecar de la Oxford, G.G. Berry."
+	},
+	{
+		"id": "mana:3071",
+		"nota": "Wittgenstein a scris o parte din „Tractatus” pe front, în Primul Război Mondial, și l-a publicat în 1921. Convins că rezolvase problemele filozofiei, s-a făcut apoi învățător de țară."
+	},
+	{
+		"id": "mana:3072",
+		"nota": "Cartea lui Frege din 1879, „Begriffsschrift”, e socotită nașterea logicii moderne. O scrisoare a lui Russell din 1902 i-a arătat o contradicție într-o lucrare de mai târziu."
+	},
+	{
+		"id": "mana:3073",
+		"nota": "∀ e un A întors, de la „all”, iar ∃ e un E întors, de la „exists”. Cu ele, „toți oamenii sunt muritori” se poate scrie ca formulă."
+	},
+	{
+		"id": "mana:3074",
+		"nota": "Lotfi Zadeh a propus mulțimile fuzzy în 1965. Mașini de spălat și camere foto „inteligente” au fost printre primele aparate care au folosit logica fuzzy."
+	},
+	{
+		"id": "mana:3075",
+		"nota": "Jan Łukasiewicz a propus notația în anii ’20; de aici numele ei, „notația poloneză”. Varianta inversă a fost folosită de unele calculatoare de buzunar."
+	},
+	{
+		"id": "mana:3076",
+		"nota": "Psihologul Peter Wason a arătat că cei mai mulți întorc cartonașele greșite. Aceeași problemă, spusă ca o regulă socială, iese mult mai ușor."
+	},
+	{
+		"id": "mana:3077",
+		"nota": "Kant a numit antinomii perechi ca „lumea are un început în timp” și „lumea n-are început”, amândouă dovedite, aparent, la fel de bine."
+	},
+	{
+		"id": "mana:3078",
+		"nota": "Matematicianul Ramanujan găsea interesant și numărul 1729, al taxiului lui Hardy: e cel mai mic număr care se scrie în două feluri ca sumă de două cuburi."
+	},
+	{
+		"id": "mana:3079",
+		"nota": "Un șofer care conduce băut și ajunge acasă teafăr n-a luat o decizie bună, a avut noroc. Unii jucători de poker numesc greșeala asta „rezultatism”."
+	},
+	{
+		"id": "mana:3080",
+		"nota": "Un test care greșește o dată din o sută dă totuși mai mulți pozitivi falși decât adevărați când boala e foarte rară. Mintea uită cât de puțini bolnavi sunt de fapt."
+	},
+	{
+		"id": "mana:3081",
+		"nota": "Deltiologia vine din grecescul „deltion”, tăbliță de scris. Cărțile poștale ilustrate au devenit o adevărată modă la începutul secolului XX."
+	},
+	{
+		"id": "mana:3082",
+		"nota": "Numele vine din grecescul „triskaideka”, treisprezece. Multe clădiri din SUA n-au etaj 13, iar unele companii aeriene n-au rând 13 în avioane."
+	},
+	{
+		"id": "mana:3083",
+		"nota": "Agleta împiedică șiretul să se destrame și îl ajută să treacă prin găuri. Numele vine din francezul „aiguillette”, ac mic."
+	},
+	{
+		"id": "mana:3084",
+		"nota": "Economistul britanic Charles Goodhart a formulat ideea în 1975. Exemplu: o școală judecată doar după rezultatele la teste ajunge să predea pentru teste."
+	},
+	{
+		"id": "mana:3085",
+		"nota": "Psihologul Oskar Pfungst a arătat în 1907 că Hans se oprea din bătut cu copita când cei din jur se relaxau, fără să-și dea seama. Efectul e luat în calcul și azi în experimente."
+	},
+	{
+		"id": "mana:3086",
+		"nota": "Franz Carl Müller-Lyer a publicat-o în 1889. Linia cu vârfurile deschise în afară pare mai lungă decât cea cu vârfurile închise, deși sunt egale."
+	},
+	{
+		"id": "mana:3087",
+		"nota": "Cuvântul e o invenție recentă, de la sfârșitul secolului XX, fără o rădăcină grecească sigură. Frica de clovni e totuși destul de răspândită încât să fie studiată."
+	},
+	{
+		"id": "mana:3088",
+		"nota": "Semințele de roșcov erau socotite foarte egale ca greutate, deși studiile arată că variază la fel de mult ca altele. Caratul metric de azi e fixat la 0,2 grame."
+	},
+	{
+		"id": "mana:3089",
+		"nota": "Un googolplex nu poate fi scris întreg: nici dacă ai pune câte o cifră pe fiecare atom din universul observabil, n-ai avea destul loc."
+	},
+	{
+		"id": "mana:3090",
+		"nota": "Museletul a fost patentat în Franța în 1844. Plăcuțele de metal de deasupra lui au ajuns obiecte de colecție, cu colecționari care fac schimb între ei."
+	},
+	{
+		"id": "mana:3091",
+		"nota": "Numele vine din latinescul „teges”, rogojină. Suporturile de carton pentru halbe au apărut în Germania, la sfârșitul secolului XIX."
+	},
+	{
+		"id": "mana:3092",
+		"nota": "Caesar a lungit anul 46 î.Hr. la 445 de zile, ca să aducă la zi calendarul înainte de reforma lui. Romanii l-au numit „anul confuziei”."
+	},
+	{
+		"id": "mana:3093",
+		"nota": "Suedia a încercat să treacă treptat la calendarul nou, a încurcat socoteala și a revenit la cel vechi adăugând o zi. Așa a apărut, o singură dată, 30 februarie 1712."
+	},
+	{
+		"id": "mana:3094",
+		"nota": "Cuvântul a fost propus în 1964 de doi cercetători australieni. Vine din grecescul „petra”, piatră, și „ichor”, sângele zeilor din mituri."
+	},
+	{
+		"id": "mana:3095",
+		"nota": "Marea Piramidă era veche de vreo 2500 de ani când s-a născut Cleopatra. Între Cleopatra și aterizarea pe Lună, din 1969, au trecut doar vreo 2000."
+	},
+	{
+		"id": "mana:3096",
+		"nota": "La Oxford se preda deja în 1096, iar Tenochtitlanul a fost întemeiat abia în 1325. Harvard, Luvrul ca muzeu și Banca Angliei sunt toate mult mai noi."
+	},
+	{
+		"id": "mana:3097",
+		"nota": "„Lorem ipsum” pornește de la o lucrare a lui Cicero despre bine și rău, din anul 45 î.Hr. Textul fără sens lasă să se vadă doar forma paginii, nu conținutul."
+	},
+	{
+		"id": "mana:3098",
+		"nota": "Englezescul „dord”, definit ca „densitate”, a stat câțiva ani în dicționarul Webster, după 1934. Pornise de la o fișă pe care scria „D or d”, adică abrevierile densității."
+	},
+	{
+		"id": "mana:3099",
+		"nota": "Mulți cartografi au desenat California ca o insulă mare, despărțită de continent. Greșeala a fost lăsată deoparte abia în secolul XVIII, după expediții pe uscat."
+	},
+	{
+		"id": "mana:3100",
+		"nota": "Doi cartografi l-au inventat în anii ’30, în statul New York. Ironic, cineva a deschis apoi acolo un magazin cu numele de pe hartă, iar locul a apărut pe hărți o vreme."
+	},
+	{
+		"id": "mana:3101",
+		"nota": "„Jamais vu” înseamnă în franceză „niciodată văzut”. Încearcă să repeți un cuvânt obișnuit de multe ori la rând, până ți se pare fără sens."
+	},
+	{
+		"id": "mana:3102",
+		"nota": "Lingvistul american Arnold Zwicky l-a numit așa în 2005. E cunoscut și ca „fenomenul Baader-Meinhof”, după scrisoarea unui cititor de ziar din 1994."
+	},
+	{
+		"id": "mana:3103",
+		"nota": "Psihologa Bluma Zeigarnik a pornit de la ospătarii unei cafenele din Berlin, care țineau minte comenzile doar până la plată. Studiul ei a apărut în 1927."
+	},
+	{
+		"id": "mana:3104",
+		"nota": "Primele elemente au timp să se fixeze în memorie, iar ultimele sunt încă proaspete. Cele din mijloc sunt cele care se pierd cel mai ușor."
+	},
+	{
+		"id": "mana:3105",
+		"nota": "Ebbinghaus a învățat mii de silabe fără sens și și-a testat singur memoria. „Curba uitării” lui arată că uităm cel mai repede în primele ore."
+	},
+	{
+		"id": "mana:3106",
+		"nota": "Psihologul George Miller a publicat în 1956 articolul „Numărul magic șapte, plus sau minus doi”. Studii mai noi cred că limita reală e mai mică, în jur de patru."
+	},
+	{
+		"id": "mana:3107",
+		"nota": "Alimentarea unui Boeing 767 Air Canada fusese calculată în livre în loc de kilograme. Piloții l-au aterizat planând, fără nicio victimă."
+	},
+	{
+		"id": "mana:3108",
+		"nota": "Un penny vechi pus pe pendul face ceasul să meargă cu aproape 0,4 secunde pe zi mai repede. Așa se reglează de mai bine de un secol."
+	},
+	{
+		"id": "mana:3109",
+		"nota": "Hymen Lipman a patentat în 1858 creionul cu radieră atașată. Inelul de metal care le ține împreună se numește ferulă."
+	},
+	{
+		"id": "mana:3110",
+		"nota": "Doi ingineri americani au creat-o în 1957, încercând să facă un tapet cu relief. Abia după câțiva ani i s-a găsit rostul de material de ambalat."
+	},
+	{
+		"id": "mana:3111",
+		"nota": "Spencer Silver a creat adezivul slab în 1968. Colegul lui, Art Fry, l-a folosit abia peste câțiva ani pentru semne de carte care să nu cadă din cartea de cântece."
+	},
+	{
+		"id": "mana:3112",
+		"nota": "„Tsundoku” e un cuvânt japonez din secolul XIX, făcut din „a lăsa grămadă” și „a citi”. Nu are echivalent într-un singur cuvânt românesc."
+	},
+	{
+		"id": "mana:3113",
+		"nota": "Cuvântul descrie privirea dintre doi oameni care vor amândoi același lucru, dar așteaptă fiecare ca celălalt să înceapă."
+	},
+	{
+		"id": "mana:3114",
+		"nota": "Primul semafor, cu brațe și lămpi pe gaz, dirija trăsurile din fața Parlamentului britanic. A explodat după câteva săptămâni, rănind polițistul care îl manevra."
+	},
+	{
+		"id": "mana:3115",
+		"nota": "Walter Arnold a fost amendat pentru că mergea cu 8 mile pe oră, adică vreo 13 km/h, unde limita era de 2 mile pe oră."
+	},
+	{
+		"id": "mana:3116",
+		"nota": "Resturile de gumă blocau, printre altele, ușile metroului. Din 2004 se vinde totuși, în farmacii, guma cu rol medical."
+	},
+	{
+		"id": "mana:3117",
+		"nota": "Germanii îi spun „Ohrwurm”, adică „vierme de ureche”, iar engleza a tradus cuvântul ca „earworm”. Cântecele simple, cu repetiții, se lipesc cel mai ușor."
 	}
 ]
