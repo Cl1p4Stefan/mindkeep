@@ -168,6 +168,27 @@ DUBLURI = {
 # deosebește întrebările: `cere_simbol` arată numele și cere simbolul.
 SENSURI = ["cere_simbol", "cere_nume"]
 
+# UN SINGUR SENS PE ELEMENT, de pe 27 octombrie 2026. Cu amândouă, cele 70 de
+# elemente dădeau 135 de întrebări — ~20% din raftul „Științe exacte” la fiecare
+# nivel, pe un singur șablon, iar „simbolul argintului” și „ce element are
+# simbolul Ag” se puteau trage una după alta, a doua dând răspunsul primei
+# (`DISTANTA_PRACTICE` ține distanța între întrebări, nu între fapte). Al doilea
+# sens nu antrenează altceva în mod real pe un raft de ~240: e același fapt,
+# întâlnit de două ori în aceeași sesiune. Vezi sesiunea UN SENS PE ELEMENT.
+#
+# SENSUL ÎL DĂ PARITATEA NUMĂRULUI ATOMIC: par → `cere_simbol`, impar →
+# `cere_nume`. Nu ordinea din listă (alternarea pe poziție), fiindcă un element
+# adăugat ar muta sensul tuturor celor de după el, deci și `id`-urile lor — iar
+# `id`-ul ține progresul din Practice. Paritatea e a elementului, nu a tabelului.
+# Iese și aproape egal pe fiecare nivel, deci ambele forme apar peste tot.
+#
+# Cele două excepții, amândouă scrise în `construieste`:
+#   · sensul ales nu se poate scrie (K, fără frate de literă) → celălalt;
+#   · elementul e deja întrebat de mână (`DUBLURI`) → niciunul. Faptul lui
+#     rămâne cel scris de mână, cu nota lui, iar elementul rămâne distractor.
+def sensul(e):
+	return "cere_simbol" if e["numar"] % 2 == 0 else "cere_nume"
+
 
 # ─────────────────────────────────────────────────────────────
 # ELEMENTELE ALESE — `tools/fabrica/date/elemente.json`
@@ -859,10 +880,12 @@ def construieste(lista, reale, rezerva):
 	fara_pereche = []
 	intrebari = []
 	for e in lista:
-		for sens in SENSURI:
-			if (e["simbol"], sens) in DUBLURI:
-				continue
-
+		# Întrebat deja de mână, în oricare sens: elementul își are întrebarea.
+		if any(s == e["simbol"] for s, _ in DUBLURI):
+			continue
+		ales = sensul(e)
+		# Sensul ales întâi, celălalt doar dacă primul nu se poate scrie.
+		for sens in [ales] + [s for s in SENSURI if s != ales]:
 			if sens == "cere_simbol":
 				text = "Care este simbolul chimic al %s?" % e["genitiv"]
 				bun = e["simbol"]
@@ -902,6 +925,7 @@ def construieste(lista, reale, rezerva):
 				subcategorie=SUBCATEGORIE,
 				eticheta=e["simbol"],
 			))
+			break   # una pe element — vezi `sensul`
 
 	# ── VERIFICAREA „EXACT UNA DIN PATRU E CORECTĂ" ──
 	# Nouă la refactor, și n-a fost o adăugire gratuită: până acum elementele se
@@ -939,7 +963,13 @@ def construieste(lista, reale, rezerva):
 	# readuce decizia — dar atunci va fi despre UN fapt, nu despre toate.
 	probleme = []
 	fapte = []
+	# Doar faptele pe care le cere o întrebare: un element întrebat numai de mână
+	# (aurul) și-a păstrat faptul de mână, iar unul `wd:` fără întrebare ar pica
+	# „niciun fapt nefolosit” din `verifica_trivia`.
+	cerute = {q["fapt"] for q in intrebari}
 	for e in lista:
+		if "wd:%s" % e["qid"] not in cerute:
+			continue
 		nota, surse = compune_nota(e)
 		# VALIDATĂ UNA CU UNA, nu pe un eșantion: costă microsecunde, iar un
 		# șablon stricat strică toate cele 70 deodată, nu una.

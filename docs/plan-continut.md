@@ -229,7 +229,7 @@ desparte; până atunci stă acolo, și e scris aici ca să se vadă că e o ale
 
 **Tabele de fabrică:**
 
-- **`stiinte_exacte` — FĂCUT.** Element ↔ simbol, 135 de întrebări, 70 de elemente (patru „ce element are simbolul…” nu se pot scrie: U, Kr, Xe, W n-au frați de literă).
+- **`stiinte_exacte` — FĂCUT.** Element ↔ simbol, **69 de întrebări, câte una pe element** (70 de elemente; aurul e întrebat doar de mână). Până pe 27 octombrie 2026 erau 135, în ambele sensuri, adică ~20% din raft pe un singur șablon — vezi sesiunea UN SENS PE ELEMENT din `progres.md`. **Capcana pentru `P274` (formula unei substanțe), mai jos:** e tot chimie de tabel, tot „simbol ↔ nume”; un sens pe substanță, din aceeași regulă.
 - **`stiinte_exacte` · formula unei substanțe** — `P274`. *Capcane:* organicele au
   mai multe forme de formulă, iar indicii în Unicode nu se compară naiv.
 - **`lumea_vie` · din ce clasă face parte un animal** — `P171` + `P105`. *Capcane:*
