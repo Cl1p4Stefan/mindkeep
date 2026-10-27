@@ -1,0 +1,1646 @@
+[
+	{
+		"id": "wd:Q181826:interpret:cere_interpret",
+		"fapt": "wd:Q181826",
+		"text": "Cine a lansat albumul „Please Please Me”, în 1963?",
+		"variante": ["The Beatles", "Bob Dylan", "The Jimi Hendrix Experience", "The Who"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q199585:interpret:cere_interpret",
+		"fapt": "wd:Q199585",
+		"text": "Cine a lansat albumul „Let It Be”, în 1970?",
+		"variante": ["Black Sabbath", "Simon and Garfunkel", "The Who", "The Beatles"],
+		"corect": 3,
+		"nivel": 1,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q185121:interpret:cere_interpret",
+		"fapt": "wd:Q185121",
+		"text": "Cine a lansat albumul „Revolver”, în 1966?",
+		"variante": ["Bob Dylan", "The Jimi Hendrix Experience", "The Rolling Stones", "The Beatles"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q201816:interpret:cere_interpret",
+		"fapt": "wd:Q201816",
+		"text": "Cine a lansat albumul „Help!”, în 1965?",
+		"variante": ["Bob Dylan", "The Beatles", "The Jimi Hendrix Experience", "The Who"],
+		"corect": 1,
+		"nivel": 1,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q190640:interpret:cere_interpret",
+		"fapt": "wd:Q190640",
+		"text": "Cine a lansat albumul „Rubber Soul”, în 1965?",
+		"variante": ["Bob Dylan", "The Jimi Hendrix Experience", "The Rolling Stones", "The Beatles"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q182518:interpret:cere_interpret",
+		"fapt": "wd:Q182518",
+		"text": "Cine a lansat albumul „A Hard Day's Night”, în 1964?",
+		"variante": ["Bob Dylan", "The Jimi Hendrix Experience", "The Beatles", "The Who"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q60676411:interpret:cere_interpret",
+		"fapt": "wd:Q60676411",
+		"text": "Cine a lansat albumul „Magical Mystery Tour”, în 1967?",
+		"variante": ["The Jimi Hendrix Experience", "The Beatles", "The Rolling Stones", "Bob Dylan"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q193477:interpret:cere_interpret",
+		"fapt": "wd:Q193477",
+		"text": "Cine a lansat albumul „A Night At The Opera”, în 1975?",
+		"variante": ["Queen", "Pink Floyd", "Led Zeppelin", "Mike Oldfield"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q210048:interpret:cere_interpret",
+		"fapt": "wd:Q210048",
+		"text": "Cine a lansat albumul „Innuendo”, în 1991?",
+		"variante": ["Guns N' Roses", "Queen", "Red Hot Chili Peppers", "Pearl Jam"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q309021:interpret:cere_interpret",
+		"fapt": "wd:Q309021",
+		"text": "Cine a lansat albumul „News of the World”, în 1977?",
+		"variante": ["Queen", "Fleetwood Mac", "AC/DC", "The Clash"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q211405:interpret:cere_interpret",
+		"fapt": "wd:Q211405",
+		"text": "Cine a lansat albumul „The Game”, în 1980?",
+		"variante": ["Queen", "Judas Priest", "The Clash", "AC/DC"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q300447:interpret:cere_interpret",
+		"fapt": "wd:Q300447",
+		"text": "Cine a lansat albumul „A Kind Of Magic”, în 1986?",
+		"variante": ["Queen", "Bon Jovi", "Michael Jackson", "U2"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q155593:interpret:cere_interpret",
+		"fapt": "wd:Q155593",
+		"text": "Cine a lansat albumul „Made in Heaven”, în 1995?",
+		"variante": ["Tupac Shakur", "Oasis", "Queen", "Dream Theater"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q270083:interpret:cere_interpret",
+		"fapt": "wd:Q270083",
+		"text": "Cine a lansat albumul „Jazz”, în 1978?",
+		"variante": ["The Clash", "Fleetwood Mac", "Queen", "AC/DC"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q200872:interpret:cere_interpret",
+		"fapt": "wd:Q200872",
+		"text": "Cine a lansat albumul „Wish You Were Here”, în 1975?",
+		"variante": ["Queen", "Led Zeppelin", "Fleetwood Mac", "Pink Floyd"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q206216:interpret:cere_interpret",
+		"fapt": "wd:Q206216",
+		"text": "Cine a lansat albumul „Animals”, în 1977?",
+		"variante": ["Fleetwood Mac", "Queen", "Pink Floyd", "AC/DC"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q208521:interpret:cere_interpret",
+		"fapt": "wd:Q208521",
+		"text": "Cine a lansat albumul „The Division Bell”, în 1994?",
+		"variante": ["Oasis", "Pink Floyd", "Tupac Shakur", "Dream Theater"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q202714:interpret:cere_interpret",
+		"fapt": "wd:Q202714",
+		"text": "Cine a lansat albumul „The Piper at the Gates of Dawn”, în 1967?",
+		"variante": ["The Jimi Hendrix Experience", "The Rolling Stones", "Bob Dylan", "Pink Floyd"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q44142:interpret:cere_interpret",
+		"fapt": "wd:Q44142",
+		"text": "Cine a lansat albumul „Bad”, în 1987?",
+		"variante": ["U2", "Michael Jackson", "Bon Jovi", "Megadeth"],
+		"corect": 1,
+		"nivel": 1,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q44104:interpret:cere_interpret",
+		"fapt": "wd:Q44104",
+		"text": "Cine a lansat albumul „Dangerous”, în 1991?",
+		"variante": ["Pearl Jam", "Michael Jackson", "Guns N' Roses", "Nirvana"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q44289:interpret:cere_interpret",
+		"fapt": "wd:Q44289",
+		"text": "Cine a lansat albumul „Off the Wall”, în 1979?",
+		"variante": ["Michael Jackson", "The Clash", "AC/DC", "Judas Priest"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q44347:interpret:cere_interpret",
+		"fapt": "wd:Q44347",
+		"text": "Cine a lansat albumul „HIStory: Past, Present and Future, Book I”, în 1995?",
+		"variante": ["Tupac Shakur", "Oasis", "Dream Theater", "Michael Jackson"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q44376:interpret:cere_interpret",
+		"fapt": "wd:Q44376",
+		"text": "Cine a lansat albumul „Invincible”, în 2001?",
+		"variante": ["Rammstein", "System of a Down", "Radiohead", "Michael Jackson"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q131182:interpret:cere_interpret",
+		"fapt": "wd:Q131182",
+		"text": "Cine a lansat albumul „The Fame”, în 2008?",
+		"variante": ["Taylor Swift", "Coldplay", "Beyoncé", "Lady Gaga"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q164646:interpret:cere_interpret",
+		"fapt": "wd:Q164646",
+		"text": "Cine a lansat albumul „Born This Way”, în 2011?",
+		"variante": ["One Direction", "Katy Perry", "Lady Gaga", "Lana Del Rey"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q2743297:interpret:cere_interpret",
+		"fapt": "wd:Q2743297",
+		"text": "Cine a lansat albumul „Artpop”, în 2013?",
+		"variante": ["Miley Cyrus", "Lady Gaga", "Daft Punk", "Lana Del Rey"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q86919359:interpret:cere_interpret",
+		"fapt": "wd:Q86919359",
+		"text": "Cine a lansat albumul „Chromatica”, în 2020?",
+		"variante": ["Dua Lipa", "Lady Gaga", "Olivia Rodrigo", "Ariana Grande"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q17444:interpret:cere_interpret",
+		"fapt": "wd:Q17444",
+		"text": "Cine a lansat albumul „Nevermind”, în 1991?",
+		"variante": ["Guns N' Roses", "Nirvana", "Pearl Jam", "Red Hot Chili Peppers"],
+		"corect": 1,
+		"nivel": 1,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q222001:interpret:cere_interpret",
+		"fapt": "wd:Q222001",
+		"text": "Cine a lansat albumul „In Utero”, în 1993?",
+		"variante": ["Dream Theater", "Nirvana", "Tupac Shakur", "Guns N' Roses"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q218513:interpret:cere_interpret",
+		"fapt": "wd:Q218513",
+		"text": "Cine a lansat albumul „Bleach”, în 1989?",
+		"variante": ["Depeche Mode", "Megadeth", "Nirvana", "Michael Jackson"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q182826:interpret:cere_interpret",
+		"fapt": "wd:Q182826",
+		"text": "Cine a lansat albumul „Kill'em All”, în 1983?",
+		"variante": ["Judas Priest", "Bon Jovi", "Michael Jackson", "Metallica"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q190989:interpret:cere_interpret",
+		"fapt": "wd:Q190989",
+		"text": "Cine a lansat albumul „Ride the Lightning”, în 1984?",
+		"variante": ["Metallica", "Bon Jovi", "U2", "Michael Jackson"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q214973:interpret:cere_interpret",
+		"fapt": "wd:Q214973",
+		"text": "Cine a lansat albumul „...And Justice for All”, în 1988?",
+		"variante": ["Metallica", "Michael Jackson", "U2", "Megadeth"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q276546:interpret:cere_interpret",
+		"fapt": "wd:Q276546",
+		"text": "Cine a lansat albumul „Load”, în 1996?",
+		"variante": ["Tupac Shakur", "Metallica", "Oasis", "Eminem"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q483778:interpret:cere_interpret",
+		"fapt": "wd:Q483778",
+		"text": "Cine a lansat albumul „Hard Candy”, în 2008?",
+		"variante": ["Coldplay", "Lady Gaga", "Taylor Swift", "Madonna"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q151880:interpret:cere_interpret",
+		"fapt": "wd:Q151880",
+		"text": "Cine a lansat albumul „Confessions on a Dance Floor”, în 2005?",
+		"variante": ["Nelly Furtado", "The Killers", "Madonna", "My Chemical Romance"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q252447:interpret:cere_interpret",
+		"fapt": "wd:Q252447",
+		"text": "Cine a lansat albumul „Like a Prayer”, în 1989?",
+		"variante": ["Depeche Mode", "Megadeth", "Madonna", "U2"],
+		"corect": 2,
+		"nivel": 1,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q154467:interpret:cere_interpret",
+		"fapt": "wd:Q154467",
+		"text": "Cine a lansat albumul „True Blue”, în 1986?",
+		"variante": ["Bon Jovi", "Madonna", "U2", "Michael Jackson"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q155335:interpret:cere_interpret",
+		"fapt": "wd:Q155335",
+		"text": "Cine a lansat albumul „Ray of Light”, în 1998?",
+		"variante": ["Eminem", "Radiohead", "System of a Down", "Madonna"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q155358:interpret:cere_interpret",
+		"fapt": "wd:Q155358",
+		"text": "Cine a lansat albumul „Music”, în 2000?",
+		"variante": ["Madonna", "Radiohead", "System of a Down", "Rammstein"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q147006:interpret:cere_interpret",
+		"fapt": "wd:Q147006",
+		"text": "Cine a lansat albumul „I Am... Sasha Fierce”, în 2008?",
+		"variante": ["Beyoncé", "Madonna", "Lady Gaga", "Taylor Swift"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q127503:interpret:cere_interpret",
+		"fapt": "wd:Q127503",
+		"text": "Cine a lansat albumul „Dangerously in Love”, în 2003?",
+		"variante": ["Evanescence", "Beyoncé", "The Killers", "Green Day"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q23905116:interpret:cere_interpret",
+		"fapt": "wd:Q23905116",
+		"text": "Cine a lansat albumul „Lemonade”, în 2016?",
+		"variante": ["Adele", "Billie Eilish", "Beyoncé", "Daft Punk"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q186188:interpret:cere_interpret",
+		"fapt": "wd:Q186188",
+		"text": "Cine a lansat albumul „Teenage Dream”, în 2010?",
+		"variante": ["Kanye West", "One Direction", "Black Eyed Peas", "Katy Perry"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q381122:interpret:cere_interpret",
+		"fapt": "wd:Q381122",
+		"text": "Cine a lansat albumul „One Of The Boys”, în 2008?",
+		"variante": ["Madonna", "Lady Gaga", "Beyoncé", "Katy Perry"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q842214:interpret:cere_interpret",
+		"fapt": "wd:Q842214",
+		"text": "Cine a lansat albumul „Fearless”, în 2008?",
+		"variante": ["Taylor Swift", "Coldplay", "Lady Gaga", "Beyoncé"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q37814092:interpret:cere_interpret",
+		"fapt": "wd:Q37814092",
+		"text": "Cine a lansat albumul „Reputation”, în 2017?",
+		"variante": ["Adele", "Taylor Swift", "Ariana Grande", "Billie Eilish"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q858750:interpret:cere_interpret",
+		"fapt": "wd:Q858750",
+		"text": "Cine a lansat albumul „Red”, în 2012?",
+		"variante": ["Lana Del Rey", "One Direction", "Taylor Swift", "Daft Punk"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q97620733:interpret:cere_interpret",
+		"fapt": "wd:Q97620733",
+		"text": "Cine a lansat albumul „Folklore”, în 2020?",
+		"variante": ["Taylor Swift", "Dua Lipa", "Ariana Grande", "ABBA"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q113640799:interpret:cere_interpret",
+		"fapt": "wd:Q113640799",
+		"text": "Cine a lansat albumul „Midnights”, în 2022?",
+		"variante": ["ABBA", "Taylor Swift", "Olivia Rodrigo", "Dua Lipa"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q151714:interpret:cere_interpret",
+		"fapt": "wd:Q151714",
+		"text": "Cine a lansat albumul „American Idiot”, în 2004?",
+		"variante": ["Green Day", "The Killers", "Evanescence", "Justin Timberlake"],
+		"corect": 0,
+		"nivel": 1,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q211292:interpret:cere_interpret",
+		"fapt": "wd:Q211292",
+		"text": "Cine a lansat albumul „Dookie”, în 1994?",
+		"variante": ["Green Day", "Oasis", "Tupac Shakur", "Dream Theater"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q152873:interpret:cere_interpret",
+		"fapt": "wd:Q152873",
+		"text": "Cine a lansat albumul „The Joshua Tree”, în 1987?",
+		"variante": ["U2", "Michael Jackson", "Bon Jovi", "Megadeth"],
+		"corect": 0,
+		"nivel": 1,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q308801:interpret:cere_interpret",
+		"fapt": "wd:Q308801",
+		"text": "Cine a lansat albumul „Achtung Baby”, în 1991?",
+		"variante": ["Red Hot Chili Peppers", "Nirvana", "U2", "Guns N' Roses"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q212846:interpret:cere_interpret",
+		"fapt": "wd:Q212846",
+		"text": "Cine a lansat albumul „L.A. Woman”, în 1971?",
+		"variante": ["The Doors", "John Lennon", "David Bowie", "Deep Purple"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q212665:interpret:cere_interpret",
+		"fapt": "wd:Q212665",
+		"text": "Cine a lansat albumul „Strange days”, în 1967?",
+		"variante": ["The Doors", "The Jimi Hendrix Experience", "Bob Dylan", "The Rolling Stones"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q153391:interpret:cere_interpret",
+		"fapt": "wd:Q153391",
+		"text": "Cine a lansat albumul „Good Girl Gone Bad”, în 2007?",
+		"variante": ["Lady Gaga", "Justin Timberlake", "Nelly Furtado", "Rihanna"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q208340:interpret:cere_interpret",
+		"fapt": "wd:Q208340",
+		"text": "Cine a lansat albumul „Loud”, în 2010?",
+		"variante": ["Rihanna", "Katy Perry", "Kanye West", "Black Eyed Peas"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q21084500:interpret:cere_interpret",
+		"fapt": "wd:Q21084500",
+		"text": "Cine a lansat albumul „Anti”, în 2016?",
+		"variante": ["Adele", "Ariana Grande", "Rihanna", "Miley Cyrus"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q158740:interpret:cere_interpret",
+		"fapt": "wd:Q158740",
+		"text": "Cine a lansat albumul „Viva la Vida or Death and All His Friends”, în 2008?",
+		"variante": ["Lady Gaga", "Coldplay", "Beyoncé", "Madonna"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q158738:interpret:cere_interpret",
+		"fapt": "wd:Q158738",
+		"text": "Cine a lansat albumul „X&Y”, în 2005?",
+		"variante": ["Muse", "Green Day", "The Killers", "Coldplay"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q207970:interpret:cere_interpret",
+		"fapt": "wd:Q207970",
+		"text": "Cine a lansat albumul „A Rush of Blood to the Head”, în 2002?",
+		"variante": ["Evanescence", "Rammstein", "System of a Down", "Coldplay"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q21168841:interpret:cere_interpret",
+		"fapt": "wd:Q21168841",
+		"text": "Cine a lansat albumul „25”, în 2015?",
+		"variante": ["Daft Punk", "Adele", "Miley Cyrus", "Lana Del Rey"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q208902:interpret:cere_interpret",
+		"fapt": "wd:Q208902",
+		"text": "Cine a lansat albumul „19”, în 2008?",
+		"variante": ["Lady Gaga", "Taylor Swift", "Adele", "Coldplay"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q108773286:interpret:cere_interpret",
+		"fapt": "wd:Q108773286",
+		"text": "Cine a lansat albumul „30”, în 2021?",
+		"variante": ["ABBA", "Adele", "Olivia Rodrigo", "Dua Lipa"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q383459:interpret:cere_interpret",
+		"fapt": "wd:Q383459",
+		"text": "Cine a lansat albumul „The Slim Shady LP”, în 1999?",
+		"variante": ["Eminem", "Radiohead", "System of a Down", "Rammstein"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q274533:interpret:cere_interpret",
+		"fapt": "wd:Q274533",
+		"text": "Cine a lansat albumul „Recovery”, în 2010?",
+		"variante": ["Kanye West", "Katy Perry", "Black Eyed Peas", "Eminem"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q245353:interpret:cere_interpret",
+		"fapt": "wd:Q245353",
+		"text": "Cine a lansat albumul „Relapse”, în 2009?",
+		"variante": ["Black Eyed Peas", "Coldplay", "Eminem", "Lady Gaga"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q329396:interpret:cere_interpret",
+		"fapt": "wd:Q329396",
+		"text": "Cine a lansat albumul „Blood Sugar Sex Magik”, în 1991?",
+		"variante": ["Red Hot Chili Peppers", "Guns N' Roses", "Nirvana", "Pearl Jam"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q152605:interpret:cere_interpret",
+		"fapt": "wd:Q152605",
+		"text": "Cine a lansat albumul „Stadium Arcadium”, în 2006?",
+		"variante": ["My Chemical Romance", "Nelly Furtado", "Red Hot Chili Peppers", "Muse"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q153475:interpret:cere_interpret",
+		"fapt": "wd:Q153475",
+		"text": "Cine a lansat albumul „By the Way”, în 2002?",
+		"variante": ["Rammstein", "System of a Down", "Red Hot Chili Peppers", "Evanescence"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q220726:interpret:cere_interpret",
+		"fapt": "wd:Q220726",
+		"text": "Cine a lansat albumul „Kid A”, în 2000?",
+		"variante": ["Radiohead", "Rammstein", "System of a Down", "Eminem"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q221246:interpret:cere_interpret",
+		"fapt": "wd:Q221246",
+		"text": "Cine a lansat albumul „The Bends”, în 1995?",
+		"variante": ["Oasis", "Tupac Shakur", "Dream Theater", "Radiohead"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q223295:interpret:cere_interpret",
+		"fapt": "wd:Q223295",
+		"text": "Cine a lansat albumul „In Rainbows”, în 2007?",
+		"variante": ["Radiohead", "Rihanna", "Madonna", "Muse"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q154601:interpret:cere_interpret",
+		"fapt": "wd:Q154601",
+		"text": "Cine a lansat albumul „Mutter”, în 2001?",
+		"variante": ["Rammstein", "System of a Down", "Radiohead", "Evanescence"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q213578:interpret:cere_interpret",
+		"fapt": "wd:Q213578",
+		"text": "Cine a lansat albumul „Sehnsucht”, în 1997?",
+		"variante": ["Rammstein", "Oasis", "Eminem", "Tupac Shakur"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q204240:interpret:cere_interpret",
+		"fapt": "wd:Q204240",
+		"text": "Cine a lansat albumul „Black Holes and Revelations”, în 2006?",
+		"variante": ["Justin Timberlake", "Nelly Furtado", "Muse", "My Chemical Romance"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q210904:interpret:cere_interpret",
+		"fapt": "wd:Q210904",
+		"text": "Cine a lansat albumul „Absolution”, în 2003?",
+		"variante": ["Muse", "Evanescence", "The Killers", "Green Day"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q285929:interpret:cere_interpret",
+		"fapt": "wd:Q285929",
+		"text": "Cine a lansat albumul „Highway to Hell”, în 1979?",
+		"variante": ["The Clash", "Judas Priest", "AC/DC", "Fleetwood Mac"],
+		"corect": 2,
+		"nivel": 1,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q271787:interpret:cere_interpret",
+		"fapt": "wd:Q271787",
+		"text": "Cine a lansat albumul „Paranoid”, în 1970?",
+		"variante": ["Black Sabbath", "Simon and Garfunkel", "David Bowie", "The Rolling Stones"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q210809:interpret:cere_interpret",
+		"fapt": "wd:Q210809",
+		"text": "Cine a lansat albumul „Physical Graffiti”, în 1975?",
+		"variante": ["Led Zeppelin", "Queen", "Pink Floyd", "Fleetwood Mac"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q211413:interpret:cere_interpret",
+		"fapt": "wd:Q211413",
+		"text": "Cine a lansat albumul „Houses of the Holy”, în 1973?",
+		"variante": ["Mike Oldfield", "Led Zeppelin", "Deep Purple", "David Bowie"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q19003:interpret:cere_interpret",
+		"fapt": "wd:Q19003",
+		"text": "Cine a lansat albumul „London Calling”, în 1979?",
+		"variante": ["AC/DC", "Judas Priest", "Fleetwood Mac", "The Clash"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q155612:interpret:cere_interpret",
+		"fapt": "wd:Q155612",
+		"text": "Cine a lansat albumul „Fallen”, în 2003?",
+		"variante": ["Evanescence", "The Killers", "Green Day", "Rammstein"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q218971:interpret:cere_interpret",
+		"fapt": "wd:Q218971",
+		"text": "Cine a lansat albumul „Toxicity”, în 2001?",
+		"variante": ["Rammstein", "System of a Down", "Radiohead", "Evanescence"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q61157315:interpret:cere_interpret",
+		"fapt": "wd:Q61157315",
+		"text": "Cine a lansat albumul „When We All Fall Asleep, Where Do We Go?”, în 2019?",
+		"variante": ["Ariana Grande", "Billie Eilish", "Dua Lipa", "Olivia Rodrigo"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q695405:interpret:cere_interpret",
+		"fapt": "wd:Q695405",
+		"text": "Cine a lansat albumul „Rumours”, în 1977?",
+		"variante": ["Pink Floyd", "Fleetwood Mac", "AC/DC", "The Clash"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q108384663:interpret:cere_interpret",
+		"fapt": "wd:Q108384663",
+		"text": "Cine a lansat albumul „Voyage”, în 2021?",
+		"variante": ["Olivia Rodrigo", "Dua Lipa", "ABBA", "Billie Eilish"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q656525:interpret:cere_interpret",
+		"fapt": "wd:Q656525",
+		"text": "Cine a lansat albumul „Ring Ring”, în 1973?",
+		"variante": ["Mike Oldfield", "Deep Purple", "Pink Floyd", "ABBA"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q8360:interpret:cere_interpret",
+		"fapt": "wd:Q8360",
+		"text": "Cine a lansat albumul „(What's the Story) Morning Glory?”, în 1995?",
+		"variante": ["Tupac Shakur", "Dream Theater", "Eminem", "Oasis"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q37148:interpret:cere_interpret",
+		"fapt": "wd:Q37148",
+		"text": "Cine a lansat albumul „Born to Die”, în 2012?",
+		"variante": ["One Direction", "Daft Punk", "Lana Del Rey", "Miley Cyrus"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q683079:interpret:cere_interpret",
+		"fapt": "wd:Q683079",
+		"text": "Cine a lansat albumul „Violator”, în 1990?",
+		"variante": ["Megadeth", "Nirvana", "Red Hot Chili Peppers", "Depeche Mode"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q584720:interpret:cere_interpret",
+		"fapt": "wd:Q584720",
+		"text": "Cine a lansat albumul „Music for the Masses”, în 1987?",
+		"variante": ["Michael Jackson", "Depeche Mode", "U2", "Bon Jovi"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q726729:interpret:cere_interpret",
+		"fapt": "wd:Q726729",
+		"text": "Cine a lansat albumul „Slippery When Wet”, în 1986?",
+		"variante": ["Bon Jovi", "U2", "Michael Jackson", "Metallica"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q755988:interpret:cere_interpret",
+		"fapt": "wd:Q755988",
+		"text": "Cine a lansat albumul „Hunky Dory”, în 1971?",
+		"variante": ["David Bowie", "The Doors", "John Lennon", "Deep Purple"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q826224:interpret:cere_interpret",
+		"fapt": "wd:Q826224",
+		"text": "Cine a lansat albumul „Tubular Bells”, în 1973?",
+		"variante": ["Deep Purple", "Mike Oldfield", "Pink Floyd", "John Lennon"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q333266:interpret:cere_interpret",
+		"fapt": "wd:Q333266",
+		"text": "Cine a lansat albumul „Imagine”, în 1971?",
+		"variante": ["David Bowie", "John Lennon", "The Doors", "Deep Purple"],
+		"corect": 1,
+		"nivel": 1,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q379339:interpret:cere_interpret",
+		"fapt": "wd:Q379339",
+		"text": "Cine a lansat albumul „Let It Bleed”, în 1969?",
+		"variante": ["The Who", "Simon and Garfunkel", "Black Sabbath", "The Rolling Stones"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q217248:interpret:cere_interpret",
+		"fapt": "wd:Q217248",
+		"text": "Cine a lansat albumul „Exile on Main St.”, în 1972?",
+		"variante": ["The Rolling Stones", "Deep Purple", "John Lennon", "David Bowie"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q745850:interpret:cere_interpret",
+		"fapt": "wd:Q745850",
+		"text": "Cine a lansat albumul „Sticky Fingers”, în 1971?",
+		"variante": ["The Rolling Stones", "John Lennon", "David Bowie", "The Doors"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q383227:interpret:cere_interpret",
+		"fapt": "wd:Q383227",
+		"text": "Cine a lansat albumul „Ten”, în 1991?",
+		"variante": ["Pearl Jam", "Guns N' Roses", "Red Hot Chili Peppers", "Nirvana"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q655502:interpret:cere_interpret",
+		"fapt": "wd:Q655502",
+		"text": "Cine a lansat albumul „Bridge over Troubled Water”, în 1970?",
+		"variante": ["Black Sabbath", "The Doors", "Simon and Garfunkel", "The Rolling Stones"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q372055:interpret:cere_interpret",
+		"fapt": "wd:Q372055",
+		"text": "Cine a lansat albumul „Tommy”, în 1969?",
+		"variante": ["The Rolling Stones", "Black Sabbath", "The Who", "Simon and Garfunkel"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q211742:interpret:cere_interpret",
+		"fapt": "wd:Q211742",
+		"text": "Cine a lansat albumul „Machine Head”, în 1972?",
+		"variante": ["Deep Purple", "David Bowie", "John Lennon", "The Doors"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q750274:interpret:cere_interpret",
+		"fapt": "wd:Q750274",
+		"text": "Cine a lansat albumul „British Steel”, în 1980?",
+		"variante": ["The Clash", "Judas Priest", "AC/DC", "Metallica"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q8119033:interpret:cere_interpret",
+		"fapt": "wd:Q8119033",
+		"text": "Cine a lansat albumul „Random Access Memories”, în 2013?",
+		"variante": ["Daft Punk", "Miley Cyrus", "Lana Del Rey", "Adele"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q547624:interpret:cere_interpret",
+		"fapt": "wd:Q547624",
+		"text": "Cine a lansat albumul „My Beautiful Dark Twisted Fantasy”, în 2010?",
+		"variante": ["Katy Perry", "Kanye West", "Black Eyed Peas", "One Direction"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q1129439:interpret:cere_interpret",
+		"fapt": "wd:Q1129439",
+		"text": "Cine a lansat albumul „Graduation”, în 2007?",
+		"variante": ["Kanye West", "Rihanna", "Nelly Furtado", "Arctic Monkeys"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q471924:interpret:cere_interpret",
+		"fapt": "wd:Q471924",
+		"text": "Cine a lansat albumul „FutureSex/LoveSounds”, în 2006?",
+		"variante": ["Justin Timberlake", "My Chemical Romance", "Arctic Monkeys", "Muse"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q76962209:interpret:cere_interpret",
+		"fapt": "wd:Q76962209",
+		"text": "Cine a lansat albumul „Future Nostalgia”, în 2020?",
+		"variante": ["ABBA", "Olivia Rodrigo", "Billie Eilish", "Dua Lipa"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q106316694:interpret:cere_interpret",
+		"fapt": "wd:Q106316694",
+		"text": "Cine a lansat albumul „Sour”, în 2021?",
+		"variante": ["ABBA", "Dua Lipa", "Olivia Rodrigo", "Billie Eilish"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q58192616:interpret:cere_interpret",
+		"fapt": "wd:Q58192616",
+		"text": "Cine a lansat albumul „Thank U, Next”, în 2019?",
+		"variante": ["Billie Eilish", "Ariana Grande", "Dua Lipa", "ABBA"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q52477911:interpret:cere_interpret",
+		"fapt": "wd:Q52477911",
+		"text": "Cine a lansat albumul „Sweetener”, în 2018?",
+		"variante": ["Ariana Grande", "Billie Eilish", "Dua Lipa", "ABBA"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q650284:interpret:cere_interpret",
+		"fapt": "wd:Q650284",
+		"text": "Cine a lansat albumul „Up All Night”, în 2011?",
+		"variante": ["Lana Del Rey", "Katy Perry", "Kanye West", "One Direction"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q842126:interpret:cere_interpret",
+		"fapt": "wd:Q842126",
+		"text": "Cine a lansat albumul „Whatever People Say I Am, That's What I'm Not”, în 2006?",
+		"variante": ["Muse", "Arctic Monkeys", "Nelly Furtado", "My Chemical Romance"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q215223:interpret:cere_interpret",
+		"fapt": "wd:Q215223",
+		"text": "Cine a lansat albumul „Hot Fuss”, în 2004?",
+		"variante": ["Green Day", "Evanescence", "Justin Timberlake", "The Killers"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q856869:interpret:cere_interpret",
+		"fapt": "wd:Q856869",
+		"text": "Cine a lansat albumul „The Black Parade”, în 2006?",
+		"variante": ["Justin Timberlake", "My Chemical Romance", "Arctic Monkeys", "Muse"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q217211:interpret:cere_interpret",
+		"fapt": "wd:Q217211",
+		"text": "Cine a lansat albumul „Highway 61 Revisited”, în 1965?",
+		"variante": ["Bob Dylan", "The Beatles", "The Jimi Hendrix Experience", "The Who"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q640397:interpret:cere_interpret",
+		"fapt": "wd:Q640397",
+		"text": "Cine a lansat albumul „Are You Experienced”, în 1967?",
+		"variante": ["Bob Dylan", "The Jimi Hendrix Experience", "The Rolling Stones", "The Who"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q637860:interpret:cere_interpret",
+		"fapt": "wd:Q637860",
+		"text": "Cine a lansat albumul „Me Against the World”, în 1995?",
+		"variante": ["Oasis", "Dream Theater", "Red Hot Chili Peppers", "Tupac Shakur"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q488934:interpret:cere_interpret",
+		"fapt": "wd:Q488934",
+		"text": "Cine a lansat albumul „Loose”, în 2006?",
+		"variante": ["Nelly Furtado", "Muse", "Justin Timberlake", "Arctic Monkeys"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q14549385:interpret:cere_interpret",
+		"fapt": "wd:Q14549385",
+		"text": "Cine a lansat albumul „Bangerz”, în 2013?",
+		"variante": ["Daft Punk", "Lana Del Rey", "Miley Cyrus", "One Direction"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q158326:interpret:cere_interpret",
+		"fapt": "wd:Q158326",
+		"text": "Cine a lansat albumul „The E.N.D”, în 2009?",
+		"variante": ["Black Eyed Peas", "Beyoncé", "Coldplay", "Madonna"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q14669:interpret:cere_interpret",
+		"fapt": "wd:Q14669",
+		"text": "Cine a lansat albumul „Rust in Peace”, în 1990?",
+		"variante": ["Depeche Mode", "Pearl Jam", "Megadeth", "Nirvana"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q643906:interpret:cere_interpret",
+		"fapt": "wd:Q643906",
+		"text": "Cine a lansat albumul „Images and Words”, în 1992?",
+		"variante": ["Dream Theater", "Nirvana", "Pearl Jam", "Red Hot Chili Peppers"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q826486:interpret:cere_interpret",
+		"fapt": "wd:Q826486",
+		"text": "Cine a lansat albumul „Use Your Illusion I”, în 1991?",
+		"variante": ["Guns N' Roses", "Pearl Jam", "Red Hot Chili Peppers", "Nirvana"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q631442:interpret:cere_interpret",
+		"fapt": "wd:Q631442",
+		"text": "Cine a lansat albumul „Chinese Democracy”, în 2008?",
+		"variante": ["Coldplay", "Guns N' Roses", "Lady Gaga", "Madonna"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q10708:interpret:cere_album",
+		"fapt": "wd:Q10708",
+		"text": "Care dintre aceste albume a fost lansat de Red Hot Chili Peppers?",
+		"variante": ["A Rush of Blood to the Head", "Invincible", "By the Way", "Fallen"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q11036:interpret:cere_album",
+		"fapt": "wd:Q11036",
+		"text": "Care dintre aceste albume a fost lansat de The Rolling Stones?",
+		"variante": ["Sticky Fingers", "Hunky Dory", "L.A. Woman", "Imagine"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q11649:interpret:cere_album",
+		"fapt": "wd:Q11649",
+		"text": "Care dintre aceste albume a fost lansat de Nirvana?",
+		"variante": ["The Division Bell", "In Utero", "Dookie", "Images and Words"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q11895:interpret:cere_album",
+		"fapt": "wd:Q11895",
+		"text": "Care dintre aceste albume a fost lansat de Guns N' Roses?",
+		"variante": ["Use Your Illusion I", "Blood Sugar Sex Magik", "Nevermind", "Achtung Baby"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q1299:interpret:cere_album",
+		"fapt": "wd:Q1299",
+		"text": "Care dintre aceste albume a fost lansat de The Beatles?",
+		"variante": ["Bridge over Troubled Water", "Paranoid", "Let It Bleed", "Let It Be"],
+		"corect": 3,
+		"nivel": 1,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q151892:interpret:cere_album",
+		"fapt": "wd:Q151892",
+		"text": "Care dintre aceste albume a fost lansat de Ariana Grande?",
+		"variante": ["Reputation", "When We All Fall Asleep, Where Do We Go?", "Lemonade", "Sweetener"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q15862:interpret:cere_album",
+		"fapt": "wd:Q15862",
+		"text": "Care dintre aceste albume a fost lansat de Queen?",
+		"variante": ["Animals", "Rumours", "News of the World", "London Calling"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q15920:interpret:cere_album",
+		"fapt": "wd:Q15920",
+		"text": "Care dintre aceste albume a fost lansat de Metallica?",
+		"variante": ["A Kind Of Magic", "British Steel", "Kill'em All", "True Blue"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q15935:interpret:cere_album",
+		"fapt": "wd:Q15935",
+		"text": "Care dintre aceste albume a fost lansat de Kanye West?",
+		"variante": ["Graduation", "In Rainbows", "Good Girl Gone Bad", "Black Holes and Revelations"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q1744:interpret:cere_album",
+		"fapt": "wd:Q1744",
+		"text": "Care dintre aceste albume a fost lansat de Madonna?",
+		"variante": ["A Kind Of Magic", "True Blue", "Slippery When Wet", "Bad"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q18233:interpret:cere_album",
+		"fapt": "wd:Q18233",
+		"text": "Care dintre aceste albume a fost lansat de ABBA?",
+		"variante": ["Sour", "Voyage", "30", "Chromatica"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q19848:interpret:cere_album",
+		"fapt": "wd:Q19848",
+		"text": "Care dintre aceste albume a fost lansat de Lady Gaga?",
+		"variante": ["Chinese Democracy", "Hard Candy", "Fearless", "The Fame"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q22151:interpret:cere_album",
+		"fapt": "wd:Q22151",
+		"text": "Care dintre aceste albume a fost lansat de Muse?",
+		"variante": ["Black Holes and Revelations", "The Black Parade", "FutureSex/LoveSounds", "Stadium Arcadium"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q2306:interpret:cere_album",
+		"fapt": "wd:Q2306",
+		"text": "Care dintre aceste albume a fost lansat de Pink Floyd?",
+		"variante": ["News of the World", "Rumours", "Animals", "Jazz"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q23215:interpret:cere_album",
+		"fapt": "wd:Q23215",
+		"text": "Care dintre aceste albume a fost lansat de Adele?",
+		"variante": ["Fearless", "I Am... Sasha Fierce", "19", "Chinese Democracy"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q2331:interpret:cere_album",
+		"fapt": "wd:Q2331",
+		"text": "Care dintre aceste albume a fost lansat de Led Zeppelin?",
+		"variante": ["Ring Ring", "Houses of the Holy", "Tubular Bells", "Exile on Main St."],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q25177:interpret:cere_album",
+		"fapt": "wd:Q25177",
+		"text": "Care dintre aceste albume a fost lansat de Rammstein?",
+		"variante": ["Load", "Ray of Light", "Sehnsucht", "The Bends"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q26876:interpret:cere_album",
+		"fapt": "wd:Q26876",
+		"text": "Care dintre aceste albume a fost lansat de Taylor Swift?",
+		"variante": ["Reputation", "Lemonade", "Sweetener", "Anti"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q2831:interpret:cere_album",
+		"fapt": "wd:Q2831",
+		"text": "Care dintre aceste albume a fost lansat de Michael Jackson?",
+		"variante": ["Invincible", "Toxicity", "Mutter", "Kid A"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q36153:interpret:cere_album",
+		"fapt": "wd:Q36153",
+		"text": "Care dintre aceste albume a fost lansat de Beyoncé?",
+		"variante": ["Anti", "Lemonade", "Reputation", "25"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q36844:interpret:cere_album",
+		"fapt": "wd:Q36844",
+		"text": "Care dintre aceste albume a fost lansat de Rihanna?",
+		"variante": ["Anti", "Lemonade", "Reputation", "25"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q396:interpret:cere_album",
+		"fapt": "wd:Q396",
+		"text": "Care dintre aceste albume a fost lansat de U2?",
+		"variante": ["Dangerous", "Blood Sugar Sex Magik", "Achtung Baby", "Use Your Illusion I"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q42493:interpret:cere_album",
+		"fapt": "wd:Q42493",
+		"text": "Care dintre aceste albume a fost lansat de Katy Perry?",
+		"variante": ["Teenage Dream", "Recovery", "My Beautiful Dark Twisted Fantasy", "Loud"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q44190:interpret:cere_album",
+		"fapt": "wd:Q44190",
+		"text": "Care dintre aceste albume a fost lansat de Radiohead?",
+		"variante": ["Made in Heaven", "HIStory: Past, Present and Future, Book I", "The Bends", "Me Against the World"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q45188:interpret:cere_album",
+		"fapt": "wd:Q45188",
+		"text": "Care dintre aceste albume a fost lansat de Coldplay?",
+		"variante": ["A Rush of Blood to the Head", "By the Way", "Absolution", "Toxicity"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q45354:interpret:cere_album",
+		"fapt": "wd:Q45354",
+		"text": "Care dintre aceste albume a fost lansat de The Doors?",
+		"variante": ["Strange days", "Are You Experienced", "The Piper at the Gates of Dawn", "Magical Mystery Tour"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q47871:interpret:cere_album",
+		"fapt": "wd:Q47871",
+		"text": "Care dintre aceste albume a fost lansat de Green Day?",
+		"variante": ["American Idiot", "Hot Fuss", "X&Y", "Absolution"],
+		"corect": 0,
+		"nivel": 1,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q482964:interpret:cere_album",
+		"fapt": "wd:Q482964",
+		"text": "Care dintre aceste albume a fost lansat de Depeche Mode?",
+		"variante": ["Rust in Peace", "Dangerous", "Violator", "Ten"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q5608:interpret:cere_album",
+		"fapt": "wd:Q5608",
+		"text": "Care dintre aceste albume a fost lansat de Eminem?",
+		"variante": ["The Slim Shady LP", "Ray of Light", "Music", "Kid A"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "muzica_moderna",
+		"categorie": "divertisment"
+	}
+]

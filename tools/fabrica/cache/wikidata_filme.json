@@ -1,0 +1,2801 @@
+{
+	"endpoint": "https://query.wikidata.org/sparql",
+	"interogari": {
+		"filme": "SELECT ?f ?f_ro ?f_en ?f_mul (MIN(YEAR(?d)) AS ?an)\n       (GROUP_CONCAT(DISTINCT STRAFTER(STR(?limba), \"entity/\"); separator=\" \") AS ?limbi) WHERE {\n  VALUES ?f { wd:Q102438 wd:Q102448 wd:Q102754 wd:Q104137 wd:Q104814 wd:Q105387 wd:Q105598 wd:Q105702 wd:Q106316 wd:Q106428 wd:Q106506 wd:Q107325 wd:Q108297 wd:Q108839994 wd:Q109116 wd:Q109135 wd:Q116852 wd:Q12018 wd:Q126699 wd:Q12728191 wd:Q12735956 wd:Q131390 wd:Q13255497 wd:Q132689 wd:Q135465 wd:Q1392744 wd:Q150804 wd:Q151904 wd:Q152780 wd:Q152857 wd:Q153723 wd:Q153882 wd:Q154581 wd:Q154817 wd:Q15648198 wd:Q160060 wd:Q160071 wd:Q160215 wd:Q160560 wd:Q162255 wd:Q162331 wd:Q162729 wd:Q163872 wd:Q164103 wd:Q165325 wd:Q165713 wd:Q165817 wd:Q168154 wd:Q16970789 wd:Q170564 wd:Q171453 wd:Q172975 wd:Q1741232 wd:Q174385 wd:Q1754127 wd:Q1757288 wd:Q18002795 wd:Q180098 wd:Q180214 wd:Q181086 wd:Q181795 wd:Q182218 wd:Q183063 wd:Q183066 wd:Q183239 wd:Q184255 wd:Q184605 wd:Q184768 wd:Q184843 wd:Q18541326 wd:Q18547094 wd:Q18547944 wd:Q185888 wd:Q186587 wd:Q188035 wd:Q188652 wd:Q188718 wd:Q188845 wd:Q188850 wd:Q18959331 wd:Q190050 wd:Q190086 wd:Q190145 wd:Q190525 wd:Q190588 wd:Q190643 wd:Q190908 wd:Q190956 wd:Q192724 wd:Q193066 wd:Q1963051 wd:Q200396 wd:Q200672 wd:Q201924 wd:Q202028 wd:Q202508 wd:Q204191 wd:Q20456 wd:Q20502242 wd:Q206124 wd:Q207130 wd:Q208108 wd:Q208263 wd:Q208344 wd:Q2085964 wd:Q209170 wd:Q210364 wd:Q212775 wd:Q213411 wd:Q214723 wd:Q214801 wd:Q216006 wd:Q217020 wd:Q217182 wd:Q218235 wd:Q219315 wd:Q219421 wd:Q221202 wd:Q222939 wd:Q22665878 wd:Q228186 wd:Q232009 wd:Q2328850 wd:Q233464 wd:Q2345 wd:Q2348435 wd:Q23762934 wd:Q23780734 wd:Q23823612 wd:Q244604 wd:Q25136235 wd:Q25139 wd:Q2522756 wd:Q2579784 wd:Q26698156 wd:Q272608 wd:Q273978 wd:Q27411 wd:Q274167 wd:Q2933985 wd:Q318766 wd:Q3212174 wd:Q335160 wd:Q34414 wd:Q374172 wd:Q3821840 wd:Q39571 wd:Q41483 wd:Q4243397 wd:Q42759035 wd:Q45602 wd:Q464032 wd:Q46551 wd:Q46717 wd:Q47075 wd:Q4778856 wd:Q484442 wd:Q484675 wd:Q4941 wd:Q53105 wd:Q5448281 wd:Q55436290 wd:Q571032 wd:Q5887360 wd:Q59653 wd:Q60834962 wd:Q63026 wd:Q80379 }\n  ?f wdt:P31/wdt:P279* wd:Q11424 .\n  OPTIONAL { ?f wdt:P577 ?d }\n  OPTIONAL { ?f wdt:P364 ?limba }\n  OPTIONAL { ?f rdfs:label ?f_ro FILTER(lang(?f_ro) = \"ro\") }\n  OPTIONAL { ?f rdfs:label ?f_en FILTER(lang(?f_en) = \"en\") }\n  OPTIONAL { ?f rdfs:label ?f_mul FILTER(lang(?f_mul) = \"mul\") }\n} GROUP BY ?f ?f_ro ?f_en ?f_mul",
+		"premii": "SELECT DISTINCT ?f ?p WHERE {\n  VALUES ?f { wd:Q102438 wd:Q102448 wd:Q102754 wd:Q104137 wd:Q104814 wd:Q105387 wd:Q105598 wd:Q105702 wd:Q106316 wd:Q106428 wd:Q106506 wd:Q107325 wd:Q108297 wd:Q108839994 wd:Q109116 wd:Q109135 wd:Q116852 wd:Q12018 wd:Q126699 wd:Q12728191 wd:Q12735956 wd:Q131390 wd:Q13255497 wd:Q132689 wd:Q135465 wd:Q1392744 wd:Q150804 wd:Q151904 wd:Q152780 wd:Q152857 wd:Q153723 wd:Q153882 wd:Q154581 wd:Q154817 wd:Q15648198 wd:Q160060 wd:Q160071 wd:Q160215 wd:Q160560 wd:Q162255 wd:Q162331 wd:Q162729 wd:Q163872 wd:Q164103 wd:Q165325 wd:Q165713 wd:Q165817 wd:Q168154 wd:Q16970789 wd:Q170564 wd:Q171453 wd:Q172975 wd:Q1741232 wd:Q174385 wd:Q1754127 wd:Q1757288 wd:Q18002795 wd:Q180098 wd:Q180214 wd:Q181086 wd:Q181795 wd:Q182218 wd:Q183063 wd:Q183066 wd:Q183239 wd:Q184255 wd:Q184605 wd:Q184768 wd:Q184843 wd:Q18541326 wd:Q18547094 wd:Q18547944 wd:Q185888 wd:Q186587 wd:Q188035 wd:Q188652 wd:Q188718 wd:Q188845 wd:Q188850 wd:Q18959331 wd:Q190050 wd:Q190086 wd:Q190145 wd:Q190525 wd:Q190588 wd:Q190643 wd:Q190908 wd:Q190956 wd:Q192724 wd:Q193066 wd:Q1963051 wd:Q200396 wd:Q200672 wd:Q201924 wd:Q202028 wd:Q202508 wd:Q204191 wd:Q20456 wd:Q20502242 wd:Q206124 wd:Q207130 wd:Q208108 wd:Q208263 wd:Q208344 wd:Q2085964 wd:Q209170 wd:Q210364 wd:Q212775 wd:Q213411 wd:Q214723 wd:Q214801 wd:Q216006 wd:Q217020 wd:Q217182 wd:Q218235 wd:Q219315 wd:Q219421 wd:Q221202 wd:Q222939 wd:Q22665878 wd:Q228186 wd:Q232009 wd:Q2328850 wd:Q233464 wd:Q2345 wd:Q2348435 wd:Q23762934 wd:Q23780734 wd:Q23823612 wd:Q244604 wd:Q25136235 wd:Q25139 wd:Q2522756 wd:Q2579784 wd:Q26698156 wd:Q272608 wd:Q273978 wd:Q27411 wd:Q274167 wd:Q2933985 wd:Q318766 wd:Q3212174 wd:Q335160 wd:Q34414 wd:Q374172 wd:Q3821840 wd:Q39571 wd:Q41483 wd:Q4243397 wd:Q42759035 wd:Q45602 wd:Q464032 wd:Q46551 wd:Q46717 wd:Q47075 wd:Q4778856 wd:Q484442 wd:Q484675 wd:Q4941 wd:Q53105 wd:Q5448281 wd:Q55436290 wd:Q571032 wd:Q5887360 wd:Q59653 wd:Q60834962 wd:Q63026 wd:Q80379 }\n  VALUES ?p { wd:Q102427 wd:Q179808 }\n  ?f wdt:P166 ?p .\n}",
+		"regizori": "SELECT ?f ?r ?r_ro ?r_en ?r_mul ?descriere\n       (MIN(YEAR(?n)) AS ?nastere) (MIN(YEAR(?m)) AS ?moarte) WHERE {\n  VALUES ?f { wd:Q102438 wd:Q102448 wd:Q102754 wd:Q104137 wd:Q104814 wd:Q105387 wd:Q105598 wd:Q105702 wd:Q106316 wd:Q106428 wd:Q106506 wd:Q107325 wd:Q108297 wd:Q108839994 wd:Q109116 wd:Q109135 wd:Q116852 wd:Q12018 wd:Q126699 wd:Q12728191 wd:Q12735956 wd:Q131390 wd:Q13255497 wd:Q132689 wd:Q135465 wd:Q1392744 wd:Q150804 wd:Q151904 wd:Q152780 wd:Q152857 wd:Q153723 wd:Q153882 wd:Q154581 wd:Q154817 wd:Q15648198 wd:Q160060 wd:Q160071 wd:Q160215 wd:Q160560 wd:Q162255 wd:Q162331 wd:Q162729 wd:Q163872 wd:Q164103 wd:Q165325 wd:Q165713 wd:Q165817 wd:Q168154 wd:Q16970789 wd:Q170564 wd:Q171453 wd:Q172975 wd:Q1741232 wd:Q174385 wd:Q1754127 wd:Q1757288 wd:Q18002795 wd:Q180098 wd:Q180214 wd:Q181086 wd:Q181795 wd:Q182218 wd:Q183063 wd:Q183066 wd:Q183239 wd:Q184255 wd:Q184605 wd:Q184768 wd:Q184843 wd:Q18541326 wd:Q18547094 wd:Q18547944 wd:Q185888 wd:Q186587 wd:Q188035 wd:Q188652 wd:Q188718 wd:Q188845 wd:Q188850 wd:Q18959331 wd:Q190050 wd:Q190086 wd:Q190145 wd:Q190525 wd:Q190588 wd:Q190643 wd:Q190908 wd:Q190956 wd:Q192724 wd:Q193066 wd:Q1963051 wd:Q200396 wd:Q200672 wd:Q201924 wd:Q202028 wd:Q202508 wd:Q204191 wd:Q20456 wd:Q20502242 wd:Q206124 wd:Q207130 wd:Q208108 wd:Q208263 wd:Q208344 wd:Q2085964 wd:Q209170 wd:Q210364 wd:Q212775 wd:Q213411 wd:Q214723 wd:Q214801 wd:Q216006 wd:Q217020 wd:Q217182 wd:Q218235 wd:Q219315 wd:Q219421 wd:Q221202 wd:Q222939 wd:Q22665878 wd:Q228186 wd:Q232009 wd:Q2328850 wd:Q233464 wd:Q2345 wd:Q2348435 wd:Q23762934 wd:Q23780734 wd:Q23823612 wd:Q244604 wd:Q25136235 wd:Q25139 wd:Q2522756 wd:Q2579784 wd:Q26698156 wd:Q272608 wd:Q273978 wd:Q27411 wd:Q274167 wd:Q2933985 wd:Q318766 wd:Q3212174 wd:Q335160 wd:Q34414 wd:Q374172 wd:Q3821840 wd:Q39571 wd:Q41483 wd:Q4243397 wd:Q42759035 wd:Q45602 wd:Q464032 wd:Q46551 wd:Q46717 wd:Q47075 wd:Q4778856 wd:Q484442 wd:Q484675 wd:Q4941 wd:Q53105 wd:Q5448281 wd:Q55436290 wd:Q571032 wd:Q5887360 wd:Q59653 wd:Q60834962 wd:Q63026 wd:Q80379 }\n  ?f wdt:P57 ?r .\n  OPTIONAL { ?r rdfs:label ?r_ro FILTER(lang(?r_ro) = \"ro\") }\n  OPTIONAL { ?r rdfs:label ?r_en FILTER(lang(?r_en) = \"en\") }\n  OPTIONAL { ?r rdfs:label ?r_mul FILTER(lang(?r_mul) = \"mul\") }\n  OPTIONAL { ?r schema:description ?descriere FILTER(lang(?descriere) = \"ro\") }\n  OPTIONAL { ?r wdt:P569 ?n }\n  OPTIONAL { ?r wdt:P570 ?m }\n} GROUP BY ?f ?r ?r_ro ?r_en ?r_mul ?descriere"
+	},
+	"luat_la": "2026-10-27T02:56:34",
+	"randuri": {
+		"filme": [
+			{
+				"an": "1996",
+				"f": "Q27411",
+				"f_en": "Scream",
+				"f_mul": "Scream",
+				"f_ro": "Scream",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "1997",
+				"f": "Q106506",
+				"f_en": "The Fifth Element",
+				"f_mul": "The Fifth Element",
+				"f_ro": "Al cincilea element",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "1962",
+				"f": "Q228186",
+				"f_en": "Lawrence of Arabia",
+				"f_mul": "Lawrence of Arabia",
+				"f_ro": "Lawrence al Arabiei",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "2002",
+				"f": "Q244604",
+				"f_en": "Minority Report",
+				"f_mul": "Minority Report",
+				"f_ro": "Raport Special",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "1994",
+				"f": "Q484675",
+				"f_en": "Léon: The Professional",
+				"f_mul": "Léon: The Professional",
+				"f_ro": "Léon",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "2003",
+				"f": "Q154817",
+				"f_en": "Good Bye Lenin!",
+				"f_mul": "Good Bye, Lenin!",
+				"f_ro": "Adio, Lenin!",
+				"limbi": "Q188"
+			},
+			{
+				"an": "2008",
+				"f": "Q160071",
+				"f_en": "Twilight",
+				"f_mul": "Twilight",
+				"f_ro": "Amurg",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "2008",
+				"f": "Q163872",
+				"f_en": "The Dark Knight",
+				"f_mul": "The Dark Knight",
+				"f_ro": "Cavalerul negru",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "2014",
+				"f": "Q15648198",
+				"f_en": "Whiplash",
+				"f_mul": "Whiplash",
+				"f_ro": "Whiplash",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "1991",
+				"f": "Q170564",
+				"f_en": "Terminator 2: Judgment Day",
+				"f_mul": "Terminator 2: Judgment Day",
+				"f_ro": "Terminatorul 2: Ziua Judecății",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "2019",
+				"f": "Q42759035",
+				"f_en": "Joker",
+				"f_mul": "Joker",
+				"f_ro": "Joker",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "2021",
+				"f": "Q60834962",
+				"f_en": "Dune",
+				"f_mul": "Dune",
+				"f_ro": "Dune",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "2023",
+				"f": "Q108839994",
+				"f_en": "Oppenheimer",
+				"f_mul": "Oppenheimer",
+				"f_ro": "Oppenheimer",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "2009",
+				"f": "Q184605",
+				"f_en": "2012",
+				"f_mul": "2012",
+				"f_ro": "2012",
+				"limbi": "Q34271 Q7850 Q1860 Q150"
+			},
+			{
+				"an": "2008",
+				"f": "Q188850",
+				"f_en": "Mamma Mia!",
+				"f_mul": "Mamma Mia!",
+				"f_ro": "Mamma Mia!",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "1984",
+				"f": "Q190956",
+				"f_en": "Amadeus",
+				"f_mul": "Amadeus",
+				"f_ro": "Amadeus",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "2008",
+				"f": "Q192724",
+				"f_en": "Iron Man",
+				"f_mul": "Iron Man",
+				"f_ro": "Iron Man",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "1946",
+				"f": "Q204191",
+				"f_en": "It's a Wonderful Life",
+				"f_mul": "It's a Wonderful Life",
+				"f_ro": "O viață minunată",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "1998",
+				"f": "Q208344",
+				"f_en": "Armageddon",
+				"f_mul": "Armageddon",
+				"f_ro": "Armageddon - Sfârșitul lumii?",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "2011",
+				"f": "Q217020",
+				"f_en": "Thor",
+				"f_mul": "Thor",
+				"f_ro": "Thor",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "1992",
+				"f": "Q221202",
+				"f_en": "Home Alone 2: Lost in New York",
+				"f_mul": "Home Alone 2: Lost in New York",
+				"f_ro": "Singur acasă 2 - Pierdut în New York",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "2012",
+				"f": "Q80379",
+				"f_en": "The Hobbit: An Unexpected Journey",
+				"f_ro": "Hobbitul: O călătorie neașteptată",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "2001",
+				"f": "Q102438",
+				"f_en": "Harry Potter and the Philosopher's Stone",
+				"f_ro": "Harry Potter și Piatra Filozofală",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "2004",
+				"f": "Q102448",
+				"f_en": "Harry Potter and the Prisoner of Azkaban",
+				"f_ro": "Harry Potter și Prizonierul din Azkaban",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "1962",
+				"f": "Q102754",
+				"f_en": "Dr. No",
+				"f_ro": "Dr. No",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "1992",
+				"f": "Q104137",
+				"f_en": "Unforgiven",
+				"f_ro": "Necruțătorul",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "1986",
+				"f": "Q104814",
+				"f_en": "Aliens",
+				"f_ro": "Aliens",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "1996",
+				"f": "Q105387",
+				"f_en": "Independence Day",
+				"f_ro": "Ziua independenței",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "1988",
+				"f": "Q105598",
+				"f_en": "Die Hard",
+				"f_ro": "Greu de ucis",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "1964",
+				"f": "Q105702",
+				"f_en": "Dr. Strangelove",
+				"f_ro": "Dr. Strangelove",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "1989",
+				"f": "Q106316",
+				"f_en": "Dead Poets Society",
+				"f_ro": "Cercul poeților dispăruți",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "1995",
+				"f": "Q106428",
+				"f_en": "Apollo 13",
+				"f_ro": "Apollo 13",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "1992",
+				"f": "Q107325",
+				"f_en": "Bram Stoker's Dracula",
+				"f_ro": "Dracula",
+				"limbi": "Q9129 Q7918 Q7913 Q1860 Q397"
+			},
+			{
+				"an": "1960",
+				"f": "Q108297",
+				"f_en": "Spartacus",
+				"f_ro": "Spartacus",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "1940",
+				"f": "Q109116",
+				"f_en": "The Great Dictator",
+				"f_ro": "Dictatorul",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "1996",
+				"f": "Q109135",
+				"f_en": "Trainspotting",
+				"f_ro": "Trainspotting",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "1989",
+				"f": "Q116852",
+				"f_en": "Batman",
+				"f_ro": "Batman",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "2008",
+				"f": "Q126699",
+				"f_en": "Gran Torino",
+				"f_ro": "Gran Torino",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "2006",
+				"f": "Q131390",
+				"f_en": "300",
+				"f_ro": "300",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "1942",
+				"f": "Q132689",
+				"f_en": "Casablanca",
+				"f_ro": "Casablanca",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "1950",
+				"f": "Q135465",
+				"f_en": "Rashomon",
+				"f_ro": "Rashomon",
+				"limbi": "Q5287"
+			},
+			{
+				"an": "2002",
+				"f": "Q150804",
+				"f_en": "The Pianist",
+				"f_ro": "Pianistul",
+				"limbi": "Q7737 Q1860 Q188 Q150"
+			},
+			{
+				"an": "2006",
+				"f": "Q151904",
+				"f_en": "Casino Royale",
+				"f_ro": "Casino Royale",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "2012",
+				"f": "Q152780",
+				"f_en": "Life of Pi",
+				"f_ro": "Viața lui Pi",
+				"limbi": "Q5885 Q5287 Q1860 Q150"
+			},
+			{
+				"an": "2004",
+				"f": "Q152857",
+				"f_en": "Downfall",
+				"f_ro": "Ultimele zile ale lui Hitler",
+				"limbi": "Q188"
+			},
+			{
+				"an": "2009",
+				"f": "Q153723",
+				"f_en": "Inglourious Basterds",
+				"f_ro": "Ticăloși fără glorie",
+				"limbi": "Q1860 Q188 Q150"
+			},
+			{
+				"an": "2006",
+				"f": "Q153882",
+				"f_en": "The Lives of Others",
+				"f_ro": "Viața celorlalți",
+				"limbi": "Q188"
+			},
+			{
+				"an": "2002",
+				"f": "Q154581",
+				"f_en": "Gangs of New York",
+				"f_ro": "Bandele din New York",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "2010",
+				"f": "Q160060",
+				"f_en": "The King's Speech",
+				"f_ro": "Discursul regelui",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "2005",
+				"f": "Q160215",
+				"f_en": "King Kong",
+				"f_ro": "King Kong",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "2006",
+				"f": "Q160560",
+				"f_en": "The Da Vinci Code",
+				"f_ro": "Codul lui Da Vinci",
+				"limbi": "Q1860 Q397 Q150"
+			},
+			{
+				"an": "1984",
+				"f": "Q162255",
+				"f_en": "The Terminator",
+				"f_ro": "Terminatorul",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "1959",
+				"f": "Q162331",
+				"f_en": "The 400 Blows",
+				"f_ro": "Cele patru sute de lovituri",
+				"limbi": "Q1860 Q150"
+			},
+			{
+				"an": "1995",
+				"f": "Q162729",
+				"f_en": "Braveheart",
+				"f_ro": "Inimă neînfricată",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "2001",
+				"f": "Q164103",
+				"f_en": "A Beautiful Mind",
+				"f_ro": "O minte sclipitoare",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "2003",
+				"f": "Q165325",
+				"f_en": "Kill Bill: Volume 1",
+				"f_ro": "Kill Bill: Volumul 1",
+				"limbi": "Q5287 Q1860"
+			},
+			{
+				"an": "1999",
+				"f": "Q165713",
+				"f_en": "Star Wars: Episode I – The Phantom Menace",
+				"f_ro": "Războiul stelelor - Episodul I: Amenințarea fantomei",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "1998",
+				"f": "Q165817",
+				"f_en": "Saving Private Ryan",
+				"f_ro": "Salvați soldatul Ryan",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "1968",
+				"f": "Q168154",
+				"f_en": "Once Upon a Time in the West",
+				"f_ro": "Undeva, cândva în vest",
+				"limbi": "Q1860 Q652"
+			},
+			{
+				"an": "2007",
+				"f": "Q171453",
+				"f_en": "Transformers",
+				"f_ro": "Transformers - Războiul lor în lumea noastră",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "2006",
+				"f": "Q172975",
+				"f_en": "The Departed",
+				"f_ro": "Cârtița",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "2010",
+				"f": "Q174385",
+				"f_en": "Alice in Wonderland",
+				"f_ro": "Alice în Țara Minunilor",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "1959",
+				"f": "Q180098",
+				"f_en": "Ben-Hur",
+				"f_ro": "Ben-Hur",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "2010",
+				"f": "Q180214",
+				"f_en": "Black Swan",
+				"f_ro": "Lebăda neagră",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "1971",
+				"f": "Q181086",
+				"f_en": "A Clockwork Orange",
+				"f_ro": "Portocala mecanică",
+				"limbi": "Q655076 Q1860"
+			},
+			{
+				"an": "1980",
+				"f": "Q181795",
+				"f_en": "Star Wars: Episode V – The Empire Strikes Back",
+				"f_ro": "Războiul stelelor - Episodul V: Imperiul contraatacă",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "2012",
+				"f": "Q182218",
+				"f_en": "The Avengers",
+				"f_ro": "Răzbunătorii",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "1999",
+				"f": "Q183063",
+				"f_en": "The Sixth Sense",
+				"f_ro": "The Sixth Sense",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "2008",
+				"f": "Q183066",
+				"f_en": "The Hurt Locker",
+				"f_ro": "The Hurt Locker",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "2008",
+				"f": "Q183239",
+				"f_en": "The Curious Case of Benjamin Button",
+				"f_ro": "Strania poveste a lui Benjamin Button",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "2004",
+				"f": "Q184255",
+				"f_en": "Million Dollar Baby",
+				"f_ro": "O fată de milioane",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "1974",
+				"f": "Q184768",
+				"f_en": "The Godfather Part II",
+				"f_ro": "Nașul: Partea a II-a",
+				"limbi": "Q33973 Q1860"
+			},
+			{
+				"an": "1982",
+				"f": "Q184843",
+				"f_en": "Blade Runner",
+				"f_ro": "Vânătorul de recompense",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "2010",
+				"f": "Q185888",
+				"f_en": "The Social Network",
+				"f_ro": "Rețeaua de socializare",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "2004",
+				"f": "Q186587",
+				"f_en": "Troy",
+				"f_ro": "Troia",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "2006",
+				"f": "Q188035",
+				"f_en": "Apocalypto",
+				"f_ro": "Apocalypto",
+				"limbi": "Q13354"
+			},
+			{
+				"an": "1976",
+				"f": "Q188652",
+				"f_en": "Rocky",
+				"f_ro": "Rocky",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "1957",
+				"f": "Q188718",
+				"f_en": "The Bridge on the River Kwai",
+				"f_ro": "Podul de pe râul Kwai",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "1988",
+				"f": "Q188845",
+				"f_en": "Rain Man",
+				"f_ro": "Rain Man",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "1999",
+				"f": "Q190050",
+				"f_en": "Fight Club",
+				"f_ro": "Fight Club",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "1959",
+				"f": "Q190086",
+				"f_en": "Some Like It Hot",
+				"f_ro": "Unora le place jazzul",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "2004",
+				"f": "Q190145",
+				"f_en": "Spider-Man 2",
+				"f_ro": "Omul-păianjen 2",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "2000",
+				"f": "Q190525",
+				"f_en": "Memento",
+				"f_ro": "Memento",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "2003",
+				"f": "Q190588",
+				"f_en": "Love Actually",
+				"f_ro": "Pur și simplu dragoste",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "1986",
+				"f": "Q190643",
+				"f_en": "Platoon",
+				"f_ro": "Plutonul",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "1995",
+				"f": "Q190908",
+				"f_en": "Seven",
+				"f_ro": "Se7en",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "1961",
+				"f": "Q193066",
+				"f_en": "Breakfast at Tiffany's",
+				"f_ro": "Micul dejun la Tiffany",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "2009",
+				"f": "Q200396",
+				"f_en": "Sherlock Holmes",
+				"f_ro": "Sherlock Holmes",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "1999",
+				"f": "Q200672",
+				"f_en": "Notting Hill",
+				"f_ro": "Notting Hill",
+				"limbi": "Q1860 Q1321"
+			},
+			{
+				"an": "2004",
+				"f": "Q201924",
+				"f_en": "The Aviator",
+				"f_ro": "Aviatorul",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "2005",
+				"f": "Q202028",
+				"f_en": "War of the Worlds",
+				"f_ro": "Războiul Lumilor",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "1999",
+				"f": "Q202508",
+				"f_en": "The Mummy",
+				"f_ro": "Mumia",
+				"limbi": "Q50868 Q13955 Q1860"
+			},
+			{
+				"an": "2011",
+				"f": "Q206124",
+				"f_en": "Midnight in Paris",
+				"f_ro": "Miezul nopții în Paris",
+				"limbi": "Q1860 Q150"
+			},
+			{
+				"an": "2003",
+				"f": "Q207130",
+				"f_en": "The Last Samurai",
+				"f_ro": "Ultimul samurai",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "2002",
+				"f": "Q208108",
+				"f_en": "Catch Me If You Can",
+				"f_ro": "Prinde-mă! Dacă poți!",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "1999",
+				"f": "Q208263",
+				"f_en": "The Green Mile",
+				"f_ro": "Culoarul morții",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "1964",
+				"f": "Q209170",
+				"f_en": "Mary Poppins",
+				"f_ro": "Mary Poppins",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "2010",
+				"f": "Q210364",
+				"f_en": "Shutter Island",
+				"f_ro": "Shutter Island",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "1987",
+				"f": "Q212775",
+				"f_en": "The Last Emperor",
+				"f_ro": "Ultimul împărat",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "2000",
+				"f": "Q213411",
+				"f_en": "Cast Away",
+				"f_ro": "Naufragiatul",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "1925",
+				"f": "Q214723",
+				"f_en": "The Gold Rush",
+				"f_ro": "Goana după aur",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "1998",
+				"f": "Q214801",
+				"f_en": "The Truman Show",
+				"f_ro": "The Truman Show",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "2006",
+				"f": "Q216006",
+				"f_en": "Pan's Labyrinth",
+				"f_ro": "Labirintul lui Pan",
+				"limbi": "Q1321"
+			},
+			{
+				"an": "1990",
+				"f": "Q217182",
+				"f_en": "Edward Scissorhands",
+				"f_ro": "Edward Mâini-de-foarfecă",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "2005",
+				"f": "Q218235",
+				"f_en": "Charlie and the Chocolate Factory",
+				"f_ro": "Charlie și fabrica de ciocolată",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "2009",
+				"f": "Q219315",
+				"f_en": "The Hangover",
+				"f_ro": "Marea mahmureală",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "1994",
+				"f": "Q219421",
+				"f_en": "The Mask",
+				"f_ro": "Masca",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "1995",
+				"f": "Q222939",
+				"f_en": "Jumanji",
+				"f_ro": "Jumanji",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "2011",
+				"f": "Q232009",
+				"f_en": "Harry Potter and the Deathly Hallows – Part 2",
+				"f_ro": "Harry Potter și Talismanele Morții. Partea 2",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "1977",
+				"f": "Q233464",
+				"f_en": "Annie Hall",
+				"f_ro": "Annie Hall",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "2001",
+				"f": "Q272608",
+				"f_en": "Mulholland Drive",
+				"f_ro": "Mulholland Drive – Calea misterelor",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "2000",
+				"f": "Q273978",
+				"f_en": "Crouching Tiger, Hidden Dragon",
+				"f_ro": "Tigru și dragon",
+				"limbi": "Q727694 Q9192 Q7850"
+			},
+			{
+				"an": "1973",
+				"f": "Q274167",
+				"f_en": "The Exorcist",
+				"f_ro": "Exorcistul",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "2004",
+				"f": "Q318766",
+				"f_en": "The Terminal",
+				"f_ro": "Terminalul",
+				"limbi": "Q7737 Q1860 Q150"
+			},
+			{
+				"an": "2000",
+				"f": "Q335160",
+				"f_en": "Snatch",
+				"f_ro": "Snatch",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "1921",
+				"f": "Q374172",
+				"f_en": "The Kid",
+				"f_ro": "Piciul",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "1988",
+				"f": "Q464032",
+				"f_en": "Cinema Paradiso",
+				"f_ro": "Cinema Paradiso",
+				"limbi": "Q652"
+			},
+			{
+				"an": "2002",
+				"f": "Q484442",
+				"f_en": "Spider-Man",
+				"f_ro": "Omul-păianjen",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "2012",
+				"f": "Q571032",
+				"f_en": "Django Unchained",
+				"f_ro": "Django dezlănțuit",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "2013",
+				"f": "Q1392744",
+				"f_en": "The Wolf of Wall Street",
+				"f_ro": "Lupul de pe Wall Street",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "1996",
+				"f": "Q1741232",
+				"f_en": "Mission: Impossible",
+				"f_ro": "Misiune: Imposibilă",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "2006",
+				"f": "Q1754127",
+				"f_en": "12:08 East of Bucharest",
+				"f_ro": "A fost sau n-a fost?",
+				"limbi": "Q7913"
+			},
+			{
+				"an": "2015",
+				"f": "Q1757288",
+				"f_en": "Mad Max: Fury Road",
+				"f_ro": "Mad Max: Drumul furiei",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "1967",
+				"f": "Q1963051",
+				"f_en": "Dacii",
+				"f_ro": "Dacii",
+				"limbi": "Q7913"
+			},
+			{
+				"an": "1965",
+				"f": "Q2085964",
+				"f_en": "Forest of the Hanged",
+				"f_ro": "Pădurea spânzuraților",
+				"limbi": "Q7913"
+			},
+			{
+				"an": "1992",
+				"f": "Q2328850",
+				"f_en": "The Oak",
+				"f_ro": "Balanța",
+				"limbi": "Q7913"
+			},
+			{
+				"an": "1970",
+				"f": "Q2348435",
+				"f_en": "Michael the Brave",
+				"f_ro": "Mihai Viteazul",
+				"limbi": "Q7913"
+			},
+			{
+				"an": "2012",
+				"f": "Q2522756",
+				"f_en": "Beyond the Hills",
+				"f_ro": "După dealuri",
+				"limbi": "Q7913"
+			},
+			{
+				"an": "2013",
+				"f": "Q2579784",
+				"f_en": "Gravity",
+				"f_ro": "Misiune în spațiu",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "2007",
+				"f": "Q2933985",
+				"f_en": "California Dreamin'",
+				"f_ro": "California Dreamin'",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "1970",
+				"f": "Q3212174",
+				"f_en": "The Reenactment",
+				"f_ro": "Reconstituirea",
+				"limbi": "Q7913"
+			},
+			{
+				"an": "1968",
+				"f": "Q3821840",
+				"f_en": "The Column",
+				"f_ro": "Columna",
+				"limbi": "Q7913"
+			},
+			{
+				"an": "1979",
+				"f": "Q4243397",
+				"f_en": "Uncle Marin, the Billionaire",
+				"f_ro": "Nea Mărin miliardar",
+				"limbi": "Q7913"
+			},
+			{
+				"an": "2013",
+				"f": "Q4778856",
+				"f_en": "Child's Pose",
+				"f_ro": "Poziția copilului",
+				"limbi": "Q7913"
+			},
+			{
+				"an": "2002",
+				"f": "Q5448281",
+				"f_en": "Philanthropy",
+				"f_ro": "Filantropica",
+				"limbi": "Q7913"
+			},
+			{
+				"an": "2014",
+				"f": "Q5887360",
+				"f_en": "Guardians of the Galaxy",
+				"f_ro": "Gardienii galaxiei",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "1972",
+				"f": "Q12728191",
+				"f_en": "Felix și Otilia",
+				"f_ro": "Felix și Otilia",
+				"limbi": "Q7913"
+			},
+			{
+				"an": "1987",
+				"f": "Q12735956",
+				"f_en": "The Moromete Family",
+				"f_ro": "Moromeții",
+				"limbi": "Q7913"
+			},
+			{
+				"an": "2014",
+				"f": "Q13255497",
+				"f_en": "Birdman",
+				"f_ro": "Birdman",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "2014",
+				"f": "Q16970789",
+				"f_en": "American Sniper",
+				"f_ro": "American Sniper",
+				"limbi": "Q13955 Q1860"
+			},
+			{
+				"an": "2015",
+				"f": "Q18002795",
+				"f_en": "The Revenant",
+				"f_ro": "The Revenant: Legenda lui Hugh Glass",
+				"limbi": "Q56539 Q1860"
+			},
+			{
+				"an": "1986",
+				"f": "Q18541326",
+				"f_en": "The Graduates",
+				"f_ro": "Liceenii",
+				"limbi": "Q7913"
+			},
+			{
+				"an": "1980",
+				"f": "Q18547094",
+				"f_en": "Microphone Test",
+				"f_ro": "Proba de microfon",
+				"limbi": "Q7913"
+			},
+			{
+				"an": "2015",
+				"f": "Q18547944",
+				"f_en": "The Martian",
+				"f_ro": "Marțianul",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "2015",
+				"f": "Q18959331",
+				"f_en": "Aferim!",
+				"f_ro": "Aferim!",
+				"limbi": "Q7913"
+			},
+			{
+				"an": "2017",
+				"f": "Q20502242",
+				"f_en": "Wonder Woman",
+				"f_ro": "Wonder Woman",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "2017",
+				"f": "Q22665878",
+				"f_en": "Thor: Ragnarok",
+				"f_ro": "Thor: Ragnarok",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "2016",
+				"f": "Q23762934",
+				"f_en": "Graduation",
+				"f_ro": "Bacalaureat",
+				"limbi": "Q7913"
+			},
+			{
+				"an": "2018",
+				"f": "Q23780734",
+				"f_en": "Black Panther",
+				"f_ro": "Pantera neagră",
+				"limbi": "Q7976"
+			},
+			{
+				"an": "2016",
+				"f": "Q23823612",
+				"f_en": "Sieranevada",
+				"f_ro": "Sieranevada",
+				"limbi": "Q7913"
+			},
+			{
+				"an": "2017",
+				"f": "Q25136235",
+				"f_en": "Get Out",
+				"f_ro": "Get Out",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "2017",
+				"f": "Q26698156",
+				"f_en": "The Shape of Water",
+				"f_ro": "Forma apei",
+				"limbi": "Q14759 Q7737 Q1860 Q150"
+			},
+			{
+				"an": "2023",
+				"f": "Q55436290",
+				"f_en": "Barbie",
+				"f_ro": "Barbie",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "1957",
+				"f": "Q2345",
+				"f_en": "12 Angry Men",
+				"f_ro": "12 oameni furioși",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "2012",
+				"f": "Q4941",
+				"f_en": "Skyfall",
+				"f_ro": "Skyfall",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "1963",
+				"f": "Q12018",
+				"f_en": "8½",
+				"f_ro": "8½",
+				"limbi": "Q652"
+			},
+			{
+				"an": "1990",
+				"f": "Q20456",
+				"f_en": "Dances with Wolves",
+				"f_ro": "Cel care dansează cu lupii",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "1999",
+				"f": "Q25139",
+				"f_en": "American Beauty",
+				"f_ro": "American Beauty",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "1954",
+				"f": "Q34414",
+				"f_en": "Rear Window",
+				"f_ro": "Fereastra din spate",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "1988",
+				"f": "Q39571",
+				"f_en": "My Neighbor Totoro",
+				"f_ro": "Vecinul Totoro",
+				"limbi": "Q5287"
+			},
+			{
+				"an": "1966",
+				"f": "Q41483",
+				"f_en": "The Good, the Bad and the Ugly",
+				"f_ro": "Cel bun, cel rău, cel urât",
+				"limbi": "Q652"
+			},
+			{
+				"an": "1936",
+				"f": "Q45602",
+				"f_en": "Modern Times",
+				"f_ro": "Timpuri noi",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "2006",
+				"f": "Q46551",
+				"f_en": "The Prestige",
+				"f_ro": "Prestigiul",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "2003",
+				"f": "Q46717",
+				"f_en": "Pirates of the Caribbean: The Curse of the Black Pearl",
+				"f_ro": "Pirații din Caraibe: Blestemul Perlei Negre",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "1983",
+				"f": "Q47075",
+				"f_en": "Scarface",
+				"f_ro": "Scarface",
+				"limbi": "Q1860"
+			},
+			{
+				"an": "1980",
+				"f": "Q53105",
+				"f_en": "Moscow Does Not Believe in Tears",
+				"f_ro": "Moscova nu crede în lacrimi",
+				"limbi": "Q7737"
+			},
+			{
+				"an": "2012",
+				"f": "Q59653",
+				"f_en": "Argo",
+				"f_ro": "Argo",
+				"limbi": "Q9168 Q1860"
+			},
+			{
+				"an": "1996",
+				"f": "Q63026",
+				"f_en": "The English Patient",
+				"f_ro": "Pacientul englez",
+				"limbi": "Q13955 Q1860 Q652 Q188"
+			}
+		],
+		"premii": [
+			{
+				"f": "Q59653",
+				"p": "Q102427"
+			},
+			{
+				"f": "Q63026",
+				"p": "Q102427"
+			},
+			{
+				"f": "Q108839994",
+				"p": "Q102427"
+			},
+			{
+				"f": "Q104137",
+				"p": "Q102427"
+			},
+			{
+				"f": "Q132689",
+				"p": "Q102427"
+			},
+			{
+				"f": "Q150804",
+				"p": "Q179808"
+			},
+			{
+				"f": "Q160060",
+				"p": "Q102427"
+			},
+			{
+				"f": "Q162729",
+				"p": "Q102427"
+			},
+			{
+				"f": "Q164103",
+				"p": "Q102427"
+			},
+			{
+				"f": "Q172975",
+				"p": "Q102427"
+			},
+			{
+				"f": "Q180098",
+				"p": "Q102427"
+			},
+			{
+				"f": "Q183066",
+				"p": "Q102427"
+			},
+			{
+				"f": "Q184255",
+				"p": "Q102427"
+			},
+			{
+				"f": "Q184768",
+				"p": "Q102427"
+			},
+			{
+				"f": "Q188652",
+				"p": "Q102427"
+			},
+			{
+				"f": "Q188718",
+				"p": "Q102427"
+			},
+			{
+				"f": "Q188845",
+				"p": "Q102427"
+			},
+			{
+				"f": "Q190643",
+				"p": "Q102427"
+			},
+			{
+				"f": "Q190956",
+				"p": "Q102427"
+			},
+			{
+				"f": "Q212775",
+				"p": "Q102427"
+			},
+			{
+				"f": "Q228186",
+				"p": "Q102427"
+			},
+			{
+				"f": "Q233464",
+				"p": "Q102427"
+			},
+			{
+				"f": "Q13255497",
+				"p": "Q102427"
+			},
+			{
+				"f": "Q26698156",
+				"p": "Q102427"
+			},
+			{
+				"f": "Q20456",
+				"p": "Q102427"
+			},
+			{
+				"f": "Q25139",
+				"p": "Q102427"
+			}
+		],
+		"regizori": [
+			{
+				"descriere": "actor de comedie și regizor englez (1889–1977)",
+				"f": "Q45602",
+				"moarte": "1977",
+				"nastere": "1889",
+				"r": "Q882",
+				"r_en": "Charlie Chaplin",
+				"r_mul": "Charlie Chaplin",
+				"r_ro": "Charlie Chaplin"
+			},
+			{
+				"descriere": "actor de comedie și regizor englez (1889–1977)",
+				"f": "Q109116",
+				"moarte": "1977",
+				"nastere": "1889",
+				"r": "Q882",
+				"r_en": "Charlie Chaplin",
+				"r_mul": "Charlie Chaplin",
+				"r_ro": "Charlie Chaplin"
+			},
+			{
+				"descriere": "actor de comedie și regizor englez (1889–1977)",
+				"f": "Q214723",
+				"moarte": "1977",
+				"nastere": "1889",
+				"r": "Q882",
+				"r_en": "Charlie Chaplin",
+				"r_mul": "Charlie Chaplin",
+				"r_ro": "Charlie Chaplin"
+			},
+			{
+				"descriere": "actor de comedie și regizor englez (1889–1977)",
+				"f": "Q374172",
+				"moarte": "1977",
+				"nastere": "1889",
+				"r": "Q882",
+				"r_en": "Charlie Chaplin",
+				"r_mul": "Charlie Chaplin",
+				"r_ro": "Charlie Chaplin"
+			},
+			{
+				"descriere": "regizor de film britanic",
+				"f": "Q184843",
+				"nastere": "1937",
+				"r": "Q56005",
+				"r_en": "Ridley Scott",
+				"r_mul": "Ridley Scott",
+				"r_ro": "Ridley Scott"
+			},
+			{
+				"descriere": "regizor de film britanic",
+				"f": "Q18547944",
+				"nastere": "1937",
+				"r": "Q56005",
+				"r_en": "Ridley Scott",
+				"r_mul": "Ridley Scott",
+				"r_ro": "Ridley Scott"
+			},
+			{
+				"descriere": "regizor și scenarist american",
+				"f": "Q116852",
+				"nastere": "1958",
+				"r": "Q56008",
+				"r_en": "Tim Burton",
+				"r_mul": "Tim Burton",
+				"r_ro": "Tim Burton"
+			},
+			{
+				"descriere": "regizor și scenarist american",
+				"f": "Q174385",
+				"nastere": "1958",
+				"r": "Q56008",
+				"r_en": "Tim Burton",
+				"r_mul": "Tim Burton",
+				"r_ro": "Tim Burton"
+			},
+			{
+				"descriere": "regizor și scenarist american",
+				"f": "Q217182",
+				"nastere": "1958",
+				"r": "Q56008",
+				"r_en": "Tim Burton",
+				"r_mul": "Tim Burton",
+				"r_ro": "Tim Burton"
+			},
+			{
+				"descriere": "regizor și scenarist american",
+				"f": "Q218235",
+				"nastere": "1958",
+				"r": "Q56008",
+				"r_en": "Tim Burton",
+				"r_mul": "Tim Burton",
+				"r_ro": "Tim Burton"
+			},
+			{
+				"descriere": "regizor de film și scenarist german",
+				"f": "Q105387",
+				"nastere": "1955",
+				"r": "Q60100",
+				"r_en": "Roland Emmerich",
+				"r_mul": "Roland Emmerich",
+				"r_ro": "Roland Emmerich"
+			},
+			{
+				"descriere": "regizor de film și scenarist german",
+				"f": "Q184605",
+				"nastere": "1955",
+				"r": "Q60100",
+				"r_en": "Roland Emmerich",
+				"r_mul": "Roland Emmerich",
+				"r_ro": "Roland Emmerich"
+			},
+			{
+				"descriere": "regizor și producător de film italo-american",
+				"f": "Q154581",
+				"nastere": "1942",
+				"r": "Q41148",
+				"r_en": "Martin Scorsese",
+				"r_mul": "Martin Scorsese",
+				"r_ro": "Martin Scorsese"
+			},
+			{
+				"descriere": "regizor și producător de film italo-american",
+				"f": "Q172975",
+				"nastere": "1942",
+				"r": "Q41148",
+				"r_en": "Martin Scorsese",
+				"r_mul": "Martin Scorsese",
+				"r_ro": "Martin Scorsese"
+			},
+			{
+				"descriere": "regizor și producător de film italo-american",
+				"f": "Q201924",
+				"nastere": "1942",
+				"r": "Q41148",
+				"r_en": "Martin Scorsese",
+				"r_mul": "Martin Scorsese",
+				"r_ro": "Martin Scorsese"
+			},
+			{
+				"descriere": "regizor și producător de film italo-american",
+				"f": "Q210364",
+				"nastere": "1942",
+				"r": "Q41148",
+				"r_en": "Martin Scorsese",
+				"r_mul": "Martin Scorsese",
+				"r_ro": "Martin Scorsese"
+			},
+			{
+				"descriere": "regizor și producător de film italo-american",
+				"f": "Q1392744",
+				"nastere": "1942",
+				"r": "Q41148",
+				"r_en": "Martin Scorsese",
+				"r_mul": "Martin Scorsese",
+				"r_ro": "Martin Scorsese"
+			},
+			{
+				"descriere": "regizor și animator japonez",
+				"f": "Q39571",
+				"nastere": "1941",
+				"r": "Q55400",
+				"r_en": "Hayao Miyazaki",
+				"r_mul": "Hayao Miyazaki",
+				"r_ro": "Hayao Miyazaki"
+			},
+			{
+				"descriere": "regizor de film australian",
+				"f": "Q106316",
+				"nastere": "1944",
+				"r": "Q55424",
+				"r_en": "Peter Weir",
+				"r_ro": "Peter Weir"
+			},
+			{
+				"descriere": "regizor de film australian",
+				"f": "Q214801",
+				"nastere": "1944",
+				"r": "Q55424",
+				"r_en": "Peter Weir",
+				"r_ro": "Peter Weir"
+			},
+			{
+				"descriere": "regizor și producător american",
+				"f": "Q105702",
+				"moarte": "1999",
+				"nastere": "1928",
+				"r": "Q2001",
+				"r_en": "Stanley Kubrick",
+				"r_mul": "Stanley Kubrick",
+				"r_ro": "Stanley Kubrick"
+			},
+			{
+				"descriere": "regizor și producător american",
+				"f": "Q108297",
+				"moarte": "1999",
+				"nastere": "1928",
+				"r": "Q2001",
+				"r_en": "Stanley Kubrick",
+				"r_mul": "Stanley Kubrick",
+				"r_ro": "Stanley Kubrick"
+			},
+			{
+				"descriere": "regizor și producător american",
+				"f": "Q181086",
+				"moarte": "1999",
+				"nastere": "1928",
+				"r": "Q2001",
+				"r_en": "Stanley Kubrick",
+				"r_mul": "Stanley Kubrick",
+				"r_ro": "Stanley Kubrick"
+			},
+			{
+				"descriere": "producător de film american",
+				"f": "Q272608",
+				"moarte": "2025",
+				"nastere": "1946",
+				"r": "Q2071",
+				"r_en": "David Lynch",
+				"r_mul": "David Lynch",
+				"r_ro": "David Lynch"
+			},
+			{
+				"descriere": "regizor american",
+				"f": "Q107325",
+				"nastere": "1939",
+				"r": "Q56094",
+				"r_en": "Francis Ford Coppola",
+				"r_mul": "Francis Ford Coppola",
+				"r_ro": "Francis Ford Coppola"
+			},
+			{
+				"descriere": "regizor american",
+				"f": "Q184768",
+				"nastere": "1939",
+				"r": "Q56094",
+				"r_en": "Francis Ford Coppola",
+				"r_mul": "Francis Ford Coppola",
+				"r_ro": "Francis Ford Coppola"
+			},
+			{
+				"descriere": "regizor de film american",
+				"f": "Q46717",
+				"nastere": "1964",
+				"r": "Q295463",
+				"r_en": "Gore Verbinski",
+				"r_ro": "Gore Verbinski"
+			},
+			{
+				"descriere": "regizor de film american",
+				"f": "Q153723",
+				"nastere": "1963",
+				"r": "Q3772",
+				"r_en": "Quentin Tarantino",
+				"r_mul": "Quentin Tarantino"
+			},
+			{
+				"descriere": "regizor de film american",
+				"f": "Q165325",
+				"nastere": "1963",
+				"r": "Q3772",
+				"r_en": "Quentin Tarantino",
+				"r_mul": "Quentin Tarantino"
+			},
+			{
+				"descriere": "regizor de film american",
+				"f": "Q571032",
+				"nastere": "1963",
+				"r": "Q3772",
+				"r_en": "Quentin Tarantino",
+				"r_mul": "Quentin Tarantino"
+			},
+			{
+				"descriere": "regizor de film și scenarist italian",
+				"f": "Q464032",
+				"nastere": "1956",
+				"r": "Q53045",
+				"r_en": "Giuseppe Tornatore",
+				"r_ro": "Giuseppe Tornatore"
+			},
+			{
+				"descriere": "regizor de film mexican",
+				"f": "Q13255497",
+				"nastere": "1963",
+				"r": "Q55215",
+				"r_en": "Alejandro González Iñárritu",
+				"r_mul": "Alejandro González Iñárritu",
+				"r_ro": "Alejandro González Iñárritu"
+			},
+			{
+				"descriere": "regizor de film mexican",
+				"f": "Q18002795",
+				"nastere": "1963",
+				"r": "Q55215",
+				"r_en": "Alejandro González Iñárritu",
+				"r_mul": "Alejandro González Iñárritu",
+				"r_ro": "Alejandro González Iñárritu"
+			},
+			{
+				"descriere": "regizor britanic (1908–1991)",
+				"f": "Q188718",
+				"moarte": "1991",
+				"nastere": "1908",
+				"r": "Q55260",
+				"r_en": "David Lean",
+				"r_mul": "David Lean",
+				"r_ro": "David Lean"
+			},
+			{
+				"descriere": "regizor britanic (1908–1991)",
+				"f": "Q228186",
+				"moarte": "1991",
+				"nastere": "1908",
+				"r": "Q55260",
+				"r_en": "David Lean",
+				"r_mul": "David Lean",
+				"r_ro": "David Lean"
+			},
+			{
+				"descriere": "actor, comedian și regizor american (n. 1979)",
+				"f": "Q25136235",
+				"nastere": "1979",
+				"r": "Q3371986",
+				"r_en": "Jordan Peele",
+				"r_mul": "Jordan Peele",
+				"r_ro": "Jordan Peele"
+			},
+			{
+				"descriere": "regizor de film român (1926-1999)",
+				"f": "Q12728191",
+				"moarte": "1999",
+				"nastere": "1926",
+				"r": "Q3701696",
+				"r_en": "Iulian Mihu",
+				"r_ro": "Iulian Mihu"
+			},
+			{
+				"descriere": "regizor de film român",
+				"f": "Q4778856",
+				"nastere": "1975",
+				"r": "Q4163465",
+				"r_en": "Călin Peter Netzer",
+				"r_mul": "Călin Peter Netzer",
+				"r_ro": "Călin Peter Netzer"
+			},
+			{
+				"descriere": "actor & regizor român",
+				"f": "Q18547094",
+				"nastere": "1943",
+				"r": "Q6872989",
+				"r_en": "Mircea Daneliuc",
+				"r_ro": "Mircea Daneliuc"
+			},
+			{
+				"descriere": "actor, regizor, producător și scenarist american (1956)",
+				"f": "Q162729",
+				"nastere": "1956",
+				"r": "Q42229",
+				"r_en": "Mel Gibson",
+				"r_mul": "Mel Gibson",
+				"r_ro": "Mel Gibson"
+			},
+			{
+				"descriere": "actor, regizor, producător și scenarist american (1956)",
+				"f": "Q188035",
+				"nastere": "1956",
+				"r": "Q42229",
+				"r_en": "Mel Gibson",
+				"r_mul": "Mel Gibson",
+				"r_ro": "Mel Gibson"
+			},
+			{
+				"descriere": "regizor de film canadian",
+				"f": "Q104814",
+				"nastere": "1954",
+				"r": "Q42574",
+				"r_en": "James Cameron",
+				"r_mul": "James Cameron"
+			},
+			{
+				"descriere": "regizor de film canadian",
+				"f": "Q162255",
+				"nastere": "1954",
+				"r": "Q42574",
+				"r_en": "James Cameron",
+				"r_mul": "James Cameron"
+			},
+			{
+				"descriere": "regizor de film canadian",
+				"f": "Q170564",
+				"nastere": "1954",
+				"r": "Q42574",
+				"r_en": "James Cameron",
+				"r_mul": "James Cameron"
+			},
+			{
+				"descriere": "actor și regizor american",
+				"f": "Q104137",
+				"nastere": "1930",
+				"r": "Q43203",
+				"r_en": "Clint Eastwood",
+				"r_mul": "Clint Eastwood",
+				"r_ro": "Clint Eastwood"
+			},
+			{
+				"descriere": "actor și regizor american",
+				"f": "Q126699",
+				"nastere": "1930",
+				"r": "Q43203",
+				"r_en": "Clint Eastwood",
+				"r_mul": "Clint Eastwood",
+				"r_ro": "Clint Eastwood"
+			},
+			{
+				"descriere": "actor și regizor american",
+				"f": "Q184255",
+				"nastere": "1930",
+				"r": "Q43203",
+				"r_en": "Clint Eastwood",
+				"r_mul": "Clint Eastwood",
+				"r_ro": "Clint Eastwood"
+			},
+			{
+				"descriere": "actor și regizor american",
+				"f": "Q16970789",
+				"nastere": "1930",
+				"r": "Q43203",
+				"r_en": "Clint Eastwood",
+				"r_mul": "Clint Eastwood",
+				"r_ro": "Clint Eastwood"
+			},
+			{
+				"descriere": "regizor, scenarist și producător american (n. 1964)",
+				"f": "Q182218",
+				"nastere": "1964",
+				"r": "Q298025",
+				"r_en": "Joss Whedon",
+				"r_mul": "Joss Whedon",
+				"r_ro": "Joss Whedon"
+			},
+			{
+				"descriere": "regizor, producător și scenarist american",
+				"f": "Q207130",
+				"nastere": "1952",
+				"r": "Q314142",
+				"r_en": "Edward Zwick",
+				"r_ro": "Edward Zwick"
+			},
+			{
+				"descriere": "regizor de film român",
+				"f": "Q2522756",
+				"nastere": "1968",
+				"r": "Q314353",
+				"r_en": "Cristian Mungiu",
+				"r_mul": "Cristian Mungiu",
+				"r_ro": "Cristian Mungiu"
+			},
+			{
+				"descriere": "regizor de film român",
+				"f": "Q23762934",
+				"nastere": "1968",
+				"r": "Q314353",
+				"r_en": "Cristian Mungiu",
+				"r_mul": "Cristian Mungiu",
+				"r_ro": "Cristian Mungiu"
+			},
+			{
+				"descriere": "regizor de film german",
+				"f": "Q152857",
+				"nastere": "1957",
+				"r": "Q60634",
+				"r_en": "Oliver Hirschbiegel",
+				"r_mul": "Oliver Hirschbiegel",
+				"r_ro": "Oliver Hirschbiegel"
+			},
+			{
+				"descriere": "regizor de film german",
+				"f": "Q154817",
+				"moarte": "2024",
+				"nastere": "1954",
+				"r": "Q60669",
+				"r_en": "Wolfgang Becker",
+				"r_mul": "Wolfgang Becker"
+			},
+			{
+				"descriere": "regizor de film german (1941–2022)",
+				"f": "Q186587",
+				"moarte": "2022",
+				"nastere": "1941",
+				"r": "Q65321",
+				"r_en": "Wolfgang Petersen",
+				"r_mul": "Wolfgang Petersen",
+				"r_ro": "Wolfgang Petersen"
+			},
+			{
+				"descriere": "regizor de film și scenarist român (1932-2017)",
+				"f": "Q3821840",
+				"moarte": "2017",
+				"nastere": "1932",
+				"r": "Q6872994",
+				"r_en": "Mircea Drăgan",
+				"r_ro": "Mircea Drăgan"
+			},
+			{
+				"descriere": "regizor de film român",
+				"f": "Q12735956",
+				"nastere": "1943",
+				"r": "Q7611187",
+				"r_en": "Stere Gulea",
+				"r_ro": "Stere Gulea"
+			},
+			{
+				"descriere": "regizor și scenarist român",
+				"f": "Q5448281",
+				"nastere": "1960",
+				"r": "Q12736378",
+				"r_en": "Nae Caranfil",
+				"r_ro": "Nae Caranfil"
+			},
+			{
+				"descriere": "regizor de film român",
+				"f": "Q18541326",
+				"moarte": "2022",
+				"nastere": "1935",
+				"r": "Q12736627",
+				"r_en": "Nicolae Corjos",
+				"r_mul": "Nicolae Corjos",
+				"r_ro": "Nicolae Corjos"
+			},
+			{
+				"descriere": "regizor de film britanic",
+				"f": "Q160060",
+				"nastere": "1972",
+				"r": "Q295912",
+				"r_en": "Tom Hooper",
+				"r_ro": "Tom Hooper"
+			},
+			{
+				"descriere": "actor și regizor american (1966)",
+				"f": "Q192724",
+				"nastere": "1966",
+				"r": "Q295964",
+				"r_en": "Jon Favreau",
+				"r_mul": "Jon Favreau",
+				"r_ro": "Jon Favreau"
+			},
+			{
+				"descriere": "regizor, scenarist și producător american de film",
+				"f": "Q15648198",
+				"nastere": "1985",
+				"r": "Q18350026",
+				"r_en": "Damien Chazelle",
+				"r_ro": "Damien Chazelle"
+			},
+			{
+				"descriere": "actor american",
+				"f": "Q106428",
+				"nastere": "1954",
+				"r": "Q103646",
+				"r_en": "Ron Howard",
+				"r_mul": "Ron Howard",
+				"r_ro": "Ron Howard"
+			},
+			{
+				"descriere": "actor american",
+				"f": "Q160560",
+				"nastere": "1954",
+				"r": "Q103646",
+				"r_en": "Ron Howard",
+				"r_mul": "Ron Howard",
+				"r_ro": "Ron Howard"
+			},
+			{
+				"descriere": "actor american",
+				"f": "Q164103",
+				"nastere": "1954",
+				"r": "Q103646",
+				"r_en": "Ron Howard",
+				"r_mul": "Ron Howard",
+				"r_ro": "Ron Howard"
+			},
+			{
+				"descriere": "regizor american",
+				"f": "Q183063",
+				"nastere": "1970",
+				"r": "Q51489",
+				"r_en": "M. Night Shyamalan",
+				"r_mul": "M. Night Shyamalan",
+				"r_ro": "M. Night Shyamalan"
+			},
+			{
+				"descriere": "regizor englez",
+				"f": "Q109135",
+				"nastere": "1956",
+				"r": "Q134867",
+				"r_en": "Danny Boyle",
+				"r_mul": "Danny Boyle",
+				"r_ro": "Danny Boyle"
+			},
+			{
+				"descriere": "regizor american",
+				"f": "Q131390",
+				"nastere": "1966",
+				"r": "Q139890",
+				"r_en": "Zack Snyder",
+				"r_mul": "Zack Snyder",
+				"r_ro": "Zack Snyder"
+			},
+			{
+				"descriere": "regizor de film britanic",
+				"f": "Q102754",
+				"moarte": "1994",
+				"nastere": "1915",
+				"r": "Q314882",
+				"r_en": "Terence Young",
+				"r_mul": "Terence Young"
+			},
+			{
+				"descriere": "regizor american",
+				"f": "Q222939",
+				"nastere": "1950",
+				"r": "Q352948",
+				"r_en": "Joe Johnston",
+				"r_mul": "Joe Johnston",
+				"r_ro": "Joe Johnston"
+			},
+			{
+				"descriere": "scenarist britanic",
+				"f": "Q190588",
+				"nastere": "1956",
+				"r": "Q355300",
+				"r_en": "Richard Curtis",
+				"r_mul": "Richard Curtis",
+				"r_ro": "Richard Curtis"
+			},
+			{
+				"descriere": "regizor din Noua Zeelandă",
+				"f": "Q80379",
+				"nastere": "1961",
+				"r": "Q4465",
+				"r_en": "Peter Jackson",
+				"r_mul": "Peter Jackson",
+				"r_ro": "Peter Jackson"
+			},
+			{
+				"descriere": "regizor din Noua Zeelandă",
+				"f": "Q160215",
+				"nastere": "1961",
+				"r": "Q4465",
+				"r_en": "Peter Jackson",
+				"r_mul": "Peter Jackson",
+				"r_ro": "Peter Jackson"
+			},
+			{
+				"descriere": "regizor italian",
+				"f": "Q12018",
+				"moarte": "1993",
+				"nastere": "1920",
+				"r": "Q7371",
+				"r_en": "Federico Fellini",
+				"r_mul": "Federico Fellini",
+				"r_ro": "Federico Fellini"
+			},
+			{
+				"descriere": "regizor de film american",
+				"f": "Q202508",
+				"nastere": "1962",
+				"r": "Q363402",
+				"r_en": "Stephen Sommers",
+				"r_mul": "Stephen Sommers",
+				"r_ro": "Stephen Sommers"
+			},
+			{
+				"descriere": "regizor de film australian",
+				"f": "Q1757288",
+				"nastere": "1945",
+				"r": "Q446960",
+				"r_en": "George Miller",
+				"r_mul": "George Miller",
+				"r_ro": "George Miller"
+			},
+			{
+				"descriere": "regizor de film american (1897–1991)",
+				"f": "Q204191",
+				"moarte": "1991",
+				"nastere": "1897",
+				"r": "Q51492",
+				"r_en": "Frank Capra",
+				"r_mul": "Frank Capra",
+				"r_ro": "Frank Capra"
+			},
+			{
+				"descriere": "regizor și producător american (1902–1981)",
+				"f": "Q180098",
+				"moarte": "1981",
+				"nastere": "1902",
+				"r": "Q51495",
+				"r_en": "William Wyler",
+				"r_mul": "William Wyler",
+				"r_ro": "William Wyler"
+			},
+			{
+				"descriere": "regizor și scenarist american (1906-2002)",
+				"f": "Q190086",
+				"moarte": "2002",
+				"nastere": "1906",
+				"r": "Q51547",
+				"r_en": "Billy Wilder",
+				"r_mul": "Billy Wilder",
+				"r_ro": "Billy Wilder"
+			},
+			{
+				"descriere": "regizor francez polonez",
+				"f": "Q150804",
+				"nastere": "1933",
+				"r": "Q51552",
+				"r_en": "Roman Polanski",
+				"r_mul": "Roman Polanski",
+				"r_ro": "Roman Polanski"
+			},
+			{
+				"descriere": "regizor american de film (1946)",
+				"f": "Q190643",
+				"nastere": "1946",
+				"r": "Q179497",
+				"r_en": "Oliver Stone",
+				"r_mul": "Oliver Stone",
+				"r_ro": "Oliver Stone"
+			},
+			{
+				"descriere": "regizor de film american",
+				"f": "Q183239",
+				"nastere": "1962",
+				"r": "Q184903",
+				"r_en": "David Fincher",
+				"r_ro": "David Fincher"
+			},
+			{
+				"descriere": "regizor de film american",
+				"f": "Q185888",
+				"nastere": "1962",
+				"r": "Q184903",
+				"r_en": "David Fincher",
+				"r_ro": "David Fincher"
+			},
+			{
+				"descriere": "regizor de film american",
+				"f": "Q190050",
+				"nastere": "1962",
+				"r": "Q184903",
+				"r_en": "David Fincher",
+				"r_ro": "David Fincher"
+			},
+			{
+				"descriere": "regizor de film american",
+				"f": "Q190908",
+				"nastere": "1962",
+				"r": "Q184903",
+				"r_en": "David Fincher",
+				"r_ro": "David Fincher"
+			},
+			{
+				"descriere": "regizor englez",
+				"f": "Q200396",
+				"nastere": "1968",
+				"r": "Q192990",
+				"r_en": "Guy Ritchie",
+				"r_mul": "Guy Ritchie",
+				"r_ro": "Guy Ritchie"
+			},
+			{
+				"descriere": "regizor englez",
+				"f": "Q335160",
+				"nastere": "1968",
+				"r": "Q192990",
+				"r_en": "Guy Ritchie",
+				"r_mul": "Guy Ritchie",
+				"r_ro": "Guy Ritchie"
+			},
+			{
+				"descriere": "regizor american",
+				"f": "Q152780",
+				"nastere": "1954",
+				"r": "Q160726",
+				"r_en": "Ang Lee",
+				"r_mul": "Ang Lee",
+				"r_ro": "Ang Lee"
+			},
+			{
+				"descriere": "regizor american",
+				"f": "Q273978",
+				"nastere": "1954",
+				"r": "Q160726",
+				"r_en": "Ang Lee",
+				"r_mul": "Ang Lee",
+				"r_ro": "Ang Lee"
+			},
+			{
+				"descriere": "regizor de film, scenarist și producător italian",
+				"f": "Q41483",
+				"moarte": "1989",
+				"nastere": "1929",
+				"r": "Q164562",
+				"r_en": "Sergio Leone",
+				"r_mul": "Sergio Leone",
+				"r_ro": "Sergio Leone"
+			},
+			{
+				"descriere": "regizor de film, scenarist și producător italian",
+				"f": "Q168154",
+				"moarte": "1989",
+				"nastere": "1929",
+				"r": "Q164562",
+				"r_en": "Sergio Leone",
+				"r_mul": "Sergio Leone",
+				"r_ro": "Sergio Leone"
+			},
+			{
+				"descriere": "regizor, scenarist și producător mexican (n. 1964)",
+				"f": "Q216006",
+				"nastere": "1964",
+				"r": "Q219124",
+				"r_en": "Guillermo del Toro",
+				"r_mul": "Guillermo del Toro",
+				"r_ro": "Guillermo del Toro"
+			},
+			{
+				"descriere": "regizor, scenarist și producător mexican (n. 1964)",
+				"f": "Q26698156",
+				"nastere": "1964",
+				"r": "Q219124",
+				"r_en": "Guillermo del Toro",
+				"r_mul": "Guillermo del Toro",
+				"r_ro": "Guillermo del Toro"
+			},
+			{
+				"descriere": "regizor englez",
+				"f": "Q4941",
+				"nastere": "1965",
+				"r": "Q223233",
+				"r_en": "Sam Mendes",
+				"r_mul": "Sam Mendes",
+				"r_ro": "Sam Mendes"
+			},
+			{
+				"descriere": "regizor englez",
+				"f": "Q25139",
+				"nastere": "1965",
+				"r": "Q223233",
+				"r_en": "Sam Mendes",
+				"r_mul": "Sam Mendes",
+				"r_ro": "Sam Mendes"
+			},
+			{
+				"descriere": "regizoare de film americană",
+				"f": "Q20502242",
+				"nastere": "1971",
+				"r": "Q456910",
+				"r_en": "Patty Jenkins",
+				"r_mul": "Patty Jenkins"
+			},
+			{
+				"descriere": "actor american",
+				"f": "Q59653",
+				"nastere": "1972",
+				"r": "Q483118",
+				"r_en": "Ben Affleck",
+				"r_mul": "Ben Affleck",
+				"r_ro": "Ben Affleck"
+			},
+			{
+				"descriere": "regizor englez (1899–1980)",
+				"f": "Q34414",
+				"moarte": "1980",
+				"nastere": "1899",
+				"r": "Q7374",
+				"r_en": "Alfred Hitchcock",
+				"r_mul": "Alfred Hitchcock",
+				"r_ro": "Alfred Hitchcock"
+			},
+			{
+				"descriere": "producător, regizor și scenarist francez (n. 1959)",
+				"f": "Q106506",
+				"nastere": "1959",
+				"r": "Q484779",
+				"r_en": "Luc Besson",
+				"r_mul": "Luc Besson",
+				"r_ro": "Luc Besson"
+			},
+			{
+				"descriere": "producător, regizor și scenarist francez (n. 1959)",
+				"f": "Q484675",
+				"nastere": "1959",
+				"r": "Q484779",
+				"r_en": "Luc Besson",
+				"r_mul": "Luc Besson",
+				"r_ro": "Luc Besson"
+			},
+			{
+				"descriere": "regizor de film, actor și politician român",
+				"f": "Q1963051",
+				"moarte": "2013",
+				"nastere": "1930",
+				"r": "Q634875",
+				"r_en": "Sergiu Nicolaescu",
+				"r_ro": "Sergiu Nicolaescu"
+			},
+			{
+				"descriere": "regizor de film, actor și politician român",
+				"f": "Q2348435",
+				"moarte": "2013",
+				"nastere": "1930",
+				"r": "Q634875",
+				"r_en": "Sergiu Nicolaescu",
+				"r_ro": "Sergiu Nicolaescu"
+			},
+			{
+				"descriere": "regizor de film, actor și politician român",
+				"f": "Q4243397",
+				"moarte": "2013",
+				"nastere": "1930",
+				"r": "Q634875",
+				"r_en": "Sergiu Nicolaescu",
+				"r_ro": "Sergiu Nicolaescu"
+			},
+			{
+				"descriere": "regizor de film român",
+				"f": "Q2933985",
+				"moarte": "2006",
+				"nastere": "1979",
+				"r": "Q638096",
+				"r_en": "Cristian Nemescu",
+				"r_ro": "Cristian Nemescu"
+			},
+			{
+				"descriere": "regizor, scenarist și producător britanic (1954-2008)",
+				"f": "Q63026",
+				"moarte": "2008",
+				"nastere": "1954",
+				"r": "Q188726",
+				"r_en": "Anthony Minghella",
+				"r_mul": "Anthony Minghella",
+				"r_ro": "Anthony Minghella"
+			},
+			{
+				"descriere": "regizor de film american",
+				"f": "Q47075",
+				"nastere": "1940",
+				"r": "Q189526",
+				"r_en": "Brian De Palma",
+				"r_mul": "Brian De Palma",
+				"r_ro": "Brian De Palma"
+			},
+			{
+				"descriere": "regizor de film american",
+				"f": "Q1741232",
+				"nastere": "1940",
+				"r": "Q189526",
+				"r_en": "Brian De Palma",
+				"r_mul": "Brian De Palma",
+				"r_ro": "Brian De Palma"
+			},
+			{
+				"descriere": "regizor de film american (1958-2026)",
+				"f": "Q219421",
+				"moarte": "2026",
+				"nastere": "1952",
+				"r": "Q725006",
+				"r_en": "Chuck Russell",
+				"r_mul": "Chuck Russell"
+			},
+			{
+				"descriere": "regizor de film britanic",
+				"f": "Q209170",
+				"moarte": "1986",
+				"nastere": "1905",
+				"r": "Q725060",
+				"r_en": "Robert Stevenson",
+				"r_mul": "Robert Stevenson"
+			},
+			{
+				"descriere": "regizor, scenarist și critic de film francez",
+				"f": "Q162331",
+				"moarte": "1984",
+				"nastere": "1932",
+				"r": "Q53002",
+				"r_en": "François Truffaut",
+				"r_mul": "François Truffaut",
+				"r_ro": "François Truffaut"
+			},
+			{
+				"descriere": "regizor italian",
+				"f": "Q212775",
+				"moarte": "2018",
+				"nastere": "1941",
+				"r": "Q53009",
+				"r_en": "Bernardo Bertolucci",
+				"r_mul": "Bernardo Bertolucci",
+				"r_ro": "Bernardo Bertolucci"
+			},
+			{
+				"descriere": "regizor de film american",
+				"f": "Q188652",
+				"moarte": "2017",
+				"nastere": "1935",
+				"r": "Q260125",
+				"r_en": "John G. Avildsen",
+				"r_ro": "John G. Avildsen"
+			},
+			{
+				"descriere": "regizor sovietic (1939–2021)",
+				"f": "Q53105",
+				"moarte": "2021",
+				"nastere": "1939",
+				"r": "Q726105",
+				"r_en": "Vladimir Menshov",
+				"r_ro": "Vladimir Menșov"
+			},
+			{
+				"descriere": "regizor român",
+				"f": "Q2328850",
+				"moarte": "2018",
+				"nastere": "1933",
+				"r": "Q967207",
+				"r_en": "Lucian Pintilie",
+				"r_mul": "Lucian Pintilie",
+				"r_ro": "Lucian Pintilie"
+			},
+			{
+				"descriere": "regizor român",
+				"f": "Q3212174",
+				"moarte": "2018",
+				"nastere": "1933",
+				"r": "Q967207",
+				"r_en": "Lucian Pintilie",
+				"r_mul": "Lucian Pintilie",
+				"r_ro": "Lucian Pintilie"
+			},
+			{
+				"descriere": "actor, regizor, scenograf român",
+				"f": "Q2085964",
+				"moarte": "2011",
+				"nastere": "1923",
+				"r": "Q1065030",
+				"r_en": "Liviu Ciulei",
+				"r_mul": "Liviu Ciulei",
+				"r_ro": "Liviu Ciulei"
+			},
+			{
+				"descriere": "regizor român",
+				"f": "Q23823612",
+				"nastere": "1967",
+				"r": "Q1140264",
+				"r_en": "Cristi Puiu",
+				"r_mul": "Cristi Puiu",
+				"r_ro": "Cristi Puiu"
+			},
+			{
+				"descriere": "regizor de film român",
+				"f": "Q18959331",
+				"nastere": "1977",
+				"r": "Q1248032",
+				"r_en": "Radu Jude",
+				"r_ro": "Radu Jude"
+			},
+			{
+				"descriere": "regizor de film neozeelandez",
+				"f": "Q22665878",
+				"nastere": "1975",
+				"r": "Q2388576",
+				"r_en": "Taika Waititi",
+				"r_mul": "Taika Waititi"
+			},
+			{
+				"descriere": "regizor de film român",
+				"f": "Q1754127",
+				"nastere": "1975",
+				"r": "Q2734356",
+				"r_en": "Corneliu Porumboiu",
+				"r_ro": "Corneliu Porumboiu"
+			},
+			{
+				"descriere": "regizor, producător și scenarist japonez",
+				"f": "Q135465",
+				"moarte": "1998",
+				"nastere": "1910",
+				"r": "Q8006",
+				"r_en": "Akira Kurosawa",
+				"r_mul": "Akira Kurosawa",
+				"r_ro": "Akira Kurosawa"
+			},
+			{
+				"descriere": "regizor de film american, scenarist, producător, designer de jocuri video și antreprenor în studio",
+				"f": "Q165817",
+				"nastere": "1946",
+				"r": "Q8877",
+				"r_en": "Steven Spielberg",
+				"r_mul": "Steven Spielberg",
+				"r_ro": "Steven Spielberg"
+			},
+			{
+				"descriere": "regizor de film american, scenarist, producător, designer de jocuri video și antreprenor în studio",
+				"f": "Q202028",
+				"nastere": "1946",
+				"r": "Q8877",
+				"r_en": "Steven Spielberg",
+				"r_mul": "Steven Spielberg",
+				"r_ro": "Steven Spielberg"
+			},
+			{
+				"descriere": "regizor de film american, scenarist, producător, designer de jocuri video și antreprenor în studio",
+				"f": "Q208108",
+				"nastere": "1946",
+				"r": "Q8877",
+				"r_en": "Steven Spielberg",
+				"r_mul": "Steven Spielberg",
+				"r_ro": "Steven Spielberg"
+			},
+			{
+				"descriere": "regizor de film american, scenarist, producător, designer de jocuri video și antreprenor în studio",
+				"f": "Q244604",
+				"nastere": "1946",
+				"r": "Q8877",
+				"r_en": "Steven Spielberg",
+				"r_mul": "Steven Spielberg",
+				"r_ro": "Steven Spielberg"
+			},
+			{
+				"descriere": "regizor de film american, scenarist, producător, designer de jocuri video și antreprenor în studio",
+				"f": "Q318766",
+				"nastere": "1946",
+				"r": "Q8877",
+				"r_en": "Steven Spielberg",
+				"r_mul": "Steven Spielberg",
+				"r_ro": "Steven Spielberg"
+			},
+			{
+				"descriere": "scenarist american, regizor, actor și producător de film",
+				"f": "Q188845",
+				"nastere": "1942",
+				"r": "Q269692",
+				"r_en": "Barry Levinson",
+				"r_mul": "Barry Levinson",
+				"r_ro": "Barry Levinson"
+			},
+			{
+				"descriere": "regizoare americană",
+				"f": "Q55436290",
+				"nastere": "1983",
+				"r": "Q271967",
+				"r_en": "Greta Gerwig",
+				"r_mul": "Greta Gerwig",
+				"r_ro": "Greta Gerwig"
+			},
+			{
+				"descriere": "actor american",
+				"f": "Q20456",
+				"nastere": "1955",
+				"r": "Q11930",
+				"r_en": "Kevin Costner",
+				"r_mul": "Kevin Costner",
+				"r_ro": "Kevin Costner"
+			},
+			{
+				"descriere": "regizor de film și comedian american",
+				"f": "Q206124",
+				"nastere": "1935",
+				"r": "Q25089",
+				"r_en": "Woody Allen",
+				"r_mul": "Woody Allen",
+				"r_ro": "Woody Allen"
+			},
+			{
+				"descriere": "regizor de film și comedian american",
+				"f": "Q233464",
+				"nastere": "1935",
+				"r": "Q25089",
+				"r_en": "Woody Allen",
+				"r_mul": "Woody Allen",
+				"r_ro": "Woody Allen"
+			},
+			{
+				"descriere": "regizor britanico-american",
+				"f": "Q46551",
+				"nastere": "1970",
+				"r": "Q25191",
+				"r_en": "Christopher Nolan",
+				"r_mul": "Christopher Nolan"
+			},
+			{
+				"descriere": "regizor britanico-american",
+				"f": "Q163872",
+				"nastere": "1970",
+				"r": "Q25191",
+				"r_en": "Christopher Nolan",
+				"r_mul": "Christopher Nolan"
+			},
+			{
+				"descriere": "regizor britanico-american",
+				"f": "Q190525",
+				"nastere": "1970",
+				"r": "Q25191",
+				"r_en": "Christopher Nolan",
+				"r_mul": "Christopher Nolan"
+			},
+			{
+				"descriere": "regizor britanico-american",
+				"f": "Q108839994",
+				"nastere": "1970",
+				"r": "Q25191",
+				"r_en": "Christopher Nolan",
+				"r_mul": "Christopher Nolan"
+			},
+			{
+				"descriere": "regizoare americană",
+				"f": "Q183066",
+				"nastere": "1951",
+				"r": "Q34816",
+				"r_en": "Kathryn Bigelow",
+				"r_mul": "Kathryn Bigelow",
+				"r_ro": "Kathryn Bigelow"
+			},
+			{
+				"descriere": "producător de film american",
+				"f": "Q165713",
+				"nastere": "1944",
+				"r": "Q38222",
+				"r_en": "George Lucas",
+				"r_mul": "George Lucas",
+				"r_ro": "George Lucas"
+			},
+			{
+				"f": "Q102448",
+				"nastere": "1961",
+				"r": "Q28028",
+				"r_en": "Alfonso Cuarón",
+				"r_mul": "Alfonso Cuarón",
+				"r_ro": "Alfonso Cuarón"
+			},
+			{
+				"f": "Q2579784",
+				"nastere": "1961",
+				"r": "Q28028",
+				"r_en": "Alfonso Cuarón",
+				"r_mul": "Alfonso Cuarón",
+				"r_ro": "Alfonso Cuarón"
+			},
+			{
+				"f": "Q132689",
+				"moarte": "1962",
+				"nastere": "1886",
+				"r": "Q51491",
+				"r_en": "Michael Curtiz",
+				"r_mul": "Michael Curtiz",
+				"r_ro": "Michael Curtiz"
+			},
+			{
+				"f": "Q190956",
+				"moarte": "2018",
+				"nastere": "1932",
+				"r": "Q51525",
+				"r_en": "Miloš Forman",
+				"r_mul": "Miloš Forman",
+				"r_ro": "Miloš Forman"
+			},
+			{
+				"f": "Q2345",
+				"moarte": "2011",
+				"nastere": "1924",
+				"r": "Q51559",
+				"r_en": "Sidney Lumet",
+				"r_mul": "Sidney Lumet",
+				"r_ro": "Sidney Lumet"
+			},
+			{
+				"f": "Q274167",
+				"moarte": "2023",
+				"nastere": "1935",
+				"r": "Q51582",
+				"r_en": "William Friedkin",
+				"r_mul": "William Friedkin",
+				"r_ro": "William Friedkin"
+			},
+			{
+				"f": "Q217020",
+				"nastere": "1960",
+				"r": "Q55294",
+				"r_en": "Kenneth Branagh",
+				"r_mul": "Kenneth Branagh",
+				"r_ro": "Kenneth Branagh"
+			},
+			{
+				"f": "Q193066",
+				"moarte": "2010",
+				"nastere": "1922",
+				"r": "Q56093",
+				"r_en": "Blake Edwards",
+				"r_mul": "Blake Edwards",
+				"r_ro": "Blake Edwards"
+			},
+			{
+				"f": "Q153882",
+				"nastere": "1973",
+				"r": "Q57932",
+				"r_en": "Florian Henckel von Donnersmarck",
+				"r_mul": "Florian Henckel von Donnersmarck",
+				"r_ro": "Florian Henckel von Donnersmarck"
+			},
+			{
+				"f": "Q171453",
+				"nastere": "1965",
+				"r": "Q59259",
+				"r_en": "Michael Bay",
+				"r_mul": "Michael Bay",
+				"r_ro": "Michael Bay"
+			},
+			{
+				"f": "Q208344",
+				"nastere": "1965",
+				"r": "Q59259",
+				"r_en": "Michael Bay",
+				"r_mul": "Michael Bay",
+				"r_ro": "Michael Bay"
+			},
+			{
+				"f": "Q102438",
+				"nastere": "1958",
+				"r": "Q75079",
+				"r_en": "Chris Columbus",
+				"r_mul": "Chris Columbus",
+				"r_ro": "Chris Columbus"
+			},
+			{
+				"f": "Q221202",
+				"nastere": "1958",
+				"r": "Q75079",
+				"r_en": "Chris Columbus",
+				"r_mul": "Chris Columbus",
+				"r_ro": "Chris Columbus"
+			},
+			{
+				"f": "Q181795",
+				"moarte": "2010",
+				"nastere": "1923",
+				"r": "Q119348",
+				"r_en": "Irvin Kershner",
+				"r_mul": "Irvin Kershner",
+				"r_ro": "Irvin Kershner"
+			},
+			{
+				"f": "Q213411",
+				"nastere": "1952",
+				"r": "Q187364",
+				"r_en": "Robert Zemeckis",
+				"r_mul": "Robert Zemeckis",
+				"r_ro": "Robert Zemeckis"
+			},
+			{
+				"f": "Q180214",
+				"nastere": "1969",
+				"r": "Q192762",
+				"r_en": "Darren Aronofsky",
+				"r_mul": "Darren Aronofsky",
+				"r_ro": "Darren Aronofsky"
+			},
+			{
+				"f": "Q27411",
+				"moarte": "2015",
+				"nastere": "1939",
+				"r": "Q223992",
+				"r_en": "Wes Craven",
+				"r_mul": "Wes Craven",
+				"r_ro": "Wes Craven"
+			},
+			{
+				"f": "Q160071",
+				"nastere": "1955",
+				"r": "Q229598",
+				"r_en": "Catherine Hardwicke",
+				"r_ro": "Catherine Hardwicke"
+			},
+			{
+				"f": "Q188850",
+				"nastere": "1957",
+				"r": "Q237696",
+				"r_en": "Phyllida Lloyd",
+				"r_ro": "Phyllida Lloyd"
+			},
+			{
+				"f": "Q105598",
+				"nastere": "1951",
+				"r": "Q270639",
+				"r_en": "John McTiernan",
+				"r_mul": "John McTiernan",
+				"r_ro": "John McTiernan"
+			},
+			{
+				"f": "Q190145",
+				"nastere": "1959",
+				"r": "Q275402",
+				"r_en": "Sam Raimi",
+				"r_mul": "Sam Raimi",
+				"r_ro": "Sam Raimi"
+			},
+			{
+				"f": "Q484442",
+				"nastere": "1959",
+				"r": "Q275402",
+				"r_en": "Sam Raimi",
+				"r_mul": "Sam Raimi",
+				"r_ro": "Sam Raimi"
+			},
+			{
+				"f": "Q151904",
+				"nastere": "1943",
+				"r": "Q282033",
+				"r_en": "Martin Campbell",
+				"r_ro": "Martin Campbell"
+			},
+			{
+				"f": "Q208263",
+				"nastere": "1959",
+				"r": "Q295445",
+				"r_en": "Frank Darabont",
+				"r_mul": "Frank Darabont",
+				"r_ro": "Frank Darabont"
+			},
+			{
+				"f": "Q232009",
+				"nastere": "1963",
+				"r": "Q312988",
+				"r_en": "David Yates",
+				"r_mul": "David Yates",
+				"r_ro": "David Yates"
+			},
+			{
+				"f": "Q219315",
+				"nastere": "1970",
+				"r": "Q362824",
+				"r_en": "Todd Phillips",
+				"r_mul": "Todd Phillips",
+				"r_ro": "Todd Phillips"
+			},
+			{
+				"f": "Q42759035",
+				"nastere": "1970",
+				"r": "Q362824",
+				"r_en": "Todd Phillips",
+				"r_mul": "Todd Phillips",
+				"r_ro": "Todd Phillips"
+			},
+			{
+				"f": "Q60834962",
+				"nastere": "1967",
+				"r": "Q548823",
+				"r_en": "Denis Villeneuve",
+				"r_mul": "Denis Villeneuve",
+				"r_ro": "Denis Villeneuve"
+			},
+			{
+				"f": "Q5887360",
+				"nastere": "1966",
+				"r": "Q717015",
+				"r_en": "James Gunn",
+				"r_mul": "James Gunn",
+				"r_ro": "James Gunn"
+			},
+			{
+				"f": "Q200672",
+				"moarte": "2021",
+				"nastere": "1956",
+				"r": "Q1354716",
+				"r_en": "Roger Michell",
+				"r_mul": "Roger Michell",
+				"r_ro": "Roger Michell"
+			},
+			{
+				"f": "Q23780734",
+				"nastere": "1986",
+				"r": "Q7383978",
+				"r_en": "Ryan Coogler",
+				"r_mul": "Ryan Coogler"
+			}
+		]
+	}
+}

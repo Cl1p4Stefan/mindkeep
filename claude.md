@@ -105,7 +105,7 @@ python tools/fabrica/capitale.py --propune   # candidați de ales, în date/*_pr
 python tools/fabrica/capitale.py --reincarca # reia din rețea, rescrie cache-ul
 ```
 
-**Patru tabele, aceleași flaguri** (`comun.Argumente`, dinadins: un tabel nou nu
+**Nouă tabele, aceleași flaguri** (`comun.Argumente`, dinadins: un tabel nou nu
 vine cu o convenție nouă de linie de comandă):
 
 | script | relația | întrebări |
@@ -114,9 +114,25 @@ vine cu o convenție nouă de linie de comandă):
 | `opere.py` | operă ↔ autor (`P50`) | 160 |
 | `capitale.py` | țară ↔ capitală (`P36`), plus steagurile | 251 |
 | `compozitori.py` | lucrare muzicală ↔ compozitor (`P86`) | 147 |
+| `filme.py` | film ↔ regizor (`P57`) | 203 |
+| `albume.py` | album ↔ interpret (`P175`) | 156 |
+| `fotbal.py` | Cupa Mondială, CM feminin, Euro: câștigătoarea și gazda; Cupa/Liga Campionilor: câștigătoarea (`P1346`, `P17`) | 143 |
+| `olimpiade.py` | Jocurile Olimpice de VARĂ ↔ orașul-gazdă (`P276`, numai așezări) | 27 |
+| `formula1.py` | sezon → campionul la piloți și la constructori, pilot → anul titlului (`P1346` + `P2094`) | 158 |
+
+Ultimele cinci (27 octombrie 2026) au un **motor comun, `tools/fabrica/tabel.py`**:
+distractorii cei mai apropiați, un singur răspuns bun, dublurile cu ce există
+(`DUBLURI` scoase, `NU_SUNT_DUBLURI` păstrate, amândouă păzite ca la celelalte),
+unicitatea în tot conținutul, notele prin validator, raportul și scrierea. Scriptul
+unui tabel ține doar ce e al lui: interogarea, capcanele, textul și nota. La
+`filme.py` și `albume.py` lista e scrisă de mână pe QID-uri, deci **după orice
+schimbare în `date/filme.json` sau `date/albume.json` se rulează cu `--reincarca`**
+(interogarea cere exact filmele din listă; motorul refuză un cache făcut cu alte
+interogări).
 
 `tools/fabrica/date/` ține **intrările** fabricii, scrise de mână: `elemente.json`,
-`opere.json`, `tari.json`, `autori.json`, `compozitori.json`, `lucrari.json`. Ieșirile lui `--propune`
+`opere.json`, `tari.json`, `autori.json`, `compozitori.json`, `lucrari.json`,
+`filme.json`, `albume.json`, `fotbal.json`, `olimpiade.json`, `formula1.json`. Ieșirile lui `--propune`
 (`*_propuse.json`) sunt în `.gitignore`: nu le citește niciun script, se refac
 dintr-o comandă, iar comise erau 118 KB care se schimbau la fiecare rulare.
 

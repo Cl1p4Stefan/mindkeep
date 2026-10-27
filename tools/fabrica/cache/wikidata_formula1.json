@@ -1,0 +1,2052 @@
+{
+	"endpoint": "https://query.wikidata.org/sparql",
+	"interogari": {
+		"campioni": "SELECT ?e ?st ?clasa ?w ?w_ro ?w_en ?w_mul ?descriere ?pilot\n       (MIN(YEAR(?n)) AS ?nastere) (MIN(YEAR(?m)) AS ?moarte) WHERE {\n  ?e wdt:P3450 wd:Q1968 ; p:P1346 ?st .\n  ?st ps:P1346 ?w .\n  BIND(EXISTS { ?w wdt:P106/wdt:P279* wd:Q378622 } AS ?pilot)\n  OPTIONAL { ?st pq:P2094 ?clasa }\n  OPTIONAL { ?w rdfs:label ?w_ro FILTER(lang(?w_ro) = \"ro\") }\n  OPTIONAL { ?w rdfs:label ?w_en FILTER(lang(?w_en) = \"en\") }\n  OPTIONAL { ?w rdfs:label ?w_mul FILTER(lang(?w_mul) = \"mul\") }\n  OPTIONAL { ?w schema:description ?descriere FILTER(lang(?descriere) = \"ro\") }\n  OPTIONAL { ?w wdt:P569 ?n }\n  OPTIONAL { ?w wdt:P570 ?m }\n} GROUP BY ?e ?st ?clasa ?w ?w_ro ?w_en ?w_mul ?descriere ?pilot",
+		"sezoane": "SELECT ?e ?e_ro ?e_en ?e_mul (MIN(YEAR(?d)) AS ?an) WHERE {\n  ?e wdt:P3450 wd:Q1968 ; wdt:P585 ?d .\n  OPTIONAL { ?e rdfs:label ?e_ro FILTER(lang(?e_ro) = \"ro\") }\n  OPTIONAL { ?e rdfs:label ?e_en FILTER(lang(?e_en) = \"en\") }\n  OPTIONAL { ?e rdfs:label ?e_mul FILTER(lang(?e_mul) = \"mul\") }\n} GROUP BY ?e ?e_ro ?e_en ?e_mul"
+	},
+	"luat_la": "2026-10-27T02:48:34",
+	"randuri": {
+		"campioni": [
+			{
+				"clasa": "Q63436479",
+				"descriere": "pilot de Formula 1 german",
+				"e": "Q69713",
+				"nastere": "1969",
+				"pilot": "true",
+				"st": "http://www.wikidata.org/entity/statement/Q69713-4ce78c22-4663-acbf-7b56-e8ca829b74b3",
+				"w": "Q9671",
+				"w_en": "Michael Schumacher",
+				"w_mul": "Michael Schumacher",
+				"w_ro": "Michael Schumacher"
+			},
+			{
+				"clasa": "Q63436479",
+				"descriere": "pilot de Formula 1 german",
+				"e": "Q69722",
+				"nastere": "1969",
+				"pilot": "true",
+				"st": "http://www.wikidata.org/entity/statement/Q69722-3cc23b75-41f5-a676-3c3d-9b245b5cfd63",
+				"w": "Q9671",
+				"w_en": "Michael Schumacher",
+				"w_mul": "Michael Schumacher",
+				"w_ro": "Michael Schumacher"
+			},
+			{
+				"clasa": "Q63436479",
+				"descriere": "pilot de Formula 1 german",
+				"e": "Q69805",
+				"nastere": "1969",
+				"pilot": "true",
+				"st": "http://www.wikidata.org/entity/statement/Q69805-ee92ed07-4413-b614-ede6-f1da2d2ba587",
+				"w": "Q9671",
+				"w_en": "Michael Schumacher",
+				"w_mul": "Michael Schumacher",
+				"w_ro": "Michael Schumacher"
+			},
+			{
+				"clasa": "Q63436479",
+				"descriere": "pilot de Formula 1 german",
+				"e": "Q69835",
+				"nastere": "1969",
+				"pilot": "true",
+				"st": "http://www.wikidata.org/entity/statement/Q69835-191994ae-4542-9162-4418-e9926e02f864",
+				"w": "Q9671",
+				"w_en": "Michael Schumacher",
+				"w_mul": "Michael Schumacher",
+				"w_ro": "Michael Schumacher"
+			},
+			{
+				"clasa": "Q63436479",
+				"descriere": "pilot de Formula 1 german",
+				"e": "Q69844",
+				"nastere": "1969",
+				"pilot": "true",
+				"st": "http://www.wikidata.org/entity/statement/Q69844-31c4d5af-4812-e60c-dadf-0d017b8cbbe8",
+				"w": "Q9671",
+				"w_en": "Michael Schumacher",
+				"w_mul": "Michael Schumacher",
+				"w_ro": "Michael Schumacher"
+			},
+			{
+				"clasa": "Q63436479",
+				"descriere": "pilot de Formula 1 german",
+				"e": "Q69859",
+				"nastere": "1969",
+				"pilot": "true",
+				"st": "http://www.wikidata.org/entity/statement/Q69859-700d12c0-4d33-7d7e-2afe-3f48850b61db",
+				"w": "Q9671",
+				"w_en": "Michael Schumacher",
+				"w_mul": "Michael Schumacher",
+				"w_ro": "Michael Schumacher"
+			},
+			{
+				"clasa": "Q63436479",
+				"descriere": "pilot de Formula 1 german",
+				"e": "Q69869",
+				"nastere": "1969",
+				"pilot": "true",
+				"st": "http://www.wikidata.org/entity/statement/Q69869-408f3fec-4e63-b30c-acdd-00c1e8c99523",
+				"w": "Q9671",
+				"w_en": "Michael Schumacher",
+				"w_mul": "Michael Schumacher",
+				"w_ro": "Michael Schumacher"
+			},
+			{
+				"clasa": "Q63436479",
+				"descriere": "pilot de Formula 1 britanic",
+				"e": "Q69106",
+				"moarte": "1959",
+				"nastere": "1929",
+				"pilot": "true",
+				"st": "http://www.wikidata.org/entity/statement/Q69106-67f8eee6-491b-ea01-5256-5bffc2d947b7",
+				"w": "Q2104",
+				"w_en": "Mike Hawthorn",
+				"w_ro": "Mike Hawthorn"
+			},
+			{
+				"clasa": "Q63436479",
+				"descriere": "pilot de curse auto francez",
+				"e": "Q69603",
+				"nastere": "1955",
+				"pilot": "true",
+				"st": "http://www.wikidata.org/entity/statement/Q69603-d4fde7b1-4b1d-28ae-11fb-26d50f085d82",
+				"w": "Q10494",
+				"w_en": "Alain Prost",
+				"w_mul": "Alain Prost",
+				"w_ro": "Alain Prost"
+			},
+			{
+				"clasa": "Q63436479",
+				"descriere": "pilot de curse auto francez",
+				"e": "Q69614",
+				"nastere": "1955",
+				"pilot": "true",
+				"st": "http://www.wikidata.org/entity/statement/Q69614-ceeca3a3-4525-b5f5-1fc8-b545254bc86b",
+				"w": "Q10494",
+				"w_en": "Alain Prost",
+				"w_mul": "Alain Prost",
+				"w_ro": "Alain Prost"
+			},
+			{
+				"clasa": "Q63436479",
+				"descriere": "pilot de curse auto francez",
+				"e": "Q69641",
+				"nastere": "1955",
+				"pilot": "true",
+				"st": "http://www.wikidata.org/entity/statement/Q69641-c3709ea7-43bc-83fc-6aae-172721c67a0b",
+				"w": "Q10494",
+				"w_en": "Alain Prost",
+				"w_mul": "Alain Prost",
+				"w_ro": "Alain Prost"
+			},
+			{
+				"clasa": "Q63436479",
+				"descriere": "pilot de curse auto francez",
+				"e": "Q69696",
+				"nastere": "1955",
+				"pilot": "true",
+				"st": "http://www.wikidata.org/entity/statement/Q69696-d4d02974-44c8-362f-2664-d12984bd677b",
+				"w": "Q10494",
+				"w_en": "Alain Prost",
+				"w_mul": "Alain Prost",
+				"w_ro": "Alain Prost"
+			},
+			{
+				"clasa": "Q63436479",
+				"descriere": "pilot de Formula 1 britanic",
+				"e": "Q69686",
+				"nastere": "1953",
+				"pilot": "true",
+				"st": "http://www.wikidata.org/entity/statement/Q69686-0417eedd-4878-97c0-6a99-1a2bd9c3935e",
+				"w": "Q10501",
+				"w_en": "Nigel Mansell",
+				"w_mul": "Nigel Mansell",
+				"w_ro": "Nigel Mansell"
+			},
+			{
+				"clasa": "Q63436479",
+				"descriere": "pilot de curse britanic",
+				"e": "Q14293115",
+				"nastere": "1985",
+				"pilot": "true",
+				"st": "http://www.wikidata.org/entity/statement/Q14293115-9094ed64-41c8-32dc-1837-56044625aa07",
+				"w": "Q9673",
+				"w_en": "Lewis Hamilton",
+				"w_mul": "Lewis Hamilton",
+				"w_ro": "Lewis Hamilton"
+			},
+			{
+				"clasa": "Q63436479",
+				"descriere": "pilot de curse britanic",
+				"e": "Q20755615",
+				"nastere": "1985",
+				"pilot": "true",
+				"st": "http://www.wikidata.org/entity/statement/Q20755615-386aad50-402d-1fed-7e32-240949253e9c",
+				"w": "Q9673",
+				"w_en": "Lewis Hamilton",
+				"w_mul": "Lewis Hamilton",
+				"w_ro": "Lewis Hamilton"
+			},
+			{
+				"clasa": "Q63436479",
+				"descriere": "pilot de curse britanic",
+				"e": "Q41173535",
+				"nastere": "1985",
+				"pilot": "true",
+				"st": "http://www.wikidata.org/entity/statement/Q41173535-32664f47-4e04-6a1f-c95b-c3afa3a1560f",
+				"w": "Q9673",
+				"w_en": "Lewis Hamilton",
+				"w_mul": "Lewis Hamilton",
+				"w_ro": "Lewis Hamilton"
+			},
+			{
+				"clasa": "Q63436479",
+				"descriere": "pilot de curse britanic",
+				"e": "Q41174436",
+				"nastere": "1985",
+				"pilot": "true",
+				"st": "http://www.wikidata.org/entity/statement/Q41174436-6252EB84-881B-4E66-A37F-3704DE977233",
+				"w": "Q9673",
+				"w_en": "Lewis Hamilton",
+				"w_mul": "Lewis Hamilton",
+				"w_ro": "Lewis Hamilton"
+			},
+			{
+				"clasa": "Q63436479",
+				"descriere": "pilot de curse britanic",
+				"e": "Q69913",
+				"nastere": "1985",
+				"pilot": "true",
+				"st": "http://www.wikidata.org/entity/statement/Q69913-5050e096-4fa2-87ef-260b-058a6b24bad0",
+				"w": "Q9673",
+				"w_en": "Lewis Hamilton",
+				"w_mul": "Lewis Hamilton",
+				"w_ro": "Lewis Hamilton"
+			},
+			{
+				"clasa": "Q63436479",
+				"descriere": "pilot de curse britanic",
+				"e": "Q69969",
+				"nastere": "1985",
+				"pilot": "true",
+				"st": "http://www.wikidata.org/entity/statement/Q69969-4c0fc6bf-4563-1736-1653-e9d32440d38b",
+				"w": "Q9673",
+				"w_en": "Lewis Hamilton",
+				"w_mul": "Lewis Hamilton",
+				"w_ro": "Lewis Hamilton"
+			},
+			{
+				"clasa": "Q63436479",
+				"descriere": "pilot de curse brazilian (1960-1994)",
+				"e": "Q69633",
+				"moarte": "1994",
+				"nastere": "1960",
+				"pilot": "true",
+				"st": "http://www.wikidata.org/entity/statement/Q69633-028fa00d-472d-2415-8c4e-0b9443a8ef0a",
+				"w": "Q10490",
+				"w_en": "Ayrton Senna",
+				"w_mul": "Ayrton Senna",
+				"w_ro": "Ayrton Senna"
+			},
+			{
+				"clasa": "Q63436479",
+				"descriere": "pilot de curse brazilian (1960-1994)",
+				"e": "Q69657",
+				"moarte": "1994",
+				"nastere": "1960",
+				"pilot": "true",
+				"st": "http://www.wikidata.org/entity/statement/Q69657-83caf281-4c4f-3ba4-6474-7181c93b7a08",
+				"w": "Q10490",
+				"w_en": "Ayrton Senna",
+				"w_mul": "Ayrton Senna",
+				"w_ro": "Ayrton Senna"
+			},
+			{
+				"clasa": "Q63436479",
+				"descriere": "pilot de curse brazilian (1960-1994)",
+				"e": "Q69670",
+				"moarte": "1994",
+				"nastere": "1960",
+				"pilot": "true",
+				"st": "http://www.wikidata.org/entity/statement/Q69670-fab31ef6-4630-8e36-959d-ab913025b872",
+				"w": "Q10490",
+				"w_en": "Ayrton Senna",
+				"w_mul": "Ayrton Senna",
+				"w_ro": "Ayrton Senna"
+			},
+			{
+				"clasa": "Q63436479",
+				"descriere": "pilot de curse britanic",
+				"e": "Q69923",
+				"nastere": "1980",
+				"pilot": "true",
+				"st": "http://www.wikidata.org/entity/statement/Q69923-b16e3e85-4c3c-3707-d340-f46f8f60964e",
+				"w": "Q10510",
+				"w_en": "Jenson Button",
+				"w_mul": "Jenson Button",
+				"w_ro": "Jenson Button"
+			},
+			{
+				"clasa": "Q63436479",
+				"descriere": "pilot de curse spaniol",
+				"e": "Q69880",
+				"nastere": "1981",
+				"pilot": "true",
+				"st": "http://www.wikidata.org/entity/statement/Q69880-93120e33-46a2-fee6-180f-2dc5a9a751ce",
+				"w": "Q10514",
+				"w_en": "Fernando Alonso",
+				"w_mul": "Fernando Alonso",
+				"w_ro": "Fernando Alonso"
+			},
+			{
+				"clasa": "Q63436479",
+				"descriere": "pilot de curse spaniol",
+				"e": "Q69893",
+				"nastere": "1981",
+				"pilot": "true",
+				"st": "http://www.wikidata.org/entity/statement/Q69893-1dcc08f5-417d-b390-eff7-b76b5fbf3483",
+				"w": "Q10514",
+				"w_en": "Fernando Alonso",
+				"w_mul": "Fernando Alonso",
+				"w_ro": "Fernando Alonso"
+			},
+			{
+				"clasa": "Q63436479",
+				"descriere": "pilot de curse italian",
+				"e": "Q68926",
+				"moarte": "1966",
+				"nastere": "1906",
+				"pilot": "true",
+				"st": "http://www.wikidata.org/entity/statement/Q68926-8b191851-49a4-1414-2c71-89e24cd51fb0",
+				"w": "Q2040",
+				"w_en": "Giuseppe Farina",
+				"w_mul": "Giuseppe Farina",
+				"w_ro": "Giuseppe Farina"
+			},
+			{
+				"clasa": "Q63436479",
+				"descriere": "pilot de curse auto argentinian",
+				"e": "Q68955",
+				"moarte": "1995",
+				"nastere": "1911",
+				"pilot": "true",
+				"st": "http://www.wikidata.org/entity/statement/Q68955-75d3e53c-45fe-4774-5fe4-c94362f539ac",
+				"w": "Q2069",
+				"w_en": "Juan Manuel Fangio",
+				"w_mul": "Juan Manuel Fangio",
+				"w_ro": "Juan Manuel Fangio"
+			},
+			{
+				"clasa": "Q63436479",
+				"descriere": "pilot de curse auto argentinian",
+				"e": "Q69001",
+				"moarte": "1995",
+				"nastere": "1911",
+				"pilot": "true",
+				"st": "http://www.wikidata.org/entity/statement/Q69001-b1d5f1e9-423d-281a-50dd-f3007b1462a7",
+				"w": "Q2069",
+				"w_en": "Juan Manuel Fangio",
+				"w_mul": "Juan Manuel Fangio",
+				"w_ro": "Juan Manuel Fangio"
+			},
+			{
+				"clasa": "Q63436479",
+				"descriere": "pilot de curse auto argentinian",
+				"e": "Q69015",
+				"moarte": "1995",
+				"nastere": "1911",
+				"pilot": "true",
+				"st": "http://www.wikidata.org/entity/statement/Q69015-2c50117e-4be8-43db-1acc-8728e7e19ac0",
+				"w": "Q2069",
+				"w_en": "Juan Manuel Fangio",
+				"w_mul": "Juan Manuel Fangio",
+				"w_ro": "Juan Manuel Fangio"
+			},
+			{
+				"clasa": "Q63436479",
+				"descriere": "pilot de curse auto argentinian",
+				"e": "Q69032",
+				"moarte": "1995",
+				"nastere": "1911",
+				"pilot": "true",
+				"st": "http://www.wikidata.org/entity/statement/Q69032-8b2e047b-43b7-95c6-5b44-89cd68eb2dd7",
+				"w": "Q2069",
+				"w_en": "Juan Manuel Fangio",
+				"w_mul": "Juan Manuel Fangio",
+				"w_ro": "Juan Manuel Fangio"
+			},
+			{
+				"clasa": "Q63436479",
+				"descriere": "pilot de curse auto argentinian",
+				"e": "Q69047",
+				"moarte": "1995",
+				"nastere": "1911",
+				"pilot": "true",
+				"st": "http://www.wikidata.org/entity/statement/Q69047-f5b694f1-4c72-6e52-820f-eea9d3bbf124",
+				"w": "Q2069",
+				"w_en": "Juan Manuel Fangio",
+				"w_mul": "Juan Manuel Fangio",
+				"w_ro": "Juan Manuel Fangio"
+			},
+			{
+				"clasa": "Q63436495",
+				"descriere": "producător britanic de mașini de curse și o echipă de curse de Formula 1",
+				"e": "Q69220",
+				"pilot": "false",
+				"st": "http://www.wikidata.org/entity/statement/Q69220-7a0ab7e3-4d01-d23d-8ad3-71665717f5a3",
+				"w": "Q173103",
+				"w_en": "Brabham",
+				"w_ro": "Brabham"
+			},
+			{
+				"clasa": "Q63436495",
+				"descriere": "producător britanic de mașini de curse și o echipă de curse de Formula 1",
+				"e": "Q69229",
+				"pilot": "false",
+				"st": "http://www.wikidata.org/entity/statement/Q69229-8fe228a5-4f36-0807-49f0-fc4ba3e98856",
+				"w": "Q173103",
+				"w_en": "Brabham",
+				"w_ro": "Brabham"
+			},
+			{
+				"clasa": "Q63436495",
+				"descriere": "echipa austriacă de curse cu sediul în Anglia",
+				"e": "Q109323149",
+				"pilot": "false",
+				"st": "http://www.wikidata.org/entity/statement/Q109323149-b661d726-410a-298a-0d36-319890d1cde8",
+				"w": "Q173663",
+				"w_mul": "Red Bull Racing"
+			},
+			{
+				"clasa": "Q63436495",
+				"descriere": "echipa austriacă de curse cu sediul în Anglia",
+				"e": "Q69356",
+				"pilot": "false",
+				"st": "http://www.wikidata.org/entity/statement/Q69356-3b6b490c-4b36-65d6-ae63-ab72a7a7d7af",
+				"w": "Q173663",
+				"w_mul": "Red Bull Racing"
+			},
+			{
+				"clasa": "Q63436495",
+				"descriere": "echipa austriacă de curse cu sediul în Anglia",
+				"e": "Q69934",
+				"pilot": "false",
+				"st": "http://www.wikidata.org/entity/statement/Q69934-55322916-4e9f-f40a-879d-f66b85124a7f",
+				"w": "Q173663",
+				"w_mul": "Red Bull Racing"
+			},
+			{
+				"clasa": "Q63436495",
+				"descriere": "echipa austriacă de curse cu sediul în Anglia",
+				"e": "Q69943",
+				"pilot": "false",
+				"st": "http://www.wikidata.org/entity/statement/Q69943-582adf06-4eda-5fba-c986-ef1e8dbd7028",
+				"w": "Q173663",
+				"w_mul": "Red Bull Racing"
+			},
+			{
+				"clasa": "Q63436495",
+				"descriere": "echipa austriacă de curse cu sediul în Anglia",
+				"e": "Q69959",
+				"pilot": "false",
+				"st": "http://www.wikidata.org/entity/statement/Q69959-f819ccf9-444f-cd1c-ff35-713c4ed6c71a",
+				"w": "Q173663",
+				"w_mul": "Red Bull Racing"
+			},
+			{
+				"clasa": "Q63436495",
+				"descriere": "echipă britanică de curse auto",
+				"e": "Q47225",
+				"pilot": "false",
+				"st": "http://www.wikidata.org/entity/statement/Q47225-d539297f-42e8-8bda-41cc-14b71589067e",
+				"w": "Q173996",
+				"w_en": "Team Lotus",
+				"w_ro": "Team Lotus"
+			},
+			{
+				"clasa": "Q63436495",
+				"descriere": "echipă britanică de curse auto",
+				"e": "Q62608",
+				"pilot": "false",
+				"st": "http://www.wikidata.org/entity/statement/Q62608-c04826f1-411c-2d91-99fd-1d3033772a64",
+				"w": "Q173996",
+				"w_en": "Team Lotus",
+				"w_ro": "Team Lotus"
+			},
+			{
+				"clasa": "Q63436495",
+				"descriere": "echipă britanică de curse auto",
+				"e": "Q69184",
+				"pilot": "false",
+				"st": "http://www.wikidata.org/entity/statement/Q69184-bdf0c983-4aaf-eb32-2c57-97cac216f026",
+				"w": "Q173996",
+				"w_en": "Team Lotus",
+				"w_ro": "Team Lotus"
+			},
+			{
+				"clasa": "Q63436495",
+				"descriere": "echipă britanică de curse auto",
+				"e": "Q69204",
+				"pilot": "false",
+				"st": "http://www.wikidata.org/entity/statement/Q69204-0654dbda-475a-c2ac-c661-f2d26653c6b0",
+				"w": "Q173996",
+				"w_en": "Team Lotus",
+				"w_ro": "Team Lotus"
+			},
+			{
+				"clasa": "Q63436495",
+				"descriere": "echipă britanică de curse auto",
+				"e": "Q69243",
+				"pilot": "false",
+				"st": "http://www.wikidata.org/entity/statement/Q69243-8310a454-4c9c-ff3c-af6d-08fdb3ffa27b",
+				"w": "Q173996",
+				"w_en": "Team Lotus",
+				"w_ro": "Team Lotus"
+			},
+			{
+				"clasa": "Q63436495",
+				"descriere": "echipă britanică de curse auto",
+				"e": "Q69267",
+				"pilot": "false",
+				"st": "http://www.wikidata.org/entity/statement/Q69267-e00a2101-44bc-9fd4-645f-35b768198578",
+				"w": "Q173996",
+				"w_en": "Team Lotus",
+				"w_ro": "Team Lotus"
+			},
+			{
+				"clasa": "Q63436495",
+				"descriere": "echipă britanică de curse auto",
+				"e": "Q69405",
+				"pilot": "false",
+				"st": "http://www.wikidata.org/entity/statement/Q69405-586af852-47b5-717d-f70f-b13360a4696b",
+				"w": "Q173996",
+				"w_en": "Team Lotus",
+				"w_ro": "Team Lotus"
+			},
+			{
+				"clasa": "Q63436479",
+				"descriere": "pilot de curse german",
+				"e": "Q69356",
+				"nastere": "1987",
+				"pilot": "true",
+				"st": "http://www.wikidata.org/entity/statement/Q69356-ac646674-4ba6-3e0f-fa28-60cd80e479b7",
+				"w": "Q42311",
+				"w_en": "Sebastian Vettel",
+				"w_mul": "Sebastian Vettel",
+				"w_ro": "Sebastian Vettel"
+			},
+			{
+				"clasa": "Q63436479",
+				"descriere": "pilot de curse german",
+				"e": "Q69934",
+				"nastere": "1987",
+				"pilot": "true",
+				"st": "http://www.wikidata.org/entity/statement/Q69934-4ee2a7ad-41b1-963c-50ff-8043b497864d",
+				"w": "Q42311",
+				"w_en": "Sebastian Vettel",
+				"w_mul": "Sebastian Vettel",
+				"w_ro": "Sebastian Vettel"
+			},
+			{
+				"clasa": "Q63436479",
+				"descriere": "pilot de curse german",
+				"e": "Q69943",
+				"nastere": "1987",
+				"pilot": "true",
+				"st": "http://www.wikidata.org/entity/statement/Q69943-02b06cd3-4e39-eb7b-6f83-977d3d7856ab",
+				"w": "Q42311",
+				"w_en": "Sebastian Vettel",
+				"w_mul": "Sebastian Vettel",
+				"w_ro": "Sebastian Vettel"
+			},
+			{
+				"clasa": "Q63436479",
+				"descriere": "pilot de curse german",
+				"e": "Q69959",
+				"nastere": "1987",
+				"pilot": "true",
+				"st": "http://www.wikidata.org/entity/statement/Q69959-8ef1d262-4d9d-1843-cca7-a72db2c54af3",
+				"w": "Q42311",
+				"w_en": "Sebastian Vettel",
+				"w_mul": "Sebastian Vettel",
+				"w_ro": "Sebastian Vettel"
+			},
+			{
+				"clasa": "Q63436479",
+				"descriere": "pilot de curse german (n. 1985)",
+				"e": "Q17455748",
+				"nastere": "1985",
+				"pilot": "true",
+				"st": "http://www.wikidata.org/entity/statement/Q17455748-6b19acc3-4f8d-e28b-f697-9e92edd627ea",
+				"w": "Q75820",
+				"w_en": "Nico Rosberg",
+				"w_mul": "Nico Rosberg",
+				"w_ro": "Nico Rosberg"
+			},
+			{
+				"clasa": "Q63436479",
+				"descriere": "pilot de Formula 1 austriac",
+				"e": "Q69375",
+				"moarte": "2019",
+				"nastere": "1949",
+				"pilot": "true",
+				"st": "http://www.wikidata.org/entity/statement/Q69375-95faf18d-4e9a-8388-9de6-266ebfb6a267",
+				"w": "Q78489",
+				"w_en": "Niki Lauda",
+				"w_mul": "Niki Lauda",
+				"w_ro": "Niki Lauda"
+			},
+			{
+				"clasa": "Q63436479",
+				"descriere": "pilot de Formula 1 austriac",
+				"e": "Q69396",
+				"moarte": "2019",
+				"nastere": "1949",
+				"pilot": "true",
+				"st": "http://www.wikidata.org/entity/statement/Q69396-6b98e0b7-4f2a-a4a9-7883-09f9672336c2",
+				"w": "Q78489",
+				"w_en": "Niki Lauda",
+				"w_mul": "Niki Lauda",
+				"w_ro": "Niki Lauda"
+			},
+			{
+				"clasa": "Q63436479",
+				"descriere": "pilot de Formula 1 austriac",
+				"e": "Q69576",
+				"moarte": "2019",
+				"nastere": "1949",
+				"pilot": "true",
+				"st": "http://www.wikidata.org/entity/statement/Q69576-9fea20c8-427d-79b5-0139-27a4ba77f7aa",
+				"w": "Q78489",
+				"w_en": "Niki Lauda",
+				"w_mul": "Niki Lauda",
+				"w_ro": "Niki Lauda"
+			},
+			{
+				"clasa": "Q63436495",
+				"descriere": "echipă britanică de Formula 1",
+				"e": "Q69343",
+				"pilot": "false",
+				"st": "http://www.wikidata.org/entity/statement/Q69343-7b36bd9e-4f81-d71f-089f-4e29ca7d9b06",
+				"w": "Q172030",
+				"w_en": "McLaren",
+				"w_ro": "McLaren"
+			},
+			{
+				"clasa": "Q63436495",
+				"descriere": "echipă britanică de Formula 1",
+				"e": "Q69576",
+				"pilot": "false",
+				"st": "http://www.wikidata.org/entity/statement/Q69576-143c0381-45d5-cd05-de04-b47e29485d88",
+				"w": "Q172030",
+				"w_en": "McLaren",
+				"w_ro": "McLaren"
+			},
+			{
+				"clasa": "Q63436495",
+				"descriere": "echipă britanică de Formula 1",
+				"e": "Q69603",
+				"pilot": "false",
+				"st": "http://www.wikidata.org/entity/statement/Q69603-d488c7eb-4833-3f5a-077f-b49a14be6be0",
+				"w": "Q172030",
+				"w_en": "McLaren",
+				"w_ro": "McLaren"
+			},
+			{
+				"clasa": "Q63436495",
+				"descriere": "echipă britanică de Formula 1",
+				"e": "Q69633",
+				"pilot": "false",
+				"st": "http://www.wikidata.org/entity/statement/Q69633-7b6e32b3-4382-716c-f26b-7b227c022145",
+				"w": "Q172030",
+				"w_en": "McLaren",
+				"w_ro": "McLaren"
+			},
+			{
+				"clasa": "Q63436495",
+				"descriere": "echipă britanică de Formula 1",
+				"e": "Q69641",
+				"pilot": "false",
+				"st": "http://www.wikidata.org/entity/statement/Q69641-985b6530-4563-4cac-608c-a12600bfe549",
+				"w": "Q172030",
+				"w_en": "McLaren",
+				"w_ro": "McLaren"
+			},
+			{
+				"clasa": "Q63436495",
+				"descriere": "echipă britanică de Formula 1",
+				"e": "Q69657",
+				"pilot": "false",
+				"st": "http://www.wikidata.org/entity/statement/Q69657-97672d58-4abe-8c78-01cc-a16d0f74e1dd",
+				"w": "Q172030",
+				"w_en": "McLaren",
+				"w_ro": "McLaren"
+			},
+			{
+				"clasa": "Q63436495",
+				"descriere": "echipă britanică de Formula 1",
+				"e": "Q69670",
+				"pilot": "false",
+				"st": "http://www.wikidata.org/entity/statement/Q69670-a9c44894-41fe-e857-6783-9389c88f5933",
+				"w": "Q172030",
+				"w_en": "McLaren",
+				"w_ro": "McLaren"
+			},
+			{
+				"clasa": "Q63436495",
+				"descriere": "echipă britanică de Formula 1",
+				"e": "Q69763",
+				"pilot": "false",
+				"st": "http://www.wikidata.org/entity/statement/Q69763-810a1648-49ed-66b5-3938-a8b651ed82cc",
+				"w": "Q172030",
+				"w_en": "McLaren",
+				"w_ro": "McLaren"
+			},
+			{
+				"clasa": "Q63436495",
+				"descriere": "echipă britanică de Formula 1",
+				"e": "Q115942630",
+				"pilot": "false",
+				"st": "http://www.wikidata.org/entity/statement/Q115942630-def3c942-45b6-3c91-93d6-5ea80d5ea80e",
+				"w": "Q172030",
+				"w_en": "McLaren",
+				"w_ro": "McLaren"
+			},
+			{
+				"clasa": "Q63436495",
+				"descriere": "constructor și echipă de Formula 1 britanică",
+				"e": "Q69423",
+				"pilot": "false",
+				"st": "http://www.wikidata.org/entity/statement/Q69423-3b06b3b9-4ef3-67ba-bf37-194fd22cce1f",
+				"w": "Q171337",
+				"w_en": "Williams Racing",
+				"w_mul": "Williams F1 Team",
+				"w_ro": "Williams F1 Team"
+			},
+			{
+				"clasa": "Q63436495",
+				"descriere": "constructor și echipă de Formula 1 britanică",
+				"e": "Q69431",
+				"pilot": "false",
+				"st": "http://www.wikidata.org/entity/statement/Q69431-68c90294-4731-1dc1-ec03-c3fc8fad1474",
+				"w": "Q171337",
+				"w_en": "Williams Racing",
+				"w_mul": "Williams F1 Team",
+				"w_ro": "Williams F1 Team"
+			},
+			{
+				"clasa": "Q63436495",
+				"descriere": "constructor și echipă de Formula 1 britanică",
+				"e": "Q69614",
+				"pilot": "false",
+				"st": "http://www.wikidata.org/entity/statement/Q69614-e9cca0d8-4149-d759-91c6-874fef92404b",
+				"w": "Q171337",
+				"w_en": "Williams Racing",
+				"w_mul": "Williams F1 Team",
+				"w_ro": "Williams F1 Team"
+			},
+			{
+				"clasa": "Q63436495",
+				"descriere": "constructor și echipă de Formula 1 britanică",
+				"e": "Q69623",
+				"pilot": "false",
+				"st": "http://www.wikidata.org/entity/statement/Q69623-1308cfc9-460e-2b09-8ac0-ffbef8ef1b8a",
+				"w": "Q171337",
+				"w_en": "Williams Racing",
+				"w_mul": "Williams F1 Team",
+				"w_ro": "Williams F1 Team"
+			},
+			{
+				"clasa": "Q63436495",
+				"descriere": "constructor și echipă de Formula 1 britanică",
+				"e": "Q69686",
+				"pilot": "false",
+				"st": "http://www.wikidata.org/entity/statement/Q69686-081dc146-4d1b-5f40-3508-dae27b4f78b8",
+				"w": "Q171337",
+				"w_en": "Williams Racing",
+				"w_mul": "Williams F1 Team",
+				"w_ro": "Williams F1 Team"
+			},
+			{
+				"clasa": "Q63436495",
+				"descriere": "constructor și echipă de Formula 1 britanică",
+				"e": "Q69696",
+				"pilot": "false",
+				"st": "http://www.wikidata.org/entity/statement/Q69696-c4e2fe47-4079-6945-61e1-87581141b79c",
+				"w": "Q171337",
+				"w_en": "Williams Racing",
+				"w_mul": "Williams F1 Team",
+				"w_ro": "Williams F1 Team"
+			},
+			{
+				"clasa": "Q63436495",
+				"descriere": "constructor și echipă de Formula 1 britanică",
+				"e": "Q69713",
+				"pilot": "false",
+				"st": "http://www.wikidata.org/entity/statement/Q69713-d7e5d925-445d-f3b3-ecd4-ed2e38b11133",
+				"w": "Q171337",
+				"w_en": "Williams Racing",
+				"w_mul": "Williams F1 Team",
+				"w_ro": "Williams F1 Team"
+			},
+			{
+				"clasa": "Q63436495",
+				"descriere": "constructor și echipă de Formula 1 britanică",
+				"e": "Q69735",
+				"pilot": "false",
+				"st": "http://www.wikidata.org/entity/statement/Q69735-d0891ceb-4f2b-aff2-b863-a7481f50c1ef",
+				"w": "Q171337",
+				"w_en": "Williams Racing",
+				"w_mul": "Williams F1 Team",
+				"w_ro": "Williams F1 Team"
+			},
+			{
+				"clasa": "Q63436495",
+				"descriere": "constructor și echipă de Formula 1 britanică",
+				"e": "Q69750",
+				"pilot": "false",
+				"st": "http://www.wikidata.org/entity/statement/Q69750-a3f99df3-494c-a2b6-e3bb-3d2f098e7d70",
+				"w": "Q171337",
+				"w_en": "Williams Racing",
+				"w_mul": "Williams F1 Team",
+				"w_ro": "Williams F1 Team"
+			},
+			{
+				"clasa": "Q63436479",
+				"descriere": "pilot de curse auto brazilian",
+				"e": "Q69431",
+				"nastere": "1952",
+				"pilot": "true",
+				"st": "http://www.wikidata.org/entity/statement/Q69431-f6614622-4e26-45d8-7bc3-708c505a8322",
+				"w": "Q171346",
+				"w_en": "Nelson Piquet",
+				"w_mul": "Nelson Piquet",
+				"w_ro": "Nelson Piquet"
+			},
+			{
+				"clasa": "Q63436479",
+				"descriere": "pilot de curse auto brazilian",
+				"e": "Q69561",
+				"nastere": "1952",
+				"pilot": "true",
+				"st": "http://www.wikidata.org/entity/statement/Q69561-19537ae1-49e7-4cd6-ebbe-bf3fdbfd67ee",
+				"w": "Q171346",
+				"w_en": "Nelson Piquet",
+				"w_mul": "Nelson Piquet",
+				"w_ro": "Nelson Piquet"
+			},
+			{
+				"clasa": "Q63436479",
+				"descriere": "pilot de curse auto brazilian",
+				"e": "Q69623",
+				"nastere": "1952",
+				"pilot": "true",
+				"st": "http://www.wikidata.org/entity/statement/Q69623-90f687a4-4095-8007-d888-ac0f0da8a308",
+				"w": "Q171346",
+				"w_en": "Nelson Piquet",
+				"w_mul": "Nelson Piquet",
+				"w_ro": "Nelson Piquet"
+			},
+			{
+				"clasa": "Q63436479",
+				"descriere": "pilot de curse finlandez (n. 1948)",
+				"e": "Q69548",
+				"nastere": "1948",
+				"pilot": "true",
+				"st": "http://www.wikidata.org/entity/statement/Q69548-6c8ecf80-43e1-f24d-38b2-4e89cd979480",
+				"w": "Q171381",
+				"w_en": "Keke Rosberg",
+				"w_mul": "Keke Rosberg",
+				"w_ro": "Keke Rosberg"
+			},
+			{
+				"clasa": "Q63436479",
+				"descriere": "pilot de curse belgiano-neerlandez",
+				"e": "Q109323149",
+				"nastere": "1997",
+				"pilot": "true",
+				"st": "http://www.wikidata.org/entity/statement/Q109323149-ea349367-438a-deb4-d573-064559ecf7f1",
+				"w": "Q2239218",
+				"w_mul": "Max Verstappen"
+			},
+			{
+				"clasa": "Q63436479",
+				"descriere": "pilot de curse belgiano-neerlandez",
+				"e": "Q72635834",
+				"nastere": "1997",
+				"pilot": "true",
+				"st": "http://www.wikidata.org/entity/statement/Q72635834-71fc1951-4051-c392-838f-40b18f4e37bc",
+				"w": "Q2239218",
+				"w_mul": "Max Verstappen"
+			},
+			{
+				"clasa": "Q63436479",
+				"descriere": "prenume",
+				"e": "Q23051084",
+				"pilot": "false",
+				"st": "http://www.wikidata.org/entity/statement/Q23051084-86b313ad-4f5d-1cc0-2759-74c139f58af5",
+				"w": "Q3862934",
+				"w_en": "Moreno",
+				"w_mul": "Moreno",
+				"w_ro": "Moreno"
+			},
+			{
+				"clasa": "Q63436495",
+				"descriere": "echipă de Formula 1",
+				"e": "Q69161",
+				"pilot": "false",
+				"st": "http://www.wikidata.org/entity/statement/Q69161-00acdc01-4264-b58b-fb26-84ac202e603f",
+				"w": "Q169898",
+				"w_en": "Scuderia Ferrari",
+				"w_ro": "Scuderia Ferrari"
+			},
+			{
+				"clasa": "Q63436495",
+				"descriere": "echipă de Formula 1",
+				"e": "Q69193",
+				"pilot": "false",
+				"st": "http://www.wikidata.org/entity/statement/Q69193-1c6dbead-4689-85d4-63d8-6f007bf56ce2",
+				"w": "Q169898",
+				"w_en": "Scuderia Ferrari",
+				"w_ro": "Scuderia Ferrari"
+			},
+			{
+				"clasa": "Q63436495",
+				"descriere": "echipă de Formula 1",
+				"e": "Q69375",
+				"pilot": "false",
+				"st": "http://www.wikidata.org/entity/statement/Q69375-9dd86ebe-4f38-0e9f-bfed-2e1a25cdbf81",
+				"w": "Q169898",
+				"w_en": "Scuderia Ferrari",
+				"w_ro": "Scuderia Ferrari"
+			},
+			{
+				"clasa": "Q63436495",
+				"descriere": "echipă de Formula 1",
+				"e": "Q69387",
+				"pilot": "false",
+				"st": "http://www.wikidata.org/entity/statement/Q69387-56a08cdc-4dfc-8477-dde7-70053b9aeba8",
+				"w": "Q169898",
+				"w_en": "Scuderia Ferrari",
+				"w_ro": "Scuderia Ferrari"
+			},
+			{
+				"clasa": "Q63436495",
+				"descriere": "echipă de Formula 1",
+				"e": "Q69396",
+				"pilot": "false",
+				"st": "http://www.wikidata.org/entity/statement/Q69396-88f3187d-4f84-6fc7-5d7b-27ddedfce54a",
+				"w": "Q169898",
+				"w_en": "Scuderia Ferrari",
+				"w_ro": "Scuderia Ferrari"
+			},
+			{
+				"clasa": "Q63436495",
+				"descriere": "echipă de Formula 1",
+				"e": "Q69415",
+				"pilot": "false",
+				"st": "http://www.wikidata.org/entity/statement/Q69415-c197240b-48ac-ba98-04df-da32c73748f5",
+				"w": "Q169898",
+				"w_en": "Scuderia Ferrari",
+				"w_ro": "Scuderia Ferrari"
+			},
+			{
+				"clasa": "Q63436495",
+				"descriere": "echipă de Formula 1",
+				"e": "Q69548",
+				"pilot": "false",
+				"st": "http://www.wikidata.org/entity/statement/Q69548-3730f832-42cf-6d84-b482-677eea54ab65",
+				"w": "Q169898",
+				"w_en": "Scuderia Ferrari",
+				"w_ro": "Scuderia Ferrari"
+			},
+			{
+				"clasa": "Q63436495",
+				"descriere": "echipă de Formula 1",
+				"e": "Q69561",
+				"pilot": "false",
+				"st": "http://www.wikidata.org/entity/statement/Q69561-f078ad18-4a06-74e5-5fa2-89e69d6c6f99",
+				"w": "Q169898",
+				"w_en": "Scuderia Ferrari",
+				"w_ro": "Scuderia Ferrari"
+			},
+			{
+				"clasa": "Q63436495",
+				"descriere": "echipă de Formula 1",
+				"e": "Q69791",
+				"pilot": "false",
+				"st": "http://www.wikidata.org/entity/statement/Q69791-f7cd2743-4d44-8269-e689-43a22905880b",
+				"w": "Q169898",
+				"w_en": "Scuderia Ferrari",
+				"w_ro": "Scuderia Ferrari"
+			},
+			{
+				"clasa": "Q63436495",
+				"descriere": "echipă de Formula 1",
+				"e": "Q69805",
+				"pilot": "false",
+				"st": "http://www.wikidata.org/entity/statement/Q69805-42bfe3ca-4c73-f845-4a30-b5ad937c7dba",
+				"w": "Q169898",
+				"w_en": "Scuderia Ferrari",
+				"w_ro": "Scuderia Ferrari"
+			},
+			{
+				"clasa": "Q63436495",
+				"descriere": "echipă de Formula 1",
+				"e": "Q69835",
+				"pilot": "false",
+				"st": "http://www.wikidata.org/entity/statement/Q69835-231faa57-4d82-95f7-1041-5fcf34a29b70",
+				"w": "Q169898",
+				"w_en": "Scuderia Ferrari",
+				"w_ro": "Scuderia Ferrari"
+			},
+			{
+				"clasa": "Q63436495",
+				"descriere": "echipă de Formula 1",
+				"e": "Q69844",
+				"pilot": "false",
+				"st": "http://www.wikidata.org/entity/statement/Q69844-ec7522c3-4da6-4853-6054-d127a9584c1b",
+				"w": "Q169898",
+				"w_en": "Scuderia Ferrari",
+				"w_ro": "Scuderia Ferrari"
+			},
+			{
+				"clasa": "Q63436495",
+				"descriere": "echipă de Formula 1",
+				"e": "Q69859",
+				"pilot": "false",
+				"st": "http://www.wikidata.org/entity/statement/Q69859-505dfdcd-4e57-e704-2bfd-28a404e0ee30",
+				"w": "Q169898",
+				"w_en": "Scuderia Ferrari",
+				"w_ro": "Scuderia Ferrari"
+			},
+			{
+				"clasa": "Q63436495",
+				"descriere": "echipă de Formula 1",
+				"e": "Q69869",
+				"pilot": "false",
+				"st": "http://www.wikidata.org/entity/statement/Q69869-954a1532-4cef-c13b-00e7-90169655d824",
+				"w": "Q169898",
+				"w_en": "Scuderia Ferrari",
+				"w_ro": "Scuderia Ferrari"
+			},
+			{
+				"clasa": "Q63436495",
+				"descriere": "echipă de Formula 1",
+				"e": "Q69901",
+				"pilot": "false",
+				"st": "http://www.wikidata.org/entity/statement/Q69901-0d4149ad-453f-ed44-4e77-3563de9277a6",
+				"w": "Q169898",
+				"w_en": "Scuderia Ferrari",
+				"w_ro": "Scuderia Ferrari"
+			},
+			{
+				"clasa": "Q63436495",
+				"descriere": "echipă de Formula 1",
+				"e": "Q69913",
+				"pilot": "false",
+				"st": "http://www.wikidata.org/entity/statement/Q69913-40aa646b-40a1-ef79-9030-aa3eaeaa8e43",
+				"w": "Q169898",
+				"w_en": "Scuderia Ferrari",
+				"w_ro": "Scuderia Ferrari"
+			},
+			{
+				"clasa": "Q63436479",
+				"descriere": "pilot de curse sud-african",
+				"e": "Q69415",
+				"nastere": "1950",
+				"pilot": "true",
+				"st": "http://www.wikidata.org/entity/statement/Q69415-c5220238-47e5-43b2-5cca-b8d0d77cb25c",
+				"w": "Q172775",
+				"w_en": "Jody Scheckter",
+				"w_ro": "Jody Scheckter"
+			},
+			{
+				"clasa": "Q63436479",
+				"descriere": "pilot de Formula 1 canadian",
+				"e": "Q69750",
+				"nastere": "1971",
+				"pilot": "true",
+				"st": "http://www.wikidata.org/entity/statement/Q69750-d2b2f113-4921-8b49-3396-0dbf4ed96321",
+				"w": "Q172843",
+				"w_en": "Jacques Villeneuve",
+				"w_mul": "Jacques Villeneuve",
+				"w_ro": "Jacques Villeneuve"
+			},
+			{
+				"clasa": "Q63436479",
+				"descriere": "pilot de curse britanic (n. 1999)",
+				"e": "Q115942630",
+				"nastere": "1999",
+				"pilot": "true",
+				"st": "http://www.wikidata.org/entity/statement/Q115942630-0dd58d5e-4be7-6a4c-da2d-7d884f5e37d4",
+				"w": "Q22007193",
+				"w_en": "Lando Norris",
+				"w_mul": "Lando Norris",
+				"w_ro": "Lando Norris"
+			},
+			{
+				"clasa": "Q63436479",
+				"e": "Q68967",
+				"moarte": "1955",
+				"nastere": "1918",
+				"pilot": "true",
+				"st": "http://www.wikidata.org/entity/statement/Q68967-e1d8bfc3-48cc-ee4e-86c0-9ac65d040535",
+				"w": "Q2086",
+				"w_en": "Alberto Ascari",
+				"w_ro": "Alberto Ascari"
+			},
+			{
+				"clasa": "Q63436479",
+				"e": "Q68980",
+				"moarte": "1955",
+				"nastere": "1918",
+				"pilot": "true",
+				"st": "http://www.wikidata.org/entity/statement/Q68980-0adfcc3f-4bb5-939a-3203-046f1fcb295a",
+				"w": "Q2086",
+				"w_en": "Alberto Ascari",
+				"w_ro": "Alberto Ascari"
+			},
+			{
+				"clasa": "Q63436479",
+				"e": "Q69118",
+				"moarte": "2014",
+				"nastere": "1926",
+				"pilot": "true",
+				"st": "http://www.wikidata.org/entity/statement/Q69118-fe6a7c80-49c3-2fb6-d048-1f311bb5f34f",
+				"w": "Q2125",
+				"w_en": "Jack Brabham",
+				"w_mul": "Jack Brabham",
+				"w_ro": "Jack Brabham"
+			},
+			{
+				"clasa": "Q63436479",
+				"e": "Q69146",
+				"moarte": "2014",
+				"nastere": "1926",
+				"pilot": "true",
+				"st": "http://www.wikidata.org/entity/statement/Q69146-1fde3843-4f42-2387-b019-29c9e9b8afe4",
+				"w": "Q2125",
+				"w_en": "Jack Brabham",
+				"w_mul": "Jack Brabham",
+				"w_ro": "Jack Brabham"
+			},
+			{
+				"clasa": "Q63436479",
+				"e": "Q69220",
+				"moarte": "2014",
+				"nastere": "1926",
+				"pilot": "true",
+				"st": "http://www.wikidata.org/entity/statement/Q69220-2e8eeaa7-47f8-3fe9-baeb-bed80e25eebe",
+				"w": "Q2125",
+				"w_en": "Jack Brabham",
+				"w_mul": "Jack Brabham",
+				"w_ro": "Jack Brabham"
+			},
+			{
+				"clasa": "Q63436479",
+				"e": "Q69161",
+				"moarte": "2008",
+				"nastere": "1927",
+				"pilot": "true",
+				"st": "http://www.wikidata.org/entity/statement/Q69161-d42cb2ea-489c-64c9-7b8e-31b414301d90",
+				"w": "Q3112",
+				"w_en": "Phil Hill",
+				"w_ro": "Phil Hill"
+			},
+			{
+				"clasa": "Q63436479",
+				"e": "Q69174",
+				"moarte": "1975",
+				"nastere": "1929",
+				"pilot": "true",
+				"st": "http://www.wikidata.org/entity/statement/Q69174-a6fa7de5-4c72-bdf9-3053-54c77e07a7eb",
+				"w": "Q3128",
+				"w_en": "Graham Hill",
+				"w_mul": "Graham Hill",
+				"w_ro": "Graham Hill"
+			},
+			{
+				"clasa": "Q63436479",
+				"e": "Q69243",
+				"moarte": "1975",
+				"nastere": "1929",
+				"pilot": "true",
+				"st": "http://www.wikidata.org/entity/statement/Q69243-170dd1bc-4bd0-34f0-2e71-e4f33e6d4b01",
+				"w": "Q3128",
+				"w_en": "Graham Hill",
+				"w_mul": "Graham Hill",
+				"w_ro": "Graham Hill"
+			},
+			{
+				"clasa": "Q63436479",
+				"e": "Q69184",
+				"moarte": "1968",
+				"nastere": "1936",
+				"pilot": "true",
+				"st": "http://www.wikidata.org/entity/statement/Q69184-cf91c05d-4e02-562d-f1cd-4c008f8e0ab3",
+				"w": "Q3137",
+				"w_en": "Jim Clark",
+				"w_ro": "Jim Clark"
+			},
+			{
+				"clasa": "Q63436479",
+				"e": "Q69204",
+				"moarte": "1968",
+				"nastere": "1936",
+				"pilot": "true",
+				"st": "http://www.wikidata.org/entity/statement/Q69204-fd4b88f0-4447-5c9b-539b-7ed540b2cba3",
+				"w": "Q3137",
+				"w_en": "Jim Clark",
+				"w_ro": "Jim Clark"
+			},
+			{
+				"clasa": "Q63436479",
+				"e": "Q69193",
+				"moarte": "2017",
+				"nastere": "1934",
+				"pilot": "true",
+				"st": "http://www.wikidata.org/entity/statement/Q69193-95ed1026-499d-d264-6893-ba53548a240e",
+				"w": "Q3153",
+				"w_en": "John Surtees",
+				"w_mul": "John Surtees",
+				"w_ro": "John Surtees"
+			},
+			{
+				"clasa": "Q63436479",
+				"e": "Q69229",
+				"moarte": "1992",
+				"nastere": "1936",
+				"pilot": "true",
+				"st": "http://www.wikidata.org/entity/statement/Q69229-c665e53a-4633-0f7f-fef8-74b7ea89434d",
+				"w": "Q3166",
+				"w_en": "Denny Hulme",
+				"w_mul": "Denny Hulme",
+				"w_ro": "Denny Hulme"
+			},
+			{
+				"clasa": "Q63436479",
+				"e": "Q42176",
+				"nastere": "1939",
+				"pilot": "true",
+				"st": "http://www.wikidata.org/entity/statement/Q42176-645f2db9-4d61-9579-c8e4-41b07228b6d6",
+				"w": "Q3188",
+				"w_en": "Jackie Stewart",
+				"w_mul": "Jackie Stewart",
+				"w_ro": "Jackie Stewart"
+			},
+			{
+				"clasa": "Q63436479",
+				"e": "Q62608",
+				"nastere": "1939",
+				"pilot": "true",
+				"st": "http://www.wikidata.org/entity/statement/Q62608-f6c23375-44df-3da0-6298-c4b2f2a0aa07",
+				"w": "Q3188",
+				"w_en": "Jackie Stewart",
+				"w_mul": "Jackie Stewart",
+				"w_ro": "Jackie Stewart"
+			},
+			{
+				"clasa": "Q63436479",
+				"e": "Q69254",
+				"nastere": "1939",
+				"pilot": "true",
+				"st": "http://www.wikidata.org/entity/statement/Q69254-9351a17a-4a5e-6829-1fb6-0651fdc217ed",
+				"w": "Q3188",
+				"w_en": "Jackie Stewart",
+				"w_mul": "Jackie Stewart",
+				"w_ro": "Jackie Stewart"
+			},
+			{
+				"clasa": "Q63436479",
+				"e": "Q47225",
+				"moarte": "1970",
+				"nastere": "1942",
+				"pilot": "true",
+				"st": "http://www.wikidata.org/entity/statement/Q47225-240d4bed-41a7-1d3d-bba2-c7467c4af152",
+				"w": "Q3234",
+				"w_en": "Jochen Rindt",
+				"w_mul": "Jochen Rindt",
+				"w_ro": "Jochen Rindt"
+			},
+			{
+				"clasa": "Q63436479",
+				"e": "Q69735",
+				"nastere": "1960",
+				"pilot": "true",
+				"st": "http://www.wikidata.org/entity/statement/Q69735-e8b1ec21-4040-20a3-3018-26fa9214bd36",
+				"w": "Q10505",
+				"w_en": "Damon Hill",
+				"w_mul": "Damon Hill",
+				"w_ro": "Damon Hill"
+			},
+			{
+				"clasa": "Q63436479",
+				"e": "Q69901",
+				"nastere": "1979",
+				"pilot": "true",
+				"st": "http://www.wikidata.org/entity/statement/Q69901-4318805a-4091-4fcc-0424-0bacb6355159",
+				"w": "Q11192",
+				"w_en": "Kimi Räikkönen",
+				"w_mul": "Kimi Räikkönen",
+				"w_ro": "Kimi Räikkönen"
+			},
+			{
+				"clasa": "Q63436495",
+				"e": "Q69923",
+				"pilot": "false",
+				"st": "http://www.wikidata.org/entity/statement/Q69923-f658656b-4a9e-9fe7-ae31-bc7ba7e0469b",
+				"w": "Q17596",
+				"w_en": "Brawn GP",
+				"w_ro": "Brawn GP"
+			},
+			{
+				"clasa": "Q63436495",
+				"e": "Q69254",
+				"pilot": "false",
+				"st": "http://www.wikidata.org/entity/statement/Q69254-423914c4-4e98-c988-dc47-d686ee145fbd",
+				"w": "Q35982",
+				"w_en": "Matra",
+				"w_ro": "Matra"
+			},
+			{
+				"clasa": "Q63436479",
+				"e": "Q69387",
+				"moarte": "1993",
+				"nastere": "1947",
+				"pilot": "true",
+				"st": "http://www.wikidata.org/entity/statement/Q69387-44448a8a-4b75-1dae-1a13-2dbab59406cb",
+				"w": "Q140393",
+				"w_mul": "James Hunt"
+			},
+			{
+				"clasa": "Q63436479",
+				"e": "Q69405",
+				"nastere": "1940",
+				"pilot": "true",
+				"st": "http://www.wikidata.org/entity/statement/Q69405-85bd8b53-4201-d3ae-abe3-80fcc1826f59",
+				"w": "Q171312",
+				"w_en": "Mario Andretti",
+				"w_mul": "Mario Andretti",
+				"w_ro": "Mario Andretti"
+			},
+			{
+				"clasa": "Q63436495",
+				"e": "Q69722",
+				"pilot": "false",
+				"st": "http://www.wikidata.org/entity/statement/Q69722-cceb26fd-41e9-ca38-9dab-5d61abe6a304",
+				"w": "Q171329",
+				"w_en": "Benetton Formula",
+				"w_ro": "Benetton Formula"
+			},
+			{
+				"clasa": "Q63436495",
+				"e": "Q42176",
+				"pilot": "false",
+				"st": "http://www.wikidata.org/entity/statement/Q42176-9582d291-4155-8f3f-380d-4e8d4f23e462",
+				"w": "Q171992",
+				"w_en": "Tyrrell Racing",
+				"w_ro": "Tyrrell Racing"
+			},
+			{
+				"clasa": "Q63436495",
+				"e": "Q14293115",
+				"pilot": "false",
+				"st": "http://www.wikidata.org/entity/statement/Q14293115-3c7d6fb7-457c-d0c7-ab24-b5a13c5c17dd",
+				"w": "Q172721",
+				"w_en": "Mercedes F1 Team",
+				"w_ro": "Mercedes"
+			},
+			{
+				"clasa": "Q63436495",
+				"e": "Q17455748",
+				"pilot": "false",
+				"st": "http://www.wikidata.org/entity/statement/Q17455748-e8d00832-4fe0-9ac7-fd31-fa668010c7e6",
+				"w": "Q172721",
+				"w_en": "Mercedes F1 Team",
+				"w_ro": "Mercedes"
+			},
+			{
+				"clasa": "Q63436495",
+				"e": "Q20755615",
+				"pilot": "false",
+				"st": "http://www.wikidata.org/entity/statement/Q20755615-5f359e8c-495a-5e4d-6957-c3b0bf35c4a9",
+				"w": "Q172721",
+				"w_en": "Mercedes F1 Team",
+				"w_ro": "Mercedes"
+			},
+			{
+				"clasa": "Q63436495",
+				"e": "Q23051084",
+				"pilot": "false",
+				"st": "http://www.wikidata.org/entity/statement/Q23051084-1e1bb486-4687-74b2-7a83-e27f190a533a",
+				"w": "Q172721",
+				"w_en": "Mercedes F1 Team",
+				"w_ro": "Mercedes"
+			},
+			{
+				"clasa": "Q63436495",
+				"e": "Q41173535",
+				"pilot": "false",
+				"st": "http://www.wikidata.org/entity/statement/Q41173535-e8d1d468-432e-7671-1318-fae4635d80e9",
+				"w": "Q172721",
+				"w_en": "Mercedes F1 Team",
+				"w_ro": "Mercedes"
+			},
+			{
+				"clasa": "Q63436495",
+				"e": "Q41174436",
+				"pilot": "false",
+				"st": "http://www.wikidata.org/entity/statement/Q41174436-72C37501-B41F-4D91-AD6F-A3516FCED141",
+				"w": "Q172721",
+				"w_en": "Mercedes F1 Team",
+				"w_ro": "Mercedes"
+			},
+			{
+				"clasa": "Q63436495",
+				"e": "Q69969",
+				"pilot": "false",
+				"st": "http://www.wikidata.org/entity/statement/Q69969-954ec474-4372-1bff-f4b4-2445abf14974",
+				"w": "Q172721",
+				"w_en": "Mercedes F1 Team",
+				"w_ro": "Mercedes"
+			},
+			{
+				"clasa": "Q63436495",
+				"e": "Q72635834",
+				"pilot": "false",
+				"st": "http://www.wikidata.org/entity/statement/Q72635834-89c936bc-459c-1863-ca7c-253d942c2c4d",
+				"w": "Q172721",
+				"w_en": "Mercedes F1 Team",
+				"w_ro": "Mercedes"
+			},
+			{
+				"clasa": "Q63436495",
+				"e": "Q69880",
+				"pilot": "false",
+				"st": "http://www.wikidata.org/entity/statement/Q69880-05d3c76f-4adb-5d62-2356-a9757124f376",
+				"w": "Q172722",
+				"w_en": "Renault F1 Team",
+				"w_ro": "Renault F1"
+			},
+			{
+				"clasa": "Q63436495",
+				"e": "Q69893",
+				"pilot": "false",
+				"st": "http://www.wikidata.org/entity/statement/Q69893-0da3dff4-4a61-4081-4157-be53887a8941",
+				"w": "Q172722",
+				"w_en": "Renault F1 Team",
+				"w_ro": "Renault F1"
+			},
+			{
+				"clasa": "Q63436479",
+				"e": "Q69423",
+				"nastere": "1946",
+				"pilot": "true",
+				"st": "http://www.wikidata.org/entity/statement/Q69423-8e7a773f-4a1e-187d-d652-b78237c1907d",
+				"w": "Q172753",
+				"w_en": "Alan Jones",
+				"w_ro": "Alan Jones"
+			},
+			{
+				"clasa": "Q63436479",
+				"e": "Q69763",
+				"nastere": "1968",
+				"pilot": "true",
+				"st": "http://www.wikidata.org/entity/statement/Q69763-498ae37f-4ac3-4de1-6aa7-0781f5fcbada",
+				"w": "Q172842",
+				"w_en": "Mika Häkkinen",
+				"w_mul": "Mika Häkkinen",
+				"w_ro": "Mika Häkkinen"
+			},
+			{
+				"clasa": "Q63436479",
+				"e": "Q69791",
+				"nastere": "1968",
+				"pilot": "true",
+				"st": "http://www.wikidata.org/entity/statement/Q69791-48fef090-43dc-0d2d-a8b0-9aac7ce51f2c",
+				"w": "Q172842",
+				"w_en": "Mika Häkkinen",
+				"w_mul": "Mika Häkkinen",
+				"w_ro": "Mika Häkkinen"
+			},
+			{
+				"clasa": "Q63436479",
+				"e": "Q69267",
+				"nastere": "1946",
+				"pilot": "true",
+				"st": "http://www.wikidata.org/entity/statement/Q69267-360f88eb-410b-9819-3a9b-b5282d701543",
+				"w": "Q172849",
+				"w_en": "Emerson Fittipaldi",
+				"w_ro": "Emerson Fittipaldi"
+			},
+			{
+				"clasa": "Q63436479",
+				"e": "Q69343",
+				"nastere": "1946",
+				"pilot": "true",
+				"st": "http://www.wikidata.org/entity/statement/Q69343-e60b3ef8-4ceb-7f73-d382-ff870d8f8a2b",
+				"w": "Q172849",
+				"w_en": "Emerson Fittipaldi",
+				"w_ro": "Emerson Fittipaldi"
+			},
+			{
+				"clasa": "Q63436495",
+				"e": "Q69174",
+				"pilot": "false",
+				"st": "http://www.wikidata.org/entity/statement/Q69174-210ecbf9-4273-7a7c-6dc7-95f63081b486",
+				"w": "Q173012",
+				"w_en": "British Racing Motors",
+				"w_ro": "British Racing Motors"
+			},
+			{
+				"clasa": "Q63436495",
+				"e": "Q69106",
+				"pilot": "false",
+				"st": "http://www.wikidata.org/entity/statement/Q69106-5e2d1def-47b6-17b4-1738-1081c5912e6e",
+				"w": "Q173093",
+				"w_en": "Vanwall",
+				"w_ro": "Vanwall"
+			}
+		],
+		"sezoane": [
+			{
+				"an": "1950",
+				"e": "Q68926",
+				"e_en": "1950 Formula One season",
+				"e_ro": "Sezonul de Formula 1 din 1950"
+			},
+			{
+				"an": "1951",
+				"e": "Q68955",
+				"e_en": "1951 Formula One season",
+				"e_ro": "Sezonul de Formula 1 din 1951"
+			},
+			{
+				"an": "1952",
+				"e": "Q68967",
+				"e_en": "1952 Formula One season",
+				"e_ro": "Sezonul de Formula 1 din 1952"
+			},
+			{
+				"an": "1953",
+				"e": "Q68980",
+				"e_en": "1953 Formula One season",
+				"e_ro": "Sezonul de Formula 1 din 1953"
+			},
+			{
+				"an": "1954",
+				"e": "Q69001",
+				"e_en": "1954 Formula One season",
+				"e_ro": "Sezonul de Formula 1 din 1954"
+			},
+			{
+				"an": "1955",
+				"e": "Q69015",
+				"e_en": "1955 Formula One season",
+				"e_ro": "Sezonul de Formula 1 din 1955"
+			},
+			{
+				"an": "1956",
+				"e": "Q69032",
+				"e_en": "1956 Formula One season",
+				"e_ro": "Sezonul de Formula 1 din 1956"
+			},
+			{
+				"an": "1957",
+				"e": "Q69047",
+				"e_en": "1957 Formula One season",
+				"e_ro": "Sezonul de Formula 1 din 1957"
+			},
+			{
+				"an": "1958",
+				"e": "Q69106",
+				"e_en": "1958 Formula One season",
+				"e_ro": "Sezonul de Formula 1 din 1958"
+			},
+			{
+				"an": "1959",
+				"e": "Q69118",
+				"e_en": "1959 Formula One season",
+				"e_ro": "Sezonul de Formula 1 din 1959"
+			},
+			{
+				"an": "1960",
+				"e": "Q69146",
+				"e_en": "1960 Formula One season",
+				"e_ro": "Sezonul de Formula 1 din 1960"
+			},
+			{
+				"an": "1961",
+				"e": "Q69161",
+				"e_en": "1961 Formula One season",
+				"e_ro": "Sezonul de Formula 1 din 1961"
+			},
+			{
+				"an": "1962",
+				"e": "Q69174",
+				"e_en": "1962 Formula One season",
+				"e_ro": "Sezonul de Formula 1 din 1962"
+			},
+			{
+				"an": "1963",
+				"e": "Q69184",
+				"e_en": "1963 Formula One season",
+				"e_ro": "Sezonul de Formula 1 din 1963"
+			},
+			{
+				"an": "1964",
+				"e": "Q69193",
+				"e_en": "1964 Formula One season",
+				"e_ro": "Sezonul de Formula 1 din 1964"
+			},
+			{
+				"an": "1965",
+				"e": "Q69204",
+				"e_en": "1965 Formula One season",
+				"e_ro": "Sezonul de Formula 1 din 1965"
+			},
+			{
+				"an": "1966",
+				"e": "Q69220",
+				"e_en": "1966 Formula One season",
+				"e_ro": "Sezonul de Formula 1 din 1966"
+			},
+			{
+				"an": "1967",
+				"e": "Q69229",
+				"e_en": "1967 Formula One season",
+				"e_ro": "Sezonul de Formula 1 din 1967"
+			},
+			{
+				"an": "1968",
+				"e": "Q69243",
+				"e_en": "1968 Formula One season",
+				"e_ro": "Sezonul de Formula 1 din 1968"
+			},
+			{
+				"an": "1969",
+				"e": "Q69254",
+				"e_en": "1969 Formula One season",
+				"e_ro": "Sezonul de Formula 1 din 1969"
+			},
+			{
+				"an": "1972",
+				"e": "Q69267",
+				"e_en": "1972 Formula One season",
+				"e_ro": "Sezonul de Formula 1 din 1972"
+			},
+			{
+				"an": "1974",
+				"e": "Q69343",
+				"e_en": "1974 Formula One season",
+				"e_ro": "Sezonul de Formula 1 din 1974"
+			},
+			{
+				"an": "2013",
+				"e": "Q69356",
+				"e_en": "2013 Formula One World Championship (FIA)",
+				"e_ro": "Sezonul de Formula 1 din 2013"
+			},
+			{
+				"an": "1975",
+				"e": "Q69375",
+				"e_en": "1975 Formula One season",
+				"e_ro": "Sezonul de Formula 1 din 1975"
+			},
+			{
+				"an": "1976",
+				"e": "Q69387",
+				"e_en": "1976 Formula One season",
+				"e_ro": "Sezonul de Formula 1 din 1976"
+			},
+			{
+				"an": "1977",
+				"e": "Q69396",
+				"e_en": "1977 Formula One season",
+				"e_ro": "Sezonul de Formula 1 din 1977"
+			},
+			{
+				"an": "1978",
+				"e": "Q69405",
+				"e_en": "1978 Formula One season",
+				"e_ro": "Sezonul de Formula 1 din 1978"
+			},
+			{
+				"an": "1979",
+				"e": "Q69415",
+				"e_en": "1979 Formula One season",
+				"e_ro": "Sezonul de Formula 1 din 1979"
+			},
+			{
+				"an": "1980",
+				"e": "Q69423",
+				"e_en": "1980 Formula One season",
+				"e_ro": "Sezonul de Formula 1 din 1980"
+			},
+			{
+				"an": "1981",
+				"e": "Q69431",
+				"e_en": "1981 Formula One World Championship",
+				"e_ro": "Sezonul de Formula 1 din 1981"
+			},
+			{
+				"an": "1982",
+				"e": "Q69548",
+				"e_en": "1982 Formula One World Championship",
+				"e_ro": "Sezonul de Formula 1 din 1982"
+			},
+			{
+				"an": "1983",
+				"e": "Q69561",
+				"e_en": "1983 Formula One World Championship",
+				"e_ro": "Sezonul de Formula 1 din 1983"
+			},
+			{
+				"an": "1984",
+				"e": "Q69576",
+				"e_en": "1984 Formula One World Championship",
+				"e_ro": "Sezonul de Formula 1 din 1984"
+			},
+			{
+				"an": "1985",
+				"e": "Q69603",
+				"e_en": "1985 Formula One World Championship",
+				"e_ro": "Sezonul de Formula 1 din 1985"
+			},
+			{
+				"an": "1986",
+				"e": "Q69614",
+				"e_en": "1986 Formula One World Championship",
+				"e_ro": "Sezonul de Formula 1 din 1986"
+			},
+			{
+				"an": "1987",
+				"e": "Q69623",
+				"e_en": "1987 Formula One World Championship",
+				"e_ro": "Sezonul de Formula 1 din 1987"
+			},
+			{
+				"an": "1988",
+				"e": "Q69633",
+				"e_en": "1988 Formula One World Championship",
+				"e_ro": "Sezonul de Formula 1 din 1988"
+			},
+			{
+				"an": "1989",
+				"e": "Q69641",
+				"e_en": "1989 Formula One World Championship",
+				"e_ro": "Sezonul de Formula 1 din 1989"
+			},
+			{
+				"an": "1990",
+				"e": "Q69657",
+				"e_en": "1990 Formula One World Championship",
+				"e_ro": "Sezonul de Formula 1 din 1990"
+			},
+			{
+				"an": "1991",
+				"e": "Q69670",
+				"e_en": "1991 Formula One World Championship",
+				"e_ro": "Sezonul de Formula 1 din 1991"
+			},
+			{
+				"an": "1992",
+				"e": "Q69686",
+				"e_en": "1992 Formula One World Championship",
+				"e_ro": "Sezonul de Formula 1 din 1992"
+			},
+			{
+				"an": "1993",
+				"e": "Q69696",
+				"e_en": "1993 Formula One World Championship",
+				"e_ro": "Sezonul de Formula 1 din 1993"
+			},
+			{
+				"an": "1994",
+				"e": "Q69713",
+				"e_en": "1994 Formula One World Championship",
+				"e_ro": "Sezonul de Formula 1 din 1994"
+			},
+			{
+				"an": "1995",
+				"e": "Q69722",
+				"e_en": "1995 Formula One World Championship",
+				"e_ro": "Sezonul de Formula 1 din 1995"
+			},
+			{
+				"an": "1996",
+				"e": "Q69735",
+				"e_en": "1996 Formula One World Championship",
+				"e_ro": "Sezonul de Formula 1 din 1996"
+			},
+			{
+				"an": "1997",
+				"e": "Q69750",
+				"e_en": "1997 Formula One World Championship",
+				"e_ro": "Sezonul de Formula 1 din 1997"
+			},
+			{
+				"an": "1998",
+				"e": "Q69763",
+				"e_en": "1998 Formula One World Championship",
+				"e_ro": "Sezonul de Formula 1 din 1998"
+			},
+			{
+				"an": "1999",
+				"e": "Q69791",
+				"e_en": "1999 Formula One World Championship",
+				"e_ro": "Sezonul de Formula 1 din 1999"
+			},
+			{
+				"an": "2000",
+				"e": "Q69805",
+				"e_en": "2000 Formula One World Championship",
+				"e_ro": "Sezonul de Formula 1 din 2000"
+			},
+			{
+				"an": "2001",
+				"e": "Q69835",
+				"e_en": "2001 Formula One World Championship",
+				"e_ro": "Sezonul de Formula 1 din 2001"
+			},
+			{
+				"an": "2002",
+				"e": "Q69844",
+				"e_en": "2002 Formula One World Championship",
+				"e_ro": "Sezonul de Formula 1 din 2002"
+			},
+			{
+				"an": "2003",
+				"e": "Q69859",
+				"e_en": "2003 Formula One World Championship",
+				"e_ro": "Sezonul de Formula 1 din 2003"
+			},
+			{
+				"an": "2004",
+				"e": "Q69869",
+				"e_en": "2004 Formula One World Championship",
+				"e_ro": "Sezonul de Formula 1 din 2004"
+			},
+			{
+				"an": "2005",
+				"e": "Q69880",
+				"e_en": "2005 Formula One World Championship",
+				"e_ro": "Sezonul de Formula 1 din 2005"
+			},
+			{
+				"an": "2006",
+				"e": "Q69893",
+				"e_en": "2006 Formula One World Championship",
+				"e_ro": "Sezonul de Formula 1 din 2006"
+			},
+			{
+				"an": "2007",
+				"e": "Q69901",
+				"e_en": "2007 Formula One World Championship",
+				"e_ro": "Sezonul de Formula 1 din 2007"
+			},
+			{
+				"an": "2008",
+				"e": "Q69913",
+				"e_en": "2008 Formula One World Championship",
+				"e_ro": "Sezonul de Formula 1 din 2008"
+			},
+			{
+				"an": "2009",
+				"e": "Q69923",
+				"e_en": "2009 Formula One World Championship",
+				"e_ro": "Sezonul de Formula 1 din 2009"
+			},
+			{
+				"an": "2010",
+				"e": "Q69934",
+				"e_en": "2010 Formula One World Championship",
+				"e_ro": "Sezonul de Formula 1 din 2010"
+			},
+			{
+				"an": "2011",
+				"e": "Q69943",
+				"e_en": "2011 Formula One World Championship",
+				"e_ro": "Sezonul de Formula 1 din 2011"
+			},
+			{
+				"an": "2012",
+				"e": "Q69959",
+				"e_en": "2012 Formula One World Championship",
+				"e_ro": "Sezonul de Formula 1 din 2012"
+			},
+			{
+				"an": "2014",
+				"e": "Q69969",
+				"e_en": "2014 Formula One World Championship",
+				"e_ro": "Sezonul de Formula 1 din 2014"
+			},
+			{
+				"an": "2015",
+				"e": "Q14293115",
+				"e_en": "2015 Formula One World Championship",
+				"e_ro": "Sezonul de Formula 1 din 2015"
+			},
+			{
+				"an": "2016",
+				"e": "Q17455748",
+				"e_en": "2016 Formula One World Championship",
+				"e_ro": "Sezonul de Formula 1 din 2016"
+			},
+			{
+				"an": "2017",
+				"e": "Q20755615",
+				"e_en": "2017 Formula One World Championship",
+				"e_ro": "Sezonul de Formula 1 din 2017"
+			},
+			{
+				"an": "2018",
+				"e": "Q23051084",
+				"e_en": "2018 Formula One World Championship",
+				"e_ro": "Sezonul de Formula 1 din 2018"
+			},
+			{
+				"an": "2019",
+				"e": "Q41173535",
+				"e_en": "2019 Formula One World Championship",
+				"e_ro": "Sezonul de Formula 1 din 2019"
+			},
+			{
+				"an": "2020",
+				"e": "Q41174436",
+				"e_en": "2020 Formula One World Championship",
+				"e_ro": "Sezonul de Formula 1 din 2020"
+			},
+			{
+				"an": "2021",
+				"e": "Q72635834",
+				"e_en": "2021 Formula One World Championship",
+				"e_ro": "Sezonul de Formula 1 din 2021"
+			},
+			{
+				"an": "2022",
+				"e": "Q92821370",
+				"e_en": "2022 Formula One World Championship",
+				"e_ro": "Sezonul de Formula 1 din 2022"
+			},
+			{
+				"an": "2023",
+				"e": "Q109323149",
+				"e_en": "2023 Formula One World Championship",
+				"e_ro": "Sezonul de Formula 1 din 2023"
+			},
+			{
+				"an": "2024",
+				"e": "Q113628886",
+				"e_en": "2024 Formula One World Championship",
+				"e_ro": "Sezonul de Formula 1 din 2024"
+			},
+			{
+				"an": "2025",
+				"e": "Q115942630",
+				"e_en": "2025 Formula One World Championship",
+				"e_ro": "Sezonul de Formula 1 din 2025"
+			},
+			{
+				"an": "2027",
+				"e": "Q115942643",
+				"e_en": "2027 Formula One World Championship"
+			},
+			{
+				"an": "2026",
+				"e": "Q115942640",
+				"e_en": "2026 Formula One World Championship",
+				"e_ro": "Sezonul de Formula 1 din 2026"
+			},
+			{
+				"an": "2028",
+				"e": "Q115942647",
+				"e_en": "2028 Formula One World Championship"
+			},
+			{
+				"an": "2029",
+				"e": "Q128432517",
+				"e_en": "2029 Formula One World Championship"
+			},
+			{
+				"an": "2030",
+				"e": "Q128432727",
+				"e_en": "2030 Formula One World Championship"
+			},
+			{
+				"an": "2031",
+				"e": "Q128650486",
+				"e_en": "2031 Formula One World Championship"
+			},
+			{
+				"an": "2032",
+				"e": "Q128650550",
+				"e_en": "2032 Formula One World Championship"
+			},
+			{
+				"an": "2033",
+				"e": "Q128650607",
+				"e_en": "2033 Formula One World Championship"
+			},
+			{
+				"an": "2034",
+				"e": "Q128650656",
+				"e_en": "2034 Formula One World Championship"
+			},
+			{
+				"an": "2035",
+				"e": "Q128651313",
+				"e_en": "2035 Formula One World Championship"
+			},
+			{
+				"an": "2036",
+				"e": "Q128651322",
+				"e_en": "2036 Formula One World Championship"
+			},
+			{
+				"an": "2037",
+				"e": "Q128651332",
+				"e_en": "2037 Formula One World Championship"
+			},
+			{
+				"an": "2038",
+				"e": "Q137220374",
+				"e_en": "2038 Formula One World Championship"
+			},
+			{
+				"an": "2039",
+				"e": "Q137220421",
+				"e_en": "2039 Formula One World Championship"
+			},
+			{
+				"an": "2040",
+				"e": "Q137220426",
+				"e_en": "2040 Formula One World Championship"
+			},
+			{
+				"an": "2041",
+				"e": "Q137220429",
+				"e_en": "2041 Formula One World Championship"
+			},
+			{
+				"an": "1971",
+				"e": "Q42176",
+				"e_en": "1971 Formula One season",
+				"e_ro": "Sezonul de Formula 1 din 1971"
+			},
+			{
+				"an": "1970",
+				"e": "Q47225",
+				"e_en": "1970 Formula One season",
+				"e_ro": "Sezonul de Formula 1 din 1970"
+			},
+			{
+				"an": "1973",
+				"e": "Q62608",
+				"e_en": "1973 Formula One season",
+				"e_ro": "Sezonul de Formula 1 din 1973"
+			}
+		]
+	}
+}

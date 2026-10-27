@@ -1,0 +1,1460 @@
+[
+	{
+		"id": "wd:Q1477177:turneu:cere_castigatoare",
+		"fapt": "wd:Q1477177",
+		"text": "Ce țară a câștigat Cupa Mondială de fotbal din 1934?",
+		"variante": ["Uruguay", "Anglia", "Italia", "Argentina"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q1477177:turneu:cere_gazda",
+		"fapt": "wd:Q1477177",
+		"text": "Ce țară a găzduit Cupa Mondială de fotbal din 1934?",
+		"variante": ["Uruguay", "Italia", "Elveția", "Suedia"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q131591:turneu:cere_castigatoare",
+		"fapt": "wd:Q131591",
+		"text": "Ce țară a câștigat Cupa Mondială de fotbal din 1938?",
+		"variante": ["Uruguay", "Anglia", "Italia", "Argentina"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q131591:turneu:cere_gazda",
+		"fapt": "wd:Q131591",
+		"text": "Ce țară a găzduit Cupa Mondială de fotbal din 1938?",
+		"variante": ["Italia", "Franța", "Uruguay", "Elveția"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q132515:turneu:cere_castigatoare",
+		"fapt": "wd:Q132515",
+		"text": "Ce țară a câștigat Cupa Mondială de fotbal din 1950?",
+		"variante": ["Uruguay", "Italia", "Anglia", "Argentina"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+
+	{
+		"id": "wd:Q132515:turneu:cere_gazda",
+		"fapt": "wd:Q132515",
+		"text": "Ce țară a găzduit Cupa Mondială de fotbal din 1950?",
+		"variante": ["Elveția", "Suedia", "Brazilia", "Chile"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+
+	{
+		"id": "wd:Q131075:turneu:cere_castigatoare",
+		"fapt": "wd:Q131075",
+		"text": "Ce țară a câștigat Cupa Mondială de fotbal din 1954?",
+		"variante": ["Anglia", "Italia", "Uruguay", "Germania"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q131075:turneu:cere_gazda",
+		"fapt": "wd:Q131075",
+		"text": "Ce țară a găzduit Cupa Mondială de fotbal din 1954?",
+		"variante": ["Elveția", "Suedia", "Chile", "Regatul Unit"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+
+	{
+		"id": "wd:Q132533:turneu:cere_castigatoare",
+		"fapt": "wd:Q132533",
+		"text": "Ce țară a câștigat Cupa Mondială de fotbal din 1958?",
+		"variante": ["Anglia", "Italia", "Uruguay", "Brazilia"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+
+	{
+		"id": "wd:Q132533:turneu:cere_gazda",
+		"fapt": "wd:Q132533",
+		"text": "Ce țară a găzduit Cupa Mondială de fotbal din 1958?",
+		"variante": ["Suedia", "Elveția", "Chile", "Regatul Unit"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q160813:turneu:cere_castigatoare",
+		"fapt": "wd:Q160813",
+		"text": "Ce țară a câștigat Cupa Mondială de fotbal din 1962?",
+		"variante": ["Anglia", "Argentina", "Italia", "Brazilia"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q160813:turneu:cere_gazda",
+		"fapt": "wd:Q160813",
+		"text": "Ce țară a găzduit Cupa Mondială de fotbal din 1962?",
+		"variante": ["Regatul Unit", "Suedia", "Elveția", "Chile"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+
+	{
+		"id": "wd:Q132664:turneu:cere_castigatoare",
+		"fapt": "wd:Q132664",
+		"text": "Ce țară a câștigat Cupa Mondială de fotbal din 1970?",
+		"variante": ["Anglia", "Argentina", "Franța", "Brazilia"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+
+	{
+		"id": "wd:Q132664:turneu:cere_gazda",
+		"fapt": "wd:Q132664",
+		"text": "Ce țară a găzduit Cupa Mondială de fotbal din 1970?",
+		"variante": ["Regatul Unit", "Argentina", "Mexic", "Chile"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q166121:turneu:cere_castigatoare",
+		"fapt": "wd:Q166121",
+		"text": "Ce țară a câștigat Cupa Mondială de fotbal din 1974?",
+		"variante": ["Anglia", "Germania", "Argentina", "Franța"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q166121:turneu:cere_gazda",
+		"fapt": "wd:Q166121",
+		"text": "Ce țară a găzduit Cupa Mondială de fotbal din 1974?",
+		"variante": ["Germania", "Argentina", "Regatul Unit", "Chile"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q46943:turneu:cere_castigatoare",
+		"fapt": "wd:Q46943",
+		"text": "Ce țară a câștigat Cupa Mondială de fotbal din 1978?",
+		"variante": ["Argentina", "Anglia", "Franța", "Brazilia"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q46943:turneu:cere_gazda",
+		"fapt": "wd:Q46943",
+		"text": "Ce țară a găzduit Cupa Mondială de fotbal din 1978?",
+		"variante": ["Regatul Unit", "Chile", "Franța", "Argentina"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q46934:turneu:cere_castigatoare",
+		"fapt": "wd:Q46934",
+		"text": "Ce țară a câștigat Cupa Mondială de fotbal din 1982?",
+		"variante": ["Italia", "Argentina", "Franța", "Anglia"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+
+	{
+		"id": "wd:Q46934:turneu:cere_gazda",
+		"fapt": "wd:Q46934",
+		"text": "Ce țară a găzduit Cupa Mondială de fotbal din 1982?",
+		"variante": ["Argentina", "Spania", "Regatul Unit", "Franța"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q46938:turneu:cere_castigatoare",
+		"fapt": "wd:Q46938",
+		"text": "Ce țară a câștigat Cupa Mondială de fotbal din 1986?",
+		"variante": ["Franța", "Argentina", "Brazilia", "Anglia"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q46938:turneu:cere_gazda",
+		"fapt": "wd:Q46938",
+		"text": "Ce țară a găzduit Cupa Mondială de fotbal din 1986?",
+		"variante": ["Argentina", "Franța", "Mexic", "Japonia"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q132529:turneu:cere_castigatoare",
+		"fapt": "wd:Q132529",
+		"text": "Ce țară a câștigat Cupa Mondială de fotbal din 1990?",
+		"variante": ["Argentina", "Franța", "Germania", "Brazilia"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q132529:turneu:cere_gazda",
+		"fapt": "wd:Q132529",
+		"text": "Ce țară a găzduit Cupa Mondială de fotbal din 1990?",
+		"variante": ["Franța", "Italia", "Argentina", "Japonia"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+
+	{
+		"id": "wd:Q101751:turneu:cere_gazda",
+		"fapt": "wd:Q101751",
+		"text": "Ce țară a găzduit Cupa Mondială de fotbal din 1994?",
+		"variante": ["Franța", "Statele Unite ale Americii", "Japonia", "Coreea de Sud"],
+		"corect": 1,
+		"nivel": 1,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q101730:turneu:cere_castigatoare",
+		"fapt": "wd:Q101730",
+		"text": "Ce țară a câștigat Cupa Mondială de fotbal din 1998?",
+		"variante": ["Brazilia", "Argentina", "Germania", "Franța"],
+		"corect": 3,
+		"nivel": 1,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q101730:turneu:cere_gazda",
+		"fapt": "wd:Q101730",
+		"text": "Ce țară a găzduit Cupa Mondială de fotbal din 1998?",
+		"variante": ["Coreea de Sud", "Japonia", "Germania", "Franța"],
+		"corect": 3,
+		"nivel": 1,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+
+	{
+		"id": "wd:Q47735:turneu:cere_castigatoare",
+		"fapt": "wd:Q47735",
+		"text": "Ce țară a câștigat Cupa Mondială de fotbal din 2002?",
+		"variante": ["Brazilia", "Franța", "Germania", "Argentina"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+
+	{
+		"id": "wd:Q37285:turneu:cere_gazda",
+		"fapt": "wd:Q37285",
+		"text": "Ce țară a găzduit Cupa Mondială de fotbal din 2006?",
+		"variante": ["Africa de Sud", "Coreea de Sud", "Germania", "Japonia"],
+		"corect": 2,
+		"nivel": 1,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q79859:turneu:cere_castigatoare",
+		"fapt": "wd:Q79859",
+		"text": "Ce țară a câștigat Cupa Mondială de fotbal din 2014?",
+		"variante": ["Brazilia", "Spania", "Franța", "Germania"],
+		"corect": 3,
+		"nivel": 1,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q79859:turneu:cere_gazda",
+		"fapt": "wd:Q79859",
+		"text": "Ce țară a găzduit Cupa Mondială de fotbal din 2014?",
+		"variante": ["Brazilia", "Africa de Sud", "Rusia", "Qatar"],
+		"corect": 0,
+		"nivel": 1,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q170645:turneu:cere_gazda",
+		"fapt": "wd:Q170645",
+		"text": "Ce țară a găzduit Cupa Mondială de fotbal din 2018?",
+		"variante": ["Qatar", "Brazilia", "Rusia", "Canada"],
+		"corect": 2,
+		"nivel": 1,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q284163:turneu:cere_gazda",
+		"fapt": "wd:Q284163",
+		"text": "Ce țară a găzduit Cupa Mondială de fotbal din 2022?",
+		"variante": ["Qatar", "Statele Unite ale Americii", "Mexic", "Canada"],
+		"corect": 0,
+		"nivel": 1,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+
+	{
+		"id": "wd:Q459419:turneu:cere_castigatoare",
+		"fapt": "wd:Q459419",
+		"text": "Ce țară a câștigat Cupa Mondială de fotbal feminin din 1991?",
+		"variante": ["Norvegia", "Germania", "Statele Unite ale Americii", "Danemarca"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q459419:turneu:cere_gazda",
+		"fapt": "wd:Q459419",
+		"text": "Ce țară a găzduit Cupa Mondială de fotbal feminin din 1991?",
+		"variante": ["Suedia", "Mexic", "China", "Italia"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q642445:turneu:cere_castigatoare",
+		"fapt": "wd:Q642445",
+		"text": "Ce țară a câștigat Cupa Mondială de fotbal feminin din 1995?",
+		"variante": ["Germania", "Statele Unite ale Americii", "Norvegia", "Danemarca"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q642445:turneu:cere_gazda",
+		"fapt": "wd:Q642445",
+		"text": "Ce țară a găzduit Cupa Mondială de fotbal feminin din 1995?",
+		"variante": ["China", "Canada", "Suedia", "Mexic"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q568445:turneu:cere_castigatoare",
+		"fapt": "wd:Q568445",
+		"text": "Ce țară a câștigat Cupa Mondială de fotbal feminin din 1999?",
+		"variante": ["Norvegia", "Germania", "Spania", "Statele Unite ale Americii"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q568445:turneu:cere_gazda",
+		"fapt": "wd:Q568445",
+		"text": "Ce țară a găzduit Cupa Mondială de fotbal feminin din 1999?",
+		"variante": ["Suedia", "China", "Canada", "Statele Unite ale Americii"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q500308:turneu:cere_castigatoare",
+		"fapt": "wd:Q500308",
+		"text": "Ce țară a câștigat Cupa Mondială de fotbal feminin din 2003?",
+		"variante": ["Norvegia", "Germania", "Statele Unite ale Americii", "Spania"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q500308:turneu:cere_gazda",
+		"fapt": "wd:Q500308",
+		"text": "Ce țară a găzduit Cupa Mondială de fotbal feminin din 2003?",
+		"variante": ["Statele Unite ale Americii", "Suedia", "China", "Canada"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q367805:turneu:cere_castigatoare",
+		"fapt": "wd:Q367805",
+		"text": "Ce țară a câștigat Cupa Mondială de fotbal feminin din 2007?",
+		"variante": ["Norvegia", "Statele Unite ale Americii", "Germania", "Spania"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q911847:turneu:cere_castigatoare",
+		"fapt": "wd:Q911847",
+		"text": "Ce țară a câștigat Cupa Mondială de fotbal feminin din 2015?",
+		"variante": ["Spania", "Statele Unite ale Americii", "Germania", "Norvegia"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q911847:turneu:cere_gazda",
+		"fapt": "wd:Q911847",
+		"text": "Ce țară a găzduit Cupa Mondială de fotbal feminin din 2015?",
+		"variante": ["Franța", "Canada", "Australia", "Noua Zeelandă"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q4630361:turneu:cere_castigatoare",
+		"fapt": "wd:Q4630361",
+		"text": "Ce țară a câștigat Cupa Mondială de fotbal feminin din 2019?",
+		"variante": ["Spania", "Statele Unite ale Americii", "Germania", "Norvegia"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q4630361:turneu:cere_gazda",
+		"fapt": "wd:Q4630361",
+		"text": "Ce țară a găzduit Cupa Mondială de fotbal feminin din 2019?",
+		"variante": ["Canada", "Noua Zeelandă", "Australia", "Franța"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+
+	{
+		"id": "wd:Q19672232:turneu:cere_castigatoare",
+		"fapt": "wd:Q19672232",
+		"text": "Ce țară a câștigat Cupa Mondială de fotbal feminin din 2023?",
+		"variante": ["Spania", "Statele Unite ale Americii", "Germania", "Norvegia"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+
+	{
+		"id": "wd:Q172831:turneu:cere_castigatoare",
+		"fapt": "wd:Q172831",
+		"text": "Ce țară a câștigat Campionatul European de fotbal din 1960?",
+		"variante": ["Italia", "Uniunea Sovietică", "Cehoslovacia", "Țările de Jos"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q172831:turneu:cere_gazda",
+		"fapt": "wd:Q172831",
+		"text": "Ce țară a găzduit Campionatul European de fotbal din 1960?",
+		"variante": ["Spania", "Republica Socialistă Federativă Iugoslavia", "Germania de Vest", "Franța"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q182205:turneu:cere_castigatoare",
+		"fapt": "wd:Q182205",
+		"text": "Ce țară a câștigat Campionatul European de fotbal din 1964?",
+		"variante": ["Italia", "Uniunea Sovietică", "Cehoslovacia", "Spania"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q182205:turneu:cere_gazda",
+		"fapt": "wd:Q182205",
+		"text": "Ce țară a găzduit Campionatul European de fotbal din 1964?",
+		"variante": ["Franța", "Republica Socialistă Federativă Iugoslavia", "Germania de Vest", "Spania"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q182201:turneu:cere_castigatoare",
+		"fapt": "wd:Q182201",
+		"text": "Ce țară a câștigat Campionatul European de fotbal din 1968?",
+		"variante": ["Uniunea Sovietică", "Cehoslovacia", "Italia", "Țările de Jos"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q182201:turneu:cere_gazda",
+		"fapt": "wd:Q182201",
+		"text": "Ce țară a găzduit Campionatul European de fotbal din 1968?",
+		"variante": ["Italia", "Spania", "Republica Socialistă Federativă Iugoslavia", "Franța"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q182386:turneu:cere_castigatoare",
+		"fapt": "wd:Q182386",
+		"text": "Ce țară a câștigat Campionatul European de fotbal din 1972?",
+		"variante": ["Cehoslovacia", "Italia", "Uniunea Sovietică", "Germania"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q182386:turneu:cere_gazda",
+		"fapt": "wd:Q182386",
+		"text": "Ce țară a găzduit Campionatul European de fotbal din 1972?",
+		"variante": ["Republica Socialistă Federativă Iugoslavia", "Spania", "Belgia", "Franța"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q188548:turneu:cere_castigatoare",
+		"fapt": "wd:Q188548",
+		"text": "Ce țară a câștigat Campionatul European de fotbal din 1976?",
+		"variante": ["Italia", "Cehoslovacia", "Țările de Jos", "Uniunea Sovietică"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q188548:turneu:cere_gazda",
+		"fapt": "wd:Q188548",
+		"text": "Ce țară a găzduit Campionatul European de fotbal din 1976?",
+		"variante": ["Republica Socialistă Federativă Iugoslavia", "Spania", "Germania de Vest", "Suedia"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q182196:turneu:cere_castigatoare",
+		"fapt": "wd:Q182196",
+		"text": "Ce țară a câștigat Campionatul European de fotbal din 1980?",
+		"variante": ["Cehoslovacia", "Țările de Jos", "Germania", "Danemarca"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q182196:turneu:cere_gazda",
+		"fapt": "wd:Q182196",
+		"text": "Ce țară a găzduit Campionatul European de fotbal din 1980?",
+		"variante": ["Italia", "Republica Socialistă Federativă Iugoslavia", "Germania de Vest", "Suedia"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+
+	{
+		"id": "wd:Q182770:turneu:cere_castigatoare",
+		"fapt": "wd:Q182770",
+		"text": "Ce țară a câștigat Campionatul European de fotbal din 1984?",
+		"variante": ["Țările de Jos", "Danemarca", "Cehoslovacia", "Franța"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+
+	{
+		"id": "wd:Q182770:turneu:cere_gazda",
+		"fapt": "wd:Q182770",
+		"text": "Ce țară a găzduit Campionatul European de fotbal din 1984?",
+		"variante": ["Germania de Vest", "Franța", "Republica Socialistă Federativă Iugoslavia", "Suedia"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q151867:turneu:cere_castigatoare",
+		"fapt": "wd:Q151867",
+		"text": "Ce țară a câștigat Campionatul European de fotbal din 1988?",
+		"variante": ["Danemarca", "Germania", "Cehoslovacia", "Țările de Jos"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q151867:turneu:cere_gazda",
+		"fapt": "wd:Q151867",
+		"text": "Ce țară a găzduit Campionatul European de fotbal din 1988?",
+		"variante": ["Suedia", "Țările de Jos", "Republica Socialistă Federativă Iugoslavia", "Germania de Vest"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+
+	{
+		"id": "wd:Q161810:turneu:cere_castigatoare",
+		"fapt": "wd:Q161810",
+		"text": "Ce țară a câștigat Campionatul European de fotbal din 1992?",
+		"variante": ["Germania", "Țările de Jos", "Danemarca", "Franța"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+
+	{
+		"id": "wd:Q161810:turneu:cere_gazda",
+		"fapt": "wd:Q161810",
+		"text": "Ce țară a găzduit Campionatul European de fotbal din 1992?",
+		"variante": ["Germania de Vest", "Suedia", "Belgia", "Țările de Jos"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+
+	{
+		"id": "wd:Q180563:turneu:cere_castigatoare",
+		"fapt": "wd:Q180563",
+		"text": "Ce țară a câștigat Campionatul European de fotbal din 1996?",
+		"variante": ["Danemarca", "Franța", "Țările de Jos", "Germania"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q180563:turneu:cere_gazda",
+		"fapt": "wd:Q180563",
+		"text": "Ce țară a găzduit Campionatul European de fotbal din 1996?",
+		"variante": ["Belgia", "Țările de Jos", "Suedia", "Regatul Unit"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q131239:turneu:cere_castigatoare",
+		"fapt": "wd:Q131239",
+		"text": "Ce țară a câștigat Campionatul European de fotbal din 2000?",
+		"variante": ["Germania", "Franța", "Grecia", "Danemarca"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q102920:turneu:cere_castigatoare",
+		"fapt": "wd:Q102920",
+		"text": "Ce țară a câștigat Campionatul European de fotbal din 2004?",
+		"variante": ["Franța", "Germania", "Spania", "Grecia"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q102920:turneu:cere_gazda",
+		"fapt": "wd:Q102920",
+		"text": "Ce țară a găzduit Campionatul European de fotbal din 2004?",
+		"variante": ["Portugalia", "Austria", "Belgia", "Țările de Jos"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q241864:turneu:cere_castigatoare",
+		"fapt": "wd:Q241864",
+		"text": "Ce țară a câștigat Campionatul European de fotbal din 2008?",
+		"variante": ["Spania", "Grecia", "Portugalia", "Franța"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q22669:turneu:cere_castigatoare",
+		"fapt": "wd:Q22669",
+		"text": "Ce țară a câștigat Campionatul European de fotbal din 2012?",
+		"variante": ["Portugalia", "Grecia", "Spania", "Franța"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+
+	{
+		"id": "wd:Q189571:turneu:cere_castigatoare",
+		"fapt": "wd:Q189571",
+		"text": "Ce țară a câștigat Campionatul European de fotbal din 2016?",
+		"variante": ["Portugalia", "Spania", "Grecia", "Franța"],
+		"corect": 0,
+		"nivel": 1,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+
+	{
+		"id": "wd:Q189571:turneu:cere_gazda",
+		"fapt": "wd:Q189571",
+		"text": "Ce țară a găzduit Campionatul European de fotbal din 2016?",
+		"variante": ["Franța", "Polonia", "Ucraina", "Austria"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+
+	{
+		"id": "wd:Q219384:turneu:cere_castigatoare",
+		"fapt": "wd:Q219384",
+		"text": "Ce echipă a câștigat Cupa Campionilor Europeni în sezonul 1955-1956?",
+		"variante": ["S.L. Benfica", "Celtic Football Club", "Feyenoord Rotterdam", "Real Madrid"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q245202:turneu:cere_castigatoare",
+		"fapt": "wd:Q245202",
+		"text": "Ce echipă a câștigat Cupa Campionilor Europeni în sezonul 1956-1957?",
+		"variante": ["S.L. Benfica", "Celtic Football Club", "Feyenoord Rotterdam", "Real Madrid"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q309318:turneu:cere_castigatoare",
+		"fapt": "wd:Q309318",
+		"text": "Ce echipă a câștigat Cupa Campionilor Europeni în sezonul 1957-1958?",
+		"variante": ["S.L. Benfica", "Celtic Football Club", "Real Madrid", "Feyenoord Rotterdam"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q309316:turneu:cere_castigatoare",
+		"fapt": "wd:Q309316",
+		"text": "Ce echipă a câștigat Cupa Campionilor Europeni în sezonul 1958-1959?",
+		"variante": ["Real Madrid", "S.L. Benfica", "Celtic Football Club", "Feyenoord Rotterdam"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q392535:turneu:cere_castigatoare",
+		"fapt": "wd:Q392535",
+		"text": "Ce echipă a câștigat Cupa Campionilor Europeni în sezonul 1959-1960?",
+		"variante": ["Real Madrid", "S.L. Benfica", "Celtic Football Club", "Feyenoord Rotterdam"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q330686:turneu:cere_castigatoare",
+		"fapt": "wd:Q330686",
+		"text": "Ce echipă a câștigat Cupa Campionilor Europeni în sezonul 1960-1961?",
+		"variante": ["Celtic Football Club", "S.L. Benfica", "Feyenoord Rotterdam", "Ajax Amsterdam"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q497028:turneu:cere_castigatoare",
+		"fapt": "wd:Q497028",
+		"text": "Ce echipă a câștigat Cupa Campionilor Europeni în sezonul 1961-1962?",
+		"variante": ["Celtic Football Club", "Feyenoord Rotterdam", "Ajax Amsterdam", "S.L. Benfica"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q500074:turneu:cere_castigatoare",
+		"fapt": "wd:Q500074",
+		"text": "Ce echipă a câștigat Cupa Campionilor Europeni în sezonul 1962-1963?",
+		"variante": ["S.L. Benfica", "Celtic Football Club", "Feyenoord Rotterdam", "A.C. Milan"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q500084:turneu:cere_castigatoare",
+		"fapt": "wd:Q500084",
+		"text": "Ce echipă a câștigat Cupa Campionilor Europeni în sezonul 1963-1964?",
+		"variante": ["FC Internazionale Milano", "Celtic Football Club", "S.L. Benfica", "Feyenoord Rotterdam"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q497052:turneu:cere_castigatoare",
+		"fapt": "wd:Q497052",
+		"text": "Ce echipă a câștigat Cupa Campionilor Europeni în sezonul 1964-1965?",
+		"variante": ["Celtic Football Club", "S.L. Benfica", "FC Internazionale Milano", "Feyenoord Rotterdam"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q573225:turneu:cere_castigatoare",
+		"fapt": "wd:Q573225",
+		"text": "Ce echipă a câștigat Cupa Campionilor Europeni în sezonul 1965-1966?",
+		"variante": ["Real Madrid", "Celtic Football Club", "Feyenoord Rotterdam", "S.L. Benfica"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q586977:turneu:cere_castigatoare",
+		"fapt": "wd:Q586977",
+		"text": "Ce echipă a câștigat Cupa Campionilor Europeni în sezonul 1966-1967?",
+		"variante": ["Feyenoord Rotterdam", "Ajax Amsterdam", "S.L. Benfica", "Celtic Football Club"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q426678:turneu:cere_castigatoare",
+		"fapt": "wd:Q426678",
+		"text": "Ce echipă a câștigat Cupa Campionilor Europeni în sezonul 1967-1968?",
+		"variante": ["Celtic Football Club", "Feyenoord Rotterdam", "Manchester United FC", "Ajax Amsterdam"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q642758:turneu:cere_castigatoare",
+		"fapt": "wd:Q642758",
+		"text": "Ce echipă a câștigat Cupa Campionilor Europeni în sezonul 1968-1969?",
+		"variante": ["Feyenoord Rotterdam", "Ajax Amsterdam", "A.C. Milan", "Celtic Football Club"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q371848:turneu:cere_castigatoare",
+		"fapt": "wd:Q371848",
+		"text": "Ce echipă a câștigat Cupa Campionilor Europeni în sezonul 1969-1970?",
+		"variante": ["Ajax Amsterdam", "Celtic Football Club", "Feyenoord Rotterdam", "S.L. Benfica"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q117079:turneu:cere_castigatoare",
+		"fapt": "wd:Q117079",
+		"text": "Ce echipă a câștigat Cupa Campionilor Europeni în sezonul 1970-1971?",
+		"variante": ["Feyenoord Rotterdam", "Ajax Amsterdam", "Celtic Football Club", "Nottingham Forest FC"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q269640:turneu:cere_castigatoare",
+		"fapt": "wd:Q269640",
+		"text": "Ce echipă a câștigat Cupa Campionilor Europeni în sezonul 1971-1972?",
+		"variante": ["Ajax Amsterdam", "Feyenoord Rotterdam", "Celtic Football Club", "Nottingham Forest FC"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q642893:turneu:cere_castigatoare",
+		"fapt": "wd:Q642893",
+		"text": "Ce echipă a câștigat Cupa Campionilor Europeni în sezonul 1972-1973?",
+		"variante": ["Ajax Amsterdam", "Feyenoord Rotterdam", "Celtic Football Club", "Nottingham Forest FC"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q642869:turneu:cere_castigatoare",
+		"fapt": "wd:Q642869",
+		"text": "Ce echipă a câștigat Cupa Campionilor Europeni în sezonul 1973-1974?",
+		"variante": ["Ajax Amsterdam", "Feyenoord Rotterdam", "FC Bayern München", "Nottingham Forest FC"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q642916:turneu:cere_castigatoare",
+		"fapt": "wd:Q642916",
+		"text": "Ce echipă a câștigat Cupa Campionilor Europeni în sezonul 1974-1975?",
+		"variante": ["Ajax Amsterdam", "FC Bayern München", "Feyenoord Rotterdam", "Nottingham Forest FC"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q642728:turneu:cere_castigatoare",
+		"fapt": "wd:Q642728",
+		"text": "Ce echipă a câștigat Cupa Campionilor Europeni în sezonul 1975-1976?",
+		"variante": ["FC Bayern München", "Nottingham Forest FC", "Ajax Amsterdam", "Feyenoord Rotterdam"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q497020:turneu:cere_castigatoare",
+		"fapt": "wd:Q497020",
+		"text": "Ce echipă a câștigat Cupa Campionilor Europeni în sezonul 1976-1977?",
+		"variante": ["Liverpool FC", "Nottingham Forest FC", "Aston Villa FC", "Hamburg SV"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q196681:turneu:cere_castigatoare",
+		"fapt": "wd:Q196681",
+		"text": "Ce echipă a câștigat Cupa Campionilor Europeni în sezonul 1977-1978?",
+		"variante": ["Nottingham Forest FC", "Aston Villa FC", "Hamburg SV", "Liverpool FC"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q642789:turneu:cere_castigatoare",
+		"fapt": "wd:Q642789",
+		"text": "Ce echipă a câștigat Cupa Campionilor Europeni în sezonul 1978-1979?",
+		"variante": ["Nottingham Forest FC", "Aston Villa FC", "Hamburg SV", "Ajax Amsterdam"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q596726:turneu:cere_castigatoare",
+		"fapt": "wd:Q596726",
+		"text": "Ce echipă a câștigat Cupa Campionilor Europeni în sezonul 1979-1980?",
+		"variante": ["Aston Villa FC", "Nottingham Forest FC", "Hamburg SV", "PSV Eindhoven"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q641465:turneu:cere_castigatoare",
+		"fapt": "wd:Q641465",
+		"text": "Ce echipă a câștigat Cupa Campionilor Europeni în sezonul 1980-1981?",
+		"variante": ["Aston Villa FC", "Liverpool FC", "Nottingham Forest FC", "Hamburg SV"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q642743:turneu:cere_castigatoare",
+		"fapt": "wd:Q642743",
+		"text": "Ce echipă a câștigat Cupa Campionilor Europeni în sezonul 1981-1982?",
+		"variante": ["Aston Villa FC", "Hamburg SV", "Nottingham Forest FC", "PSV Eindhoven"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q642777:turneu:cere_castigatoare",
+		"fapt": "wd:Q642777",
+		"text": "Ce echipă a câștigat Cupa Campionilor Europeni în sezonul 1982-1983?",
+		"variante": ["Aston Villa FC", "Hamburg SV", "Nottingham Forest FC", "PSV Eindhoven"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q497085:turneu:cere_castigatoare",
+		"fapt": "wd:Q497085",
+		"text": "Ce echipă a câștigat Cupa Campionilor Europeni în sezonul 1983-1984?",
+		"variante": ["Hamburg SV", "Aston Villa FC", "Liverpool FC", "PSV Eindhoven"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q642844:turneu:cere_castigatoare",
+		"fapt": "wd:Q642844",
+		"text": "Ce echipă a câștigat Cupa Campionilor Europeni în sezonul 1984-1985?",
+		"variante": ["Hamburg SV", "PSV Eindhoven", "Aston Villa FC", "Juventus Torino"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q696245:turneu:cere_castigatoare",
+		"fapt": "wd:Q696245",
+		"text": "Ce echipă a câștigat Cupa Campionilor Europeni în sezonul 1986-1987?",
+		"variante": ["PSV Eindhoven", "Hamburg SV", "Steaua Roșie Belgrad", "FC Porto"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q392526:turneu:cere_castigatoare",
+		"fapt": "wd:Q392526",
+		"text": "Ce echipă a câștigat Cupa Campionilor Europeni în sezonul 1987-1988?",
+		"variante": ["Steaua Roșie Belgrad", "Olympique de Marseille", "PSV Eindhoven", "Hamburg SV"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q696237:turneu:cere_castigatoare",
+		"fapt": "wd:Q696237",
+		"text": "Ce echipă a câștigat Cupa Campionilor Europeni în sezonul 1988-1989?",
+		"variante": ["PSV Eindhoven", "Steaua Roșie Belgrad", "Olympique de Marseille", "A.C. Milan"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q594303:turneu:cere_castigatoare",
+		"fapt": "wd:Q594303",
+		"text": "Ce echipă a câștigat Cupa Campionilor Europeni în sezonul 1989-1990?",
+		"variante": ["Steaua Roșie Belgrad", "A.C. Milan", "PSV Eindhoven", "Olympique de Marseille"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q118823:turneu:cere_castigatoare",
+		"fapt": "wd:Q118823",
+		"text": "Ce echipă a câștigat Cupa Campionilor Europeni în sezonul 1990-1991?",
+		"variante": ["Olympique de Marseille", "A.C. Milan", "PSV Eindhoven", "Steaua Roșie Belgrad"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+
+	{
+		"id": "wd:Q269535:turneu:cere_castigatoare",
+		"fapt": "wd:Q269535",
+		"text": "Ce echipă a câștigat Cupa Campionilor Europeni în sezonul 1991-1992?",
+		"variante": ["Olympique de Marseille", "FC Barcelona", "Steaua Roșie Belgrad", "A.C. Milan"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q275673:turneu:cere_castigatoare",
+		"fapt": "wd:Q275673",
+		"text": "Ce echipă a câștigat Liga Campionilor în sezonul 1992-1993?",
+		"variante": ["A.C. Milan", "Steaua Roșie Belgrad", "Olympique de Marseille", "Juventus Torino"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+
+	{
+		"id": "wd:Q4405:turneu:cere_castigatoare",
+		"fapt": "wd:Q4405",
+		"text": "Ce echipă a câștigat Liga Campionilor în sezonul 1993-1994?",
+		"variante": ["A.C. Milan", "Olympique de Marseille", "Juventus Torino", "Steaua Roșie Belgrad"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q455985:turneu:cere_castigatoare",
+		"fapt": "wd:Q455985",
+		"text": "Ce echipă a câștigat Liga Campionilor în sezonul 1994-1995?",
+		"variante": ["A.C. Milan", "Juventus Torino", "Borussia Dortmund", "Ajax Amsterdam"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q26170:turneu:cere_castigatoare",
+		"fapt": "wd:Q26170",
+		"text": "Ce echipă a câștigat Liga Campionilor în sezonul 1995-1996?",
+		"variante": ["Borussia Dortmund", "A.C. Milan", "Olympique de Marseille", "Juventus Torino"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q196515:turneu:cere_castigatoare",
+		"fapt": "wd:Q196515",
+		"text": "Ce echipă a câștigat Liga Campionilor în sezonul 1996-1997?",
+		"variante": ["Juventus Torino", "A.C. Milan", "Borussia Dortmund", "Olympique de Marseille"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+
+	{
+		"id": "wd:Q241409:turneu:cere_castigatoare",
+		"fapt": "wd:Q241409",
+		"text": "Ce echipă a câștigat Liga Campionilor în sezonul 1997-1998?",
+		"variante": ["Borussia Dortmund", "Juventus Torino", "Real Madrid", "A.C. Milan"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q279736:turneu:cere_castigatoare",
+		"fapt": "wd:Q279736",
+		"text": "Ce echipă a câștigat Liga Campionilor în sezonul 1998-1999?",
+		"variante": ["Manchester United FC", "Borussia Dortmund", "Juventus Torino", "FC Porto"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q330050:turneu:cere_castigatoare",
+		"fapt": "wd:Q330050",
+		"text": "Ce echipă a câștigat Liga Campionilor în sezonul 1999-2000?",
+		"variante": ["Real Madrid", "Borussia Dortmund", "Juventus Torino", "FC Porto"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+
+	{
+		"id": "wd:Q456097:turneu:cere_castigatoare",
+		"fapt": "wd:Q456097",
+		"text": "Ce echipă a câștigat Liga Campionilor în sezonul 2000-2001?",
+		"variante": ["FC Bayern München", "FC Porto", "Borussia Dortmund", "Juventus Torino"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+
+	{
+		"id": "wd:Q727058:turneu:cere_castigatoare",
+		"fapt": "wd:Q727058",
+		"text": "Ce echipă a câștigat Liga Campionilor în sezonul 2001-2002?",
+		"variante": ["FC Porto", "Borussia Dortmund", "Juventus Torino", "Real Madrid"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q455978:turneu:cere_castigatoare",
+		"fapt": "wd:Q455978",
+		"text": "Ce echipă a câștigat Liga Campionilor în sezonul 2002-2003?",
+		"variante": ["FC Porto", "Manchester United FC", "A.C. Milan", "Borussia Dortmund"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q244467:turneu:cere_castigatoare",
+		"fapt": "wd:Q244467",
+		"text": "Ce echipă a câștigat Liga Campionilor în sezonul 2003-2004?",
+		"variante": ["FC Porto", "Manchester United FC", "FC Internazionale Milano", "Borussia Dortmund"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q308996:turneu:cere_castigatoare",
+		"fapt": "wd:Q308996",
+		"text": "Ce echipă a câștigat Liga Campionilor în sezonul 2004-2005?",
+		"variante": ["Liverpool FC", "FC Porto", "Manchester United FC", "FC Internazionale Milano"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+
+	{
+		"id": "wd:Q219705:turneu:cere_castigatoare",
+		"fapt": "wd:Q219705",
+		"text": "Ce echipă a câștigat Liga Campionilor în sezonul 2005-2006?",
+		"variante": ["FC Porto", "Manchester United FC", "FC Barcelona", "FC Internazionale Milano"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+
+	{
+		"id": "wd:Q192736:turneu:cere_castigatoare",
+		"fapt": "wd:Q192736",
+		"text": "Ce echipă a câștigat Liga Campionilor în sezonul 2006-2007?",
+		"variante": ["Manchester United FC", "FC Internazionale Milano", "FC Porto", "A.C. Milan"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q186489:turneu:cere_castigatoare",
+		"fapt": "wd:Q186489",
+		"text": "Ce echipă a câștigat Liga Campionilor în sezonul 2007-2008?",
+		"variante": ["FC Internazionale Milano", "Manchester United FC", "FC Porto", "FC Barcelona"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q188787:turneu:cere_castigatoare",
+		"fapt": "wd:Q188787",
+		"text": "Ce echipă a câștigat Liga Campionilor în sezonul 2008-2009?",
+		"variante": ["FC Internazionale Milano", "Manchester United FC", "FC Barcelona", "FC Porto"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q184182:turneu:cere_castigatoare",
+		"fapt": "wd:Q184182",
+		"text": "Ce echipă a câștigat Liga Campionilor în sezonul 2009-2010?",
+		"variante": ["FC Internazionale Milano", "Manchester United FC", "FC Barcelona", "Real Madrid"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q189180:turneu:cere_castigatoare",
+		"fapt": "wd:Q189180",
+		"text": "Ce echipă a câștigat Liga Campionilor în sezonul 2010-2011?",
+		"variante": ["FC Barcelona", "FC Internazionale Milano", "Manchester United FC", "Real Madrid"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q485002:turneu:cere_castigatoare",
+		"fapt": "wd:Q485002",
+		"text": "Ce echipă a câștigat Liga Campionilor în sezonul 2011-2012?",
+		"variante": ["FC Internazionale Milano", "Chelsea FC", "FC Barcelona", "Real Madrid"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q485956:turneu:cere_castigatoare",
+		"fapt": "wd:Q485956",
+		"text": "Ce echipă a câștigat Liga Campionilor în sezonul 2012-2013?",
+		"variante": ["FC Barcelona", "FC Internazionale Milano", "Real Madrid", "FC Bayern München"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q30608:turneu:cere_castigatoare",
+		"fapt": "wd:Q30608",
+		"text": "Ce echipă a câștigat Liga Campionilor în sezonul 2013-2014?",
+		"variante": ["FC Barcelona", "FC Internazionale Milano", "Liverpool FC", "Real Madrid"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q11306107:turneu:cere_castigatoare",
+		"fapt": "wd:Q11306107",
+		"text": "Ce echipă a câștigat Liga Campionilor în sezonul 2014-2015?",
+		"variante": ["Real Madrid", "Liverpool FC", "FC Barcelona", "FC Bayern München"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q13416183:turneu:cere_castigatoare",
+		"fapt": "wd:Q13416183",
+		"text": "Ce echipă a câștigat Liga Campionilor în sezonul 2015-2016?",
+		"variante": ["FC Barcelona", "Liverpool FC", "FC Bayern München", "Real Madrid"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q18740961:turneu:cere_castigatoare",
+		"fapt": "wd:Q18740961",
+		"text": "Ce echipă a câștigat Liga Campionilor în sezonul 2016-2017?",
+		"variante": ["Liverpool FC", "Real Madrid", "FC Barcelona", "FC Bayern München"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q20972117:turneu:cere_castigatoare",
+		"fapt": "wd:Q20972117",
+		"text": "Ce echipă a câștigat Liga Campionilor în sezonul 2017-2018?",
+		"variante": ["Liverpool FC", "FC Bayern München", "Chelsea FC", "Real Madrid"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q30032467:turneu:cere_castigatoare",
+		"fapt": "wd:Q30032467",
+		"text": "Ce echipă a câștigat Liga Campionilor în sezonul 2018-2019?",
+		"variante": ["FC Bayern München", "Liverpool FC", "Chelsea FC", "Real Madrid"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q53164830:turneu:cere_castigatoare",
+		"fapt": "wd:Q53164830",
+		"text": "Ce echipă a câștigat Liga Campionilor în sezonul 2019-2020?",
+		"variante": ["FC Bayern München", "Chelsea FC", "Liverpool FC", "Manchester City FC"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q63088790:turneu:cere_castigatoare",
+		"fapt": "wd:Q63088790",
+		"text": "Ce echipă a câștigat Liga Campionilor în sezonul 2020-2021?",
+		"variante": ["FC Bayern München", "Liverpool FC", "Manchester City FC", "Chelsea FC"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q96621465:turneu:cere_castigatoare",
+		"fapt": "wd:Q96621465",
+		"text": "Ce echipă a câștigat Liga Campionilor în sezonul 2021-2022?",
+		"variante": ["Real Madrid", "Chelsea FC", "Manchester City FC", "FC Bayern München"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q106086340:turneu:cere_castigatoare",
+		"fapt": "wd:Q106086340",
+		"text": "Ce echipă a câștigat Liga Campionilor în sezonul 2022-2023?",
+		"variante": ["Chelsea FC", "Paris Saint-Germain FC", "Manchester City FC", "FC Bayern München"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q111309338:turneu:cere_castigatoare",
+		"fapt": "wd:Q111309338",
+		"text": "Ce echipă a câștigat Liga Campionilor în sezonul 2023-2024?",
+		"variante": ["Real Madrid", "Paris Saint-Germain FC", "Manchester City FC", "Chelsea FC"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q117008008:turneu:cere_castigatoare",
+		"fapt": "wd:Q117008008",
+		"text": "Ce echipă a câștigat Liga Campionilor în sezonul 2024-2025?",
+		"variante": ["Manchester City FC", "Paris Saint-Germain FC", "Chelsea FC", "FC Bayern München"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "sporturi_de_echipa",
+		"categorie": "sport_jocuri"
+	}
+]

@@ -1,0 +1,1620 @@
+[
+	{
+		"id": "wd:Q68926:campion:cere_pilot",
+		"fapt": "wd:Q68926",
+		"text": "Cine a câștigat titlul mondial de Formula 1 la piloți în 1950?",
+		"variante": ["Juan Manuel Fangio", "Giuseppe Farina", "Alberto Ascari", "Mike Hawthorn"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q68967:campion:cere_pilot",
+		"fapt": "wd:Q68967",
+		"text": "Cine a câștigat titlul mondial de Formula 1 la piloți în 1952?",
+		"variante": ["Juan Manuel Fangio", "Giuseppe Farina", "Alberto Ascari", "Mike Hawthorn"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q68980:campion:cere_pilot",
+		"fapt": "wd:Q68980",
+		"text": "Cine a câștigat titlul mondial de Formula 1 la piloți în 1953?",
+		"variante": ["Alberto Ascari", "Juan Manuel Fangio", "Giuseppe Farina", "Mike Hawthorn"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q69001:campion:cere_pilot",
+		"fapt": "wd:Q69001",
+		"text": "Cine a câștigat titlul mondial de Formula 1 la piloți în 1954?",
+		"variante": ["Alberto Ascari", "Mike Hawthorn", "Juan Manuel Fangio", "Giuseppe Farina"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q69015:campion:cere_pilot",
+		"fapt": "wd:Q69015",
+		"text": "Cine a câștigat titlul mondial de Formula 1 la piloți în 1955?",
+		"variante": ["Alberto Ascari", "Juan Manuel Fangio", "Mike Hawthorn", "Jack Brabham"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q69032:campion:cere_pilot",
+		"fapt": "wd:Q69032",
+		"text": "Cine a câștigat titlul mondial de Formula 1 la piloți în 1956?",
+		"variante": ["Mike Hawthorn", "Juan Manuel Fangio", "Jack Brabham", "Alberto Ascari"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q69106:campion:cere_pilot",
+		"fapt": "wd:Q69106",
+		"text": "Cine a câștigat titlul mondial de Formula 1 la piloți în 1958?",
+		"variante": ["Jack Brabham", "Phil Hill", "Graham Hill", "Mike Hawthorn"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q69106:campion:cere_constructor",
+		"fapt": "wd:Q69106",
+		"text": "Ce echipă a câștigat titlul mondial al constructorilor în Formula 1, în 1958?",
+		"variante": ["Scuderia Ferrari", "British Racing Motors", "Team Lotus", "Vanwall"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q69118:campion:cere_pilot",
+		"fapt": "wd:Q69118",
+		"text": "Cine a câștigat titlul mondial de Formula 1 la piloți în 1959?",
+		"variante": ["Mike Hawthorn", "Phil Hill", "Jack Brabham", "Graham Hill"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q69146:campion:cere_pilot",
+		"fapt": "wd:Q69146",
+		"text": "Cine a câștigat titlul mondial de Formula 1 la piloți în 1960?",
+		"variante": ["Phil Hill", "Graham Hill", "Mike Hawthorn", "Jack Brabham"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q69161:campion:cere_pilot",
+		"fapt": "wd:Q69161",
+		"text": "Cine a câștigat titlul mondial de Formula 1 la piloți în 1961?",
+		"variante": ["Phil Hill", "Graham Hill", "Jack Brabham", "Jim Clark"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q69161:campion:cere_constructor",
+		"fapt": "wd:Q69161",
+		"text": "Ce echipă a câștigat titlul mondial al constructorilor în Formula 1, în 1961?",
+		"variante": ["Scuderia Ferrari", "British Racing Motors", "Team Lotus", "Vanwall"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q69174:campion:cere_pilot",
+		"fapt": "wd:Q69174",
+		"text": "Cine a câștigat titlul mondial de Formula 1 la piloți în 1962?",
+		"variante": ["Graham Hill", "Phil Hill", "Jim Clark", "John Surtees"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q69174:campion:cere_constructor",
+		"fapt": "wd:Q69174",
+		"text": "Ce echipă a câștigat titlul mondial al constructorilor în Formula 1, în 1962?",
+		"variante": ["Team Lotus", "British Racing Motors", "Scuderia Ferrari", "Vanwall"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q69184:campion:cere_constructor",
+		"fapt": "wd:Q69184",
+		"text": "Ce echipă a câștigat titlul mondial al constructorilor în Formula 1, în 1963?",
+		"variante": ["British Racing Motors", "Team Lotus", "Scuderia Ferrari", "Brabham"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q69193:campion:cere_pilot",
+		"fapt": "wd:Q69193",
+		"text": "Cine a câștigat titlul mondial de Formula 1 la piloți în 1964?",
+		"variante": ["Jim Clark", "Graham Hill", "John Surtees", "Denny Hulme"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q69193:campion:cere_constructor",
+		"fapt": "wd:Q69193",
+		"text": "Ce echipă a câștigat titlul mondial al constructorilor în Formula 1, în 1964?",
+		"variante": ["Scuderia Ferrari", "Team Lotus", "British Racing Motors", "Brabham"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q69204:campion:cere_constructor",
+		"fapt": "wd:Q69204",
+		"text": "Ce echipă a câștigat titlul mondial al constructorilor în Formula 1, în 1965?",
+		"variante": ["Brabham", "British Racing Motors", "Scuderia Ferrari", "Team Lotus"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q69220:campion:cere_pilot",
+		"fapt": "wd:Q69220",
+		"text": "Cine a câștigat titlul mondial de Formula 1 la piloți în 1966?",
+		"variante": ["Jack Brabham", "Denny Hulme", "John Surtees", "Jim Clark"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q69220:campion:cere_constructor",
+		"fapt": "wd:Q69220",
+		"text": "Ce echipă a câștigat titlul mondial al constructorilor în Formula 1, în 1966?",
+		"variante": ["Matra", "Brabham", "Team Lotus", "British Racing Motors"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q69229:campion:cere_pilot",
+		"fapt": "wd:Q69229",
+		"text": "Cine a câștigat titlul mondial de Formula 1 la piloți în 1967?",
+		"variante": ["Jackie Stewart", "Denny Hulme", "Jochen Rindt", "John Surtees"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q69229:campion:cere_constructor",
+		"fapt": "wd:Q69229",
+		"text": "Ce echipă a câștigat titlul mondial al constructorilor în Formula 1, în 1967?",
+		"variante": ["Matra", "Team Lotus", "Tyrrell Racing", "Brabham"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q69243:campion:cere_pilot",
+		"fapt": "wd:Q69243",
+		"text": "Cine a câștigat titlul mondial de Formula 1 la piloți în 1968?",
+		"variante": ["Jackie Stewart", "Denny Hulme", "Graham Hill", "Jochen Rindt"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q69243:campion:cere_constructor",
+		"fapt": "wd:Q69243",
+		"text": "Ce echipă a câștigat titlul mondial al constructorilor în Formula 1, în 1968?",
+		"variante": ["Team Lotus", "Matra", "Brabham", "Tyrrell Racing"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q69254:campion:cere_pilot",
+		"fapt": "wd:Q69254",
+		"text": "Cine a câștigat titlul mondial de Formula 1 la piloți în 1969?",
+		"variante": ["Jochen Rindt", "Denny Hulme", "Emerson Fittipaldi", "Jackie Stewart"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q69254:campion:cere_constructor",
+		"fapt": "wd:Q69254",
+		"text": "Ce echipă a câștigat titlul mondial al constructorilor în Formula 1, în 1969?",
+		"variante": ["Tyrrell Racing", "Matra", "Brabham", "McLaren"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q47225:campion:cere_pilot",
+		"fapt": "wd:Q47225",
+		"text": "Cine a câștigat titlul mondial de Formula 1 la piloți în 1970?",
+		"variante": ["Jackie Stewart", "Emerson Fittipaldi", "Denny Hulme", "Jochen Rindt"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q47225:campion:cere_constructor",
+		"fapt": "wd:Q47225",
+		"text": "Ce echipă a câștigat titlul mondial al constructorilor în Formula 1, în 1970?",
+		"variante": ["Tyrrell Racing", "Team Lotus", "Matra", "Brabham"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q42176:campion:cere_pilot",
+		"fapt": "wd:Q42176",
+		"text": "Cine a câștigat titlul mondial de Formula 1 la piloți în 1971?",
+		"variante": ["Emerson Fittipaldi", "Jochen Rindt", "Niki Lauda", "Jackie Stewart"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q42176:campion:cere_constructor",
+		"fapt": "wd:Q42176",
+		"text": "Ce echipă a câștigat titlul mondial al constructorilor în Formula 1, în 1971?",
+		"variante": ["Matra", "Tyrrell Racing", "McLaren", "Brabham"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q69267:campion:cere_pilot",
+		"fapt": "wd:Q69267",
+		"text": "Cine a câștigat titlul mondial de Formula 1 la piloți în 1972?",
+		"variante": ["Jochen Rindt", "Emerson Fittipaldi", "Niki Lauda", "Jackie Stewart"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q69267:campion:cere_constructor",
+		"fapt": "wd:Q69267",
+		"text": "Ce echipă a câștigat titlul mondial al constructorilor în Formula 1, în 1972?",
+		"variante": ["Tyrrell Racing", "Team Lotus", "McLaren", "Matra"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q62608:campion:cere_pilot",
+		"fapt": "wd:Q62608",
+		"text": "Cine a câștigat titlul mondial de Formula 1 la piloți în 1973?",
+		"variante": ["Jackie Stewart", "Emerson Fittipaldi", "Niki Lauda", "James Hunt"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q62608:campion:cere_constructor",
+		"fapt": "wd:Q62608",
+		"text": "Ce echipă a câștigat titlul mondial al constructorilor în Formula 1, în 1973?",
+		"variante": ["McLaren", "Tyrrell Racing", "Team Lotus", "Matra"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q69343:campion:cere_pilot",
+		"fapt": "wd:Q69343",
+		"text": "Cine a câștigat titlul mondial de Formula 1 la piloți în 1974?",
+		"variante": ["Emerson Fittipaldi", "Niki Lauda", "James Hunt", "Mario Andretti"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q69343:campion:cere_constructor",
+		"fapt": "wd:Q69343",
+		"text": "Ce echipă a câștigat titlul mondial al constructorilor în Formula 1, în 1974?",
+		"variante": ["McLaren", "Tyrrell Racing", "Matra", "Williams F1 Team"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q69375:campion:cere_pilot",
+		"fapt": "wd:Q69375",
+		"text": "Cine a câștigat titlul mondial de Formula 1 la piloți în 1975?",
+		"variante": ["James Hunt", "Emerson Fittipaldi", "Mario Andretti", "Niki Lauda"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q69375:campion:cere_constructor",
+		"fapt": "wd:Q69375",
+		"text": "Ce echipă a câștigat titlul mondial al constructorilor în Formula 1, în 1975?",
+		"variante": ["McLaren", "Scuderia Ferrari", "Tyrrell Racing", "Williams F1 Team"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q69387:campion:cere_pilot",
+		"fapt": "wd:Q69387",
+		"text": "Cine a câștigat titlul mondial de Formula 1 la piloți în 1976?",
+		"variante": ["James Hunt", "Niki Lauda", "Mario Andretti", "Jody Scheckter"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q69387:campion:cere_constructor",
+		"fapt": "wd:Q69387",
+		"text": "Ce echipă a câștigat titlul mondial al constructorilor în Formula 1, în 1976?",
+		"variante": ["McLaren", "Williams F1 Team", "Scuderia Ferrari", "Tyrrell Racing"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q69396:campion:cere_pilot",
+		"fapt": "wd:Q69396",
+		"text": "Cine a câștigat titlul mondial de Formula 1 la piloți în 1977?",
+		"variante": ["James Hunt", "Niki Lauda", "Mario Andretti", "Jody Scheckter"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q69396:campion:cere_constructor",
+		"fapt": "wd:Q69396",
+		"text": "Ce echipă a câștigat titlul mondial al constructorilor în Formula 1, în 1977?",
+		"variante": ["McLaren", "Williams F1 Team", "Tyrrell Racing", "Scuderia Ferrari"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q69405:campion:cere_pilot",
+		"fapt": "wd:Q69405",
+		"text": "Cine a câștigat titlul mondial de Formula 1 la piloți în 1978?",
+		"variante": ["Jody Scheckter", "Alan Jones", "Mario Andretti", "James Hunt"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q69405:campion:cere_constructor",
+		"fapt": "wd:Q69405",
+		"text": "Ce echipă a câștigat titlul mondial al constructorilor în Formula 1, în 1978?",
+		"variante": ["Team Lotus", "Williams F1 Team", "McLaren", "Tyrrell Racing"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q69415:campion:cere_pilot",
+		"fapt": "wd:Q69415",
+		"text": "Cine a câștigat titlul mondial de Formula 1 la piloți în 1979?",
+		"variante": ["Jody Scheckter", "Mario Andretti", "Alan Jones", "Nelson Piquet"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q69415:campion:cere_constructor",
+		"fapt": "wd:Q69415",
+		"text": "Ce echipă a câștigat titlul mondial al constructorilor în Formula 1, în 1979?",
+		"variante": ["Scuderia Ferrari", "Williams F1 Team", "McLaren", "Tyrrell Racing"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q69423:campion:cere_pilot",
+		"fapt": "wd:Q69423",
+		"text": "Cine a câștigat titlul mondial de Formula 1 la piloți în 1980?",
+		"variante": ["Nelson Piquet", "Alan Jones", "Jody Scheckter", "Mario Andretti"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q69423:campion:cere_constructor",
+		"fapt": "wd:Q69423",
+		"text": "Ce echipă a câștigat titlul mondial al constructorilor în Formula 1, în 1980?",
+		"variante": ["McLaren", "Tyrrell Racing", "Williams F1 Team", "Matra"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q69431:campion:cere_pilot",
+		"fapt": "wd:Q69431",
+		"text": "Cine a câștigat titlul mondial de Formula 1 la piloți în 1981?",
+		"variante": ["Keke Rosberg", "Alan Jones", "Nelson Piquet", "Jody Scheckter"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q69431:campion:cere_constructor",
+		"fapt": "wd:Q69431",
+		"text": "Ce echipă a câștigat titlul mondial al constructorilor în Formula 1, în 1981?",
+		"variante": ["McLaren", "Williams F1 Team", "Tyrrell Racing", "Matra"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q69548:campion:cere_pilot",
+		"fapt": "wd:Q69548",
+		"text": "Cine a câștigat titlul mondial de Formula 1 la piloți în 1982?",
+		"variante": ["Nelson Piquet", "Keke Rosberg", "Alan Jones", "Alain Prost"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q69548:campion:cere_constructor",
+		"fapt": "wd:Q69548",
+		"text": "Ce echipă a câștigat titlul mondial al constructorilor în Formula 1, în 1982?",
+		"variante": ["Scuderia Ferrari", "Williams F1 Team", "McLaren", "Tyrrell Racing"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q69561:campion:cere_pilot",
+		"fapt": "wd:Q69561",
+		"text": "Cine a câștigat titlul mondial de Formula 1 la piloți în 1983?",
+		"variante": ["Keke Rosberg", "Alain Prost", "Alan Jones", "Nelson Piquet"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q69561:campion:cere_constructor",
+		"fapt": "wd:Q69561",
+		"text": "Ce echipă a câștigat titlul mondial al constructorilor în Formula 1, în 1983?",
+		"variante": ["Williams F1 Team", "McLaren", "Scuderia Ferrari", "Benetton Formula"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q69576:campion:cere_pilot",
+		"fapt": "wd:Q69576",
+		"text": "Cine a câștigat titlul mondial de Formula 1 la piloți în 1984?",
+		"variante": ["Alain Prost", "Niki Lauda", "Keke Rosberg", "Nelson Piquet"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q69576:campion:cere_constructor",
+		"fapt": "wd:Q69576",
+		"text": "Ce echipă a câștigat titlul mondial al constructorilor în Formula 1, în 1984?",
+		"variante": ["Williams F1 Team", "Benetton Formula", "Tyrrell Racing", "McLaren"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+
+	{
+		"id": "wd:Q69603:campion:cere_pilot",
+		"fapt": "wd:Q69603",
+		"text": "Cine a câștigat titlul mondial de Formula 1 la piloți în 1985?",
+		"variante": ["Alain Prost", "Ayrton Senna", "Keke Rosberg", "Nelson Piquet"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+
+	{
+		"id": "wd:Q69603:campion:cere_constructor",
+		"fapt": "wd:Q69603",
+		"text": "Ce echipă a câștigat titlul mondial al constructorilor în Formula 1, în 1985?",
+		"variante": ["Williams F1 Team", "Benetton Formula", "McLaren", "Tyrrell Racing"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+
+	{
+		"id": "wd:Q69614:campion:cere_pilot",
+		"fapt": "wd:Q69614",
+		"text": "Cine a câștigat titlul mondial de Formula 1 la piloți în 1986?",
+		"variante": ["Ayrton Senna", "Alain Prost", "Keke Rosberg", "Nelson Piquet"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+
+	{
+		"id": "wd:Q69614:campion:cere_constructor",
+		"fapt": "wd:Q69614",
+		"text": "Ce echipă a câștigat titlul mondial al constructorilor în Formula 1, în 1986?",
+		"variante": ["Benetton Formula", "McLaren", "Tyrrell Racing", "Williams F1 Team"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q69623:campion:cere_pilot",
+		"fapt": "wd:Q69623",
+		"text": "Cine a câștigat titlul mondial de Formula 1 la piloți în 1987?",
+		"variante": ["Ayrton Senna", "Nelson Piquet", "Alain Prost", "Nigel Mansell"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q69623:campion:cere_constructor",
+		"fapt": "wd:Q69623",
+		"text": "Ce echipă a câștigat titlul mondial al constructorilor în Formula 1, în 1987?",
+		"variante": ["Benetton Formula", "Williams F1 Team", "McLaren", "Tyrrell Racing"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q69633:campion:cere_constructor",
+		"fapt": "wd:Q69633",
+		"text": "Ce echipă a câștigat titlul mondial al constructorilor în Formula 1, în 1988?",
+		"variante": ["Benetton Formula", "McLaren", "Williams F1 Team", "Renault F1"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+
+	{
+		"id": "wd:Q69641:campion:cere_pilot",
+		"fapt": "wd:Q69641",
+		"text": "Cine a câștigat titlul mondial de Formula 1 la piloți în 1989?",
+		"variante": ["Ayrton Senna", "Nigel Mansell", "Michael Schumacher", "Alain Prost"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+
+	{
+		"id": "wd:Q69641:campion:cere_constructor",
+		"fapt": "wd:Q69641",
+		"text": "Ce echipă a câștigat titlul mondial al constructorilor în Formula 1, în 1989?",
+		"variante": ["Benetton Formula", "Williams F1 Team", "McLaren", "Renault F1"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+
+	{
+		"id": "wd:Q69657:campion:cere_pilot",
+		"fapt": "wd:Q69657",
+		"text": "Cine a câștigat titlul mondial de Formula 1 la piloți în 1990?",
+		"variante": ["Nigel Mansell", "Michael Schumacher", "Ayrton Senna", "Alain Prost"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+
+	{
+		"id": "wd:Q69657:campion:cere_constructor",
+		"fapt": "wd:Q69657",
+		"text": "Ce echipă a câștigat titlul mondial al constructorilor în Formula 1, în 1990?",
+		"variante": ["Benetton Formula", "McLaren", "Williams F1 Team", "Renault F1"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q69670:campion:cere_constructor",
+		"fapt": "wd:Q69670",
+		"text": "Ce echipă a câștigat titlul mondial al constructorilor în Formula 1, în 1991?",
+		"variante": ["Benetton Formula", "Williams F1 Team", "McLaren", "Renault F1"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+
+	{
+		"id": "wd:Q69686:campion:cere_pilot",
+		"fapt": "wd:Q69686",
+		"text": "Cine a câștigat titlul mondial de Formula 1 la piloți în 1992?",
+		"variante": ["Michael Schumacher", "Ayrton Senna", "Damon Hill", "Nigel Mansell"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+
+	{
+		"id": "wd:Q69686:campion:cere_constructor",
+		"fapt": "wd:Q69686",
+		"text": "Ce echipă a câștigat titlul mondial al constructorilor în Formula 1, în 1992?",
+		"variante": ["Benetton Formula", "Williams F1 Team", "Renault F1", "Brawn GP"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+
+	{
+		"id": "wd:Q69696:campion:cere_pilot",
+		"fapt": "wd:Q69696",
+		"text": "Cine a câștigat titlul mondial de Formula 1 la piloți în 1993?",
+		"variante": ["Michael Schumacher", "Nigel Mansell", "Alain Prost", "Damon Hill"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+
+	{
+		"id": "wd:Q69696:campion:cere_constructor",
+		"fapt": "wd:Q69696",
+		"text": "Ce echipă a câștigat titlul mondial al constructorilor în Formula 1, în 1993?",
+		"variante": ["Benetton Formula", "Williams F1 Team", "Renault F1", "Brawn GP"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+
+	{
+		"id": "wd:Q69713:campion:cere_pilot",
+		"fapt": "wd:Q69713",
+		"text": "Cine a câștigat titlul mondial de Formula 1 la piloți în 1994?",
+		"variante": ["Michael Schumacher", "Nigel Mansell", "Damon Hill", "Jacques Villeneuve"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+
+	{
+		"id": "wd:Q69713:campion:cere_constructor",
+		"fapt": "wd:Q69713",
+		"text": "Ce echipă a câștigat titlul mondial al constructorilor în Formula 1, în 1994?",
+		"variante": ["Benetton Formula", "Renault F1", "Brawn GP", "Williams F1 Team"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+
+	{
+		"id": "wd:Q69722:campion:cere_pilot",
+		"fapt": "wd:Q69722",
+		"text": "Cine a câștigat titlul mondial de Formula 1 la piloți în 1995?",
+		"variante": ["Damon Hill", "Jacques Villeneuve", "Mika Häkkinen", "Michael Schumacher"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+
+	{
+		"id": "wd:Q69722:campion:cere_constructor",
+		"fapt": "wd:Q69722",
+		"text": "Ce echipă a câștigat titlul mondial al constructorilor în Formula 1, în 1995?",
+		"variante": ["Benetton Formula", "Renault F1", "Brawn GP", "Williams F1 Team"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q69735:campion:cere_constructor",
+		"fapt": "wd:Q69735",
+		"text": "Ce echipă a câștigat titlul mondial al constructorilor în Formula 1, în 1996?",
+		"variante": ["Williams F1 Team", "Benetton Formula", "Renault F1", "Brawn GP"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q69750:campion:cere_pilot",
+		"fapt": "wd:Q69750",
+		"text": "Cine a câștigat titlul mondial de Formula 1 la piloți în 1997?",
+		"variante": ["Mika Häkkinen", "Jacques Villeneuve", "Damon Hill", "Michael Schumacher"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q69750:campion:cere_constructor",
+		"fapt": "wd:Q69750",
+		"text": "Ce echipă a câștigat titlul mondial al constructorilor în Formula 1, în 1997?",
+		"variante": ["Benetton Formula", "Renault F1", "Williams F1 Team", "Brawn GP"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+
+	{
+		"id": "wd:Q69763:campion:cere_pilot",
+		"fapt": "wd:Q69763",
+		"text": "Cine a câștigat titlul mondial de Formula 1 la piloți în 1998?",
+		"variante": ["Mika Häkkinen", "Jacques Villeneuve", "Damon Hill", "Michael Schumacher"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+
+	{
+		"id": "wd:Q69763:campion:cere_constructor",
+		"fapt": "wd:Q69763",
+		"text": "Ce echipă a câștigat titlul mondial al constructorilor în Formula 1, în 1998?",
+		"variante": ["McLaren", "Benetton Formula", "Renault F1", "Brawn GP"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+
+	{
+		"id": "wd:Q69791:campion:cere_pilot",
+		"fapt": "wd:Q69791",
+		"text": "Cine a câștigat titlul mondial de Formula 1 la piloți în 1999?",
+		"variante": ["Jacques Villeneuve", "Damon Hill", "Michael Schumacher", "Mika Häkkinen"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q69791:campion:cere_constructor",
+		"fapt": "wd:Q69791",
+		"text": "Ce echipă a câștigat titlul mondial al constructorilor în Formula 1, în 1999?",
+		"variante": ["Benetton Formula", "Scuderia Ferrari", "Renault F1", "Brawn GP"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+
+	{
+		"id": "wd:Q69805:campion:cere_pilot",
+		"fapt": "wd:Q69805",
+		"text": "Cine a câștigat titlul mondial de Formula 1 la piloți în 2000?",
+		"variante": ["Mika Häkkinen", "Jacques Villeneuve", "Damon Hill", "Michael Schumacher"],
+		"corect": 3,
+		"nivel": 1,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+
+	{
+		"id": "wd:Q69805:campion:cere_constructor",
+		"fapt": "wd:Q69805",
+		"text": "Ce echipă a câștigat titlul mondial al constructorilor în Formula 1, în 2000?",
+		"variante": ["Renault F1", "Benetton Formula", "Brawn GP", "Scuderia Ferrari"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q69835:campion:cere_pilot",
+		"fapt": "wd:Q69835",
+		"text": "Cine a câștigat titlul mondial de Formula 1 la piloți în 2001?",
+		"variante": ["Mika Häkkinen", "Fernando Alonso", "Jacques Villeneuve", "Michael Schumacher"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q69835:campion:cere_constructor",
+		"fapt": "wd:Q69835",
+		"text": "Ce echipă a câștigat titlul mondial al constructorilor în Formula 1, în 2001?",
+		"variante": ["Renault F1", "Scuderia Ferrari", "Benetton Formula", "Brawn GP"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+
+	{
+		"id": "wd:Q69844:campion:cere_pilot",
+		"fapt": "wd:Q69844",
+		"text": "Cine a câștigat titlul mondial de Formula 1 la piloți în 2002?",
+		"variante": ["Fernando Alonso", "Mika Häkkinen", "Jacques Villeneuve", "Michael Schumacher"],
+		"corect": 3,
+		"nivel": 1,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+
+	{
+		"id": "wd:Q69844:campion:cere_constructor",
+		"fapt": "wd:Q69844",
+		"text": "Ce echipă a câștigat titlul mondial al constructorilor în Formula 1, în 2002?",
+		"variante": ["Renault F1", "Brawn GP", "Scuderia Ferrari", "Benetton Formula"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q69859:campion:cere_pilot",
+		"fapt": "wd:Q69859",
+		"text": "Cine a câștigat titlul mondial de Formula 1 la piloți în 2003?",
+		"variante": ["Fernando Alonso", "Kimi Räikkönen", "Michael Schumacher", "Mika Häkkinen"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q69859:campion:cere_constructor",
+		"fapt": "wd:Q69859",
+		"text": "Ce echipă a câștigat titlul mondial al constructorilor în Formula 1, în 2003?",
+		"variante": ["Renault F1", "Brawn GP", "Benetton Formula", "Scuderia Ferrari"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q69869:campion:cere_constructor",
+		"fapt": "wd:Q69869",
+		"text": "Ce echipă a câștigat titlul mondial al constructorilor în Formula 1, în 2004?",
+		"variante": ["Renault F1", "Brawn GP", "Scuderia Ferrari", "Red Bull Racing"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+
+	{
+		"id": "wd:Q69880:campion:cere_pilot",
+		"fapt": "wd:Q69880",
+		"text": "Cine a câștigat titlul mondial de Formula 1 la piloți în 2005?",
+		"variante": ["Fernando Alonso", "Kimi Räikkönen", "Lewis Hamilton", "Jenson Button"],
+		"corect": 0,
+		"nivel": 1,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+
+	{
+		"id": "wd:Q69880:campion:cere_constructor",
+		"fapt": "wd:Q69880",
+		"text": "Ce echipă a câștigat titlul mondial al constructorilor în Formula 1, în 2005?",
+		"variante": ["Brawn GP", "Red Bull Racing", "Mercedes", "Renault F1"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q69893:campion:cere_pilot",
+		"fapt": "wd:Q69893",
+		"text": "Cine a câștigat titlul mondial de Formula 1 la piloți în 2006?",
+		"variante": ["Kimi Räikkönen", "Fernando Alonso", "Lewis Hamilton", "Jenson Button"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q69893:campion:cere_constructor",
+		"fapt": "wd:Q69893",
+		"text": "Ce echipă a câștigat titlul mondial al constructorilor în Formula 1, în 2006?",
+		"variante": ["Brawn GP", "Renault F1", "Red Bull Racing", "Mercedes"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+
+	{
+		"id": "wd:Q69901:campion:cere_constructor",
+		"fapt": "wd:Q69901",
+		"text": "Ce echipă a câștigat titlul mondial al constructorilor în Formula 1, în 2007?",
+		"variante": ["Renault F1", "Brawn GP", "Red Bull Racing", "Scuderia Ferrari"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q69913:campion:cere_constructor",
+		"fapt": "wd:Q69913",
+		"text": "Ce echipă a câștigat titlul mondial al constructorilor în Formula 1, în 2008?",
+		"variante": ["Scuderia Ferrari", "Brawn GP", "Renault F1", "Red Bull Racing"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+
+	{
+		"id": "wd:Q69923:campion:cere_pilot",
+		"fapt": "wd:Q69923",
+		"text": "Cine a câștigat titlul mondial de Formula 1 la piloți în 2009?",
+		"variante": ["Jenson Button", "Lewis Hamilton", "Kimi Räikkönen", "Sebastian Vettel"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q69923:campion:cere_constructor",
+		"fapt": "wd:Q69923",
+		"text": "Ce echipă a câștigat titlul mondial al constructorilor în Formula 1, în 2009?",
+		"variante": ["Red Bull Racing", "Brawn GP", "Renault F1", "Mercedes"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+
+	{
+		"id": "wd:Q69934:campion:cere_pilot",
+		"fapt": "wd:Q69934",
+		"text": "Cine a câștigat titlul mondial de Formula 1 la piloți în 2010?",
+		"variante": ["Jenson Button", "Lewis Hamilton", "Sebastian Vettel", "Kimi Räikkönen"],
+		"corect": 2,
+		"nivel": 1,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+
+	{
+		"id": "wd:Q69934:campion:cere_constructor",
+		"fapt": "wd:Q69934",
+		"text": "Ce echipă a câștigat titlul mondial al constructorilor în Formula 1, în 2010?",
+		"variante": ["Brawn GP", "Mercedes", "Renault F1", "Red Bull Racing"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q69943:campion:cere_pilot",
+		"fapt": "wd:Q69943",
+		"text": "Cine a câștigat titlul mondial de Formula 1 la piloți în 2011?",
+		"variante": ["Jenson Button", "Lewis Hamilton", "Kimi Räikkönen", "Sebastian Vettel"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q69943:campion:cere_constructor",
+		"fapt": "wd:Q69943",
+		"text": "Ce echipă a câștigat titlul mondial al constructorilor în Formula 1, în 2011?",
+		"variante": ["Red Bull Racing", "Brawn GP", "Mercedes", "Renault F1"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q69959:campion:cere_pilot",
+		"fapt": "wd:Q69959",
+		"text": "Cine a câștigat titlul mondial de Formula 1 la piloți în 2012?",
+		"variante": ["Jenson Button", "Nico Rosberg", "Sebastian Vettel", "Lewis Hamilton"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q69959:campion:cere_constructor",
+		"fapt": "wd:Q69959",
+		"text": "Ce echipă a câștigat titlul mondial al constructorilor în Formula 1, în 2012?",
+		"variante": ["Mercedes", "Brawn GP", "Red Bull Racing", "Renault F1"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q69356:campion:cere_pilot",
+		"fapt": "wd:Q69356",
+		"text": "Cine a câștigat titlul mondial de Formula 1 la piloți în 2013?",
+		"variante": ["Nico Rosberg", "Jenson Button", "Sebastian Vettel", "Lewis Hamilton"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q69356:campion:cere_constructor",
+		"fapt": "wd:Q69356",
+		"text": "Ce echipă a câștigat titlul mondial al constructorilor în Formula 1, în 2013?",
+		"variante": ["Mercedes", "Red Bull Racing", "Brawn GP", "Renault F1"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+
+	{
+		"id": "wd:Q69969:campion:cere_pilot",
+		"fapt": "wd:Q69969",
+		"text": "Cine a câștigat titlul mondial de Formula 1 la piloți în 2014?",
+		"variante": ["Sebastian Vettel", "Nico Rosberg", "Lewis Hamilton", "Jenson Button"],
+		"corect": 2,
+		"nivel": 1,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q69969:campion:cere_constructor",
+		"fapt": "wd:Q69969",
+		"text": "Ce echipă a câștigat titlul mondial al constructorilor în Formula 1, în 2014?",
+		"variante": ["Red Bull Racing", "Brawn GP", "Mercedes", "Renault F1"],
+		"corect": 2,
+		"nivel": 1,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+
+	{
+		"id": "wd:Q14293115:campion:cere_pilot",
+		"fapt": "wd:Q14293115",
+		"text": "Cine a câștigat titlul mondial de Formula 1 la piloți în 2015?",
+		"variante": ["Nico Rosberg", "Sebastian Vettel", "Max Verstappen", "Lewis Hamilton"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q14293115:campion:cere_constructor",
+		"fapt": "wd:Q14293115",
+		"text": "Ce echipă a câștigat titlul mondial al constructorilor în Formula 1, în 2015?",
+		"variante": ["Mercedes", "Red Bull Racing", "Brawn GP", "Renault F1"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q17455748:campion:cere_pilot",
+		"fapt": "wd:Q17455748",
+		"text": "Cine a câștigat titlul mondial de Formula 1 la piloți în 2016?",
+		"variante": ["Nico Rosberg", "Sebastian Vettel", "Max Verstappen", "Jenson Button"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q17455748:campion:cere_constructor",
+		"fapt": "wd:Q17455748",
+		"text": "Ce echipă a câștigat titlul mondial al constructorilor în Formula 1, în 2016?",
+		"variante": ["Red Bull Racing", "Brawn GP", "Mercedes", "Renault F1"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q20755615:campion:cere_pilot",
+		"fapt": "wd:Q20755615",
+		"text": "Cine a câștigat titlul mondial de Formula 1 la piloți în 2017?",
+		"variante": ["Lewis Hamilton", "Nico Rosberg", "Sebastian Vettel", "Max Verstappen"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q20755615:campion:cere_constructor",
+		"fapt": "wd:Q20755615",
+		"text": "Ce echipă a câștigat titlul mondial al constructorilor în Formula 1, în 2017?",
+		"variante": ["Red Bull Racing", "Brawn GP", "Mercedes", "Renault F1"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q41173535:campion:cere_pilot",
+		"fapt": "wd:Q41173535",
+		"text": "Cine a câștigat titlul mondial de Formula 1 la piloți în 2019?",
+		"variante": ["Lewis Hamilton", "Max Verstappen", "Nico Rosberg", "Sebastian Vettel"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q41173535:campion:cere_constructor",
+		"fapt": "wd:Q41173535",
+		"text": "Ce echipă a câștigat titlul mondial al constructorilor în Formula 1, în 2019?",
+		"variante": ["Mercedes", "Red Bull Racing", "Brawn GP", "Renault F1"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+
+	{
+		"id": "wd:Q41174436:campion:cere_pilot",
+		"fapt": "wd:Q41174436",
+		"text": "Cine a câștigat titlul mondial de Formula 1 la piloți în 2020?",
+		"variante": ["Lewis Hamilton", "Max Verstappen", "Nico Rosberg", "Lando Norris"],
+		"corect": 0,
+		"nivel": 1,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q41174436:campion:cere_constructor",
+		"fapt": "wd:Q41174436",
+		"text": "Ce echipă a câștigat titlul mondial al constructorilor în Formula 1, în 2020?",
+		"variante": ["Red Bull Racing", "Brawn GP", "Mercedes", "Renault F1"],
+		"corect": 2,
+		"nivel": 1,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q72635834:campion:cere_pilot",
+		"fapt": "wd:Q72635834",
+		"text": "Cine a câștigat titlul mondial de Formula 1 la piloți în 2021?",
+		"variante": ["Max Verstappen", "Lando Norris", "Nico Rosberg", "Sebastian Vettel"],
+		"corect": 0,
+		"nivel": 1,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+
+	{
+		"id": "wd:Q72635834:campion:cere_constructor",
+		"fapt": "wd:Q72635834",
+		"text": "Ce echipă a câștigat titlul mondial al constructorilor în Formula 1, în 2021?",
+		"variante": ["Red Bull Racing", "Mercedes", "Brawn GP", "Renault F1"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+
+	{
+		"id": "wd:Q109323149:campion:cere_pilot",
+		"fapt": "wd:Q109323149",
+		"text": "Cine a câștigat titlul mondial de Formula 1 la piloți în 2023?",
+		"variante": ["Max Verstappen", "Lando Norris", "Nico Rosberg", "Sebastian Vettel"],
+		"corect": 0,
+		"nivel": 1,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q109323149:campion:cere_constructor",
+		"fapt": "wd:Q109323149",
+		"text": "Ce echipă a câștigat titlul mondial al constructorilor în Formula 1, în 2023?",
+		"variante": ["Mercedes", "Brawn GP", "Red Bull Racing", "Renault F1"],
+		"corect": 2,
+		"nivel": 1,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q115942630:campion:cere_pilot",
+		"fapt": "wd:Q115942630",
+		"text": "Cine a câștigat titlul mondial de Formula 1 la piloți în 2025?",
+		"variante": ["Max Verstappen", "Nico Rosberg", "Sebastian Vettel", "Lando Norris"],
+		"corect": 3,
+		"nivel": 1,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+
+	{
+		"id": "wd:Q115942630:campion:cere_constructor",
+		"fapt": "wd:Q115942630",
+		"text": "Ce echipă a câștigat titlul mondial al constructorilor în Formula 1, în 2025?",
+		"variante": ["Mercedes", "McLaren", "Red Bull Racing", "Brawn GP"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+
+	{
+		"id": "wd:Q10490:campion:cere_an",
+		"fapt": "wd:Q10490",
+		"text": "În care dintre acești ani a fost Ayrton Senna campion mondial de Formula 1?",
+		"variante": ["1989", "1992", "1990", "1987"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q10494:campion:cere_an",
+		"fapt": "wd:Q10494",
+		"text": "În care dintre acești ani a fost Alain Prost campion mondial de Formula 1?",
+		"variante": ["1984", "1987", "1983", "1985"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q10501:campion:cere_an",
+		"fapt": "wd:Q10501",
+		"text": "În care dintre acești ani a fost Nigel Mansell campion mondial de Formula 1?",
+		"variante": ["1992", "1993", "1991", "1990"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q10510:campion:cere_an",
+		"fapt": "wd:Q10510",
+		"text": "În care dintre acești ani a fost Jenson Button campion mondial de Formula 1?",
+		"variante": ["2009", "2008", "2010", "2007"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q10514:campion:cere_an",
+		"fapt": "wd:Q10514",
+		"text": "În care dintre acești ani a fost Fernando Alonso campion mondial de Formula 1?",
+		"variante": ["2007", "2008", "2004", "2006"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q140393:campion:cere_an",
+		"fapt": "wd:Q140393",
+		"text": "În care dintre acești ani a fost James Hunt campion mondial de Formula 1?",
+		"variante": ["1975", "1977", "1976", "1978"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q171312:campion:cere_an",
+		"fapt": "wd:Q171312",
+		"text": "În care dintre acești ani a fost Mario Andretti campion mondial de Formula 1?",
+		"variante": ["1977", "1979", "1978", "1976"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q171346:campion:cere_an",
+		"fapt": "wd:Q171346",
+		"text": "În care dintre acești ani a fost Nelson Piquet campion mondial de Formula 1?",
+		"variante": ["1984", "1982", "1985", "1983"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q171381:campion:cere_an",
+		"fapt": "wd:Q171381",
+		"text": "În care dintre acești ani a fost Keke Rosberg campion mondial de Formula 1?",
+		"variante": ["1983", "1981", "1982", "1984"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q172753:campion:cere_an",
+		"fapt": "wd:Q172753",
+		"text": "În care dintre acești ani a fost Alan Jones campion mondial de Formula 1?",
+		"variante": ["1981", "1979", "1980", "1982"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q172775:campion:cere_an",
+		"fapt": "wd:Q172775",
+		"text": "În care dintre acești ani a fost Jody Scheckter campion mondial de Formula 1?",
+		"variante": ["1979", "1978", "1980", "1981"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q172842:campion:cere_an",
+		"fapt": "wd:Q172842",
+		"text": "În care dintre acești ani a fost Mika Häkkinen campion mondial de Formula 1?",
+		"variante": ["1997", "1996", "1998", "2000"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q172843:campion:cere_an",
+		"fapt": "wd:Q172843",
+		"text": "În care dintre acești ani a fost Jacques Villeneuve campion mondial de Formula 1?",
+		"variante": ["1997", "1998", "1996", "1999"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q172849:campion:cere_an",
+		"fapt": "wd:Q172849",
+		"text": "În care dintre acești ani a fost Emerson Fittipaldi campion mondial de Formula 1?",
+		"variante": ["1973", "1974", "1975", "1976"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q2040:campion:cere_an",
+		"fapt": "wd:Q2040",
+		"text": "În care dintre acești ani a fost Giuseppe Farina campion mondial de Formula 1?",
+		"variante": ["1951", "1952", "1950", "1953"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q2069:campion:cere_an",
+		"fapt": "wd:Q2069",
+		"text": "În care dintre acești ani a fost Juan Manuel Fangio campion mondial de Formula 1?",
+		"variante": ["1953", "1952", "1955", "1958"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q2086:campion:cere_an",
+		"fapt": "wd:Q2086",
+		"text": "În care dintre acești ani a fost Alberto Ascari campion mondial de Formula 1?",
+		"variante": ["1954", "1955", "1951", "1953"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q2104:campion:cere_an",
+		"fapt": "wd:Q2104",
+		"text": "În care dintre acești ani a fost Mike Hawthorn campion mondial de Formula 1?",
+		"variante": ["1958", "1957", "1959", "1960"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q2125:campion:cere_an",
+		"fapt": "wd:Q2125",
+		"text": "În care dintre acești ani a fost Jack Brabham campion mondial de Formula 1?",
+		"variante": ["1958", "1957", "1959", "1961"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+
+	{
+		"id": "wd:Q22007193:campion:cere_an",
+		"fapt": "wd:Q22007193",
+		"text": "În care dintre acești ani a fost Lando Norris campion mondial de Formula 1?",
+		"variante": ["2023", "2021", "2020", "2025"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q2239218:campion:cere_an",
+		"fapt": "wd:Q2239218",
+		"text": "În care dintre acești ani a fost Max Verstappen campion mondial de Formula 1?",
+		"variante": ["2020", "2019", "2021", "2025"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+
+	{
+		"id": "wd:Q3112:campion:cere_an",
+		"fapt": "wd:Q3112",
+		"text": "În care dintre acești ani a fost Phil Hill campion mondial de Formula 1?",
+		"variante": ["1960", "1962", "1961", "1963"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q3128:campion:cere_an",
+		"fapt": "wd:Q3128",
+		"text": "În care dintre acești ani a fost Graham Hill campion mondial de Formula 1?",
+		"variante": ["1962", "1963", "1961", "1960"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q3153:campion:cere_an",
+		"fapt": "wd:Q3153",
+		"text": "În care dintre acești ani a fost John Surtees campion mondial de Formula 1?",
+		"variante": ["1963", "1965", "1966", "1964"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q3166:campion:cere_an",
+		"fapt": "wd:Q3166",
+		"text": "În care dintre acești ani a fost Denny Hulme campion mondial de Formula 1?",
+		"variante": ["1968", "1967", "1966", "1965"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q3188:campion:cere_an",
+		"fapt": "wd:Q3188",
+		"text": "În care dintre acești ani a fost Jackie Stewart campion mondial de Formula 1?",
+		"variante": ["1972", "1970", "1971", "1974"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q3234:campion:cere_an",
+		"fapt": "wd:Q3234",
+		"text": "În care dintre acești ani a fost Jochen Rindt campion mondial de Formula 1?",
+		"variante": ["1970", "1969", "1971", "1968"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q42311:campion:cere_an",
+		"fapt": "wd:Q42311",
+		"text": "În care dintre acești ani a fost Sebastian Vettel campion mondial de Formula 1?",
+		"variante": ["2009", "2008", "2011", "2014"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q75820:campion:cere_an",
+		"fapt": "wd:Q75820",
+		"text": "În care dintre acești ani a fost Nico Rosberg campion mondial de Formula 1?",
+		"variante": ["2017", "2015", "2014", "2016"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q78489:campion:cere_an",
+		"fapt": "wd:Q78489",
+		"text": "În care dintre acești ani a fost Niki Lauda campion mondial de Formula 1?",
+		"variante": ["1985", "1983", "1984", "1982"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q9671:campion:cere_an",
+		"fapt": "wd:Q9671",
+		"text": "În care dintre acești ani a fost Michael Schumacher campion mondial de Formula 1?",
+		"variante": ["1996", "1995", "1997", "1993"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	},
+	{
+		"id": "wd:Q9673:campion:cere_an",
+		"fapt": "wd:Q9673",
+		"text": "În care dintre acești ani a fost Lewis Hamilton campion mondial de Formula 1?",
+		"variante": ["2016", "2021", "2017", "2013"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "motor_extreme",
+		"categorie": "sport_jocuri"
+	}
+]

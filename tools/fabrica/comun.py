@@ -1236,7 +1236,7 @@ def anii_vietii(om):
 	return "", []
 
 
-def nota_omului(nume, om):
+def nota_omului(nume, om, prezent=False):
 	"""Un om → (nota, valorile din care e făcută). Pentru sensul invers al unui
 	tabel: se arată omul, se cer lucrările lui.
 
@@ -1247,6 +1247,12 @@ def nota_omului(nume, om):
 
 	`nume` vine separat, fiindcă numele AFIȘAT în joc e cel din tabelul meu, nu
 	eticheta de la Wikidata.
+
+	`prezent=True` scrie „este” în loc de „a fost” când omul n-are an al morții.
+	Tabelele de Divertisment și Sport (regizori, interpreți, piloți) au mulți
+	oameni în viață, iar „Taylor Swift (n. 1989) a fost cantautoare” spune altceva
+	decât vrea. Implicit rămâne „a fost”, ca notele deja scrise ale celorlalte
+	tabele să nu se schimbe la următoarea rulare.
 	"""
 	surse = [nume]
 	ani, valori = anii_vietii(om)
@@ -1255,8 +1261,9 @@ def nota_omului(nume, om):
 	if descriere:
 		surse.append(descriere)
 
+	verb = "este" if prezent and not om.get("moarte") else "a fost"
 	if ani and descriere:
-		return "%s (%s) a fost %s." % (nume, ani, descriere), surse
+		return "%s (%s) %s %s." % (nume, ani, verb, descriere), surse
 	if ani:
 		# FĂRĂ DESCRIERE, anii devin propoziția întreagă — deci nu mai pot sta într-o
 		# paranteză. „Daniel Defoe a trăit: 1660–1731." a fost prima formă, și nu e
@@ -1268,7 +1275,7 @@ def nota_omului(nume, om):
 				nume, an_scris(n), an_scris(m)), surse
 		return "%s s-a născut în %s." % (nume, an_scris(n)), surse
 	if descriere:
-		return "%s a fost %s." % (nume, descriere), surse
+		return "%s %s %s." % (nume, verb, descriere), surse
 	# Fără ani și fără descriere n-am din ce să compun un cârlig, deci nu compun
 	# nimic. O notă care doar repetă numele ar fi mai rea decât lipsa ei: ai apăsa
 	# „Află mai multe" și n-ai afla nimic.

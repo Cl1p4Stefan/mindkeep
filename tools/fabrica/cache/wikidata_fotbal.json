@@ -1,0 +1,2845 @@
+{
+	"endpoint": "https://query.wikidata.org/sparql",
+	"interogari": {
+		"castigatori": "SELECT ?e ?st ?w ?w_ro ?w_en ?w_mul ?rol ?tara ?tara_ro ?tara_en ?tara_mul WHERE {\n  VALUES ?comp { wd:Q19317 wd:Q19323 wd:Q260858 wd:Q18756 }\n  ?e wdt:P3450 ?comp ; p:P1346 ?st .\n  ?st ps:P1346 ?w .\n  OPTIONAL { ?st pq:P2501 ?rol }\n  OPTIONAL { ?w rdfs:label ?w_ro FILTER(lang(?w_ro) = \"ro\") }\n  OPTIONAL { ?w rdfs:label ?w_en FILTER(lang(?w_en) = \"en\") }\n  OPTIONAL { ?w rdfs:label ?w_mul FILTER(lang(?w_mul) = \"mul\") }\n  OPTIONAL { ?w wdt:P1532 ?t1 }\n  OPTIONAL { ?w wdt:P17 ?t2 }\n  BIND(COALESCE(?t1, ?t2) AS ?tara)\n  OPTIONAL { ?tara rdfs:label ?tara_ro FILTER(lang(?tara_ro) = \"ro\") }\n  OPTIONAL { ?tara rdfs:label ?tara_en FILTER(lang(?tara_en) = \"en\") }\n  OPTIONAL { ?tara rdfs:label ?tara_mul FILTER(lang(?tara_mul) = \"mul\") }\n}",
+		"editii": "SELECT ?e ?comp ?e_ro ?e_en ?e_mul (MIN(YEAR(?d)) AS ?an) WHERE {\n  VALUES ?comp { wd:Q19317 wd:Q19323 wd:Q260858 wd:Q18756 }\n  ?e wdt:P3450 ?comp .\n  OPTIONAL { ?e wdt:P585 ?d }\n  OPTIONAL { ?e rdfs:label ?e_ro FILTER(lang(?e_ro) = \"ro\") }\n  OPTIONAL { ?e rdfs:label ?e_en FILTER(lang(?e_en) = \"en\") }\n  OPTIONAL { ?e rdfs:label ?e_mul FILTER(lang(?e_mul) = \"mul\") }\n} GROUP BY ?e ?comp ?e_ro ?e_en ?e_mul",
+		"gazde": "SELECT ?e ?tara ?tara_ro ?tara_en ?tara_mul WHERE {\n  VALUES ?comp { wd:Q19317 wd:Q19323 wd:Q260858 wd:Q18756 }\n  ?e wdt:P3450 ?comp ; wdt:P17 ?tara .\n  OPTIONAL { ?tara rdfs:label ?tara_ro FILTER(lang(?tara_ro) = \"ro\") }\n  OPTIONAL { ?tara rdfs:label ?tara_en FILTER(lang(?tara_en) = \"en\") }\n  OPTIONAL { ?tara rdfs:label ?tara_mul FILTER(lang(?tara_mul) = \"mul\") }\n}"
+	},
+	"luat_la": "2026-10-27T03:01:29",
+	"randuri": {
+		"castigatori": [
+			{
+				"e": "Q241864",
+				"st": "http://www.wikidata.org/entity/statement/Q241864-A79A8A91-2DB1-484C-B8E1-DF8FE019EC6F",
+				"tara": "Q29",
+				"tara_en": "Spain",
+				"tara_ro": "Spania",
+				"w": "Q42267",
+				"w_en": "Spain men's national football team",
+				"w_ro": "Echipa națională de fotbal a Spaniei"
+			},
+			{
+				"e": "Q5020214",
+				"st": "http://www.wikidata.org/entity/statement/Q5020214-00a8527c-40fb-71b5-838c-c300a8456f2c",
+				"tara": "Q29",
+				"tara_en": "Spain",
+				"tara_ro": "Spania",
+				"w": "Q42267",
+				"w_en": "Spain men's national football team",
+				"w_ro": "Echipa națională de fotbal a Spaniei"
+			},
+			{
+				"e": "Q111309338",
+				"st": "http://www.wikidata.org/entity/statement/Q111309338-c7a1c73e-404c-8b66-0e08-5f025971907a",
+				"tara": "Q29",
+				"tara_en": "Spain",
+				"tara_ro": "Spania",
+				"w": "Q8682",
+				"w_en": "Real Madrid Club de Fútbol",
+				"w_ro": "Real Madrid"
+			},
+			{
+				"e": "Q13416183",
+				"st": "http://www.wikidata.org/entity/statement/Q13416183-30D0A9E1-52F3-4036-A359-483737165F07",
+				"tara": "Q29",
+				"tara_en": "Spain",
+				"tara_ro": "Spania",
+				"w": "Q8682",
+				"w_en": "Real Madrid Club de Fútbol",
+				"w_ro": "Real Madrid"
+			},
+			{
+				"e": "Q18740961",
+				"st": "http://www.wikidata.org/entity/statement/Q18740961-aa62d998-41ce-8ca0-8cfd-c81acd09cce3",
+				"tara": "Q29",
+				"tara_en": "Spain",
+				"tara_ro": "Spania",
+				"w": "Q8682",
+				"w_en": "Real Madrid Club de Fútbol",
+				"w_ro": "Real Madrid"
+			},
+			{
+				"e": "Q20972117",
+				"st": "http://www.wikidata.org/entity/statement/Q20972117-c6f804c3-4d37-98c8-dbc7-f25315ea8ab6",
+				"tara": "Q29",
+				"tara_en": "Spain",
+				"tara_ro": "Spania",
+				"w": "Q8682",
+				"w_en": "Real Madrid Club de Fútbol",
+				"w_ro": "Real Madrid"
+			},
+			{
+				"e": "Q219384",
+				"st": "http://www.wikidata.org/entity/statement/Q219384-1EC83307-BEA7-4128-B549-D0D8481A8639",
+				"tara": "Q29",
+				"tara_en": "Spain",
+				"tara_ro": "Spania",
+				"w": "Q8682",
+				"w_en": "Real Madrid Club de Fútbol",
+				"w_ro": "Real Madrid"
+			},
+			{
+				"e": "Q241409",
+				"st": "http://www.wikidata.org/entity/statement/Q241409-66A4A0AD-AC6C-4496-80EF-3A22E5AD5BC2",
+				"tara": "Q29",
+				"tara_en": "Spain",
+				"tara_ro": "Spania",
+				"w": "Q8682",
+				"w_en": "Real Madrid Club de Fútbol",
+				"w_ro": "Real Madrid"
+			},
+			{
+				"e": "Q245202",
+				"st": "http://www.wikidata.org/entity/statement/Q245202-0A997497-7D33-46A6-AFB8-FBCD083954D4",
+				"tara": "Q29",
+				"tara_en": "Spain",
+				"tara_ro": "Spania",
+				"w": "Q8682",
+				"w_en": "Real Madrid Club de Fútbol",
+				"w_ro": "Real Madrid"
+			},
+			{
+				"e": "Q30608",
+				"st": "http://www.wikidata.org/entity/statement/Q30608-A9FC120E-9800-40B3-9D09-6702F1B7D1E0",
+				"tara": "Q29",
+				"tara_en": "Spain",
+				"tara_ro": "Spania",
+				"w": "Q8682",
+				"w_en": "Real Madrid Club de Fútbol",
+				"w_ro": "Real Madrid"
+			},
+			{
+				"e": "Q309316",
+				"st": "http://www.wikidata.org/entity/statement/Q309316-AA0B4392-EF56-4F44-816A-53838E5FE806",
+				"tara": "Q29",
+				"tara_en": "Spain",
+				"tara_ro": "Spania",
+				"w": "Q8682",
+				"w_en": "Real Madrid Club de Fútbol",
+				"w_ro": "Real Madrid"
+			},
+			{
+				"e": "Q309318",
+				"st": "http://www.wikidata.org/entity/statement/Q309318-17015C51-E52E-45FE-9CA1-25A70715959F",
+				"tara": "Q29",
+				"tara_en": "Spain",
+				"tara_ro": "Spania",
+				"w": "Q8682",
+				"w_en": "Real Madrid Club de Fútbol",
+				"w_ro": "Real Madrid"
+			},
+			{
+				"e": "Q330050",
+				"st": "http://www.wikidata.org/entity/statement/Q330050-F3444327-1996-4CE3-B714-5E2E8FD1ABAF",
+				"tara": "Q29",
+				"tara_en": "Spain",
+				"tara_ro": "Spania",
+				"w": "Q8682",
+				"w_en": "Real Madrid Club de Fútbol",
+				"w_ro": "Real Madrid"
+			},
+			{
+				"e": "Q392535",
+				"st": "http://www.wikidata.org/entity/statement/Q392535-E60CC21D-780B-4B65-8B3E-E21A5C990ECF",
+				"tara": "Q29",
+				"tara_en": "Spain",
+				"tara_ro": "Spania",
+				"w": "Q8682",
+				"w_en": "Real Madrid Club de Fútbol",
+				"w_ro": "Real Madrid"
+			},
+			{
+				"e": "Q573225",
+				"st": "http://www.wikidata.org/entity/statement/Q573225-113EE825-E3F8-473A-BB25-2009040534C3",
+				"tara": "Q29",
+				"tara_en": "Spain",
+				"tara_ro": "Spania",
+				"w": "Q8682",
+				"w_en": "Real Madrid Club de Fútbol",
+				"w_ro": "Real Madrid"
+			},
+			{
+				"e": "Q727058",
+				"st": "http://www.wikidata.org/entity/statement/Q727058-36ECF104-E2A3-4335-AC4F-28A71823CAF4",
+				"tara": "Q29",
+				"tara_en": "Spain",
+				"tara_ro": "Spania",
+				"w": "Q8682",
+				"w_en": "Real Madrid Club de Fútbol",
+				"w_ro": "Real Madrid"
+			},
+			{
+				"e": "Q96621465",
+				"st": "http://www.wikidata.org/entity/statement/Q96621465-d4333386-4ed8-ce83-951e-96fb7589de1d",
+				"tara": "Q29",
+				"tara_en": "Spain",
+				"tara_ro": "Spania",
+				"w": "Q8682",
+				"w_en": "Real Madrid Club de Fútbol",
+				"w_ro": "Real Madrid"
+			},
+			{
+				"e": "Q11306107",
+				"st": "http://www.wikidata.org/entity/statement/Q11306107-F12F1804-7EF8-4B97-B316-DC4528EE1C07",
+				"tara": "Q29",
+				"tara_en": "Spain",
+				"tara_ro": "Spania",
+				"w": "Q7156",
+				"w_en": "FC Barcelona",
+				"w_mul": "Fc Barcelona",
+				"w_ro": "FC Barcelona"
+			},
+			{
+				"e": "Q188787",
+				"st": "http://www.wikidata.org/entity/statement/Q188787-34EB3445-16E1-4BD3-A951-1A86B2E7085C",
+				"tara": "Q29",
+				"tara_en": "Spain",
+				"tara_ro": "Spania",
+				"w": "Q7156",
+				"w_en": "FC Barcelona",
+				"w_mul": "Fc Barcelona",
+				"w_ro": "FC Barcelona"
+			},
+			{
+				"e": "Q189180",
+				"st": "http://www.wikidata.org/entity/statement/Q189180-69F0C105-48BD-4EF4-B687-AA565003A610",
+				"tara": "Q29",
+				"tara_en": "Spain",
+				"tara_ro": "Spania",
+				"w": "Q7156",
+				"w_en": "FC Barcelona",
+				"w_mul": "Fc Barcelona",
+				"w_ro": "FC Barcelona"
+			},
+			{
+				"e": "Q219705",
+				"st": "http://www.wikidata.org/entity/statement/Q219705-1514C748-A152-442C-A978-CFF6E0796ADE",
+				"tara": "Q29",
+				"tara_en": "Spain",
+				"tara_ro": "Spania",
+				"w": "Q7156",
+				"w_en": "FC Barcelona",
+				"w_mul": "Fc Barcelona",
+				"w_ro": "FC Barcelona"
+			},
+			{
+				"e": "Q269535",
+				"st": "http://www.wikidata.org/entity/statement/Q269535-A996D5E0-8D78-4CB6-8556-F41483F35FF1",
+				"tara": "Q29",
+				"tara_en": "Spain",
+				"tara_ro": "Spania",
+				"w": "Q7156",
+				"w_en": "FC Barcelona",
+				"w_mul": "Fc Barcelona",
+				"w_ro": "FC Barcelona"
+			},
+			{
+				"e": "Q134202",
+				"st": "http://www.wikidata.org/entity/statement/Q134202-008C4214-BDAE-4ED2-940F-A699FE0BFDF4",
+				"tara": "Q21",
+				"tara_en": "England",
+				"tara_ro": "Anglia",
+				"w": "Q47762",
+				"w_en": "England men's national association football team",
+				"w_ro": "Echipa națională de fotbal a Angliei"
+			},
+			{
+				"e": "Q188548",
+				"st": "http://www.wikidata.org/entity/statement/Q188548-3962B5DB-F357-4CE5-B51C-8E77F80FA271",
+				"tara": "Q33946",
+				"tara_en": "Czechoslovakia",
+				"tara_ro": "Cehoslovacia",
+				"w": "Q182072",
+				"w_en": "Czechoslovakia men's national association football team",
+				"w_ro": "Echipa națională de fotbal a Cehoslovaciei"
+			},
+			{
+				"e": "Q284163",
+				"st": "http://www.wikidata.org/entity/statement/Q284163-fbd3c248-4fbb-0f70-7d3b-adaf95e80999",
+				"tara": "Q414",
+				"tara_en": "Argentina",
+				"tara_ro": "Argentina",
+				"w": "Q79800",
+				"w_en": "Argentina national football team",
+				"w_ro": "Echipa națională de fotbal a Argentinei"
+			},
+			{
+				"e": "Q46938",
+				"st": "http://www.wikidata.org/entity/statement/Q46938-5E9CD77E-CD88-4940-9BEB-56F190EB34ED",
+				"tara": "Q414",
+				"tara_en": "Argentina",
+				"tara_ro": "Argentina",
+				"w": "Q79800",
+				"w_en": "Argentina national football team",
+				"w_ro": "Echipa națională de fotbal a Argentinei"
+			},
+			{
+				"e": "Q46943",
+				"st": "http://www.wikidata.org/entity/statement/Q46943-D1459434-1FB2-47BB-8E17-AA107B09DB45",
+				"tara": "Q414",
+				"tara_en": "Argentina",
+				"tara_ro": "Argentina",
+				"w": "Q79800",
+				"w_en": "Argentina national football team",
+				"w_ro": "Echipa națională de fotbal a Argentinei"
+			},
+			{
+				"e": "Q172831",
+				"st": "http://www.wikidata.org/entity/statement/Q172831-9E590ED7-7304-4013-93A9-91FAC568E397",
+				"tara": "Q15180",
+				"tara_en": "Soviet Union",
+				"tara_ro": "Uniunea Sovietică",
+				"w": "Q189275",
+				"w_en": "Soviet Union national association football team",
+				"w_ro": "Echipa națională de fotbal a Uniunii Sovietice"
+			},
+			{
+				"e": "Q118823",
+				"st": "http://www.wikidata.org/entity/statement/Q118823-2E9093C0-C04E-4AC7-8BED-762D4841DFCD",
+				"tara": "Q403",
+				"tara_en": "Serbia",
+				"tara_ro": "Serbia",
+				"w": "Q173009",
+				"w_en": "FK Crvena zvezda",
+				"w_ro": "Steaua Roșie Belgrad"
+			},
+			{
+				"e": "Q367805",
+				"st": "http://www.wikidata.org/entity/statement/Q367805-137ea431-4901-8f04-82dc-8f0a455ebdce",
+				"tara": "Q183",
+				"tara_en": "Germany",
+				"tara_ro": "Germania",
+				"w": "Q154408",
+				"w_en": "Germany women's national football team",
+				"w_ro": "Echipa națională de fotbal feminin a Germaniei"
+			},
+			{
+				"e": "Q500308",
+				"st": "http://www.wikidata.org/entity/statement/Q500308-9766E0C4-3F55-463D-BF9D-E73F2BA0554F",
+				"tara": "Q183",
+				"tara_en": "Germany",
+				"tara_ro": "Germania",
+				"w": "Q154408",
+				"w_en": "Germany women's national football team",
+				"w_ro": "Echipa națională de fotbal feminin a Germaniei"
+			},
+			{
+				"e": "Q180563",
+				"st": "http://www.wikidata.org/entity/statement/Q180563-7C04A6F3-25A7-4F8B-9ACE-D6AD07B4DF62",
+				"tara": "Q183",
+				"tara_en": "Germany",
+				"tara_ro": "Germania",
+				"w": "Q43310",
+				"w_en": "Germany men's national association football team",
+				"w_ro": "Echipa națională de fotbal a Germaniei"
+			},
+			{
+				"e": "Q182196",
+				"st": "http://www.wikidata.org/entity/statement/Q182196-34BF1017-88EA-406B-9940-E1DB5B0769D9",
+				"tara": "Q183",
+				"tara_en": "Germany",
+				"tara_ro": "Germania",
+				"w": "Q43310",
+				"w_en": "Germany men's national association football team",
+				"w_ro": "Echipa națională de fotbal a Germaniei"
+			},
+			{
+				"e": "Q182386",
+				"st": "http://www.wikidata.org/entity/statement/Q182386-ED306FD9-EABB-4B2A-9D45-252A42732840",
+				"tara": "Q183",
+				"tara_en": "Germany",
+				"tara_ro": "Germania",
+				"w": "Q43310",
+				"w_en": "Germany men's national association football team",
+				"w_ro": "Echipa națională de fotbal a Germaniei"
+			},
+			{
+				"e": "Q79859",
+				"st": "http://www.wikidata.org/entity/statement/Q79859-774ff684-4258-211e-7938-6f2cee414483",
+				"tara": "Q183",
+				"tara_en": "Germany",
+				"tara_ro": "Germania",
+				"w": "Q43310",
+				"w_en": "Germany men's national association football team",
+				"w_ro": "Echipa națională de fotbal a Germaniei"
+			},
+			{
+				"e": "Q196515",
+				"st": "http://www.wikidata.org/entity/statement/Q196515-F3223012-0309-4AD7-9837-FFA4DEBF9801",
+				"tara": "Q183",
+				"tara_en": "Germany",
+				"tara_ro": "Germania",
+				"w": "Q41420",
+				"w_en": "Borussia Dortmund",
+				"w_ro": "Borussia Dortmund"
+			},
+			{
+				"e": "Q456097",
+				"st": "http://www.wikidata.org/entity/statement/Q456097-4D4CA59C-9C1D-4B79-ACC0-625F2B4589F4",
+				"tara": "Q183",
+				"tara_en": "Germany",
+				"tara_ro": "Germania",
+				"w": "Q15789",
+				"w_en": "FC Bayern Munich",
+				"w_ro": "FC Bayern München"
+			},
+			{
+				"e": "Q485956",
+				"st": "http://www.wikidata.org/entity/statement/Q485956-47292F78-EA2D-4979-831D-820A9D7443E9",
+				"tara": "Q183",
+				"tara_en": "Germany",
+				"tara_ro": "Germania",
+				"w": "Q15789",
+				"w_en": "FC Bayern Munich",
+				"w_ro": "FC Bayern München"
+			},
+			{
+				"e": "Q53164830",
+				"st": "http://www.wikidata.org/entity/statement/Q53164830-95281045-49fd-5a2f-4099-0e3921f90d28",
+				"tara": "Q183",
+				"tara_en": "Germany",
+				"tara_ro": "Germania",
+				"w": "Q15789",
+				"w_en": "FC Bayern Munich",
+				"w_ro": "FC Bayern München"
+			},
+			{
+				"e": "Q642728",
+				"st": "http://www.wikidata.org/entity/statement/Q642728-BAE71001-DE2D-4BDD-A070-D7C0D485EDD5",
+				"tara": "Q183",
+				"tara_en": "Germany",
+				"tara_ro": "Germania",
+				"w": "Q15789",
+				"w_en": "FC Bayern Munich",
+				"w_ro": "FC Bayern München"
+			},
+			{
+				"e": "Q642869",
+				"st": "http://www.wikidata.org/entity/statement/Q642869-E269291A-CB3B-48DB-88C0-7F162E40C502",
+				"tara": "Q183",
+				"tara_en": "Germany",
+				"tara_ro": "Germania",
+				"w": "Q15789",
+				"w_en": "FC Bayern Munich",
+				"w_ro": "FC Bayern München"
+			},
+			{
+				"e": "Q642916",
+				"st": "http://www.wikidata.org/entity/statement/Q642916-92F21615-37E3-4523-8B73-DCDB73DAD168",
+				"tara": "Q183",
+				"tara_en": "Germany",
+				"tara_ro": "Germania",
+				"w": "Q15789",
+				"w_en": "FC Bayern Munich",
+				"w_ro": "FC Bayern München"
+			},
+			{
+				"e": "Q131075",
+				"st": "http://www.wikidata.org/entity/statement/Q131075-429F98BD-63BE-4B42-BA87-906E5C19B7AA",
+				"tara": "Q183",
+				"tara_en": "Germany",
+				"tara_ro": "Germania",
+				"w": "Q43310",
+				"w_en": "Germany men's national association football team",
+				"w_ro": "Echipa națională de fotbal a Germaniei"
+			},
+			{
+				"e": "Q132529",
+				"st": "http://www.wikidata.org/entity/statement/Q132529-588B1E9C-CDCA-485B-A15E-4A238E2B2155",
+				"tara": "Q183",
+				"tara_en": "Germany",
+				"tara_ro": "Germania",
+				"w": "Q43310",
+				"w_en": "Germany men's national association football team",
+				"w_ro": "Echipa națională de fotbal a Germaniei"
+			},
+			{
+				"e": "Q166121",
+				"st": "http://www.wikidata.org/entity/statement/Q166121-45948C61-9BB1-4723-A2CA-2A26B677AFCF",
+				"tara": "Q183",
+				"tara_en": "Germany",
+				"tara_ro": "Germania",
+				"w": "Q43310",
+				"w_en": "Germany men's national association football team",
+				"w_ro": "Echipa națională de fotbal a Germaniei"
+			},
+			{
+				"e": "Q642777",
+				"st": "http://www.wikidata.org/entity/statement/Q642777-CA658F13-35FD-46DC-825F-39863B8F9A68",
+				"tara": "Q183",
+				"tara_en": "Germany",
+				"tara_ro": "Germania",
+				"w": "Q51974",
+				"w_en": "Hamburger SV",
+				"w_mul": "Hamburger SV",
+				"w_ro": "Hamburg SV"
+			},
+			{
+				"e": "Q101751",
+				"st": "http://www.wikidata.org/entity/statement/Q101751-42EEC598-88DE-41D9-8DA1-FF3DBE121287",
+				"tara": "Q155",
+				"tara_en": "Brazil",
+				"tara_ro": "Brazilia",
+				"w": "Q83459",
+				"w_en": "Brazil men's national football team",
+				"w_ro": "Echipa națională de fotbal a Braziliei"
+			},
+			{
+				"e": "Q132533",
+				"st": "http://www.wikidata.org/entity/statement/Q132533-B004BED9-3D91-46CF-B66B-47522EF024F1",
+				"tara": "Q155",
+				"tara_en": "Brazil",
+				"tara_ro": "Brazilia",
+				"w": "Q83459",
+				"w_en": "Brazil men's national football team",
+				"w_ro": "Echipa națională de fotbal a Braziliei"
+			},
+			{
+				"e": "Q132664",
+				"st": "http://www.wikidata.org/entity/statement/Q132664-369BF805-2003-4714-AEB6-32A3764D7BD0",
+				"tara": "Q155",
+				"tara_en": "Brazil",
+				"tara_ro": "Brazilia",
+				"w": "Q83459",
+				"w_en": "Brazil men's national football team",
+				"w_ro": "Echipa națională de fotbal a Braziliei"
+			},
+			{
+				"e": "Q160813",
+				"st": "http://www.wikidata.org/entity/statement/Q160813-2F82DBEC-9B11-44B2-8D3A-427425AC733C",
+				"tara": "Q155",
+				"tara_en": "Brazil",
+				"tara_ro": "Brazilia",
+				"w": "Q83459",
+				"w_en": "Brazil men's national football team",
+				"w_ro": "Echipa națională de fotbal a Braziliei"
+			},
+			{
+				"e": "Q47735",
+				"st": "http://www.wikidata.org/entity/statement/Q47735-FAF4A854-1138-41F5-A5DB-711AECB73041",
+				"tara": "Q155",
+				"tara_en": "Brazil",
+				"tara_ro": "Brazilia",
+				"w": "Q83459",
+				"w_en": "Brazil men's national football team",
+				"w_ro": "Echipa națională de fotbal a Braziliei"
+			},
+			{
+				"e": "Q196681",
+				"st": "http://www.wikidata.org/entity/statement/Q196681-4CFBCCF4-55BA-4A6C-B915-0ADB337069F2",
+				"tara": "Q145",
+				"tara_en": "United Kingdom",
+				"tara_ro": "Regatul Unit",
+				"w": "Q1130849",
+				"w_en": "Liverpool F.C.",
+				"w_ro": "Liverpool FC"
+			},
+			{
+				"e": "Q30032467",
+				"st": "http://www.wikidata.org/entity/statement/Q30032467-4803E10B-FD30-4E0A-8A3E-F254754728FA",
+				"tara": "Q145",
+				"tara_en": "United Kingdom",
+				"tara_ro": "Regatul Unit",
+				"w": "Q1130849",
+				"w_en": "Liverpool F.C.",
+				"w_ro": "Liverpool FC"
+			},
+			{
+				"e": "Q308996",
+				"st": "http://www.wikidata.org/entity/statement/Q308996-3046C07C-45F2-484D-BD7A-39FFA3A1B902",
+				"tara": "Q145",
+				"tara_en": "United Kingdom",
+				"tara_ro": "Regatul Unit",
+				"w": "Q1130849",
+				"w_en": "Liverpool F.C.",
+				"w_ro": "Liverpool FC"
+			},
+			{
+				"e": "Q497020",
+				"st": "http://www.wikidata.org/entity/statement/Q497020-35977A52-C09D-4BCB-BAEB-2AB89A0D579B",
+				"tara": "Q145",
+				"tara_en": "United Kingdom",
+				"tara_ro": "Regatul Unit",
+				"w": "Q1130849",
+				"w_en": "Liverpool F.C.",
+				"w_ro": "Liverpool FC"
+			},
+			{
+				"e": "Q497085",
+				"st": "http://www.wikidata.org/entity/statement/Q497085-776D0F46-8FE3-4BE7-914B-8C373504F11D",
+				"tara": "Q145",
+				"tara_en": "United Kingdom",
+				"tara_ro": "Regatul Unit",
+				"w": "Q1130849",
+				"w_en": "Liverpool F.C.",
+				"w_ro": "Liverpool FC"
+			},
+			{
+				"e": "Q641465",
+				"st": "http://www.wikidata.org/entity/statement/Q641465-857DB1EA-2CBB-4737-A8AB-5BEAF18D854A",
+				"tara": "Q145",
+				"tara_en": "United Kingdom",
+				"tara_ro": "Regatul Unit",
+				"w": "Q1130849",
+				"w_en": "Liverpool F.C.",
+				"w_ro": "Liverpool FC"
+			},
+			{
+				"e": "Q586977",
+				"st": "http://www.wikidata.org/entity/statement/Q586977-E43C0707-40D6-45D0-BF54-43FE567196C9",
+				"tara": "Q145",
+				"tara_en": "United Kingdom",
+				"tara_ro": "Regatul Unit",
+				"w": "Q19593",
+				"w_en": "Celtic F.C.",
+				"w_ro": "Celtic Football Club"
+			},
+			{
+				"e": "Q596726",
+				"st": "http://www.wikidata.org/entity/statement/Q596726-326FE027-A895-48A6-89B0-78759DD86ABB",
+				"tara": "Q145",
+				"tara_en": "United Kingdom",
+				"tara_ro": "Regatul Unit",
+				"w": "Q19490",
+				"w_en": "Nottingham Forest F.C.",
+				"w_ro": "Nottingham Forest FC"
+			},
+			{
+				"e": "Q642789",
+				"st": "http://www.wikidata.org/entity/statement/Q642789-DCD1B3FB-D805-42BB-B8BF-6CB7F8E4C3F7",
+				"tara": "Q145",
+				"tara_en": "United Kingdom",
+				"tara_ro": "Regatul Unit",
+				"w": "Q19490",
+				"w_en": "Nottingham Forest F.C.",
+				"w_ro": "Nottingham Forest FC"
+			},
+			{
+				"e": "Q186489",
+				"st": "http://www.wikidata.org/entity/statement/Q186489-80565A66-6B3B-4B68-B0B2-E9B934EA4FC2",
+				"tara": "Q145",
+				"tara_en": "United Kingdom",
+				"tara_ro": "Regatul Unit",
+				"w": "Q18656",
+				"w_en": "Manchester United F.C.",
+				"w_ro": "Manchester United FC"
+			},
+			{
+				"e": "Q279736",
+				"st": "http://www.wikidata.org/entity/statement/Q279736-BF206DC6-3A3D-4F2C-982B-0CB94A709418",
+				"tara": "Q145",
+				"tara_en": "United Kingdom",
+				"tara_ro": "Regatul Unit",
+				"w": "Q18656",
+				"w_en": "Manchester United F.C.",
+				"w_ro": "Manchester United FC"
+			},
+			{
+				"e": "Q426678",
+				"st": "http://www.wikidata.org/entity/statement/Q426678-30630E65-A586-496C-B966-195DC63133C3",
+				"tara": "Q145",
+				"tara_en": "United Kingdom",
+				"tara_ro": "Regatul Unit",
+				"w": "Q18656",
+				"w_en": "Manchester United F.C.",
+				"w_ro": "Manchester United FC"
+			},
+			{
+				"e": "Q485002",
+				"st": "http://www.wikidata.org/entity/statement/Q485002-9FB5F78C-BF29-4BB7-824D-9662BCE97DAC",
+				"tara": "Q145",
+				"tara_en": "United Kingdom",
+				"tara_ro": "Regatul Unit",
+				"w": "Q9616",
+				"w_en": "Chelsea F.C.",
+				"w_ro": "Chelsea FC"
+			},
+			{
+				"e": "Q63088790",
+				"st": "http://www.wikidata.org/entity/statement/Q63088790-20074f90-45aa-26da-0f71-cebdbd5afd0c",
+				"tara": "Q145",
+				"tara_en": "United Kingdom",
+				"tara_ro": "Regatul Unit",
+				"w": "Q9616",
+				"w_en": "Chelsea F.C.",
+				"w_ro": "Chelsea FC"
+			},
+			{
+				"e": "Q106086340",
+				"st": "http://www.wikidata.org/entity/statement/Q106086340-e2b142f9-4385-a8bf-6ecd-0f6067ff4810",
+				"tara": "Q145",
+				"tara_en": "United Kingdom",
+				"tara_ro": "Regatul Unit",
+				"w": "Q50602",
+				"w_en": "Manchester City F.C.",
+				"w_ro": "Manchester City FC"
+			},
+			{
+				"e": "Q642743",
+				"st": "http://www.wikidata.org/entity/statement/Q642743-7A487B04-2AA6-421D-B880-0D3583C660AE",
+				"tara": "Q145",
+				"tara_en": "United Kingdom",
+				"tara_ro": "Regatul Unit",
+				"w": "Q18711",
+				"w_en": "Aston Villa F.C.",
+				"w_mul": "Aston Villa F.C.",
+				"w_ro": "Aston Villa FC"
+			},
+			{
+				"e": "Q132515",
+				"st": "http://www.wikidata.org/entity/statement/Q132515-811D7E48-B9A5-469F-9E4D-D58615A5784D",
+				"tara": "Q77",
+				"tara_en": "Uruguay",
+				"tara_ro": "Uruguay",
+				"w": "Q134916",
+				"w_en": "Uruguay men's national football team",
+				"w_ro": "Echipa națională de fotbal a Uruguayului"
+			},
+			{
+				"e": "Q48432",
+				"st": "http://www.wikidata.org/entity/statement/Q48432-7D55E6A3-5817-4ACD-A217-A2D4858EC17D",
+				"tara": "Q77",
+				"tara_en": "Uruguay",
+				"tara_ro": "Uruguay",
+				"w": "Q134916",
+				"w_en": "Uruguay men's national football team",
+				"w_ro": "Echipa națională de fotbal a Uruguayului"
+			},
+			{
+				"e": "Q275673",
+				"st": "http://www.wikidata.org/entity/statement/Q275673-826B194F-0C68-4962-9330-98EDD0206EDE",
+				"tara": "Q142",
+				"tara_en": "France",
+				"tara_ro": "Franța",
+				"w": "Q132885",
+				"w_en": "Olympique de Marseille",
+				"w_ro": "Olympique de Marseille"
+			},
+			{
+				"e": "Q101730",
+				"st": "http://www.wikidata.org/entity/statement/Q101730-1DA27BFA-5071-4252-8ACA-50008148E67D",
+				"tara": "Q142",
+				"tara_en": "France",
+				"tara_ro": "Franța",
+				"w": "Q47774",
+				"w_en": "France men's national association football team",
+				"w_ro": "Echipa națională de fotbal a Franței"
+			},
+			{
+				"e": "Q131239",
+				"st": "http://www.wikidata.org/entity/statement/Q131239-062C318E-D01F-4CE1-8CE2-826E20718C58",
+				"tara": "Q142",
+				"tara_en": "France",
+				"tara_ro": "Franța",
+				"w": "Q47774",
+				"w_en": "France men's national association football team",
+				"w_ro": "Echipa națională de fotbal a Franței"
+			},
+			{
+				"e": "Q170645",
+				"st": "http://www.wikidata.org/entity/statement/Q170645-9e57a9e8-43e7-95a1-dd51-46d2407d65b1",
+				"tara": "Q142",
+				"tara_en": "France",
+				"tara_ro": "Franța",
+				"w": "Q47774",
+				"w_en": "France men's national association football team",
+				"w_ro": "Echipa națională de fotbal a Franței"
+			},
+			{
+				"e": "Q182770",
+				"st": "http://www.wikidata.org/entity/statement/Q182770-D0EFD119-780E-4CBB-98F3-D6B27FA90696",
+				"tara": "Q142",
+				"tara_en": "France",
+				"tara_ro": "Franța",
+				"w": "Q47774",
+				"w_en": "France men's national association football team",
+				"w_ro": "Echipa națională de fotbal a Franței"
+			},
+			{
+				"e": "Q117008008",
+				"st": "http://www.wikidata.org/entity/statement/Q117008008-98241f31-469c-09be-3780-6923f7cef677",
+				"tara": "Q142",
+				"tara_en": "France",
+				"tara_ro": "Franța",
+				"w": "Q483020",
+				"w_en": "Paris Saint-Germain FC",
+				"w_mul": "Paris Saint-Germain",
+				"w_ro": "Paris Saint-Germain FC"
+			},
+			{
+				"e": "Q124024430",
+				"st": "http://www.wikidata.org/entity/statement/Q124024430-78d768aa-4cbe-eb5e-d2be-0c36ae4b9faf",
+				"tara": "Q142",
+				"tara_en": "France",
+				"tara_ro": "Franța",
+				"w": "Q483020",
+				"w_en": "Paris Saint-Germain FC",
+				"w_mul": "Paris Saint-Germain",
+				"w_ro": "Paris Saint-Germain FC"
+			},
+			{
+				"e": "Q371848",
+				"st": "http://www.wikidata.org/entity/statement/Q371848-D1CB2BF9-0B5C-456E-81F7-84C52F70E49A",
+				"tara": "Q55",
+				"tara_en": "Netherlands",
+				"tara_ro": "Țările de Jos",
+				"w": "Q134241",
+				"w_en": "Feyenoord Rotterdam",
+				"w_ro": "Feyenoord Rotterdam"
+			},
+			{
+				"e": "Q117079",
+				"st": "http://www.wikidata.org/entity/statement/Q117079-063DC592-9C94-4575-B5DA-BE9A747DC3D1",
+				"tara": "Q55",
+				"tara_en": "Netherlands",
+				"tara_ro": "Țările de Jos",
+				"w": "Q81888",
+				"w_en": "AFC Ajax",
+				"w_ro": "Ajax Amsterdam"
+			},
+			{
+				"e": "Q269640",
+				"st": "http://www.wikidata.org/entity/statement/Q269640-3378C0B9-CDD1-466B-902B-141AC4E6DD72",
+				"tara": "Q55",
+				"tara_en": "Netherlands",
+				"tara_ro": "Țările de Jos",
+				"w": "Q81888",
+				"w_en": "AFC Ajax",
+				"w_ro": "Ajax Amsterdam"
+			},
+			{
+				"e": "Q455985",
+				"st": "http://www.wikidata.org/entity/statement/Q455985-C85271EF-D6C8-4A2F-A764-D3FFCCA97C77",
+				"tara": "Q55",
+				"tara_en": "Netherlands",
+				"tara_ro": "Țările de Jos",
+				"w": "Q81888",
+				"w_en": "AFC Ajax",
+				"w_ro": "Ajax Amsterdam"
+			},
+			{
+				"e": "Q642893",
+				"st": "http://www.wikidata.org/entity/statement/Q642893-761BA51B-5349-4D5F-BA0B-67D36AB0628D",
+				"tara": "Q55",
+				"tara_en": "Netherlands",
+				"tara_ro": "Țările de Jos",
+				"w": "Q81888",
+				"w_en": "AFC Ajax",
+				"w_ro": "Ajax Amsterdam"
+			},
+			{
+				"e": "Q392526",
+				"st": "http://www.wikidata.org/entity/statement/Q392526-F2F4F0C1-63FE-4E63-89E3-457DB06C3B70",
+				"tara": "Q55",
+				"tara_en": "Netherlands",
+				"tara_ro": "Țările de Jos",
+				"w": "Q11938",
+				"w_en": "PSV Eindhoven",
+				"w_ro": "PSV Eindhoven"
+			},
+			{
+				"e": "Q151867",
+				"st": "http://www.wikidata.org/entity/statement/Q151867-515A4D6D-746C-4164-8A44-586BB56CD839",
+				"tara": "Q55",
+				"tara_en": "Netherlands",
+				"tara_ro": "Țările de Jos",
+				"w": "Q47050",
+				"w_en": "Netherlands national association football team",
+				"w_ro": "Echipa națională de fotbal a Țărilor de Jos"
+			},
+			{
+				"e": "Q102920",
+				"rol": "Q3275569",
+				"st": "http://www.wikidata.org/entity/statement/Q102920-26ca0ee3-4526-6339-67fa-9a81790e6c35",
+				"tara": "Q45",
+				"tara_en": "Portugal",
+				"tara_ro": "Portugalia",
+				"w": "Q267245",
+				"w_en": "Portugal men's national football team",
+				"w_ro": "Echipa națională de fotbal a Portugaliei"
+			},
+			{
+				"e": "Q189571",
+				"st": "http://www.wikidata.org/entity/statement/Q189571-c9e93a78-4abd-aca1-d0fb-4d49a4ccb67a",
+				"tara": "Q45",
+				"tara_en": "Portugal",
+				"tara_ro": "Portugalia",
+				"w": "Q267245",
+				"w_en": "Portugal men's national football team",
+				"w_ro": "Echipa națională de fotbal a Portugaliei"
+			},
+			{
+				"e": "Q330686",
+				"st": "http://www.wikidata.org/entity/statement/Q330686-4E02D70F-41A0-4CE2-AB26-54BE092EDBB8",
+				"tara": "Q45",
+				"tara_en": "Portugal",
+				"tara_ro": "Portugalia",
+				"w": "Q131499",
+				"w_en": "S.L. Benfica",
+				"w_ro": "S.L. Benfica"
+			},
+			{
+				"e": "Q497028",
+				"st": "http://www.wikidata.org/entity/statement/Q497028-C88DF632-2298-484A-9CF5-4A1E9316B2D2",
+				"tara": "Q45",
+				"tara_en": "Portugal",
+				"tara_ro": "Portugalia",
+				"w": "Q131499",
+				"w_en": "S.L. Benfica",
+				"w_ro": "S.L. Benfica"
+			},
+			{
+				"e": "Q244467",
+				"st": "http://www.wikidata.org/entity/statement/Q244467-F7D6DCA9-40F7-4F23-800F-267E36B535FA",
+				"tara": "Q45",
+				"tara_en": "Portugal",
+				"tara_ro": "Portugalia",
+				"w": "Q128446",
+				"w_en": "FC Porto",
+				"w_ro": "FC Porto"
+			},
+			{
+				"e": "Q696245",
+				"st": "http://www.wikidata.org/entity/statement/Q696245-F82EB1A2-B521-436A-946D-3A6F1DA211C0",
+				"tara": "Q45",
+				"tara_en": "Portugal",
+				"tara_ro": "Portugalia",
+				"w": "Q128446",
+				"w_en": "FC Porto",
+				"w_ro": "FC Porto"
+			},
+			{
+				"e": "Q102920",
+				"rol": "Q852061",
+				"st": "http://www.wikidata.org/entity/statement/Q102920-61970939-4716-9fcc-fd2f-63c286a0d38b",
+				"tara": "Q41",
+				"tara_en": "Greece",
+				"tara_ro": "Grecia",
+				"w": "Q134925",
+				"w_en": "Greece men's national football team",
+				"w_ro": "Echipa națională de fotbal a Greciei"
+			},
+			{
+				"e": "Q642445",
+				"st": "http://www.wikidata.org/entity/statement/Q642445-15257b45-4921-42f7-1194-25c3fdfe3aa4",
+				"tara": "Q20",
+				"tara_en": "Norway",
+				"tara_ro": "Norvegia",
+				"w": "Q751994",
+				"w_en": "Norway women's national football team"
+			},
+			{
+				"e": "Q131591",
+				"st": "http://www.wikidata.org/entity/statement/Q131591-F7FF9250-E5ED-41F8-ADDB-E754704C778C",
+				"tara": "Q38",
+				"tara_en": "Italy",
+				"tara_ro": "Italia",
+				"w": "Q676899",
+				"w_en": "Italy men's national association football team",
+				"w_ro": "echipa națională de fotbal a Italiei"
+			},
+			{
+				"e": "Q1477177",
+				"st": "http://www.wikidata.org/entity/statement/Q1477177-D3AE8FB5-C704-4637-8646-C9CAEA1CD316",
+				"tara": "Q38",
+				"tara_en": "Italy",
+				"tara_ro": "Italia",
+				"w": "Q676899",
+				"w_en": "Italy men's national association football team",
+				"w_ro": "echipa națională de fotbal a Italiei"
+			},
+			{
+				"e": "Q182201",
+				"st": "http://www.wikidata.org/entity/statement/Q182201-1BF7E67F-8DA3-4FBD-BFEC-091B1BA8F7BC",
+				"tara": "Q38",
+				"tara_en": "Italy",
+				"tara_ro": "Italia",
+				"w": "Q676899",
+				"w_en": "Italy men's national association football team",
+				"w_ro": "echipa națională de fotbal a Italiei"
+			},
+			{
+				"e": "Q373501",
+				"st": "http://www.wikidata.org/entity/statement/Q373501-1d8c3deb-435f-fad0-3e5f-4b638a221a04",
+				"tara": "Q38",
+				"tara_en": "Italy",
+				"tara_ro": "Italia",
+				"w": "Q676899",
+				"w_en": "Italy men's national association football team",
+				"w_ro": "echipa națională de fotbal a Italiei"
+			},
+			{
+				"e": "Q37285",
+				"st": "http://www.wikidata.org/entity/statement/Q37285-ce525195-404c-1ad0-66b1-8d6ef584bda0",
+				"tara": "Q38",
+				"tara_en": "Italy",
+				"tara_ro": "Italia",
+				"w": "Q676899",
+				"w_en": "Italy men's national association football team",
+				"w_ro": "echipa națională de fotbal a Italiei"
+			},
+			{
+				"e": "Q46934",
+				"st": "http://www.wikidata.org/entity/statement/Q46934-17af2aec-4ffe-8b36-db9c-2b54d2835235",
+				"tara": "Q38",
+				"tara_en": "Italy",
+				"tara_ro": "Italia",
+				"w": "Q676899",
+				"w_en": "Italy men's national association football team",
+				"w_ro": "echipa națională de fotbal a Italiei"
+			},
+			{
+				"e": "Q192736",
+				"st": "http://www.wikidata.org/entity/statement/Q192736-E488B51A-160B-471A-8E7A-FE50E6719284",
+				"tara": "Q38",
+				"tara_en": "Italy",
+				"tara_ro": "Italia",
+				"w": "Q1543",
+				"w_en": "AC Milan",
+				"w_ro": "A.C. Milan"
+			},
+			{
+				"e": "Q4405",
+				"st": "http://www.wikidata.org/entity/statement/Q4405-B202B999-FAD5-49E7-B035-D6D8E18B0A0F",
+				"tara": "Q38",
+				"tara_en": "Italy",
+				"tara_ro": "Italia",
+				"w": "Q1543",
+				"w_en": "AC Milan",
+				"w_ro": "A.C. Milan"
+			},
+			{
+				"e": "Q455978",
+				"st": "http://www.wikidata.org/entity/statement/Q455978-C6F40820-C532-42C5-9D80-1D635968EE3C",
+				"tara": "Q38",
+				"tara_en": "Italy",
+				"tara_ro": "Italia",
+				"w": "Q1543",
+				"w_en": "AC Milan",
+				"w_ro": "A.C. Milan"
+			},
+			{
+				"e": "Q500074",
+				"st": "http://www.wikidata.org/entity/statement/Q500074-DF524336-90D6-4034-AAE4-33B946CAF8ED",
+				"tara": "Q38",
+				"tara_en": "Italy",
+				"tara_ro": "Italia",
+				"w": "Q1543",
+				"w_en": "AC Milan",
+				"w_ro": "A.C. Milan"
+			},
+			{
+				"e": "Q594303",
+				"st": "http://www.wikidata.org/entity/statement/Q594303-30D73BC9-45A4-4AF1-92CB-F4BFF2C22B06",
+				"tara": "Q38",
+				"tara_en": "Italy",
+				"tara_ro": "Italia",
+				"w": "Q1543",
+				"w_en": "AC Milan",
+				"w_ro": "A.C. Milan"
+			},
+			{
+				"e": "Q642758",
+				"st": "http://www.wikidata.org/entity/statement/Q642758-016C8B4E-0FAB-4D68-BC43-A133BBADF302",
+				"tara": "Q38",
+				"tara_en": "Italy",
+				"tara_ro": "Italia",
+				"w": "Q1543",
+				"w_en": "AC Milan",
+				"w_ro": "A.C. Milan"
+			},
+			{
+				"e": "Q696237",
+				"st": "http://www.wikidata.org/entity/statement/Q696237-29B78447-1307-472C-AD21-F069FDA31244",
+				"tara": "Q38",
+				"tara_en": "Italy",
+				"tara_ro": "Italia",
+				"w": "Q1543",
+				"w_en": "AC Milan",
+				"w_ro": "A.C. Milan"
+			},
+			{
+				"e": "Q26170",
+				"st": "http://www.wikidata.org/entity/statement/Q26170-0FD91DE7-CF28-4D98-A147-0DCB1BC354D0",
+				"tara": "Q38",
+				"tara_en": "Italy",
+				"tara_ro": "Italia",
+				"w": "Q1422",
+				"w_en": "Juventus FC",
+				"w_ro": "Juventus Torino"
+			},
+			{
+				"e": "Q642844",
+				"st": "http://www.wikidata.org/entity/statement/Q642844-BDF4FE09-9C5C-4104-A03D-C3422BD10DD0",
+				"tara": "Q38",
+				"tara_en": "Italy",
+				"tara_ro": "Italia",
+				"w": "Q1422",
+				"w_en": "Juventus FC",
+				"w_ro": "Juventus Torino"
+			},
+			{
+				"e": "Q184182",
+				"st": "http://www.wikidata.org/entity/statement/Q184182-16CC3C2F-E8AB-4407-86D7-A9D4766A02BC",
+				"tara": "Q38",
+				"tara_en": "Italy",
+				"tara_ro": "Italia",
+				"w": "Q631",
+				"w_en": "Inter Milan",
+				"w_mul": "Inter Milan",
+				"w_ro": "FC Internazionale Milano"
+			},
+			{
+				"e": "Q497052",
+				"st": "http://www.wikidata.org/entity/statement/Q497052-664455AD-94DD-40D2-BCA7-C134A1CB70E8",
+				"tara": "Q38",
+				"tara_en": "Italy",
+				"tara_ro": "Italia",
+				"w": "Q631",
+				"w_en": "Inter Milan",
+				"w_mul": "Inter Milan",
+				"w_ro": "FC Internazionale Milano"
+			},
+			{
+				"e": "Q500084",
+				"st": "http://www.wikidata.org/entity/statement/Q500084-EE5820C7-A168-4068-B0E4-7C3C2C695DDB",
+				"tara": "Q38",
+				"tara_en": "Italy",
+				"tara_ro": "Italia",
+				"w": "Q631",
+				"w_en": "Inter Milan",
+				"w_mul": "Inter Milan",
+				"w_ro": "FC Internazionale Milano"
+			},
+			{
+				"e": "Q330674",
+				"st": "http://www.wikidata.org/entity/statement/Q330674-38E045DC-8525-4A28-993C-7FD507F3627E",
+				"tara": "Q218",
+				"tara_en": "Romania",
+				"tara_ro": "România",
+				"w": "Q179658",
+				"w_en": "FCSB",
+				"w_mul": "FCSB",
+				"w_ro": "FCSB"
+			},
+			{
+				"e": "Q108183",
+				"st": "http://www.wikidata.org/entity/statement/Q108183-7441899E-A9E7-437A-AB5F-F943D6E2AE43",
+				"tara": "Q17",
+				"tara_en": "Japan",
+				"tara_ro": "Japonia",
+				"w": "Q388232",
+				"w_en": "Japan women's national football team",
+				"w_ro": "Echipa națională de fotbal feminin a Japoniei"
+			},
+			{
+				"e": "Q459419",
+				"st": "http://www.wikidata.org/entity/statement/Q459419-4397d85a-4906-8bf4-38b7-ad0175eaf7d1",
+				"tara": "Q30",
+				"tara_en": "United States",
+				"tara_ro": "Statele Unite ale Americii",
+				"w": "Q334526",
+				"w_en": "United States women's national soccer team",
+				"w_ro": "Echipa națională de fotbal feminin a Statelor Unite ale Americii"
+			},
+			{
+				"e": "Q4630361",
+				"st": "http://www.wikidata.org/entity/statement/Q4630361-67b98661-4b6a-b640-95d4-62bdf95283b5",
+				"tara": "Q30",
+				"tara_en": "United States",
+				"tara_ro": "Statele Unite ale Americii",
+				"w": "Q334526",
+				"w_en": "United States women's national soccer team",
+				"w_ro": "Echipa națională de fotbal feminin a Statelor Unite ale Americii"
+			},
+			{
+				"e": "Q568445",
+				"st": "http://www.wikidata.org/entity/statement/Q568445-d633c0f7-49d3-1c76-f829-e01cb6c0e70f",
+				"tara": "Q30",
+				"tara_en": "United States",
+				"tara_ro": "Statele Unite ale Americii",
+				"w": "Q334526",
+				"w_en": "United States women's national soccer team",
+				"w_ro": "Echipa națională de fotbal feminin a Statelor Unite ale Americii"
+			},
+			{
+				"e": "Q911847",
+				"st": "http://www.wikidata.org/entity/statement/Q911847-b43dd28c-4ded-1cf5-f4f9-7b27ba5ddad7",
+				"tara": "Q30",
+				"tara_en": "United States",
+				"tara_ro": "Statele Unite ale Americii",
+				"w": "Q334526",
+				"w_en": "United States women's national soccer team",
+				"w_ro": "Echipa națională de fotbal feminin a Statelor Unite ale Americii"
+			},
+			{
+				"e": "Q60761793",
+				"st": "http://www.wikidata.org/entity/statement/Q60761793-e7e4dae2-4baa-2900-69a7-1145ad15add4",
+				"tara": "Q35",
+				"tara_en": "Denmark",
+				"tara_ro": "Danemarca",
+				"w": "Q514498",
+				"w_en": "Denmark women's national football team"
+			},
+			{
+				"e": "Q60761818",
+				"st": "http://www.wikidata.org/entity/statement/Q60761818-1bfc51df-479f-4440-5531-208a5995bd8c",
+				"tara": "Q35",
+				"tara_en": "Denmark",
+				"tara_ro": "Danemarca",
+				"w": "Q514498",
+				"w_en": "Denmark women's national football team"
+			},
+			{
+				"e": "Q161810",
+				"st": "http://www.wikidata.org/entity/statement/Q161810-ACB54DDA-37E1-46AD-AC19-49B16B06F903",
+				"tara": "Q35",
+				"tara_en": "Denmark",
+				"tara_ro": "Danemarca",
+				"w": "Q131785",
+				"w_en": "Denmark men's national football team",
+				"w_ro": "Echipa națională de fotbal a Danemarcei"
+			},
+			{
+				"e": "Q19672232",
+				"st": "http://www.wikidata.org/entity/statement/Q19672232-13e9b1a1-4d10-4630-d0e8-f5281cd938c9",
+				"tara": "Q29",
+				"tara_en": "Spain",
+				"tara_ro": "Spania",
+				"w": "Q847623",
+				"w_en": "Spain women's national association football team",
+				"w_ro": "Echipa națională de fotbal feminin a Spaniei"
+			},
+			{
+				"e": "Q15098367",
+				"st": "http://www.wikidata.org/entity/statement/Q15098367-5580aab0-44f4-22aa-1cc6-f849d2d60092",
+				"tara": "Q29",
+				"tara_en": "Spain",
+				"tara_ro": "Spania",
+				"w": "Q42267",
+				"w_en": "Spain men's national football team",
+				"w_ro": "Echipa națională de fotbal a Spaniei"
+			},
+			{
+				"e": "Q176883",
+				"st": "http://www.wikidata.org/entity/statement/Q176883-c0915b81-455b-f299-965f-19fb866777e7",
+				"tara": "Q29",
+				"tara_en": "Spain",
+				"tara_ro": "Spania",
+				"w": "Q42267",
+				"w_en": "Spain men's national football team",
+				"w_ro": "Echipa națională de fotbal a Spaniei"
+			},
+			{
+				"e": "Q182205",
+				"st": "http://www.wikidata.org/entity/statement/Q182205-D83A4A97-2571-4B97-935B-B8E424194629",
+				"tara": "Q29",
+				"tara_en": "Spain",
+				"tara_ro": "Spania",
+				"w": "Q42267",
+				"w_en": "Spain men's national football team",
+				"w_ro": "Echipa națională de fotbal a Spaniei"
+			},
+			{
+				"e": "Q22669",
+				"st": "http://www.wikidata.org/entity/statement/Q22669-637b4dfc-4138-cfc7-d646-ade19d31c21f",
+				"tara": "Q29",
+				"tara_en": "Spain",
+				"tara_ro": "Spania",
+				"w": "Q42267",
+				"w_en": "Spain men's national football team",
+				"w_ro": "Echipa națională de fotbal a Spaniei"
+			}
+		],
+		"editii": [
+			{
+				"comp": "Q18756",
+				"e": "Q918001",
+				"e_en": "2010–11 UEFA Champions League knockout phase"
+			},
+			{
+				"an": "1934",
+				"comp": "Q19317",
+				"e": "Q1477177",
+				"e_en": "1934 FIFA World Cup",
+				"e_ro": "Campionatul Mondial de Fotbal 1934"
+			},
+			{
+				"an": "2014",
+				"comp": "Q19317",
+				"e": "Q1489646",
+				"e_en": "2014 FIFA World Cup qualification – UEFA Second Round"
+			},
+			{
+				"an": "1984",
+				"comp": "Q260858",
+				"e": "Q3653979",
+				"e_en": "UEFA Euro 1984 qualifying Group 5"
+			},
+			{
+				"comp": "Q19317",
+				"e": "Q3792814",
+				"e_en": "The Lost World Cup"
+			},
+			{
+				"comp": "Q18756",
+				"e": "Q4600983",
+				"e_en": "2002–03 UEFA Champions League knockout stage"
+			},
+			{
+				"an": "2019",
+				"comp": "Q19323",
+				"e": "Q4630361",
+				"e_en": "2019 FIFA Women's World Cup",
+				"e_ro": "Campionatul Mondial de Fotbal Feminin 2019"
+			},
+			{
+				"an": "2026",
+				"comp": "Q19317",
+				"e": "Q5020214",
+				"e_en": "2026 FIFA World Cup",
+				"e_ro": "Campionatul Mondial de Fotbal 2026"
+			},
+			{
+				"comp": "Q18756",
+				"e": "Q11306107",
+				"e_en": "2014–15 UEFA Champions League",
+				"e_ro": "Liga Campionilor 2014-2015"
+			},
+			{
+				"comp": "Q18756",
+				"e": "Q13416183",
+				"e_en": "2015–16 UEFA Champions League",
+				"e_ro": "Liga Campionilor 2015-2016"
+			},
+			{
+				"an": "2030",
+				"comp": "Q19317",
+				"e": "Q14935989",
+				"e_en": "2030 FIFA World Cup",
+				"e_ro": "Campionatul Mondial de Fotbal 2030"
+			},
+			{
+				"comp": "Q260858",
+				"e": "Q15098367",
+				"e_en": "UEFA Euro 2024",
+				"e_ro": "Campionatul European de Fotbal 2024"
+			},
+			{
+				"comp": "Q18756",
+				"e": "Q16821754",
+				"e_en": "2001–02 UEFA Champions League knockout stage"
+			},
+			{
+				"comp": "Q18756",
+				"e": "Q16842771",
+				"e_en": "2000–01 UEFA Champions League knockout stage"
+			},
+			{
+				"comp": "Q18756",
+				"e": "Q18740961",
+				"e_en": "2016–17 UEFA Champions League",
+				"e_ro": "Liga Campionilor 2016-2017"
+			},
+			{
+				"an": "2023",
+				"comp": "Q19323",
+				"e": "Q19672232",
+				"e_en": "2023 FIFA Women's World Cup"
+			},
+			{
+				"an": "2018",
+				"comp": "Q19317",
+				"e": "Q19941398",
+				"e_en": "2018 FIFA World Cup qualification – UEFA Second Round",
+				"e_ro": "Calificările pentru Campionatul Mondial de Fotbal 2018"
+			},
+			{
+				"an": "2018",
+				"comp": "Q19317",
+				"e": "Q20730966",
+				"e_en": "2018 FIFA World Cup qualification – UEFA Group A",
+				"e_ro": "Calificările pentru Campionatul Mondial de Fotbal 2018"
+			},
+			{
+				"an": "2018",
+				"comp": "Q19317",
+				"e": "Q20730978",
+				"e_en": "2018 FIFA World Cup qualification – UEFA Group C",
+				"e_ro": "Calificările pentru Campionatul Mondial de Fotbal 2018"
+			},
+			{
+				"an": "2018",
+				"comp": "Q19317",
+				"e": "Q20730976",
+				"e_en": "2018 FIFA World Cup qualification – UEFA Group I",
+				"e_ro": "Calificările pentru Campionatul Mondial de Fotbal 2018"
+			},
+			{
+				"an": "2018",
+				"comp": "Q19317",
+				"e": "Q20730977",
+				"e_en": "2018 FIFA World Cup qualification – UEFA Group B",
+				"e_ro": "Calificările pentru Campionatul Mondial de Fotbal 2018"
+			},
+			{
+				"an": "2018",
+				"comp": "Q19317",
+				"e": "Q20730982",
+				"e_en": "2018 FIFA World Cup qualification – UEFA Group E",
+				"e_ro": "Calificările pentru Campionatul Mondial de Fotbal 2018"
+			},
+			{
+				"an": "2018",
+				"comp": "Q19317",
+				"e": "Q20730983",
+				"e_en": "2018 FIFA World Cup qualification – UEFA Group F"
+			},
+			{
+				"an": "2018",
+				"comp": "Q19317",
+				"e": "Q20730980",
+				"e_en": "2018 FIFA World Cup qualification – UEFA Group D",
+				"e_ro": "Calificările pentru Campionatul Mondial de Fotbal 2018"
+			},
+			{
+				"an": "2018",
+				"comp": "Q19317",
+				"e": "Q20730985",
+				"e_en": "2018 FIFA World Cup qualification – UEFA Group G",
+				"e_ro": "Calificările pentru Campionatul Mondial de Fotbal 2018"
+			},
+			{
+				"an": "2018",
+				"comp": "Q19317",
+				"e": "Q20730988",
+				"e_en": "2018 FIFA World Cup qualification – UEFA Group H",
+				"e_ro": "Calificările pentru Campionatul Mondial de Fotbal 2018"
+			},
+			{
+				"comp": "Q18756",
+				"e": "Q20972117",
+				"e_en": "2017–18 UEFA Champions League",
+				"e_ro": "Liga Campionilor 2017-2018"
+			},
+			{
+				"comp": "Q18756",
+				"e": "Q21210683"
+			},
+			{
+				"comp": "Q18756",
+				"e": "Q30032467",
+				"e_en": "2018–19 UEFA Champions League",
+				"e_ro": "Liga Campionilor 2018-2019"
+			},
+			{
+				"comp": "Q18756",
+				"e": "Q30682633",
+				"e_en": "2017–18 UEFA Champions League knockout phase"
+			},
+			{
+				"an": "2028",
+				"comp": "Q260858",
+				"e": "Q37417257",
+				"e_en": "UEFA Euro 2028",
+				"e_ro": "Campionatul European de Fotbal 2028"
+			},
+			{
+				"an": "2034",
+				"comp": "Q19317",
+				"e": "Q43215379",
+				"e_en": "FIFA World Cup Saudi Arabia 2034",
+				"e_ro": "Campionatul Mondial de Fotbal 2034"
+			},
+			{
+				"comp": "Q18756",
+				"e": "Q48833691"
+			},
+			{
+				"comp": "Q18756",
+				"e": "Q53164830",
+				"e_en": "2019–20 UEFA Champions League",
+				"e_ro": "Liga Campionilor 2019-2020"
+			},
+			{
+				"comp": "Q18756",
+				"e": "Q53673351",
+				"e_en": "2018–19 UEFA Champions League qualifying phase and play-offs"
+			},
+			{
+				"comp": "Q18756",
+				"e": "Q54015786",
+				"e_en": "2018–19 UEFA Champions League group stage"
+			},
+			{
+				"comp": "Q18756",
+				"e": "Q55153438",
+				"e_en": "2018–19 UEFA Champions League knockout phase"
+			},
+			{
+				"comp": "Q18756",
+				"e": "Q56328389"
+			},
+			{
+				"an": "1971",
+				"comp": "Q19323",
+				"e": "Q60761793",
+				"e_en": "1971 Women's World Cup"
+			},
+			{
+				"an": "1970",
+				"comp": "Q19323",
+				"e": "Q60761818",
+				"e_en": "1970 Women's World Cup"
+			},
+			{
+				"comp": "Q18756",
+				"e": "Q63088790",
+				"e_en": "2020–21 UEFA Champions League",
+				"e_ro": "Liga Campionilor 2020-2021"
+			},
+			{
+				"comp": "Q18756",
+				"e": "Q64547253",
+				"e_en": "2019–20 UEFA Champions League qualifying phase and play-off round"
+			},
+			{
+				"an": "2027",
+				"comp": "Q19323",
+				"e": "Q64979822",
+				"e_en": "2027 FIFA Women's World Cup"
+			},
+			{
+				"an": "1946",
+				"comp": "Q19317",
+				"e": "Q65273310",
+				"e_en": "1946 FIFA World Cup"
+			},
+			{
+				"comp": "Q18756",
+				"e": "Q66815162",
+				"e_en": "2019–20 UEFA Champions League group stage"
+			},
+			{
+				"comp": "Q18756",
+				"e": "Q73798270",
+				"e_en": "2019–20 UEFA Champions League knockout phase"
+			},
+			{
+				"comp": "Q18756",
+				"e": "Q73901855"
+			},
+			{
+				"comp": "Q18756",
+				"e": "Q96621465",
+				"e_en": "2021–22 UEFA Champions League",
+				"e_ro": "Liga Campionilor 2021-2022"
+			},
+			{
+				"comp": "Q18756",
+				"e": "Q97204155",
+				"e_en": "2020–21 UEFA Champions League knockout phase",
+				"e_ro": "Faza eliminatorie a Ligii Campionilor 2020-2021"
+			},
+			{
+				"comp": "Q18756",
+				"e": "Q97204163",
+				"e_en": "2020–21 UEFA Champions League qualifying phase and play-off round",
+				"e_ro": "Liga Campionilor 2020-2021 faza calificărilor și runda play-off"
+			},
+			{
+				"comp": "Q18756",
+				"e": "Q98924499",
+				"e_en": "2020–21 UEFA Champions League group stage",
+				"e_ro": "Faza grupelor Ligii Campionilor 2020-2021"
+			},
+			{
+				"comp": "Q18756",
+				"e": "Q99749714"
+			},
+			{
+				"an": "2032",
+				"comp": "Q260858",
+				"e": "Q105387376",
+				"e_en": "UEFA Euro 2032",
+				"e_ro": "Campionatul European de Fotbal 2032"
+			},
+			{
+				"comp": "Q18756",
+				"e": "Q106086340",
+				"e_en": "2022–23 UEFA Champions League",
+				"e_ro": "Liga Campionilor 2022-2023"
+			},
+			{
+				"comp": "Q18756",
+				"e": "Q110474069",
+				"e_en": "1955–56 European Cup knockout phase"
+			},
+			{
+				"comp": "Q19323",
+				"e": "Q111072137",
+				"e_en": "edition of the FIFA Women's World Cup"
+			},
+			{
+				"comp": "Q18756",
+				"e": "Q111309338",
+				"e_en": "2023–24 UEFA Champions League",
+				"e_ro": "Liga Campionilor 2023-2024"
+			},
+			{
+				"an": "2038",
+				"comp": "Q19317",
+				"e": "Q114027850",
+				"e_en": "2038 FIFA World Cup",
+				"e_ro": "Campionatul Mondial de Fotbal 2038"
+			},
+			{
+				"an": "2031",
+				"comp": "Q19323",
+				"e": "Q116858656",
+				"e_en": "2031 FIFA Women's World Cup"
+			},
+			{
+				"comp": "Q18756",
+				"e": "Q117008008",
+				"e_en": "2024–25 UEFA Champions League",
+				"e_ro": "Liga Campionilor 2024-2025"
+			},
+			{
+				"an": "2039",
+				"comp": "Q19323",
+				"e": "Q122148778",
+				"e_en": "2039 FIFA Women's World Cup"
+			},
+			{
+				"comp": "Q18756",
+				"e": "Q124024430",
+				"e_en": "2025–26 UEFA Champions League",
+				"e_ro": "Liga Campionilor 2025-2026"
+			},
+			{
+				"an": "2036",
+				"comp": "Q260858",
+				"e": "Q126680627",
+				"e_en": "UEFA Euro 2036"
+			},
+			{
+				"an": "2027",
+				"comp": "Q18756",
+				"e": "Q131460448",
+				"e_en": "2026–27 UEFA Champions League",
+				"e_ro": "Liga Campionilor 2026-2027"
+			},
+			{
+				"an": "2035",
+				"comp": "Q19323",
+				"e": "Q133818853",
+				"e_en": "2035 FIFA Women's World Cup"
+			},
+			{
+				"comp": "Q18756",
+				"e": "Q135649118",
+				"e_en": "2027–28 UEFA Champions League"
+			},
+			{
+				"an": "1942",
+				"comp": "Q19317",
+				"e": "Q138679595",
+				"e_en": "1942 and 1946 FIFA World Cup"
+			},
+			{
+				"comp": "Q18756",
+				"e": "Q140722133",
+				"e_en": "2028–29 UEFA Champions League"
+			},
+			{
+				"comp": "Q18756",
+				"e": "Q4405",
+				"e_en": "1993–94 UEFA Champions League",
+				"e_ro": "Liga Campionilor 1993-1994"
+			},
+			{
+				"an": "2012",
+				"comp": "Q260858",
+				"e": "Q22669",
+				"e_en": "UEFA Euro 2012",
+				"e_ro": "Campionatul European de Fotbal 2012"
+			},
+			{
+				"comp": "Q18756",
+				"e": "Q26170",
+				"e_en": "1995–96 UEFA Champions League",
+				"e_ro": "Liga Campionilor 1995-1996"
+			},
+			{
+				"comp": "Q18756",
+				"e": "Q30608",
+				"e_en": "2013–14 UEFA Champions League",
+				"e_ro": "Liga Campionilor 2013-2014"
+			},
+			{
+				"an": "2006",
+				"comp": "Q19317",
+				"e": "Q37285",
+				"e_en": "2006 FIFA World Cup",
+				"e_ro": "Campionatul Mondial de Fotbal 2006"
+			},
+			{
+				"an": "1982",
+				"comp": "Q19317",
+				"e": "Q46934",
+				"e_en": "1982 FIFA World Cup",
+				"e_ro": "Campionatul Mondial de Fotbal 1982"
+			},
+			{
+				"an": "1986",
+				"comp": "Q19317",
+				"e": "Q46938",
+				"e_en": "1986 FIFA World Cup",
+				"e_ro": "Campionatul Mondial de Fotbal 1986"
+			},
+			{
+				"an": "1978",
+				"comp": "Q19317",
+				"e": "Q46943",
+				"e_en": "1978 FIFA World Cup",
+				"e_ro": "Campionatul Mondial de Fotbal 1978"
+			},
+			{
+				"an": "2002",
+				"comp": "Q19317",
+				"e": "Q47735",
+				"e_en": "2002 FIFA World Cup",
+				"e_ro": "Campionatul Mondial de Fotbal 2002"
+			},
+			{
+				"an": "1930",
+				"comp": "Q19317",
+				"e": "Q48432",
+				"e_en": "1930 FIFA World Cup",
+				"e_ro": "Campionatul Mondial de Fotbal 1930"
+			},
+			{
+				"an": "2014",
+				"comp": "Q19317",
+				"e": "Q79859",
+				"e_en": "2014 FIFA World Cup",
+				"e_ro": "Campionatul Mondial de Fotbal 2014"
+			},
+			{
+				"an": "1998",
+				"comp": "Q19317",
+				"e": "Q101730",
+				"e_en": "1998 FIFA World Cup",
+				"e_ro": "Campionatul Mondial de Fotbal 1998"
+			},
+			{
+				"an": "1994",
+				"comp": "Q19317",
+				"e": "Q101751",
+				"e_en": "1994 FIFA World Cup",
+				"e_ro": "Campionatul Mondial de Fotbal 1994"
+			},
+			{
+				"an": "2004",
+				"comp": "Q260858",
+				"e": "Q102920",
+				"e_en": "UEFA Euro 2004",
+				"e_ro": "Campionatul European de Fotbal 2004"
+			},
+			{
+				"comp": "Q19323",
+				"e": "Q108183",
+				"e_en": "2011 FIFA Women's World Cup",
+				"e_ro": "Campionatul Mondial de Fotbal Feminin 2011"
+			},
+			{
+				"an": "1970",
+				"comp": "Q18756",
+				"e": "Q117079",
+				"e_en": "1970–71 European Cup",
+				"e_ro": "Cupa Campionilor Europeni 1970-1971"
+			},
+			{
+				"an": "1990",
+				"comp": "Q18756",
+				"e": "Q118823",
+				"e_en": "1990–91 European Cup",
+				"e_ro": "Cupa Campionilor Europeni 1990-1991"
+			},
+			{
+				"an": "1954",
+				"comp": "Q19317",
+				"e": "Q131075",
+				"e_en": "1954 FIFA World Cup",
+				"e_ro": "Campionatul Mondial de Fotbal 1954"
+			},
+			{
+				"an": "2000",
+				"comp": "Q260858",
+				"e": "Q131239",
+				"e_en": "UEFA Euro 2000",
+				"e_ro": "Campionatul European de Fotbal 2000"
+			},
+			{
+				"an": "1938",
+				"comp": "Q19317",
+				"e": "Q131591",
+				"e_en": "1938 FIFA World Cup",
+				"e_ro": "Campionatul Mondial de Fotbal 1938"
+			},
+			{
+				"an": "1950",
+				"comp": "Q19317",
+				"e": "Q132515",
+				"e_en": "1950 FIFA World Cup",
+				"e_ro": "Campionatul Mondial de Fotbal 1950"
+			},
+			{
+				"an": "1990",
+				"comp": "Q19317",
+				"e": "Q132529",
+				"e_en": "1990 FIFA World Cup",
+				"e_ro": "Campionatul Mondial de Fotbal 1990"
+			},
+			{
+				"an": "1958",
+				"comp": "Q19317",
+				"e": "Q132533",
+				"e_en": "1958 FIFA World Cup",
+				"e_ro": "Campionatul Mondial de Fotbal 1958"
+			},
+			{
+				"an": "1970",
+				"comp": "Q19317",
+				"e": "Q132664",
+				"e_en": "1970 FIFA World Cup",
+				"e_ro": "Campionatul Mondial de Fotbal 1970"
+			},
+			{
+				"an": "1966",
+				"comp": "Q19317",
+				"e": "Q134202",
+				"e_en": "1966 FIFA World Cup",
+				"e_ro": "Campionatul Mondial de Fotbal 1966"
+			},
+			{
+				"an": "1988",
+				"comp": "Q260858",
+				"e": "Q151867",
+				"e_en": "UEFA Euro 1988",
+				"e_ro": "Campionatul European de Fotbal 1988"
+			},
+			{
+				"an": "1962",
+				"comp": "Q19317",
+				"e": "Q160813",
+				"e_en": "1962 FIFA World Cup",
+				"e_ro": "Campionatul Mondial de Fotbal 1962"
+			},
+			{
+				"an": "1992",
+				"comp": "Q260858",
+				"e": "Q161810",
+				"e_en": "UEFA Euro 1992",
+				"e_ro": "Campionatul European de Fotbal 1992"
+			},
+			{
+				"an": "1974",
+				"comp": "Q19317",
+				"e": "Q166121",
+				"e_en": "1974 FIFA World Cup",
+				"e_ro": "Campionatul Mondial de Fotbal 1974"
+			},
+			{
+				"an": "2018",
+				"comp": "Q19317",
+				"e": "Q170645",
+				"e_en": "2018 FIFA World Cup",
+				"e_ro": "Campionatul Mondial de Fotbal 2018"
+			},
+			{
+				"an": "1960",
+				"comp": "Q260858",
+				"e": "Q172831",
+				"e_en": "1960 European Nations' Cup",
+				"e_ro": "Cupa Națiunilor Europene 1960"
+			},
+			{
+				"an": "2010",
+				"comp": "Q19317",
+				"e": "Q176883",
+				"e_en": "2010 FIFA World Cup",
+				"e_ro": "Campionatul Mondial de Fotbal 2010"
+			},
+			{
+				"an": "1996",
+				"comp": "Q260858",
+				"e": "Q180563",
+				"e_en": "UEFA Euro 1996",
+				"e_ro": "Campionatul European de Fotbal 1996"
+			},
+			{
+				"an": "1980",
+				"comp": "Q260858",
+				"e": "Q182196",
+				"e_en": "UEFA Euro 1980",
+				"e_ro": "Campionatul European de Fotbal 1980"
+			},
+			{
+				"an": "1968",
+				"comp": "Q260858",
+				"e": "Q182201",
+				"e_en": "1968 UEFA European Championship",
+				"e_ro": "Campionatul European de Fotbal 1968"
+			},
+			{
+				"an": "1964",
+				"comp": "Q260858",
+				"e": "Q182205",
+				"e_en": "1964 European Challenge Cup",
+				"e_ro": "Cupa Națiunilor Europene 1964"
+			},
+			{
+				"an": "1972",
+				"comp": "Q260858",
+				"e": "Q182386",
+				"e_en": "UEFA Euro 1972",
+				"e_ro": "Campionatul European de Fotbal 1972"
+			},
+			{
+				"an": "1984",
+				"comp": "Q260858",
+				"e": "Q182770",
+				"e_en": "UEFA Euro 1984",
+				"e_ro": "Campionatul European de Fotbal 1984"
+			},
+			{
+				"comp": "Q18756",
+				"e": "Q184182",
+				"e_en": "2009–10 UEFA Champions League",
+				"e_ro": "Liga Campionilor 2009-2010"
+			},
+			{
+				"comp": "Q18756",
+				"e": "Q186489",
+				"e_en": "2007–08 UEFA Champions League",
+				"e_ro": "Liga Campionilor 2007-2008"
+			},
+			{
+				"an": "1976",
+				"comp": "Q260858",
+				"e": "Q188548",
+				"e_en": "UEFA Euro 1976",
+				"e_ro": "Campionatul European de Fotbal 1976"
+			},
+			{
+				"comp": "Q18756",
+				"e": "Q188787",
+				"e_en": "2008–09 UEFA Champions League",
+				"e_ro": "Liga Campionilor 2008-2009"
+			},
+			{
+				"comp": "Q18756",
+				"e": "Q189180",
+				"e_en": "2010–11 UEFA Champions League",
+				"e_ro": "Liga Campionilor 2010-2011"
+			},
+			{
+				"an": "2016",
+				"comp": "Q260858",
+				"e": "Q189571",
+				"e_en": "UEFA Euro 2016",
+				"e_ro": "Campionatul European de Fotbal 2016"
+			},
+			{
+				"comp": "Q18756",
+				"e": "Q192736",
+				"e_en": "2006–07 UEFA Champions League",
+				"e_ro": "Liga Campionilor 2006-2007"
+			},
+			{
+				"comp": "Q18756",
+				"e": "Q196515",
+				"e_en": "1996–97 UEFA Champions League",
+				"e_ro": "Liga Campionilor 1996-1997"
+			},
+			{
+				"comp": "Q18756",
+				"e": "Q196681",
+				"e_en": "1977–78 European Cup",
+				"e_ro": "Cupa Campionilor Europeni 1977-1978"
+			},
+			{
+				"an": "1942",
+				"comp": "Q19317",
+				"e": "Q203851",
+				"e_en": "1942 FIFA World Cup"
+			},
+			{
+				"comp": "Q18756",
+				"e": "Q219384",
+				"e_en": "1955–56 European Cup",
+				"e_ro": "Cupa Campionilor Europeni 1955-1956"
+			},
+			{
+				"comp": "Q18756",
+				"e": "Q219705",
+				"e_en": "2005–06 UEFA Champions League",
+				"e_ro": "Liga Campionilor 2005-2006"
+			},
+			{
+				"comp": "Q18756",
+				"e": "Q241409",
+				"e_en": "1997–98 UEFA Champions League",
+				"e_ro": "Liga Campionilor 1997-1998"
+			},
+			{
+				"an": "2008",
+				"comp": "Q260858",
+				"e": "Q241864",
+				"e_en": "UEFA Euro 2008",
+				"e_ro": "Campionatul European de Fotbal 2008"
+			},
+			{
+				"comp": "Q18756",
+				"e": "Q244467",
+				"e_en": "2003–04 UEFA Champions League",
+				"e_ro": "Liga Campionilor 2003-2004"
+			},
+			{
+				"comp": "Q18756",
+				"e": "Q245202",
+				"e_en": "1956–57 European Cup",
+				"e_ro": "Cupa Campionilor Europeni 1956-1957"
+			},
+			{
+				"an": "1991",
+				"comp": "Q18756",
+				"e": "Q269535",
+				"e_en": "1991–92 European Cup",
+				"e_ro": "Cupa Campionilor Europeni 1991-1992"
+			},
+			{
+				"an": "1971",
+				"comp": "Q18756",
+				"e": "Q269640",
+				"e_en": "1971–72 European Cup",
+				"e_ro": "Cupa Campionilor Europeni 1971-1972"
+			},
+			{
+				"comp": "Q18756",
+				"e": "Q275673",
+				"e_en": "1992–93 UEFA Champions League",
+				"e_ro": "Liga Campionilor 1992-1993"
+			},
+			{
+				"comp": "Q18756",
+				"e": "Q279736",
+				"e_en": "1998–99 UEFA Champions League",
+				"e_ro": "Liga Campionilor 1998-1999"
+			},
+			{
+				"an": "2022",
+				"comp": "Q19317",
+				"e": "Q284163",
+				"e_en": "2022 FIFA World Cup",
+				"e_ro": "Campionatul Mondial de Fotbal 2022"
+			},
+			{
+				"comp": "Q18756",
+				"e": "Q308996",
+				"e_en": "2004–05 UEFA Champions League",
+				"e_ro": "Liga Campionilor 2004-2005"
+			},
+			{
+				"comp": "Q18756",
+				"e": "Q309318",
+				"e_en": "1957–58 European Cup",
+				"e_ro": "Cupa Campionilor Europeni 1957-1958"
+			},
+			{
+				"an": "1958",
+				"comp": "Q18756",
+				"e": "Q309316",
+				"e_en": "1958–59 European Cup",
+				"e_ro": "Cupa Campionilor Europeni 1958-1959"
+			},
+			{
+				"comp": "Q18756",
+				"e": "Q330050",
+				"e_en": "1999–2000 UEFA Champions League",
+				"e_ro": "Liga Campionilor 1999-2000"
+			},
+			{
+				"comp": "Q18756",
+				"e": "Q330674",
+				"e_en": "1985–86 European Cup",
+				"e_ro": "Cupa Campionilor Europeni 1985-1986, 1986-1987, 2000-2001"
+			},
+			{
+				"comp": "Q18756",
+				"e": "Q330686",
+				"e_en": "1960–61 European Cup",
+				"e_ro": "Cupa Campionilor Europeni 1960-1961"
+			},
+			{
+				"an": "2007",
+				"comp": "Q19323",
+				"e": "Q367805",
+				"e_en": "2007 FIFA Women's World Cup",
+				"e_ro": "Campionatul Mondial de Fotbal Feminin 2007"
+			},
+			{
+				"an": "1969",
+				"comp": "Q18756",
+				"e": "Q371848",
+				"e_en": "1969–70 European Cup",
+				"e_ro": "Cupa Campionilor Europeni 1969-1970"
+			},
+			{
+				"an": "2021",
+				"comp": "Q260858",
+				"e": "Q373501",
+				"e_en": "UEFA Euro 2020",
+				"e_ro": "Campionatul European de Fotbal 2020"
+			},
+			{
+				"comp": "Q18756",
+				"e": "Q392526",
+				"e_en": "1987–88 European Cup",
+				"e_ro": "Cupa Campionilor Europeni 1987-1988"
+			},
+			{
+				"an": "1959",
+				"comp": "Q18756",
+				"e": "Q392535",
+				"e_en": "1959–60 European Cup",
+				"e_ro": "Cupa Campionilor Europeni 1959-1960"
+			},
+			{
+				"an": "2014",
+				"comp": "Q19317",
+				"e": "Q426659",
+				"e_en": "2014 FIFA World Cup qualification – UEFA Group C",
+				"e_ro": "Calificările pentru Campionatul Mondial de Fotbal 2014 (UEFA) – Grupa C"
+			},
+			{
+				"an": "1967",
+				"comp": "Q18756",
+				"e": "Q426678",
+				"e_en": "1967–68 European Cup",
+				"e_ro": "Cupa Campionilor Europeni 1967-1968"
+			},
+			{
+				"comp": "Q18756",
+				"e": "Q455978",
+				"e_en": "2002–03 UEFA Champions League",
+				"e_ro": "Liga Campionilor 2002-2003"
+			},
+			{
+				"comp": "Q18756",
+				"e": "Q455985",
+				"e_en": "1994–95 UEFA Champions League",
+				"e_ro": "Liga Campionilor 1994-1995"
+			},
+			{
+				"comp": "Q18756",
+				"e": "Q456097",
+				"e_en": "2000–01 UEFA Champions League",
+				"e_ro": "Liga Campionilor 2000-2001"
+			},
+			{
+				"an": "1991",
+				"comp": "Q19323",
+				"e": "Q459419",
+				"e_en": "1991 FIFA Women's World Cup",
+				"e_ro": "Campionatul Mondial de Fotbal Feminin 1991"
+			},
+			{
+				"comp": "Q18756",
+				"e": "Q485002",
+				"e_en": "2011–12 UEFA Champions League",
+				"e_ro": "Liga Campionilor 2011-2012"
+			},
+			{
+				"comp": "Q18756",
+				"e": "Q485956",
+				"e_en": "2012–13 UEFA Champions League",
+				"e_ro": "Liga Campionilor 2012-2013"
+			},
+			{
+				"comp": "Q18756",
+				"e": "Q497020",
+				"e_en": "1976–77 European Cup",
+				"e_ro": "Cupa Campionilor Europeni 1976-1977"
+			},
+			{
+				"comp": "Q18756",
+				"e": "Q497028",
+				"e_en": "1961–62 European Cup",
+				"e_ro": "Cupa Campionilor Europeni 1961-1962"
+			},
+			{
+				"comp": "Q18756",
+				"e": "Q497052",
+				"e_en": "1964–65 European Cup",
+				"e_ro": "Cupa Campionilor Europeni 1964-1965"
+			},
+			{
+				"an": "1983",
+				"comp": "Q18756",
+				"e": "Q497085",
+				"e_en": "1983–84 European Cup",
+				"e_ro": "Cupa Campionilor Europeni 1983-1984"
+			},
+			{
+				"comp": "Q18756",
+				"e": "Q500074",
+				"e_en": "1962–63 European Cup",
+				"e_ro": "Cupa Campionilor Europeni 1962-1963"
+			},
+			{
+				"comp": "Q18756",
+				"e": "Q500084",
+				"e_en": "1963–64 European Cup",
+				"e_ro": "Cupa Campionilor Europeni 1963-1964"
+			},
+			{
+				"an": "2003",
+				"comp": "Q19323",
+				"e": "Q500308",
+				"e_en": "2003 FIFA Women's World Cup",
+				"e_ro": "Campionatul Mondial de Fotbal Feminin 2003"
+			},
+			{
+				"an": "1999",
+				"comp": "Q19323",
+				"e": "Q568445",
+				"e_en": "1999 FIFA Women's World Cup",
+				"e_ro": "Campionatul Mondial de Fotbal Feminin 1999"
+			},
+			{
+				"comp": "Q18756",
+				"e": "Q573225",
+				"e_en": "1965–66 European Cup",
+				"e_ro": "Cupa Campionilor Europeni 1965-1966"
+			},
+			{
+				"an": "1966",
+				"comp": "Q18756",
+				"e": "Q586977",
+				"e_en": "1966–67 European Cup",
+				"e_ro": "Cupa Campionilor Europeni 1966-1967"
+			},
+			{
+				"an": "2014",
+				"comp": "Q19317",
+				"e": "Q591184",
+				"e_en": "2014 FIFA World Cup qualification – UEFA Group D",
+				"e_ro": "Calificările pentru Campionatul Mondial de Fotbal 2014 – UEFA Grupa D"
+			},
+			{
+				"comp": "Q18756",
+				"e": "Q594303",
+				"e_en": "1989–90 European Cup",
+				"e_ro": "Cupa Campionilor Europeni 1989-1990"
+			},
+			{
+				"comp": "Q18756",
+				"e": "Q596726",
+				"e_en": "1979–80 European Cup",
+				"e_ro": "Cupa Campionilor Europeni 1979-1980"
+			},
+			{
+				"an": "2014",
+				"comp": "Q19317",
+				"e": "Q601980",
+				"e_en": "2014 FIFA World Cup qualification – UEFA Group B",
+				"e_ro": "Calificările pentru Campionatul Mondial de Fotbal 2014 (UEFA) – Grupa B"
+			},
+			{
+				"comp": "Q18756",
+				"e": "Q641465",
+				"e_en": "1980–81 European Cup",
+				"e_ro": "Cupa Campionilor Europeni 1980-1981"
+			},
+			{
+				"an": "1995",
+				"comp": "Q19323",
+				"e": "Q642445",
+				"e_en": "1995 FIFA Women's World Cup",
+				"e_ro": "Campionatul Mondial de Fotbal Feminin 1995"
+			},
+			{
+				"an": "1975",
+				"comp": "Q18756",
+				"e": "Q642728",
+				"e_en": "1975–76 European Cup",
+				"e_ro": "Cupa Campionilor Europeni 1975-1976"
+			},
+			{
+				"comp": "Q18756",
+				"e": "Q642743",
+				"e_en": "1981–82 European Cup",
+				"e_ro": "Cupa Campionilor Europeni 1981-1982"
+			},
+			{
+				"an": "1968",
+				"comp": "Q18756",
+				"e": "Q642758",
+				"e_en": "1968–69 European Cup",
+				"e_ro": "Cupa Campionilor Europeni 1968-1969"
+			},
+			{
+				"comp": "Q18756",
+				"e": "Q642777",
+				"e_en": "1982–83 European Cup",
+				"e_ro": "Cupa Campionilor Europeni 1982-1983"
+			},
+			{
+				"an": "1978",
+				"comp": "Q18756",
+				"e": "Q642789",
+				"e_en": "1978–79 European Cup",
+				"e_ro": "Cupa Campionilor Europeni 1978-1979"
+			},
+			{
+				"comp": "Q18756",
+				"e": "Q642844",
+				"e_en": "1984–85 European Cup",
+				"e_ro": "Cupa Campionilor Europeni 1984-1985"
+			},
+			{
+				"an": "1973",
+				"comp": "Q18756",
+				"e": "Q642869",
+				"e_en": "1973–74 European Cup",
+				"e_ro": "Cupa Campionilor Europeni 1973-1974"
+			},
+			{
+				"an": "1972",
+				"comp": "Q18756",
+				"e": "Q642893",
+				"e_en": "1972–73 European Cup",
+				"e_ro": "Cupa Campionilor Europeni 1972-1973"
+			},
+			{
+				"an": "1974",
+				"comp": "Q18756",
+				"e": "Q642916",
+				"e_en": "1974–75 European Cup",
+				"e_ro": "Cupa Campionilor Europeni 1974-1975"
+			},
+			{
+				"comp": "Q18756",
+				"e": "Q696237",
+				"e_en": "1988–89 European Cup",
+				"e_ro": "Cupa Campionilor Europeni 1988-1989"
+			},
+			{
+				"comp": "Q18756",
+				"e": "Q696245",
+				"e_en": "1986–87 European Cup",
+				"e_ro": "Cupa Campionilor Europeni 1986-1987"
+			},
+			{
+				"comp": "Q18756",
+				"e": "Q727058",
+				"e_en": "2001–02 UEFA Champions League",
+				"e_ro": "Liga Campionilor 2001-2002"
+			},
+			{
+				"an": "2014",
+				"comp": "Q19317",
+				"e": "Q757236",
+				"e_en": "2014 FIFA World Cup qualification – UEFA Group A",
+				"e_ro": "Calificările pentru Campionatul Mondial de Fotbal 2014 (UEFA) – Grupa A"
+			},
+			{
+				"comp": "Q18756",
+				"e": "Q830259",
+				"e_en": "2011–12 UEFA Champions League knockout phase",
+				"e_ro": "Faza eliminatorie a Ligii Campionilor 2011-2012"
+			},
+			{
+				"an": "2015",
+				"comp": "Q19323",
+				"e": "Q911847",
+				"e_en": "2015 FIFA Women's World Cup",
+				"e_ro": "Campionatul Mondial de Fotbal Feminin 2015"
+			},
+			{
+				"comp": "Q18756",
+				"e": "Q913823",
+				"e_en": "2009–10 UEFA Champions League knockout phase",
+				"e_ro": "Faza eliminatorie a Ligii Campionilor 2009-2010"
+			}
+		],
+		"gazde": [
+			{
+				"e": "Q188548",
+				"tara": "Q83286",
+				"tara_en": "Socialist Federal Republic of Yugoslavia",
+				"tara_mul": "Socijalistička Federativna Republika Jugoslavija",
+				"tara_ro": "Republica Socialistă Federativă Iugoslavia"
+			},
+			{
+				"e": "Q151867",
+				"tara": "Q713750",
+				"tara_en": "West Germany",
+				"tara_ro": "Germania de Vest"
+			},
+			{
+				"e": "Q176883",
+				"tara": "Q258",
+				"tara_en": "South Africa",
+				"tara_ro": "Africa de Sud"
+			},
+			{
+				"e": "Q160813",
+				"tara": "Q298",
+				"tara_en": "Chile",
+				"tara_ro": "Chile"
+			},
+			{
+				"e": "Q19672232",
+				"tara": "Q408",
+				"tara_en": "Australia",
+				"tara_ro": "Australia"
+			},
+			{
+				"e": "Q46943",
+				"tara": "Q414",
+				"tara_en": "Argentina",
+				"tara_ro": "Argentina"
+			},
+			{
+				"e": "Q19672232",
+				"tara": "Q664",
+				"tara_en": "New Zealand",
+				"tara_ro": "Noua Zeelandă"
+			},
+			{
+				"e": "Q116858656",
+				"tara": "Q766",
+				"tara_en": "Jamaica",
+				"tara_ro": "Jamaica"
+			},
+			{
+				"e": "Q116858656",
+				"tara": "Q800",
+				"tara_en": "Costa Rica",
+				"tara_ro": "Costa Rica"
+			},
+			{
+				"e": "Q284163",
+				"tara": "Q846",
+				"tara_en": "Qatar",
+				"tara_ro": "Qatar"
+			},
+			{
+				"e": "Q43215379",
+				"tara": "Q851",
+				"tara_en": "Saudi Arabia",
+				"tara_ro": "Arabia Saudită"
+			},
+			{
+				"e": "Q47735",
+				"tara": "Q884",
+				"tara_en": "South Korea",
+				"tara_ro": "Coreea de Sud"
+			},
+			{
+				"e": "Q14935989",
+				"tara": "Q1028",
+				"tara_en": "Morocco",
+				"tara_ro": "Maroc"
+			},
+			{
+				"e": "Q5020214",
+				"tara": "Q16",
+				"tara_en": "Canada",
+				"tara_ro": "Canada"
+			},
+			{
+				"e": "Q911847",
+				"tara": "Q16",
+				"tara_en": "Canada",
+				"tara_ro": "Canada"
+			},
+			{
+				"e": "Q47735",
+				"tara": "Q17",
+				"tara_en": "Japan",
+				"tara_ro": "Japonia"
+			},
+			{
+				"e": "Q37417257",
+				"tara": "Q27",
+				"tara_en": "Ireland",
+				"tara_ro": "Irlanda"
+			},
+			{
+				"e": "Q116858656",
+				"tara": "Q30",
+				"tara_en": "United States",
+				"tara_ro": "Statele Unite ale Americii"
+			},
+			{
+				"e": "Q5020214",
+				"tara": "Q30",
+				"tara_en": "United States",
+				"tara_ro": "Statele Unite ale Americii"
+			},
+			{
+				"e": "Q568445",
+				"tara": "Q30",
+				"tara_en": "United States",
+				"tara_ro": "Statele Unite ale Americii"
+			},
+			{
+				"e": "Q500308",
+				"tara": "Q30",
+				"tara_en": "United States",
+				"tara_ro": "Statele Unite ale Americii"
+			},
+			{
+				"e": "Q101751",
+				"tara": "Q30",
+				"tara_en": "United States",
+				"tara_ro": "Statele Unite ale Americii"
+			},
+			{
+				"e": "Q182386",
+				"tara": "Q31",
+				"tara_en": "Belgium",
+				"tara_ro": "Belgia"
+			},
+			{
+				"e": "Q131239",
+				"tara": "Q31",
+				"tara_en": "Belgium",
+				"tara_ro": "Belgia"
+			},
+			{
+				"e": "Q30032467",
+				"tara": "Q29",
+				"tara_en": "Spain",
+				"tara_ro": "Spania"
+			},
+			{
+				"e": "Q596726",
+				"tara": "Q29",
+				"tara_en": "Spain",
+				"tara_ro": "Spania"
+			},
+			{
+				"e": "Q46934",
+				"tara": "Q29",
+				"tara_en": "Spain",
+				"tara_ro": "Spania"
+			},
+			{
+				"e": "Q14935989",
+				"tara": "Q29",
+				"tara_en": "Spain",
+				"tara_ro": "Spania"
+			},
+			{
+				"e": "Q182205",
+				"tara": "Q29",
+				"tara_en": "Spain",
+				"tara_ro": "Spania"
+			},
+			{
+				"e": "Q642445",
+				"tara": "Q34",
+				"tara_en": "Sweden",
+				"tara_ro": "Suedia"
+			},
+			{
+				"e": "Q161810",
+				"tara": "Q34",
+				"tara_en": "Sweden",
+				"tara_ro": "Suedia"
+			},
+			{
+				"e": "Q132533",
+				"tara": "Q34",
+				"tara_en": "Sweden",
+				"tara_ro": "Suedia"
+			},
+			{
+				"e": "Q13416183",
+				"tara": "Q38",
+				"tara_en": "Italy",
+				"tara_ro": "Italia"
+			},
+			{
+				"e": "Q105387376",
+				"tara": "Q38",
+				"tara_en": "Italy",
+				"tara_ro": "Italia"
+			},
+			{
+				"e": "Q60761818",
+				"tara": "Q38",
+				"tara_en": "Italy",
+				"tara_ro": "Italia"
+			},
+			{
+				"e": "Q1477177",
+				"tara": "Q38",
+				"tara_en": "Italy",
+				"tara_ro": "Italia"
+			},
+			{
+				"e": "Q182201",
+				"tara": "Q38",
+				"tara_en": "Italy",
+				"tara_ro": "Italia"
+			},
+			{
+				"e": "Q182196",
+				"tara": "Q38",
+				"tara_en": "Italy",
+				"tara_ro": "Italia"
+			},
+			{
+				"e": "Q132529",
+				"tara": "Q38",
+				"tara_en": "Italy",
+				"tara_ro": "Italia"
+			},
+			{
+				"e": "Q241864",
+				"tara": "Q39",
+				"tara_en": "Switzerland",
+				"tara_ro": "Elveția"
+			},
+			{
+				"e": "Q131075",
+				"tara": "Q39",
+				"tara_en": "Switzerland",
+				"tara_ro": "Elveția"
+			},
+			{
+				"e": "Q22669",
+				"tara": "Q36",
+				"tara_en": "Poland",
+				"tara_ro": "Polonia"
+			},
+			{
+				"e": "Q105387376",
+				"tara": "Q43",
+				"tara_en": "Turkey",
+				"tara_ro": "Turcia"
+			},
+			{
+				"e": "Q241864",
+				"tara": "Q40",
+				"tara_en": "Austria",
+				"tara_ro": "Austria"
+			},
+			{
+				"e": "Q53164830",
+				"tara": "Q45",
+				"tara_en": "Portugal",
+				"tara_ro": "Portugalia"
+			},
+			{
+				"e": "Q14935989",
+				"tara": "Q45",
+				"tara_en": "Portugal",
+				"tara_ro": "Portugalia"
+			},
+			{
+				"e": "Q102920",
+				"tara": "Q45",
+				"tara_en": "Portugal",
+				"tara_ro": "Portugalia"
+			},
+			{
+				"e": "Q131239",
+				"tara": "Q55",
+				"tara_en": "Netherlands",
+				"tara_ro": "Țările de Jos"
+			},
+			{
+				"e": "Q48432",
+				"tara": "Q77",
+				"tara_en": "Uruguay",
+				"tara_ro": "Uruguay"
+			},
+			{
+				"e": "Q46938",
+				"tara": "Q96",
+				"tara_en": "Mexico",
+				"tara_ro": "Mexic"
+			},
+			{
+				"e": "Q116858656",
+				"tara": "Q96",
+				"tara_en": "Mexico",
+				"tara_ro": "Mexic"
+			},
+			{
+				"e": "Q60761793",
+				"tara": "Q96",
+				"tara_en": "Mexico",
+				"tara_ro": "Mexic"
+			},
+			{
+				"e": "Q5020214",
+				"tara": "Q96",
+				"tara_en": "Mexico",
+				"tara_ro": "Mexic"
+			},
+			{
+				"e": "Q132664",
+				"tara": "Q96",
+				"tara_en": "Mexico",
+				"tara_ro": "Mexic"
+			},
+			{
+				"e": "Q4630361",
+				"tara": "Q142",
+				"tara_en": "France",
+				"tara_ro": "Franța"
+			},
+			{
+				"e": "Q189571",
+				"tara": "Q142",
+				"tara_en": "France",
+				"tara_ro": "Franța"
+			},
+			{
+				"e": "Q182770",
+				"tara": "Q142",
+				"tara_en": "France",
+				"tara_ro": "Franța"
+			},
+			{
+				"e": "Q172831",
+				"tara": "Q142",
+				"tara_en": "France",
+				"tara_ro": "Franța"
+			},
+			{
+				"e": "Q131591",
+				"tara": "Q142",
+				"tara_en": "France",
+				"tara_ro": "Franța"
+			},
+			{
+				"e": "Q101730",
+				"tara": "Q142",
+				"tara_en": "France",
+				"tara_ro": "Franța"
+			},
+			{
+				"e": "Q18740961",
+				"tara": "Q145",
+				"tara_en": "United Kingdom",
+				"tara_ro": "Regatul Unit"
+			},
+			{
+				"e": "Q133818853",
+				"tara": "Q145",
+				"tara_en": "United Kingdom",
+				"tara_ro": "Regatul Unit"
+			},
+			{
+				"e": "Q37417257",
+				"tara": "Q145",
+				"tara_en": "United Kingdom",
+				"tara_ro": "Regatul Unit"
+			},
+			{
+				"e": "Q180563",
+				"tara": "Q145",
+				"tara_en": "United Kingdom",
+				"tara_ro": "Regatul Unit"
+			},
+			{
+				"e": "Q134202",
+				"tara": "Q145",
+				"tara_en": "United Kingdom",
+				"tara_ro": "Regatul Unit"
+			},
+			{
+				"e": "Q459419",
+				"tara": "Q148",
+				"tara_en": "People's Republic of China",
+				"tara_ro": "China"
+			},
+			{
+				"e": "Q64979822",
+				"tara": "Q155",
+				"tara_en": "Brazil",
+				"tara_ro": "Brazilia"
+			},
+			{
+				"e": "Q132515",
+				"tara": "Q155",
+				"tara_en": "Brazil",
+				"tara_ro": "Brazilia"
+			},
+			{
+				"e": "Q79859",
+				"tara": "Q155",
+				"tara_en": "Brazil",
+				"tara_ro": "Brazilia"
+			},
+			{
+				"e": "Q170645",
+				"tara": "Q159",
+				"tara_en": "Russia",
+				"tara_ro": "Rusia"
+			},
+			{
+				"e": "Q11306107",
+				"tara": "Q183",
+				"tara_en": "Germany",
+				"tara_ro": "Germania"
+			},
+			{
+				"e": "Q37285",
+				"tara": "Q183",
+				"tara_en": "Germany",
+				"tara_ro": "Germania"
+			},
+			{
+				"e": "Q15098367",
+				"tara": "Q183",
+				"tara_en": "Germany",
+				"tara_ro": "Germania"
+			},
+			{
+				"e": "Q166121",
+				"tara": "Q183",
+				"tara_en": "Germany",
+				"tara_ro": "Germania"
+			},
+			{
+				"e": "Q108183",
+				"tara": "Q183",
+				"tara_en": "Germany",
+				"tara_ro": "Germania"
+			},
+			{
+				"e": "Q20972117",
+				"tara": "Q212",
+				"tara_en": "Ukraine",
+				"tara_ro": "Ucraina"
+			},
+			{
+				"e": "Q22669",
+				"tara": "Q212",
+				"tara_en": "Ukraine",
+				"tara_ro": "Ucraina"
+			}
+		]
+	}
+}

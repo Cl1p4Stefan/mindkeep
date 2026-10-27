@@ -1,0 +1,446 @@
+[
+	{
+		"id": "wd:Q1477177",
+		"nota": "Cupa Mondială de fotbal din 1934 s-a ținut în Italia, iar gazdele au câștigat-o."
+	},
+	{
+		"id": "wd:Q131591",
+		"nota": "Cupa Mondială de fotbal din 1938 s-a ținut în Franța și a fost câștigată de Italia."
+	},
+	{
+		"id": "wd:Q132515",
+		"nota": "Cupa Mondială de fotbal din 1950 s-a ținut în Brazilia și a fost câștigată de Uruguay."
+	},
+	{
+		"id": "wd:Q131075",
+		"nota": "Cupa Mondială de fotbal din 1954 s-a ținut în Elveția și a fost câștigată de Germania."
+	},
+	{
+		"id": "wd:Q132533",
+		"nota": "Cupa Mondială de fotbal din 1958 s-a ținut în Suedia și a fost câștigată de Brazilia."
+	},
+	{
+		"id": "wd:Q160813",
+		"nota": "Cupa Mondială de fotbal din 1962 s-a ținut în Chile și a fost câștigată de Brazilia."
+	},
+	{
+		"id": "wd:Q132664",
+		"nota": "Cupa Mondială de fotbal din 1970 s-a ținut în Mexic și a fost câștigată de Brazilia."
+	},
+	{
+		"id": "wd:Q166121",
+		"nota": "Cupa Mondială de fotbal din 1974 s-a ținut în Germania, iar gazdele au câștigat-o."
+	},
+	{
+		"id": "wd:Q46943",
+		"nota": "Cupa Mondială de fotbal din 1978 s-a ținut în Argentina, iar gazdele au câștigat-o."
+	},
+	{
+		"id": "wd:Q46934",
+		"nota": "Cupa Mondială de fotbal din 1982 s-a ținut în Spania și a fost câștigată de Italia."
+	},
+	{
+		"id": "wd:Q46938",
+		"nota": "Cupa Mondială de fotbal din 1986 s-a ținut în Mexic și a fost câștigată de Argentina."
+	},
+	{
+		"id": "wd:Q132529",
+		"nota": "Cupa Mondială de fotbal din 1990 s-a ținut în Italia și a fost câștigată de Germania."
+	},
+	{
+		"id": "wd:Q101751",
+		"nota": "Cupa Mondială de fotbal din 1994 s-a ținut în Statele Unite ale Americii și a fost câștigată de Brazilia."
+	},
+	{
+		"id": "wd:Q101730",
+		"nota": "Cupa Mondială de fotbal din 1998 s-a ținut în Franța, iar gazdele au câștigat-o."
+	},
+	{
+		"id": "wd:Q47735",
+		"nota": "Cupa Mondială de fotbal din 2002 s-a ținut în Coreea de Sud și Japonia și a fost câștigată de Brazilia."
+	},
+	{
+		"id": "wd:Q37285",
+		"nota": "Cupa Mondială de fotbal din 2006 s-a ținut în Germania și a fost câștigată de Italia."
+	},
+	{
+		"id": "wd:Q79859",
+		"nota": "Cupa Mondială de fotbal din 2014 s-a ținut în Brazilia și a fost câștigată de Germania."
+	},
+	{
+		"id": "wd:Q170645",
+		"nota": "Cupa Mondială de fotbal din 2018 s-a ținut în Rusia și a fost câștigată de Franța."
+	},
+	{
+		"id": "wd:Q284163",
+		"nota": "Cupa Mondială de fotbal din 2022 s-a ținut în Qatar și a fost câștigată de Argentina."
+	},
+	{
+		"id": "wd:Q459419",
+		"nota": "Cupa Mondială de fotbal feminin din 1991 s-a ținut în China și a fost câștigată de Statele Unite ale Americii."
+	},
+	{
+		"id": "wd:Q642445",
+		"nota": "Cupa Mondială de fotbal feminin din 1995 s-a ținut în Suedia și a fost câștigată de Norvegia."
+	},
+	{
+		"id": "wd:Q568445",
+		"nota": "Cupa Mondială de fotbal feminin din 1999 s-a ținut în Statele Unite ale Americii, iar gazdele au câștigat-o."
+	},
+	{
+		"id": "wd:Q500308",
+		"nota": "Cupa Mondială de fotbal feminin din 2003 s-a ținut în Statele Unite ale Americii și a fost câștigată de Germania."
+	},
+	{
+		"id": "wd:Q367805",
+		"nota": "Cupa Mondială de fotbal feminin din 2007 s-a ținut în  și a fost câștigată de Germania."
+	},
+	{
+		"id": "wd:Q911847",
+		"nota": "Cupa Mondială de fotbal feminin din 2015 s-a ținut în Canada și a fost câștigată de Statele Unite ale Americii."
+	},
+	{
+		"id": "wd:Q4630361",
+		"nota": "Cupa Mondială de fotbal feminin din 2019 s-a ținut în Franța și a fost câștigată de Statele Unite ale Americii."
+	},
+	{
+		"id": "wd:Q19672232",
+		"nota": "Cupa Mondială de fotbal feminin din 2023 s-a ținut în Australia și Noua Zeelandă și a fost câștigată de Spania."
+	},
+	{
+		"id": "wd:Q172831",
+		"nota": "Campionatul European de fotbal din 1960 s-a ținut în Franța și a fost câștigată de Uniunea Sovietică."
+	},
+	{
+		"id": "wd:Q182205",
+		"nota": "Campionatul European de fotbal din 1964 s-a ținut în Spania, iar gazdele au câștigat-o."
+	},
+	{
+		"id": "wd:Q182201",
+		"nota": "Campionatul European de fotbal din 1968 s-a ținut în Italia, iar gazdele au câștigat-o."
+	},
+	{
+		"id": "wd:Q182386",
+		"nota": "Campionatul European de fotbal din 1972 s-a ținut în Belgia și a fost câștigată de Germania."
+	},
+	{
+		"id": "wd:Q188548",
+		"nota": "Campionatul European de fotbal din 1976 s-a ținut în Republica Socialistă Federativă Iugoslavia și a fost câștigată de Cehoslovacia."
+	},
+	{
+		"id": "wd:Q182196",
+		"nota": "Campionatul European de fotbal din 1980 s-a ținut în Italia și a fost câștigată de Germania."
+	},
+	{
+		"id": "wd:Q182770",
+		"nota": "Campionatul European de fotbal din 1984 s-a ținut în Franța, iar gazdele au câștigat-o."
+	},
+	{
+		"id": "wd:Q151867",
+		"nota": "Campionatul European de fotbal din 1988 s-a ținut în Germania de Vest și a fost câștigată de Țările de Jos."
+	},
+	{
+		"id": "wd:Q161810",
+		"nota": "Campionatul European de fotbal din 1992 s-a ținut în Suedia și a fost câștigată de Danemarca."
+	},
+	{
+		"id": "wd:Q180563",
+		"nota": "Campionatul European de fotbal din 1996 s-a ținut în Regatul Unit și a fost câștigată de Germania."
+	},
+	{
+		"id": "wd:Q131239",
+		"nota": "Campionatul European de fotbal din 2000 s-a ținut în Belgia și Țările de Jos și a fost câștigată de Franța."
+	},
+	{
+		"id": "wd:Q102920",
+		"nota": "Campionatul European de fotbal din 2004 s-a ținut în Portugalia și a fost câștigată de Grecia."
+	},
+	{
+		"id": "wd:Q241864",
+		"nota": "Campionatul European de fotbal din 2008 s-a ținut în Austria și Elveția și a fost câștigată de Spania."
+	},
+	{
+		"id": "wd:Q22669",
+		"nota": "Campionatul European de fotbal din 2012 s-a ținut în Polonia și Ucraina și a fost câștigată de Spania."
+	},
+	{
+		"id": "wd:Q189571",
+		"nota": "Campionatul European de fotbal din 2016 s-a ținut în Franța și a fost câștigată de Portugalia."
+	},
+	{
+		"id": "wd:Q219384",
+		"nota": "Cupa Campionilor Europeni din sezonul 1955-1956 a fost câștigată de Real Madrid."
+	},
+	{
+		"id": "wd:Q245202",
+		"nota": "Cupa Campionilor Europeni din sezonul 1956-1957 a fost câștigată de Real Madrid."
+	},
+	{
+		"id": "wd:Q309318",
+		"nota": "Cupa Campionilor Europeni din sezonul 1957-1958 a fost câștigată de Real Madrid."
+	},
+	{
+		"id": "wd:Q309316",
+		"nota": "Cupa Campionilor Europeni din sezonul 1958-1959 a fost câștigată de Real Madrid."
+	},
+	{
+		"id": "wd:Q392535",
+		"nota": "Cupa Campionilor Europeni din sezonul 1959-1960 a fost câștigată de Real Madrid."
+	},
+	{
+		"id": "wd:Q330686",
+		"nota": "Cupa Campionilor Europeni din sezonul 1960-1961 a fost câștigată de S.L. Benfica."
+	},
+	{
+		"id": "wd:Q497028",
+		"nota": "Cupa Campionilor Europeni din sezonul 1961-1962 a fost câștigată de S.L. Benfica."
+	},
+	{
+		"id": "wd:Q500074",
+		"nota": "Cupa Campionilor Europeni din sezonul 1962-1963 a fost câștigată de A.C. Milan."
+	},
+	{
+		"id": "wd:Q500084",
+		"nota": "Cupa Campionilor Europeni din sezonul 1963-1964 a fost câștigată de FC Internazionale Milano."
+	},
+	{
+		"id": "wd:Q497052",
+		"nota": "Cupa Campionilor Europeni din sezonul 1964-1965 a fost câștigată de FC Internazionale Milano."
+	},
+	{
+		"id": "wd:Q573225",
+		"nota": "Cupa Campionilor Europeni din sezonul 1965-1966 a fost câștigată de Real Madrid."
+	},
+	{
+		"id": "wd:Q586977",
+		"nota": "Cupa Campionilor Europeni din sezonul 1966-1967 a fost câștigată de Celtic Football Club."
+	},
+	{
+		"id": "wd:Q426678",
+		"nota": "Cupa Campionilor Europeni din sezonul 1967-1968 a fost câștigată de Manchester United FC."
+	},
+	{
+		"id": "wd:Q642758",
+		"nota": "Cupa Campionilor Europeni din sezonul 1968-1969 a fost câștigată de A.C. Milan."
+	},
+	{
+		"id": "wd:Q371848",
+		"nota": "Cupa Campionilor Europeni din sezonul 1969-1970 a fost câștigată de Feyenoord Rotterdam."
+	},
+	{
+		"id": "wd:Q117079",
+		"nota": "Cupa Campionilor Europeni din sezonul 1970-1971 a fost câștigată de Ajax Amsterdam."
+	},
+	{
+		"id": "wd:Q269640",
+		"nota": "Cupa Campionilor Europeni din sezonul 1971-1972 a fost câștigată de Ajax Amsterdam."
+	},
+	{
+		"id": "wd:Q642893",
+		"nota": "Cupa Campionilor Europeni din sezonul 1972-1973 a fost câștigată de Ajax Amsterdam."
+	},
+	{
+		"id": "wd:Q642869",
+		"nota": "Cupa Campionilor Europeni din sezonul 1973-1974 a fost câștigată de FC Bayern München."
+	},
+	{
+		"id": "wd:Q642916",
+		"nota": "Cupa Campionilor Europeni din sezonul 1974-1975 a fost câștigată de FC Bayern München."
+	},
+	{
+		"id": "wd:Q642728",
+		"nota": "Cupa Campionilor Europeni din sezonul 1975-1976 a fost câștigată de FC Bayern München."
+	},
+	{
+		"id": "wd:Q497020",
+		"nota": "Cupa Campionilor Europeni din sezonul 1976-1977 a fost câștigată de Liverpool FC."
+	},
+	{
+		"id": "wd:Q196681",
+		"nota": "Cupa Campionilor Europeni din sezonul 1977-1978 a fost câștigată de Liverpool FC."
+	},
+	{
+		"id": "wd:Q642789",
+		"nota": "Cupa Campionilor Europeni din sezonul 1978-1979 a fost câștigată de Nottingham Forest FC."
+	},
+	{
+		"id": "wd:Q596726",
+		"nota": "Cupa Campionilor Europeni din sezonul 1979-1980 a fost câștigată de Nottingham Forest FC."
+	},
+	{
+		"id": "wd:Q641465",
+		"nota": "Cupa Campionilor Europeni din sezonul 1980-1981 a fost câștigată de Liverpool FC."
+	},
+	{
+		"id": "wd:Q642743",
+		"nota": "Cupa Campionilor Europeni din sezonul 1981-1982 a fost câștigată de Aston Villa FC."
+	},
+	{
+		"id": "wd:Q642777",
+		"nota": "Cupa Campionilor Europeni din sezonul 1982-1983 a fost câștigată de Hamburg SV."
+	},
+	{
+		"id": "wd:Q497085",
+		"nota": "Cupa Campionilor Europeni din sezonul 1983-1984 a fost câștigată de Liverpool FC."
+	},
+	{
+		"id": "wd:Q642844",
+		"nota": "Cupa Campionilor Europeni din sezonul 1984-1985 a fost câștigată de Juventus Torino."
+	},
+	{
+		"id": "wd:Q696245",
+		"nota": "Cupa Campionilor Europeni din sezonul 1986-1987 a fost câștigată de FC Porto."
+	},
+	{
+		"id": "wd:Q392526",
+		"nota": "Cupa Campionilor Europeni din sezonul 1987-1988 a fost câștigată de PSV Eindhoven."
+	},
+	{
+		"id": "wd:Q696237",
+		"nota": "Cupa Campionilor Europeni din sezonul 1988-1989 a fost câștigată de A.C. Milan."
+	},
+	{
+		"id": "wd:Q594303",
+		"nota": "Cupa Campionilor Europeni din sezonul 1989-1990 a fost câștigată de A.C. Milan."
+	},
+	{
+		"id": "wd:Q118823",
+		"nota": "Cupa Campionilor Europeni din sezonul 1990-1991 a fost câștigată de Steaua Roșie Belgrad."
+	},
+	{
+		"id": "wd:Q269535",
+		"nota": "Cupa Campionilor Europeni din sezonul 1991-1992 a fost câștigată de FC Barcelona."
+	},
+	{
+		"id": "wd:Q275673",
+		"nota": "Liga Campionilor din sezonul 1992-1993 a fost câștigată de Olympique de Marseille."
+	},
+	{
+		"id": "wd:Q4405",
+		"nota": "Liga Campionilor din sezonul 1993-1994 a fost câștigată de A.C. Milan."
+	},
+	{
+		"id": "wd:Q455985",
+		"nota": "Liga Campionilor din sezonul 1994-1995 a fost câștigată de Ajax Amsterdam."
+	},
+	{
+		"id": "wd:Q26170",
+		"nota": "Liga Campionilor din sezonul 1995-1996 a fost câștigată de Juventus Torino."
+	},
+	{
+		"id": "wd:Q196515",
+		"nota": "Liga Campionilor din sezonul 1996-1997 a fost câștigată de Borussia Dortmund."
+	},
+	{
+		"id": "wd:Q241409",
+		"nota": "Liga Campionilor din sezonul 1997-1998 a fost câștigată de Real Madrid."
+	},
+	{
+		"id": "wd:Q279736",
+		"nota": "Liga Campionilor din sezonul 1998-1999 a fost câștigată de Manchester United FC."
+	},
+	{
+		"id": "wd:Q330050",
+		"nota": "Liga Campionilor din sezonul 1999-2000 a fost câștigată de Real Madrid."
+	},
+	{
+		"id": "wd:Q456097",
+		"nota": "Liga Campionilor din sezonul 2000-2001 a fost câștigată de FC Bayern München."
+	},
+	{
+		"id": "wd:Q727058",
+		"nota": "Liga Campionilor din sezonul 2001-2002 a fost câștigată de Real Madrid."
+	},
+	{
+		"id": "wd:Q455978",
+		"nota": "Liga Campionilor din sezonul 2002-2003 a fost câștigată de A.C. Milan."
+	},
+	{
+		"id": "wd:Q244467",
+		"nota": "Liga Campionilor din sezonul 2003-2004 a fost câștigată de FC Porto."
+	},
+	{
+		"id": "wd:Q308996",
+		"nota": "Liga Campionilor din sezonul 2004-2005 a fost câștigată de Liverpool FC."
+	},
+	{
+		"id": "wd:Q219705",
+		"nota": "Liga Campionilor din sezonul 2005-2006 a fost câștigată de FC Barcelona."
+	},
+	{
+		"id": "wd:Q192736",
+		"nota": "Liga Campionilor din sezonul 2006-2007 a fost câștigată de A.C. Milan."
+	},
+	{
+		"id": "wd:Q186489",
+		"nota": "Liga Campionilor din sezonul 2007-2008 a fost câștigată de Manchester United FC."
+	},
+	{
+		"id": "wd:Q188787",
+		"nota": "Liga Campionilor din sezonul 2008-2009 a fost câștigată de FC Barcelona."
+	},
+	{
+		"id": "wd:Q184182",
+		"nota": "Liga Campionilor din sezonul 2009-2010 a fost câștigată de FC Internazionale Milano."
+	},
+	{
+		"id": "wd:Q189180",
+		"nota": "Liga Campionilor din sezonul 2010-2011 a fost câștigată de FC Barcelona."
+	},
+	{
+		"id": "wd:Q485002",
+		"nota": "Liga Campionilor din sezonul 2011-2012 a fost câștigată de Chelsea FC."
+	},
+	{
+		"id": "wd:Q485956",
+		"nota": "Liga Campionilor din sezonul 2012-2013 a fost câștigată de FC Bayern München."
+	},
+	{
+		"id": "wd:Q30608",
+		"nota": "Liga Campionilor din sezonul 2013-2014 a fost câștigată de Real Madrid."
+	},
+	{
+		"id": "wd:Q11306107",
+		"nota": "Liga Campionilor din sezonul 2014-2015 a fost câștigată de FC Barcelona."
+	},
+	{
+		"id": "wd:Q13416183",
+		"nota": "Liga Campionilor din sezonul 2015-2016 a fost câștigată de Real Madrid."
+	},
+	{
+		"id": "wd:Q18740961",
+		"nota": "Liga Campionilor din sezonul 2016-2017 a fost câștigată de Real Madrid."
+	},
+	{
+		"id": "wd:Q20972117",
+		"nota": "Liga Campionilor din sezonul 2017-2018 a fost câștigată de Real Madrid."
+	},
+	{
+		"id": "wd:Q30032467",
+		"nota": "Liga Campionilor din sezonul 2018-2019 a fost câștigată de Liverpool FC."
+	},
+	{
+		"id": "wd:Q53164830",
+		"nota": "Liga Campionilor din sezonul 2019-2020 a fost câștigată de FC Bayern München."
+	},
+	{
+		"id": "wd:Q63088790",
+		"nota": "Liga Campionilor din sezonul 2020-2021 a fost câștigată de Chelsea FC."
+	},
+	{
+		"id": "wd:Q96621465",
+		"nota": "Liga Campionilor din sezonul 2021-2022 a fost câștigată de Real Madrid."
+	},
+	{
+		"id": "wd:Q106086340",
+		"nota": "Liga Campionilor din sezonul 2022-2023 a fost câștigată de Manchester City FC."
+	},
+	{
+		"id": "wd:Q111309338",
+		"nota": "Liga Campionilor din sezonul 2023-2024 a fost câștigată de Real Madrid."
+	},
+	{
+		"id": "wd:Q117008008",
+		"nota": "Liga Campionilor din sezonul 2024-2025 a fost câștigată de Paris Saint-Germain FC."
+	}
+]

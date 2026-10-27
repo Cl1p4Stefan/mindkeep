@@ -1,0 +1,527 @@
+{
+	"endpoint": "https://query.wikidata.org/sparql",
+	"interogari": {
+		"editii": "SELECT ?e ?e_ro ?e_en ?e_mul (MIN(YEAR(?d)) AS ?an) WHERE {\n  ?e wdt:P3450 wd:Q159821 .\n  { ?e wdt:P585 ?d } UNION { ?e wdt:P580 ?d }\n  OPTIONAL { ?e rdfs:label ?e_ro FILTER(lang(?e_ro) = \"ro\") }\n  OPTIONAL { ?e rdfs:label ?e_en FILTER(lang(?e_en) = \"en\") }\n  OPTIONAL { ?e rdfs:label ?e_mul FILTER(lang(?e_mul) = \"mul\") }\n} GROUP BY ?e ?e_ro ?e_en ?e_mul",
+		"orase": "SELECT DISTINCT ?e ?oras ?oras_ro ?oras_en ?oras_mul ?tara_ro ?tara_en ?tara_mul WHERE {\n  ?e wdt:P3450 wd:Q159821 ; wdt:P276 ?oras .\n  ?oras wdt:P31/wdt:P279* wd:Q486972 .\n  OPTIONAL { ?oras rdfs:label ?oras_ro FILTER(lang(?oras_ro) = \"ro\") }\n  OPTIONAL { ?oras rdfs:label ?oras_en FILTER(lang(?oras_en) = \"en\") }\n  OPTIONAL { ?oras rdfs:label ?oras_mul FILTER(lang(?oras_mul) = \"mul\") }\n  OPTIONAL { ?e wdt:P17 ?tara .\n             OPTIONAL { ?tara rdfs:label ?tara_ro FILTER(lang(?tara_ro) = \"ro\") }\n             OPTIONAL { ?tara rdfs:label ?tara_en FILTER(lang(?tara_en) = \"en\") }\n             OPTIONAL { ?tara rdfs:label ?tara_mul FILTER(lang(?tara_mul) = \"mul\") } }\n}"
+	},
+	"luat_la": "2026-10-27T03:02:16",
+	"randuri": {
+		"editii": [
+			{
+				"an": "1940",
+				"e": "Q8368",
+				"e_en": "1940 Summer Olympics",
+				"e_mul": "Juegos Olímpicos de Verano 1940",
+				"e_ro": "Jocurile Olimpice de vară din 1940"
+			},
+			{
+				"an": "1980",
+				"e": "Q8450",
+				"e_en": "1980 Summer Olympics",
+				"e_mul": "Moscow 1980 Summer Olympics",
+				"e_ro": "Jocurile Olimpice de vară din 1980"
+			},
+			{
+				"an": "2021",
+				"e": "Q181278",
+				"e_en": "2020 Summer Olympics",
+				"e_ro": "Jocurile Olimpice de vară din 2020"
+			},
+			{
+				"an": "2024",
+				"e": "Q995653",
+				"e_en": "2024 Summer Olympics",
+				"e_ro": "Jocurile Olimpice de vară din 2024"
+			},
+			{
+				"an": "2028",
+				"e": "Q1451505",
+				"e_en": "2028 Summer Olympics",
+				"e_ro": "Jocurile Olimpice de vară din 2028"
+			},
+			{
+				"an": "2032",
+				"e": "Q31039462",
+				"e_en": "2032 Summer Olympics",
+				"e_ro": "Jocurile Olimpice de vară din 2032"
+			},
+			{
+				"an": "2036",
+				"e": "Q108045332",
+				"e_en": "2036 Summer Olympics"
+			},
+			{
+				"an": "2040",
+				"e": "Q128996541",
+				"e_en": "2040 Summer Olympics"
+			},
+			{
+				"an": "1896",
+				"e": "Q8080",
+				"e_en": "1896 Summer Olympics",
+				"e_ro": "Jocurile Olimpice de vară din 1896"
+			},
+			{
+				"an": "1900",
+				"e": "Q8088",
+				"e_en": "1900 Summer Olympics",
+				"e_ro": "Jocurile Olimpice de vară din 1900"
+			},
+			{
+				"an": "1904",
+				"e": "Q8098",
+				"e_en": "1904 Summer Olympics",
+				"e_ro": "Jocurile Olimpice de vară din 1904"
+			},
+			{
+				"an": "1908",
+				"e": "Q8111",
+				"e_en": "1908 Summer Olympics",
+				"e_ro": "Jocurile Olimpice de vară din 1908"
+			},
+			{
+				"an": "1912",
+				"e": "Q8118",
+				"e_en": "1912 Summer Olympics",
+				"e_ro": "Jocurile Olimpice de vară din 1912"
+			},
+			{
+				"an": "1916",
+				"e": "Q8123",
+				"e_en": "1916 Summer Olympics",
+				"e_ro": "Jocurile Olimpice de vară din 1916"
+			},
+			{
+				"an": "1920",
+				"e": "Q8128",
+				"e_en": "1920 Summer Olympics",
+				"e_ro": "Jocurile Olimpice de vară din 1920"
+			},
+			{
+				"an": "1924",
+				"e": "Q8132",
+				"e_en": "1924 Summer Olympics",
+				"e_ro": "Jocurile Olimpice de vară din 1924"
+			},
+			{
+				"an": "1928",
+				"e": "Q8138",
+				"e_en": "1928 Summer Olympics",
+				"e_ro": "Jocurile Olimpice de vară din 1928"
+			},
+			{
+				"an": "1932",
+				"e": "Q8143",
+				"e_en": "1932 Summer Olympics",
+				"e_ro": "Jocurile Olimpice de vară din 1932"
+			},
+			{
+				"an": "1936",
+				"e": "Q8150",
+				"e_en": "1936 Summer Olympics",
+				"e_ro": "Jocurile Olimpice de vară din 1936"
+			},
+			{
+				"an": "1944",
+				"e": "Q8376",
+				"e_en": "1944 Summer Olympics",
+				"e_ro": "Jocurile Olimpice de vară din 1944"
+			},
+			{
+				"an": "1948",
+				"e": "Q8403",
+				"e_en": "1948 Summer Olympics",
+				"e_ro": "Jocurile Olimpice de vară din 1948"
+			},
+			{
+				"an": "1952",
+				"e": "Q8407",
+				"e_en": "1952 Summer Olympics",
+				"e_ro": "Jocurile Olimpice de vară din 1952"
+			},
+			{
+				"an": "1956",
+				"e": "Q8411",
+				"e_en": "1956 Summer Olympics",
+				"e_ro": "Jocurile Olimpice de vară din 1956"
+			},
+			{
+				"an": "1960",
+				"e": "Q8415",
+				"e_en": "1960 Summer Olympics",
+				"e_ro": "Jocurile Olimpice de vară din 1960"
+			},
+			{
+				"an": "1964",
+				"e": "Q8420",
+				"e_en": "1964 Summer Olympics",
+				"e_ro": "Jocurile Olimpice de vară din 1964"
+			},
+			{
+				"an": "1968",
+				"e": "Q8429",
+				"e_en": "1968 Summer Olympics",
+				"e_ro": "Jocurile Olimpice de vară din 1968"
+			},
+			{
+				"an": "1972",
+				"e": "Q8438",
+				"e_en": "1972 Summer Olympics",
+				"e_ro": "Jocurile Olimpice de vară din 1972"
+			},
+			{
+				"an": "1976",
+				"e": "Q8444",
+				"e_en": "1976 Summer Olympics",
+				"e_ro": "Jocurile Olimpice de vară din 1976"
+			},
+			{
+				"an": "1984",
+				"e": "Q8456",
+				"e_en": "1984 Summer Olympics",
+				"e_ro": "Jocurile Olimpice de vară din 1984"
+			},
+			{
+				"an": "1988",
+				"e": "Q8470",
+				"e_en": "1988 Summer Olympics",
+				"e_ro": "Jocurile Olimpice de vară din 1988"
+			},
+			{
+				"an": "1992",
+				"e": "Q8488",
+				"e_en": "1992 Summer Olympics",
+				"e_ro": "Jocurile Olimpice de vară din 1992"
+			},
+			{
+				"an": "1996",
+				"e": "Q8531",
+				"e_en": "1996 Summer Olympics",
+				"e_ro": "Jocurile Olimpice de vară din 1996"
+			},
+			{
+				"an": "2000",
+				"e": "Q8544",
+				"e_en": "2000 Summer Olympics",
+				"e_ro": "Jocurile Olimpice de vară din 2000"
+			},
+			{
+				"an": "2004",
+				"e": "Q8558",
+				"e_en": "2004 Summer Olympics",
+				"e_ro": "Jocurile Olimpice de vară din 2004"
+			},
+			{
+				"an": "2008",
+				"e": "Q8567",
+				"e_en": "2008 Summer Olympics",
+				"e_ro": "Jocurile Olimpice de vară din 2008"
+			},
+			{
+				"an": "2012",
+				"e": "Q8577",
+				"e_en": "2012 Summer Olympics",
+				"e_ro": "Jocurile Olimpice de vară din 2012"
+			},
+			{
+				"an": "2016",
+				"e": "Q8613",
+				"e_en": "2016 Summer Olympics",
+				"e_ro": "Jocurile Olimpice de vară din 2016"
+			}
+		],
+		"orase": [
+			{
+				"e": "Q8150",
+				"oras": "Q64",
+				"oras_en": "Berlin",
+				"oras_ro": "Berlin",
+				"tara_en": "German Reich",
+				"tara_mul": "Deutsches Reich",
+				"tara_ro": "Imperiul German"
+			},
+			{
+				"e": "Q8123",
+				"oras": "Q64",
+				"oras_en": "Berlin",
+				"oras_ro": "Berlin",
+				"tara_en": "German Reich",
+				"tara_mul": "Deutsches Reich",
+				"tara_ro": "Imperiul German"
+			},
+			{
+				"e": "Q8444",
+				"oras": "Q340",
+				"oras_en": "Montreal",
+				"oras_ro": "Montreal",
+				"tara_en": "Canada",
+				"tara_ro": "Canada"
+			},
+			{
+				"e": "Q8613",
+				"oras": "Q8678",
+				"oras_en": "Rio de Janeiro",
+				"oras_mul": "Rio de Janeiro",
+				"oras_ro": "Rio de Janeiro",
+				"tara_en": "Brazil",
+				"tara_ro": "Brazilia"
+			},
+			{
+				"e": "Q8544",
+				"oras": "Q3130",
+				"oras_en": "Sydney",
+				"oras_ro": "Sydney",
+				"tara_en": "Australia",
+				"tara_ro": "Australia"
+			},
+			{
+				"e": "Q8420",
+				"oras": "Q1490",
+				"oras_en": "Tokyo",
+				"oras_ro": "Tokyo",
+				"tara_en": "Japan",
+				"tara_ro": "Japonia"
+			},
+			{
+				"e": "Q8567",
+				"oras": "Q956",
+				"oras_en": "Beijing",
+				"oras_ro": "Beijing",
+				"tara_en": "People's Republic of China",
+				"tara_ro": "China"
+			},
+			{
+				"e": "Q8531",
+				"oras": "Q23556",
+				"oras_en": "Atlanta",
+				"oras_mul": "Atlanta",
+				"oras_ro": "Atlanta",
+				"tara_en": "United States",
+				"tara_ro": "Statele Unite ale Americii"
+			},
+			{
+				"e": "Q8558",
+				"oras": "Q1524",
+				"oras_en": "Athens",
+				"oras_ro": "Atena",
+				"tara_en": "Greece",
+				"tara_ro": "Grecia"
+			},
+			{
+				"e": "Q8429",
+				"oras": "Q1489",
+				"oras_en": "Mexico City",
+				"oras_ro": "Ciudad de México",
+				"tara_en": "Mexico",
+				"tara_ro": "Mexic"
+			},
+			{
+				"e": "Q8577",
+				"oras": "Q84",
+				"oras_en": "London",
+				"oras_ro": "Londra",
+				"tara_en": "United Kingdom",
+				"tara_ro": "Regatul Unit"
+			},
+			{
+				"e": "Q8488",
+				"oras": "Q1492",
+				"oras_en": "Barcelona",
+				"oras_ro": "Barcelona",
+				"tara_en": "Spain",
+				"tara_ro": "Spania"
+			},
+			{
+				"e": "Q8450",
+				"oras": "Q649",
+				"oras_en": "Moscow",
+				"oras_ro": "Moscova",
+				"tara_en": "Soviet Union",
+				"tara_ro": "Uniunea Sovietică"
+			},
+			{
+				"e": "Q8415",
+				"oras": "Q220",
+				"oras_en": "Rome",
+				"oras_ro": "Roma",
+				"tara_en": "Italy",
+				"tara_ro": "Italia"
+			},
+			{
+				"e": "Q8411",
+				"oras": "Q3141",
+				"oras_en": "Melbourne",
+				"oras_ro": "Melbourne",
+				"tara_en": "Australia",
+				"tara_ro": "Australia"
+			},
+			{
+				"e": "Q8368",
+				"oras": "Q1490",
+				"oras_en": "Tokyo",
+				"oras_ro": "Tokyo",
+				"tara_en": "Finland",
+				"tara_ro": "Finlanda"
+			},
+			{
+				"e": "Q8088",
+				"oras": "Q90",
+				"oras_en": "Paris",
+				"oras_ro": "Paris",
+				"tara_en": "France",
+				"tara_ro": "Franța"
+			},
+			{
+				"e": "Q8407",
+				"oras": "Q1757",
+				"oras_en": "Helsinki",
+				"oras_ro": "Helsinki",
+				"tara_en": "Finland",
+				"tara_ro": "Finlanda"
+			},
+			{
+				"e": "Q8138",
+				"oras": "Q727",
+				"oras_en": "Amsterdam",
+				"oras_mul": "Amsterdam",
+				"oras_ro": "Amsterdam",
+				"tara_en": "Netherlands",
+				"tara_ro": "Țările de Jos"
+			},
+			{
+				"e": "Q1451505",
+				"oras": "Q65",
+				"oras_en": "Los Angeles",
+				"oras_mul": "Los Angeles",
+				"oras_ro": "Los Angeles",
+				"tara_en": "United States",
+				"tara_ro": "Statele Unite ale Americii"
+			},
+			{
+				"e": "Q8111",
+				"oras": "Q84",
+				"oras_en": "London",
+				"oras_ro": "Londra",
+				"tara_en": "United Kingdom of Great Britain and Ireland",
+				"tara_ro": "Regatul Unit al Marii Britanii și Irlandei"
+			},
+			{
+				"e": "Q8376",
+				"oras": "Q84",
+				"oras_en": "London",
+				"oras_ro": "Londra",
+				"tara_en": "United Kingdom",
+				"tara_ro": "Regatul Unit"
+			},
+			{
+				"e": "Q8143",
+				"oras": "Q65",
+				"oras_en": "Los Angeles",
+				"oras_mul": "Los Angeles",
+				"oras_ro": "Los Angeles",
+				"tara_en": "United States",
+				"tara_ro": "Statele Unite ale Americii"
+			},
+			{
+				"e": "Q181278",
+				"oras": "Q1490",
+				"oras_en": "Tokyo",
+				"oras_ro": "Tokyo",
+				"tara_en": "Japan",
+				"tara_ro": "Japonia"
+			},
+			{
+				"e": "Q8403",
+				"oras": "Q84",
+				"oras_en": "London",
+				"oras_ro": "Londra",
+				"tara_en": "United Kingdom",
+				"tara_ro": "Regatul Unit"
+			},
+			{
+				"e": "Q8132",
+				"oras": "Q90",
+				"oras_en": "Paris",
+				"oras_ro": "Paris",
+				"tara_en": "France",
+				"tara_ro": "Franța"
+			},
+			{
+				"e": "Q8368",
+				"oras": "Q1757",
+				"oras_en": "Helsinki",
+				"oras_ro": "Helsinki",
+				"tara_en": "Japan",
+				"tara_ro": "Japonia"
+			},
+			{
+				"e": "Q8098",
+				"oras": "Q38022",
+				"oras_en": "St. Louis",
+				"oras_mul": "St. Louis",
+				"oras_ro": "Saint Louis",
+				"tara_en": "United States",
+				"tara_ro": "Statele Unite ale Americii"
+			},
+			{
+				"e": "Q8118",
+				"oras": "Q1754",
+				"oras_en": "Stockholm",
+				"oras_mul": "Stockholm",
+				"oras_ro": "Stockholm",
+				"tara_en": "Sweden",
+				"tara_ro": "Suedia"
+			},
+			{
+				"e": "Q31039462",
+				"oras": "Q34932",
+				"oras_en": "Brisbane",
+				"oras_mul": "Brisbane",
+				"oras_ro": "Brisbane",
+				"tara_en": "Australia",
+				"tara_ro": "Australia"
+			},
+			{
+				"e": "Q8368",
+				"oras": "Q1490",
+				"oras_en": "Tokyo",
+				"oras_ro": "Tokyo",
+				"tara_en": "Japan",
+				"tara_ro": "Japonia"
+			},
+			{
+				"e": "Q8128",
+				"oras": "Q12892",
+				"oras_en": "Antwerp",
+				"oras_mul": "Antwerpen",
+				"oras_ro": "Anvers",
+				"tara_en": "Belgium",
+				"tara_ro": "Belgia"
+			},
+			{
+				"e": "Q8080",
+				"oras": "Q1524",
+				"oras_en": "Athens",
+				"oras_ro": "Atena",
+				"tara_en": "Kingdom of Greece",
+				"tara_ro": "Regatul Greciei"
+			},
+			{
+				"e": "Q995653",
+				"oras": "Q90",
+				"oras_en": "Paris",
+				"oras_ro": "Paris",
+				"tara_en": "France",
+				"tara_ro": "Franța"
+			},
+			{
+				"e": "Q8368",
+				"oras": "Q1757",
+				"oras_en": "Helsinki",
+				"oras_ro": "Helsinki",
+				"tara_en": "Finland",
+				"tara_ro": "Finlanda"
+			}
+		]
+	}
+}

@@ -297,16 +297,27 @@ să existe prima întrebare: un fenomen viral se stinge, iar o întrebare despre
 
 **Tabele de fabrică:**
 
-- **`cinematografie` · film → regizor** — `P57`. Cea mai curată relație din tot
-  domeniul. *Capcane:* filmele cu doi regizori, remake-urile cu același titlu.
+- **`cinematografie` · film → regizor — FĂCUT** (27 octombrie 2026, `filme.py`).
+  203 întrebări: 168 de filme (19 românești) și 35 per regizor, numai pentru cei
+  cu măcar două filme în tabel. *Capcane confirmate:* filmele cu mai mulți
+  regizori (Matrix, „Pe aripile vântului”, animațiile Disney) se refuză. *Capcana
+  pe care NU o prevăzusem:* distractorii aleși doar pe an amestecau lumile — Radu
+  Jude printre regizorii posibili ai unui „Războiul stelelor”. Se aleg întâi din
+  aceeași limbă originală (`P364`).
 - **`cinematografie` · anul unui film** — `P577`. *Capcana principală:* `P577` are
   de obicei mai multe declarații, câte una pe țară. Se cere cea calificată cu țara
-  de origine, altfel se refuză rândul.
+  de origine, altfel se refuză rândul. *În `filme.py` anul doar însoțește
+  întrebarea și se ia CEL MAI MIC* — prima lansare, oriunde; o lansare târzie nu
+  poate coborî anul. Un tabel care ÎNTREABĂ anul ar avea nevoie de regula de mai
+  sus.
 - **`cinematografie` · premiile Oscar** — `P166`, cu calificatorul de ediție.
   *Capcana care strică totul:* ceremonia din 1994 a premiat filme din 1993.
   Întrebarea se scrie cu anul FILMULUI, sau nu se scrie.
-- **`muzica_moderna` · album → interpret** — `P175`, `P577`. Relație curată și
-  volum mare. *Capcană:* reeditările cu alt an.
+- **`muzica_moderna` · album → interpret — FĂCUT** (27 octombrie 2026,
+  `albume.py`). 156 de întrebări: 127 de albume și 29 per interpret. *Capcane
+  măsurate:* albumele care poartă numele interpretului („Queen”, „Metallica”)
+  scurg răspunsul și nu se aleg; `P175` cu invitați („Led Zeppelin IV” cu Sandy
+  Denny) se refuză; unele etichete (Lady Gaga, Beyoncé) sunt doar în limba `mul`.
 
 ### Sport și jocuri
 
@@ -332,21 +343,40 @@ Cele trei rafturi de acum se taie după **sportul din întrebare**, nu după ce 
 documentul, și motivul e structural: **palmaresele sunt liste finite, datate din
 construcție.** Regula „numai trecut” nu e o constrângere aici, e forma datelor.
 
-- **`sporturi_de_echipa` · câștigătoarea Cupei Mondiale, pe ediție** — `P1346` pe
-  entitatea ediției. *Capcane:* ediția masculină și cea feminină au nume
-  asemănătoare, iar „fotbal la Jocurile Olimpice” se strecoară în aceeași
-  interogare.
-- **`individuale_olimpism` · orașul-gazdă, pe ediție** — proprietatea exactă **se
-  măsoară**, nu se presupune. *Capcane, toate cerând oprire:* edițiile anulate
-  (1916, 1940, 1944) sunt în Wikidata ca ediții; Tokyo 2020 s-a ținut în 2021;
-  1956 are călăria la Stockholm; iarna și vara cad în același an până în 1992.
-- **`motor_extreme` · campioni pe an** (Formula 1, Tour de France) — `P1346`.
+- **`sporturi_de_echipa` · câștigătoarea Cupei Mondiale, pe ediție — FĂCUT**
+  (27 octombrie 2026, `fotbal.py`), lărgit la CM feminin, Euro (câștigătoare și
+  gazdă) și Cupa/Liga Campionilor (câștigătoarea pe sezon). 143 de întrebări.
+  *Capcane măsurate:* `P1346` ține și FINALISTA (Euro 2004, cu rolul
+  „runner-up”); gazdele multiple (2002, Euro 2000/2008/2012) nu primesc întrebare
+  de gazdă; Euro 2020 s-a jucat în 2021; edițiile feminine „neoficiale” din 1970-71
+  sunt la Wikidata ca ediții; la Liga Campionilor un item CONTOPIT („1985-1986,
+  1986-1987, 2000-2001”) are un singur câștigător pentru trei sezoane, deci
+  sezonul se citește din etichetă, cu tipar strict.
+- **`individuale_olimpism` · orașul-gazdă, pe ediție — FĂCUT, numai VARA**
+  (27 octombrie 2026, `olimpiade.py`). 27 de întrebări, 12 ediții erau deja
+  întrebate de mână. Toate capcanele de aici s-au confirmat. *Măsurătoarea care
+  a decis:* proprietatea e `P276` (locul), iar `P276` ține și STADIOANELE; filtrul
+  „numai așezări” ajunge vara, dar la IARNĂ dă „Hafjell” în loc de Lillehammer
+  și nimic la jumătate din ediții. **Jocurile de iarnă nu se fac** până nu apare
+  un al doilea semn pentru oraș.
+- **`motor_extreme` · campioni pe an — FĂCUT pentru Formula 1** (27 octombrie
+  2026, `formula1.py`): piloți și constructori, despărțiți de `P2094`, plus „în ce
+  an a fost X campion”. 158 de întrebări. *Capcana găsită la măsurătoare, nu
+  prevăzută:* sezonul 2018 are drept campion la piloți itemul „Moreno” — un
+  PRENUME. Al doilea semn: ocupația „pilot de curse”, pe care o au toți ceilalți
+  73. **Tour de France rămâne de făcut**, cu capcana de mai jos.
+- **`motor_extreme` · Tour de France** — `P1346`.
   *Capcana cea mai instructivă din tot documentul:* **titlurile retrase.** Lance
   Armstrong a câștigat Tour de France din 1999 până în 2005 și apoi nu le-a mai
   câștigat — palmaresul oficial n-are învingător pentru acei ani, dar Wikidata
   poate ține declarația. Un tabel care nu se oprește aici predă șapte fapte false.
-- **`gaming` · joc → studio, joc → an** — `P178`, `P577`. Volum mare și relație
-  curată. *Capcană:* lansările pe platforme diferite, cu ani diferiți.
+- **`gaming` · joc → studio, joc → an** — `P178`, `P577`. **MĂSURAT ȘI RESPINS**
+  (27 octombrie 2026): relația NU e curată. `P178` ține și studiourile care au
+  făcut PORTĂRI — „Doom” (1993) are drept unic dezvoltator „Nerve Software”, nu
+  id Software; „Minecraft” are „Microsoft + Mojang”; GTA V are trei studiouri
+  Rockstar. Un singur dezvoltator nu e nici el o garanție (Doom e chiar cazul
+  ăsta). Fără un al doilea semn, tabelul ar preda studiouri greșite; rămâne de
+  mână.
 
 ### Gastronomie și lifestyle
 

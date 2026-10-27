@@ -1,0 +1,2040 @@
+{
+	"endpoint": "https://query.wikidata.org/sparql",
+	"interogari": {
+		"albume": "SELECT ?a ?a_ro ?a_en ?a_mul (MIN(YEAR(?d)) AS ?an) WHERE {\n  VALUES ?a { wd:Q106316694 wd:Q108384663 wd:Q108773286 wd:Q1129439 wd:Q113640799 wd:Q127503 wd:Q131182 wd:Q14549385 wd:Q14669 wd:Q147006 wd:Q151714 wd:Q151880 wd:Q152605 wd:Q152873 wd:Q153391 wd:Q153475 wd:Q154467 wd:Q154601 wd:Q155335 wd:Q155358 wd:Q155593 wd:Q155612 wd:Q158326 wd:Q158738 wd:Q158740 wd:Q164646 wd:Q17444 wd:Q181826 wd:Q182518 wd:Q182826 wd:Q185121 wd:Q186188 wd:Q19003 wd:Q190640 wd:Q190989 wd:Q193477 wd:Q199585 wd:Q200872 wd:Q201816 wd:Q202714 wd:Q204240 wd:Q206216 wd:Q207970 wd:Q208340 wd:Q208521 wd:Q208902 wd:Q210048 wd:Q210809 wd:Q21084500 wd:Q210904 wd:Q211292 wd:Q211405 wd:Q211413 wd:Q21168841 wd:Q211742 wd:Q212665 wd:Q212846 wd:Q213578 wd:Q214973 wd:Q215223 wd:Q217211 wd:Q217248 wd:Q218513 wd:Q218971 wd:Q220726 wd:Q221246 wd:Q222001 wd:Q223295 wd:Q23905116 wd:Q245353 wd:Q252447 wd:Q270083 wd:Q271787 wd:Q2743297 wd:Q274533 wd:Q276546 wd:Q285929 wd:Q300447 wd:Q308801 wd:Q309021 wd:Q329396 wd:Q333266 wd:Q37148 wd:Q372055 wd:Q37814092 wd:Q379339 wd:Q381122 wd:Q383227 wd:Q383459 wd:Q44104 wd:Q44142 wd:Q44289 wd:Q44347 wd:Q44376 wd:Q471924 wd:Q483778 wd:Q488934 wd:Q52477911 wd:Q547624 wd:Q58192616 wd:Q584720 wd:Q60676411 wd:Q61157315 wd:Q631442 wd:Q637860 wd:Q640397 wd:Q643906 wd:Q650284 wd:Q655502 wd:Q656525 wd:Q683079 wd:Q695405 wd:Q726729 wd:Q745850 wd:Q750274 wd:Q755988 wd:Q76962209 wd:Q8119033 wd:Q826224 wd:Q826486 wd:Q8360 wd:Q842126 wd:Q842214 wd:Q856869 wd:Q858750 wd:Q86919359 wd:Q97620733 }\n  ?a wdt:P31/wdt:P279* wd:Q482994 .\n  OPTIONAL { ?a wdt:P577 ?d }\n  OPTIONAL { ?a rdfs:label ?a_ro FILTER(lang(?a_ro) = \"ro\") }\n  OPTIONAL { ?a rdfs:label ?a_en FILTER(lang(?a_en) = \"en\") }\n  OPTIONAL { ?a rdfs:label ?a_mul FILTER(lang(?a_mul) = \"mul\") }\n} GROUP BY ?a ?a_ro ?a_en ?a_mul",
+		"interpreti": "SELECT ?a ?i ?i_ro ?i_en ?i_mul ?descriere ?om\n       (MIN(YEAR(?n)) AS ?nastere) (MIN(YEAR(?m)) AS ?moarte)\n       (MIN(YEAR(?s)) AS ?start) WHERE {\n  VALUES ?a { wd:Q106316694 wd:Q108384663 wd:Q108773286 wd:Q1129439 wd:Q113640799 wd:Q127503 wd:Q131182 wd:Q14549385 wd:Q14669 wd:Q147006 wd:Q151714 wd:Q151880 wd:Q152605 wd:Q152873 wd:Q153391 wd:Q153475 wd:Q154467 wd:Q154601 wd:Q155335 wd:Q155358 wd:Q155593 wd:Q155612 wd:Q158326 wd:Q158738 wd:Q158740 wd:Q164646 wd:Q17444 wd:Q181826 wd:Q182518 wd:Q182826 wd:Q185121 wd:Q186188 wd:Q19003 wd:Q190640 wd:Q190989 wd:Q193477 wd:Q199585 wd:Q200872 wd:Q201816 wd:Q202714 wd:Q204240 wd:Q206216 wd:Q207970 wd:Q208340 wd:Q208521 wd:Q208902 wd:Q210048 wd:Q210809 wd:Q21084500 wd:Q210904 wd:Q211292 wd:Q211405 wd:Q211413 wd:Q21168841 wd:Q211742 wd:Q212665 wd:Q212846 wd:Q213578 wd:Q214973 wd:Q215223 wd:Q217211 wd:Q217248 wd:Q218513 wd:Q218971 wd:Q220726 wd:Q221246 wd:Q222001 wd:Q223295 wd:Q23905116 wd:Q245353 wd:Q252447 wd:Q270083 wd:Q271787 wd:Q2743297 wd:Q274533 wd:Q276546 wd:Q285929 wd:Q300447 wd:Q308801 wd:Q309021 wd:Q329396 wd:Q333266 wd:Q37148 wd:Q372055 wd:Q37814092 wd:Q379339 wd:Q381122 wd:Q383227 wd:Q383459 wd:Q44104 wd:Q44142 wd:Q44289 wd:Q44347 wd:Q44376 wd:Q471924 wd:Q483778 wd:Q488934 wd:Q52477911 wd:Q547624 wd:Q58192616 wd:Q584720 wd:Q60676411 wd:Q61157315 wd:Q631442 wd:Q637860 wd:Q640397 wd:Q643906 wd:Q650284 wd:Q655502 wd:Q656525 wd:Q683079 wd:Q695405 wd:Q726729 wd:Q745850 wd:Q750274 wd:Q755988 wd:Q76962209 wd:Q8119033 wd:Q826224 wd:Q826486 wd:Q8360 wd:Q842126 wd:Q842214 wd:Q856869 wd:Q858750 wd:Q86919359 wd:Q97620733 }\n  ?a wdt:P175 ?i .\n  BIND(EXISTS { ?i wdt:P31 wd:Q5 } AS ?om)\n  OPTIONAL { ?i rdfs:label ?i_ro FILTER(lang(?i_ro) = \"ro\") }\n  OPTIONAL { ?i rdfs:label ?i_en FILTER(lang(?i_en) = \"en\") }\n  OPTIONAL { ?i rdfs:label ?i_mul FILTER(lang(?i_mul) = \"mul\") }\n  OPTIONAL { ?i schema:description ?descriere FILTER(lang(?descriere) = \"ro\") }\n  OPTIONAL { ?i wdt:P569 ?n }\n  OPTIONAL { ?i wdt:P570 ?m }\n  OPTIONAL { ?i wdt:P571 ?s }\n} GROUP BY ?a ?i ?i_ro ?i_en ?i_mul ?descriere ?om"
+	},
+	"luat_la": "2026-10-27T02:59:03",
+	"randuri": {
+		"albume": [
+			{
+				"a": "Q127503",
+				"a_en": "Dangerously in Love",
+				"a_mul": "Dangerously in Love",
+				"a_ro": "Dangerously in Love",
+				"an": "2003"
+			},
+			{
+				"a": "Q8360",
+				"a_en": "(What's the Story) Morning Glory?",
+				"a_mul": "(What's the Story) Morning Glory?",
+				"a_ro": "(What's the Story) Morning Glory?",
+				"an": "1995"
+			},
+			{
+				"a": "Q131182",
+				"a_en": "The Fame",
+				"a_mul": "The Fame",
+				"a_ro": "The Fame",
+				"an": "2008"
+			},
+			{
+				"a": "Q151714",
+				"a_en": "American Idiot",
+				"a_mul": "American Idiot",
+				"an": "2004"
+			},
+			{
+				"a": "Q14669",
+				"a_en": "Rust in Peace",
+				"a_mul": "Rust in Peace",
+				"a_ro": "Rust in Peace",
+				"an": "1990"
+			},
+			{
+				"a": "Q17444",
+				"a_en": "Nevermind",
+				"a_mul": "Nevermind",
+				"a_ro": "Nevermind",
+				"an": "1991"
+			},
+			{
+				"a": "Q151880",
+				"a_en": "Confessions on a Dance Floor",
+				"a_mul": "Confessions on a Dance Floor",
+				"a_ro": "Confessions on a Dance Floor",
+				"an": "2005"
+			},
+			{
+				"a": "Q152605",
+				"a_en": "Stadium Arcadium",
+				"a_mul": "Stadium Arcadium",
+				"an": "2006"
+			},
+			{
+				"a": "Q19003",
+				"a_en": "London Calling",
+				"a_mul": "London Calling",
+				"a_ro": "London Calling",
+				"an": "1979"
+			},
+			{
+				"a": "Q37148",
+				"a_en": "Born to Die",
+				"a_mul": "Born to Die",
+				"a_ro": "Born to Die",
+				"an": "2012"
+			},
+			{
+				"a": "Q153391",
+				"a_en": "Good Girl Gone Bad",
+				"a_mul": "Good Girl Gone Bad",
+				"a_ro": "Good Girl Gone Bad",
+				"an": "2007"
+			},
+			{
+				"a": "Q153475",
+				"a_en": "By the Way",
+				"a_mul": "By the Way",
+				"an": "2002"
+			},
+			{
+				"a": "Q44104",
+				"a_en": "Dangerous",
+				"a_mul": "Dangerous",
+				"a_ro": "Dangerous",
+				"an": "1991"
+			},
+			{
+				"a": "Q154467",
+				"a_en": "True Blue",
+				"a_mul": "True Blue",
+				"a_ro": "True Blue",
+				"an": "1986"
+			},
+			{
+				"a": "Q44142",
+				"a_en": "Bad",
+				"a_mul": "Bad",
+				"a_ro": "Bad",
+				"an": "1987"
+			},
+			{
+				"a": "Q155335",
+				"a_en": "Ray of Light",
+				"a_mul": "Ray of Light",
+				"a_ro": "Ray of Light",
+				"an": "1998"
+			},
+			{
+				"a": "Q155358",
+				"a_en": "Music",
+				"a_mul": "Music",
+				"a_ro": "Music",
+				"an": "2000"
+			},
+			{
+				"a": "Q155593",
+				"a_en": "Made in Heaven",
+				"a_mul": "Made in Heaven",
+				"a_ro": "Made in Heaven",
+				"an": "1995"
+			},
+			{
+				"a": "Q155612",
+				"a_en": "Fallen",
+				"a_mul": "Fallen",
+				"a_ro": "Fallen",
+				"an": "2003"
+			},
+			{
+				"a": "Q158326",
+				"a_en": "The E.N.D",
+				"a_mul": "The E.N.D",
+				"an": "2009"
+			},
+			{
+				"a": "Q158738",
+				"a_en": "X&Y",
+				"a_mul": "X&Y",
+				"a_ro": "X&Y",
+				"an": "2005"
+			},
+			{
+				"a": "Q8119033",
+				"a_en": "Random Access Memories",
+				"a_mul": "Random Access Memories",
+				"an": "2013"
+			},
+			{
+				"a": "Q14549385",
+				"a_en": "Bangerz",
+				"a_mul": "Bangerz",
+				"a_ro": "Bangerz",
+				"an": "2013"
+			},
+			{
+				"a": "Q158740",
+				"a_en": "Viva la Vida or Death and All His Friends",
+				"a_mul": "Viva la Vida or Death and All His Friends",
+				"a_ro": "Viva la Vida or Death and All His Friends",
+				"an": "2008"
+			},
+			{
+				"a": "Q21084500",
+				"a_en": "Anti",
+				"a_mul": "Anti",
+				"a_ro": "Anti",
+				"an": "2016"
+			},
+			{
+				"a": "Q21168841",
+				"a_en": "25",
+				"a_mul": "25",
+				"a_ro": "25",
+				"an": "2015"
+			},
+			{
+				"a": "Q164646",
+				"a_en": "Born This Way",
+				"a_mul": "Born This Way",
+				"a_ro": "Born This Way",
+				"an": "2011"
+			},
+			{
+				"a": "Q181826",
+				"a_en": "Please Please Me",
+				"a_mul": "Please Please Me",
+				"a_ro": "Please Please Me",
+				"an": "1963"
+			},
+			{
+				"a": "Q182518",
+				"a_en": "A Hard Day's Night",
+				"a_mul": "A Hard Day's Night",
+				"an": "1964"
+			},
+			{
+				"a": "Q185121",
+				"a_en": "Revolver",
+				"a_mul": "Revolver",
+				"a_ro": "Revolver",
+				"an": "1966"
+			},
+			{
+				"a": "Q23905116",
+				"a_en": "Lemonade",
+				"a_mul": "Lemonade",
+				"a_ro": "Lemonade",
+				"an": "2016"
+			},
+			{
+				"a": "Q186188",
+				"a_en": "Teenage Dream",
+				"a_mul": "Teenage Dream",
+				"a_ro": "Teenage Dream",
+				"an": "2010"
+			},
+			{
+				"a": "Q37814092",
+				"a_en": "Reputation",
+				"a_mul": "Reputation",
+				"a_ro": "Reputation",
+				"an": "2017"
+			},
+			{
+				"a": "Q193477",
+				"a_en": "A Night at the Opera",
+				"a_mul": "A Night at the Opera",
+				"a_ro": "A Night At The Opera",
+				"an": "1975"
+			},
+			{
+				"a": "Q52477911",
+				"a_en": "Sweetener",
+				"a_mul": "Sweetener",
+				"a_ro": "Sweetener",
+				"an": "2018"
+			},
+			{
+				"a": "Q199585",
+				"a_en": "Let It Be",
+				"a_mul": "Let It Be",
+				"a_ro": "Let It Be",
+				"an": "1970"
+			},
+			{
+				"a": "Q58192616",
+				"a_en": "Thank U, Next",
+				"a_mul": "Thank U, Next",
+				"an": "2019"
+			},
+			{
+				"a": "Q60676411",
+				"a_en": "Magical Mystery Tour",
+				"a_mul": "Magical Mystery Tour",
+				"an": "1967"
+			},
+			{
+				"a": "Q202714",
+				"a_en": "The Piper at the Gates of Dawn",
+				"a_mul": "The Piper at the Gates of Dawn",
+				"a_ro": "The Piper at the Gates of Dawn",
+				"an": "1967"
+			},
+			{
+				"a": "Q208340",
+				"a_en": "Loud",
+				"a_mul": "Loud",
+				"a_ro": "Loud",
+				"an": "2010"
+			},
+			{
+				"a": "Q208521",
+				"a_en": "The Division Bell",
+				"a_mul": "The Division Bell",
+				"a_ro": "The Division Bell",
+				"an": "1994"
+			},
+			{
+				"a": "Q61157315",
+				"a_en": "When We All Fall Asleep, Where Do We Go?",
+				"a_mul": "When We All Fall Asleep, Where Do We Go?",
+				"a_ro": "When We All Fall Asleep, Where Do We Go?",
+				"an": "2019"
+			},
+			{
+				"a": "Q208902",
+				"a_en": "19",
+				"a_mul": "19",
+				"a_ro": "19",
+				"an": "2008"
+			},
+			{
+				"a": "Q210809",
+				"a_en": "Physical Graffiti",
+				"a_mul": "Physical Graffiti",
+				"a_ro": "Physical Graffiti",
+				"an": "1975"
+			},
+			{
+				"a": "Q210904",
+				"a_en": "Absolution",
+				"a_mul": "Absolution",
+				"a_ro": "Absolution",
+				"an": "2003"
+			},
+			{
+				"a": "Q76962209",
+				"a_en": "Future Nostalgia",
+				"a_mul": "Future Nostalgia",
+				"a_ro": "Future Nostalgia",
+				"an": "2020"
+			},
+			{
+				"a": "Q211292",
+				"a_en": "Dookie",
+				"a_mul": "Dookie",
+				"an": "1994"
+			},
+			{
+				"a": "Q86919359",
+				"a_en": "Chromatica",
+				"a_mul": "Chromatica",
+				"a_ro": "Chromatica",
+				"an": "2020"
+			},
+			{
+				"a": "Q213578",
+				"a_en": "Sehnsucht",
+				"a_mul": "Sehnsucht",
+				"a_ro": "Sehnsucht",
+				"an": "1997"
+			},
+			{
+				"a": "Q97620733",
+				"a_en": "Folklore",
+				"a_mul": "Folklore",
+				"a_ro": "Folklore",
+				"an": "2020"
+			},
+			{
+				"a": "Q215223",
+				"a_en": "Hot Fuss",
+				"a_mul": "Hot Fuss",
+				"a_ro": "Hot Fuss",
+				"an": "2004"
+			},
+			{
+				"a": "Q220726",
+				"a_en": "Kid A",
+				"a_mul": "Kid A",
+				"a_ro": "Kid A",
+				"an": "2000"
+			},
+			{
+				"a": "Q221246",
+				"a_en": "The Bends",
+				"a_mul": "The Bends",
+				"a_ro": "The Bends",
+				"an": "1995"
+			},
+			{
+				"a": "Q222001",
+				"a_en": "In Utero",
+				"a_mul": "In Utero",
+				"a_ro": "In Utero",
+				"an": "1993"
+			},
+			{
+				"a": "Q223295",
+				"a_en": "In Rainbows",
+				"a_mul": "In Rainbows",
+				"a_ro": "In Rainbows",
+				"an": "2007"
+			},
+			{
+				"a": "Q106316694",
+				"a_en": "Sour",
+				"a_mul": "Sour",
+				"a_ro": "Sour",
+				"an": "2021"
+			},
+			{
+				"a": "Q252447",
+				"a_en": "Like a Prayer",
+				"a_mul": "Like a Prayer",
+				"a_ro": "Like a Prayer",
+				"an": "1989"
+			},
+			{
+				"a": "Q270083",
+				"a_en": "Jazz",
+				"a_mul": "Jazz",
+				"a_ro": "Jazz",
+				"an": "1978"
+			},
+			{
+				"a": "Q271787",
+				"a_en": "Paranoid",
+				"a_mul": "Paranoid",
+				"a_ro": "Paranoid",
+				"an": "1970"
+			},
+			{
+				"a": "Q274533",
+				"a_en": "Recovery",
+				"a_mul": "Recovery",
+				"a_ro": "Recovery",
+				"an": "2010"
+			},
+			{
+				"a": "Q276546",
+				"a_en": "Load",
+				"a_mul": "Load",
+				"a_ro": "Load",
+				"an": "1996"
+			},
+			{
+				"a": "Q108384663",
+				"a_en": "Voyage",
+				"a_mul": "Voyage",
+				"a_ro": "Voyage",
+				"an": "2021"
+			},
+			{
+				"a": "Q309021",
+				"a_en": "News of the World",
+				"a_mul": "News of the World",
+				"a_ro": "News of the World",
+				"an": "1977"
+			},
+			{
+				"a": "Q333266",
+				"a_en": "Imagine",
+				"a_mul": "Imagine",
+				"a_ro": "Imagine",
+				"an": "1971"
+			},
+			{
+				"a": "Q108773286",
+				"a_en": "30",
+				"a_mul": "30",
+				"a_ro": "30",
+				"an": "2021"
+			},
+			{
+				"a": "Q372055",
+				"a_en": "Tommy",
+				"a_mul": "Tommy",
+				"a_ro": "Tommy",
+				"an": "1969"
+			},
+			{
+				"a": "Q381122",
+				"a_en": "One of the Boys",
+				"a_mul": "One of the Boys",
+				"a_ro": "One Of The Boys",
+				"an": "2008"
+			},
+			{
+				"a": "Q383459",
+				"a_en": "The Slim Shady LP",
+				"a_mul": "The Slim Shady LP",
+				"a_ro": "The Slim Shady LP",
+				"an": "1999"
+			},
+			{
+				"a": "Q471924",
+				"a_en": "FutureSex/LoveSounds",
+				"a_mul": "FutureSex/LoveSounds",
+				"a_ro": "FutureSex/LoveSounds",
+				"an": "2006"
+			},
+			{
+				"a": "Q113640799",
+				"a_en": "Midnights",
+				"a_mul": "Midnights",
+				"a_ro": "Midnights",
+				"an": "2022"
+			},
+			{
+				"a": "Q483778",
+				"a_en": "Hard Candy",
+				"a_mul": "Hard Candy",
+				"a_ro": "Hard Candy",
+				"an": "2008"
+			},
+			{
+				"a": "Q547624",
+				"a_en": "My Beautiful Dark Twisted Fantasy",
+				"a_mul": "My Beautiful Dark Twisted Fantasy",
+				"an": "2010"
+			},
+			{
+				"a": "Q584720",
+				"a_en": "Music for the Masses",
+				"a_mul": "Music for the Masses",
+				"a_ro": "Music for the Masses",
+				"an": "1987"
+			},
+			{
+				"a": "Q637860",
+				"a_en": "Me Against the World",
+				"a_mul": "Me Against the World",
+				"a_ro": "Me Against the World",
+				"an": "1995"
+			},
+			{
+				"a": "Q656525",
+				"a_en": "Ring Ring",
+				"a_mul": "Ring Ring",
+				"a_ro": "Ring Ring",
+				"an": "1973"
+			},
+			{
+				"a": "Q695405",
+				"a_en": "Rumours",
+				"a_mul": "Rumours",
+				"a_ro": "Rumours",
+				"an": "1977"
+			},
+			{
+				"a": "Q826486",
+				"a_en": "Use Your Illusion I",
+				"a_mul": "Use Your Illusion I",
+				"a_ro": "Use Your Illusion I",
+				"an": "1991"
+			},
+			{
+				"a": "Q842214",
+				"a_en": "Fearless",
+				"a_mul": "Fearless",
+				"a_ro": "Fearless",
+				"an": "2008"
+			},
+			{
+				"a": "Q856869",
+				"a_en": "The Black Parade",
+				"a_mul": "The Black Parade",
+				"an": "2006"
+			},
+			{
+				"a": "Q858750",
+				"a_en": "Red",
+				"a_mul": "Red",
+				"a_ro": "Red",
+				"an": "2012"
+			},
+			{
+				"a": "Q1129439",
+				"a_en": "Graduation",
+				"a_mul": "Graduation",
+				"an": "2007"
+			},
+			{
+				"a": "Q2743297",
+				"a_en": "Artpop",
+				"a_mul": "Artpop",
+				"a_ro": "Artpop",
+				"an": "2013"
+			},
+			{
+				"a": "Q147006",
+				"a_en": "I Am… Sasha Fierce",
+				"a_ro": "I Am... Sasha Fierce",
+				"an": "2008"
+			},
+			{
+				"a": "Q152873",
+				"a_en": "The Joshua Tree",
+				"a_ro": "The Joshua Tree",
+				"an": "1987"
+			},
+			{
+				"a": "Q154601",
+				"a_en": "Mutter",
+				"a_ro": "Mutter",
+				"an": "2001"
+			},
+			{
+				"a": "Q182826",
+				"a_en": "Kill 'Em All",
+				"a_ro": "Kill'em All",
+				"an": "1983"
+			},
+			{
+				"a": "Q190640",
+				"a_en": "Rubber Soul",
+				"an": "1965"
+			},
+			{
+				"a": "Q190989",
+				"a_en": "Ride the Lightning",
+				"a_ro": "Ride the Lightning",
+				"an": "1984"
+			},
+			{
+				"a": "Q200872",
+				"a_en": "Wish You Were Here",
+				"a_ro": "Wish You Were Here",
+				"an": "1975"
+			},
+			{
+				"a": "Q201816",
+				"a_en": "Help!",
+				"an": "1965"
+			},
+			{
+				"a": "Q204240",
+				"a_en": "Black Holes and Revelations",
+				"an": "2006"
+			},
+			{
+				"a": "Q206216",
+				"a_en": "Animals (Pink Floyd album)",
+				"a_ro": "Animals",
+				"an": "1977"
+			},
+			{
+				"a": "Q207970",
+				"a_en": "A Rush of Blood to the Head",
+				"a_ro": "A Rush of Blood to the Head",
+				"an": "2002"
+			},
+			{
+				"a": "Q210048",
+				"a_en": "Innuendo",
+				"a_ro": "Innuendo",
+				"an": "1991"
+			},
+			{
+				"a": "Q211405",
+				"a_en": "The Game",
+				"a_ro": "The Game",
+				"an": "1980"
+			},
+			{
+				"a": "Q211413",
+				"a_en": "Houses of the Holy",
+				"a_ro": "Houses of the Holy",
+				"an": "1973"
+			},
+			{
+				"a": "Q211742",
+				"a_en": "Machine Head",
+				"a_ro": "Machine Head",
+				"an": "1972"
+			},
+			{
+				"a": "Q212665",
+				"a_en": "Strange Days",
+				"a_ro": "Strange days",
+				"an": "1967"
+			},
+			{
+				"a": "Q212846",
+				"a_en": "L.A. Woman",
+				"a_ro": "L.A. Woman",
+				"an": "1971"
+			},
+			{
+				"a": "Q214973",
+				"a_en": "...And Justice for All",
+				"a_ro": "...And Justice for All",
+				"an": "1988"
+			},
+			{
+				"a": "Q217211",
+				"a_en": "Highway 61 Revisited",
+				"a_ro": "Highway 61 Revisited",
+				"an": "1965"
+			},
+			{
+				"a": "Q217248",
+				"a_en": "Exile on Main St.",
+				"a_ro": "Exile on Main St.",
+				"an": "1972"
+			},
+			{
+				"a": "Q218513",
+				"a_en": "Bleach",
+				"a_ro": "Bleach",
+				"an": "1989"
+			},
+			{
+				"a": "Q218971",
+				"a_en": "Toxicity",
+				"a_ro": "Toxicity",
+				"an": "2001"
+			},
+			{
+				"a": "Q245353",
+				"a_en": "Relapse",
+				"an": "2009"
+			},
+			{
+				"a": "Q285929",
+				"a_en": "Highway to Hell",
+				"a_ro": "Highway to Hell",
+				"an": "1979"
+			},
+			{
+				"a": "Q300447",
+				"a_en": "A Kind of Magic",
+				"a_ro": "A Kind Of Magic",
+				"an": "1986"
+			},
+			{
+				"a": "Q308801",
+				"a_en": "Achtung Baby",
+				"a_ro": "Achtung Baby",
+				"an": "1991"
+			},
+			{
+				"a": "Q329396",
+				"a_en": "Blood Sugar Sex Magik",
+				"an": "1991"
+			},
+			{
+				"a": "Q379339",
+				"a_en": "Let It Bleed",
+				"a_ro": "Let It Bleed",
+				"an": "1969"
+			},
+			{
+				"a": "Q383227",
+				"a_en": "Ten",
+				"a_ro": "Ten",
+				"an": "1991"
+			},
+			{
+				"a": "Q488934",
+				"a_en": "Loose",
+				"a_ro": "Loose",
+				"an": "2006"
+			},
+			{
+				"a": "Q631442",
+				"a_en": "Chinese Democracy",
+				"a_ro": "Chinese Democracy",
+				"an": "2008"
+			},
+			{
+				"a": "Q640397",
+				"a_en": "Are You Experienced",
+				"a_ro": "Are You Experienced",
+				"an": "1967"
+			},
+			{
+				"a": "Q643906",
+				"a_en": "Images and Words",
+				"a_ro": "Images and Words",
+				"an": "1992"
+			},
+			{
+				"a": "Q650284",
+				"a_en": "Up All Night",
+				"an": "2011"
+			},
+			{
+				"a": "Q655502",
+				"a_en": "Bridge over Troubled Water",
+				"a_ro": "Bridge over Troubled Water",
+				"an": "1970"
+			},
+			{
+				"a": "Q683079",
+				"a_en": "Violator",
+				"a_ro": "Violator",
+				"an": "1990"
+			},
+			{
+				"a": "Q726729",
+				"a_en": "Slippery When Wet",
+				"a_ro": "Slippery When Wet",
+				"an": "1986"
+			},
+			{
+				"a": "Q745850",
+				"a_en": "Sticky Fingers",
+				"an": "1971"
+			},
+			{
+				"a": "Q750274",
+				"a_en": "British Steel",
+				"a_ro": "British Steel",
+				"an": "1980"
+			},
+			{
+				"a": "Q755988",
+				"a_en": "Hunky Dory",
+				"a_ro": "Hunky Dory",
+				"an": "1971"
+			},
+			{
+				"a": "Q826224",
+				"a_en": "Tubular Bells",
+				"a_ro": "Tubular Bells",
+				"an": "1973"
+			},
+			{
+				"a": "Q842126",
+				"a_en": "Whatever People Say I Am, That's What I'm Not",
+				"a_ro": "Whatever People Say I Am, That's What I'm Not",
+				"an": "2006"
+			},
+			{
+				"a": "Q44289",
+				"a_en": "Off the Wall",
+				"a_ro": "Off the Wall",
+				"an": "1979"
+			},
+			{
+				"a": "Q44347",
+				"a_en": "HIStory: Past, Present and Future, Book I",
+				"a_ro": "HIStory: Past, Present and Future, Book I",
+				"an": "1995"
+			},
+			{
+				"a": "Q44376",
+				"a_en": "Invincible",
+				"a_ro": "Invincible",
+				"an": "2001"
+			}
+		],
+		"interpreti": [
+			{
+				"a": "Q308801",
+				"descriere": "trupă de rock alternativ irlandeză",
+				"i": "Q396",
+				"i_en": "U2",
+				"i_mul": "U2",
+				"i_ro": "U2",
+				"om": "false",
+				"start": "1976"
+			},
+			{
+				"a": "Q152873",
+				"descriere": "trupă de rock alternativ irlandeză",
+				"i": "Q396",
+				"i_en": "U2",
+				"i_mul": "U2",
+				"i_ro": "U2",
+				"om": "false",
+				"start": "1976"
+			},
+			{
+				"a": "Q483778",
+				"descriere": "cântăreață, dansatoare, producătoare, regizoare și femeie de afaceri americană",
+				"i": "Q1744",
+				"i_en": "Madonna",
+				"i_mul": "Madonna",
+				"i_ro": "Madonna",
+				"nastere": "1958",
+				"om": "true"
+			},
+			{
+				"a": "Q252447",
+				"descriere": "cântăreață, dansatoare, producătoare, regizoare și femeie de afaceri americană",
+				"i": "Q1744",
+				"i_en": "Madonna",
+				"i_mul": "Madonna",
+				"i_ro": "Madonna",
+				"nastere": "1958",
+				"om": "true"
+			},
+			{
+				"a": "Q151880",
+				"descriere": "cântăreață, dansatoare, producătoare, regizoare și femeie de afaceri americană",
+				"i": "Q1744",
+				"i_en": "Madonna",
+				"i_mul": "Madonna",
+				"i_ro": "Madonna",
+				"nastere": "1958",
+				"om": "true"
+			},
+			{
+				"a": "Q155358",
+				"descriere": "cântăreață, dansatoare, producătoare, regizoare și femeie de afaceri americană",
+				"i": "Q1744",
+				"i_en": "Madonna",
+				"i_mul": "Madonna",
+				"i_ro": "Madonna",
+				"nastere": "1958",
+				"om": "true"
+			},
+			{
+				"a": "Q155335",
+				"descriere": "cântăreață, dansatoare, producătoare, regizoare și femeie de afaceri americană",
+				"i": "Q1744",
+				"i_en": "Madonna",
+				"i_mul": "Madonna",
+				"i_ro": "Madonna",
+				"nastere": "1958",
+				"om": "true"
+			},
+			{
+				"a": "Q154467",
+				"descriere": "cântăreață, dansatoare, producătoare, regizoare și femeie de afaceri americană",
+				"i": "Q1744",
+				"i_en": "Madonna",
+				"i_mul": "Madonna",
+				"i_ro": "Madonna",
+				"nastere": "1958",
+				"om": "true"
+			},
+			{
+				"a": "Q86919359",
+				"descriere": "Cântăreață, compozitoare și actriță americană (n. 1986)",
+				"i": "Q19848",
+				"i_mul": "Lady Gaga",
+				"nastere": "1986",
+				"om": "true"
+			},
+			{
+				"a": "Q2743297",
+				"descriere": "Cântăreață, compozitoare și actriță americană (n. 1986)",
+				"i": "Q19848",
+				"i_mul": "Lady Gaga",
+				"nastere": "1986",
+				"om": "true"
+			},
+			{
+				"a": "Q164646",
+				"descriere": "Cântăreață, compozitoare și actriță americană (n. 1986)",
+				"i": "Q19848",
+				"i_mul": "Lady Gaga",
+				"nastere": "1986",
+				"om": "true"
+			},
+			{
+				"a": "Q131182",
+				"descriere": "Cântăreață, compozitoare și actriță americană (n. 1986)",
+				"i": "Q19848",
+				"i_mul": "Lady Gaga",
+				"nastere": "1986",
+				"om": "true"
+			},
+			{
+				"a": "Q210904",
+				"descriere": "formație rock din Anglia",
+				"i": "Q22151",
+				"i_mul": "Muse",
+				"i_ro": "Muse",
+				"om": "false",
+				"start": "1994"
+			},
+			{
+				"a": "Q204240",
+				"descriere": "formație rock din Anglia",
+				"i": "Q22151",
+				"i_mul": "Muse",
+				"i_ro": "Muse",
+				"om": "false",
+				"start": "1994"
+			},
+			{
+				"a": "Q217211",
+				"descriere": "muzician american",
+				"i": "Q392",
+				"i_en": "Bob Dylan",
+				"i_mul": "Bob Dylan",
+				"nastere": "1941",
+				"om": "true"
+			},
+			{
+				"a": "Q208521",
+				"descriere": "trupă rock din Regatul Unit",
+				"i": "Q2306",
+				"i_en": "Pink Floyd",
+				"i_mul": "Pink Floyd",
+				"i_ro": "Pink Floyd",
+				"om": "false",
+				"start": "1964"
+			},
+			{
+				"a": "Q206216",
+				"descriere": "trupă rock din Regatul Unit",
+				"i": "Q2306",
+				"i_en": "Pink Floyd",
+				"i_mul": "Pink Floyd",
+				"i_ro": "Pink Floyd",
+				"om": "false",
+				"start": "1964"
+			},
+			{
+				"a": "Q202714",
+				"descriere": "trupă rock din Regatul Unit",
+				"i": "Q2306",
+				"i_en": "Pink Floyd",
+				"i_mul": "Pink Floyd",
+				"i_ro": "Pink Floyd",
+				"om": "false",
+				"start": "1964"
+			},
+			{
+				"a": "Q200872",
+				"descriere": "trupă rock din Regatul Unit",
+				"i": "Q2306",
+				"i_en": "Pink Floyd",
+				"i_mul": "Pink Floyd",
+				"i_ro": "Pink Floyd",
+				"om": "false",
+				"start": "1964"
+			},
+			{
+				"a": "Q211413",
+				"descriere": "trupă rock din Regatul Unit",
+				"i": "Q2331",
+				"i_en": "Led Zeppelin",
+				"i_mul": "Led Zeppelin",
+				"i_ro": "Led Zeppelin",
+				"om": "false",
+				"start": "1968"
+			},
+			{
+				"a": "Q210809",
+				"descriere": "trupă rock din Regatul Unit",
+				"i": "Q2331",
+				"i_en": "Led Zeppelin",
+				"i_mul": "Led Zeppelin",
+				"i_ro": "Led Zeppelin",
+				"om": "false",
+				"start": "1968"
+			},
+			{
+				"a": "Q44289",
+				"descriere": "cântăreț și dansator american",
+				"i": "Q2831",
+				"i_en": "Michael Jackson",
+				"i_mul": "Michael Jackson",
+				"moarte": "2009",
+				"nastere": "1958",
+				"om": "true"
+			},
+			{
+				"a": "Q44347",
+				"descriere": "cântăreț și dansator american",
+				"i": "Q2831",
+				"i_en": "Michael Jackson",
+				"i_mul": "Michael Jackson",
+				"moarte": "2009",
+				"nastere": "1958",
+				"om": "true"
+			},
+			{
+				"a": "Q44376",
+				"descriere": "cântăreț și dansator american",
+				"i": "Q2831",
+				"i_en": "Michael Jackson",
+				"i_mul": "Michael Jackson",
+				"moarte": "2009",
+				"nastere": "1958",
+				"om": "true"
+			},
+			{
+				"a": "Q44104",
+				"descriere": "cântăreț și dansator american",
+				"i": "Q2831",
+				"i_en": "Michael Jackson",
+				"i_mul": "Michael Jackson",
+				"moarte": "2009",
+				"nastere": "1958",
+				"om": "true"
+			},
+			{
+				"a": "Q44142",
+				"descriere": "cântăreț și dansator american",
+				"i": "Q2831",
+				"i_en": "Michael Jackson",
+				"i_mul": "Michael Jackson",
+				"moarte": "2009",
+				"nastere": "1958",
+				"om": "true"
+			},
+			{
+				"a": "Q333266",
+				"descriere": "muzician englez",
+				"i": "Q1203",
+				"i_en": "John Lennon",
+				"i_mul": "John Lennon",
+				"i_ro": "John Lennon",
+				"moarte": "1980",
+				"nastere": "1940",
+				"om": "true"
+			},
+			{
+				"a": "Q60676411",
+				"descriere": "trupă rock britanică",
+				"i": "Q1299",
+				"i_en": "The Beatles",
+				"i_mul": "The Beatles",
+				"om": "false",
+				"start": "1960"
+			},
+			{
+				"a": "Q201816",
+				"descriere": "trupă rock britanică",
+				"i": "Q1299",
+				"i_en": "The Beatles",
+				"i_mul": "The Beatles",
+				"om": "false",
+				"start": "1960"
+			},
+			{
+				"a": "Q199585",
+				"descriere": "trupă rock britanică",
+				"i": "Q1299",
+				"i_en": "The Beatles",
+				"i_mul": "The Beatles",
+				"om": "false",
+				"start": "1960"
+			},
+			{
+				"a": "Q190640",
+				"descriere": "trupă rock britanică",
+				"i": "Q1299",
+				"i_en": "The Beatles",
+				"i_mul": "The Beatles",
+				"om": "false",
+				"start": "1960"
+			},
+			{
+				"a": "Q185121",
+				"descriere": "trupă rock britanică",
+				"i": "Q1299",
+				"i_en": "The Beatles",
+				"i_mul": "The Beatles",
+				"om": "false",
+				"start": "1960"
+			},
+			{
+				"a": "Q182518",
+				"descriere": "trupă rock britanică",
+				"i": "Q1299",
+				"i_en": "The Beatles",
+				"i_mul": "The Beatles",
+				"om": "false",
+				"start": "1960"
+			},
+			{
+				"a": "Q181826",
+				"descriere": "trupă rock britanică",
+				"i": "Q1299",
+				"i_en": "The Beatles",
+				"i_mul": "The Beatles",
+				"om": "false",
+				"start": "1960"
+			},
+			{
+				"a": "Q108773286",
+				"descriere": "cantautoare și actriță britanică",
+				"i": "Q23215",
+				"i_en": "Adele",
+				"i_mul": "Adele",
+				"i_ro": "Adele",
+				"nastere": "1988",
+				"om": "true"
+			},
+			{
+				"a": "Q21168841",
+				"descriere": "cantautoare și actriță britanică",
+				"i": "Q23215",
+				"i_en": "Adele",
+				"i_mul": "Adele",
+				"i_ro": "Adele",
+				"nastere": "1988",
+				"om": "true"
+			},
+			{
+				"a": "Q208902",
+				"descriere": "cantautoare și actriță britanică",
+				"i": "Q23215",
+				"i_en": "Adele",
+				"i_mul": "Adele",
+				"i_ro": "Adele",
+				"nastere": "1988",
+				"om": "true"
+			},
+			{
+				"a": "Q213578",
+				"descriere": "formație hard rock din Germania",
+				"i": "Q25177",
+				"i_en": "Rammstein",
+				"i_mul": "Rammstein",
+				"i_ro": "Rammstein",
+				"om": "false",
+				"start": "1994"
+			},
+			{
+				"a": "Q154601",
+				"descriere": "formație hard rock din Germania",
+				"i": "Q25177",
+				"i_en": "Rammstein",
+				"i_mul": "Rammstein",
+				"i_ro": "Rammstein",
+				"om": "false",
+				"start": "1994"
+			},
+			{
+				"a": "Q643906",
+				"descriere": "trupă americană de metal progresiv",
+				"i": "Q162586",
+				"i_en": "Dream Theater",
+				"i_ro": "Dream Theater",
+				"om": "false",
+				"start": "1985"
+			},
+			{
+				"a": "Q842126",
+				"descriere": "grup muzical britanic",
+				"i": "Q170599",
+				"i_en": "Arctic Monkeys",
+				"i_mul": "Arctic Monkeys",
+				"i_ro": "Arctic Monkeys",
+				"om": "false",
+				"start": "2002"
+			},
+			{
+				"a": "Q8119033",
+				"descriere": "duo francez de muzică electronică",
+				"i": "Q185828",
+				"i_en": "Daft Punk",
+				"i_mul": "Daft Punk",
+				"i_ro": "Daft Punk",
+				"om": "false",
+				"start": "1993"
+			},
+			{
+				"a": "Q826224",
+				"descriere": "muzician britanic (n. 1953)",
+				"i": "Q3008",
+				"i_en": "Mike Oldfield",
+				"i_mul": "Mike Oldfield",
+				"i_ro": "Mike Oldfield",
+				"nastere": "1953",
+				"om": "true"
+			},
+			{
+				"a": "Q113640799",
+				"descriere": "cantautoare americană",
+				"i": "Q26876",
+				"i_en": "Taylor Swift",
+				"i_mul": "Taylor Swift",
+				"nastere": "1989",
+				"om": "true"
+			},
+			{
+				"a": "Q97620733",
+				"descriere": "cantautoare americană",
+				"i": "Q26876",
+				"i_en": "Taylor Swift",
+				"i_mul": "Taylor Swift",
+				"nastere": "1989",
+				"om": "true"
+			},
+			{
+				"a": "Q37814092",
+				"descriere": "cantautoare americană",
+				"i": "Q26876",
+				"i_en": "Taylor Swift",
+				"i_mul": "Taylor Swift",
+				"nastere": "1989",
+				"om": "true"
+			},
+			{
+				"a": "Q858750",
+				"descriere": "cantautoare americană",
+				"i": "Q26876",
+				"i_en": "Taylor Swift",
+				"i_mul": "Taylor Swift",
+				"nastere": "1989",
+				"om": "true"
+			},
+			{
+				"a": "Q842214",
+				"descriere": "cantautoare americană",
+				"i": "Q26876",
+				"i_en": "Taylor Swift",
+				"i_mul": "Taylor Swift",
+				"nastere": "1989",
+				"om": "true"
+			},
+			{
+				"a": "Q285929",
+				"descriere": "trupă australiană",
+				"i": "Q27593",
+				"i_en": "AC/DC",
+				"i_mul": "AC/DC",
+				"i_ro": "AC/DC",
+				"om": "false",
+				"start": "1973"
+			},
+			{
+				"a": "Q37148",
+				"descriere": "cântăreață și compozitoare americană",
+				"i": "Q37150",
+				"i_en": "Lana Del Rey",
+				"i_mul": "Lana Del Rey",
+				"i_ro": "Lana Del Rey",
+				"nastere": "1985",
+				"om": "true"
+			},
+			{
+				"a": "Q186188",
+				"descriere": "cântăreață americană",
+				"i": "Q42493",
+				"i_en": "Katy Perry",
+				"i_mul": "Katy Perry",
+				"i_ro": "Katy Perry",
+				"nastere": "1984",
+				"om": "true"
+			},
+			{
+				"a": "Q381122",
+				"descriere": "cântăreață americană",
+				"i": "Q42493",
+				"i_en": "Katy Perry",
+				"i_mul": "Katy Perry",
+				"i_ro": "Katy Perry",
+				"nastere": "1984",
+				"om": "true"
+			},
+			{
+				"a": "Q158326",
+				"descriere": "formație americană",
+				"i": "Q134541",
+				"i_en": "Black Eyed Peas",
+				"i_mul": "Black Eyed Peas",
+				"i_ro": "Black Eyed Peas",
+				"om": "false",
+				"start": "1995"
+			},
+			{
+				"a": "Q127503",
+				"descriere": "cântăreață și actriță americană",
+				"i": "Q36153",
+				"i_mul": "Beyoncé",
+				"nastere": "1981",
+				"om": "true"
+			},
+			{
+				"a": "Q147006",
+				"descriere": "cântăreață și actriță americană",
+				"i": "Q36153",
+				"i_mul": "Beyoncé",
+				"nastere": "1981",
+				"om": "true"
+			},
+			{
+				"a": "Q23905116",
+				"descriere": "cântăreață și actriță americană",
+				"i": "Q36153",
+				"i_mul": "Beyoncé",
+				"nastere": "1981",
+				"om": "true"
+			},
+			{
+				"a": "Q471924",
+				"descriere": "cântăreț și actor american",
+				"i": "Q43432",
+				"i_mul": "Justin Timberlake",
+				"nastere": "1981",
+				"om": "true"
+			},
+			{
+				"a": "Q223295",
+				"descriere": "trupă rock engleză",
+				"i": "Q44190",
+				"i_mul": "Radiohead",
+				"i_ro": "Radiohead",
+				"om": "false",
+				"start": "1985"
+			},
+			{
+				"a": "Q221246",
+				"descriere": "trupă rock engleză",
+				"i": "Q44190",
+				"i_mul": "Radiohead",
+				"i_ro": "Radiohead",
+				"om": "false",
+				"start": "1985"
+			},
+			{
+				"a": "Q220726",
+				"descriere": "trupă rock engleză",
+				"i": "Q44190",
+				"i_mul": "Radiohead",
+				"i_ro": "Radiohead",
+				"om": "false",
+				"start": "1985"
+			},
+			{
+				"a": "Q218971",
+				"descriere": "trupă americană metal",
+				"i": "Q45165",
+				"i_en": "System of a Down",
+				"i_mul": "System of a Down",
+				"i_ro": "System of a Down",
+				"om": "false",
+				"start": "1994"
+			},
+			{
+				"a": "Q153391",
+				"descriere": "cântăreță, dansatoare și designer din Barbados",
+				"i": "Q36844",
+				"i_mul": "Rihanna",
+				"nastere": "1988",
+				"om": "true"
+			},
+			{
+				"a": "Q208340",
+				"descriere": "cântăreță, dansatoare și designer din Barbados",
+				"i": "Q36844",
+				"i_mul": "Rihanna",
+				"nastere": "1988",
+				"om": "true"
+			},
+			{
+				"a": "Q21084500",
+				"descriere": "cântăreță, dansatoare și designer din Barbados",
+				"i": "Q36844",
+				"i_mul": "Rihanna",
+				"nastere": "1988",
+				"om": "true"
+			},
+			{
+				"a": "Q14549385",
+				"descriere": "cântăreață și actriță americană",
+				"i": "Q4235",
+				"i_en": "Miley Cyrus",
+				"i_mul": "Miley Cyrus",
+				"nastere": "1992",
+				"om": "true"
+			},
+			{
+				"a": "Q755988",
+				"descriere": "cântăreț englez",
+				"i": "Q5383",
+				"i_en": "David Bowie",
+				"i_mul": "David Bowie",
+				"i_ro": "David Bowie",
+				"moarte": "2016",
+				"nastere": "1947",
+				"om": "true"
+			},
+			{
+				"a": "Q207970",
+				"descriere": "Formație de alt rock și piano-rock din Londra, Regatul Unit",
+				"i": "Q45188",
+				"i_en": "Coldplay",
+				"i_mul": "Coldplay",
+				"i_ro": "Coldplay",
+				"om": "false",
+				"start": "1999"
+			},
+			{
+				"a": "Q158740",
+				"descriere": "Formație de alt rock și piano-rock din Londra, Regatul Unit",
+				"i": "Q45188",
+				"i_en": "Coldplay",
+				"i_mul": "Coldplay",
+				"i_ro": "Coldplay",
+				"om": "false",
+				"start": "1999"
+			},
+			{
+				"a": "Q158738",
+				"descriere": "Formație de alt rock și piano-rock din Londra, Regatul Unit",
+				"i": "Q45188",
+				"i_en": "Coldplay",
+				"i_mul": "Coldplay",
+				"i_ro": "Coldplay",
+				"om": "false",
+				"start": "1999"
+			},
+			{
+				"a": "Q212846",
+				"descriere": "formație americană",
+				"i": "Q45354",
+				"i_en": "The Doors",
+				"i_mul": "The Doors",
+				"i_ro": "The Doors",
+				"om": "false",
+				"start": "1965"
+			},
+			{
+				"a": "Q212665",
+				"descriere": "formație americană",
+				"i": "Q45354",
+				"i_en": "The Doors",
+				"i_mul": "The Doors",
+				"i_ro": "The Doors",
+				"om": "false",
+				"start": "1965"
+			},
+			{
+				"a": "Q271787",
+				"descriere": "trupă rock britanică",
+				"i": "Q47670",
+				"i_en": "Black Sabbath",
+				"i_mul": "Black Sabbath",
+				"i_ro": "Black Sabbath",
+				"om": "false",
+				"start": "1968"
+			},
+			{
+				"a": "Q8360",
+				"descriere": "formație rock",
+				"i": "Q382890",
+				"i_en": "Oasis",
+				"i_mul": "Oasis",
+				"i_ro": "Oasis",
+				"om": "false",
+				"start": "1991"
+			},
+			{
+				"a": "Q683079",
+				"descriere": "trupă britanică",
+				"i": "Q482964",
+				"i_en": "Depeche Mode",
+				"i_mul": "Depeche Mode",
+				"i_ro": "Depeche Mode",
+				"om": "false",
+				"start": "1980"
+			},
+			{
+				"a": "Q584720",
+				"descriere": "trupă britanică",
+				"i": "Q482964",
+				"i_en": "Depeche Mode",
+				"i_mul": "Depeche Mode",
+				"i_ro": "Depeche Mode",
+				"om": "false",
+				"start": "1980"
+			},
+			{
+				"a": "Q856869",
+				"descriere": "formație rock americană",
+				"i": "Q483285",
+				"i_en": "My Chemical Romance",
+				"i_mul": "My Chemical Romance",
+				"i_ro": "My Chemical Romance",
+				"om": "false",
+				"start": "2001"
+			},
+			{
+				"a": "Q655502",
+				"descriere": "duo muzical american",
+				"i": "Q484918",
+				"i_en": "Simon & Garfunkel",
+				"i_mul": "Simon & Garfunkel",
+				"i_ro": "Simon and Garfunkel",
+				"om": "false",
+				"start": "1957"
+			},
+			{
+				"a": "Q155612",
+				"descriere": "trupă rock americană",
+				"i": "Q1777698",
+				"i_en": "Evanescence",
+				"i_ro": "Evanescence",
+				"om": "false",
+				"start": "1994"
+			},
+			{
+				"a": "Q488934",
+				"descriere": "cântăreață canadiană-portugheză",
+				"i": "Q80424",
+				"i_en": "Nelly Furtado",
+				"i_mul": "Nelly Furtado",
+				"i_ro": "Nelly Furtado",
+				"nastere": "1978",
+				"om": "true"
+			},
+			{
+				"a": "Q14669",
+				"descriere": "formație americană de thrash metal",
+				"i": "Q83431",
+				"i_mul": "Megadeth",
+				"i_ro": "Megadeth",
+				"om": "false",
+				"start": "1983"
+			},
+			{
+				"a": "Q211742",
+				"descriere": "formație rock britanică",
+				"i": "Q101505",
+				"i_en": "Deep Purple",
+				"i_mul": "Deep Purple",
+				"i_ro": "Deep Purple",
+				"om": "false",
+				"start": "1968"
+			},
+			{
+				"a": "Q695405",
+				"descriere": "formație rock britanico-americană",
+				"i": "Q106648",
+				"i_en": "Fleetwood Mac",
+				"i_mul": "Fleetwood Mac",
+				"i_ro": "Fleetwood Mac",
+				"om": "false",
+				"start": "1967"
+			},
+			{
+				"a": "Q76962209",
+				"descriere": "cântăreață britanică (n. 1995)",
+				"i": "Q21914464",
+				"i_mul": "Dua Lipa",
+				"nastere": "1995",
+				"om": "true"
+			},
+			{
+				"a": "Q61157315",
+				"descriere": "cântăreață și compozitoare americană",
+				"i": "Q29564107",
+				"i_mul": "Billie Eilish",
+				"i_ro": "Billie Eilish",
+				"nastere": "2001",
+				"om": "true"
+			},
+			{
+				"a": "Q383459",
+				"descriere": "rapper și actor american (n. 1972)",
+				"i": "Q5608",
+				"i_en": "Eminem",
+				"i_mul": "Eminem",
+				"nastere": "1972",
+				"om": "true"
+			},
+			{
+				"a": "Q274533",
+				"descriere": "rapper și actor american (n. 1972)",
+				"i": "Q5608",
+				"i_en": "Eminem",
+				"i_mul": "Eminem",
+				"nastere": "1972",
+				"om": "true"
+			},
+			{
+				"a": "Q245353",
+				"descriere": "rapper și actor american (n. 1972)",
+				"i": "Q5608",
+				"i_en": "Eminem",
+				"i_mul": "Eminem",
+				"nastere": "1972",
+				"om": "true"
+			},
+			{
+				"a": "Q637860",
+				"descriere": "rapper, actor și activist american",
+				"i": "Q6107",
+				"i_en": "Tupac Shakur",
+				"i_mul": "Tupac Shakur",
+				"i_ro": "Tupac Shakur",
+				"moarte": "1996",
+				"nastere": "1971",
+				"om": "true"
+			},
+			{
+				"a": "Q329396",
+				"descriere": "trupă americană de rock",
+				"i": "Q10708",
+				"i_en": "Red Hot Chili Peppers",
+				"i_mul": "Red Hot Chili Peppers",
+				"i_ro": "Red Hot Chili Peppers",
+				"om": "false",
+				"start": "1982"
+			},
+			{
+				"a": "Q153475",
+				"descriere": "trupă americană de rock",
+				"i": "Q10708",
+				"i_en": "Red Hot Chili Peppers",
+				"i_mul": "Red Hot Chili Peppers",
+				"i_ro": "Red Hot Chili Peppers",
+				"om": "false",
+				"start": "1982"
+			},
+			{
+				"a": "Q152605",
+				"descriere": "trupă americană de rock",
+				"i": "Q10708",
+				"i_en": "Red Hot Chili Peppers",
+				"i_mul": "Red Hot Chili Peppers",
+				"i_ro": "Red Hot Chili Peppers",
+				"om": "false",
+				"start": "1982"
+			},
+			{
+				"a": "Q745850",
+				"descriere": "trupă rock britanică",
+				"i": "Q11036",
+				"i_en": "The Rolling Stones",
+				"i_mul": "The Rolling Stones",
+				"i_ro": "The Rolling Stones",
+				"om": "false",
+				"start": "1962"
+			},
+			{
+				"a": "Q379339",
+				"descriere": "trupă rock britanică",
+				"i": "Q11036",
+				"i_en": "The Rolling Stones",
+				"i_mul": "The Rolling Stones",
+				"i_ro": "The Rolling Stones",
+				"om": "false",
+				"start": "1962"
+			},
+			{
+				"a": "Q217248",
+				"descriere": "trupă rock britanică",
+				"i": "Q11036",
+				"i_en": "The Rolling Stones",
+				"i_mul": "The Rolling Stones",
+				"i_ro": "The Rolling Stones",
+				"om": "false",
+				"start": "1962"
+			},
+			{
+				"a": "Q106316694",
+				"descriere": "actriță și cântăreață americană",
+				"i": "Q63243883",
+				"i_mul": "Olivia Rodrigo",
+				"nastere": "2003",
+				"om": "true"
+			},
+			{
+				"a": "Q650284",
+				"descriere": "formație de băieți englezo-irlandeză",
+				"i": "Q146027",
+				"i_en": "One Direction",
+				"i_mul": "One Direction",
+				"i_ro": "One Direction",
+				"om": "false",
+				"start": "2010"
+			},
+			{
+				"a": "Q52477911",
+				"descriere": "cântăreață și actriță americană (n. 1993)",
+				"i": "Q151892",
+				"i_en": "Ariana Grande",
+				"i_mul": "Ariana Grande",
+				"nastere": "1993",
+				"om": "true"
+			},
+			{
+				"a": "Q58192616",
+				"descriere": "cântăreață și actriță americană (n. 1993)",
+				"i": "Q151892",
+				"i_en": "Ariana Grande",
+				"i_mul": "Ariana Grande",
+				"nastere": "1993",
+				"om": "true"
+			},
+			{
+				"a": "Q222001",
+				"descriere": "trupă rock americană",
+				"i": "Q11649",
+				"i_en": "Nirvana",
+				"i_mul": "Nirvana",
+				"i_ro": "Nirvana",
+				"om": "false",
+				"start": "1987"
+			},
+			{
+				"a": "Q218513",
+				"descriere": "trupă rock americană",
+				"i": "Q11649",
+				"i_en": "Nirvana",
+				"i_mul": "Nirvana",
+				"i_ro": "Nirvana",
+				"om": "false",
+				"start": "1987"
+			},
+			{
+				"a": "Q17444",
+				"descriere": "trupă rock americană",
+				"i": "Q11649",
+				"i_en": "Nirvana",
+				"i_mul": "Nirvana",
+				"i_ro": "Nirvana",
+				"om": "false",
+				"start": "1987"
+			},
+			{
+				"a": "Q826486",
+				"descriere": "formație americană",
+				"i": "Q11895",
+				"i_en": "Guns N' Roses",
+				"i_mul": "Guns N' Roses",
+				"i_ro": "Guns N' Roses",
+				"om": "false",
+				"start": "1985"
+			},
+			{
+				"a": "Q631442",
+				"descriere": "formație americană",
+				"i": "Q11895",
+				"i_en": "Guns N' Roses",
+				"i_mul": "Guns N' Roses",
+				"i_ro": "Guns N' Roses",
+				"om": "false",
+				"start": "1985"
+			},
+			{
+				"a": "Q211405",
+				"descriere": "trupă rock britanică",
+				"i": "Q15862",
+				"i_en": "Queen",
+				"i_mul": "Queen",
+				"i_ro": "Queen",
+				"om": "false",
+				"start": "1970"
+			},
+			{
+				"a": "Q210048",
+				"descriere": "trupă rock britanică",
+				"i": "Q15862",
+				"i_en": "Queen",
+				"i_mul": "Queen",
+				"i_ro": "Queen",
+				"om": "false",
+				"start": "1970"
+			},
+			{
+				"a": "Q193477",
+				"descriere": "trupă rock britanică",
+				"i": "Q15862",
+				"i_en": "Queen",
+				"i_mul": "Queen",
+				"i_ro": "Queen",
+				"om": "false",
+				"start": "1970"
+			},
+			{
+				"a": "Q155593",
+				"descriere": "trupă rock britanică",
+				"i": "Q15862",
+				"i_en": "Queen",
+				"i_mul": "Queen",
+				"i_ro": "Queen",
+				"om": "false",
+				"start": "1970"
+			},
+			{
+				"a": "Q309021",
+				"descriere": "trupă rock britanică",
+				"i": "Q15862",
+				"i_en": "Queen",
+				"i_mul": "Queen",
+				"i_ro": "Queen",
+				"om": "false",
+				"start": "1970"
+			},
+			{
+				"a": "Q300447",
+				"descriere": "trupă rock britanică",
+				"i": "Q15862",
+				"i_en": "Queen",
+				"i_mul": "Queen",
+				"i_ro": "Queen",
+				"om": "false",
+				"start": "1970"
+			},
+			{
+				"a": "Q270083",
+				"descriere": "trupă rock britanică",
+				"i": "Q15862",
+				"i_en": "Queen",
+				"i_mul": "Queen",
+				"i_ro": "Queen",
+				"om": "false",
+				"start": "1970"
+			},
+			{
+				"a": "Q276546",
+				"descriere": "formație americană de heavy metal",
+				"i": "Q15920",
+				"i_en": "Metallica",
+				"i_mul": "Metallica",
+				"i_ro": "Metallica",
+				"om": "false",
+				"start": "1981"
+			},
+			{
+				"a": "Q214973",
+				"descriere": "formație americană de heavy metal",
+				"i": "Q15920",
+				"i_en": "Metallica",
+				"i_mul": "Metallica",
+				"i_ro": "Metallica",
+				"om": "false",
+				"start": "1981"
+			},
+			{
+				"a": "Q190989",
+				"descriere": "formație americană de heavy metal",
+				"i": "Q15920",
+				"i_en": "Metallica",
+				"i_mul": "Metallica",
+				"i_ro": "Metallica",
+				"om": "false",
+				"start": "1981"
+			},
+			{
+				"a": "Q182826",
+				"descriere": "formație americană de heavy metal",
+				"i": "Q15920",
+				"i_en": "Metallica",
+				"i_mul": "Metallica",
+				"i_ro": "Metallica",
+				"om": "false",
+				"start": "1981"
+			},
+			{
+				"a": "Q1129439",
+				"descriere": "rapper american",
+				"i": "Q15935",
+				"i_mul": "Kanye West",
+				"nastere": "1977",
+				"om": "true"
+			},
+			{
+				"a": "Q547624",
+				"descriere": "rapper american",
+				"i": "Q15935",
+				"i_mul": "Kanye West",
+				"nastere": "1977",
+				"om": "true"
+			},
+			{
+				"a": "Q108384663",
+				"descriere": "formație pop suedeză",
+				"i": "Q18233",
+				"i_en": "ABBA",
+				"i_mul": "ABBA",
+				"om": "false",
+				"start": "1970"
+			},
+			{
+				"a": "Q656525",
+				"descriere": "formație pop suedeză",
+				"i": "Q18233",
+				"i_en": "ABBA",
+				"i_mul": "ABBA",
+				"om": "false",
+				"start": "1970"
+			},
+			{
+				"a": "Q211292",
+				"i": "Q47871",
+				"i_en": "Green Day",
+				"i_mul": "Green Day",
+				"om": "false",
+				"start": "1982"
+			},
+			{
+				"a": "Q151714",
+				"i": "Q47871",
+				"i_en": "Green Day",
+				"i_mul": "Green Day",
+				"om": "false",
+				"start": "1982"
+			},
+			{
+				"a": "Q750274",
+				"i": "Q83468",
+				"i_en": "Judas Priest",
+				"i_mul": "Judas Priest",
+				"i_ro": "Judas Priest",
+				"om": "false",
+				"start": "1969"
+			},
+			{
+				"a": "Q372055",
+				"i": "Q93346",
+				"i_en": "The Who",
+				"i_mul": "The Who",
+				"i_ro": "The Who",
+				"om": "false",
+				"start": "1964"
+			},
+			{
+				"a": "Q19003",
+				"i": "Q125603",
+				"i_en": "The Clash",
+				"i_mul": "The Clash",
+				"i_ro": "The Clash",
+				"om": "false",
+				"start": "1976"
+			},
+			{
+				"a": "Q383227",
+				"i": "Q142701",
+				"i_en": "Pearl Jam",
+				"i_mul": "Pearl Jam",
+				"i_ro": "Pearl Jam",
+				"om": "false",
+				"start": "1990"
+			},
+			{
+				"a": "Q215223",
+				"i": "Q220730",
+				"i_en": "The Killers",
+				"i_mul": "The Killers",
+				"i_ro": "The Killers",
+				"om": "false",
+				"start": "2001"
+			},
+			{
+				"a": "Q726729",
+				"i": "Q259254",
+				"i_en": "Bon Jovi",
+				"i_mul": "Bon Jovi",
+				"i_ro": "Bon Jovi",
+				"om": "false",
+				"start": "1983"
+			},
+			{
+				"a": "Q640397",
+				"i": "Q1407424",
+				"i_en": "The Jimi Hendrix Experience",
+				"i_ro": "The Jimi Hendrix Experience",
+				"om": "false",
+				"start": "1966"
+			}
+		]
+	}
+}

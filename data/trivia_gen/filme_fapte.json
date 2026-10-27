@@ -1,0 +1,814 @@
+[
+	{
+		"id": "wd:Q165817",
+		"nota": "„Salvați soldatul Ryan” este un film din 1998, regizat de Steven Spielberg."
+	},
+	{
+		"id": "wd:Q170564",
+		"nota": "„Terminatorul 2: Ziua Judecății” este un film din 1991, regizat de James Cameron."
+	},
+	{
+		"id": "wd:Q163872",
+		"nota": "„Cavalerul negru” este un film din 2008, regizat de Christopher Nolan."
+	},
+	{
+		"id": "wd:Q108839994",
+		"nota": "„Oppenheimer” este un film din 2023, regizat de Christopher Nolan. A primit Oscarul pentru cel mai bun film."
+	},
+	{
+		"id": "wd:Q55436290",
+		"nota": "„Barbie” este un film din 2023, regizat de Greta Gerwig."
+	},
+	{
+		"id": "wd:Q109116",
+		"nota": "„Dictatorul” este un film din 1940, regizat de Charlie Chaplin."
+	},
+	{
+		"id": "wd:Q45602",
+		"nota": "„Timpuri noi” este un film din 1936, regizat de Charlie Chaplin."
+	},
+	{
+		"id": "wd:Q162729",
+		"nota": "„Inimă neînfricată” este un film din 1995, regizat de Mel Gibson. A primit Oscarul pentru cel mai bun film."
+	},
+	{
+		"id": "wd:Q80379",
+		"nota": "„Hobbitul: O călătorie neașteptată” este un film din 2012, regizat de Peter Jackson."
+	},
+	{
+		"id": "wd:Q217182",
+		"nota": "„Edward Mâini-de-foarfecă” este un film din 1990, regizat de Tim Burton."
+	},
+	{
+		"id": "wd:Q218235",
+		"nota": "„Charlie și fabrica de ciocolată” este un film din 2005, regizat de Tim Burton."
+	},
+	{
+		"id": "wd:Q165325",
+		"nota": "„Kill Bill: Volumul 1” este un film din 2003, regizat de Quentin Tarantino."
+	},
+	{
+		"id": "wd:Q571032",
+		"nota": "„Django dezlănțuit” este un film din 2012, regizat de Quentin Tarantino."
+	},
+	{
+		"id": "wd:Q1392744",
+		"nota": "„Lupul de pe Wall Street” este un film din 2013, regizat de Martin Scorsese."
+	},
+	{
+		"id": "wd:Q202028",
+		"nota": "„Războiul Lumilor” este un film din 2005, regizat de Steven Spielberg."
+	},
+	{
+		"id": "wd:Q190643",
+		"nota": "„Plutonul” este un film din 1986, regizat de Oliver Stone. A primit Oscarul pentru cel mai bun film."
+	},
+	{
+		"id": "wd:Q181795",
+		"nota": "„Războiul stelelor - Episodul V: Imperiul contraatacă” este un film din 1980, regizat de Irvin Kershner."
+	},
+	{
+		"id": "wd:Q41483",
+		"nota": "„Cel bun, cel rău, cel urât” este un film din 1966, regizat de Sergio Leone."
+	},
+	{
+		"id": "wd:Q153723",
+		"nota": "„Ticăloși fără glorie” este un film din 2009, regizat de Quentin Tarantino."
+	},
+	{
+		"id": "wd:Q60834962",
+		"nota": "„Dune” este un film din 2021, regizat de Denis Villeneuve."
+	},
+	{
+		"id": "wd:Q42759035",
+		"nota": "„Joker” este un film din 2019, regizat de Todd Phillips."
+	},
+	{
+		"id": "wd:Q172975",
+		"nota": "„Cârtița” este un film din 2006, regizat de Martin Scorsese. A primit Oscarul pentru cel mai bun film."
+	},
+	{
+		"id": "wd:Q184843",
+		"nota": "„Vânătorul de recompense” este un film din 1982, regizat de Ridley Scott."
+	},
+	{
+		"id": "wd:Q18547944",
+		"nota": "„Marțianul” este un film din 2015, regizat de Ridley Scott."
+	},
+	{
+		"id": "wd:Q186587",
+		"nota": "„Troia” este un film din 2004, regizat de Wolfgang Petersen."
+	},
+	{
+		"id": "wd:Q105387",
+		"nota": "„Ziua independenței” este un film din 1996, regizat de Roland Emmerich."
+	},
+	{
+		"id": "wd:Q184605",
+		"nota": "„2012” este un film din 2009, regizat de Roland Emmerich."
+	},
+	{
+		"id": "wd:Q190145",
+		"nota": "„Omul-păianjen 2” este un film din 2004, regizat de Sam Raimi."
+	},
+	{
+		"id": "wd:Q484442",
+		"nota": "„Omul-păianjen” este un film din 2002, regizat de Sam Raimi."
+	},
+	{
+		"id": "wd:Q192724",
+		"nota": "„Iron Man” este un film din 2008, regizat de Jon Favreau."
+	},
+	{
+		"id": "wd:Q182218",
+		"nota": "„Răzbunătorii” este un film din 2012, regizat de Joss Whedon."
+	},
+	{
+		"id": "wd:Q46551",
+		"nota": "„Prestigiul” este un film din 2006, regizat de Christopher Nolan."
+	},
+	{
+		"id": "wd:Q190525",
+		"nota": "„Memento” este un film din 2000, regizat de Christopher Nolan."
+	},
+	{
+		"id": "wd:Q190050",
+		"nota": "„Fight Club” este un film din 1999, regizat de David Fincher."
+	},
+	{
+		"id": "wd:Q190908",
+		"nota": "„Se7en” este un film din 1995, regizat de David Fincher."
+	},
+	{
+		"id": "wd:Q185888",
+		"nota": "„Rețeaua de socializare” este un film din 2010, regizat de David Fincher."
+	},
+	{
+		"id": "wd:Q183239",
+		"nota": "„Strania poveste a lui Benjamin Button” este un film din 2008, regizat de David Fincher."
+	},
+	{
+		"id": "wd:Q102438",
+		"nota": "„Harry Potter și Piatra Filozofală” este un film din 2001, regizat de Chris Columbus."
+	},
+	{
+		"id": "wd:Q102448",
+		"nota": "„Harry Potter și Prizonierul din Azkaban” este un film din 2004, regizat de Alfonso Cuarón."
+	},
+	{
+		"id": "wd:Q2579784",
+		"nota": "„Misiune în spațiu” este un film din 2013, regizat de Alfonso Cuarón."
+	},
+	{
+		"id": "wd:Q221202",
+		"nota": "„Singur acasă 2 - Pierdut în New York” este un film din 1992, regizat de Chris Columbus."
+	},
+	{
+		"id": "wd:Q190956",
+		"nota": "„Amadeus” este un film din 1984, regizat de Miloš Forman. A primit Oscarul pentru cel mai bun film."
+	},
+	{
+		"id": "wd:Q63026",
+		"nota": "„Pacientul englez” este un film din 1996, regizat de Anthony Minghella. A primit Oscarul pentru cel mai bun film."
+	},
+	{
+		"id": "wd:Q164103",
+		"nota": "„O minte sclipitoare” este un film din 2001, regizat de Ron Howard. A primit Oscarul pentru cel mai bun film."
+	},
+	{
+		"id": "wd:Q106428",
+		"nota": "„Apollo 13” este un film din 1995, regizat de Ron Howard."
+	},
+	{
+		"id": "wd:Q160560",
+		"nota": "„Codul lui Da Vinci” este un film din 2006, regizat de Ron Howard."
+	},
+	{
+		"id": "wd:Q109135",
+		"nota": "„Trainspotting” este un film din 1996, regizat de Danny Boyle."
+	},
+	{
+		"id": "wd:Q25139",
+		"nota": "„American Beauty” este un film din 1999, regizat de Sam Mendes. A primit Oscarul pentru cel mai bun film."
+	},
+	{
+		"id": "wd:Q4941",
+		"nota": "„Skyfall” este un film din 2012, regizat de Sam Mendes."
+	},
+	{
+		"id": "wd:Q228186",
+		"nota": "„Lawrence al Arabiei” este un film din 1962, regizat de David Lean. A primit Oscarul pentru cel mai bun film."
+	},
+	{
+		"id": "wd:Q188718",
+		"nota": "„Podul de pe râul Kwai” este un film din 1957, regizat de David Lean. A primit Oscarul pentru cel mai bun film."
+	},
+	{
+		"id": "wd:Q180098",
+		"nota": "„Ben-Hur” este un film din 1959, regizat de William Wyler. A primit Oscarul pentru cel mai bun film."
+	},
+	{
+		"id": "wd:Q190086",
+		"nota": "„Unora le place jazzul” este un film din 1959, regizat de Billy Wilder."
+	},
+	{
+		"id": "wd:Q132689",
+		"nota": "„Casablanca” este un film din 1942, regizat de Michael Curtiz. A primit Oscarul pentru cel mai bun film."
+	},
+	{
+		"id": "wd:Q204191",
+		"nota": "„O viață minunată” este un film din 1946, regizat de Frank Capra."
+	},
+	{
+		"id": "wd:Q2345",
+		"nota": "„12 oameni furioși” este un film din 1957, regizat de Sidney Lumet."
+	},
+	{
+		"id": "wd:Q34414",
+		"nota": "„Fereastra din spate” este un film din 1954, regizat de Alfred Hitchcock."
+	},
+	{
+		"id": "wd:Q181086",
+		"nota": "„Portocala mecanică” este un film din 1971, regizat de Stanley Kubrick."
+	},
+	{
+		"id": "wd:Q105702",
+		"nota": "„Dr. Strangelove” este un film din 1964, regizat de Stanley Kubrick."
+	},
+	{
+		"id": "wd:Q108297",
+		"nota": "„Spartacus” este un film din 1960, regizat de Stanley Kubrick."
+	},
+	{
+		"id": "wd:Q184768",
+		"nota": "„Nașul: Partea a II-a” este un film din 1974, regizat de Francis Ford Coppola. A primit Oscarul pentru cel mai bun film."
+	},
+	{
+		"id": "wd:Q107325",
+		"nota": "„Dracula” este un film din 1992, regizat de Francis Ford Coppola."
+	},
+	{
+		"id": "wd:Q47075",
+		"nota": "„Scarface” este un film din 1983, regizat de Brian De Palma."
+	},
+	{
+		"id": "wd:Q1741232",
+		"nota": "„Misiune: Imposibilă” este un film din 1996, regizat de Brian De Palma."
+	},
+	{
+		"id": "wd:Q208263",
+		"nota": "„Culoarul morții” este un film din 1999, regizat de Frank Darabont."
+	},
+	{
+		"id": "wd:Q104137",
+		"nota": "„Necruțătorul” este un film din 1992, regizat de Clint Eastwood. A primit Oscarul pentru cel mai bun film."
+	},
+	{
+		"id": "wd:Q184255",
+		"nota": "„O fată de milioane” este un film din 2004, regizat de Clint Eastwood. A primit Oscarul pentru cel mai bun film."
+	},
+	{
+		"id": "wd:Q126699",
+		"nota": "„Gran Torino” este un film din 2008, regizat de Clint Eastwood."
+	},
+	{
+		"id": "wd:Q16970789",
+		"nota": "„American Sniper” este un film din 2014, regizat de Clint Eastwood."
+	},
+	{
+		"id": "wd:Q168154",
+		"nota": "„Undeva, cândva în vest” este un film din 1968, regizat de Sergio Leone."
+	},
+	{
+		"id": "wd:Q135465",
+		"nota": "„Rashomon” este un film din 1950, regizat de Akira Kurosawa."
+	},
+	{
+		"id": "wd:Q39571",
+		"nota": "„Vecinul Totoro” este un film din 1988, regizat de Hayao Miyazaki."
+	},
+	{
+		"id": "wd:Q12018",
+		"nota": "„8½” este un film din 1963, regizat de Federico Fellini."
+	},
+	{
+		"id": "wd:Q162331",
+		"nota": "„Cele patru sute de lovituri” este un film din 1959, regizat de François Truffaut."
+	},
+	{
+		"id": "wd:Q464032",
+		"nota": "„Cinema Paradiso” este un film din 1988, regizat de Giuseppe Tornatore."
+	},
+	{
+		"id": "wd:Q152857",
+		"nota": "„Ultimele zile ale lui Hitler” este un film din 2004, regizat de Oliver Hirschbiegel."
+	},
+	{
+		"id": "wd:Q153882",
+		"nota": "„Viața celorlalți” este un film din 2006, regizat de Florian Henckel von Donnersmarck."
+	},
+	{
+		"id": "wd:Q154817",
+		"nota": "„Adio, Lenin!” este un film din 2003, regizat de Wolfgang Becker."
+	},
+	{
+		"id": "wd:Q216006",
+		"nota": "„Labirintul lui Pan” este un film din 2006, regizat de Guillermo del Toro."
+	},
+	{
+		"id": "wd:Q26698156",
+		"nota": "„Forma apei” este un film din 2017, regizat de Guillermo del Toro. A primit Oscarul pentru cel mai bun film."
+	},
+	{
+		"id": "wd:Q13255497",
+		"nota": "„Birdman” este un film din 2014, regizat de Alejandro González Iñárritu. A primit Oscarul pentru cel mai bun film."
+	},
+	{
+		"id": "wd:Q18002795",
+		"nota": "„The Revenant: Legenda lui Hugh Glass” este un film din 2015, regizat de Alejandro González Iñárritu."
+	},
+	{
+		"id": "wd:Q273978",
+		"nota": "„Tigru și dragon” este un film din 2000, regizat de Ang Lee."
+	},
+	{
+		"id": "wd:Q152780",
+		"nota": "„Viața lui Pi” este un film din 2012, regizat de Ang Lee."
+	},
+	{
+		"id": "wd:Q150804",
+		"nota": "„Pianistul” este un film din 2002, regizat de Roman Polanski. A primit Palme d'Or la Cannes."
+	},
+	{
+		"id": "wd:Q212775",
+		"nota": "„Ultimul împărat” este un film din 1987, regizat de Bernardo Bertolucci. A primit Oscarul pentru cel mai bun film."
+	},
+	{
+		"id": "wd:Q160060",
+		"nota": "„Discursul regelui” este un film din 2010, regizat de Tom Hooper. A primit Oscarul pentru cel mai bun film."
+	},
+	{
+		"id": "wd:Q59653",
+		"nota": "„Argo” este un film din 2012, regizat de Ben Affleck. A primit Oscarul pentru cel mai bun film."
+	},
+	{
+		"id": "wd:Q183066",
+		"nota": "„The Hurt Locker” este un film din 2008, regizat de Kathryn Bigelow. A primit Oscarul pentru cel mai bun film."
+	},
+	{
+		"id": "wd:Q15648198",
+		"nota": "„Whiplash” este un film din 2014, regizat de Damien Chazelle."
+	},
+	{
+		"id": "wd:Q180214",
+		"nota": "„Lebăda neagră” este un film din 2010, regizat de Darren Aronofsky."
+	},
+	{
+		"id": "wd:Q214801",
+		"nota": "„The Truman Show” este un film din 1998, regizat de Peter Weir."
+	},
+	{
+		"id": "wd:Q106316",
+		"nota": "„Cercul poeților dispăruți” este un film din 1989, regizat de Peter Weir."
+	},
+	{
+		"id": "wd:Q183063",
+		"nota": "„The Sixth Sense” este un film din 1999, regizat de M. Night Shyamalan."
+	},
+	{
+		"id": "wd:Q188845",
+		"nota": "„Rain Man” este un film din 1988, regizat de Barry Levinson. A primit Oscarul pentru cel mai bun film."
+	},
+	{
+		"id": "wd:Q213411",
+		"nota": "„Naufragiatul” este un film din 2000, regizat de Robert Zemeckis."
+	},
+	{
+		"id": "wd:Q105598",
+		"nota": "„Greu de ucis” este un film din 1988, regizat de John McTiernan."
+	},
+	{
+		"id": "wd:Q104814",
+		"nota": "„Aliens” este un film din 1986, regizat de James Cameron."
+	},
+	{
+		"id": "wd:Q162255",
+		"nota": "„Terminatorul” este un film din 1984, regizat de James Cameron."
+	},
+	{
+		"id": "wd:Q484675",
+		"nota": "„Léon” este un film din 1994, regizat de Luc Besson."
+	},
+	{
+		"id": "wd:Q106506",
+		"nota": "„Al cincilea element” este un film din 1997, regizat de Luc Besson."
+	},
+	{
+		"id": "wd:Q219421",
+		"nota": "„Masca” este un film din 1994, regizat de Chuck Russell."
+	},
+	{
+		"id": "wd:Q222939",
+		"nota": "„Jumanji” este un film din 1995, regizat de Joe Johnston."
+	},
+	{
+		"id": "wd:Q116852",
+		"nota": "„Batman” este un film din 1989, regizat de Tim Burton."
+	},
+	{
+		"id": "wd:Q174385",
+		"nota": "„Alice în Țara Minunilor” este un film din 2010, regizat de Tim Burton."
+	},
+	{
+		"id": "wd:Q335160",
+		"nota": "„Snatch” este un film din 2000, regizat de Guy Ritchie."
+	},
+	{
+		"id": "wd:Q200396",
+		"nota": "„Sherlock Holmes” este un film din 2009, regizat de Guy Ritchie."
+	},
+	{
+		"id": "wd:Q274167",
+		"nota": "„Exorcistul” este un film din 1973, regizat de William Friedkin."
+	},
+	{
+		"id": "wd:Q209170",
+		"nota": "„Mary Poppins” este un film din 1964, regizat de Robert Stevenson."
+	},
+	{
+		"id": "wd:Q193066",
+		"nota": "„Micul dejun la Tiffany” este un film din 1961, regizat de Blake Edwards."
+	},
+	{
+		"id": "wd:Q214723",
+		"nota": "„Goana după aur” este un film din 1925, regizat de Charlie Chaplin."
+	},
+	{
+		"id": "wd:Q374172",
+		"nota": "„Piciul” este un film din 1921, regizat de Charlie Chaplin."
+	},
+	{
+		"id": "wd:Q233464",
+		"nota": "„Annie Hall” este un film din 1977, regizat de Woody Allen. A primit Oscarul pentru cel mai bun film."
+	},
+	{
+		"id": "wd:Q206124",
+		"nota": "„Miezul nopții în Paris” este un film din 2011, regizat de Woody Allen."
+	},
+	{
+		"id": "wd:Q272608",
+		"nota": "„Mulholland Drive – Calea misterelor” este un film din 2001, regizat de David Lynch."
+	},
+	{
+		"id": "wd:Q53105",
+		"nota": "„Moscova nu crede în lacrimi” este un film din 1980, regizat de Vladimir Menșov."
+	},
+	{
+		"id": "wd:Q25136235",
+		"nota": "„Get Out” este un film din 2017, regizat de Jordan Peele."
+	},
+	{
+		"id": "wd:Q22665878",
+		"nota": "„Thor: Ragnarok” este un film din 2017, regizat de Taika Waititi."
+	},
+	{
+		"id": "wd:Q5887360",
+		"nota": "„Gardienii galaxiei” este un film din 2014, regizat de James Gunn."
+	},
+	{
+		"id": "wd:Q1757288",
+		"nota": "„Mad Max: Drumul furiei” este un film din 2015, regizat de George Miller."
+	},
+	{
+		"id": "wd:Q27411",
+		"nota": "„Scream” este un film din 1996, regizat de Wes Craven."
+	},
+	{
+		"id": "wd:Q190588",
+		"nota": "„Pur și simplu dragoste” este un film din 2003, regizat de Richard Curtis."
+	},
+	{
+		"id": "wd:Q200672",
+		"nota": "„Notting Hill” este un film din 1999, regizat de Roger Michell."
+	},
+	{
+		"id": "wd:Q188850",
+		"nota": "„Mamma Mia!” este un film din 2008, regizat de Phyllida Lloyd."
+	},
+	{
+		"id": "wd:Q20456",
+		"nota": "„Cel care dansează cu lupii” este un film din 1990, regizat de Kevin Costner. A primit Oscarul pentru cel mai bun film."
+	},
+	{
+		"id": "wd:Q201924",
+		"nota": "„Aviatorul” este un film din 2004, regizat de Martin Scorsese."
+	},
+	{
+		"id": "wd:Q154581",
+		"nota": "„Bandele din New York” este un film din 2002, regizat de Martin Scorsese."
+	},
+	{
+		"id": "wd:Q210364",
+		"nota": "„Shutter Island” este un film din 2010, regizat de Martin Scorsese."
+	},
+	{
+		"id": "wd:Q208108",
+		"nota": "„Prinde-mă! Dacă poți!” este un film din 2002, regizat de Steven Spielberg."
+	},
+	{
+		"id": "wd:Q318766",
+		"nota": "„Terminalul” este un film din 2004, regizat de Steven Spielberg."
+	},
+	{
+		"id": "wd:Q244604",
+		"nota": "„Raport Special” este un film din 2002, regizat de Steven Spielberg."
+	},
+	{
+		"id": "wd:Q160215",
+		"nota": "„King Kong” este un film din 2005, regizat de Peter Jackson."
+	},
+	{
+		"id": "wd:Q102754",
+		"nota": "„Dr. No” este un film din 1962, regizat de Terence Young."
+	},
+	{
+		"id": "wd:Q151904",
+		"nota": "„Casino Royale” este un film din 2006, regizat de Martin Campbell."
+	},
+	{
+		"id": "wd:Q232009",
+		"nota": "„Harry Potter și Talismanele Morții. Partea 2” este un film din 2011, regizat de David Yates."
+	},
+	{
+		"id": "wd:Q46717",
+		"nota": "„Pirații din Caraibe: Blestemul Perlei Negre” este un film din 2003, regizat de Gore Verbinski."
+	},
+	{
+		"id": "wd:Q160071",
+		"nota": "„Amurg” este un film din 2008, regizat de Catherine Hardwicke."
+	},
+	{
+		"id": "wd:Q171453",
+		"nota": "„Transformers - Războiul lor în lumea noastră” este un film din 2007, regizat de Michael Bay."
+	},
+	{
+		"id": "wd:Q208344",
+		"nota": "„Armageddon - Sfârșitul lumii?” este un film din 1998, regizat de Michael Bay."
+	},
+	{
+		"id": "wd:Q202508",
+		"nota": "„Mumia” este un film din 1999, regizat de Stephen Sommers."
+	},
+	{
+		"id": "wd:Q207130",
+		"nota": "„Ultimul samurai” este un film din 2003, regizat de Edward Zwick."
+	},
+	{
+		"id": "wd:Q188035",
+		"nota": "„Apocalypto” este un film din 2006, regizat de Mel Gibson."
+	},
+	{
+		"id": "wd:Q165713",
+		"nota": "„Războiul stelelor - Episodul I: Amenințarea fantomei” este un film din 1999, regizat de George Lucas."
+	},
+	{
+		"id": "wd:Q217020",
+		"nota": "„Thor” este un film din 2011, regizat de Kenneth Branagh."
+	},
+	{
+		"id": "wd:Q23780734",
+		"nota": "„Pantera neagră” este un film din 2018, regizat de Ryan Coogler."
+	},
+	{
+		"id": "wd:Q20502242",
+		"nota": "„Wonder Woman” este un film din 2017, regizat de Patty Jenkins."
+	},
+	{
+		"id": "wd:Q131390",
+		"nota": "„300” este un film din 2006, regizat de Zack Snyder."
+	},
+	{
+		"id": "wd:Q219315",
+		"nota": "„Marea mahmureală” este un film din 2009, regizat de Todd Phillips."
+	},
+	{
+		"id": "wd:Q188652",
+		"nota": "„Rocky” este un film din 1976, regizat de John G. Avildsen. A primit Oscarul pentru cel mai bun film."
+	},
+	{
+		"id": "wd:Q2085964",
+		"nota": "„Pădurea spânzuraților” este un film din 1965, regizat de Liviu Ciulei."
+	},
+	{
+		"id": "wd:Q3212174",
+		"nota": "„Reconstituirea” este un film din 1970, regizat de Lucian Pintilie."
+	},
+	{
+		"id": "wd:Q12735956",
+		"nota": "„Moromeții” este un film din 1987, regizat de Stere Gulea."
+	},
+	{
+		"id": "wd:Q1963051",
+		"nota": "„Dacii” este un film din 1967, regizat de Sergiu Nicolaescu."
+	},
+	{
+		"id": "wd:Q2348435",
+		"nota": "„Mihai Viteazul” este un film din 1970, regizat de Sergiu Nicolaescu."
+	},
+	{
+		"id": "wd:Q4243397",
+		"nota": "„Nea Mărin miliardar” este un film din 1979, regizat de Sergiu Nicolaescu."
+	},
+	{
+		"id": "wd:Q5448281",
+		"nota": "„Filantropica” este un film din 2002, regizat de Nae Caranfil."
+	},
+	{
+		"id": "wd:Q2933985",
+		"nota": "„California Dreamin'” este un film din 2007, regizat de Cristian Nemescu."
+	},
+	{
+		"id": "wd:Q4778856",
+		"nota": "„Poziția copilului” este un film din 2013, regizat de Călin Peter Netzer."
+	},
+	{
+		"id": "wd:Q1754127",
+		"nota": "„A fost sau n-a fost?” este un film din 2006, regizat de Corneliu Porumboiu."
+	},
+	{
+		"id": "wd:Q18959331",
+		"nota": "„Aferim!” este un film din 2015, regizat de Radu Jude."
+	},
+	{
+		"id": "wd:Q2522756",
+		"nota": "„După dealuri” este un film din 2012, regizat de Cristian Mungiu."
+	},
+	{
+		"id": "wd:Q23762934",
+		"nota": "„Bacalaureat” este un film din 2016, regizat de Cristian Mungiu."
+	},
+	{
+		"id": "wd:Q2328850",
+		"nota": "„Balanța” este un film din 1992, regizat de Lucian Pintilie."
+	},
+	{
+		"id": "wd:Q18541326",
+		"nota": "„Liceenii” este un film din 1986, regizat de Nicolae Corjos."
+	},
+	{
+		"id": "wd:Q3821840",
+		"nota": "„Columna” este un film din 1968, regizat de Mircea Drăgan."
+	},
+	{
+		"id": "wd:Q12728191",
+		"nota": "„Felix și Otilia” este un film din 1972, regizat de Iulian Mihu."
+	},
+	{
+		"id": "wd:Q18547094",
+		"nota": "„Proba de microfon” este un film din 1980, regizat de Mircea Daneliuc."
+	},
+	{
+		"id": "wd:Q23823612",
+		"nota": "„Sieranevada” este un film din 2016, regizat de Cristi Puiu."
+	},
+	{
+		"id": "wd:Q103646",
+		"nota": "Ron Howard (n. 1954) este actor american. A regizat, printre altele, „Apollo 13” (1995), „O minte sclipitoare” (2001) și „Codul lui Da Vinci” (2006)."
+	},
+	{
+		"id": "wd:Q160726",
+		"nota": "Ang Lee (n. 1954) este regizor american. A regizat, printre altele, „Tigru și dragon” (2000) și „Viața lui Pi” (2012)."
+	},
+	{
+		"id": "wd:Q164562",
+		"nota": "Sergio Leone (1929–1989) a fost regizor de film, scenarist și producător italian. A regizat, printre altele, „Cel bun, cel rău, cel urât” (1966) și „Undeva, cândva în vest” (1968)."
+	},
+	{
+		"id": "wd:Q184903",
+		"nota": "David Fincher (n. 1962) este regizor de film american. A regizat, printre altele, „Se7en” (1995), „Fight Club” (1999) și „Strania poveste a lui Benjamin Button” (2008)."
+	},
+	{
+		"id": "wd:Q189526",
+		"nota": "Brian De Palma (n. 1940) este regizor de film american. A regizat, printre altele, „Scarface” (1983) și „Misiune: Imposibilă” (1996)."
+	},
+	{
+		"id": "wd:Q192990",
+		"nota": "Guy Ritchie (n. 1968) este regizor englez. A regizat, printre altele, „Snatch” (2000) și „Sherlock Holmes” (2009)."
+	},
+	{
+		"id": "wd:Q2001",
+		"nota": "Stanley Kubrick (1928–1999) a fost regizor și producător american. A regizat, printre altele, „Spartacus” (1960), „Dr. Strangelove” (1964) și „Portocala mecanică” (1971)."
+	},
+	{
+		"id": "wd:Q219124",
+		"nota": "Guillermo del Toro (n. 1964) este regizor, scenarist și producător mexican. A regizat, printre altele, „Labirintul lui Pan” (2006) și „Forma apei” (2017)."
+	},
+	{
+		"id": "wd:Q223233",
+		"nota": "Sam Mendes (n. 1965) este regizor englez. A regizat, printre altele, „American Beauty” (1999) și „Skyfall” (2012)."
+	},
+	{
+		"id": "wd:Q25089",
+		"nota": "Woody Allen (n. 1935) este regizor de film și comedian american. A regizat, printre altele, „Annie Hall” (1977) și „Miezul nopții în Paris” (2011)."
+	},
+	{
+		"id": "wd:Q25191",
+		"nota": "Christopher Nolan (n. 1970) este regizor britanico-american. A regizat, printre altele, „Memento” (2000), „Prestigiul” (2006) și „Cavalerul negru” (2008)."
+	},
+	{
+		"id": "wd:Q275402",
+		"nota": "Sam Raimi s-a născut în 1959. A regizat, printre altele, „Omul-păianjen” (2002) și „Omul-păianjen 2” (2004)."
+	},
+	{
+		"id": "wd:Q28028",
+		"nota": "Alfonso Cuarón s-a născut în 1961. A regizat, printre altele, „Harry Potter și Prizonierul din Azkaban” (2004) și „Misiune în spațiu” (2013)."
+	},
+	{
+		"id": "wd:Q314353",
+		"nota": "Cristian Mungiu (n. 1968) este regizor de film român. A regizat, printre altele, „După dealuri” (2012) și „Bacalaureat” (2016)."
+	},
+	{
+		"id": "wd:Q362824",
+		"nota": "Todd Phillips s-a născut în 1970. A regizat, printre altele, „Marea mahmureală” (2009) și „Joker” (2019)."
+	},
+	{
+		"id": "wd:Q3772",
+		"nota": "Quentin Tarantino (n. 1963) este regizor de film american. A regizat, printre altele, „Kill Bill: Volumul 1” (2003), „Ticăloși fără glorie” (2009) și „Django dezlănțuit” (2012)."
+	},
+	{
+		"id": "wd:Q41148",
+		"nota": "Martin Scorsese (n. 1942) este regizor și producător de film italo-american. A regizat, printre altele, „Bandele din New York” (2002), „Aviatorul” (2004) și „Cârtița” (2006)."
+	},
+	{
+		"id": "wd:Q42229",
+		"nota": "Mel Gibson (n. 1956) este actor, regizor, producător și scenarist american. A regizat, printre altele, „Inimă neînfricată” (1995) și „Apocalypto” (2006)."
+	},
+	{
+		"id": "wd:Q42574",
+		"nota": "James Cameron (n. 1954) este regizor de film canadian. A regizat, printre altele, „Terminatorul” (1984), „Aliens” (1986) și „Terminatorul 2: Ziua Judecății” (1991)."
+	},
+	{
+		"id": "wd:Q43203",
+		"nota": "Clint Eastwood (n. 1930) este actor și regizor american. A regizat, printre altele, „Necruțătorul” (1992), „O fată de milioane” (2004) și „Gran Torino” (2008)."
+	},
+	{
+		"id": "wd:Q4465",
+		"nota": "Peter Jackson (n. 1961) este regizor din Noua Zeelandă. A regizat, printre altele, „King Kong” (2005) și „Hobbitul: O călătorie neașteptată” (2012)."
+	},
+	{
+		"id": "wd:Q484779",
+		"nota": "Luc Besson (n. 1959) este producător, regizor și scenarist francez. A regizat, printre altele, „Léon” (1994) și „Al cincilea element” (1997)."
+	},
+	{
+		"id": "wd:Q55215",
+		"nota": "Alejandro González Iñárritu (n. 1963) este regizor de film mexican. A regizat, printre altele, „Birdman” (2014) și „The Revenant: Legenda lui Hugh Glass” (2015)."
+	},
+	{
+		"id": "wd:Q55260",
+		"nota": "David Lean (1908–1991) a fost regizor britanic. A regizat, printre altele, „Podul de pe râul Kwai” (1957) și „Lawrence al Arabiei” (1962)."
+	},
+	{
+		"id": "wd:Q55424",
+		"nota": "Peter Weir (n. 1944) este regizor de film australian. A regizat, printre altele, „Cercul poeților dispăruți” (1989) și „The Truman Show” (1998)."
+	},
+	{
+		"id": "wd:Q56005",
+		"nota": "Ridley Scott (n. 1937) este regizor de film britanic. A regizat, printre altele, „Vânătorul de recompense” (1982) și „Marțianul” (2015)."
+	},
+	{
+		"id": "wd:Q56008",
+		"nota": "Tim Burton (n. 1958) este regizor și scenarist american. A regizat, printre altele, „Batman” (1989), „Edward Mâini-de-foarfecă” (1990) și „Charlie și fabrica de ciocolată” (2005)."
+	},
+	{
+		"id": "wd:Q56094",
+		"nota": "Francis Ford Coppola (n. 1939) este regizor american. A regizat, printre altele, „Nașul: Partea a II-a” (1974) și „Dracula” (1992)."
+	},
+	{
+		"id": "wd:Q59259",
+		"nota": "Michael Bay s-a născut în 1965. A regizat, printre altele, „Armageddon - Sfârșitul lumii?” (1998) și „Transformers - Războiul lor în lumea noastră” (2007)."
+	},
+	{
+		"id": "wd:Q60100",
+		"nota": "Roland Emmerich (n. 1955) este regizor de film și scenarist german. A regizat, printre altele, „Ziua independenței” (1996) și „2012” (2009)."
+	},
+	{
+		"id": "wd:Q634875",
+		"nota": "Sergiu Nicolaescu (1930–2013) a fost regizor de film, actor și politician român. A regizat, printre altele, „Dacii” (1967), „Mihai Viteazul” (1970) și „Nea Mărin miliardar” (1979)."
+	},
+	{
+		"id": "wd:Q75079",
+		"nota": "Chris Columbus s-a născut în 1958. A regizat, printre altele, „Singur acasă 2 - Pierdut în New York” (1992) și „Harry Potter și Piatra Filozofală” (2001)."
+	},
+	{
+		"id": "wd:Q882",
+		"nota": "Charlie Chaplin (1889–1977) a fost actor de comedie și regizor englez. A regizat, printre altele, „Piciul” (1921), „Goana după aur” (1925) și „Timpuri noi” (1936)."
+	},
+	{
+		"id": "wd:Q8877",
+		"nota": "Steven Spielberg s-a născut în 1946. A regizat, printre altele, „Salvați soldatul Ryan” (1998), „Prinde-mă! Dacă poți!” (2002) și „Raport Special” (2002)."
+	},
+	{
+		"id": "wd:Q967207",
+		"nota": "Lucian Pintilie (1933–2018) a fost regizor român. A regizat, printre altele, „Reconstituirea” (1970) și „Balanța” (1992)."
+	}
+]

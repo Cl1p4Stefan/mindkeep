@@ -1,0 +1,2085 @@
+[
+	{
+		"id": "wd:Q165817:regizor:cere_regizor",
+		"fapt": "wd:Q165817",
+		"text": "Cine a regizat filmul „Salvați soldatul Ryan”, din 1998?",
+		"variante": ["Peter Weir", "Roger Michell", "Steven Spielberg", "Frank Darabont"],
+		"corect": 2,
+		"nivel": 1,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q170564:regizor:cere_regizor",
+		"fapt": "wd:Q170564",
+		"text": "Cine a regizat filmul „Terminatorul 2: Ziua Judecății”, din 1991?",
+		"variante": ["Clint Eastwood", "James Cameron", "Tim Burton", "Kevin Costner"],
+		"corect": 1,
+		"nivel": 1,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q163872:regizor:cere_regizor",
+		"fapt": "wd:Q163872",
+		"text": "Cine a regizat filmul „Cavalerul negru”, din 2008?",
+		"variante": ["Christopher Nolan", "Kathryn Bigelow", "Jon Favreau", "Catherine Hardwicke"],
+		"corect": 0,
+		"nivel": 1,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q108839994:regizor:cere_regizor",
+		"fapt": "wd:Q108839994",
+		"text": "Cine a regizat filmul „Oppenheimer”, din 2023?",
+		"variante": ["Greta Gerwig", "Christopher Nolan", "Denis Villeneuve", "Todd Phillips"],
+		"corect": 1,
+		"nivel": 1,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q55436290:regizor:cere_regizor",
+		"fapt": "wd:Q55436290",
+		"text": "Cine a regizat filmul „Barbie”, din 2023?",
+		"variante": ["Greta Gerwig", "Denis Villeneuve", "Todd Phillips", "Taika Waititi"],
+		"corect": 0,
+		"nivel": 1,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q109116:regizor:cere_regizor",
+		"fapt": "wd:Q109116",
+		"text": "Cine a regizat filmul „Dictatorul”, din 1940?",
+		"variante": ["Michael Curtiz", "Frank Capra", "Alfred Hitchcock", "Charlie Chaplin"],
+		"corect": 3,
+		"nivel": 1,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q45602:regizor:cere_regizor",
+		"fapt": "wd:Q45602",
+		"text": "Cine a regizat filmul „Timpuri noi”, din 1936?",
+		"variante": ["Michael Curtiz", "Frank Capra", "Alfred Hitchcock", "Charlie Chaplin"],
+		"corect": 3,
+		"nivel": 1,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q162729:regizor:cere_regizor",
+		"fapt": "wd:Q162729",
+		"text": "Cine a regizat filmul „Inimă neînfricată”, din 1995?",
+		"variante": ["Joe Johnston", "Roland Emmerich", "Danny Boyle", "Mel Gibson"],
+		"corect": 3,
+		"nivel": 1,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q80379:regizor:cere_regizor",
+		"fapt": "wd:Q80379",
+		"text": "Cine a regizat filmul „Hobbitul: O călătorie neașteptată”, din 2012?",
+		"variante": ["Peter Jackson", "Joss Whedon", "Ben Affleck", "Martin Scorsese"],
+		"corect": 0,
+		"nivel": 1,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q217182:regizor:cere_regizor",
+		"fapt": "wd:Q217182",
+		"text": "Cine a regizat filmul „Edward Mâini-de-foarfecă”, din 1990?",
+		"variante": ["Kevin Costner", "James Cameron", "Tim Burton", "Barry Levinson"],
+		"corect": 2,
+		"nivel": 1,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q218235:regizor:cere_regizor",
+		"fapt": "wd:Q218235",
+		"text": "Cine a regizat filmul „Charlie și fabrica de ciocolată”, din 2005?",
+		"variante": ["Martin Campbell", "Zack Snyder", "Tim Burton", "Alfonso Cuarón"],
+		"corect": 2,
+		"nivel": 1,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q165325:regizor:cere_regizor",
+		"fapt": "wd:Q165325",
+		"text": "Cine a regizat filmul „Kill Bill: Volumul 1”, din 2003?",
+		"variante": ["Gore Verbinski", "Richard Curtis", "Edward Zwick", "Quentin Tarantino"],
+		"corect": 3,
+		"nivel": 1,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q571032:regizor:cere_regizor",
+		"fapt": "wd:Q571032",
+		"text": "Cine a regizat filmul „Django dezlănțuit”, din 2012?",
+		"variante": ["Peter Jackson", "Quentin Tarantino", "Ben Affleck", "Joss Whedon"],
+		"corect": 1,
+		"nivel": 1,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q1392744:regizor:cere_regizor",
+		"fapt": "wd:Q1392744",
+		"text": "Cine a regizat filmul „Lupul de pe Wall Street”, din 2013?",
+		"variante": ["James Gunn", "Martin Scorsese", "Damien Chazelle", "Joss Whedon"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q202028:regizor:cere_regizor",
+		"fapt": "wd:Q202028",
+		"text": "Cine a regizat filmul „Războiul Lumilor”, din 2005?",
+		"variante": ["Martin Campbell", "Steven Spielberg", "Wolfgang Petersen", "Alfonso Cuarón"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q190643:regizor:cere_regizor",
+		"fapt": "wd:Q190643",
+		"text": "Cine a regizat filmul „Plutonul”, din 1986?",
+		"variante": ["Bernardo Bertolucci", "Oliver Stone", "John McTiernan", "Miloš Forman"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q181795:regizor:cere_regizor",
+		"fapt": "wd:Q181795",
+		"text": "Cine a regizat filmul „Războiul stelelor - Episodul V: Imperiul contraatacă”, din 1980?",
+		"variante": ["Ridley Scott", "Irvin Kershner", "Woody Allen", "Brian De Palma"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q41483:regizor:cere_regizor",
+		"fapt": "wd:Q41483",
+		"text": "Cine a regizat filmul „Cel bun, cel rău, cel urât”, din 1966?",
+		"variante": ["Sergio Leone", "Federico Fellini", "Giuseppe Tornatore", "Anthony Minghella"],
+		"corect": 0,
+		"nivel": 1,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q153723:regizor:cere_regizor",
+		"fapt": "wd:Q153723",
+		"text": "Cine a regizat filmul „Ticăloși fără glorie”, din 2009?",
+		"variante": ["Catherine Hardwicke", "Kathryn Bigelow", "Quentin Tarantino", "Tom Hooper"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q60834962:regizor:cere_regizor",
+		"fapt": "wd:Q60834962",
+		"text": "Cine a regizat filmul „Dune”, din 2021?",
+		"variante": ["Greta Gerwig", "Todd Phillips", "Taika Waititi", "Denis Villeneuve"],
+		"corect": 3,
+		"nivel": 1,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q42759035:regizor:cere_regizor",
+		"fapt": "wd:Q42759035",
+		"text": "Cine a regizat filmul „Joker”, din 2019?",
+		"variante": ["Denis Villeneuve", "Todd Phillips", "Patty Jenkins", "Taika Waititi"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q172975:regizor:cere_regizor",
+		"fapt": "wd:Q172975",
+		"text": "Cine a regizat filmul „Cârtița”, din 2006?",
+		"variante": ["Zack Snyder", "Martin Campbell", "Michael Bay", "Martin Scorsese"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q184843:regizor:cere_regizor",
+		"fapt": "wd:Q184843",
+		"text": "Cine a regizat filmul „Vânătorul de recompense”, din 1982?",
+		"variante": ["Brian De Palma", "Ridley Scott", "Irvin Kershner", "Miloš Forman"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q18547944:regizor:cere_regizor",
+		"fapt": "wd:Q18547944",
+		"text": "Cine a regizat filmul „Marțianul”, din 2015?",
+		"variante": ["Ridley Scott", "George Miller", "Alejandro González Iñárritu", "James Gunn"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q186587:regizor:cere_regizor",
+		"fapt": "wd:Q186587",
+		"text": "Cine a regizat filmul „Troia”, din 2004?",
+		"variante": ["Sam Raimi", "Alfonso Cuarón", "Wolfgang Petersen", "Richard Curtis"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q105387:regizor:cere_regizor",
+		"fapt": "wd:Q105387",
+		"text": "Cine a regizat filmul „Ziua independenței”, din 1996?",
+		"variante": ["Danny Boyle", "Anthony Minghella", "Wes Craven", "Roland Emmerich"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q184605:regizor:cere_regizor",
+		"fapt": "wd:Q184605",
+		"text": "Cine a regizat filmul „2012”, din 2009?",
+		"variante": ["Roland Emmerich", "Kathryn Bigelow", "Catherine Hardwicke", "Phyllida Lloyd"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q190145:regizor:cere_regizor",
+		"fapt": "wd:Q190145",
+		"text": "Cine a regizat filmul „Omul-păianjen 2”, din 2004?",
+		"variante": ["Alfonso Cuarón", "Wolfgang Petersen", "Sam Raimi", "Gore Verbinski"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q484442:regizor:cere_regizor",
+		"fapt": "wd:Q484442",
+		"text": "Cine a regizat filmul „Omul-păianjen”, din 2002?",
+		"variante": ["Roman Polanski", "Richard Curtis", "Sam Raimi", "Gore Verbinski"],
+		"corect": 2,
+		"nivel": 1,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q192724:regizor:cere_regizor",
+		"fapt": "wd:Q192724",
+		"text": "Cine a regizat filmul „Iron Man”, din 2008?",
+		"variante": ["Jon Favreau", "Kathryn Bigelow", "Christopher Nolan", "Phyllida Lloyd"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q182218:regizor:cere_regizor",
+		"fapt": "wd:Q182218",
+		"text": "Cine a regizat filmul „Răzbunătorii”, din 2012?",
+		"variante": ["Joss Whedon", "Ben Affleck", "Peter Jackson", "David Yates"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q46551:regizor:cere_regizor",
+		"fapt": "wd:Q46551",
+		"text": "Cine a regizat filmul „Prestigiul”, din 2006?",
+		"variante": ["Martin Campbell", "Zack Snyder", "Christopher Nolan", "Michael Bay"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q190525:regizor:cere_regizor",
+		"fapt": "wd:Q190525",
+		"text": "Cine a regizat filmul „Memento”, din 2000?",
+		"variante": ["Guy Ritchie", "Robert Zemeckis", "Chris Columbus", "Christopher Nolan"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q190050:regizor:cere_regizor",
+		"fapt": "wd:Q190050",
+		"text": "Cine a regizat filmul „Fight Club”, din 1999?",
+		"variante": ["M. Night Shyamalan", "Stephen Sommers", "Frank Darabont", "David Fincher"],
+		"corect": 3,
+		"nivel": 1,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q190908:regizor:cere_regizor",
+		"fapt": "wd:Q190908",
+		"text": "Cine a regizat filmul „Se7en”, din 1995?",
+		"variante": ["Mel Gibson", "Joe Johnston", "Luc Besson", "David Fincher"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q185888:regizor:cere_regizor",
+		"fapt": "wd:Q185888",
+		"text": "Cine a regizat filmul „Rețeaua de socializare”, din 2010?",
+		"variante": ["Tom Hooper", "Darren Aronofsky", "David Fincher", "Kenneth Branagh"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q183239:regizor:cere_regizor",
+		"fapt": "wd:Q183239",
+		"text": "Cine a regizat filmul „Strania poveste a lui Benjamin Button”, din 2008?",
+		"variante": ["Jon Favreau", "David Fincher", "Phyllida Lloyd", "Catherine Hardwicke"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q102438:regizor:cere_regizor",
+		"fapt": "wd:Q102438",
+		"text": "Cine a regizat filmul „Harry Potter și Piatra Filozofală”, din 2001?",
+		"variante": ["Chris Columbus", "Ron Howard", "David Lynch", "Roman Polanski"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q102448:regizor:cere_regizor",
+		"fapt": "wd:Q102448",
+		"text": "Cine a regizat filmul „Harry Potter și Prizonierul din Azkaban”, din 2004?",
+		"variante": ["Sam Raimi", "Wolfgang Petersen", "Alfonso Cuarón", "Gore Verbinski"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q2579784:regizor:cere_regizor",
+		"fapt": "wd:Q2579784",
+		"text": "Cine a regizat filmul „Misiune în spațiu”, din 2013?",
+		"variante": ["Alfonso Cuarón", "Martin Scorsese", "Joss Whedon", "Damien Chazelle"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q221202:regizor:cere_regizor",
+		"fapt": "wd:Q221202",
+		"text": "Cine a regizat filmul „Singur acasă 2 - Pierdut în New York”, din 1992?",
+		"variante": ["Clint Eastwood", "James Cameron", "Chuck Russell", "Chris Columbus"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q190956:regizor:cere_regizor",
+		"fapt": "wd:Q190956",
+		"text": "Cine a regizat filmul „Amadeus”, din 1984?",
+		"variante": ["Brian De Palma", "Oliver Stone", "Ridley Scott", "Miloš Forman"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q63026:regizor:cere_regizor",
+		"fapt": "wd:Q63026",
+		"text": "Cine a regizat filmul „Pacientul englez”, din 1996?",
+		"variante": ["Wes Craven", "Danny Boyle", "Roland Emmerich", "Anthony Minghella"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q164103:regizor:cere_regizor",
+		"fapt": "wd:Q164103",
+		"text": "Cine a regizat filmul „O minte sclipitoare”, din 2001?",
+		"variante": ["Chris Columbus", "Ron Howard", "David Lynch", "Robert Zemeckis"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q106428:regizor:cere_regizor",
+		"fapt": "wd:Q106428",
+		"text": "Cine a regizat filmul „Apollo 13”, din 1995?",
+		"variante": ["Mel Gibson", "Ron Howard", "Joe Johnston", "Danny Boyle"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q160560:regizor:cere_regizor",
+		"fapt": "wd:Q160560",
+		"text": "Cine a regizat filmul „Codul lui Da Vinci”, din 2006?",
+		"variante": ["Martin Campbell", "Zack Snyder", "Cristian Nemescu", "Ron Howard"],
+		"corect": 3,
+		"nivel": 1,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q109135:regizor:cere_regizor",
+		"fapt": "wd:Q109135",
+		"text": "Cine a regizat filmul „Trainspotting”, din 1996?",
+		"variante": ["Anthony Minghella", "Danny Boyle", "Wes Craven", "Roland Emmerich"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q25139:regizor:cere_regizor",
+		"fapt": "wd:Q25139",
+		"text": "Cine a regizat filmul „American Beauty”, din 1999?",
+		"variante": ["Frank Darabont", "Roger Michell", "Sam Mendes", "David Fincher"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q4941:regizor:cere_regizor",
+		"fapt": "wd:Q4941",
+		"text": "Cine a regizat filmul „Skyfall”, din 2012?",
+		"variante": ["Sam Mendes", "Ben Affleck", "Joss Whedon", "Peter Jackson"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q228186:regizor:cere_regizor",
+		"fapt": "wd:Q228186",
+		"text": "Cine a regizat filmul „Lawrence al Arabiei”, din 1962?",
+		"variante": ["Terence Young", "David Lean", "Blake Edwards", "Robert Stevenson"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q188718:regizor:cere_regizor",
+		"fapt": "wd:Q188718",
+		"text": "Cine a regizat filmul „Podul de pe râul Kwai”, din 1957?",
+		"variante": ["Sidney Lumet", "Billy Wilder", "François Truffaut", "David Lean"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q180098:regizor:cere_regizor",
+		"fapt": "wd:Q180098",
+		"text": "Cine a regizat filmul „Ben-Hur”, din 1959?",
+		"variante": ["François Truffaut", "Billy Wilder", "Blake Edwards", "William Wyler"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q190086:regizor:cere_regizor",
+		"fapt": "wd:Q190086",
+		"text": "Cine a regizat filmul „Unora le place jazzul”, din 1959?",
+		"variante": ["Billy Wilder", "William Wyler", "François Truffaut", "Sidney Lumet"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q132689:regizor:cere_regizor",
+		"fapt": "wd:Q132689",
+		"text": "Cine a regizat filmul „Casablanca”, din 1942?",
+		"variante": ["Charlie Chaplin", "Frank Capra", "Michael Curtiz", "Alfred Hitchcock"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q204191:regizor:cere_regizor",
+		"fapt": "wd:Q204191",
+		"text": "Cine a regizat filmul „O viață minunată”, din 1946?",
+		"variante": ["Michael Curtiz", "Charlie Chaplin", "Alfred Hitchcock", "Frank Capra"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q2345:regizor:cere_regizor",
+		"fapt": "wd:Q2345",
+		"text": "Cine a regizat filmul „12 oameni furioși”, din 1957?",
+		"variante": ["William Wyler", "François Truffaut", "Billy Wilder", "Sidney Lumet"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q34414:regizor:cere_regizor",
+		"fapt": "wd:Q34414",
+		"text": "Cine a regizat filmul „Fereastra din spate”, din 1954?",
+		"variante": ["Sidney Lumet", "François Truffaut", "Alfred Hitchcock", "William Wyler"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q181086:regizor:cere_regizor",
+		"fapt": "wd:Q181086",
+		"text": "Cine a regizat filmul „Portocala mecanică”, din 1971?",
+		"variante": ["William Friedkin", "Stanley Kubrick", "Francis Ford Coppola", "John G. Avildsen"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q105702:regizor:cere_regizor",
+		"fapt": "wd:Q105702",
+		"text": "Cine a regizat filmul „Dr. Strangelove”, din 1964?",
+		"variante": ["Robert Stevenson", "David Lean", "Terence Young", "Stanley Kubrick"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q108297:regizor:cere_regizor",
+		"fapt": "wd:Q108297",
+		"text": "Cine a regizat filmul „Spartacus”, din 1960?",
+		"variante": ["Stanley Kubrick", "Billy Wilder", "William Wyler", "Blake Edwards"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q184768:regizor:cere_regizor",
+		"fapt": "wd:Q184768",
+		"text": "Cine a regizat filmul „Nașul: Partea a II-a”, din 1974?",
+		"variante": ["Francis Ford Coppola", "William Friedkin", "John G. Avildsen", "Woody Allen"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q107325:regizor:cere_regizor",
+		"fapt": "wd:Q107325",
+		"text": "Cine a regizat filmul „Dracula”, din 1992?",
+		"variante": ["Clint Eastwood", "Francis Ford Coppola", "James Cameron", "Luc Besson"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q47075:regizor:cere_regizor",
+		"fapt": "wd:Q47075",
+		"text": "Cine a regizat filmul „Scarface”, din 1983?",
+		"variante": ["Brian De Palma", "Ridley Scott", "Miloš Forman", "Irvin Kershner"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q1741232:regizor:cere_regizor",
+		"fapt": "wd:Q1741232",
+		"text": "Cine a regizat filmul „Misiune: Imposibilă”, din 1996?",
+		"variante": ["Danny Boyle", "Anthony Minghella", "Wes Craven", "Brian De Palma"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q208263:regizor:cere_regizor",
+		"fapt": "wd:Q208263",
+		"text": "Cine a regizat filmul „Culoarul morții”, din 1999?",
+		"variante": ["Sam Mendes", "David Fincher", "Stephen Sommers", "Frank Darabont"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q104137:regizor:cere_regizor",
+		"fapt": "wd:Q104137",
+		"text": "Cine a regizat filmul „Necruțătorul”, din 1992?",
+		"variante": ["James Cameron", "Chuck Russell", "Clint Eastwood", "Luc Besson"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q184255:regizor:cere_regizor",
+		"fapt": "wd:Q184255",
+		"text": "Cine a regizat filmul „O fată de milioane”, din 2004?",
+		"variante": ["Clint Eastwood", "Alfonso Cuarón", "Wolfgang Petersen", "Sam Raimi"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q126699:regizor:cere_regizor",
+		"fapt": "wd:Q126699",
+		"text": "Cine a regizat filmul „Gran Torino”, din 2008?",
+		"variante": ["Phyllida Lloyd", "Christopher Nolan", "Catherine Hardwicke", "Clint Eastwood"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q16970789:regizor:cere_regizor",
+		"fapt": "wd:Q16970789",
+		"text": "Cine a regizat filmul „American Sniper”, din 2014?",
+		"variante": ["Damien Chazelle", "James Gunn", "Alejandro González Iñárritu", "Clint Eastwood"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q168154:regizor:cere_regizor",
+		"fapt": "wd:Q168154",
+		"text": "Cine a regizat filmul „Undeva, cândva în vest”, din 1968?",
+		"variante": ["Stanley Kubrick", "Sergio Leone", "Robert Stevenson", "William Friedkin"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q135465:regizor:cere_regizor",
+		"fapt": "wd:Q135465",
+		"text": "Cine a regizat filmul „Rashomon”, din 1950?",
+		"variante": ["Hayao Miyazaki", "Quentin Tarantino", "Frank Capra", "Akira Kurosawa"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q39571:regizor:cere_regizor",
+		"fapt": "wd:Q39571",
+		"text": "Cine a regizat filmul „Vecinul Totoro”, din 1988?",
+		"variante": ["Quentin Tarantino", "Akira Kurosawa", "John McTiernan", "Hayao Miyazaki"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q12018:regizor:cere_regizor",
+		"fapt": "wd:Q12018",
+		"text": "Cine a regizat filmul „8½”, din 1963?",
+		"variante": ["Sergio Leone", "Federico Fellini", "Giuseppe Tornatore", "Anthony Minghella"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q162331:regizor:cere_regizor",
+		"fapt": "wd:Q162331",
+		"text": "Cine a regizat filmul „Cele patru sute de lovituri”, din 1959?",
+		"variante": ["François Truffaut", "William Wyler", "Billy Wilder", "Sidney Lumet"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q464032:regizor:cere_regizor",
+		"fapt": "wd:Q464032",
+		"text": "Cine a regizat filmul „Cinema Paradiso”, din 1988?",
+		"variante": ["Anthony Minghella", "Sergio Leone", "Giuseppe Tornatore", "Federico Fellini"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q152857:regizor:cere_regizor",
+		"fapt": "wd:Q152857",
+		"text": "Cine a regizat filmul „Ultimele zile ale lui Hitler”, din 2004?",
+		"variante": ["Wolfgang Becker", "Roman Polanski", "Florian Henckel von Donnersmarck", "Oliver Hirschbiegel"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q153882:regizor:cere_regizor",
+		"fapt": "wd:Q153882",
+		"text": "Cine a regizat filmul „Viața celorlalți”, din 2006?",
+		"variante": ["Oliver Hirschbiegel", "Wolfgang Becker", "Roman Polanski", "Florian Henckel von Donnersmarck"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q154817:regizor:cere_regizor",
+		"fapt": "wd:Q154817",
+		"text": "Cine a regizat filmul „Adio, Lenin!”, din 2003?",
+		"variante": ["Oliver Hirschbiegel", "Roman Polanski", "Florian Henckel von Donnersmarck", "Wolfgang Becker"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q216006:regizor:cere_regizor",
+		"fapt": "wd:Q216006",
+		"text": "Cine a regizat filmul „Labirintul lui Pan”, din 2006?",
+		"variante": ["Roger Michell", "Florian Henckel von Donnersmarck", "Martin Campbell", "Guillermo del Toro"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q26698156:regizor:cere_regizor",
+		"fapt": "wd:Q26698156",
+		"text": "Cine a regizat filmul „Forma apei”, din 2017?",
+		"variante": ["Taika Waititi", "Patty Jenkins", "Guillermo del Toro", "Jordan Peele"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q13255497:regizor:cere_regizor",
+		"fapt": "wd:Q13255497",
+		"text": "Cine a regizat filmul „Birdman”, din 2014?",
+		"variante": ["James Gunn", "Alejandro González Iñárritu", "Damien Chazelle", "Martin Scorsese"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q18002795:regizor:cere_regizor",
+		"fapt": "wd:Q18002795",
+		"text": "Cine a regizat filmul „The Revenant: Legenda lui Hugh Glass”, din 2015?",
+		"variante": ["George Miller", "Alejandro González Iñárritu", "Damien Chazelle", "James Gunn"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q273978:regizor:cere_regizor",
+		"fapt": "wd:Q273978",
+		"text": "Cine a regizat filmul „Tigru și dragon”, din 2000?",
+		"variante": ["Robert Zemeckis", "Guy Ritchie", "Ang Lee", "Roger Michell"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q152780:regizor:cere_regizor",
+		"fapt": "wd:Q152780",
+		"text": "Cine a regizat filmul „Viața lui Pi”, din 2012?",
+		"variante": ["Peter Jackson", "Ben Affleck", "Joss Whedon", "Ang Lee"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q150804:regizor:cere_regizor",
+		"fapt": "wd:Q150804",
+		"text": "Cine a regizat filmul „Pianistul”, din 2002?",
+		"variante": ["Richard Curtis", "Roman Polanski", "David Lynch", "Gore Verbinski"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q212775:regizor:cere_regizor",
+		"fapt": "wd:Q212775",
+		"text": "Cine a regizat filmul „Ultimul împărat”, din 1987?",
+		"variante": ["John McTiernan", "Barry Levinson", "Oliver Stone", "Bernardo Bertolucci"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q160060:regizor:cere_regizor",
+		"fapt": "wd:Q160060",
+		"text": "Cine a regizat filmul „Discursul regelui”, din 2010?",
+		"variante": ["Darren Aronofsky", "David Yates", "Tom Hooper", "Kenneth Branagh"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q59653:regizor:cere_regizor",
+		"fapt": "wd:Q59653",
+		"text": "Cine a regizat filmul „Argo”, din 2012?",
+		"variante": ["Peter Jackson", "Ben Affleck", "Joss Whedon", "Martin Scorsese"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q183066:regizor:cere_regizor",
+		"fapt": "wd:Q183066",
+		"text": "Cine a regizat filmul „The Hurt Locker”, din 2008?",
+		"variante": ["Kathryn Bigelow", "Jon Favreau", "Catherine Hardwicke", "Phyllida Lloyd"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q15648198:regizor:cere_regizor",
+		"fapt": "wd:Q15648198",
+		"text": "Cine a regizat filmul „Whiplash”, din 2014?",
+		"variante": ["Alejandro González Iñárritu", "James Gunn", "Damien Chazelle", "Martin Scorsese"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q180214:regizor:cere_regizor",
+		"fapt": "wd:Q180214",
+		"text": "Cine a regizat filmul „Lebăda neagră”, din 2010?",
+		"variante": ["Tom Hooper", "David Yates", "Darren Aronofsky", "Kenneth Branagh"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q214801:regizor:cere_regizor",
+		"fapt": "wd:Q214801",
+		"text": "Cine a regizat filmul „The Truman Show”, din 1998?",
+		"variante": ["Peter Weir", "Steven Spielberg", "Sam Mendes", "M. Night Shyamalan"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q106316:regizor:cere_regizor",
+		"fapt": "wd:Q106316",
+		"text": "Cine a regizat filmul „Cercul poeților dispăruți”, din 1989?",
+		"variante": ["John McTiernan", "Tim Burton", "Peter Weir", "Kevin Costner"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q183063:regizor:cere_regizor",
+		"fapt": "wd:Q183063",
+		"text": "Cine a regizat filmul „The Sixth Sense”, din 1999?",
+		"variante": ["George Lucas", "M. Night Shyamalan", "Frank Darabont", "Sam Mendes"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q188845:regizor:cere_regizor",
+		"fapt": "wd:Q188845",
+		"text": "Cine a regizat filmul „Rain Man”, din 1988?",
+		"variante": ["John McTiernan", "Barry Levinson", "Bernardo Bertolucci", "Oliver Stone"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q213411:regizor:cere_regizor",
+		"fapt": "wd:Q213411",
+		"text": "Cine a regizat filmul „Naufragiatul”, din 2000?",
+		"variante": ["Guy Ritchie", "M. Night Shyamalan", "Robert Zemeckis", "Stephen Sommers"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q105598:regizor:cere_regizor",
+		"fapt": "wd:Q105598",
+		"text": "Cine a regizat filmul „Greu de ucis”, din 1988?",
+		"variante": ["Barry Levinson", "John McTiernan", "Bernardo Bertolucci", "Oliver Stone"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q104814:regizor:cere_regizor",
+		"fapt": "wd:Q104814",
+		"text": "Cine a regizat filmul „Aliens”, din 1986?",
+		"variante": ["Oliver Stone", "Bernardo Bertolucci", "James Cameron", "Barry Levinson"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q162255:regizor:cere_regizor",
+		"fapt": "wd:Q162255",
+		"text": "Cine a regizat filmul „Terminatorul”, din 1984?",
+		"variante": ["Miloš Forman", "Brian De Palma", "James Cameron", "Ridley Scott"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q484675:regizor:cere_regizor",
+		"fapt": "wd:Q484675",
+		"text": "Cine a regizat filmul „Léon”, din 1994?",
+		"variante": ["Chuck Russell", "Mel Gibson", "Luc Besson", "Joe Johnston"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q106506:regizor:cere_regizor",
+		"fapt": "wd:Q106506",
+		"text": "Cine a regizat filmul „Al cincilea element”, din 1997?",
+		"variante": ["Anthony Minghella", "Steven Spielberg", "Roland Emmerich", "Luc Besson"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q219421:regizor:cere_regizor",
+		"fapt": "wd:Q219421",
+		"text": "Cine a regizat filmul „Masca”, din 1994?",
+		"variante": ["Luc Besson", "Chuck Russell", "Mel Gibson", "Joe Johnston"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q222939:regizor:cere_regizor",
+		"fapt": "wd:Q222939",
+		"text": "Cine a regizat filmul „Jumanji”, din 1995?",
+		"variante": ["Mel Gibson", "Joe Johnston", "Wes Craven", "Danny Boyle"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q116852:regizor:cere_regizor",
+		"fapt": "wd:Q116852",
+		"text": "Cine a regizat filmul „Batman”, din 1989?",
+		"variante": ["Tim Burton", "Kevin Costner", "John McTiernan", "Barry Levinson"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q174385:regizor:cere_regizor",
+		"fapt": "wd:Q174385",
+		"text": "Cine a regizat filmul „Alice în Țara Minunilor”, din 2010?",
+		"variante": ["Darren Aronofsky", "Tom Hooper", "David Yates", "Tim Burton"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q335160:regizor:cere_regizor",
+		"fapt": "wd:Q335160",
+		"text": "Cine a regizat filmul „Snatch”, din 2000?",
+		"variante": ["Guy Ritchie", "Robert Zemeckis", "M. Night Shyamalan", "Roger Michell"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q200396:regizor:cere_regizor",
+		"fapt": "wd:Q200396",
+		"text": "Cine a regizat filmul „Sherlock Holmes”, din 2009?",
+		"variante": ["Phyllida Lloyd", "Jon Favreau", "Kathryn Bigelow", "Guy Ritchie"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q274167:regizor:cere_regizor",
+		"fapt": "wd:Q274167",
+		"text": "Cine a regizat filmul „Exorcistul”, din 1973?",
+		"variante": ["Francis Ford Coppola", "Stanley Kubrick", "William Friedkin", "John G. Avildsen"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q209170:regizor:cere_regizor",
+		"fapt": "wd:Q209170",
+		"text": "Cine a regizat filmul „Mary Poppins”, din 1964?",
+		"variante": ["David Lean", "Terence Young", "Robert Stevenson", "Blake Edwards"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q193066:regizor:cere_regizor",
+		"fapt": "wd:Q193066",
+		"text": "Cine a regizat filmul „Micul dejun la Tiffany”, din 1961?",
+		"variante": ["Terence Young", "David Lean", "William Wyler", "Blake Edwards"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q214723:regizor:cere_regizor",
+		"fapt": "wd:Q214723",
+		"text": "Cine a regizat filmul „Goana după aur”, din 1925?",
+		"variante": ["Michael Curtiz", "Frank Capra", "Alfred Hitchcock", "Charlie Chaplin"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q374172:regizor:cere_regizor",
+		"fapt": "wd:Q374172",
+		"text": "Cine a regizat filmul „Piciul”, din 1921?",
+		"variante": ["Charlie Chaplin", "Michael Curtiz", "Frank Capra", "Alfred Hitchcock"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q233464:regizor:cere_regizor",
+		"fapt": "wd:Q233464",
+		"text": "Cine a regizat filmul „Annie Hall”, din 1977?",
+		"variante": ["John G. Avildsen", "Woody Allen", "Irvin Kershner", "Francis Ford Coppola"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q206124:regizor:cere_regizor",
+		"fapt": "wd:Q206124",
+		"text": "Cine a regizat filmul „Miezul nopții în Paris”, din 2011?",
+		"variante": ["David Yates", "Woody Allen", "Kenneth Branagh", "Ben Affleck"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q272608:regizor:cere_regizor",
+		"fapt": "wd:Q272608",
+		"text": "Cine a regizat filmul „Mulholland Drive – Calea misterelor”, din 2001?",
+		"variante": ["Chris Columbus", "David Lynch", "Ron Howard", "Roman Polanski"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q53105:regizor:cere_regizor",
+		"fapt": "wd:Q53105",
+		"text": "Cine a regizat filmul „Moscova nu crede în lacrimi”, din 1980?",
+		"variante": ["Vladimir Menșov", "Roman Polanski", "Mircea Daneliuc", "Irvin Kershner"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q25136235:regizor:cere_regizor",
+		"fapt": "wd:Q25136235",
+		"text": "Cine a regizat filmul „Get Out”, din 2017?",
+		"variante": ["Taika Waititi", "Patty Jenkins", "George Miller", "Jordan Peele"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q22665878:regizor:cere_regizor",
+		"fapt": "wd:Q22665878",
+		"text": "Cine a regizat filmul „Thor: Ragnarok”, din 2017?",
+		"variante": ["Jordan Peele", "Taika Waititi", "Patty Jenkins", "George Miller"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q5887360:regizor:cere_regizor",
+		"fapt": "wd:Q5887360",
+		"text": "Cine a regizat filmul „Gardienii galaxiei”, din 2014?",
+		"variante": ["Alejandro González Iñárritu", "Damien Chazelle", "James Gunn", "Martin Scorsese"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q1757288:regizor:cere_regizor",
+		"fapt": "wd:Q1757288",
+		"text": "Cine a regizat filmul „Mad Max: Drumul furiei”, din 2015?",
+		"variante": ["George Miller", "Alejandro González Iñárritu", "James Gunn", "Damien Chazelle"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q27411:regizor:cere_regizor",
+		"fapt": "wd:Q27411",
+		"text": "Cine a regizat filmul „Scream”, din 1996?",
+		"variante": ["Wes Craven", "Danny Boyle", "Anthony Minghella", "Roland Emmerich"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q190588:regizor:cere_regizor",
+		"fapt": "wd:Q190588",
+		"text": "Cine a regizat filmul „Pur și simplu dragoste”, din 2003?",
+		"variante": ["Quentin Tarantino", "Edward Zwick", "Gore Verbinski", "Richard Curtis"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q200672:regizor:cere_regizor",
+		"fapt": "wd:Q200672",
+		"text": "Cine a regizat filmul „Notting Hill”, din 1999?",
+		"variante": ["Sam Mendes", "Frank Darabont", "M. Night Shyamalan", "Roger Michell"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q188850:regizor:cere_regizor",
+		"fapt": "wd:Q188850",
+		"text": "Cine a regizat filmul „Mamma Mia!”, din 2008?",
+		"variante": ["Christopher Nolan", "Kathryn Bigelow", "Phyllida Lloyd", "Jon Favreau"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q20456:regizor:cere_regizor",
+		"fapt": "wd:Q20456",
+		"text": "Cine a regizat filmul „Cel care dansează cu lupii”, din 1990?",
+		"variante": ["Kevin Costner", "Tim Burton", "James Cameron", "John McTiernan"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q201924:regizor:cere_regizor",
+		"fapt": "wd:Q201924",
+		"text": "Cine a regizat filmul „Aviatorul”, din 2004?",
+		"variante": ["Wolfgang Petersen", "Martin Scorsese", "Sam Raimi", "Alfonso Cuarón"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q154581:regizor:cere_regizor",
+		"fapt": "wd:Q154581",
+		"text": "Cine a regizat filmul „Bandele din New York”, din 2002?",
+		"variante": ["Roman Polanski", "Martin Scorsese", "Gore Verbinski", "David Lynch"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q210364:regizor:cere_regizor",
+		"fapt": "wd:Q210364",
+		"text": "Cine a regizat filmul „Shutter Island”, din 2010?",
+		"variante": ["Tom Hooper", "Martin Scorsese", "Darren Aronofsky", "Kenneth Branagh"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q208108:regizor:cere_regizor",
+		"fapt": "wd:Q208108",
+		"text": "Cine a regizat filmul „Prinde-mă! Dacă poți!”, din 2002?",
+		"variante": ["Roman Polanski", "Steven Spielberg", "David Lynch", "Edward Zwick"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q318766:regizor:cere_regizor",
+		"fapt": "wd:Q318766",
+		"text": "Cine a regizat filmul „Terminalul”, din 2004?",
+		"variante": ["Sam Raimi", "Alfonso Cuarón", "Steven Spielberg", "Wolfgang Petersen"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q244604:regizor:cere_regizor",
+		"fapt": "wd:Q244604",
+		"text": "Cine a regizat filmul „Raport Special”, din 2002?",
+		"variante": ["Roman Polanski", "David Lynch", "Gore Verbinski", "Steven Spielberg"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q160215:regizor:cere_regizor",
+		"fapt": "wd:Q160215",
+		"text": "Cine a regizat filmul „King Kong”, din 2005?",
+		"variante": ["Peter Jackson", "Alfonso Cuarón", "Wolfgang Petersen", "Zack Snyder"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q102754:regizor:cere_regizor",
+		"fapt": "wd:Q102754",
+		"text": "Cine a regizat filmul „Dr. No”, din 1962?",
+		"variante": ["David Lean", "Blake Edwards", "Terence Young", "Robert Stevenson"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q151904:regizor:cere_regizor",
+		"fapt": "wd:Q151904",
+		"text": "Cine a regizat filmul „Casino Royale”, din 2006?",
+		"variante": ["Zack Snyder", "Cristian Nemescu", "Michael Bay", "Martin Campbell"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q232009:regizor:cere_regizor",
+		"fapt": "wd:Q232009",
+		"text": "Cine a regizat filmul „Harry Potter și Talismanele Morții. Partea 2”, din 2011?",
+		"variante": ["Kenneth Branagh", "David Yates", "Joss Whedon", "Tom Hooper"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q46717:regizor:cere_regizor",
+		"fapt": "wd:Q46717",
+		"text": "Cine a regizat filmul „Pirații din Caraibe: Blestemul Perlei Negre”, din 2003?",
+		"variante": ["Edward Zwick", "Quentin Tarantino", "Richard Curtis", "Gore Verbinski"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q160071:regizor:cere_regizor",
+		"fapt": "wd:Q160071",
+		"text": "Cine a regizat filmul „Amurg”, din 2008?",
+		"variante": ["Catherine Hardwicke", "Jon Favreau", "Christopher Nolan", "Phyllida Lloyd"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q171453:regizor:cere_regizor",
+		"fapt": "wd:Q171453",
+		"text": "Cine a regizat filmul „Transformers - Războiul lor în lumea noastră”, din 2007?",
+		"variante": ["Cristian Nemescu", "Kathryn Bigelow", "Michael Bay", "Catherine Hardwicke"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q208344:regizor:cere_regizor",
+		"fapt": "wd:Q208344",
+		"text": "Cine a regizat filmul „Armageddon - Sfârșitul lumii?”, din 1998?",
+		"variante": ["Steven Spielberg", "Michael Bay", "Peter Weir", "Roger Michell"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q202508:regizor:cere_regizor",
+		"fapt": "wd:Q202508",
+		"text": "Cine a regizat filmul „Mumia”, din 1999?",
+		"variante": ["George Lucas", "David Fincher", "Stephen Sommers", "Roger Michell"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q207130:regizor:cere_regizor",
+		"fapt": "wd:Q207130",
+		"text": "Cine a regizat filmul „Ultimul samurai”, din 2003?",
+		"variante": ["Richard Curtis", "Edward Zwick", "Gore Verbinski", "Quentin Tarantino"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q188035:regizor:cere_regizor",
+		"fapt": "wd:Q188035",
+		"text": "Cine a regizat filmul „Apocalypto”, din 2006?",
+		"variante": ["Martin Campbell", "Guillermo del Toro", "Zack Snyder", "Mel Gibson"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q165713:regizor:cere_regizor",
+		"fapt": "wd:Q165713",
+		"text": "Cine a regizat filmul „Războiul stelelor - Episodul I: Amenințarea fantomei”, din 1999?",
+		"variante": ["Frank Darabont", "Roger Michell", "David Fincher", "George Lucas"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q217020:regizor:cere_regizor",
+		"fapt": "wd:Q217020",
+		"text": "Cine a regizat filmul „Thor”, din 2011?",
+		"variante": ["David Yates", "Joss Whedon", "Darren Aronofsky", "Kenneth Branagh"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q23780734:regizor:cere_regizor",
+		"fapt": "wd:Q23780734",
+		"text": "Cine a regizat filmul „Pantera neagră”, din 2018?",
+		"variante": ["Jordan Peele", "Ryan Coogler", "Todd Phillips", "Patty Jenkins"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q20502242:regizor:cere_regizor",
+		"fapt": "wd:Q20502242",
+		"text": "Cine a regizat filmul „Wonder Woman”, din 2017?",
+		"variante": ["Taika Waititi", "Jordan Peele", "Todd Phillips", "Patty Jenkins"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q131390:regizor:cere_regizor",
+		"fapt": "wd:Q131390",
+		"text": "Cine a regizat filmul „300”, din 2006?",
+		"variante": ["Martin Campbell", "Cristian Nemescu", "Michael Bay", "Zack Snyder"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q219315:regizor:cere_regizor",
+		"fapt": "wd:Q219315",
+		"text": "Cine a regizat filmul „Marea mahmureală”, din 2009?",
+		"variante": ["Todd Phillips", "Darren Aronofsky", "Christopher Nolan", "Catherine Hardwicke"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q188652:regizor:cere_regizor",
+		"fapt": "wd:Q188652",
+		"text": "Cine a regizat filmul „Rocky”, din 1976?",
+		"variante": ["Woody Allen", "Francis Ford Coppola", "John G. Avildsen", "William Friedkin"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q2085964:regizor:cere_regizor",
+		"fapt": "wd:Q2085964",
+		"text": "Cine a regizat filmul „Pădurea spânzuraților”, din 1965?",
+		"variante": ["Liviu Ciulei", "Sergiu Nicolaescu", "Mircea Drăgan", "Lucian Pintilie"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q3212174:regizor:cere_regizor",
+		"fapt": "wd:Q3212174",
+		"text": "Cine a regizat filmul „Reconstituirea”, din 1970?",
+		"variante": ["Lucian Pintilie", "Iulian Mihu", "Mircea Drăgan", "Sergiu Nicolaescu"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q12735956:regizor:cere_regizor",
+		"fapt": "wd:Q12735956",
+		"text": "Cine a regizat filmul „Moromeții”, din 1987?",
+		"variante": ["Stere Gulea", "Nicolae Corjos", "Mircea Daneliuc", "Iulian Mihu"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q1963051:regizor:cere_regizor",
+		"fapt": "wd:Q1963051",
+		"text": "Cine a regizat filmul „Dacii”, din 1967?",
+		"variante": ["Mircea Drăgan", "Liviu Ciulei", "Lucian Pintilie", "Sergiu Nicolaescu"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q2348435:regizor:cere_regizor",
+		"fapt": "wd:Q2348435",
+		"text": "Cine a regizat filmul „Mihai Viteazul”, din 1970?",
+		"variante": ["Sergiu Nicolaescu", "Lucian Pintilie", "Mircea Drăgan", "Iulian Mihu"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q4243397:regizor:cere_regizor",
+		"fapt": "wd:Q4243397",
+		"text": "Cine a regizat filmul „Nea Mărin miliardar”, din 1979?",
+		"variante": ["Mircea Daneliuc", "Nicolae Corjos", "Sergiu Nicolaescu", "Iulian Mihu"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q5448281:regizor:cere_regizor",
+		"fapt": "wd:Q5448281",
+		"text": "Cine a regizat filmul „Filantropica”, din 2002?",
+		"variante": ["Corneliu Porumboiu", "Nae Caranfil", "Cristian Mungiu", "Călin Peter Netzer"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q2933985:regizor:cere_regizor",
+		"fapt": "wd:Q2933985",
+		"text": "Cine a regizat filmul „California Dreamin'”, din 2007?",
+		"variante": ["Cristian Nemescu", "Michael Bay", "Zack Snyder", "Kathryn Bigelow"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q4778856:regizor:cere_regizor",
+		"fapt": "wd:Q4778856",
+		"text": "Cine a regizat filmul „Poziția copilului”, din 2013?",
+		"variante": ["Cristian Mungiu", "Radu Jude", "Cristi Puiu", "Călin Peter Netzer"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q1754127:regizor:cere_regizor",
+		"fapt": "wd:Q1754127",
+		"text": "Cine a regizat filmul „A fost sau n-a fost?”, din 2006?",
+		"variante": ["Nae Caranfil", "Cristian Mungiu", "Corneliu Porumboiu", "Călin Peter Netzer"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q18959331:regizor:cere_regizor",
+		"fapt": "wd:Q18959331",
+		"text": "Cine a regizat filmul „Aferim!”, din 2015?",
+		"variante": ["Cristi Puiu", "Călin Peter Netzer", "Radu Jude", "Cristian Mungiu"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q2522756:regizor:cere_regizor",
+		"fapt": "wd:Q2522756",
+		"text": "Cine a regizat filmul „După dealuri”, din 2012?",
+		"variante": ["Călin Peter Netzer", "Radu Jude", "Cristi Puiu", "Cristian Mungiu"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q23762934:regizor:cere_regizor",
+		"fapt": "wd:Q23762934",
+		"text": "Cine a regizat filmul „Bacalaureat”, din 2016?",
+		"variante": ["Cristi Puiu", "Radu Jude", "Cristian Mungiu", "Călin Peter Netzer"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q2328850:regizor:cere_regizor",
+		"fapt": "wd:Q2328850",
+		"text": "Cine a regizat filmul „Balanța”, din 1992?",
+		"variante": ["Stere Gulea", "Nicolae Corjos", "Lucian Pintilie", "Nae Caranfil"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q18541326:regizor:cere_regizor",
+		"fapt": "wd:Q18541326",
+		"text": "Cine a regizat filmul „Liceenii”, din 1986?",
+		"variante": ["Stere Gulea", "Mircea Daneliuc", "Iulian Mihu", "Nicolae Corjos"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q3821840:regizor:cere_regizor",
+		"fapt": "wd:Q3821840",
+		"text": "Cine a regizat filmul „Columna”, din 1968?",
+		"variante": ["Mircea Drăgan", "Sergiu Nicolaescu", "Lucian Pintilie", "Liviu Ciulei"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q12728191:regizor:cere_regizor",
+		"fapt": "wd:Q12728191",
+		"text": "Cine a regizat filmul „Felix și Otilia”, din 1972?",
+		"variante": ["Lucian Pintilie", "Mircea Drăgan", "Sergiu Nicolaescu", "Iulian Mihu"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q18547094:regizor:cere_regizor",
+		"fapt": "wd:Q18547094",
+		"text": "Cine a regizat filmul „Proba de microfon”, din 1980?",
+		"variante": ["Nicolae Corjos", "Stere Gulea", "Iulian Mihu", "Mircea Daneliuc"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q23823612:regizor:cere_regizor",
+		"fapt": "wd:Q23823612",
+		"text": "Cine a regizat filmul „Sieranevada”, din 2016?",
+		"variante": ["Radu Jude", "Cristi Puiu", "Călin Peter Netzer", "Cristian Mungiu"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q103646:regizor:cere_film",
+		"fapt": "wd:Q103646",
+		"text": "Care dintre aceste filme a fost regizat de Ron Howard?",
+		"variante": ["Harry Potter și Piatra Filozofală", "O minte sclipitoare", "Mulholland Drive – Calea misterelor", "Bandele din New York"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q160726:regizor:cere_film",
+		"fapt": "wd:Q160726",
+		"text": "Care dintre aceste filme a fost regizat de Ang Lee?",
+		"variante": ["2012", "Tigru și dragon", "Memento", "Snatch"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q164562:regizor:cere_film",
+		"fapt": "wd:Q164562",
+		"text": "Care dintre aceste filme a fost regizat de Sergio Leone?",
+		"variante": ["Undeva, cândva în vest", "Portocala mecanică", "Dr. Strangelove", "Mary Poppins"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q184903:regizor:cere_film",
+		"fapt": "wd:Q184903",
+		"text": "Care dintre aceste filme a fost regizat de David Fincher?",
+		"variante": ["The Sixth Sense", "Mumia", "Notting Hill", "Fight Club"],
+		"corect": 3,
+		"nivel": 1,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q189526:regizor:cere_film",
+		"fapt": "wd:Q189526",
+		"text": "Care dintre aceste filme a fost regizat de Brian De Palma?",
+		"variante": ["Pacientul englez", "Misiune: Imposibilă", "Scream", "Ziua independenței"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q192990:regizor:cere_film",
+		"fapt": "wd:Q192990",
+		"text": "Care dintre aceste filme a fost regizat de Guy Ritchie?",
+		"variante": ["Memento", "Naufragiatul", "Mumia", "Snatch"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q2001:regizor:cere_film",
+		"fapt": "wd:Q2001",
+		"text": "Care dintre aceste filme a fost regizat de Stanley Kubrick?",
+		"variante": ["Dr. Strangelove", "Mary Poppins", "Lawrence al Arabiei", "Dr. No"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q219124:regizor:cere_film",
+		"fapt": "wd:Q219124",
+		"text": "Care dintre aceste filme a fost regizat de Guillermo del Toro?",
+		"variante": ["Get Out", "Wonder Woman", "Thor: Ragnarok", "Forma apei"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q223233:regizor:cere_film",
+		"fapt": "wd:Q223233",
+		"text": "Care dintre aceste filme a fost regizat de Sam Mendes?",
+		"variante": ["Notting Hill", "Războiul stelelor - Episodul I: Amenințarea fantomei", "American Beauty", "Culoarul morții"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q25089:regizor:cere_film",
+		"fapt": "wd:Q25089",
+		"text": "Care dintre aceste filme a fost regizat de Woody Allen?",
+		"variante": ["Rocky", "Războiul stelelor - Episodul V: Imperiul contraatacă", "Annie Hall", "Nașul: Partea a II-a"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q25191:regizor:cere_film",
+		"fapt": "wd:Q25191",
+		"text": "Care dintre aceste filme a fost regizat de Christopher Nolan?",
+		"variante": ["Oppenheimer", "Barbie", "Dune", "Joker"],
+		"corect": 0,
+		"nivel": 1,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q275402:regizor:cere_film",
+		"fapt": "wd:Q275402",
+		"text": "Care dintre aceste filme a fost regizat de Sam Raimi?",
+		"variante": ["Terminalul", "Omul-păianjen 2", "Troia", "Aviatorul"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q28028:regizor:cere_film",
+		"fapt": "wd:Q28028",
+		"text": "Care dintre aceste filme a fost regizat de Alfonso Cuarón?",
+		"variante": ["Lupul de pe Wall Street", "Birdman", "Viața lui Pi", "Misiune în spațiu"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q314353:regizor:cere_film",
+		"fapt": "wd:Q314353",
+		"text": "Care dintre aceste filme a fost regizat de Cristian Mungiu?",
+		"variante": ["Sieranevada", "Aferim!", "Bacalaureat", "Poziția copilului"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q362824:regizor:cere_film",
+		"fapt": "wd:Q362824",
+		"text": "Care dintre aceste filme a fost regizat de Todd Phillips?",
+		"variante": ["Marea mahmureală", "Ticăloși fără glorie", "2012", "Sherlock Holmes"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q3772:regizor:cere_film",
+		"fapt": "wd:Q3772",
+		"text": "Care dintre aceste filme a fost regizat de Quentin Tarantino?",
+		"variante": ["Hobbitul: O călătorie neașteptată", "Răzbunătorii", "Viața lui Pi", "Django dezlănțuit"],
+		"corect": 3,
+		"nivel": 1,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q41148:regizor:cere_film",
+		"fapt": "wd:Q41148",
+		"text": "Care dintre aceste filme a fost regizat de Martin Scorsese?",
+		"variante": ["Lupul de pe Wall Street", "Misiune în spațiu", "Django dezlănțuit", "Gardienii galaxiei"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q42229:regizor:cere_film",
+		"fapt": "wd:Q42229",
+		"text": "Care dintre aceste filme a fost regizat de Mel Gibson?",
+		"variante": ["A fost sau n-a fost?", "Viața celorlalți", "Cârtița", "Apocalypto"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q42574:regizor:cere_film",
+		"fapt": "wd:Q42574",
+		"text": "Care dintre aceste filme a fost regizat de James Cameron?",
+		"variante": ["Edward Mâini-de-foarfecă", "Singur acasă 2 - Pierdut în New York", "Terminatorul 2: Ziua Judecății", "Dracula"],
+		"corect": 2,
+		"nivel": 1,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q43203:regizor:cere_film",
+		"fapt": "wd:Q43203",
+		"text": "Care dintre aceste filme a fost regizat de Clint Eastwood?",
+		"variante": ["O fată de milioane", "Troia", "Omul-păianjen 2", "Terminalul"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q4465:regizor:cere_film",
+		"fapt": "wd:Q4465",
+		"text": "Care dintre aceste filme a fost regizat de Peter Jackson?",
+		"variante": ["Argo", "Hobbitul: O călătorie neașteptată", "Django dezlănțuit", "Răzbunătorii"],
+		"corect": 1,
+		"nivel": 1,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q484779:regizor:cere_film",
+		"fapt": "wd:Q484779",
+		"text": "Care dintre aceste filme a fost regizat de Luc Besson?",
+		"variante": ["Léon", "Masca", "Inimă neînfricată", "Se7en"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q55215:regizor:cere_film",
+		"fapt": "wd:Q55215",
+		"text": "Care dintre aceste filme a fost regizat de Alejandro González Iñárritu?",
+		"variante": ["Whiplash", "American Sniper", "Birdman", "Gardienii galaxiei"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q55260:regizor:cere_film",
+		"fapt": "wd:Q55260",
+		"text": "Care dintre aceste filme a fost regizat de David Lean?",
+		"variante": ["Dr. No", "Micul dejun la Tiffany", "Mary Poppins", "Lawrence al Arabiei"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q55424:regizor:cere_film",
+		"fapt": "wd:Q55424",
+		"text": "Care dintre aceste filme a fost regizat de Peter Weir?",
+		"variante": ["The Truman Show", "Armageddon - Sfârșitul lumii?", "Salvați soldatul Ryan", "Războiul stelelor - Episodul I: Amenințarea fantomei"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q56005:regizor:cere_film",
+		"fapt": "wd:Q56005",
+		"text": "Care dintre aceste filme a fost regizat de Ridley Scott?",
+		"variante": ["Scarface", "Războiul stelelor - Episodul V: Imperiul contraatacă", "Vânătorul de recompense", "Amadeus"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q56008:regizor:cere_film",
+		"fapt": "wd:Q56008",
+		"text": "Care dintre aceste filme a fost regizat de Tim Burton?",
+		"variante": ["Rețeaua de socializare", "Discursul regelui", "Alice în Țara Minunilor", "Shutter Island"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q56094:regizor:cere_film",
+		"fapt": "wd:Q56094",
+		"text": "Care dintre aceste filme a fost regizat de Francis Ford Coppola?",
+		"variante": ["Exorcistul", "Rocky", "Nașul: Partea a II-a", "Portocala mecanică"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q59259:regizor:cere_film",
+		"fapt": "wd:Q59259",
+		"text": "Care dintre aceste filme a fost regizat de Michael Bay?",
+		"variante": ["California Dreamin'", "Cavalerul negru", "Transformers - Războiul lor în lumea noastră", "Cârtița"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q60100:regizor:cere_film",
+		"fapt": "wd:Q60100",
+		"text": "Care dintre aceste filme a fost regizat de Roland Emmerich?",
+		"variante": ["Sherlock Holmes", "2012", "Marea mahmureală", "Ticăloși fără glorie"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q634875:regizor:cere_film",
+		"fapt": "wd:Q634875",
+		"text": "Care dintre aceste filme a fost regizat de Sergiu Nicolaescu?",
+		"variante": ["Nea Mărin miliardar", "Proba de microfon", "Liceenii", "Felix și Otilia"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q75079:regizor:cere_film",
+		"fapt": "wd:Q75079",
+		"text": "Care dintre aceste filme a fost regizat de Chris Columbus?",
+		"variante": ["Necruțătorul", "Singur acasă 2 - Pierdut în New York", "Dracula", "Terminatorul 2: Ziua Judecății"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q882:regizor:cere_film",
+		"fapt": "wd:Q882",
+		"text": "Care dintre aceste filme a fost regizat de Charlie Chaplin?",
+		"variante": ["Casablanca", "O viață minunată", "Fereastra din spate", "Goana după aur"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+	{
+		"id": "wd:Q8877:regizor:cere_film",
+		"fapt": "wd:Q8877",
+		"text": "Care dintre aceste filme a fost regizat de Steven Spielberg?",
+		"variante": ["Terminalul", "Troia", "Harry Potter și Prizonierul din Azkaban", "O fată de milioane"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	},
+
+	{
+		"id": "wd:Q967207:regizor:cere_film",
+		"fapt": "wd:Q967207",
+		"text": "Care dintre aceste filme a fost regizat de Lucian Pintilie?",
+		"variante": ["Mihai Viteazul", "Felix și Otilia", "Reconstituirea", "Columna"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "cinematografie",
+		"categorie": "divertisment"
+	}
+]
