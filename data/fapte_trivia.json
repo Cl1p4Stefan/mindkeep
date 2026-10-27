@@ -12464,5 +12464,1205 @@
 	{
 		"id": "mana:3117",
 		"nota": "Germanii îi spun „Ohrwurm”, adică „vierme de ureche”, iar engleza a tradus cuvântul ca „earworm”. Cântecele simple, cu repetiții, se lipesc cel mai ușor."
+	},
+	{
+		"id": "mana:3118",
+		"nota": "Roma a crescut dintr-un sat de pe malul Tibrului până la un imperiu de vreo 50 de milioane de oameni. Cartagina și Alexandria i-au fost rivale bogate, niciodată capitale."
+	},
+	{
+		"id": "mana:3119",
+		"nota": "Drakkarul avea fundul plat, deci putea urca pe râuri și trage direct la plajă, fără port. De aceea atacurile vikingilor veneau din locuri unde nimeni nu aștepta corăbii."
+	},
+	{
+		"id": "mana:3120",
+		"nota": "Catapulta arunca pietre pe deasupra zidului, berbecul lovea poarta, iar balista trăgea săgeți uriașe drept înainte. Fiecare mașină de asediu avea altă țintă."
+	},
+	{
+		"id": "mana:3121",
+		"nota": "Podul mobil se ridica cu lanțuri și devenea o a doua poartă, lipită de prima. Șanțul cu apă nu era pentru frumusețe: împiedica atacatorii să sape un tunel sub ziduri."
+	},
+	{
+		"id": "mana:3122",
+		"nota": "Arcul lung englez era înalt cât un om și trimitea săgeți la peste 200 de metri. Un arcaș bun trăgea de zece ori mai repede decât unul cu arbaletă, dar se antrena din copilărie."
+	},
+	{
+		"id": "mana:3123",
+		"nota": "Marele Zid nu e un singur zid, ci multe ziduri ridicate de dinastii diferite, pe mii de kilometri. Povestea că se vede cu ochiul liber de pe Lună e falsă: e prea îngust."
+	},
+	{
+		"id": "mana:3124",
+		"nota": "Grădinile sunt singura minune a lumii antice despre care nu se știe sigur dacă a existat: nu s-a găsit nicio urmă, iar scribii babilonieni nu le pomenesc deloc."
+	},
+	{
+		"id": "mana:3125",
+		"nota": "Piramida e un mormânt, nu un templu: faraonul era așezat în ea cu tot ce credea că-i trebuie pe lumea cealaltă. Mai târziu s-au îngropat ascuns, în morminte săpate în stâncă."
+	},
+	{
+		"id": "mana:3126",
+		"nota": "Un sclav roman putea fi eliberat de stăpân și devenea „libert”, cu drepturi aproape de cetățean. Mulți sclavi erau prizonieri aduși din războaiele de cucerire."
+	},
+	{
+		"id": "mana:3127",
+		"nota": "Numele Senatului vine din „senex”, adică bătrân: la început erau capii familiilor de vază. Hotărârile se dădeau în numele „Senatului și poporului roman”, scurtat SPQR."
+	},
+	{
+		"id": "mana:3128",
+		"nota": "Cuvântul „faraon” vine din egipteană, „per-aa”, adică „casa cea mare”: palatul a dat numele omului. Faraonul era socotit deopotrivă rege și zeu pe pământ."
+	},
+	{
+		"id": "mana:3129",
+		"nota": "Mumificarea ținea aproape 70 de zile: organele erau scoase și puse în vase, trupul era uscat cu o sare numită natron, apoi învelit în fâșii de pânză."
+	},
+	{
+		"id": "mana:3130",
+		"nota": "Papa de la Roma a ajuns să încoroneze împărați, iar de aici s-a iscat o ceartă de secole: cine îl numește pe episcop, Biserica sau regele care îi dă pământurile?"
+	},
+	{
+		"id": "mana:3131",
+		"nota": "O Biblie copiată de mână cerea luni de muncă și pieile a peste o sută de animale, pentru pergament. De aceea cărțile erau legate cu lanț de pupitru, în bibliotecile mănăstirești."
+	},
+	{
+		"id": "mana:3132",
+		"nota": "Toga era semnul cetățeniei: un străin sau un sclav nu avea voie s-o poarte. Cei care cereau o funcție purtau una albită cu cretă, „candida” — de acolo vine cuvântul candidat."
+	},
+	{
+		"id": "mana:3133",
+		"nota": "Apeductul mergea în pantă lină, pe arcade, și lăsa apa să curgă singură, fără pompe. Roma primea astfel apă pentru fântâni, băi publice și closete cu scurgere."
+	},
+	{
+		"id": "mana:3134",
+		"nota": "Forumul era deopotrivă piață, tribunal și loc de întruniri. Cel din Roma se vede și azi, între Capitoliu și Colosseum, ca un câmp de coloane rupte."
+	},
+	{
+		"id": "mana:3135",
+		"nota": "Carele erau trase de patru cai, iar vizitiii erau vedetele orașului, cu echipe și culori proprii. În tribune încăpeau peste 100.000 de oameni, mai mulți decât pe un stadion de azi."
+	},
+	{
+		"id": "mana:3136",
+		"nota": "Turnirul era antrenament și spectacol deopotrivă, cu lănci de lemn care se rupeau la lovire. Era totuși primejdios: regele Henric al II-lea al Franței a murit rănit într-unul, în 1559."
+	},
+	{
+		"id": "mana:3137",
+		"nota": "Vasalul primea pământ, numit feudă, și datora în schimb slujbă militară. Vasalul vasalului nu era însă vasalul tău — din lanțul acesta încurcat veneau războaiele dintre seniori."
+	},
+	{
+		"id": "mana:3138",
+		"nota": "Zeciuiala însemna a zecea parte din recoltă și se strângea în hambare ale bisericii. Țăranul mai dădea și stăpânului pământului o parte, numită dijmă."
+	},
+	{
+		"id": "mana:3139",
+		"nota": "Alfabetul fenician avea numai consoane, iar grecii au adăugat vocalele. Numele literelor au rămas aproape la fel: „alef” a devenit alfa, „bet” a devenit beta."
+	},
+	{
+		"id": "mana:3140",
+		"nota": "Colosul din Rodos era înalt cam cât Statuia Libertății de azi, fără soclu, și a stat în picioare doar vreo cincizeci de ani: a căzut la un cutremur, iar bronzul a fost vândut."
+	},
+	{
+		"id": "mana:3141",
+		"nota": "Din cele șapte minuni, numai piramida de la Giza mai există. Lista era un fel de ghid de călătorie scris pentru greci: toate se aflau în jurul Mediteranei."
+	},
+	{
+		"id": "mana:3142",
+		"nota": "Pergamentul se face din piele de vițel sau de oaie, curățată și întinsă. Era scump, dar putea fi răzuit și scris din nou — așa s-au pierdut unele texte antice."
+	},
+	{
+		"id": "mana:3143",
+		"nota": "Oamenii care l-au trăit credeau că e cel din urmă război de felul acesta. Numele s-a schimbat după 1939, când a devenit limpede că fusese doar primul dintre două."
+	},
+	{
+		"id": "mana:3144",
+		"nota": "Două bombe atomice au fost folosite la o săptămână una de alta, iar Japonia a capitulat pe 15 august 1945. Au rămas singurele folosite vreodată într-un război."
+	},
+	{
+		"id": "mana:3145",
+		"nota": "Aliații au fost o alianță ciudată: Statele Unite, Marea Britanie și Uniunea Sovietică, adică două democrații și o dictatură. S-a desfăcut îndată după victorie."
+	},
+	{
+		"id": "mana:3146",
+		"nota": "„Apartheid” înseamnă „separare” în afrikaans. Legile cereau pașapoarte interne pentru oamenii de culoare și le hotărau unde pot locui, munci și învăța."
+	},
+	{
+		"id": "mana:3147",
+		"nota": "Prăbușirea din octombrie 1929 a fost urmată de un deceniu de sărăcie, cu un sfert din americani fără lucru. Criza a ajuns și în Europa, unde a ajutat extremele să crească."
+	},
+	{
+		"id": "mana:3148",
+		"nota": "Gripa din 1918 n-a pornit din Spania: a fost numită așa fiindcă spaniolii, neintrați în război, erau singurii care scriau liber despre ea în ziare."
+	},
+	{
+		"id": "mana:3149",
+		"nota": "Războiul din Coreea s-a oprit cu un armistițiu, nu cu o pace, iar granița a rămas aproape unde era la început. Cele două state sunt, tehnic, în război și azi."
+	},
+	{
+		"id": "mana:3150",
+		"nota": "În 1914, numai Etiopia și Liberia mai erau independente în Africa. Granițele trase atunci cu rigla pe hartă au rămas, în mare parte, granițele de azi."
+	},
+	{
+		"id": "mana:3151",
+		"nota": "Cu calea ferată, drumul de la un ocean la altul a scăzut de la șase luni, cu căruța, la o săptămână. Linia a fost construită mai ales de muncitori chinezi și irlandezi."
+	},
+	{
+		"id": "mana:3152",
+		"nota": "Cuvântul „fascism” vine de la „fascia”, mănunchiul de nuiele purtat de slujbașii Romei antice, ca semn al puterii. Regimul a dat numele tuturor celor care l-au imitat."
+	},
+	{
+		"id": "mana:3153",
+		"nota": "Pe frontul din Franța, tranșeele se întindeau de la Marea Nordului la Elveția, fără întrerupere. Linia s-a mutat, în patru ani, numai cu câteva zeci de kilometri."
+	},
+	{
+		"id": "mana:3154",
+		"nota": "Englezii au numit mașina „tank”, adică rezervor, ca să ascundă ce transportă în vagoanele acoperite. Numele de acoperire a rămas tancului în aproape toate limbile."
+	},
+	{
+		"id": "mana:3155",
+		"nota": "Mișcarea a folosit boicotul și marșurile, nu armele. Rosa Parks a pornit un boicot de un an al autobuzelor din Montgomery, în 1955, refuzând să-și cedeze locul."
+	},
+	{
+		"id": "mana:3156",
+		"nota": "Alianța a fost semnată în capitala Poloniei și s-a destrămat în 1991. Singura dată când a pornit la luptă, a intrat în țara unuia dintre membrii ei: Cehoslovacia, în 1968."
+	},
+	{
+		"id": "mana:3157",
+		"nota": "Pe Mayflower încăpuseră vreo 100 de oameni, iar drumul a ținut două luni. Înainte de a coborî, au scris o înțelegere despre cum se vor conduce: un fel de primă constituție."
+	},
+	{
+		"id": "mana:3158",
+		"nota": "Israelul a fost proclamat pe 14 mai 1948, iar războiul cu țările vecine a început a doua zi. Granițele rămase atunci au fost linii de armistițiu, nu granițe recunoscute."
+	},
+	{
+		"id": "mana:3159",
+		"nota": "Crucea Roșie a fost pornită de un negustor elvețian care văzuse, pe un câmp de luptă din Italia, mii de răniți lăsați fără ajutor. Semnul ei e steagul Elveției cu culorile întoarse."
+	},
+	{
+		"id": "mana:3160",
+		"nota": "Programul Apollo a cerut muncă de aproape un deceniu și peste 400.000 de oameni. Calculatorul de bord al navei avea mai puțină memorie decât un telefon de azi."
+	},
+	{
+		"id": "mana:3161",
+		"nota": "Actul de capitulare a fost semnat de două ori: o dată pe 7 mai, în Franța, și încă o dată pe 8 mai, la Berlin. Din pricina fusului orar, la Moscova era deja 9 mai."
+	},
+	{
+		"id": "mana:3162",
+		"nota": "Expresia „cortina de fier” a fost făcută cunoscută de premierul britanic, într-un discurs din 1946. Nu era un zid, ci șiruri de garduri, mine și turnuri de pază, pe mii de kilometri."
+	},
+	{
+		"id": "mana:3163",
+		"nota": "Prima Republică Franceză a fost proclamată în 1792. A ținut doar doisprezece ani, până când Napoleon s-a încoronat împărat, dar a schimbat pentru totdeauna ideea de stat."
+	},
+	{
+		"id": "mana:3164",
+		"nota": "Ghilotina a fost propusă ca o moarte egală pentru toți și mai puțin chinuitoare decât securea. A fost folosită în Franța, legal, până în 1977."
+	},
+	{
+		"id": "mana:3165",
+		"nota": "Comerțul cu sclavi mergea pe un triunghi: mărfuri spre Africa, oameni spre America, zahăr și bumbac spre Europa. Mulți dintre cei îmbarcați mureau pe drum."
+	},
+	{
+		"id": "mana:3166",
+		"nota": "„Kamikaze” înseamnă „vântul zeilor” și amintește o furtună care ar fi risipit, în secolul XIII, o flotă mongolă pornită spre Japonia. Atacurile au început în 1944."
+	},
+	{
+		"id": "mana:3167",
+		"nota": "Marea Britanie și Franța au declarat război Germaniei două zile mai târziu. Polonia a fost împărțită în câteva săptămâni între Germania și Uniunea Sovietică."
+	},
+	{
+		"id": "mana:3168",
+		"nota": "Herodot a scris despre războaiele cu perșii, dar a umplut cartea și cu obiceiuri, hărți și povești auzite. Spunea limpede când nu crede ce repovestește, ceea ce era nou atunci."
+	},
+	{
+		"id": "mana:3169",
+		"nota": "Pizarro a ajuns în Peru cu mai puțin de 200 de oameni, într-o vreme în care imperiul tocmai ieșise dintr-un război între frați. L-a prins pe conducător la o întâlnire de pace."
+	},
+	{
+		"id": "mana:3170",
+		"nota": "Ioana a ridicat asediul în câteva zile și l-a dus pe rege la încoronare. Doi ani mai târziu a fost arsă pe rug, iar după cinci secole a fost declarată sfântă."
+	},
+	{
+		"id": "mana:3171",
+		"nota": "Lenin a condus până la moartea lui, în 1924. Trupul i-a fost îmbălsămat și pus într-un mausoleu în Piața Roșie, unde se află și azi."
+	},
+	{
+		"id": "mana:3172",
+		"nota": "Elisabeta a II-a a avut cea mai lungă domnie din istoria britanică. A urcat pe tron în 1952, când prim-ministrul țării era un om născut în secolul XIX."
+	},
+	{
+		"id": "mana:3173",
+		"nota": "Maica Tereza s-a născut în Macedonia, a plecat la 18 ani în India și a rămas acolo toată viața. Premiul l-a primit în 1979 și a cerut ca banchetul festiv să fie dat săracilor."
+	},
+	{
+		"id": "mana:3174",
+		"nota": "Cartea lui Marco Polo a fost dictată în închisoare, unui coleg de celulă, și a fost citită ca o poveste de necrezut. Contemporanii l-au numit „Il Milione”, omul cu un milion de minciuni."
+	},
+	{
+		"id": "mana:3175",
+		"nota": "Diana era prima soție a moștenitorului tronului și cea mai fotografiată femeie a vremii. Funeraliile au fost urmărite, după estimări, de peste două miliarde de oameni."
+	},
+	{
+		"id": "mana:3176",
+		"nota": "Edison a strâns peste o mie de brevete și a lucrat cu o echipă întreagă, într-un laborator-fabrică. Nu a inventat becul din nimic: l-a făcut să ardă destul de mult ca să fie vândut."
+	},
+	{
+		"id": "mana:3177",
+		"nota": "Podul, terminat în 1895, a fost cel mai lung din Europa la vremea lui. La proba de rezistență, Saligny a stat chiar sub el, în timp ce treceau trenurile încărcate."
+	},
+	{
+		"id": "mana:3178",
+		"nota": "Vlaicu și-a construit aparatele singur și a câștigat premii la un concurs din Viena, în 1912. A murit în 1913, lângă Câmpina, într-o încercare de a trece munții în zbor."
+	},
+	{
+		"id": "mana:3179",
+		"nota": "Fleming a găsit o mucegaiță care omorâse bacteriile dintr-o farfurie de laborator lăsată descoperită. A trecut însă un deceniu până alții au făcut din ea un medicament."
+	},
+	{
+		"id": "mana:3180",
+		"nota": "Obama a fost ales în 2008 și a condus țara două mandate, până în ianuarie 2017. În primul an de mandat a primit Premiul Nobel pentru Pace, o alegere mult discutată."
+	},
+	{
+		"id": "mana:3181",
+		"nota": "Decebal a pierdut două războaie și s-a sinucis în anul 106, ca să nu fie dus în triumf la Roma. Scena e săpată pe Columna lui Traian, care se vede acolo și azi."
+	},
+	{
+		"id": "mana:3182",
+		"nota": "Vespucci a fost primul care a scris că pământurile acelea nu sunt Asia, ci un continent nou. Un cartograf german i-a latinizat numele pe o hartă din 1507, și așa a rămas."
+	},
+	{
+		"id": "mana:3183",
+		"nota": "Che Guevara era medic de profesie și a ajuns ministru în Cuba, înainte de a pleca să pornească alte revoluții. Fotografia lui, din 1960, e una dintre cele mai reproduse din lume."
+	},
+	{
+		"id": "mana:3184",
+		"nota": "Marx a trăit mai ales la Londra, în sărăcie, ajutat de prietenul lui Engels. N-a văzut niciun stat condus după ideile lui: primul a apărut cu 34 de ani după moartea sa."
+	},
+	{
+		"id": "mana:3185",
+		"nota": "Eva Perón a fost actriță înainte de a ajunge soția președintelui și a strâns o popularitate uriașă printre săraci. A murit la 33 de ani, iar funeraliile au ținut zile în șir."
+	},
+	{
+		"id": "mana:3186",
+		"nota": "Maria Antoaneta era fiica împărătesei Austriei și a fost dată în căsătorie la 14 ani, ca să lege două dinastii. Vorba „să mănânce cozonac” nu apare în nicio sursă a vremii."
+	},
+	{
+		"id": "mana:3187",
+		"nota": "În războiul Crimeii, Florence Nightingale a ținut socoteala morților și a arătat că mureau mai mulți de boală decât de rănile din luptă. Curățenia impusă de ea a scăzut mortalitatea."
+	},
+	{
+		"id": "mana:3188",
+		"nota": "Pe bandă, un automobil se asambla în ore, nu în zile, iar prețul a scăzut de câteva ori. Ford plătea dinadins salarii mari: voia ca lucrătorii lui să poată cumpăra ce fac."
+	},
+	{
+		"id": "mana:3189",
+		"nota": "Venită din familia regală britanică, Maria a ajuns în țară la 17 ani. În 1917 a lucrat în spitalele de la Iași, în vreme de tifos, și a fost numită de soldați „mama răniților”."
+	},
+	{
+		"id": "mana:3190",
+		"nota": "Freud a pus în centru visele și amintirile ascunse, și a numit vindecarea prin vorbire „cura prin cuvânt”. A fugit din Viena în 1938, la un an după anexarea Austriei."
+	},
+	{
+		"id": "mana:3191",
+		"nota": "Ramses al II-lea a avut atât de mulți copii încât i-au murit mai mulți moștenitori înaintea lui. Templele lui au fost tăiate în blocuri și mutate mai sus, în anii 1960."
+	},
+	{
+		"id": "mana:3192",
+		"nota": "Hrușciov a venit la conducere după moartea lui Stalin și a condamnat în 1956 crimele acestuia. A fost înlăturat de propriul partid în 1964 și lăsat să trăiască retras, ceva fără precedent."
+	},
+	{
+		"id": "mana:3193",
+		"nota": "În mitologia greacă, cei trei frați au împărțit lumea prin tragere la sorți, iar lui Hades i-a căzut lumea de dedesubt. Numele zeului a ajuns să însemne chiar locul pe care îl stăpânea."
+	},
+	{
+		"id": "mana:3194",
+		"nota": "În mitologia greacă, Apollo era și zeul profeției, iar oracolul lui era întrebat înaintea războaielor și a întemeierii de orașe. Pe templu scria „cunoaște-te pe tine însuți”."
+	},
+	{
+		"id": "mana:3195",
+		"nota": "Potrivit mitului, fiica Demetrei a fost răpită în lumea morților, iar durerea mamei a uscat pământul. Întoarcerea fiicei pentru o parte din an a dat, în poveste, primăvara."
+	},
+	{
+		"id": "mana:3196",
+		"nota": "Olimpul e un munte adevărat, cel mai înalt din Grecia, cu aproape 3.000 de metri. Grecii credeau că vârful lui, ascuns mai tot anul în nori, e sălașul zeilor."
+	},
+	{
+		"id": "mana:3197",
+		"nota": "Povestea potopului apare și în epopeile mesopotamiene, cu mult înaintea Bibliei, iar amănuntele seamănă. Curcubeul e, în textul biblic, semnul legământului de după potop."
+	},
+	{
+		"id": "mana:3198",
+		"nota": "În povestirea biblică, apele mării se despart la porunca lui Moise, iar urmăritorii se îneacă. Drumul prin pustie ar fi ținut patruzeci de ani."
+	},
+	{
+		"id": "mana:3199",
+		"nota": "În Șabat nu se face nicio muncă, nici măcar aprinsul focului, de unde vin obiceiurile cu mâncarea gătită dinainte. Cuvântul vine din ebraică și înseamnă „a se opri”."
+	},
+	{
+		"id": "mana:3200",
+		"nota": "Semnul dat celor care l-au arestat ar fi fost un sărut, de unde expresia „sărutul lui Iuda”. Numele a ajuns, în multe limbi, cuvântul pentru trădător."
+	},
+	{
+		"id": "mana:3201",
+		"nota": "Zmeul din povestea românească nu e un balaur: are chip de om, casă, mamă și cal, și poate fi învins în luptă dreaptă. Balaurul cu mai multe capete e altă ființă."
+	},
+	{
+		"id": "mana:3202",
+		"nota": "În mitologia romană, săgețile lui Cupidon aprindeau dragostea fără să întrebe pe nimeni. Era înfățișat ca un copil înaripat, de unde îngerașii cu arc de pe tablourile de mai târziu."
+	},
+	{
+		"id": "mana:3203",
+		"nota": "Jupiter îi corespunde lui Zeus și stăpânea fulgerul. Templul lui de pe Capitoliu era locul unde generalii învingători își încheiau triumful."
+	},
+	{
+		"id": "mana:3204",
+		"nota": "Credința în vampiri e veche și răspândită, dar chipul de azi vine din literatura secolului XIX. Usturoiul și oglinda au intrat în poveste din superstiții populare, nu din vreo carte sfântă."
+	},
+	{
+		"id": "mana:3205",
+		"nota": "Moscheea nu are statui sau icoane: pereții sunt împodobiți cu scris și figuri geometrice. Turnul de lângă ea, minaretul, e locul de unde se chema la rugăciune."
+	},
+	{
+		"id": "mana:3206",
+		"nota": "Cuvântul vine din greacă și înseamnă „adunare”. Sinagogile au luat locul templului din Ierusalim, dărâmat de romani în anul 70."
+	},
+	{
+		"id": "mana:3207",
+		"nota": "Vaca e legată de hrană și de viață, iar laptele ei intră în multe ritualuri hinduse. În mai multe state indiene, tăierea vitelor e oprită prin lege."
+	},
+	{
+		"id": "mana:3208",
+		"nota": "În mitul grec, tatăl lui Icar îi făcuse aripile ca să fugă din insula unde erau închiși. Ceara s-a topit, iar marea în care a căzut i-a purtat numele."
+	},
+	{
+		"id": "mana:3209",
+		"nota": "Drumul lui e povestit în Odiseea, una dintre cele mai vechi cărți ale Europei. Acasă îl aștepta o soție care amâna măritișul, deșirând noaptea ce țesea ziua."
+	},
+	{
+		"id": "mana:3210",
+		"nota": "Pedeapsa i-a fost dată lui Atlas pentru că luptase împotriva zeilor. Numele lui a ajuns pe cărțile de hărți, fiindcă pe primele era desenat chiar el, cu bolta pe spate."
+	},
+	{
+		"id": "mana:3211",
+		"nota": "Potrivit legendei romane, gemenii au fost lăsați pe apă și scoși la mal. Statuia lupoaicei a fost dăruită mai multor orașe românești, ca semn al originii latine."
+	},
+	{
+		"id": "mana:3212",
+		"nota": "Cele zece porunci sunt scrise de două ori în Biblie, cu mici deosebiri, și au fost numerotate altfel de evrei, catolici și protestanți. Numărul lor a rămas însă același."
+	},
+	{
+		"id": "mana:3213",
+		"nota": "Primii creștini foloseau mai ales peștele, fiindcă literele cuvântului grecesc pentru pește erau începutul unei mărturisiri de credință. Crucea s-a răspândit după secolul IV."
+	},
+	{
+		"id": "mana:3214",
+		"nota": "Semiluna nu e un semn al credinței islamice de la început: a fost luată de otomani și legată de atunci de islam. Multe moschei vechi nu o au deloc."
+	},
+	{
+		"id": "mana:3215",
+		"nota": "Semnul a ajuns să însemne iudaismul abia în ultimele secole. E așezat azi în mijlocul steagului Israelului, între două dungi albastre."
+	},
+	{
+		"id": "mana:3216",
+		"nota": "Karma înseamnă, la literă, „faptă”: fiecare faptă are o urmare, în viața aceasta sau în alta. Cuvântul a intrat în limbile europene cu un înțeles mult mai simplu decât are."
+	},
+	{
+		"id": "mana:3217",
+		"nota": "Calendarul islamic ține după Lună, deci Ramadanul se mută cu vreo unsprezece zile pe an. Postul se încheie cu o sărbătoare de trei zile."
+	},
+	{
+		"id": "mana:3218",
+		"nota": "La Termopile, Leonida a apărat trecătoarea câteva zile, până a fost ocolit pe o potecă de munte. Întârzierea a dat Atenei timp să-și urce oamenii pe corăbii."
+	},
+	{
+		"id": "mana:3219",
+		"nota": "La Salamina, Temistocle a atras flota persană într-o strâmtoare îngustă, unde corăbiile mari nu puteau manevra. După înfrângere, Xerxes s-a întors în Asia și a lăsat armata în Grecia."
+	},
+	{
+		"id": "mana:3220",
+		"nota": "Războiul peloponesiac a ținut din 431 până în 404 î.Hr. și s-a încheiat cu înfrângerea Atenei. Istoria lui a fost scrisă de Tucidide, un general atenian care l-a trăit."
+	},
+	{
+		"id": "mana:3221",
+		"nota": "„Punic” vine de la Poeni, numele latin al fenicienilor din Cartagina. Al treilea război, încheiat în 146 î.Hr., s-a sfârșit cu orașul ars până în temelii."
+	},
+	{
+		"id": "mana:3222",
+		"nota": "Cele Douăsprezece Table, din jurul anului 450 î.Hr., au fost scrise ca legea să fie știută de toți, nu numai de preoți. Copiii romani le învățau pe de rost la școală."
+	},
+	{
+		"id": "mana:3223",
+		"nota": "Edictul din Milano a oprit prigoana împotriva creștinilor, dar nu i-a făcut religie de stat. Asta s-a întâmplat abia în 380, cu un alt edict, dat la Tesalonic."
+	},
+	{
+		"id": "mana:3224",
+		"nota": "Vizigoții lui Alaric au intrat în Roma în 410, pentru prima dată în opt secole. Alt popor a jefuit-o în 455, iar numele lui a dat cuvântul „vandalism”."
+	},
+	{
+		"id": "mana:3225",
+		"nota": "Bagdadul a fost construit rotund, cu palatul în mijloc, și a ajuns cel mai mare centru de învățătură al lumii, cu o „Casă a Înțelepciunii” plină de traduceri din greacă."
+	},
+	{
+		"id": "mana:3226",
+		"nota": "Merovingienii au domnit din secolul V, dar puterea trecuse treptat la majordomii palatului. Unul dintre ei, Pepin cel Scurt, i-a înlocuit pe tron în 751."
+	},
+	{
+		"id": "mana:3227",
+		"nota": "La Worms s-a tăiat nodul în două: împăratul dădea episcopului pământurile, papa îi dădea însemnele bisericești. Același om, împărțit între doi stăpâni."
+	},
+	{
+		"id": "mana:3228",
+		"nota": "Dominicanii au fost întemeiați în 1216 ca ordin de predicatori învățați, trimiși împotriva ereziilor. Numele lor a fost citit în glumă „Domini canes”, câinii Domnului."
+	},
+	{
+		"id": "mana:3229",
+		"nota": "Școala din Bologna a început ca școală de drept, strânsă în jurul studenților care își plăteau singuri profesorii. De la asociația lor, „universitas”, vine numele de universitate."
+	},
+	{
+		"id": "mana:3230",
+		"nota": "Mali stăpânea drumurile prin Sahara, pe care aurul mergea spre nord și sarea spre sud. Timbuktu a ajuns oraș de școli, cu manuscrise păstrate până azi."
+	},
+	{
+		"id": "mana:3231",
+		"nota": "Bogdan I a trecut Carpații în jurul anului 1359 și a scos Moldova de sub stăpânirea regelui ungar. Cronicile numesc întemeierea „descălecat”."
+	},
+	{
+		"id": "mana:3232",
+		"nota": "La Nicopole, oastea de cruciați condusă de regele Ungariei a fost sfărâmată de armata otomană. Mircea cel Bătrân, care luptase și el acolo, a scăpat cu oamenii lui."
+	},
+	{
+		"id": "mana:3233",
+		"nota": "Înfrângerea de la Ankara l-a lăsat pe Baiazid prizonier, iar imperiul a intrat într-un deceniu de războaie între fiii sultanului. Bizanțul a mai trăit, din pricina asta, încă vreo cincizeci de ani."
+	},
+	{
+		"id": "mana:3234",
+		"nota": "Cele două roze, albă pentru York și roșie pentru Lancaster, au fost puse împreună de Tudori pe stema lor, după 1485. Numele războiului a fost dat mult mai târziu."
+	},
+	{
+		"id": "mana:3235",
+		"nota": "Medicii erau bancheri, nu nobili de sânge: au cumpărat influență și au plătit artiști. Cupola catedralei din Florența, ridicată de Brunelleschi, părea până atunci de neînchipuit."
+	},
+	{
+		"id": "mana:3236",
+		"nota": "Cruciada a patra n-a ajuns niciodată în Țara Sfântă: a cucerit orașul creștin pe care venise să-l ajute și a pus pe tron un împărat latin. Bizanțul s-a refăcut abia după 1261."
+	},
+	{
+		"id": "mana:3237",
+		"nota": "Regatul Ierusalimului a fost întemeiat în 1099 și a pierdut orașul în 1187. A mai ținut aproape un secol, cu capitala mutată la Acra, pe coastă."
+	},
+	{
+		"id": "mana:3238",
+		"nota": "Templierii strânseseră pământuri în toată Europa și țineau un fel de bancă pentru pelerini. Regele Franței, dator la ei, i-a dat în judecată, iar papa a desființat ordinul."
+	},
+	{
+		"id": "mana:3239",
+		"nota": "Bresla hotăra câți meșteri pot lucra, cât costă marfa și cum se face ucenicia. Cine nu era în bresla meseriei lui nu avea drept să vândă în oraș."
+	},
+	{
+		"id": "mana:3240",
+		"nota": "Tunurile de asediu au dărâmat ziduri care stătuseră secole, iar cetățile noi au fost ridicate joase și groase, cu bastioane. La Constantinopol, în 1453, tunul a decis."
+	},
+	{
+		"id": "mana:3241",
+		"nota": "Granada a căzut în ianuarie 1492, încheind șapte secole de stăpânire musulmană în Spania. În același an, aceiași regi au trimis spre apus trei corăbii, cu bani strânși din război."
+	},
+	{
+		"id": "mana:3242",
+		"nota": "Normanzii erau vikingi așezați în Franța cu două secole înainte, și vorbeau franceză. După cucerire, engleza s-a umplut de cuvinte franceze, mai ales la curte și în bucătărie."
+	},
+	{
+		"id": "mana:3243",
+		"nota": "Moștenitorul tronului austriac, arhiducele Franz Ferdinand, a fost împușcat pe 28 iunie 1914. O ceartă între două state s-a prefăcut în război mondial în cinci săptămâni, din pricina alianțelor."
+	},
+	{
+		"id": "mana:3244",
+		"nota": "Liga a fost gândită de președintele american Wilson, dar Statele Unite n-au intrat niciodată în ea. N-a putut opri nicio agresiune a anilor 1930."
+	},
+	{
+		"id": "mana:3245",
+		"nota": "Declarația spune că oamenii se nasc liberi și egali în drepturi. A fost scrisă în câteva săptămâni și a rămas, până azi, parte din dreptul constituțional francez."
+	},
+	{
+		"id": "mana:3246",
+		"nota": "Cele treisprezece colonii au ajuns, după independență, primele state ale Uniunii. Dungile de pe steagul american le amintesc și azi, deși stelele s-au înmulțit la 50."
+	},
+	{
+		"id": "mana:3247",
+		"nota": "Sankt Petersburg a fost ridicat pe mlaștini, dinadins, ca fereastră spre Europa. Bolșevicii au mutat capitala la Moscova, mai departe de granițe și de flotele străine."
+	},
+	{
+		"id": "mana:3248",
+		"nota": "Bonn a fost ales dinadins, un oraș mic, ca să se vadă că așezarea e vremelnică. După reunificare, capitala s-a mutat înapoi la Berlin, printr-un vot strâns al parlamentului."
+	},
+	{
+		"id": "mana:3249",
+		"nota": "Numele îi vine de la felul în care s-a petrecut: greve și adunări, fără vărsare de sânge. Doi ani mai târziu, tot fără violență, Cehoslovacia s-a împărțit în două state."
+	},
+	{
+		"id": "mana:3250",
+		"nota": "Timp de aproape un an, avioanele au adus hrană și cărbuni, aterizând uneori la fiecare câteva minute. Blocada a fost ridicată fără luptă, în mai 1949."
+	},
+	{
+		"id": "mana:3251",
+		"nota": "Francezii începuseră lucrările și s-au retras, după ce malaria și febra galbenă au omorât mii de muncitori. Statele Unite au reușit abia după ce s-au luptat cu țânțarii."
+	},
+	{
+		"id": "mana:3252",
+		"nota": "Armata română a trecut Dunărea la cererea comandamentului rus, care avea nevoie de ajutor la asediu. Rusia era aliatul de atunci; independența a fost recunoscută abia în 1878."
+	},
+	{
+		"id": "mana:3253",
+		"nota": "Declarația are 30 de articole și a fost votată fără niciun vot împotrivă, dar cu opt abțineri. Nu e un tratat obligatoriu, însă a intrat în constituțiile a sute de state."
+	},
+	{
+		"id": "mana:3254",
+		"nota": "Primul atac mare cu clor a fost dat la Ypres, în 1915. Gazele au ucis relativ puțini oameni față de artilerie, dar au fost interzise prin tratat după război."
+	},
+	{
+		"id": "mana:3255",
+		"nota": "Reunificarea s-a împlinit pe 3 octombrie 1990, mai puțin de un an după căderea zidului. Statul de la răsărit n-a fost unit cu cel de la apus: a intrat în el, cu legile lui."
+	},
+	{
+		"id": "mana:3256",
+		"nota": "Cutremurul a rupt conductele de apă din San Francisco, așa că focul a ars trei zile nestins. Peste jumătate din locuitorii orașului au rămas fără casă."
+	},
+	{
+		"id": "mana:3257",
+		"nota": "Hindenburg era umplut cu hidrogen, care arde, fiindcă heliul nu-i fusese vândut. Dezastrul, filmat și transmis la radio, a încheiat epoca aeronavelor de pasageri."
+	},
+	{
+		"id": "mana:3258",
+		"nota": "Sfânta Elena e la 2.000 de kilometri de orice uscat, și asta dinadins: din Elba, primul loc de exil, Napoleon fugise după un an. A murit pe insulă în 1821."
+	},
+	{
+		"id": "mana:3259",
+		"nota": "Variola a scăzut populația continentului, după unele estimări, cu peste 80% în primul secol. Bolile mergeau înaintea cuceritorilor: multe sate erau goale când soseau aceștia."
+	},
+	{
+		"id": "mana:3260",
+		"nota": "O coaliție de peste 30 de țări a luptat sub mandat ONU, iar războiul terestru a ținut 100 de ore. A fost primul război urmărit în direct la televiziune."
+	},
+	{
+		"id": "mana:3261",
+		"nota": "Numele s-a schimbat la venirea lui Ceaușescu la conducere, odată cu o nouă constituție. Până atunci, din 1947, statul se numise Republica Populară."
+	},
+	{
+		"id": "mana:3262",
+		"nota": "Bombardamentele asupra Londrei au ținut peste opt luni, iar oamenii dormeau în stațiile de metrou. Germania n-a reușit să scoată Marea Britanie din război."
+	},
+	{
+		"id": "mana:3263",
+		"nota": "La Roma au semnat șase state: Franța, Germania de Vest, Italia, Belgia, Olanda și Luxemburg. Comunitatea pornită cu cărbune și oțel a ajuns, după decenii, uniune politică."
+	},
+	{
+		"id": "mana:3264",
+		"nota": "În Irlanda a murit un milion de oameni, iar un alt milion au plecat, mai ales în America. Populația țării e și azi mai mică decât înainte de foamete."
+	},
+	{
+		"id": "mana:3265",
+		"nota": "Din 1867, monarhia a avut două parlamente și două guverne, la Viena și la Budapesta, cu un singur împărat și rege. Numai armata, politica externă și finanțele erau comune."
+	},
+	{
+		"id": "mana:3266",
+		"nota": "Mișcarea din 1821 a pornit din Oltenia, cu pandurii, și a sfârșit cu uciderea conducătorului ei. Un câștig a rămas: domniile fanariote s-au încheiat, iar tronul s-a întors la pământeni."
+	},
+	{
+		"id": "mana:3267",
+		"nota": "Prin reforma agrară, peste 400.000 de familii au primit pământ, cu despăgubire plătită în rate. Loturile au fost însă mici, iar problema pământului a rămas deschisă."
+	},
+	{
+		"id": "mana:3268",
+		"nota": "Cuvântările lui Demostene împotriva regelui macedonean se numesc până azi „filipice”. Se spune că s-a vindecat de bâlbâială vorbind cu pietricele în gură, la malul mării."
+	},
+	{
+		"id": "mana:3269",
+		"nota": "Sub Pericle s-au ridicat clădirile de pe Acropole, plătite din banii alianței conduse de Atena. A murit de ciumă, în al doilea an al războiului cu Sparta."
+	},
+	{
+		"id": "mana:3270",
+		"nota": "Diaz a ocolit capul în 1488 și l-a numit „al Furtunilor”, dar regele i-a schimbat numele în „Capul Bunei Speranțe”. Drumul spre India era, de atunci, doar o chestiune de curaj."
+	},
+	{
+		"id": "mana:3271",
+		"nota": "Ferdinand era de origine germană, dar a dus țara în război împotriva Germaniei, iar familia lui l-a renegat. A fost încoronat la Alba Iulia, în 1922, ca rege al tuturor românilor."
+	},
+	{
+		"id": "mana:3272",
+		"nota": "Carol al II-lea a renunțat la tron în 1925, pentru o femeie, apoi s-a întors și l-a luat de la propriul fiu. În 1938 a desființat partidele și a condus personal, până în 1940."
+	},
+	{
+		"id": "mana:3273",
+		"nota": "Antonescu a condus țara ca „Conducător al Statului”, cu puteri aproape totale, din 1940. A fost arestat pe 23 august 1944 și executat după un proces, în 1946."
+	},
+	{
+		"id": "mana:3274",
+		"nota": "A plecat pe front ca infirmieră, apoi a cerut să lupte și a primit comanda unui pluton. A căzut în luptă la Mărășești, în 1917, la 23 de ani."
+	},
+	{
+		"id": "mana:3275",
+		"nota": "Scandalul a pornit de la o spargere în sediul partidului rival, din clădirea Watergate. Nixon a plecat singur, înainte de a fi destituit de Congres, și a fost iertat de urmașul lui."
+	},
+	{
+		"id": "mana:3276",
+		"nota": "Reagan fusese actor înainte de politică și a ajuns președinte la 69 de ani. Discursul l-a rostit lângă zid, cu doi ani înainte ca acesta să fie dărâmat."
+	},
+	{
+		"id": "mana:3277",
+		"nota": "Elțîn s-a urcat pe un tanc în 1991, ca să se împotrivească unei lovituri de stat, și a condus apoi Rusia opt ani. A demisionat singur, în ultima zi a anului 1999."
+	},
+	{
+		"id": "mana:3278",
+		"nota": "Earhart traversase Atlanticul în 1932, la cinci ani după Lindbergh. Avionul ei a dispărut în 1937, în drum spre o insulă mică din Pacific, și nu a fost găsit."
+	},
+	{
+		"id": "mana:3279",
+		"nota": "Tereșkova era parașutistă amatoare, nu pilot, și a fost aleasă dintr-un grup de cinci femei. A petrecut trei zile pe orbită, mai mult decât toți americanii zburați până atunci."
+	},
+	{
+		"id": "mana:3280",
+		"nota": "Bell a ajuns la brevet cu câteva ore înaintea unui concurent, iar procesele au ținut ani. Lucra de fapt la aparate pentru surzi: mama și soția lui nu auzeau."
+	},
+	{
+		"id": "mana:3281",
+		"nota": "Wałęsa era electrician la șantierul naval din Gdańsk când a condus greva din 1980. A primit Premiul Nobel pentru Pace în 1983, pe când sindicatul era interzis."
+	},
+	{
+		"id": "mana:3282",
+		"nota": "Livingstone a fost dat dispărut ani de-a rândul, până l-a găsit un ziarist trimis anume după el. Cascada pe care a descris-o pentru europeni e cea mai mare de pe continent."
+	},
+	{
+		"id": "mana:3283",
+		"nota": "Cortés a pornit cu vreo 500 de oameni, dar a câștigat alăturându-și popoarele supuse de azteci. Boala adusă din Europa a făcut restul, înaintea armelor."
+	},
+	{
+		"id": "mana:3284",
+		"nota": "Nehru a condus țara șaptesprezece ani și a ținut-o nealiniată, între cele două blocuri. Fiica lui și nepotul lui au ajuns, mai târziu, tot prim-miniștri."
+	},
+	{
+		"id": "mana:3285",
+		"nota": "Jefferson a scris-o la 33 de ani, în câteva zile, iar ceilalți i-au tăiat vreo cincime din text. A murit pe 4 iulie 1826, la exact 50 de ani de la adoptarea ei."
+	},
+	{
+		"id": "mana:3286",
+		"nota": "Gheorghiu-Dej a condus partidul aproape douăzeci de ani și a obținut, în 1958, retragerea trupelor sovietice din țară. A murit în funcție, iar locul lui a fost luat de Ceaușescu."
+	},
+	{
+		"id": "mana:3287",
+		"nota": "Teritoriul i-a fost recunoscut lui Leopold personal, nu țării lui, și a fost stors de cauciuc cu o cruzime care a stârnit prima mare campanie pentru drepturile omului. Belgia l-a preluat în 1908."
+	},
+	{
+		"id": "mana:3288",
+		"nota": "Lindbergh a zburat de la New York la Paris în 33 de ore, fără radio și fără somn, cu un avion încărcat de benzină. La întoarcere a fost primit ca un erou de milioane de oameni."
+	},
+	{
+		"id": "mana:3289",
+		"nota": "Bălcescu a cerut pământ pentru țărani, lucru care a speriat chiar și o parte din revoluționari. A murit de tuberculoză la Palermo, în 1852, la 33 de ani, în exil."
+	},
+	{
+		"id": "mana:3290",
+		"nota": "Kogălniceanu a dus la capăt secularizarea averilor mănăstirești și reforma pământului. Tot el ceruse, încă din 1843, la deschiderea cursului de istorie, unirea țărilor române."
+	},
+	{
+		"id": "mana:3291",
+		"nota": "Brejnev a venit la putere după înlăturarea predecesorului și a condus 18 ani, până la moarte. Perioada a fost numită mai târziu, de reformatori, „epoca stagnării”."
+	},
+	{
+		"id": "mana:3292",
+		"nota": "Echipa lui Scott a ajuns la pol și a găsit acolo steagul lăsat de norvegieni, cu o lună înainte. Toți cinci au murit pe drumul de întoarcere, la câteva zeci de kilometri de un depozit."
+	},
+	{
+		"id": "mana:3293",
+		"nota": "Profeția spunea că Cronos va fi răsturnat de propriul fiu. Mama l-a ascuns pe cel mic și i-a dat tatălui o piatră învelită în scutece: copilul a crescut și profeția s-a împlinit."
+	},
+	{
+		"id": "mana:3294",
+		"nota": "Elena era soția regelui Spartei și a fost dusă la Troia de un fiu al regelui de acolo. Chipul ei a fost numit mai târziu „fața care a pornit o mie de corăbii”."
+	},
+	{
+		"id": "mana:3295",
+		"nota": "Se spunea că locul unde au dansat rămâne pârjolit, iar omul care le vede „e luat din iele”, adică paralizat. De aici vine și numele unei boli din vorbirea veche."
+	},
+	{
+		"id": "mana:3296",
+		"nota": "În mit, Narcis era atât de frumos încât respingea pe toți, iar pedeapsa a fost să se îndrăgostească de el însuși. Floarea care i-a luat numele a crescut pe locul unde a murit."
+	},
+	{
+		"id": "mana:3297",
+		"nota": "Darul lui Midas s-a dovedit blestem: mâncarea și băutura se prefăceau în aur. În alt mit, același rege capătă urechi de măgar pentru că judecase prost o întrecere muzicală."
+	},
+	{
+		"id": "mana:3298",
+		"nota": "Regele l-a închis pe Dedal în propria lucrare, ca să nu-i spună nimănui taina. A scăpat zburând, cu aripi făcute din pene și ceară, dar fiul lui a plătit scăparea."
+	},
+	{
+		"id": "mana:3299",
+		"nota": "Plata lui Caron era o monedă, pusă morților în gură la înmormântare. Cine n-o avea rămânea să rătăcească pe malul apei, fără odihnă."
+	},
+	{
+		"id": "mana:3300",
+		"nota": "Eroul care a luptat cu hidra a biruit numai arzând rănile, ca să nu mai crească nimic. Cuvântul se folosește azi pentru orice problemă care se înmulțește când o rezolvi."
+	},
+	{
+		"id": "mana:3301",
+		"nota": "Se spune că Pegas s-a născut din sângele unui monstru ucis. Călare pe el, eroul a biruit o fiară care sufla foc, atacând-o de sus, din aer."
+	},
+	{
+		"id": "mana:3302",
+		"nota": "Grecii îl înfățișau pe Ares ca pe o patimă oarbă, nu ca pe un strateg: era zeul măcelului, nu al izbânzii. La romani, zeul războiului a fost cinstit ca părinte al cetății."
+	},
+	{
+		"id": "mana:3303",
+		"nota": "În mitologia nordică, Frigg știa soarta tuturor, dar nu o spunea. Numele ei a rămas, în engleză, în ziua de vineri — „Friday”."
+	},
+	{
+		"id": "mana:3304",
+		"nota": "Numele valkiriilor înseamnă „cele care aleg morții”. În mit, zburau peste câmpul de luptă și duceau sufletele războinicilor în sala lui Odin."
+	},
+	{
+		"id": "mana:3305",
+		"nota": "În mitul egiptean, soția lui Osiris i-a strâns bucățile și l-a înviat pentru o vreme. De aceea era socotit zeul învierii și judecătorul celor morți."
+	},
+	{
+		"id": "mana:3306",
+		"nota": "Se credea că Thot a dat oamenilor scrierea și socotelile. Grecii l-au pus alături de Hermes și i-au atribuit cărți de alchimie scrise mult mai târziu."
+	},
+	{
+		"id": "mana:3307",
+		"nota": "Profeția despre Oedip fusese dată încă la nașterea lui, iar tot ce s-a făcut ca să fie ocolită a dus la împlinirea ei. Când a aflat adevărul, s-a orbit cu mâna lui."
+	},
+	{
+		"id": "mana:3308",
+		"nota": "Hajjul e una dintre cele cinci îndatoriri ale credinciosului, de împlinit o dată în viață, dacă poate. Pelerinii se îmbracă toți în pânză albă, ca să nu se deosebească bogatul de sărac."
+	},
+	{
+		"id": "mana:3309",
+		"nota": "Credința în reîncarnare e în miezul hinduismului și al budismului, dar se întâlnea și la greci, la pitagoricieni. Ieșirea din șirul nașterilor e scopul de pe urmă al amândurora."
+	},
+	{
+		"id": "mana:3310",
+		"nota": "Rusaliile se țin la cincizeci de zile după Paște, de unde și numele grecesc, Cincizecime. În tradiția românească, în aceeași zi se pun la poartă ramuri verzi de nuc sau de tei."
+	},
+	{
+		"id": "mana:3311",
+		"nota": "Talmudul a fost strâns în primul mileniu și e scris ca o dezbatere: întrebare, răspuns, împotrivire. Se citește cu comentariile tipărite în jurul textului, pe aceeași pagină."
+	},
+	{
+		"id": "mana:3312",
+		"nota": "Numele vine de la protestul unor principi germani împotriva unei hotărâri imperiale, în 1529. Nu e o singură biserică, ci multe, fără un conducător comun."
+	},
+	{
+		"id": "mana:3313",
+		"nota": "Tradiția îl leagă pe apostolul Andrei de Scythia Minor, adică de Dobrogea de azi, iar o peșteră de acolo îi poartă numele. Ziua lui, 30 noiembrie, e sărbătoare legală în România."
+	},
+	{
+		"id": "mana:3314",
+		"nota": "Nicolae era episcop în Asia Mică, în secolul IV, și legenda spune că lăsa daruri pe ascuns. Din numele lui olandez, „Sinterklaas”, a ieșit englezescul „Santa Claus”."
+	},
+	{
+		"id": "mana:3315",
+		"nota": "Câmpiile Elizee erau partea luminoasă a lumii de dincolo, unde ajungeau eroii și cei iubiți de zei. Numele a rămas pe cel mai cunoscut bulevard al Parisului."
+	},
+	{
+		"id": "mana:3316",
+		"nota": "În hinduism, nimicirea nu e rea în sine: face loc facerii din nou, iar Kali e zeița ei. E cinstită mai ales în Bengal, iar numele orașului Calcutta ar veni de la un templu al ei."
+	},
+	{
+		"id": "mana:3317",
+		"nota": "Brahma face lumea, Vishnu o ține, Shiva o desface — și totul reîncepe. Dintre ei, cel care face lumea are cele mai puține temple: lucrarea lui e socotită încheiată."
+	},
+	{
+		"id": "mana:3318",
+		"nota": "În pădurea Teutoburg, Arminius a atras trei legiuni într-o ambuscadă și le-a nimicit. Roma n-a mai încercat serios să cucerească Germania, iar granița a rămas pe Rin."
+	},
+	{
+		"id": "mana:3319",
+		"nota": "La Cannae, oastea romană a fost încercuită și strivită într-o singură zi. Manevra se învață și azi în școlile militare, ca pildă de învăluire dublă."
+	},
+	{
+		"id": "mana:3320",
+		"nota": "Sub Traian, imperiul se întindea de la Britania la Golful Persic. Urmașul lui a lăsat cuceririle din răsărit și a început să zidească granițe, în loc să le mute mai departe."
+	},
+	{
+		"id": "mana:3321",
+		"nota": "La Adrianopol, împăratul Valens a căzut pe câmpul de luptă, iar goții au rămas în imperiu ca popor înarmat. Bătălia e socotită începutul sfârșitului pentru Roma de Apus."
+	},
+	{
+		"id": "mana:3322",
+		"nota": "Teodoric, regele ostrogoților, a condus Italia din Ravenna, păstrând Senatul și slujbașii romani. Mormântul lui, acoperit cu un singur bloc uriaș de piatră, se vede și azi acolo."
+	},
+	{
+		"id": "mana:3323",
+		"nota": "Lombardia își trage numele de la longobarzi. Ducatele lor au ținut nordul Italiei până când Carol cel Mare le-a luat coroana, în 774."
+	},
+	{
+		"id": "mana:3324",
+		"nota": "Dinastia macedoneană a domnit un secol și jumătate și a împins granița iar la Dunăre. Vasile al II-lea a supus Bulgaria după un război care a ținut aproape patruzeci de ani."
+	},
+	{
+		"id": "mana:3325",
+		"nota": "Focul grecesc era un amestec lichid, aruncat cu țevi de pe corăbii, care ardea și pe apă. Rețeta era secret de stat și s-a pierdut cu totul: nimeni nu știe azi din ce era făcut."
+	},
+	{
+		"id": "mana:3326",
+		"nota": "La Grunwald, oștile polone și lituaniene au zdrobit ordinul teutonic, iar marele maestru a căzut în luptă. Statul cavalerilor n-a mai fost niciodată o putere."
+	},
+	{
+		"id": "mana:3327",
+		"nota": "Hansa aduna peste o sută de orașe, de la Londra la Novgorod, cu flote, legi și depozite proprii. Nu era un stat, dar putea purta război: a învins Danemarca în 1370."
+	},
+	{
+		"id": "mana:3328",
+		"nota": "La Clermont, papa Urban al II-lea a chemat cavalerii să elibereze Ierusalimul. Mulțimea ar fi răspuns, potrivit cronicarilor, „Deus vult” — „Dumnezeu o vrea”."
+	},
+	{
+		"id": "mana:3329",
+		"nota": "La Hattin, oastea cruciată a fost lăsată fără apă într-un podiș uscat și apoi învinsă. Ierusalimul a căzut câteva luni mai târziu, aproape fără luptă."
+	},
+	{
+		"id": "mana:3330",
+		"nota": "Mamelucii erau copii cumpărați și crescuți ca soldați, care au ajuns să ia ei puterea. Sultanii lor au stăpânit Cairo până la cucerirea otomană, în 1517."
+	},
+	{
+		"id": "mana:3331",
+		"nota": "La Ain Jalut, în Palestina, oastea egipteană a învins o armată mongolă rămasă fără grosul trupelor, plecate la alegerea noului han. Mongolii n-au mai trecut spre Egipt."
+	},
+	{
+		"id": "mana:3332",
+		"nota": "Timur a adus la Samarkand meșteri luați din țările cucerite, ca să-i împodobească orașul. Nepotul lui, Ulugh Beg, a ridicat acolo un observator astronomic uriaș, fără niciun telescop."
+	},
+	{
+		"id": "mana:3333",
+		"nota": "Olmecii au trăit pe coasta Golfului Mexic în jurul anului 1000 î.Hr. Capetele lor de piatră, înalte de câțiva metri, au fost cărate de la kilometri depărtare, fără roată."
+	},
+	{
+		"id": "mana:3334",
+		"nota": "Glifele mayașe au fost descifrate abia după ce s-a înțeles că amestecă semne pentru silabe cu semne pentru cuvinte întregi. Incașii, în schimb, țineau socotelile în noduri pe sfori."
+	},
+	{
+		"id": "mana:3335",
+		"nota": "La Crécy, arcașii englezi au doborât cavaleria franceză înainte ca aceasta să ajungă la ei. Cavalerul în armură, stăpânul câmpului de luptă de trei secole, începea să-și piardă locul."
+	},
+	{
+		"id": "mana:3336",
+		"nota": "Timp de aproape patruzeci de ani, creștinătatea apuseană a avut doi, apoi trei papi deodată. Soborul de la Constanța i-a înlăturat pe toți și a ales unul singur, Martin al V-lea."
+	},
+	{
+		"id": "mana:3337",
+		"nota": "Basarabii au stăpânit Țara Românească aproape trei secole, iar numele lor a rămas pe harta dintre Prut și Nistru. Moldova a avut în schimb dinastia Mușatinilor."
+	},
+	{
+		"id": "mana:3338",
+		"nota": "Bătălia de la Rovine, dată cel mai probabil în 1395, s-a încheiat cu retragerea oastei otomane. Locul exact nu e cunoscut cu siguranță nici azi."
+	},
+	{
+		"id": "mana:3339",
+		"nota": "Partida dublă, descrisă de Luca Pacioli în 1494, cere ca fiecare sumă să fie scrisă de două ori, ca o greșeală să se vadă îndată. Se folosește aproape neschimbată și azi."
+	},
+	{
+		"id": "mana:3340",
+		"nota": "Cifrele s-au născut în India și au ajuns în Europa prin matematicienii arabi din Spania. Zeroul a fost cel mai greu de primit: o cifră pentru nimic părea o contradicție."
+	},
+	{
+		"id": "mana:3341",
+		"nota": "Prin devșirme, băieți din satele creștine erau luați, crescuți musulmani și făcuți ieniceri sau dregători. Unii au ajuns mari viziri, mai puternici decât nobilii de sânge."
+	},
+	{
+		"id": "mana:3342",
+		"nota": "Timarul era un venit dat călărețului cât timp slujea: nu se moștenea și putea fi luat înapoi. Așa a avut sultanul o cavalerie numeroasă, fără să plătească salarii."
+	},
+	{
+		"id": "mana:3343",
+		"nota": "Pacea de la Augsburg s-a rezumat în formula „a cui e țara, a aceluia e religia”. Nu dădea libertate omului, ci principelui: supușii de altă credință puteau doar să plece."
+	},
+	{
+		"id": "mana:3344",
+		"nota": "Regele Henric al IV-lea, trecut la catolicism ca să-și capete tronul, a dat hughenoților drepturi și cetăți. Edictul a fost anulat aproape un secol mai târziu."
+	},
+	{
+		"id": "mana:3345",
+		"nota": "Corăbiile n-au fost învinse într-o singură bătălie: brulotele le-au risipit, apoi furtunile le-au sfărâmat pe coastele Irlandei și Scoției. Jumătate nu s-au mai întors."
+	},
+	{
+		"id": "mana:3346",
+		"nota": "Europa s-a temut că Franța și Spania ajung sub o singură coroană. Pacea din 1713 a lăsat tronul unui Bourbon, dar i-a interzis să unească vreodată cele două regate."
+	},
+	{
+		"id": "mana:3347",
+		"nota": "A fost prima pace în care Imperiul Otoman a cedat teritorii mari în Europa. Transilvania a trecut atunci sub stăpânirea Habsburgilor."
+	},
+	{
+		"id": "mana:3348",
+		"nota": "Asediul din 1683 a fost spart de o oaste de ajutor condusă de regele polon Jan Sobieski, venită de pe dealurile din jur. De atunci, granița otomană numai a scăzut în Europa."
+	},
+	{
+		"id": "mana:3349",
+		"nota": "Pacea de la Kuciuk-Kainargi a dat Rusiei dreptul de a vorbi în numele creștinilor ortodocși din imperiu. Din acest drept s-a născut, într-un secol, protectoratul asupra Principatelor."
+	},
+	{
+		"id": "mana:3350",
+		"nota": "Austria a primit Bucovina ca plată pentru mijlocirea unei păci, iar granița a fost mutată pe furiș de slujbașii ei. Grigore Ghica, domnul care s-a împotrivit, a fost ucis."
+	},
+	{
+		"id": "mana:3351",
+		"nota": "Pacea de la București, din 1812, a încheiat un război ruso-turc și a tăiat Moldova în două, pe Prut. Numele Basarabiei, purtat până atunci doar de sudul ei, a trecut la tot ținutul."
+	},
+	{
+		"id": "mana:3352",
+		"nota": "Convenția de la Paris a hotărât două principate cu doi domni, dar cu legi și instituții comune. Românii au ocolit textul alegând același om în ambele scaune, în 1859."
+	},
+	{
+		"id": "mana:3353",
+		"nota": "Asediul Plevnei a ținut cinci luni, iar atacurile asupra redutelor de la Grivița au fost cele mai grele lupte ale armatei române. Cetatea a căzut în decembrie 1877."
+	},
+	{
+		"id": "mana:3354",
+		"nota": "Răscoala a pornit din nordul Moldovei și s-a întins în toată țara, din pricina arendelor și a lipsei de pământ. A fost înăbușită cu armata, cu mii de morți."
+	},
+	{
+		"id": "mana:3355",
+		"nota": "Rusia a cedat teritorii uriașe ca să iasă din război, iar bolșevicii au numit pacea „rușinoasă, dar necesară”. Tratatul s-a desființat de la sine la înfrângerea Germaniei."
+	},
+	{
+		"id": "mana:3356",
+		"nota": "Pactul Ribbentrop-Molotov era, la vedere, un tratat de neagresiune; într-un protocol secret, cele două state își împărțeau vecinii. Basarabia e numită acolo, pe nume."
+	},
+	{
+		"id": "mana:3357",
+		"nota": "Germania și Italia au hotărât, cu harta pe masă, ca nordul Transilvaniei, vreo 43.000 de kilometri pătrați, să treacă Ungariei. Teritoriul s-a întors la România în 1945."
+	},
+	{
+		"id": "mana:3358",
+		"nota": "La Stalingrad, o armată germană întreagă a fost încercuită în oraș și a capitulat în februarie 1943. Armata română, care apăra flancurile, a fost sfărâmată în aceeași învăluire."
+	},
+	{
+		"id": "mana:3359",
+		"nota": "Planul Barbarossa miza pe o victorie în câteva luni, înainte de iarnă. Trei milioane de soldați au trecut granița deodată: cea mai mare invazie din istorie."
+	},
+	{
+		"id": "mana:3360",
+		"nota": "La Potsdam, Germania a fost împărțită în patru zone de ocupație și despărțită de teritoriile din est. Față de conferința din februarie, scaunele se schimbaseră: Roosevelt murise."
+	},
+	{
+		"id": "mana:3361",
+		"nota": "La Nürnberg a judecat primul tribunal internațional pentru crime de război, iar „am primit ordine” n-a fost primit ca apărare. Pe temelia lui s-au ridicat tribunalele de azi."
+	},
+	{
+		"id": "mana:3362",
+		"nota": "Franța, Marea Britanie și Israelul au atacat, dar s-au retras la presiunea Statelor Unite și a Uniunii Sovietice deodată. Criza a arătat că vechile imperii nu mai decid singure."
+	},
+	{
+		"id": "mana:3363",
+		"nota": "Revoluția maghiară a mers până la a anunța ieșirea din alianța militară a blocului comunist, iar răspunsul a venit cu tancuri. Peste 200.000 de oameni au fugit din țară."
+	},
+	{
+		"id": "mana:3364",
+		"nota": "Primăvara de la Praga voia „socialism cu față umană”: cenzură slăbită, dezbatere liberă. Invazia a fost făcută de cinci state din propria alianță a țării."
+	},
+	{
+		"id": "mana:3365",
+		"nota": "Statele comuniste au semnat la Helsinki pentru recunoașterea granițelor, dar au primit la pachet un capitol despre drepturile omului. Opozanții l-au folosit apoi ca lege, nu ca vorbe."
+	},
+	{
+		"id": "mana:3366",
+		"nota": "Războiul din Afganistan a ținut nouă ani și s-a încheiat cu retragerea trupelor sovietice, în 1989. Costul lui a slăbit grav statul care îl purtase."
+	},
+	{
+		"id": "mana:3367",
+		"nota": "Datoria a fost plătită până la ultimul dolar, în 1989, prin exportul alimentelor și al energiei. În țară se raționalizau pâinea, uleiul, zahărul și curentul electric."
+	},
+	{
+		"id": "mana:3368",
+		"nota": "Puyi a urcat pe tron la doi ani și a fost detronat la șase, în 1912. A fost pus mai târziu împărat de japonezi în Manciuria, iar la sfârșitul vieții lucra ca grădinar la Beijing."
+	},
+	{
+		"id": "mana:3369",
+		"nota": "MacArthur a semnat actul pe un vas de război ancorat în golful Tokio și a condus apoi ocupația Japoniei. A fost înlăturat din comandă, într-un război de mai târziu, pentru nesupunere."
+	},
+	{
+		"id": "mana:3370",
+		"nota": "Cromwell a condus țara fără rege unsprezece ani, cu armata în spate. După moartea lui, monarhia a fost adusă înapoi, iar trupul i-a fost dezgropat și spânzurat."
+	},
+	{
+		"id": "mana:3371",
+		"nota": "Hatșepsut s-a înfățișat în statui cu barbă falsă, semnul puterii faraonice. Urmașul ei a pus să-i fie șterse numele și chipul de pe monumente, decenii după moartea ei."
+	},
+	{
+		"id": "mana:3372",
+		"nota": "Barnard a operat la Cape Town, iar pacientul a trăit optsprezece zile, răpus de o infecție. Medicamentele care împiedică respingerea organului au venit abia peste un deceniu."
+	},
+	{
+		"id": "mana:3373",
+		"nota": "Paulescu a publicat lucrările despre „pancreină” înaintea echipei canadiene care a primit Nobelul. Prioritatea lui e recunoscută azi în istoria medicinei, premiul nu i-a fost dat."
+	},
+	{
+		"id": "mana:3374",
+		"nota": "Racoviță a fost naturalistul expediției belgiene Belgica, prinsă în gheață peste iarnă. A adunat mii de probe și a devenit apoi întemeietorul studiului vieții din peșteri."
+	},
+	{
+		"id": "mana:3375",
+		"nota": "Ana Aslan a condus din 1952 primul institut de geriatrie din lume și a pus la punct un tratament cu procaină. Pacienții veneau din străinătate, iar statul făcea din asta un export."
+	},
+	{
+		"id": "mana:3376",
+		"nota": "Palade a plecat din țară în 1946 și a lucrat în Statele Unite, unde a descris ribozomii. Premiul l-a primit pentru felul în care a arătat că e făcută, pe dinăuntru, o celulă."
+	},
+	{
+		"id": "mana:3377",
+		"nota": "Havel era dramaturg și fusese închis de regim ani de-a rândul. A ajuns președinte la câteva săptămâni după ce protestele începuseră, și a rămas în funcție până în 2003."
+	},
+	{
+		"id": "mana:3378",
+		"nota": "Nasser a luat canalul de la o companie anglo-franceză, ca să plătească un baraj pe Nil. A ieșit din criza care a urmat mai puternic decât intrase, deși armata lui pierduse."
+	},
+	{
+		"id": "mana:3379",
+		"nota": "Eduard al VIII-lea a domnit mai puțin de un an, fără să fie încoronat. Fratele lui, care nu se pregătise pentru tron și se bâlbâia, i-a luat locul și a condus țara prin tot războiul."
+	},
+	{
+		"id": "mana:3380",
+		"nota": "Salk n-a brevetat vaccinul, spunând că nu se patentează soarele. În Statele Unite, cazurile de poliomielită au scăzut în câțiva ani de la peste 30.000 la câteva sute pe an."
+	},
+	{
+		"id": "mana:3381",
+		"nota": "Sagele povestesc o așezare a lui Leif, numită Vinland, iar urmele unei tabere nordice au fost găsite în Newfoundland. Așezarea a ținut puțin, iar drumul a fost uitat în Europa."
+	},
+	{
+		"id": "mana:3382",
+		"nota": "Clemenceau a ajuns la conducere la 76 de ani, în cel mai greu moment al războiului, și a fost numit „Tigrul”. La masa păcii a cerut cele mai grele condiții pentru Germania."
+	},
+	{
+		"id": "mana:3383",
+		"nota": "Henric al IV-lea ar fi așteptat trei zile în zăpadă, în fața cetății, până a fost primit. „A merge la Canossa” a rămas, în germană, expresia pentru o umilință politică."
+	},
+	{
+		"id": "mana:3384",
+		"nota": "Bandaranaike a condus Ceylonul, țara numită azi Sri Lanka, după uciderea soțului ei, tot prim-ministru. A fost șefă de guvern de trei ori, în patru decenii diferite."
+	},
+	{
+		"id": "mana:3385",
+		"nota": "Semmelweis a arătat cu cifre că mortalitatea scade de câteva ori, dar colegii l-au luat în râs. A murit într-un azil, iar ideea lui a fost primită abia după ce s-au descoperit microbii."
+	},
+	{
+		"id": "mana:3386",
+		"nota": "Yeager a zburat cu două coaste rupte, din care a căzut de pe cal cu două zile înainte, și n-a spus nimănui. Avionul lui, lansat dintr-un bombardier, era în fond o rachetă cu aripi."
+	},
+	{
+		"id": "mana:3387",
+		"nota": "Cele două corăbii ale lui Franklin au fost prinse în gheață, iar toți cei 129 de oameni au murit. Epavele au fost găsite abia în 2014 și 2016, cu ajutorul poveștilor inuite."
+	},
+	{
+		"id": "mana:3388",
+		"nota": "Maniu fusese conducătorul românilor din Transilvania la unirea din 1918. A murit în 1953 în închisoarea de la Sighet, condamnat de regimul comunist la muncă silnică pe viață."
+	},
+	{
+		"id": "mana:3389",
+		"nota": "Avram Iancu a condus cetele de moți în 1848 și a ținut munții Apuseni până la sfârșitul luptelor. A refuzat decorația împăratului și a murit sărac, umblând cu fluierul prin sate."
+	},
+	{
+		"id": "mana:3390",
+		"nota": "Elisa Leonida Zamfirescu a fost respinsă de Școala de Poduri și Șosele din București, fiind femeie, și a plecat să studieze în Germania. Și-a luat diploma în 1912, la Berlin."
+	},
+	{
+		"id": "mana:3391",
+		"nota": "Gladstone și rivalul lui, Disraeli, s-au schimbat la conducere ani de-a rândul și se detestau. A ajuns ultima dată prim-ministru la 82 de ani."
+	},
+	{
+		"id": "mana:3392",
+		"nota": "Shaka a schimbat felul de a lupta: sulița scurtă de împuns, în loc de cea aruncată, și o formație în corn de taur. Din războaiele pornite atunci s-au mutat popoare întregi."
+	},
+	{
+		"id": "mana:3393",
+		"nota": "În mitologia greacă, Tartarul era așezat atât de jos încât o nicovală ar fi căzut nouă zile până la el. Mai târziu, poeții l-au făcut locul de pedeapsă al celor mai mari păcătoși."
+	},
+	{
+		"id": "mana:3394",
+		"nota": "Hecate era înfățișată cu trei fețe, privind în trei drumuri deodată, și însoțită de câini. Oamenii îi lăsau mâncare la răscruci, în nopțile cu lună nouă."
+	},
+	{
+		"id": "mana:3395",
+		"nota": "În mitologia greacă, Nemesis pedepsea „hybris”-ul, îngâmfarea celui care se socotea deopotrivă cu zeii. Numele ei se folosește azi pentru un adversar de care nu scapi."
+	},
+	{
+		"id": "mana:3396",
+		"nota": "Eriniile erau înfățișate cu șerpi în păr și nu se opreau niciodată, până la ispășire. Grecii se temeau să le rostească numele și le spuneau „binevoitoarele”, ca să le îmbuneze."
+	},
+	{
+		"id": "mana:3397",
+		"nota": "Bolnavii dormeau în templele lui Asclepios, așteptând un vis cu leacul. Bastonul cu un singur șarpe e semnul medicinei de azi, deși adesea e încurcat cu cel al zeului vestitor."
+	},
+	{
+		"id": "mana:3398",
+		"nota": "Cei primiți în misterele de la Eleusis jurau să nu spună nimic, și nu s-au păstrat despre ele decât frânturi. Au ținut aproape două mii de ani, până le-au oprit împărații creștini."
+	},
+	{
+		"id": "mana:3399",
+		"nota": "Templele lui Mithra erau încăperi subpământene, închipuite ca o peșteră, și nu primeau femei. Credința s-a răspândit pe granițele imperiului, odată cu legiunile."
+	},
+	{
+		"id": "mana:3400",
+		"nota": "Fiecare casă romană avea un mic altar cu chipurile larilor, unde se lăsa din mâncarea zilei. Erau socotiți strămoși sau duhuri ale locului, nu zei mari."
+	},
+	{
+		"id": "mana:3401",
+		"nota": "În mit, mama lui Baldr a pus toate lucrurile să jure că nu-l vor vătăma, dar a uitat vâscul. Moartea lui e semnul că nici zeii nu scapă de soartă."
+	},
+	{
+		"id": "mana:3402",
+		"nota": "În mitologia nordică, Sleipnir era cel mai iute dintre cai și putea alerga și prin aer, și pe apă. Povestea nașterii lui e una dintre cele mai ciudate din tot mitul: tatăl i-a fost Loki."
+	},
+	{
+		"id": "mana:3403",
+		"nota": "Bifrost era văzută ca un curcubeu și păzită de un zeu care aude iarba crescând. La sfârșitul lumii, puntea se rupe sub greutatea celor care vin la bătălia de pe urmă."
+	},
+	{
+		"id": "mana:3404",
+		"nota": "Pacea dintre asi și vani a fost legată prin schimb de ostatici, iar zei din a doua familie au ajuns astfel cinstiți alături de ceilalți. Unii cercetători văd aici două credințe amestecate."
+	},
+	{
+		"id": "mana:3405",
+		"nota": "Coborârea Iștarei în lumea morților, trecând prin șapte porți și lăsând la fiecare o podoabă, e una dintre cele mai vechi povestiri scrise. Sumerienii o numeau Inanna."
+	},
+	{
+		"id": "mana:3406",
+		"nota": "„Enuma Eliș” e chiar începutul textului: „Când sus...”. Lumea se naște, în poem, din trupul unei ființe de la începutul vremii, despicat după o bătălie între zei."
+	},
+	{
+		"id": "mana:3407",
+		"nota": "Dacă inima atârna mai greu decât pana lui Maat, mortul nu trecea mai departe. Zeița nu era doar o persoană în mit, ci și numele rânduielii drepte a lumii."
+	},
+	{
+		"id": "mana:3408",
+		"nota": "Era o culegere de formule, scrise pe papirus și alese după punga celui mort. Numele egiptean al cărții se traduce mai degrabă „ieșirea la lumina zilei”."
+	},
+	{
+		"id": "mana:3409",
+		"nota": "Din Avesta s-a păstrat numai o parte, după ce preoții au ținut textul secole în memorie. Cele mai vechi imnuri ar fi fost compuse de întemeietorul religiei însuși."
+	},
+	{
+		"id": "mana:3410",
+		"nota": "Cartea de temelie a Cabalei, Zoharul, a apărut în Spania în secolul XIII. Învățătura era dată numai oamenilor trecuți de patruzeci de ani, ca să nu fie înțeleasă strâmb."
+	},
+	{
+		"id": "mana:3411",
+		"nota": "Fiecare hadith e însoțit de lanțul celor care l-au transmis, iar lanțul e cântărit ca dovadă. Pe ele s-a clădit legea religioasă, nu numai pe textul Coranului."
+	},
+	{
+		"id": "mana:3412",
+		"nota": "Cearta era cine urmează la conducerea credincioșilor: un grup socotea că urmașul se alege dintre apropiați, celălalt că trebuie să fie din familia profetului. Politica a venit înaintea învățăturii."
+	},
+	{
+		"id": "mana:3413",
+		"nota": "La Calcedon s-a hotărât că Hristos are două firi, dumnezeiască și omenească, nedespărțite. Bisericile care n-au primit hotărârea — cea coptă, cea armeană — s-au desprins atunci."
+	},
+	{
+		"id": "mana:3414",
+		"nota": "Călugării jainiști mătură drumul înaintea lor și își acoperă gura, ca să nu ucidă din nebăgare de seamă. Religia a apărut în aceeași vreme cu budismul."
+	},
+	{
+		"id": "mana:3415",
+		"nota": "În șintoism, kami pot fi munți, copaci, râuri sau strămoși. Porțile roșii de la intrarea în locurile sfinte, numite torii, arată trecerea din lumea obișnuită în cea curată."
+	},
+	{
+		"id": "mana:3416",
+		"nota": "Popol Vuh a fost scris cu litere latine în secolul XVI, după o tradiție mult mai veche. Zeii ar fi încercat întâi lutul și lemnul, și abia porumbul a dat oameni care vorbesc."
+	},
+	{
+		"id": "mana:3417",
+		"nota": "Legenda spune că Tuatha Dé Danann au fost învinși de oamenii veniți din urmă și s-au retras în movilele de pământ. Din ei s-au născut, în povestea de mai târziu, zânele irlandeze."
 	}
 ]
