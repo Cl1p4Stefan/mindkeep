@@ -40936,6 +40936,2481 @@
 		"id": "mana:3718",
 		"verificat": false,
 		"fapt": "mana:3718",
+		"text": "Ce animal are cocoașă și rabdă multe zile fără apă?",
+		"variante": ["Cămila", "Lama", "Antilopa", "Bizonul"],
+		"corect": 0,
+		"nivel": 1,
+		"subcategorie": "lumea_vie",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3719",
+		"verificat": false,
+		"fapt": "mana:3719",
+		"text": "Câți dinți are, de obicei, un om adult, cu tot cu molarii de minte?",
+		"variante": ["36", "32", "28", "24"],
+		"corect": 1,
+		"nivel": 1,
+		"subcategorie": "lumea_vie",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3720",
+		"verificat": false,
+		"fapt": "mana:3720",
+		"text": "Ce organ al corpului simte gusturile?",
+		"variante": ["Nasul", "Gâtul", "Limba", "Cerul gurii"],
+		"corect": 2,
+		"nivel": 1,
+		"subcategorie": "lumea_vie",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3721",
+		"verificat": false,
+		"fapt": "mana:3721",
+		"text": "Ce insectă se aprinde intermitent, în iarbă, în nopțile de vară?",
+		"variante": ["Greierele", "Lăcusta", "Cărăbușul", "Licuriciul"],
+		"corect": 3,
+		"nivel": 1,
+		"subcategorie": "lumea_vie",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3722",
+		"verificat": false,
+		"fapt": "mana:3722",
+		"text": "Din ce se naște, de obicei, o plantă nouă?",
+		"variante": ["Sămânța", "Frunza", "Floarea", "Tulpina"],
+		"corect": 0,
+		"nivel": 1,
+		"subcategorie": "lumea_vie",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3723",
+		"verificat": false,
+		"fapt": "mana:3723",
+		"text": "Ce pasăre nu poate zbura și trăiește în Antarctica?",
+		"variante": ["Pelicanul", "Pinguinul", "Struțul", "Albatrosul"],
+		"corect": 1,
+		"nivel": 1,
+		"subcategorie": "lumea_vie",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3724",
+		"verificat": false,
+		"fapt": "mana:3724",
+		"text": "Ce organ al corpului e apărat de pleoape și de gene?",
+		"variante": ["Gura", "Fruntea", "Ochiul", "Nasul"],
+		"corect": 2,
+		"nivel": 1,
+		"subcategorie": "lumea_vie",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3725",
+		"verificat": false,
+		"fapt": "mana:3725",
+		"text": "Ce face ursul brun în cea mai mare parte a iernii?",
+		"variante": ["Migrează", "Vânează", "Își schimbă blana", "Hibernează"],
+		"corect": 3,
+		"nivel": 1,
+		"subcategorie": "lumea_vie",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3726",
+		"verificat": false,
+		"fapt": "mana:3726",
+		"text": "Câți plămâni are omul?",
+		"variante": ["Doi", "Unul", "Trei", "Patru"],
+		"corect": 0,
+		"nivel": 1,
+		"subcategorie": "lumea_vie",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3727",
+		"verificat": false,
+		"fapt": "mana:3727",
+		"text": "Ce grupă de animale are corpul moale și, adesea, o cochilie?",
+		"variante": ["Amfibienii", "Moluștele", "Insectele", "Crustaceele"],
+		"corect": 1,
+		"nivel": 1,
+		"subcategorie": "lumea_vie",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3728",
+		"verificat": false,
+		"fapt": "mana:3728",
+		"text": "Ce insectă bâzâie pe la lăsarea serii și înțeapă ca să sugă sânge?",
+		"variante": ["Molia", "Greierele", "Țânțarul", "Albina"],
+		"corect": 2,
+		"nivel": 1,
+		"subcategorie": "lumea_vie",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3729",
+		"verificat": false,
+		"fapt": "mana:3729",
+		"text": "Ce animal de curte dă lână?",
+		"variante": ["Capra", "Vaca", "Gâsca", "Oaia"],
+		"corect": 3,
+		"nivel": 1,
+		"subcategorie": "lumea_vie",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3730",
+		"verificat": false,
+		"fapt": "mana:3730",
+		"text": "Ce parte a ochiului se lărgește la întuneric și se strânge la lumină?",
+		"variante": ["Pupila", "Corneea", "Retina", "Cristalinul"],
+		"corect": 0,
+		"nivel": 1,
+		"subcategorie": "lumea_vie",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3731",
+		"verificat": false,
+		"fapt": "mana:3731",
+		"text": "Ce fel de animal e rechinul?",
+		"variante": ["Amfibian", "Pește", "Mamifer", "Reptilă"],
+		"corect": 1,
+		"nivel": 1,
+		"subcategorie": "lumea_vie",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3732",
+		"verificat": false,
+		"fapt": "mana:3732",
+		"text": "Ce parte a plantei duce apa de la rădăcină spre frunze?",
+		"variante": ["Fructul", "Sămânța", "Tulpina", "Floarea"],
+		"corect": 2,
+		"nivel": 1,
+		"subcategorie": "lumea_vie",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3733",
+		"verificat": false,
+		"fapt": "mana:3733",
+		"text": "Ce animal greoi din Africa își petrece ziua în apă și iese noaptea la păscut?",
+		"variante": ["Rinocerul", "Bivolul", "Tapirul", "Hipopotamul"],
+		"corect": 3,
+		"nivel": 1,
+		"subcategorie": "lumea_vie",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3734",
+		"verificat": false,
+		"fapt": "mana:3734",
+		"text": "În ce organ ajunge mâncarea imediat după ce e înghițită?",
+		"variante": ["Stomacul", "Intestinul subțire", "Ficatul", "Pancreasul"],
+		"corect": 0,
+		"nivel": 1,
+		"subcategorie": "lumea_vie",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3735",
+		"verificat": false,
+		"fapt": "mana:3735",
+		"text": "Ce animal își poartă puiul într-un buzunar de piele?",
+		"variante": ["Castorul", "Cangurul", "Leneșul", "Lemurul"],
+		"corect": 1,
+		"nivel": 1,
+		"subcategorie": "lumea_vie",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3736",
+		"verificat": false,
+		"fapt": "mana:3736",
+		"text": "Ce vitamină se găsește din belșug în lămâi și în ardeiul gras?",
+		"variante": ["Vitamina B12", "Vitamina K", "Vitamina C", "Vitamina A"],
+		"corect": 2,
+		"nivel": 1,
+		"subcategorie": "lumea_vie",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3737",
+		"verificat": false,
+		"fapt": "mana:3737",
+		"text": "Ce celule dau culoarea roșie a sângelui?",
+		"variante": ["Globulele albe", "Trombocitele", "Neuronii", "Globulele roșii"],
+		"corect": 3,
+		"nivel": 1,
+		"subcategorie": "lumea_vie",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3738",
+		"verificat": false,
+		"fapt": "mana:3738",
+		"text": "Ce plantă de deșert ține apa în tulpina groasă, apărată de spini?",
+		"variante": ["Cactusul", "Feriga", "Papura", "Trestia"],
+		"corect": 0,
+		"nivel": 1,
+		"subcategorie": "lumea_vie",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3739",
+		"verificat": false,
+		"fapt": "mana:3739",
+		"text": "Ce animal își leapădă pielea întreagă, dintr-o bucată, când crește?",
+		"variante": ["Racul", "Șarpele", "Broasca", "Melcul"],
+		"corect": 1,
+		"nivel": 1,
+		"subcategorie": "lumea_vie",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3740",
+		"verificat": false,
+		"fapt": "mana:3740",
+		"text": "Ce animal sapă galerii sub pământ și vede foarte slab?",
+		"variante": ["Veverița", "Ariciul", "Cârtița", "Vulpea"],
+		"corect": 2,
+		"nivel": 1,
+		"subcategorie": "lumea_vie",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3741",
+		"verificat": false,
+		"fapt": "mana:3741",
+		"text": "Ce șir de oase susține corpul omului pe verticală?",
+		"variante": ["Cutia toracică", "Bazinul", "Sternul", "Coloana vertebrală"],
+		"corect": 3,
+		"nivel": 1,
+		"subcategorie": "lumea_vie",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3742",
+		"verificat": false,
+		"fapt": "mana:3742",
+		"text": "Ce fel de plante nu fac flori, ci conuri cu semințe?",
+		"variante": ["Coniferele", "Cerealele", "Leguminoasele", "Mușchii"],
+		"corect": 0,
+		"nivel": 1,
+		"subcategorie": "lumea_vie",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3743",
+		"verificat": false,
+		"fapt": "mana:3743",
+		"text": "Câte vertebre are gâtul la aproape toate mamiferele, de la om la girafă?",
+		"variante": ["Douăzeci", "Șapte", "Trei", "Doisprezece"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "lumea_vie",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3744",
+		"verificat": false,
+		"fapt": "mana:3744",
+		"text": "Ce hormon lipsește sau nu mai e ascultat, în diabet?",
+		"variante": ["Tiroxina", "Cortizolul", "Insulina", "Adrenalina"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "lumea_vie",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3745",
+		"verificat": false,
+		"fapt": "mana:3745",
+		"text": "Ce săculeți mici din plămâni fac schimbul de gaze cu sângele?",
+		"variante": ["Bronhiile", "Traheea", "Pleura", "Alveolele"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "lumea_vie",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3746",
+		"verificat": false,
+		"fapt": "mana:3746",
+		"text": "Cum se numește celula nervoasă?",
+		"variante": ["Neuronul", "Nefronul", "Limfocitul", "Miocitul"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "lumea_vie",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3747",
+		"verificat": false,
+		"fapt": "mana:3747",
+		"text": "Ce substanță hrănitoare fabrică planta în fotosinteză?",
+		"variante": ["Amidonul", "Glucoza", "Clorofila", "Celuloza"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "lumea_vie",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3748",
+		"verificat": false,
+		"fapt": "mana:3748",
+		"text": "Cum se numește transportul polenului de la o floare la alta?",
+		"variante": ["Altoire", "Înmugurire", "Polenizare", "Germinare"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "lumea_vie",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3749",
+		"verificat": false,
+		"fapt": "mana:3749",
+		"text": "Cum se numesc animalele care mănâncă atât plante, cât și carne?",
+		"variante": ["Erbivore", "Carnivore", "Insectivore", "Omnivore"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "lumea_vie",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3750",
+		"verificat": false,
+		"fapt": "mana:3750",
+		"text": "Cum se numesc animalele fără coloană vertebrală?",
+		"variante": ["Nevertebrate", "Vertebrate", "Mamifere", "Cordate"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "lumea_vie",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3751",
+		"verificat": false,
+		"fapt": "mana:3751",
+		"text": "Cum se numește învelișul subțire care închide celula și alege ce intră în ea?",
+		"variante": ["Nucleolul", "Membrana celulară", "Peretele celular", "Citoplasma"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "lumea_vie",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3752",
+		"verificat": false,
+		"fapt": "mana:3752",
+		"text": "Împotriva căror agenți nu au niciun efect antibioticele?",
+		"variante": ["Ciupercilor", "Paraziților", "Virusurilor", "Bacteriilor"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "lumea_vie",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3753",
+		"verificat": false,
+		"fapt": "mana:3753",
+		"text": "Care e cel mai mic os din corpul omenesc?",
+		"variante": ["Nicovala", "Clavicula", "Rotula", "Scărița"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "lumea_vie",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3754",
+		"verificat": false,
+		"fapt": "mana:3754",
+		"text": "Ce parte a corpului adună cele mai multe oase?",
+		"variante": ["Mâna", "Capul", "Coloana", "Piciorul"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "lumea_vie",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3755",
+		"verificat": false,
+		"fapt": "mana:3755",
+		"text": "Ce mușchi desparte toracele de abdomen și trage aerul în plămâni?",
+		"variante": ["Abdominalul", "Diafragma", "Pectoralul", "Trapezul"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "lumea_vie",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3756",
+		"verificat": false,
+		"fapt": "mana:3756",
+		"text": "Ce fel de plante se înmulțesc prin spori, nu prin semințe?",
+		"variante": ["Leguminoasele", "Gramineele", "Ferigile", "Coniferele"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "lumea_vie",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3757",
+		"verificat": false,
+		"fapt": "mana:3757",
+		"text": "Ce parte a florii produce polenul?",
+		"variante": ["Pistilul", "Sepalele", "Receptaculul", "Staminele"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "lumea_vie",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3758",
+		"verificat": false,
+		"fapt": "mana:3758",
+		"text": "Cum se numește știința care studiază insectele?",
+		"variante": ["Entomologia", "Ihtiologia", "Ornitologia", "Herpetologia"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "lumea_vie",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3759",
+		"verificat": false,
+		"fapt": "mana:3759",
+		"text": "Ce grupă de animale cuprinde racii, crabii și creveții?",
+		"variante": ["Celenteratele", "Crustaceele", "Moluștele", "Arahnidele"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "lumea_vie",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3760",
+		"verificat": false,
+		"fapt": "mana:3760",
+		"text": "Ce organ mic strânge bila făcută de ficat, până la nevoie?",
+		"variante": ["Duodenul", "Apendicele", "Vezica biliară", "Splina"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "lumea_vie",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3761",
+		"verificat": false,
+		"fapt": "mana:3761",
+		"text": "Ce sunt, de fapt, coralii?",
+		"variante": ["Plante", "Minerale", "Ciuperci", "Animale"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "lumea_vie",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3762",
+		"verificat": false,
+		"fapt": "mana:3762",
+		"text": "Câte perechi de coaste are, de obicei, omul?",
+		"variante": ["12", "10", "14", "16"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "lumea_vie",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3763",
+		"verificat": false,
+		"fapt": "mana:3763",
+		"text": "Cum se numește lichidul limpede care curge prin vasele limfatice?",
+		"variante": ["Bila", "Limfa", "Plasma", "Serul"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "lumea_vie",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3764",
+		"verificat": false,
+		"fapt": "mana:3764",
+		"text": "Ce parte a sângelui pornește închegarea unei răni?",
+		"variante": ["Plasma", "Limfa", "Trombocitele", "Globulele albe"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "lumea_vie",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3765",
+		"verificat": false,
+		"fapt": "mana:3765",
+		"text": "Ce animal marin se mișcă prin pulsații și n-are nici creier, nici inimă?",
+		"variante": ["Caracatița", "Steaua-de-mare", "Calmarul", "Meduza"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "lumea_vie",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3766",
+		"verificat": false,
+		"fapt": "mana:3766",
+		"text": "Ce parte a creierului ține ritmul respirației și al inimii?",
+		"variante": ["Bulbul rahidian", "Cerebelul", "Hipofiza", "Lobul frontal"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "lumea_vie",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3767",
+		"verificat": false,
+		"fapt": "mana:3767",
+		"text": "Ce savant englez a privit în 1665 o felie de plută la microscop și a numit „celule” ce a văzut?",
+		"variante": ["Theodor Schwann", "Robert Hooke", "Antonie van Leeuwenhoek", "Robert Brown"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "lumea_vie",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3768",
+		"verificat": false,
+		"fapt": "mana:3768",
+		"text": "Ce organit al celulei leagă aminoacizii în proteine?",
+		"variante": ["Aparatul Golgi", "Vacuola", "Ribozomul", "Lizozomul"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "lumea_vie",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3769",
+		"verificat": false,
+		"fapt": "mana:3769",
+		"text": "Ce moleculă duce informația din nucleu către locul unde se fac proteinele?",
+		"variante": ["ADN mitocondrial", "Histona", "Enzima de restricție", "ARN mesager"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "lumea_vie",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3770",
+		"verificat": false,
+		"fapt": "mana:3770",
+		"text": "Cum se numește grupul de trei baze azotate care indică un aminoacid?",
+		"variante": ["Codon", "Nucleozom", "Exon", "Operon"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "lumea_vie",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3771",
+		"verificat": false,
+		"fapt": "mana:3771",
+		"text": "Cum se numește moartea celulară programată?",
+		"variante": ["Fagocitoza", "Apoptoza", "Necroza", "Mitoza"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "lumea_vie",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3772",
+		"verificat": false,
+		"fapt": "mana:3772",
+		"text": "Cum se numește totalitatea trăsăturilor care se văd la un organism?",
+		"variante": ["Cariotipul", "Haplotipul", "Fenotipul", "Genotipul"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "lumea_vie",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3773",
+		"verificat": false,
+		"fapt": "mana:3773",
+		"text": "Ce fel de alelă se arată numai când organismul are două copii ale ei?",
+		"variante": ["Dominantă", "Codominantă", "Letală", "Recesivă"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "lumea_vie",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3774",
+		"verificat": false,
+		"fapt": "mana:3774",
+		"text": "Cum se numește menținerea constantă a mediului interior al corpului?",
+		"variante": ["Homeostazia", "Metabolismul", "Hemostaza", "Osmoreglarea"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "lumea_vie",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3775",
+		"verificat": false,
+		"fapt": "mana:3775",
+		"text": "Ce moleculă e principala monedă de energie a celulei?",
+		"variante": ["NaCl", "ATP", "ADN", "ARN"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "lumea_vie",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3776",
+		"verificat": false,
+		"fapt": "mana:3776",
+		"text": "Cum se numește șirul de reacții din mitocondrie care oxidează acetil-coenzima A?",
+		"variante": ["Ciclul Calvin", "Ciclul ureei", "Ciclul Krebs", "Glicoliza"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "lumea_vie",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3777",
+		"verificat": false,
+		"fapt": "mana:3777",
+		"text": "Cum se numește mutarea unei substanțe prin membrană în sens potrivnic concentrației, cu cheltuială de energie?",
+		"variante": ["Difuzia simplă", "Exocitoza", "Plasmoliza", "Transportul activ"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "lumea_vie",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3778",
+		"verificat": false,
+		"fapt": "mana:3778",
+		"text": "Ce relație aduce folos unei specii, fără să-i facă nimic celeilalte?",
+		"variante": ["Comensalism", "Mutualism", "Parazitism", "Amensalism"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "lumea_vie",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3779",
+		"verificat": false,
+		"fapt": "mana:3779",
+		"text": "Ce cercetătoare a descoperit, în porumb, gene care își schimbă locul?",
+		"variante": ["Nettie Stevens", "Barbara McClintock", "Lynn Margulis", "Rita Levi-Montalcini"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "lumea_vie",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3780",
+		"verificat": false,
+		"fapt": "mana:3780",
+		"text": "Ce unealtă de tăiere precisă a ADN-ului a fost premiată cu Nobel în 2020?",
+		"variante": ["Electroforeza", "Microarray", "CRISPR", "PCR"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "lumea_vie",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3781",
+		"verificat": false,
+		"fapt": "mana:3781",
+		"text": "Cum se numește copierea ADN-ului înaintea diviziunii celulare?",
+		"variante": ["Transcripția", "Translația", "Conjugarea", "Replicarea"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "lumea_vie",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3782",
+		"verificat": false,
+		"fapt": "mana:3782",
+		"text": "Ce animal a fost, în 1996, primul mamifer clonat dintr-o celulă adultă?",
+		"variante": ["Oaia Dolly", "Maimuța Able", "Cățeaua Laika", "Broasca Xenopus"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "lumea_vie",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3783",
+		"verificat": false,
+		"fapt": "mana:3783",
+		"text": "Ce teorie spune că mitocondriile au fost odinioară bacterii înghițite de altă celulă?",
+		"variante": ["Lamarckismul", "Endosimbioza", "Panspermia", "Catastrofismul"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "lumea_vie",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3784",
+		"verificat": false,
+		"fapt": "mana:3784",
+		"text": "Ce hormon al glandelor suprarenale pregătește corpul pentru fugă sau luptă?",
+		"variante": ["Tiroxina", "Melatonina", "Adrenalina", "Insulina"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "lumea_vie",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3785",
+		"verificat": false,
+		"fapt": "mana:3785",
+		"text": "Cum se numește schimbarea întâmplătoare a secvenței ADN?",
+		"variante": ["Recombinarea", "Migrația", "Selecția", "Mutația"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "lumea_vie",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3786",
+		"verificat": false,
+		"fapt": "mana:3786",
+		"text": "Cum se numește înghițirea și mistuirea unui microb de către o celulă de apărare?",
+		"variante": ["Fagocitoza", "Pinocitoza", "Hemoliza", "Aglutinarea"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "lumea_vie",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3787",
+		"verificat": false,
+		"fapt": "mana:3787",
+		"text": "Cum se numesc celulele care se pot preschimba în mai multe feluri de țesut?",
+		"variante": ["Gameții", "Celulele stem", "Celulele somatice", "Celulele gliale"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "lumea_vie",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3788",
+		"verificat": false,
+		"fapt": "mana:3788",
+		"text": "Ce organit mărunt descompune deșeurile celulei, cu enzime tari?",
+		"variante": ["Centrozomul", "Peroxizomul", "Lizozomul", "Ribozomul"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "lumea_vie",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3789",
+		"verificat": false,
+		"fapt": "mana:3789",
+		"text": "Ce înveliș grăsos de pe fibra nervoasă grăbește trecerea semnalului?",
+		"variante": ["Keratina", "Colagenul", "Chitina", "Mielina"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "lumea_vie",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3790",
+		"verificat": false,
+		"fapt": "mana:3790",
+		"text": "Ce substanțe duc semnalul peste spațiul dintre doi neuroni?",
+		"variante": ["Neurotransmițătorii", "Hormonii", "Anticorpii", "Enzimele"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "lumea_vie",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3791",
+		"verificat": false,
+		"fapt": "mana:3791",
+		"text": "Ce afecțiune e dată de o copie în plus a cromozomului 21?",
+		"variante": ["Daltonismul", "Sindromul Down", "Sindromul Turner", "Hemofilia"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "lumea_vie",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3792",
+		"verificat": false,
+		"fapt": "mana:3792",
+		"text": "Ce organ curăță sângele de globulele roșii îmbătrânite?",
+		"variante": ["Timusul", "Pancreasul", "Splina", "Rinichiul"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "lumea_vie",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3793",
+		"verificat": false,
+		"fapt": "mana:3793",
+		"text": "Ce invenție preistorică, rotundă, a schimbat transportul pe uscat?",
+		"variante": ["Plugul", "Șurubul", "Scripetele", "Roata"],
+		"corect": 3,
+		"nivel": 1,
+		"subcategorie": "tehnologie_inventii",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3794",
+		"verificat": false,
+		"fapt": "mana:3794",
+		"text": "Ce unealtă bate cuiele?",
+		"variante": ["Ciocanul", "Clestele", "Șurubelnița", "Dalta"],
+		"corect": 0,
+		"nivel": 1,
+		"subcategorie": "tehnologie_inventii",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3795",
+		"verificat": false,
+		"fapt": "mana:3795",
+		"text": "Ce aparat prinde emisiuni prin unde, numai cu sunet?",
+		"variante": ["Magnetofonul", "Radioul", "Televizorul", "Telefonul"],
+		"corect": 1,
+		"nivel": 1,
+		"subcategorie": "tehnologie_inventii",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3796",
+		"verificat": false,
+		"fapt": "mana:3796",
+		"text": "Ce obiect mută indicatorul pe ecranul calculatorului?",
+		"variante": ["Difuzorul", "Modemul", "Mouse-ul", "Monitorul"],
+		"corect": 2,
+		"nivel": 1,
+		"subcategorie": "tehnologie_inventii",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3797",
+		"verificat": false,
+		"fapt": "mana:3797",
+		"text": "Ce parte a calculatorului are taste cu litere și cifre?",
+		"variante": ["Carcasa", "Placa de bază", "Difuzorul", "Tastatura"],
+		"corect": 3,
+		"nivel": 1,
+		"subcategorie": "tehnologie_inventii",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3798",
+		"verificat": false,
+		"fapt": "mana:3798",
+		"text": "Ce aparat pune pe hârtie ceea ce vezi pe ecran?",
+		"variante": ["Imprimanta", "Scanerul", "Plotterul", "Proiectorul"],
+		"corect": 0,
+		"nivel": 1,
+		"subcategorie": "tehnologie_inventii",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3799",
+		"verificat": false,
+		"fapt": "mana:3799",
+		"text": "Ce obiect păstrează energie electrică pentru aparatele purtate în buzunar?",
+		"variante": ["Condensatorul", "Bateria", "Becul", "Siguranța"],
+		"corect": 1,
+		"nivel": 1,
+		"subcategorie": "tehnologie_inventii",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3800",
+		"verificat": false,
+		"fapt": "mana:3800",
+		"text": "Ce obiect mic aprinde focul prin frecare?",
+		"variante": ["Lupa", "Fitilul", "Chibritul", "Amnarul"],
+		"corect": 2,
+		"nivel": 1,
+		"subcategorie": "tehnologie_inventii",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3801",
+		"verificat": false,
+		"fapt": "mana:3801",
+		"text": "Ce instalație urcă oamenii pe trepte care se mișcă singure?",
+		"variante": ["Liftul", "Teleferica", "Pasarela", "Scara rulantă"],
+		"corect": 3,
+		"nivel": 1,
+		"subcategorie": "tehnologie_inventii",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3802",
+		"verificat": false,
+		"fapt": "mana:3802",
+		"text": "Ce obiect ținut în mână dă lumină cu ajutorul bateriilor?",
+		"variante": ["Lanterna", "Felinarul", "Lampa cu gaz", "Candela"],
+		"corect": 0,
+		"nivel": 1,
+		"subcategorie": "tehnologie_inventii",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3803",
+		"verificat": false,
+		"fapt": "mana:3803",
+		"text": "Ce aparat măsoară greutatea?",
+		"variante": ["Cronometrul", "Cântarul", "Metrul", "Barometrul"],
+		"corect": 1,
+		"nivel": 1,
+		"subcategorie": "tehnologie_inventii",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3804",
+		"verificat": false,
+		"fapt": "mana:3804",
+		"text": "Ce obiect mic deschide o încuietoare?",
+		"variante": ["Clanța", "Balamaua", "Cheia", "Zăvorul"],
+		"corect": 2,
+		"nivel": 1,
+		"subcategorie": "tehnologie_inventii",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3805",
+		"verificat": false,
+		"fapt": "mana:3805",
+		"text": "Ce dispozitiv ține pasagerul în scaun la o frânare bruscă?",
+		"variante": ["Airbagul", "Tetiera", "Oglinda retrovizoare", "Centura de siguranță"],
+		"corect": 3,
+		"nivel": 1,
+		"subcategorie": "tehnologie_inventii",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3806",
+		"verificat": false,
+		"fapt": "mana:3806",
+		"text": "Ce invenție încetinește căderea prin aer, desfăcându-se ca o umbrelă?",
+		"variante": ["Parașuta", "Planorul", "Balonul", "Deltaplanul"],
+		"corect": 0,
+		"nivel": 1,
+		"subcategorie": "tehnologie_inventii",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3807",
+		"verificat": false,
+		"fapt": "mana:3807",
+		"text": "Ce unealtă strânge șuruburile?",
+		"variante": ["Rindeaua", "Șurubelnița", "Pila", "Dalta"],
+		"corect": 1,
+		"nivel": 1,
+		"subcategorie": "tehnologie_inventii",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3808",
+		"verificat": false,
+		"fapt": "mana:3808",
+		"text": "Ce mijloc de transport urcă oamenii pe munte, atârnat de un cablu?",
+		"variante": ["Tramvaiul", "Metroul", "Telecabina", "Funicularul de marfă"],
+		"corect": 2,
+		"nivel": 1,
+		"subcategorie": "tehnologie_inventii",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3809",
+		"verificat": false,
+		"fapt": "mana:3809",
+		"text": "Ce vehicul se deplasează sub apă?",
+		"variante": ["Hidroavionul", "Remorcherul", "Catamaranul", "Submarinul"],
+		"corect": 3,
+		"nivel": 1,
+		"subcategorie": "tehnologie_inventii",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3810",
+		"verificat": false,
+		"fapt": "mana:3810",
+		"text": "Ce aparat zboară cu palete rotitoare deasupra și poate rămâne pe loc în aer?",
+		"variante": ["Elicopterul", "Planorul", "Dirijabilul", "Hidroavionul"],
+		"corect": 0,
+		"nivel": 1,
+		"subcategorie": "tehnologie_inventii",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3811",
+		"verificat": false,
+		"fapt": "mana:3811",
+		"text": "Ce obiect schimbă canalele de la distanță?",
+		"variante": ["Difuzorul", "Telecomanda", "Antena", "Decodorul"],
+		"corect": 1,
+		"nivel": 1,
+		"subcategorie": "tehnologie_inventii",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3812",
+		"verificat": false,
+		"fapt": "mana:3812",
+		"text": "Ce obiect te lasă să asculți muzică fără să-i deranjezi pe ceilalți?",
+		"variante": ["Megafonul", "Amplificatorul", "Căștile", "Difuzorul"],
+		"corect": 2,
+		"nivel": 1,
+		"subcategorie": "tehnologie_inventii",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3813",
+		"verificat": false,
+		"fapt": "mana:3813",
+		"text": "Ce aparat face vânt cu palete care se rotesc?",
+		"variante": ["Radiatorul", "Boilerul", "Umidificatorul", "Ventilatorul"],
+		"corect": 3,
+		"nivel": 1,
+		"subcategorie": "tehnologie_inventii",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3814",
+		"verificat": false,
+		"fapt": "mana:3814",
+		"text": "Ce instalație cu trei lumini dirijează traficul?",
+		"variante": ["Semaforul", "Indicatorul", "Marcajul", "Bariera"],
+		"corect": 0,
+		"nivel": 1,
+		"subcategorie": "tehnologie_inventii",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3815",
+		"verificat": false,
+		"fapt": "mana:3815",
+		"text": "Ce dispozitiv se umflă cu gaz într-o clipă și apără pasagerul la izbire?",
+		"variante": ["Bara de protecție", "Airbagul", "Centura", "Tetiera"],
+		"corect": 1,
+		"nivel": 1,
+		"subcategorie": "tehnologie_inventii",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3816",
+		"verificat": false,
+		"fapt": "mana:3816",
+		"text": "Ce instrument de scris are o bilă mică în vârf?",
+		"variante": ["Pana", "Carioca", "Pixul", "Creionul"],
+		"corect": 2,
+		"nivel": 1,
+		"subcategorie": "tehnologie_inventii",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3817",
+		"verificat": false,
+		"fapt": "mana:3817",
+		"text": "Ce tehnologie leagă aparatele la internet fără cablu, în casă?",
+		"variante": ["Bluetooth", "Infraroșu", "Fibra optică", "Wi-Fi"],
+		"corect": 3,
+		"nivel": 1,
+		"subcategorie": "tehnologie_inventii",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3818",
+		"verificat": false,
+		"fapt": "mana:3818",
+		"text": "Ce procedeu de păstrare a hranei a fost pus la punct de Clarence Birdseye, în anii 1920?",
+		"variante": ["Congelarea rapidă", "Afumarea", "Sterilizarea", "Deshidratarea"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "tehnologie_inventii",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3819",
+		"verificat": false,
+		"fapt": "mana:3819",
+		"text": "Ce fel de motor a născocit Felix Wankel, cu piston care se rotește?",
+		"variante": ["Motorul în stea", "Motorul rotativ", "Motorul în V", "Motorul boxer"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "tehnologie_inventii",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3820",
+		"verificat": false,
+		"fapt": "mana:3820",
+		"text": "Ce inventator italian a trecut un semnal radio peste Atlantic, în 1901?",
+		"variante": ["Heinrich Hertz", "Reginald Fessenden", "Guglielmo Marconi", "Nikola Tesla"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "tehnologie_inventii",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3821",
+		"verificat": false,
+		"fapt": "mana:3821",
+		"text": "Ce inginer german a brevetat în 1886 un automobil cu motor pe benzină?",
+		"variante": ["Gottlieb Daimler", "Wilhelm Maybach", "Armand Peugeot", "Karl Benz"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "tehnologie_inventii",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3822",
+		"verificat": false,
+		"fapt": "mana:3822",
+		"text": "Ce fibră sintetică lansată de DuPont în 1938 a luat locul mătasei la ciorapi?",
+		"variante": ["Nylonul", "Vâscoza", "Poliesterul", "Acrilul"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "tehnologie_inventii",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3823",
+		"verificat": false,
+		"fapt": "mana:3823",
+		"text": "Ce sistem de prindere a fost gândit după ce un inginer a privit scaieții agățați de haine?",
+		"variante": ["Nitul", "Velcro", "Capsa", "Fermoarul"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "tehnologie_inventii",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3824",
+		"verificat": false,
+		"fapt": "mana:3824",
+		"text": "Ce invenție a lui George Westinghouse a făcut trenurile lungi mult mai sigure?",
+		"variante": ["Cuplajul cu lanț", "Semnalul luminos", "Frâna cu aer comprimat", "Macazul automat"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "tehnologie_inventii",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3825",
+		"verificat": false,
+		"fapt": "mana:3825",
+		"text": "Ce procedeu al lui Charles Goodyear a făcut cauciucul statornic la căldură și la frig?",
+		"variante": ["Galvanizarea", "Pasteurizarea", "Polimerizarea", "Vulcanizarea"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "tehnologie_inventii",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3826",
+		"verificat": false,
+		"fapt": "mana:3826",
+		"text": "Ce procedeu brevetat de Henry Bessemer, în 1856, a ieftinit oțelul?",
+		"variante": ["Convertizorul Bessemer", "Cuptorul Siemens", "Procedeul Hall-Héroult", "Procedeul Solvay"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "tehnologie_inventii",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3827",
+		"verificat": false,
+		"fapt": "mana:3827",
+		"text": "Ce inginer englez a construit, în 1825, prima cale ferată publică, între Stockton și Darlington?",
+		"variante": ["Thomas Telford", "George Stephenson", "Isambard Brunel", "Richard Trevithick"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "tehnologie_inventii",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3828",
+		"verificat": false,
+		"fapt": "mana:3828",
+		"text": "Ce aeronavă cu schelet rigid, umplută cu gaz mai ușor decât aerul, poartă numele unui conte german?",
+		"variante": ["Balonul Montgolfier", "Autogirul", "Zeppelinul", "Planorul"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "tehnologie_inventii",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3829",
+		"verificat": false,
+		"fapt": "mana:3829",
+		"text": "Ce medicament a fost pus în vânzare de firma Bayer, în 1899?",
+		"variante": ["Paracetamolul", "Morfina", "Chinina", "Aspirina"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "tehnologie_inventii",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3830",
+		"verificat": false,
+		"fapt": "mana:3830",
+		"text": "Ce inventator american a arătat public, în 1854, frâna de siguranță pentru ascensoare?",
+		"variante": ["Elisha Otis", "Cyrus Field", "Peter Cooper", "Frank Sprague"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "tehnologie_inventii",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3831",
+		"verificat": false,
+		"fapt": "mana:3831",
+		"text": "Ce aparat a înregistrat sunetul pe bandă magnetică, înaintea casetofonului?",
+		"variante": ["Pick-upul", "Magnetofonul", "Fonograful", "Patefonul"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "tehnologie_inventii",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3832",
+		"verificat": false,
+		"fapt": "mana:3832",
+		"text": "Ce invenție a intrat în casele secolului XIX prin fabrica lui Isaac Singer?",
+		"variante": ["Mașina de scris", "Mașina de tricotat", "Mașina de cusut", "Mașina de spălat"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "tehnologie_inventii",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3833",
+		"verificat": false,
+		"fapt": "mana:3833",
+		"text": "Ce inginer american a construit în 1902 primul sistem de aer condiționat?",
+		"variante": ["Clarence Birdseye", "Charles Kettering", "Frederick Jones", "Willis Carrier"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "tehnologie_inventii",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3834",
+		"verificat": false,
+		"fapt": "mana:3834",
+		"text": "Ce inginer născut la Kiev a construit, în America, primul elicopter făcut în serie?",
+		"variante": ["Igor Sikorski", "Juan de la Cierva", "Paul Cornu", "Arthur Young"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "tehnologie_inventii",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3835",
+		"verificat": false,
+		"fapt": "mana:3835",
+		"text": "Ce aparat implantabil, folosit prima dată în 1958, ține ritmul inimii?",
+		"variante": ["Defibrilatorul extern", "Stimulatorul cardiac", "Stentul", "Valva artificială"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "tehnologie_inventii",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3836",
+		"verificat": false,
+		"fapt": "mana:3836",
+		"text": "Ce invenție a lui Earle Dickson, din 1920, acoperă o tăietură mică?",
+		"variante": ["Garoul", "Atela", "Plasturele", "Compresa"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "tehnologie_inventii",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3837",
+		"verificat": false,
+		"fapt": "mana:3837",
+		"text": "Ce șir de dungi a fost citit prima dată de un scaner, la o casă de magazin, în 1974?",
+		"variante": ["Codul QR", "Banda magnetică", "Eticheta RFID", "Codul de bare"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "tehnologie_inventii",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3838",
+		"verificat": false,
+		"fapt": "mana:3838",
+		"text": "Ce invenție chineză, descrisă încă din secolul IX, a schimbat felul de a purta război?",
+		"variante": ["Praful de pușcă", "Arbaleta", "Oțelul damaschinat", "Focul grecesc"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "tehnologie_inventii",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3839",
+		"verificat": false,
+		"fapt": "mana:3839",
+		"text": "Ce instrument medical a fost născocit de René Laennec, în 1816?",
+		"variante": ["Oftalmoscopul", "Stetoscopul", "Termometrul clinic", "Tensiometrul"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "tehnologie_inventii",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3840",
+		"verificat": false,
+		"fapt": "mana:3840",
+		"text": "Ce zidar englez a brevetat, în 1824, cimentul Portland?",
+		"variante": ["Joseph Monier", "Thomas Edison", "Joseph Aspdin", "John Smeaton"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "tehnologie_inventii",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3841",
+		"verificat": false,
+		"fapt": "mana:3841",
+		"text": "Ce mașină de calcul a construit Blaise Pascal, în 1642, ca să adune și să scadă?",
+		"variante": ["Mașina analitică", "Abacul lui Napier", "Rigla de calcul", "Pascalina"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "tehnologie_inventii",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3842",
+		"verificat": false,
+		"fapt": "mana:3842",
+		"text": "Ce inginer german a construit, în 1876, primul motor cu ardere internă în patru timpi?",
+		"variante": ["Nikolaus Otto", "Étienne Lenoir", "Felix Wankel", "Gottlieb Daimler"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "tehnologie_inventii",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3843",
+		"verificat": false,
+		"fapt": "mana:3843",
+		"text": "Ce pereche de protocoale, scrisă de Vinton Cerf și Robert Kahn, leagă rețele deosebite într-un internet?",
+		"variante": ["Telnet", "TCP/IP", "FTP", "SMTP"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "tehnologie_inventii",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3844",
+		"verificat": false,
+		"fapt": "mana:3844",
+		"text": "Ce sistem preface numele unui site în adresa numerică a serverului?",
+		"variante": ["VPN", "NAT", "DNS", "HTTP"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "tehnologie_inventii",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3845",
+		"verificat": false,
+		"fapt": "mana:3845",
+		"text": "Ce limbaj de marcare descrie structura unei pagini web?",
+		"variante": ["CSS", "XML", "JSON", "HTML"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "tehnologie_inventii",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3846",
+		"verificat": false,
+		"fapt": "mana:3846",
+		"text": "Ce limbaj de programare lansat de Sun în 1995 rulează pe o mașină virtuală, nu direct pe procesor?",
+		"variante": ["Java", "Perl", "Pascal", "Ruby"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "tehnologie_inventii",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3847",
+		"verificat": false,
+		"fapt": "mana:3847",
+		"text": "Ce limbaj cere date dintr-o bază relațională, cu tabele legate între ele?",
+		"variante": ["LaTeX", "SQL", "HTML", "Assembler"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "tehnologie_inventii",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3848",
+		"verificat": false,
+		"fapt": "mana:3848",
+		"text": "Ce sistem de operare făcut la Bell Labs, în 1969, a stat la temelia multor altora?",
+		"variante": ["MS-DOS", "OS/2", "UNIX", "CP/M"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "tehnologie_inventii",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3849",
+		"verificat": false,
+		"fapt": "mana:3849",
+		"text": "Ce calculator britanic din 1943 a fost construit pentru spargerea cifrurilor germane?",
+		"variante": ["Mark I", "EDSAC", "Z3", "Colossus"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "tehnologie_inventii",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3850",
+		"verificat": false,
+		"fapt": "mana:3850",
+		"text": "Ce limbaj creat la IBM în 1957 a fost primul de nivel înalt folosit pe scară largă?",
+		"variante": ["FORTRAN", "COBOL", "LISP", "BASIC"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "tehnologie_inventii",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3851",
+		"verificat": false,
+		"fapt": "mana:3851",
+		"text": "Ce arhitectură de calculator ține programul și datele în aceeași memorie?",
+		"variante": ["Arhitectura vectorială", "Arhitectura von Neumann", "Arhitectura Harvard", "Arhitectura RISC"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "tehnologie_inventii",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3852",
+		"verificat": false,
+		"fapt": "mana:3852",
+		"text": "Ce sistem de ținere a versiunilor codului a fost scris de Linus Torvalds, în 2005?",
+		"variante": ["CVS", "Mercurial", "Git", "Subversion"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "tehnologie_inventii",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3853",
+		"verificat": false,
+		"fapt": "mana:3853",
+		"text": "Ce informaticiană americană a lucrat la primul compilator și la limbajul COBOL?",
+		"variante": ["Jean Bartik", "Margaret Hamilton", "Adele Goldberg", "Grace Hopper"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "tehnologie_inventii",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3854",
+		"verificat": false,
+		"fapt": "mana:3854",
+		"text": "Ce component electronic dă lumină când trece curentul prin el, arătat prima dată în roșu, în 1962?",
+		"variante": ["LED-ul", "Tranzistorul", "Tiristorul", "Fotorezistența"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "tehnologie_inventii",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3855",
+		"verificat": false,
+		"fapt": "mana:3855",
+		"text": "Prin ce fel de cablu trec datele ca impulsuri de lumină?",
+		"variante": ["Cablul de alimentare", "Fibra optică", "Cablul coaxial", "Perechea torsadată"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "tehnologie_inventii",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3856",
+		"verificat": false,
+		"fapt": "mana:3856",
+		"text": "Ce fel de registru, descris în 2008, leagă blocuri de date prin semnături criptografice?",
+		"variante": ["Tabela de dispersie", "Lista înlănțuită", "Blockchain", "Arborele binar"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "tehnologie_inventii",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3857",
+		"verificat": false,
+		"fapt": "mana:3857",
+		"text": "Ce efect preface lumina de-a dreptul în electricitate, în panourile solare?",
+		"variante": ["Efectul Joule", "Efectul Hall", "Efectul Peltier", "Efectul fotovoltaic"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "tehnologie_inventii",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3858",
+		"verificat": false,
+		"fapt": "mana:3858",
+		"text": "Ce fel de baterie, premiată cu Nobel în 2019, alimentează telefoanele și mașinile electrice?",
+		"variante": ["Litiu-ion", "Nichel-cadmiu", "Plumb-acid", "Zinc-carbon"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "tehnologie_inventii",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3859",
+		"verificat": false,
+		"fapt": "mana:3859",
+		"text": "Ce a pornit Enrico Fermi, în 1942, sub tribunele unui stadion din Chicago?",
+		"variante": ["Primul radiotelescop", "Primul reactor nuclear", "Primul accelerator de particule", "Primul laser"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "tehnologie_inventii",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3860",
+		"verificat": false,
+		"fapt": "mana:3860",
+		"text": "Ce tehnologie de rețea locală a fost născocită la Xerox PARC, în 1973?",
+		"variante": ["ATM", "ISDN", "Ethernet", "Token Ring"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "tehnologie_inventii",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3861",
+		"verificat": false,
+		"fapt": "mana:3861",
+		"text": "Ce fel de mesaj a fost trimis prima dată printr-o rețea GSM, în 1992?",
+		"variante": ["Faxul", "Pagerul", "E-mailul", "SMS-ul"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "tehnologie_inventii",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3862",
+		"verificat": false,
+		"fapt": "mana:3862",
+		"text": "Ce conector apărut în 1996 a înlocuit porturile seriale și paralele ale calculatoarelor?",
+		"variante": ["USB", "HDMI", "SCSI", "PS/2"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "tehnologie_inventii",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3863",
+		"verificat": false,
+		"fapt": "mana:3863",
+		"text": "Ce legătură între Europa și America a fost dusă la bun sfârșit în 1866?",
+		"variante": ["Cablul telefonic transatlantic", "Cablul telegrafic transatlantic", "Linia radio transatlantică", "Ruta poștală cu vapoare"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "tehnologie_inventii",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3864",
+		"verificat": false,
+		"fapt": "mana:3864",
+		"text": "Ce robot industrial a început să lucreze pe o linie General Motors, în 1961?",
+		"variante": ["ASIMO", "Elektro", "Unimate", "Shakey"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "tehnologie_inventii",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3865",
+		"verificat": false,
+		"fapt": "mana:3865",
+		"text": "Ce mașină de țesut din 1804 era programată cu cartele perforate?",
+		"variante": ["Războiul Cartwright", "Mașina Spinning Jenny", "Mașina lui Arkwright", "Războiul Jacquard"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "tehnologie_inventii",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3866",
+		"verificat": false,
+		"fapt": "mana:3866",
+		"text": "Ce inginer a proiectat calculatoarele Apple I și Apple II?",
+		"variante": ["Steve Wozniak", "Steve Jobs", "Chuck Peddle", "Jef Raskin"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "tehnologie_inventii",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3867",
+		"verificat": false,
+		"fapt": "mana:3867",
+		"text": "Ce inginer american a arătat publicului, în 1968, mouse-ul, ferestrele și scrisul în comun pe ecran?",
+		"variante": ["Vannevar Bush", "Douglas Engelbart", "Ivan Sutherland", "Alan Kay"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "tehnologie_inventii",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3868",
+		"verificat": false,
+		"fapt": "mana:3868",
+		"text": "Câte planete se află între Soare și Pământ?",
+		"variante": ["Trei", "Niciuna", "Două", "Una"],
+		"corect": 2,
+		"nivel": 1,
+		"subcategorie": "astronomie_spatiu",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3869",
+		"verificat": false,
+		"fapt": "mana:3869",
+		"text": "Cum se numește omul pregătit să zboare în spațiu?",
+		"variante": ["Aviator", "Scafandru", "Navigator", "Astronaut"],
+		"corect": 3,
+		"nivel": 1,
+		"subcategorie": "astronomie_spatiu",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3870",
+		"verificat": false,
+		"fapt": "mana:3870",
+		"text": "Ce culoare are Soarele privit din spațiu, fără atmosferă la mijloc?",
+		"variante": ["Alb", "Galben", "Portocaliu", "Roșu"],
+		"corect": 0,
+		"nivel": 1,
+		"subcategorie": "astronomie_spatiu",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3871",
+		"verificat": false,
+		"fapt": "mana:3871",
+		"text": "Cât timp face lumina Lunii până la Pământ?",
+		"variante": ["Circa o oră", "Puțin peste o secundă", "O clipă, fără nicio întârziere", "Circa un minut"],
+		"corect": 1,
+		"nivel": 1,
+		"subcategorie": "astronomie_spatiu",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3872",
+		"verificat": false,
+		"fapt": "mana:3872",
+		"text": "Ce satelit artificial a fost primul trimis pe orbită, în 1957?",
+		"variante": ["Vanguard 1", "Telstar", "Sputnik 1", "Explorer 1"],
+		"corect": 2,
+		"nivel": 1,
+		"subcategorie": "astronomie_spatiu",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3873",
+		"verificat": false,
+		"fapt": "mana:3873",
+		"text": "Ce vehicul poate ieși din atmosferă, împingându-se cu gaze arse?",
+		"variante": ["Avionul cu reacție", "Dirijabilul", "Planorul", "Racheta"],
+		"corect": 3,
+		"nivel": 1,
+		"subcategorie": "astronomie_spatiu",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3874",
+		"verificat": false,
+		"fapt": "mana:3874",
+		"text": "Ce este un an-lumină?",
+		"variante": ["Distanța străbătută de lumină într-un an", "Timpul în care lumina ocolește Pământul", "Vârsta unei stele tinere", "Durata unui ocol al Soarelui"],
+		"corect": 0,
+		"nivel": 1,
+		"subcategorie": "astronomie_spatiu",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3875",
+		"verificat": false,
+		"fapt": "mana:3875",
+		"text": "Cum se numește un grup de stele care alcătuiesc pe cer un desen cunoscut?",
+		"variante": ["Eclipsă", "Constelație", "Nebuloasă", "Roi de meteoriți"],
+		"corect": 1,
+		"nivel": 1,
+		"subcategorie": "astronomie_spatiu",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3876",
+		"verificat": false,
+		"fapt": "mana:3876",
+		"text": "Cum se numește faza în care Luna se vede ca un disc întreg?",
+		"variante": ["Primul pătrar", "Ultimul pătrar", "Lună plină", "Lună nouă"],
+		"corect": 2,
+		"nivel": 1,
+		"subcategorie": "astronomie_spatiu",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3877",
+		"verificat": false,
+		"fapt": "mana:3877",
+		"text": "Cum se numește starea de lipsă a greutății, simțită pe o stație spațială?",
+		"variante": ["Inerție", "Accelerație", "Frecare", "Imponderabilitate"],
+		"corect": 3,
+		"nivel": 1,
+		"subcategorie": "astronomie_spatiu",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3878",
+		"verificat": false,
+		"fapt": "mana:3878",
+		"text": "Câte faze principale are Luna?",
+		"variante": ["Patru", "Două", "Șase", "Opt"],
+		"corect": 0,
+		"nivel": 1,
+		"subcategorie": "astronomie_spatiu",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3879",
+		"verificat": false,
+		"fapt": "mana:3879",
+		"text": "Ce culoare are cerul văzut de pe suprafața Lunii, în plină zi?",
+		"variante": ["Cenușiu", "Negru", "Albastru", "Roșu"],
+		"corect": 1,
+		"nivel": 1,
+		"subcategorie": "astronomie_spatiu",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3880",
+		"verificat": false,
+		"fapt": "mana:3880",
+		"text": "Cum e greutatea unui om pe Lună, față de cea de pe Pământ?",
+		"variante": ["De două ori mai mare", "De șase ori mai mare", "De șase ori mai mică", "La fel"],
+		"corect": 2,
+		"nivel": 1,
+		"subcategorie": "astronomie_spatiu",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3881",
+		"verificat": false,
+		"fapt": "mana:3881",
+		"text": "Cum se numește știința care studiază corpurile cerești?",
+		"variante": ["Astrologia", "Geologia", "Meteorologia", "Astronomia"],
+		"corect": 3,
+		"nivel": 1,
+		"subcategorie": "astronomie_spatiu",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3882",
+		"verificat": false,
+		"fapt": "mana:3882",
+		"text": "Ce se întâmplă cu stelele în timpul zilei?",
+		"variante": ["Rămân pe cer, ascunse de lumina Soarelui", "Se sting pentru câteva ore", "Trec în cealaltă jumătate a cerului", "Se depărtează de Pământ"],
+		"corect": 0,
+		"nivel": 1,
+		"subcategorie": "astronomie_spatiu",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3883",
+		"verificat": false,
+		"fapt": "mana:3883",
+		"text": "Ce se întâmplă cu lumina zilei în timpul unei eclipse totale de Soare?",
+		"variante": ["Se întunecă pentru o zi întreagă", "Se întunecă pentru câteva minute", "Se face roșie pentru o oră", "Nu se schimbă nimic"],
+		"corect": 1,
+		"nivel": 1,
+		"subcategorie": "astronomie_spatiu",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3884",
+		"verificat": false,
+		"fapt": "mana:3884",
+		"text": "Cum se numește anul care are 366 de zile?",
+		"variante": ["An sideral", "An tropic", "An bisect", "An solar"],
+		"corect": 2,
+		"nivel": 1,
+		"subcategorie": "astronomie_spatiu",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3885",
+		"verificat": false,
+		"fapt": "mana:3885",
+		"text": "Cum se numește ziua cea mai lungă a anului, în emisfera nordică?",
+		"variante": ["Echinocțiul de primăvară", "Solstițiul de iarnă", "Echinocțiul de toamnă", "Solstițiul de vară"],
+		"corect": 3,
+		"nivel": 1,
+		"subcategorie": "astronomie_spatiu",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3886",
+		"verificat": false,
+		"fapt": "mana:3886",
+		"text": "Cum se numește o grămadă uriașă de stele, gaz și praf, ținută laolaltă de gravitație?",
+		"variante": ["Galaxie", "Sistem solar", "Roi de asteroizi", "Nebuloasă"],
+		"corect": 0,
+		"nivel": 1,
+		"subcategorie": "astronomie_spatiu",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3887",
+		"verificat": false,
+		"fapt": "mana:3887",
+		"text": "Cum se numesc gropile rotunde care acoperă suprafața Lunii?",
+		"variante": ["Fisuri", "Cratere", "Mări", "Dune"],
+		"corect": 1,
+		"nivel": 1,
+		"subcategorie": "astronomie_spatiu",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3888",
+		"verificat": false,
+		"fapt": "mana:3888",
+		"text": "Cum se numește un corp stâncos care ocolește Soarele, prea mic ca să fie planetă?",
+		"variante": ["Quasar", "Pulsar", "Asteroid", "Satelit"],
+		"corect": 2,
+		"nivel": 1,
+		"subcategorie": "astronomie_spatiu",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3889",
+		"verificat": false,
+		"fapt": "mana:3889",
+		"text": "Cum se numește aparatul fără echipaj trimis să cerceteze alte corpuri cerești?",
+		"variante": ["Naveta spațială", "Satelitul meteorologic", "Observatorul", "Sonda spațială"],
+		"corect": 3,
+		"nivel": 1,
+		"subcategorie": "astronomie_spatiu",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3890",
+		"verificat": false,
+		"fapt": "mana:3890",
+		"text": "De unde vine lumina pe care o dă Luna?",
+		"variante": ["O răsfrânge de la Soare", "O produce singură, ca o stea", "Vine de la stelele apropiate", "Vine de la Pământ"],
+		"corect": 0,
+		"nivel": 1,
+		"subcategorie": "astronomie_spatiu",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3891",
+		"verificat": false,
+		"fapt": "mana:3891",
+		"text": "Ce lipsește în spațiu, motiv pentru care sunetul nu se poate auzi?",
+		"variante": ["Praful", "Aerul", "Lumina", "Căldura"],
+		"corect": 1,
+		"nivel": 1,
+		"subcategorie": "astronomie_spatiu",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3892",
+		"verificat": false,
+		"fapt": "mana:3892",
+		"text": "Ce alternanță e dată de rotația Pământului în jurul axei sale?",
+		"variante": ["Mareele", "Fazele Lunii", "Ziua și noaptea", "Anotimpurile"],
+		"corect": 2,
+		"nivel": 1,
+		"subcategorie": "astronomie_spatiu",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3893",
+		"verificat": false,
+		"fapt": "mana:3893",
+		"text": "Care e cel mai mare satelit natural din Sistemul Solar?",
+		"variante": ["Titan", "Callisto", "Triton", "Ganymede"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "astronomie_spatiu",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3894",
+		"verificat": false,
+		"fapt": "mana:3894",
+		"text": "Cum se numește cel mai înalt vulcan din Sistemul Solar, ridicat pe Marte?",
+		"variante": ["Olympus Mons", "Valles Marineris", "Mons Huygens", "Maxwell Montes"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "astronomie_spatiu",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3895",
+		"verificat": false,
+		"fapt": "mana:3895",
+		"text": "Cum se numește momentul în care ziua și noaptea sunt aproape egale?",
+		"variante": ["Afeliu", "Echinocțiu", "Solstițiu", "Perigeu"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "astronomie_spatiu",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3896",
+		"verificat": false,
+		"fapt": "mana:3896",
+		"text": "Cum se numește învelișul exterior al atmosferei Soarelui, văzut ca o cunună în eclipsa totală?",
+		"variante": ["Cromosfera", "Heliosfera", "Coroana", "Fotosfera"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "astronomie_spatiu",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3897",
+		"verificat": false,
+		"fapt": "mana:3897",
+		"text": "Cum se numesc zonele mai întunecate și mai reci de pe suprafața Soarelui?",
+		"variante": ["Protuberanțele", "Granulele", "Spiculele", "Petele solare"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "astronomie_spatiu",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3898",
+		"verificat": false,
+		"fapt": "mana:3898",
+		"text": "Ce lumini colorate apar pe cerul zonelor polare, din pricina particulelor venite de la Soare?",
+		"variante": ["Aurora polară", "Fulgerul globular", "Haloul lunar", "Miragiul"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "astronomie_spatiu",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3899",
+		"verificat": false,
+		"fapt": "mana:3899",
+		"text": "Ce agenție spațială reunește țările europene?",
+		"variante": ["JAXA", "ESA", "NASA", "Roscosmos"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "astronomie_spatiu",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3900",
+		"verificat": false,
+		"fapt": "mana:3900",
+		"text": "Ce misiune Apollo a avut o explozie la bord și s-a întors fără să aterizeze, în 1970?",
+		"variante": ["Apollo 15", "Apollo 17", "Apollo 13", "Apollo 12"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "astronomie_spatiu",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3901",
+		"verificat": false,
+		"fapt": "mana:3901",
+		"text": "Cum se numesc, la un loc, Mercur, Venus, Pământul și Marte?",
+		"variante": ["Giganți gazoși", "Planete pitice", "Planete exterioare", "Planete telurice"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "astronomie_spatiu",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3902",
+		"verificat": false,
+		"fapt": "mana:3902",
+		"text": "Ce cosmonaut român a zburat în spațiu, în 1981?",
+		"variante": ["Dumitru Prunariu", "Vladimír Remek", "Bertalan Farkas", "Mirosław Hermaszewski"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "astronomie_spatiu",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3903",
+		"verificat": false,
+		"fapt": "mana:3903",
+		"text": "Ce rover american a coborât pe Marte în 2012, lăsat din aer de o macara zburătoare?",
+		"variante": ["Sojourner", "Curiosity", "Opportunity", "Spirit"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "astronomie_spatiu",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3904",
+		"verificat": false,
+		"fapt": "mana:3904",
+		"text": "Cât ține un an pe Marte, aproximativ?",
+		"variante": ["88 de zile", "12 ani", "687 de zile", "365 de zile"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "astronomie_spatiu",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3905",
+		"verificat": false,
+		"fapt": "mana:3905",
+		"text": "Cum se numește punctul orbitei cel mai apropiat de Soare?",
+		"variante": ["Afeliu", "Perigeu", "Zenit", "Periheliu"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "astronomie_spatiu",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3906",
+		"verificat": false,
+		"fapt": "mana:3906",
+		"text": "Ce fel de telescop culege unde radio, nu lumină?",
+		"variante": ["Radiotelescopul", "Telescopul optic", "Microscopul electronic", "Spectroscopul"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "astronomie_spatiu",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3907",
+		"verificat": false,
+		"fapt": "mana:3907",
+		"text": "Cum se numește potrivirea din care Luna ne arată mereu aceeași față?",
+		"variante": ["Librația", "Rotația sincronă", "Precesia", "Nutația"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "astronomie_spatiu",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3908",
+		"verificat": false,
+		"fapt": "mana:3908",
+		"text": "Ce satelit al lui Saturn azvârle gheizere de apă prin crăpăturile de la polul sud?",
+		"variante": ["Iapetus", "Dione", "Enceladus", "Mimas"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "astronomie_spatiu",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3909",
+		"verificat": false,
+		"fapt": "mana:3909",
+		"text": "Cum se numește trecerea unei planete prin fața stelei sale, văzută de la noi?",
+		"variante": ["Ocultație", "Conjuncție", "Opoziție", "Tranzit"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "astronomie_spatiu",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3910",
+		"verificat": false,
+		"fapt": "mana:3910",
+		"text": "Ce misiune a dus primii oameni în jurul Lunii, fără aterizare, în 1968?",
+		"variante": ["Apollo 8", "Apollo 9", "Apollo 10", "Gemini 12"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "astronomie_spatiu",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3911",
+		"verificat": false,
+		"fapt": "mana:3911",
+		"text": "Cum se numea naveta spațială americană care a zburat prima, în 1981?",
+		"variante": ["Atlantis", "Columbia", "Challenger", "Discovery"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "astronomie_spatiu",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3912",
+		"verificat": false,
+		"fapt": "mana:3912",
+		"text": "Ce firmă privată a dus prima un echipaj la Stația Spațială Internațională, în 2020?",
+		"variante": ["Boeing", "Virgin Galactic", "SpaceX", "Blue Origin"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "astronomie_spatiu",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3913",
+		"verificat": false,
+		"fapt": "mana:3913",
+		"text": "Ce planetă pitică descoperită în 2005 a grăbit scoaterea lui Pluto din rândul planetelor?",
+		"variante": ["Haumea", "Makemake", "Sedna", "Eris"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "astronomie_spatiu",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3914",
+		"verificat": false,
+		"fapt": "mana:3914",
+		"text": "Cum se numește ploaia de stele căzătoare care se vede în august?",
+		"variante": ["Perseidele", "Leonidele", "Geminidele", "Quadrantidele"],
+		"corect": 0,
+		"nivel": 2,
+		"subcategorie": "astronomie_spatiu",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3915",
+		"verificat": false,
+		"fapt": "mana:3915",
+		"text": "Ce rachetă a dus misiunile Apollo spre Lună?",
+		"variante": ["Titan II", "Saturn V", "Soiuz", "Atlas V"],
+		"corect": 1,
+		"nivel": 2,
+		"subcategorie": "astronomie_spatiu",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3916",
+		"verificat": false,
+		"fapt": "mana:3916",
+		"text": "Ce șir de sonde sovietice a trimis primele imagini de pe suprafața lui Venus?",
+		"variante": ["Mariner", "Pioneer", "Venera", "Luna"],
+		"corect": 2,
+		"nivel": 2,
+		"subcategorie": "astronomie_spatiu",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3917",
+		"verificat": false,
+		"fapt": "mana:3917",
+		"text": "Cum se numește un meteor neobișnuit de strălucitor, mai luminos decât planetele?",
+		"variante": ["Pulsar", "Novă", "Cometă", "Bolid"],
+		"corect": 3,
+		"nivel": 2,
+		"subcategorie": "astronomie_spatiu",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3918",
+		"verificat": false,
+		"fapt": "mana:3918",
+		"text": "Ce rămâne după o supernovă, dacă miezul are între una și jumătate și trei mase solare?",
+		"variante": ["Stea neutronică", "Pitică brună", "Pitică roșie", "Gigantă albastră"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "astronomie_spatiu",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3919",
+		"verificat": false,
+		"fapt": "mana:3919",
+		"text": "Cum se numește raza orizontului evenimentelor unei găuri negre?",
+		"variante": ["Raza Hubble", "Raza Schwarzschild", "Raza Roche", "Raza Bohr"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "astronomie_spatiu",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3920",
+		"verificat": false,
+		"fapt": "mana:3920",
+		"text": "Cum se numește gaura neagră supermasivă din centrul Căii Lactee?",
+		"variante": ["M87*", "Centaurus A", "Sagittarius A*", "Cygnus X-1"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "astronomie_spatiu",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3921",
+		"verificat": false,
+		"fapt": "mana:3921",
+		"text": "Ce galaxie mare se îndreaptă spre Calea Lactee și se va uni cu ea?",
+		"variante": ["Galaxia Sombrero", "Norul Mic al lui Magellan", "Galaxia Vârtej", "Andromeda"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "astronomie_spatiu",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3922",
+		"verificat": false,
+		"fapt": "mana:3922",
+		"text": "Ce se bănuiește din faptul că marginile galaxiilor se rotesc prea repede?",
+		"variante": ["Materia întunecată", "Energia de vid", "Antimateria", "Plasma caldă"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "astronomie_spatiu",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3923",
+		"verificat": false,
+		"fapt": "mana:3923",
+		"text": "Ce se bănuiește că grăbește extinderea Universului?",
+		"variante": ["Masa neutrinilor", "Energia întunecată", "Presiunea radiației", "Câmpul magnetic galactic"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "astronomie_spatiu",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3924",
+		"verificat": false,
+		"fapt": "mana:3924",
+		"text": "Ce a măsurat pentru prima dată, în 2015, observatorul LIGO?",
+		"variante": ["Razele cosmice", "Undele radio de la pulsari", "Undele gravitaționale", "Neutrinii solari"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "astronomie_spatiu",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3925",
+		"verificat": false,
+		"fapt": "mana:3925",
+		"text": "În ce se va preschimba Soarele înainte să rămână o pitică albă?",
+		"variante": ["Stea neutronică", "Novă", "Pitică brună", "Gigantă roșie"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "astronomie_spatiu",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3926",
+		"verificat": false,
+		"fapt": "mana:3926",
+		"text": "Cum se numește învelișul de gaz pe care îl leapădă o stea ca Soarele la sfârșitul vieții?",
+		"variante": ["Nebuloasă planetară", "Rămășiță de supernovă", "Nor molecular", "Disc protoplanetar"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "astronomie_spatiu",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3927",
+		"verificat": false,
+		"fapt": "mana:3927",
+		"text": "Ce metodă măsoară distanța stelelor apropiate din deplasarea lor aparentă la șase luni?",
+		"variante": ["Interferometria", "Paralaxa", "Spectroscopia", "Fotometria"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "astronomie_spatiu",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3928",
+		"verificat": false,
+		"fapt": "mana:3928",
+		"text": "Cum se numește fabricarea elementelor chimice în miezul stelelor?",
+		"variante": ["Ionizarea", "Recombinarea", "Nucleosinteza stelară", "Fisiunea stelară"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "astronomie_spatiu",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3929",
+		"verificat": false,
+		"fapt": "mana:3929",
+		"text": "Cum se numește distanța sub care un satelit e sfâșiat de forțele de maree?",
+		"variante": ["Limita Eddington", "Limita Hayashi", "Limita Jeans", "Limita Roche"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "astronomie_spatiu",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3930",
+		"verificat": false,
+		"fapt": "mana:3930",
+		"text": "În ce loc, la un milion și jumătate de kilometri de Pământ, stă telescopul James Webb?",
+		"variante": ["Punctul L2", "Punctul L1", "Orbita geostaționară", "Centura Van Allen"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "astronomie_spatiu",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3931",
+		"verificat": false,
+		"fapt": "mana:3931",
+		"text": "Ce fel de stea neutronică are cel mai puternic câmp magnetic cunoscut?",
+		"variante": ["Stea T Tauri", "Magnetar", "Cefeidă", "Pitică albă"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "astronomie_spatiu",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3932",
+		"verificat": false,
+		"fapt": "mana:3932",
+		"text": "Ce element e, după hidrogen, cel mai răspândit în Univers?",
+		"variante": ["Carbonul", "Fierul", "Heliul", "Oxigenul"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "astronomie_spatiu",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3933",
+		"verificat": false,
+		"fapt": "mana:3933",
+		"text": "Cum se numește regiunea din jurul unei stele unde apa poate rămâne lichidă?",
+		"variante": ["Lobul Roche", "Discul de acreție", "Sfera Hill", "Zona locuibilă"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "astronomie_spatiu",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3934",
+		"verificat": false,
+		"fapt": "mana:3934",
+		"text": "Cum se numește șuvoiul de particule care pleacă fără oprire din coroana Soarelui?",
+		"variante": ["Vântul solar", "Radiația de fond", "Fluxul de neutrini", "Praful zodiacal"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "astronomie_spatiu",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3935",
+		"verificat": false,
+		"fapt": "mana:3935",
+		"text": "Cum se numește granița unde vântul solar se oprește în fața mediului dintre stele?",
+		"variante": ["Fotosfera", "Heliopauza", "Tropopauza", "Magnetopauza"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "astronomie_spatiu",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3936",
+		"verificat": false,
+		"fapt": "mana:3936",
+		"text": "Cum sunt numiți Uranus și Neptun, spre deosebire de Jupiter și Saturn?",
+		"variante": ["Planete telurice", "Planete pitice", "Giganți de gheață", "Giganți gazoși"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "astronomie_spatiu",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3937",
+		"verificat": false,
+		"fapt": "mana:3937",
+		"text": "Ce sondă a studiat Saturnul între 2004 și 2017, înainte să cadă în atmosfera lui?",
+		"variante": ["Galileo", "Ulysses", "Pioneer 11", "Cassini"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "astronomie_spatiu",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3938",
+		"verificat": false,
+		"fapt": "mana:3938",
+		"text": "Ce sondă a trecut pe lângă Pluto, în 2015?",
+		"variante": ["New Horizons", "Dawn", "Rosetta", "Deep Impact"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "astronomie_spatiu",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3939",
+		"verificat": false,
+		"fapt": "mana:3939",
+		"text": "Ce sondă a intrat pe orbita lui Jupiter, în 2016?",
+		"variante": ["Magellan", "Juno", "Cassini", "Voyager 2"],
+		"corect": 1,
+		"nivel": 3,
+		"subcategorie": "astronomie_spatiu",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3940",
+		"verificat": false,
+		"fapt": "mana:3940",
+		"text": "Ce sondă a izbutit prima aterizare lină pe Lună, în 1966?",
+		"variante": ["Surveyor 1", "Lunokhod 1", "Luna 9", "Ranger 7"],
+		"corect": 2,
+		"nivel": 3,
+		"subcategorie": "astronomie_spatiu",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3941",
+		"verificat": false,
+		"fapt": "mana:3941",
+		"text": "Ce stație spațială sovietică a stat pe orbită între 1986 și 2001?",
+		"variante": ["Saliut 1", "Skylab", "Tiangong", "Mir"],
+		"corect": 3,
+		"nivel": 3,
+		"subcategorie": "astronomie_spatiu",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3942",
+		"verificat": false,
+		"fapt": "mana:3942",
+		"text": "Ce astronomă a măsurat rotația galaxiilor și a găsit dovezi pentru masa nevăzută din ele?",
+		"variante": ["Vera Rubin", "Henrietta Leavitt", "Annie Jump Cannon", "Jocelyn Bell Burnell"],
+		"corect": 0,
+		"nivel": 3,
+		"subcategorie": "astronomie_spatiu",
+		"categorie": "stiinta_tehnologie"
+	},
+	{
+		"id": "mana:3943",
+		"verificat": false,
+		"fapt": "mana:3943",
 		"text": "Ce ocean înconjoară Polul Nord?",
 		"variante": ["Oceanul Arctic", "Oceanul Atlantic", "Oceanul Indian", "Oceanul Pacific"],
 		"corect": 0,
@@ -40944,9 +43419,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3719",
+		"id": "mana:3944",
 		"verificat": false,
-		"fapt": "mana:3719",
+		"fapt": "mana:3944",
 		"text": "Ce continent e străbătut de fluviul Amazon?",
 		"variante": ["Africa", "America de Sud", "Asia", "Australia"],
 		"corect": 1,
@@ -40955,9 +43430,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3720",
+		"id": "mana:3945",
 		"verificat": false,
-		"fapt": "mana:3720",
+		"fapt": "mana:3945",
 		"text": "Cum se numește muntele de gheață care plutește pe mare, rupt din marginea unui ghețar?",
 		"variante": ["Un recif", "Un atol", "Un aisberg", "Un banc de nisip"],
 		"corect": 2,
@@ -40966,9 +43441,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3721",
+		"id": "mana:3946",
 		"verificat": false,
-		"fapt": "mana:3721",
+		"fapt": "mana:3946",
 		"text": "Ce vânt se învârte într-o coloană îngustă și poate smulge acoperișuri?",
 		"variante": ["Tornada", "Briza", "Musonul", "Alizeul"],
 		"corect": 0,
@@ -40977,9 +43452,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3722",
+		"id": "mana:3947",
 		"verificat": false,
-		"fapt": "mana:3722",
+		"fapt": "mana:3947",
 		"text": "Ce precipitație cade vara în bucăți de gheață și strică recoltele?",
 		"variante": ["Roua", "Bruma", "Chiciura", "Grindina"],
 		"corect": 3,
@@ -40988,9 +43463,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3723",
+		"id": "mana:3948",
 		"verificat": false,
-		"fapt": "mana:3723",
+		"fapt": "mana:3948",
 		"text": "Ce lanț muntos se înalță între Franța, Elveția și Austria?",
 		"variante": ["Carpații", "Balcanii", "Alpii", "Vosgii"],
 		"corect": 2,
@@ -40999,9 +43474,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3724",
+		"id": "mana:3949",
 		"verificat": false,
-		"fapt": "mana:3724",
+		"fapt": "mana:3949",
 		"text": "Ce anotimp e în Australia când în România e iarnă?",
 		"variante": ["Vara", "Iarna", "Primăvara", "Toamna"],
 		"corect": 0,
@@ -41010,9 +43485,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3725",
+		"id": "mana:3950",
 		"verificat": false,
-		"fapt": "mana:3725",
+		"fapt": "mana:3950",
 		"text": "Cum se numește valea adâncă, cu pereți abrupți, săpată de un râu în stâncă?",
 		"variante": ["Un fiord", "Un istm", "Un platou", "Un canion"],
 		"corect": 3,
@@ -41021,9 +43496,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3726",
+		"id": "mana:3951",
 		"verificat": false,
-		"fapt": "mana:3726",
+		"fapt": "mana:3951",
 		"text": "Ce lipsește, în primul rând, dintr-un deșert?",
 		"variante": ["Ploaia", "Vântul", "Nisipul", "Soarele"],
 		"corect": 0,
@@ -41032,9 +43507,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3727",
+		"id": "mana:3952",
 		"verificat": false,
-		"fapt": "mana:3727",
+		"fapt": "mana:3952",
 		"text": "Cum se numește locul în care un râu începe?",
 		"variante": ["Delta", "Izvorul", "Gura de vărsare", "Lunca"],
 		"corect": 1,
@@ -41043,9 +43518,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3728",
+		"id": "mana:3953",
 		"verificat": false,
-		"fapt": "mana:3728",
+		"fapt": "mana:3953",
 		"text": "Ce fenomen ridică și coboară nivelul mării de două ori pe zi?",
 		"variante": ["Mareea", "Tsunamiul", "Furtuna", "Curentul marin"],
 		"corect": 0,
@@ -41054,9 +43529,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3729",
+		"id": "mana:3954",
 		"verificat": false,
-		"fapt": "mana:3729",
+		"fapt": "mana:3954",
 		"text": "Cum se numește linia imaginară care împarte Pământul în două jumătăți egale, la distanță egală de poli?",
 		"variante": ["Meridianul zero", "Tropicul Racului", "Ecuatorul", "Cercul polar"],
 		"corect": 2,
@@ -41065,9 +43540,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3730",
+		"id": "mana:3955",
 		"verificat": false,
-		"fapt": "mana:3730",
+		"fapt": "mana:3955",
 		"text": "Cum se numește apa care cade din nori în fulgi albi?",
 		"variante": ["Bruma", "Zăpada", "Chiciura", "Poleiul"],
 		"corect": 1,
@@ -41076,9 +43551,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3731",
+		"id": "mana:3956",
 		"verificat": false,
-		"fapt": "mana:3731",
+		"fapt": "mana:3956",
 		"text": "Ce val uriaș se ridică după un cutremur produs pe fundul oceanului?",
 		"variante": ["Mareea", "Uraganul", "Vârtejul", "Tsunamiul"],
 		"corect": 3,
@@ -41087,9 +43562,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3732",
+		"id": "mana:3957",
 		"verificat": false,
-		"fapt": "mana:3732",
+		"fapt": "mana:3957",
 		"text": "Cum se numește o întindere de apă sărată mai mică decât un ocean, legată de el?",
 		"variante": ["Un lac", "O mare", "O lagună", "Un estuar"],
 		"corect": 1,
@@ -41098,9 +43573,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3733",
+		"id": "mana:3958",
 		"verificat": false,
-		"fapt": "mana:3733",
+		"fapt": "mana:3958",
 		"text": "Cum se numește învelișul de aer care înconjoară Pământul?",
 		"variante": ["Hidrosfera", "Litosfera", "Biosfera", "Atmosfera"],
 		"corect": 3,
@@ -41109,9 +43584,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3734",
+		"id": "mana:3959",
 		"verificat": false,
-		"fapt": "mana:3734",
+		"fapt": "mana:3959",
 		"text": "Cum se numește stratul de la suprafața pământului în care cresc plantele?",
 		"variante": ["Solul", "Roca", "Nisipul", "Argila"],
 		"corect": 0,
@@ -41120,9 +43595,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3735",
+		"id": "mana:3960",
 		"verificat": false,
-		"fapt": "mana:3735",
+		"fapt": "mana:3960",
 		"text": "Cum se numește furtuna tropicală cu vânturi foarte puternice, formată deasupra Atlanticului?",
 		"variante": ["Uraganul", "Taifunul", "Ciclonul polar", "Tornada"],
 		"corect": 0,
@@ -41131,9 +43606,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3736",
+		"id": "mana:3961",
 		"verificat": false,
-		"fapt": "mana:3736",
+		"fapt": "mana:3961",
 		"text": "Cum se numește drumul apei din mare în nori, în ploaie și înapoi în mare?",
 		"variante": ["Efectul de seră", "Eroziunea", "Circuitul apei în natură", "Sedimentarea"],
 		"corect": 2,
@@ -41142,9 +43617,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3737",
+		"id": "mana:3962",
 		"verificat": false,
-		"fapt": "mana:3737",
+		"fapt": "mana:3962",
 		"text": "Ce ținut de la gura unui fluviu, cu stufăriș și brațe întinse, se află în sud-estul României?",
 		"variante": ["Lunca Siretului", "Balta Brăilei", "Grindul Chituc", "Delta Dunării"],
 		"corect": 3,
@@ -41153,9 +43628,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3738",
+		"id": "mana:3963",
 		"verificat": false,
-		"fapt": "mana:3738",
+		"fapt": "mana:3963",
 		"text": "Cum se numesc cele patru direcții principale: nord, sud, est și vest?",
 		"variante": ["Punctele cardinale", "Paralelele", "Meridianele", "Tropicele"],
 		"corect": 0,
@@ -41164,9 +43639,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3739",
+		"id": "mana:3964",
 		"verificat": false,
-		"fapt": "mana:3739",
+		"fapt": "mana:3964",
 		"text": "Ce fluviu trece prin Paris?",
 		"variante": ["Loara", "Sena", "Ronul", "Rinul"],
 		"corect": 1,
@@ -41175,9 +43650,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3740",
+		"id": "mana:3965",
 		"verificat": false,
-		"fapt": "mana:3740",
+		"fapt": "mana:3965",
 		"text": "Ce vulcan activ se înalță deasupra orașului sicilian Catania?",
 		"variante": ["Stromboli", "Hekla", "Vezuviul", "Etna"],
 		"corect": 3,
@@ -41186,9 +43661,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3741",
+		"id": "mana:3966",
 		"verificat": false,
-		"fapt": "mana:3741",
+		"fapt": "mana:3966",
 		"text": "Ce mare se află între Europa, Africa și Asia, legată de ocean printr-o strâmtoare îngustă?",
 		"variante": ["Marea Mediterană", "Marea Roșie", "Marea Caspică", "Marea Nordului"],
 		"corect": 0,
@@ -41197,9 +43672,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3742",
+		"id": "mana:3967",
 		"verificat": false,
-		"fapt": "mana:3742",
+		"fapt": "mana:3967",
 		"text": "Cum se numește masa de zăpadă care se desprinde și alunecă în viteză pe panta unui munte?",
 		"variante": ["Alunecarea de teren", "Avalanșa", "Viscolul", "Torentul"],
 		"corect": 1,
@@ -41208,9 +43683,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3743",
+		"id": "mana:3968",
 		"verificat": false,
-		"fapt": "mana:3743",
+		"fapt": "mana:3968",
 		"text": "Care e cel mai înalt vârf din Alpi?",
 		"variante": ["Matterhorn", "Mont Blanc", "Monte Rosa", "Jungfrau"],
 		"corect": 1,
@@ -41219,9 +43694,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3744",
+		"id": "mana:3969",
 		"verificat": false,
-		"fapt": "mana:3744",
+		"fapt": "mana:3969",
 		"text": "Care e cel mai lung fluviu din Asia?",
 		"variante": ["Gangele", "Mekong", "Yangtze", "Indus"],
 		"corect": 2,
@@ -41230,9 +43705,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3745",
+		"id": "mana:3970",
 		"verificat": false,
-		"fapt": "mana:3745",
+		"fapt": "mana:3970",
 		"text": "Care e cel mai întins lac de pe Pământ, numit „mare” din cauza mărimii?",
 		"variante": ["Lacul Baikal", "Lacul Ciad", "Marea Caspică", "Lacul Aral"],
 		"corect": 2,
@@ -41241,9 +43716,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3746",
+		"id": "mana:3971",
 		"verificat": false,
-		"fapt": "mana:3746",
+		"fapt": "mana:3971",
 		"text": "Ce mare se află la nord de Polonia și de Germania?",
 		"variante": ["Marea Baltică", "Marea Nordului", "Marea Albă", "Marea Norvegiei"],
 		"corect": 0,
@@ -41252,9 +43727,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3747",
+		"id": "mana:3972",
 		"verificat": false,
-		"fapt": "mana:3747",
+		"fapt": "mana:3972",
 		"text": "Ce mare se întinde între Grecia și Turcia, cu sute de insule?",
 		"variante": ["Marea Ionică", "Marea Adriatică", "Marea Marmara", "Marea Egee"],
 		"corect": 3,
@@ -41263,9 +43738,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3748",
+		"id": "mana:3973",
 		"verificat": false,
-		"fapt": "mana:3748",
+		"fapt": "mana:3973",
 		"text": "Care e cea mai mare insulă din Marea Mediterană?",
 		"variante": ["Sardinia", "Cipru", "Sicilia", "Creta"],
 		"corect": 2,
@@ -41274,9 +43749,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3749",
+		"id": "mana:3974",
 		"verificat": false,
-		"fapt": "mana:3749",
+		"fapt": "mana:3974",
 		"text": "Ce râu trece prin Roma?",
 		"variante": ["Padul", "Arno", "Tibrul", "Adige"],
 		"corect": 2,
@@ -41285,20 +43760,20 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3750",
+		"id": "mana:3975",
 		"verificat": false,
-		"fapt": "mana:3750",
-		"text": "Cum se numește lumina colorată care se vede noaptea pe cerul regiunilor polare?",
-		"variante": ["Aurora polară", "Curcubeul", "Mirajul", "Halo solar"],
+		"fapt": "mana:3975",
+		"text": "Cum se numește paralela care marchează limita de nord a zonei calde a Pământului?",
+		"variante": ["Tropicul Racului", "Tropicul Capricornului", "Cercul polar de nord", "Ecuatorul"],
 		"corect": 0,
 		"nivel": 2,
 		"subcategorie": "geografie_fizica",
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3751",
+		"id": "mana:3976",
 		"verificat": false,
-		"fapt": "mana:3751",
+		"fapt": "mana:3976",
 		"text": "Cum se numește un grup de insule apropiate unele de altele?",
 		"variante": ["Un istm", "Un arhipelag", "Un atol", "Un golf"],
 		"corect": 1,
@@ -41307,9 +43782,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3752",
+		"id": "mana:3977",
 		"verificat": false,
-		"fapt": "mana:3752",
+		"fapt": "mana:3977",
 		"text": "Cum se numește locul jos dintre două culmi, prin care un drum trece peste munte?",
 		"variante": ["O trecătoare", "Un versant", "O creastă", "Un abrupt"],
 		"corect": 0,
@@ -41318,9 +43793,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3753",
+		"id": "mana:3978",
 		"verificat": false,
-		"fapt": "mana:3753",
+		"fapt": "mana:3978",
 		"text": "Cum se numește locul unde un râu se unește cu altul?",
 		"variante": ["Cumpăna apelor", "Meandrul", "Vadul", "Confluența"],
 		"corect": 3,
@@ -41329,9 +43804,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3754",
+		"id": "mana:3979",
 		"verificat": false,
-		"fapt": "mana:3754",
+		"fapt": "mana:3979",
 		"text": "Cum se numește pădurea de conifere care se întinde peste nordul Rusiei și al Canadei?",
 		"variante": ["Taigaua", "Tundra", "Savana", "Stepa"],
 		"corect": 0,
@@ -41340,9 +43815,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3755",
+		"id": "mana:3980",
 		"verificat": false,
-		"fapt": "mana:3755",
+		"fapt": "mana:3980",
 		"text": "Cum se numește ținutul fără copaci, cu mușchi și licheni, de la marginea ghețurilor arctice?",
 		"variante": ["Taigaua", "Pampasul", "Tundra", "Preria"],
 		"corect": 2,
@@ -41351,9 +43826,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3756",
+		"id": "mana:3981",
 		"verificat": false,
-		"fapt": "mana:3756",
+		"fapt": "mana:3981",
 		"text": "Cum se numește câmpia africană cu ierburi înalte și copaci rari?",
 		"variante": ["Stepa", "Savana", "Preria", "Tundra"],
 		"corect": 1,
@@ -41362,9 +43837,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3757",
+		"id": "mana:3982",
 		"verificat": false,
-		"fapt": "mana:3757",
+		"fapt": "mana:3982",
 		"text": "Ce masiv din Carpați are vârful Omu?",
 		"variante": ["Retezat", "Parâng", "Bucegi", "Ceahlău"],
 		"corect": 2,
@@ -41373,9 +43848,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3758",
+		"id": "mana:3983",
 		"verificat": false,
-		"fapt": "mana:3758",
+		"fapt": "mana:3983",
 		"text": "Care e cel mai lung râu care curge în întregime pe teritoriul României?",
 		"variante": ["Oltul", "Mureșul", "Siretul", "Prutul"],
 		"corect": 0,
@@ -41384,9 +43859,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3759",
+		"id": "mana:3984",
 		"verificat": false,
-		"fapt": "mana:3759",
+		"fapt": "mana:3984",
 		"text": "Ce râu străbate Transilvania și se varsă în Tisa, lângă Szeged?",
 		"variante": ["Someșul", "Crișul Alb", "Mureșul", "Oltul"],
 		"corect": 2,
@@ -41395,9 +43870,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3760",
+		"id": "mana:3985",
 		"verificat": false,
-		"fapt": "mana:3760",
+		"fapt": "mana:3985",
 		"text": "Ce râu formează granița dintre România și Republica Moldova?",
 		"variante": ["Siretul", "Nistrul", "Jijia", "Prutul"],
 		"corect": 3,
@@ -41406,9 +43881,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3761",
+		"id": "mana:3986",
 		"verificat": false,
-		"fapt": "mana:3761",
+		"fapt": "mana:3986",
 		"text": "Cum se numește masa uriașă de gheață care acoperă Antarctica și Groenlanda?",
 		"variante": ["Ghețarul de vale", "Calota glaciară", "Banchiza", "Morena"],
 		"corect": 1,
@@ -41417,9 +43892,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3762",
+		"id": "mana:3987",
 		"verificat": false,
-		"fapt": "mana:3762",
+		"fapt": "mana:3987",
 		"text": "Cum se numesc cercurile de pe glob care arată latitudinea?",
 		"variante": ["Paralelele", "Meridianele", "Tropicele", "Fusurile orare"],
 		"corect": 0,
@@ -41428,9 +43903,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3763",
+		"id": "mana:3988",
 		"verificat": false,
-		"fapt": "mana:3763",
+		"fapt": "mana:3988",
 		"text": "Cum se numesc liniile de pe glob care merg de la un pol la celălalt?",
 		"variante": ["Izotermele", "Curbele de nivel", "Meridianele", "Paralelele"],
 		"corect": 2,
@@ -41439,9 +43914,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3764",
+		"id": "mana:3989",
 		"verificat": false,
-		"fapt": "mana:3764",
+		"fapt": "mana:3989",
 		"text": "Prin ce cartier al Londrei trece meridianul de la care se numără longitudinea?",
 		"variante": ["Westminster", "Chelsea", "Greenwich", "Camden"],
 		"corect": 2,
@@ -41450,9 +43925,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3765",
+		"id": "mana:3990",
 		"verificat": false,
-		"fapt": "mana:3765",
+		"fapt": "mana:3990",
 		"text": "Cum se numește fenomenul în care Soarele nu apune deloc, vara, dincolo de cercul polar?",
 		"variante": ["Aurora polară", "Soarele de la miezul nopții", "Noaptea polară", "Eclipsa"],
 		"corect": 1,
@@ -41461,9 +43936,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3766",
+		"id": "mana:3991",
 		"verificat": false,
-		"fapt": "mana:3766",
+		"fapt": "mana:3991",
 		"text": "Ce lanț muntos străbate nord-vestul Africii, din Maroc până în Tunisia?",
 		"variante": ["Munții Ahaggar", "Munții Dragonului", "Munții Atlas", "Munții Etiopieni"],
 		"corect": 2,
@@ -41472,9 +43947,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3767",
+		"id": "mana:3992",
 		"verificat": false,
-		"fapt": "mana:3767",
+		"fapt": "mana:3992",
 		"text": "Cum se numește peninsula din nordul Europei împărțită între Norvegia și Suedia?",
 		"variante": ["Peninsula Iutlanda", "Peninsula Kola", "Peninsula Balcanică", "Peninsula Scandinavă"],
 		"corect": 3,
@@ -41483,9 +43958,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3768",
+		"id": "mana:3993",
 		"verificat": false,
-		"fapt": "mana:3768",
+		"fapt": "mana:3993",
 		"text": "Ce scară măsoară puterea vântului, de la calm la uragan?",
 		"variante": ["Scara Beaufort", "Scara Richter", "Scara Mohs", "Scara Fujita"],
 		"corect": 0,
@@ -41494,9 +43969,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3769",
+		"id": "mana:3994",
 		"verificat": false,
-		"fapt": "mana:3769",
+		"fapt": "mana:3994",
 		"text": "Cum se numește vântul cald și uscat care coboară pe versantul adăpostit al unui munte?",
 		"variante": ["Musonul", "Alizeul", "Bora", "Föhnul"],
 		"corect": 3,
@@ -41505,9 +43980,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3770",
+		"id": "mana:3995",
 		"verificat": false,
-		"fapt": "mana:3770",
+		"fapt": "mana:3995",
 		"text": "Ce fluviu african formează cascada Victoria?",
 		"variante": ["Nigerul", "Zambezi", "Limpopo", "Orange"],
 		"corect": 1,
@@ -41516,9 +43991,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3771",
+		"id": "mana:3996",
 		"verificat": false,
-		"fapt": "mana:3771",
+		"fapt": "mana:3996",
 		"text": "Ce deșert de pe coasta sud-vestică a Africii are dune care coboară până în ocean?",
 		"variante": ["Namib", "Kalahari", "Danakil", "Karoo"],
 		"corect": 0,
@@ -41527,9 +44002,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3772",
+		"id": "mana:3997",
 		"verificat": false,
-		"fapt": "mana:3772",
+		"fapt": "mana:3997",
 		"text": "Ce deșert de nisip din Peninsula Arabică are cea mai întinsă mare de dune neîntreruptă din lume?",
 		"variante": ["Negev", "Thar", "Rub al-Khali", "Dasht-e Kavir"],
 		"corect": 2,
@@ -41538,9 +44013,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3773",
+		"id": "mana:3998",
 		"verificat": false,
-		"fapt": "mana:3773",
+		"fapt": "mana:3998",
 		"text": "Ce mare se află între Peninsula Italică, Sardinia și Sicilia?",
 		"variante": ["Marea Ligurică", "Marea Ionică", "Marea Adriatică", "Marea Tireniană"],
 		"corect": 3,
@@ -41549,9 +44024,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3774",
+		"id": "mana:3999",
 		"verificat": false,
-		"fapt": "mana:3774",
+		"fapt": "mana:3999",
 		"text": "Cum se numește procesul prin care se formează lanțurile de munți?",
 		"variante": ["Eroziunea", "Orogeneza", "Subducția", "Sedimentarea"],
 		"corect": 1,
@@ -41560,9 +44035,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3775",
+		"id": "mana:4000",
 		"verificat": false,
-		"fapt": "mana:3775",
+		"fapt": "mana:4000",
 		"text": "Care e cel mai înalt vârf din America de Sud?",
 		"variante": ["Chimborazo", "Huascarán", "Ojos del Salado", "Aconcagua"],
 		"corect": 3,
@@ -41571,9 +44046,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3776",
+		"id": "mana:4001",
 		"verificat": false,
-		"fapt": "mana:3776",
+		"fapt": "mana:4001",
 		"text": "Care e cel mai înalt vârf din America de Nord?",
 		"variante": ["Denali", "Logan", "Orizaba", "Whitney"],
 		"corect": 0,
@@ -41582,9 +44057,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3777",
+		"id": "mana:4002",
 		"verificat": false,
-		"fapt": "mana:3777",
+		"fapt": "mana:4002",
 		"text": "Care e cel mai înalt vârf din Caucaz?",
 		"variante": ["Kazbek", "Ararat", "Elbrus", "Dîh Tau"],
 		"corect": 2,
@@ -41593,9 +44068,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3778",
+		"id": "mana:4003",
 		"verificat": false,
-		"fapt": "mana:3778",
+		"fapt": "mana:4003",
 		"text": "Ce lac uriaș din centrul Australiei e sec aproape tot timpul?",
 		"variante": ["Lacul Torrens", "Lacul Eyre", "Lacul Gairdner", "Lacul Argyle"],
 		"corect": 1,
@@ -41604,9 +44079,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3779",
+		"id": "mana:4004",
 		"verificat": false,
-		"fapt": "mana:3779",
+		"fapt": "mana:4004",
 		"text": "Ce mare interioară din Asia Centrală s-a micșorat drastic după devierea râurilor care o alimentau?",
 		"variante": ["Marea Caspică", "Lacul Balhaș", "Lacul Issyk-Kul", "Marea Aral"],
 		"corect": 3,
@@ -41615,9 +44090,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3780",
+		"id": "mana:4005",
 		"verificat": false,
-		"fapt": "mana:3780",
+		"fapt": "mana:4005",
 		"text": "Cum se numește depresiunea largă rămasă după prăbușirea vârfului unui vulcan?",
 		"variante": ["Craterul", "Caldeira", "Maarul", "Conul"],
 		"corect": 1,
@@ -41626,9 +44101,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3781",
+		"id": "mana:4006",
 		"verificat": false,
-		"fapt": "mana:3781",
+		"fapt": "mana:4006",
 		"text": "Cum se numește izvorul fierbinte care aruncă periodic o coloană de apă și abur?",
 		"variante": ["Izbucul", "Mofeta", "Gheizerul", "Vulcanul de nămol"],
 		"corect": 2,
@@ -41637,9 +44112,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3782",
+		"id": "mana:4007",
 		"verificat": false,
-		"fapt": "mana:3782",
+		"fapt": "mana:4007",
 		"text": "Cum se numește golful adânc și îngust, cu pereți abrupți, săpat de un ghețar?",
 		"variante": ["Estuarul", "Limanul", "Canionul", "Fiordul"],
 		"corect": 3,
@@ -41648,9 +44123,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3783",
+		"id": "mana:4008",
 		"verificat": false,
-		"fapt": "mana:3783",
+		"fapt": "mana:4008",
 		"text": "Cum se numește insula de corali în formă de inel, cu o lagună la mijloc?",
 		"variante": ["Atolul", "Arhipelagul", "Reciful de barieră", "Insula vulcanică"],
 		"corect": 0,
@@ -41659,9 +44134,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3784",
+		"id": "mana:4009",
 		"verificat": false,
-		"fapt": "mana:3784",
+		"fapt": "mana:4009",
 		"text": "Ce vânt aduce praf din Sahara peste Italia și Grecia?",
 		"variante": ["Mistralul", "Siroco", "Tramontana", "Bora"],
 		"corect": 1,
@@ -41670,9 +44145,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3785",
+		"id": "mana:4010",
 		"verificat": false,
-		"fapt": "mana:3785",
+		"fapt": "mana:4010",
 		"text": "Cum se numește depozitul de praf adus de vânt, din care s-au format soluri foarte fertile?",
 		"variante": ["Morena", "Aluviunea", "Loessul", "Turba"],
 		"corect": 2,
@@ -41681,9 +44156,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3786",
+		"id": "mana:4011",
 		"verificat": false,
-		"fapt": "mana:3786",
+		"fapt": "mana:4011",
 		"text": "Cum se numește adâncitura în formă de pâlnie, formată în calcar prin dizolvare?",
 		"variante": ["Avenul", "Lapiezul", "Dolina", "Cheile"],
 		"corect": 2,
@@ -41692,9 +44167,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3787",
+		"id": "mana:4012",
 		"verificat": false,
-		"fapt": "mana:3787",
+		"fapt": "mana:4012",
 		"text": "Cum se numește formațiunea de calcar care crește din tavanul unei peșteri, în jos?",
 		"variante": ["Stalagmita", "Coloana", "Draperia", "Stalactita"],
 		"corect": 3,
@@ -41703,9 +44178,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3788",
+		"id": "mana:4013",
 		"verificat": false,
-		"fapt": "mana:3788",
+		"fapt": "mana:4013",
 		"text": "Cum se numește lanțul de munți de pe fundul oceanului, unde se naște crustă nouă?",
 		"variante": ["Platforma continentală", "Dorsala oceanică", "Fosa abisală", "Taluzul"],
 		"corect": 1,
@@ -41714,9 +44189,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3789",
+		"id": "mana:4014",
 		"verificat": false,
-		"fapt": "mana:3789",
+		"fapt": "mana:4014",
 		"text": "Cum se numește stratul Pământului dintre crustă și nucleu?",
 		"variante": ["Mantaua", "Litosfera", "Biosfera", "Scoarța oceanică"],
 		"corect": 0,
@@ -41725,9 +44200,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3790",
+		"id": "mana:4015",
 		"verificat": false,
-		"fapt": "mana:3790",
+		"fapt": "mana:4015",
 		"text": "Ce scară măsoară puterea unei tornade după distrugerile lăsate?",
 		"variante": ["Scara Beaufort", "Scara Fujita", "Scara Saffir-Simpson", "Scara Mercalli"],
 		"corect": 1,
@@ -41736,9 +44211,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3791",
+		"id": "mana:4016",
 		"verificat": false,
-		"fapt": "mana:3791",
+		"fapt": "mana:4016",
 		"text": "Cum se numește cantitatea de apă care trece într-o secundă prin secțiunea unui râu?",
 		"variante": ["Panta", "Nivelul", "Bazinul", "Debitul"],
 		"corect": 3,
@@ -41747,9 +44222,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3792",
+		"id": "mana:4017",
 		"verificat": false,
-		"fapt": "mana:3792",
+		"fapt": "mana:4017",
 		"text": "Cum se numește tot terenul de pe care un fluviu își adună apele?",
 		"variante": ["Cumpăna apelor", "Bazinul hidrografic", "Lunca", "Terasa"],
 		"corect": 1,
@@ -41758,9 +44233,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3793",
+		"id": "mana:4018",
 		"verificat": false,
-		"fapt": "mana:3793",
+		"fapt": "mana:4018",
 		"text": "În ce țară se află Marele Canion, săpat de fluviul Colorado?",
 		"variante": ["Statele Unite", "Mexic", "Canada", "Australia"],
 		"corect": 0,
@@ -41769,9 +44244,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3794",
+		"id": "mana:4019",
 		"verificat": false,
-		"fapt": "mana:3794",
+		"fapt": "mana:4019",
 		"text": "Ce clădire e reședința oficială a președintelui american?",
 		"variante": ["Capitoliul", "Casa Albă", "Pentagonul", "Monticello"],
 		"corect": 1,
@@ -41780,9 +44255,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3795",
+		"id": "mana:4020",
 		"verificat": false,
-		"fapt": "mana:3795",
+		"fapt": "mana:4020",
 		"text": "Ce capitală a Țărilor de Jos e cunoscută pentru canale, biciclete și case înguste?",
 		"variante": ["Haga", "Rotterdam", "Utrecht", "Amsterdam"],
 		"corect": 3,
@@ -41791,9 +44266,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3796",
+		"id": "mana:4021",
 		"verificat": false,
-		"fapt": "mana:3796",
+		"fapt": "mana:4021",
 		"text": "În ce țară se află orașul Dubai?",
 		"variante": ["Emiratele Arabe Unite", "Qatar", "Arabia Saudită", "Kuweit"],
 		"corect": 0,
@@ -41802,9 +44277,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3797",
+		"id": "mana:4022",
 		"verificat": false,
-		"fapt": "mana:3797",
+		"fapt": "mana:4022",
 		"text": "Ce muzeu din Londra adăpostește piatra de la Rosetta și marmurele Partenonului?",
 		"variante": ["British Museum", "Galeria Tate", "National Gallery", "Muzeul Victoria and Albert"],
 		"corect": 0,
@@ -41813,9 +44288,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3798",
+		"id": "mana:4023",
 		"verificat": false,
-		"fapt": "mana:3798",
+		"fapt": "mana:4023",
 		"text": "Ce construcție din Paris a fost, la ridicarea ei, cea mai înaltă din lume?",
 		"variante": ["Arcul de Triumf", "Catedrala Notre-Dame", "Turnul Montparnasse", "Turnul Eiffel"],
 		"corect": 3,
@@ -41824,9 +44299,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3799",
+		"id": "mana:4024",
 		"verificat": false,
-		"fapt": "mana:3799",
+		"fapt": "mana:4024",
 		"text": "În ce țară merg turiștii ca să vadă Marea Barieră de Corali?",
 		"variante": ["Indonezia", "Australia", "Filipine", "Mexic"],
 		"corect": 1,
@@ -41835,9 +44310,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3800",
+		"id": "mana:4025",
 		"verificat": false,
-		"fapt": "mana:3800",
+		"fapt": "mana:4025",
 		"text": "Care e cea mai mare stațiune de pe litoralul românesc?",
 		"variante": ["Eforie Nord", "Costinești", "Vama Veche", "Mamaia"],
 		"corect": 3,
@@ -41846,9 +44321,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3801",
+		"id": "mana:4026",
 		"verificat": false,
-		"fapt": "mana:3801",
+		"fapt": "mana:4026",
 		"text": "Ce castel din Sinaia a fost reședința de vară a regilor României?",
 		"variante": ["Bran", "Peleș", "Corvinilor", "Cantacuzino"],
 		"corect": 1,
@@ -41857,9 +44332,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3802",
+		"id": "mana:4027",
 		"verificat": false,
-		"fapt": "mana:3802",
+		"fapt": "mana:4027",
 		"text": "Ce clădire din Londra e sediul Parlamentului britanic?",
 		"variante": ["Palatul Westminster", "Palatul St James", "Somerset House", "Mansion House"],
 		"corect": 0,
@@ -41868,9 +44343,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3803",
+		"id": "mana:4028",
 		"verificat": false,
-		"fapt": "mana:3803",
+		"fapt": "mana:4028",
 		"text": "Ce monument din Paris a fost ridicat pentru victoriile armatei lui Napoleon?",
 		"variante": ["Turnul Eiffel", "Opera Garnier", "Arcul de Triumf", "Palatul Luxemburg"],
 		"corect": 2,
@@ -41879,9 +44354,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3804",
+		"id": "mana:4029",
 		"verificat": false,
-		"fapt": "mana:3804",
+		"fapt": "mana:4029",
 		"text": "Ce oraș din deșertul Nevada e cunoscut pentru cazinourile de pe Strip?",
 		"variante": ["Reno", "Phoenix", "Atlantic City", "Las Vegas"],
 		"corect": 3,
@@ -41890,9 +44365,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3805",
+		"id": "mana:4030",
 		"verificat": false,
-		"fapt": "mana:3805",
+		"fapt": "mana:4030",
 		"text": "Ce oraș brazilian e cunoscut pentru carnaval și pentru plaja Copacabana?",
 		"variante": ["São Paulo", "Rio de Janeiro", "Salvador", "Recife"],
 		"corect": 1,
@@ -41901,9 +44376,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3806",
+		"id": "mana:4031",
 		"verificat": false,
-		"fapt": "mana:3806",
+		"fapt": "mana:4031",
 		"text": "Ce oraș din Arabia Saudită e destinația pelerinajului musulman?",
 		"variante": ["Medina", "Riad", "Mecca", "Jedda"],
 		"corect": 2,
@@ -41912,9 +44387,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3807",
+		"id": "mana:4032",
 		"verificat": false,
-		"fapt": "mana:3807",
+		"fapt": "mana:4032",
 		"text": "Ce oraș are atât Zidul Plângerii, cât și Cupola Stâncii?",
 		"variante": ["Betleemul", "Damascul", "Ammanul", "Ierusalimul"],
 		"corect": 3,
@@ -41923,9 +44398,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3808",
+		"id": "mana:4033",
 		"verificat": false,
-		"fapt": "mana:3808",
+		"fapt": "mana:4033",
 		"text": "Ce palat din Londra e reședința oficială a monarhului britanic?",
 		"variante": ["Palatul Buckingham", "Castelul Windsor", "Palatul Westminster", "Turnul Londrei"],
 		"corect": 0,
@@ -41934,9 +44409,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3809",
+		"id": "mana:4034",
 		"verificat": false,
-		"fapt": "mana:3809",
+		"fapt": "mana:4034",
 		"text": "Ce munte cu vârf conic, acoperit de zăpadă, e simbolul Japoniei?",
 		"variante": ["Muntele Aso", "Muntele Fuji", "Muntele Hakusan", "Muntele Daisen"],
 		"corect": 1,
@@ -41945,9 +44420,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3810",
+		"id": "mana:4035",
 		"verificat": false,
-		"fapt": "mana:3810",
+		"fapt": "mana:4035",
 		"text": "Ce parc mare e un dreptunghi verde în mijlocul Manhattanului?",
 		"variante": ["Hyde Park", "Prospect Park", "Battery Park", "Central Park"],
 		"corect": 3,
@@ -41956,9 +44431,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3811",
+		"id": "mana:4036",
 		"verificat": false,
-		"fapt": "mana:3811",
+		"fapt": "mana:4036",
 		"text": "Ce capitală are Opera de Stat și palatul Schönbrunn?",
 		"variante": ["Viena", "Budapesta", "Praga", "München"],
 		"corect": 0,
@@ -41967,9 +44442,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3812",
+		"id": "mana:4037",
 		"verificat": false,
-		"fapt": "mana:3812",
+		"fapt": "mana:4037",
 		"text": "Ce oraș german găzduiește Oktoberfest?",
 		"variante": ["Berlin", "Köln", "München", "Hamburg"],
 		"corect": 2,
@@ -41978,9 +44453,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3813",
+		"id": "mana:4038",
 		"verificat": false,
-		"fapt": "mana:3813",
+		"fapt": "mana:4038",
 		"text": "Ce oraș are Marele Bazar și Moscheea Albastră?",
 		"variante": ["Cairo", "Teheran", "Marrakech", "Istanbul"],
 		"corect": 3,
@@ -41989,9 +44464,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3814",
+		"id": "mana:4039",
 		"verificat": false,
-		"fapt": "mana:3814",
+		"fapt": "mana:4039",
 		"text": "Ce cascadă de la granița dintre Statele Unite și Canada e vizitată de milioane de turiști?",
 		"variante": ["Cascada Victoria", "Cascada Niagara", "Cascada Iguazú", "Cascada Angel"],
 		"corect": 1,
@@ -42000,9 +44475,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3815",
+		"id": "mana:4040",
 		"verificat": false,
-		"fapt": "mana:3815",
+		"fapt": "mana:4040",
 		"text": "Ce zgârie-nori art déco cu 102 etaje e un simbol al New Yorkului?",
 		"variante": ["Chrysler Building", "Flatiron Building", "One World Trade Center", "Empire State Building"],
 		"corect": 3,
@@ -42011,9 +44486,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3816",
+		"id": "mana:4041",
 		"verificat": false,
-		"fapt": "mana:3816",
+		"fapt": "mana:4041",
 		"text": "Ce bazilică din Barcelona e în construcție de peste un secol?",
 		"variante": ["Santa Maria del Mar", "Catedrala Sfânta Eulalia", "Sagrada Família", "Capela Güell"],
 		"corect": 2,
@@ -42022,9 +44497,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3817",
+		"id": "mana:4042",
 		"verificat": false,
-		"fapt": "mana:3817",
+		"fapt": "mana:4042",
 		"text": "Ce biserică din Vatican e cea mai mare din lume?",
 		"variante": ["Bazilica Sfântul Petru", "Catedrala Sfântul Pavel", "Domul din Milano", "Bazilica Sfântul Marcu"],
 		"corect": 0,
@@ -42033,9 +44508,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3818",
+		"id": "mana:4043",
 		"verificat": false,
-		"fapt": "mana:3818",
+		"fapt": "mana:4043",
 		"text": "Ce pod din Londra se deschide în două brațe, ca să lase navele să treacă?",
 		"variante": ["London Bridge", "Tower Bridge", "Podul Mileniumului", "Podul Westminster"],
 		"corect": 1,
@@ -42044,9 +44519,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3819",
+		"id": "mana:4044",
 		"verificat": false,
-		"fapt": "mana:3819",
+		"fapt": "mana:4044",
 		"text": "Ce faleze albe de cretă sunt simbolul coastei sud-estice a Angliei?",
 		"variante": ["Falezele de la Moher", "Stânca Gibraltarului", "Falezele de la Dover", "Falezele Etretat"],
 		"corect": 2,
@@ -42055,9 +44530,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3820",
+		"id": "mana:4045",
 		"verificat": false,
-		"fapt": "mana:3820",
+		"fapt": "mana:4045",
 		"text": "Cărei țări aparține Insula Paștelui?",
 		"variante": ["Peru", "Ecuador", "Noua Zeelandă", "Chile"],
 		"corect": 3,
@@ -42066,9 +44541,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3821",
+		"id": "mana:4046",
 		"verificat": false,
-		"fapt": "mana:3821",
+		"fapt": "mana:4046",
 		"text": "În ce țară se află rezervația Serengeti?",
 		"variante": ["Tanzania", "Kenya", "Uganda", "Botswana"],
 		"corect": 0,
@@ -42077,9 +44552,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3822",
+		"id": "mana:4047",
 		"verificat": false,
-		"fapt": "mana:3822",
+		"fapt": "mana:4047",
 		"text": "Ce oraș din Transilvania are un turn cu ceas și o cetate medievală pe deal?",
 		"variante": ["Mediaș", "Sighișoara", "Bistrița", "Sebeș"],
 		"corect": 1,
@@ -42088,9 +44563,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3823",
+		"id": "mana:4048",
 		"verificat": false,
-		"fapt": "mana:3823",
+		"fapt": "mana:4048",
 		"text": "Ce cimitir din Maramureș are cruci de lemn pictate, cu versuri hazlii despre morți?",
 		"variante": ["Cimitirul Bellu", "Cimitirul Eroilor", "Cimitirul Vesel", "Cimitirul Central"],
 		"corect": 2,
@@ -42099,9 +44574,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3824",
+		"id": "mana:4049",
 		"verificat": false,
-		"fapt": "mana:3824",
+		"fapt": "mana:4049",
 		"text": "Ce bulevard parizian duce dinspre Place de la Concorde spre Arcul de Triumf?",
 		"variante": ["Rue de Rivoli", "Boulevard Saint-Germain", "Avenue Montaigne", "Champs-Élysées"],
 		"corect": 3,
@@ -42110,9 +44585,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3825",
+		"id": "mana:4050",
 		"verificat": false,
-		"fapt": "mana:3825",
+		"fapt": "mana:4050",
 		"text": "Ce parc de distracții din Florida e cel mai vizitat din lume?",
 		"variante": ["Universal Studios", "Legoland", "Walt Disney World", "Busch Gardens"],
 		"corect": 2,
@@ -42121,9 +44596,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3826",
+		"id": "mana:4051",
 		"verificat": false,
-		"fapt": "mana:3826",
+		"fapt": "mana:4051",
 		"text": "Ce canal e cel mai mare din Veneția, traversat de podul Rialto?",
 		"variante": ["Canalul Giudecca", "Rio Nuovo", "Canalul Cannaregio", "Canal Grande"],
 		"corect": 3,
@@ -42132,9 +44607,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3827",
+		"id": "mana:4052",
 		"verificat": false,
-		"fapt": "mana:3827",
+		"fapt": "mana:4052",
 		"text": "Ce oraș rusesc e numit „Veneția nordului”, cu canale și palate?",
 		"variante": ["Moscova", "Sankt Petersburg", "Kazan", "Novgorod"],
 		"corect": 1,
@@ -42143,9 +44618,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3828",
+		"id": "mana:4053",
 		"verificat": false,
-		"fapt": "mana:3828",
+		"fapt": "mana:4053",
 		"text": "Ce ansamblu fortificat se află în centrul Moscovei, cu ziduri roșii și douăzeci de turnuri?",
 		"variante": ["Arsenalul", "Cetatea Petropavlovsk", "Kremlinul", "Mănăstirea Novodevici"],
 		"corect": 2,
@@ -42154,9 +44629,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3829",
+		"id": "mana:4054",
 		"verificat": false,
-		"fapt": "mana:3829",
+		"fapt": "mana:4054",
 		"text": "Ce oraș-stat asiatic are hotelul cu piscină pe acoperiș, Marina Bay Sands?",
 		"variante": ["Hong Kong", "Macao", "Bangkok", "Singapore"],
 		"corect": 3,
@@ -42165,9 +44640,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3830",
+		"id": "mana:4055",
 		"verificat": false,
-		"fapt": "mana:3830",
+		"fapt": "mana:4055",
 		"text": "Ce canal taie America Centrală, legând Atlanticul de Pacific?",
 		"variante": ["Canalul Panama", "Canalul Kiel", "Canalul Corint", "Canalul Volga-Don"],
 		"corect": 0,
@@ -42176,9 +44651,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3831",
+		"id": "mana:4056",
 		"verificat": false,
-		"fapt": "mana:3831",
+		"fapt": "mana:4056",
 		"text": "Ce oraș spaniol are o fostă moschee devenită catedrală, cu arcade roșii și albe?",
 		"variante": ["Sevilla", "Córdoba", "Toledo", "Valencia"],
 		"corect": 1,
@@ -42187,9 +44662,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3832",
+		"id": "mana:4057",
 		"verificat": false,
-		"fapt": "mana:3832",
+		"fapt": "mana:4057",
 		"text": "Ce capitală europeană are turnul Belém și un pod peste râul Tejo?",
 		"variante": ["Porto", "Lisabona", "Madrid", "Sevilla"],
 		"corect": 1,
@@ -42198,9 +44673,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3833",
+		"id": "mana:4058",
 		"verificat": false,
-		"fapt": "mana:3833",
+		"fapt": "mana:4058",
 		"text": "Ce oraș marocan are piața Jemaa el-Fna?",
 		"variante": ["Fez", "Casablanca", "Rabat", "Marrakech"],
 		"corect": 3,
@@ -42209,9 +44684,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3834",
+		"id": "mana:4059",
 		"verificat": false,
-		"fapt": "mana:3834",
+		"fapt": "mana:4059",
 		"text": "Ce armată de statui de lut a fost descoperită în 1974, lângă Xi'an?",
 		"variante": ["Armata de bronz", "Garda imperială", "Armata de teracotă", "Soldații de jad"],
 		"corect": 2,
@@ -42220,9 +44695,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3835",
+		"id": "mana:4060",
 		"verificat": false,
-		"fapt": "mana:3835",
+		"fapt": "mana:4060",
 		"text": "Ce lac din Scoția e legat de legenda unui monstru?",
 		"variante": ["Loch Ness", "Loch Lomond", "Loch Awe", "Loch Katrine"],
 		"corect": 0,
@@ -42231,9 +44706,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3836",
+		"id": "mana:4061",
 		"verificat": false,
-		"fapt": "mana:3836",
+		"fapt": "mana:4061",
 		"text": "Ce castel stă pe o stâncă vulcanică deasupra capitalei Scoției?",
 		"variante": ["Castelul Stirling", "Castelul Edinburgh", "Castelul Balmoral", "Castelul Eilean Donan"],
 		"corect": 1,
@@ -42242,9 +44717,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3837",
+		"id": "mana:4062",
 		"verificat": false,
-		"fapt": "mana:3837",
+		"fapt": "mana:4062",
 		"text": "Ce insulă grecească păstrează ruinele palatului de la Knossos?",
 		"variante": ["Rodos", "Santorini", "Corfu", "Creta"],
 		"corect": 3,
@@ -42253,9 +44728,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3838",
+		"id": "mana:4063",
 		"verificat": false,
-		"fapt": "mana:3838",
+		"fapt": "mana:4063",
 		"text": "Ce oraș italian are galeria Uffizi și cupola lui Brunelleschi?",
 		"variante": ["Florența", "Siena", "Bologna", "Pisa"],
 		"corect": 0,
@@ -42264,9 +44739,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3839",
+		"id": "mana:4064",
 		"verificat": false,
-		"fapt": "mana:3839",
+		"fapt": "mana:4064",
 		"text": "Ce mănăstire franceză e ridicată pe o insulă-stâncă pe care mareea o înconjoară?",
 		"variante": ["Cluny", "Fontevraud", "Mont-Saint-Michel", "Chartres"],
 		"corect": 2,
@@ -42275,9 +44750,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3840",
+		"id": "mana:4065",
 		"verificat": false,
-		"fapt": "mana:3840",
+		"fapt": "mana:4065",
 		"text": "Care e cea mai cunoscută stațiune de schi din România, la poalele masivului Postăvaru?",
 		"variante": ["Predeal", "Sinaia", "Poiana Brașov", "Păltiniș"],
 		"corect": 2,
@@ -42286,9 +44761,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3841",
+		"id": "mana:4066",
 		"verificat": false,
-		"fapt": "mana:3841",
+		"fapt": "mana:4066",
 		"text": "Ce muzeu din București adună case țărănești aduse din toată țara, în aer liber?",
 		"variante": ["Muzeul Țăranului Român", "Muzeul Antipa", "Muzeul Cotroceni", "Muzeul Satului"],
 		"corect": 3,
@@ -42297,9 +44772,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3842",
+		"id": "mana:4067",
 		"verificat": false,
-		"fapt": "mana:3842",
+		"fapt": "mana:4067",
 		"text": "Ce stradă pietonală din Barcelona coboară, mărginită de platani, de la Plaça de Catalunya spre port?",
 		"variante": ["Passeig de Gràcia", "La Rambla", "Carrer Montcada", "Avinguda Diagonal"],
 		"corect": 1,
@@ -42308,9 +44783,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3843",
+		"id": "mana:4068",
 		"verificat": false,
-		"fapt": "mana:3843",
+		"fapt": "mana:4068",
 		"text": "Ce palat din Sintra are turnuri vopsite în galben și roșu, pe un vârf împădurit?",
 		"variante": ["Palatul Ajuda", "Palatul Mafra", "Palatul Pena", "Palatul Queluz"],
 		"corect": 2,
@@ -42319,9 +44794,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3844",
+		"id": "mana:4069",
 		"verificat": false,
-		"fapt": "mana:3844",
+		"fapt": "mana:4069",
 		"text": "Ce cetate din sudul Franței are un dublu rând de ziduri, restaurată în secolul XIX?",
 		"variante": ["Carcassonne", "Avignon", "Aigues-Mortes", "Provins"],
 		"corect": 0,
@@ -42330,9 +44805,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3845",
+		"id": "mana:4070",
 		"verificat": false,
-		"fapt": "mana:3845",
+		"fapt": "mana:4070",
 		"text": "Ce oraș german și-a reconstruit biserica Frauenkirche din pietrele rămase după bombardamentul din 1945?",
 		"variante": ["Leipzig", "Dresda", "Nürnberg", "Hamburg"],
 		"corect": 1,
@@ -42341,9 +44816,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3846",
+		"id": "mana:4071",
 		"verificat": false,
-		"fapt": "mana:3846",
+		"fapt": "mana:4071",
 		"text": "Ce peșteră din Apuseni adăpostește unul dintre cei mai mari ghețari subterani din Europa?",
 		"variante": ["Peștera Urșilor", "Peștera Muierilor", "Peștera Scărișoara", "Peștera Vântului"],
 		"corect": 2,
@@ -42352,9 +44827,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3847",
+		"id": "mana:4072",
 		"verificat": false,
-		"fapt": "mana:3847",
+		"fapt": "mana:4072",
 		"text": "Ce clădire din Barcelona are terasa cu hornuri sculptate și e numită La Pedrera?",
 		"variante": ["Casa Batlló", "Casa Vicens", "Palau Güell", "Casa Milà"],
 		"corect": 3,
@@ -42363,9 +44838,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3848",
+		"id": "mana:4073",
 		"verificat": false,
-		"fapt": "mana:3848",
+		"fapt": "mana:4073",
 		"text": "Ce oraș al civilizației Indusului, săpat în Pakistan, avea canalizare și băi publice?",
 		"variante": ["Ur", "Mohenjo-daro", "Mari", "Ebla"],
 		"corect": 1,
@@ -42374,9 +44849,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3849",
+		"id": "mana:4074",
 		"verificat": false,
-		"fapt": "mana:3849",
+		"fapt": "mana:4074",
 		"text": "Ce oraș roman din Libia are ruine bine păstrate pe coasta Mediteranei?",
 		"variante": ["Cirene", "Timgad", "Leptis Magna", "Volubilis"],
 		"corect": 2,
@@ -42385,9 +44860,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3850",
+		"id": "mana:4075",
 		"verificat": false,
-		"fapt": "mana:3850",
+		"fapt": "mana:4075",
 		"text": "Ce cetate din Tunisia de azi a fost rivala Romei, distrusă în 146 î.Hr.?",
 		"variante": ["Utica", "Hadrumetum", "Sabratha", "Cartagina"],
 		"corect": 3,
@@ -42396,9 +44871,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3851",
+		"id": "mana:4076",
 		"verificat": false,
-		"fapt": "mana:3851",
+		"fapt": "mana:4076",
 		"text": "Ce insulă din Mediterana are temple megalitice mai vechi decât piramidele egiptene?",
 		"variante": ["Creta", "Cipru", "Malta", "Sardinia"],
 		"corect": 2,
@@ -42407,9 +44882,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3852",
+		"id": "mana:4077",
 		"verificat": false,
-		"fapt": "mana:3852",
+		"fapt": "mana:4077",
 		"text": "Ce mănăstire de la poalele muntelui Sinai e locuită neîntrerupt din secolul VI?",
 		"variante": ["Mănăstirea Sfântul Antonie", "Lavra Sfântul Sava", "Mănăstirea Studion", "Mănăstirea Sfânta Ecaterina"],
 		"corect": 3,
@@ -42418,9 +44893,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3853",
+		"id": "mana:4078",
 		"verificat": false,
-		"fapt": "mana:3853",
+		"fapt": "mana:4078",
 		"text": "Ce oraș indian are palatul Hawa Mahal și case vopsite în roz?",
 		"variante": ["Udaipur", "Jaipur", "Jodhpur", "Agra"],
 		"corect": 1,
@@ -42429,9 +44904,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3854",
+		"id": "mana:4079",
 		"verificat": false,
-		"fapt": "mana:3854",
+		"fapt": "mana:4079",
 		"text": "Ce palat din Istanbul a fost reședința sultanilor otomani vreme de aproape patru secole?",
 		"variante": ["Palatul Dolmabahçe", "Palatul Yıldız", "Palatul Topkapi", "Palatul Beylerbeyi"],
 		"corect": 2,
@@ -42440,9 +44915,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3855",
+		"id": "mana:4080",
 		"verificat": false,
-		"fapt": "mana:3855",
+		"fapt": "mana:4080",
 		"text": "Ce oraș din Iran păstrează ruinele capitalei ceremoniale a Imperiului Persan?",
 		"variante": ["Pasargadae", "Susa", "Persepolis", "Ecbatana"],
 		"corect": 2,
@@ -42451,9 +44926,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3856",
+		"id": "mana:4081",
 		"verificat": false,
-		"fapt": "mana:3856",
+		"fapt": "mana:4081",
 		"text": "Ce câmpie din Myanmar e acoperită de mii de pagode de cărămidă?",
 		"variante": ["Bagan", "Mandalay", "Sagaing", "Pegu"],
 		"corect": 0,
@@ -42462,9 +44937,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3857",
+		"id": "mana:4082",
 		"verificat": false,
-		"fapt": "mana:3857",
+		"fapt": "mana:4082",
 		"text": "Ce oraș peruan a fost capitala Imperiului Inca?",
 		"variante": ["Lima", "Cusco", "Arequipa", "Trujillo"],
 		"corect": 1,
@@ -42473,9 +44948,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3858",
+		"id": "mana:4083",
 		"verificat": false,
-		"fapt": "mana:3858",
+		"fapt": "mana:4083",
 		"text": "Ce desene uriașe de pe un platou peruan se văd întregi doar din aer?",
 		"variante": ["Geoglifele Paracas", "Desenele Moche", "Liniile Chincha", "Liniile Nazca"],
 		"corect": 3,
@@ -42484,9 +44959,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3859",
+		"id": "mana:4084",
 		"verificat": false,
-		"fapt": "mana:3859",
+		"fapt": "mana:4084",
 		"text": "Ce ruine de piatră uscată din sudul Africii au dat numele unei țări?",
 		"variante": ["Mapungubwe", "Marele Zimbabwe", "Thulamela", "Khami"],
 		"corect": 1,
@@ -42495,9 +44970,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3860",
+		"id": "mana:4085",
 		"verificat": false,
-		"fapt": "mana:3860",
+		"fapt": "mana:4085",
 		"text": "Ce oraș antic din Sudan e înconjurat de mai multe piramide decât tot Egiptul?",
 		"variante": ["Napata", "Kerma", "Meroe", "Dongola"],
 		"corect": 2,
@@ -42506,9 +44981,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3861",
+		"id": "mana:4086",
 		"verificat": false,
-		"fapt": "mana:3861",
+		"fapt": "mana:4086",
 		"text": "Ce fort din capitala Indiei a fost ridicat de Shah Jahan ca reședință a împăraților moguli?",
 		"variante": ["Fortul Agra", "Fortul Amber", "Fortul Roșu", "Fortul Golconda"],
 		"corect": 2,
@@ -42517,9 +44992,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3862",
+		"id": "mana:4087",
 		"verificat": false,
-		"fapt": "mana:3862",
+		"fapt": "mana:4087",
 		"text": "Ce oraș-oază din deșertul sirian a fost un centru caravanier cu colonade romane?",
 		"variante": ["Dura-Europos", "Apamea", "Bosra", "Palmira"],
 		"corect": 3,
@@ -42528,9 +45003,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3863",
+		"id": "mana:4088",
 		"verificat": false,
-		"fapt": "mana:3863",
+		"fapt": "mana:4088",
 		"text": "Ce mănăstire din Bhutan e agățată pe un perete de stâncă, la peste 3.000 de metri?",
 		"variante": ["Paro Taktsang", "Punakha Dzong", "Mănăstirea Tengboche", "Mănăstirea Hemis"],
 		"corect": 0,
@@ -42539,9 +45014,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3864",
+		"id": "mana:4089",
 		"verificat": false,
-		"fapt": "mana:3864",
+		"fapt": "mana:4089",
 		"text": "Ce oraș japonez are mii de porți roșii înșirate pe drumul templului Fushimi Inari?",
 		"variante": ["Nara", "Osaka", "Nikko", "Kyoto"],
 		"corect": 3,
@@ -42550,9 +45025,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3865",
+		"id": "mana:4090",
 		"verificat": false,
-		"fapt": "mana:3865",
+		"fapt": "mana:4090",
 		"text": "Ce colonie grecească din Dobrogea, întemeiată în secolul VII î.Hr., are ruine lângă lacul Sinoe?",
 		"variante": ["Tomis", "Histria", "Callatis", "Argamum"],
 		"corect": 1,
@@ -42561,9 +45036,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3866",
+		"id": "mana:4091",
 		"verificat": false,
-		"fapt": "mana:3866",
+		"fapt": "mana:4091",
 		"text": "Ce drum roman, cel mai vechi dintre cele mari, lega capitala imperiului de portul Brindisi?",
 		"variante": ["Via Flaminia", "Via Aurelia", "Via Appia", "Via Salaria"],
 		"corect": 2,
@@ -42572,9 +45047,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3867",
+		"id": "mana:4092",
 		"verificat": false,
-		"fapt": "mana:3867",
+		"fapt": "mana:4092",
 		"text": "Ce județ din nordul României are opt biserici de lemn în patrimoniul mondial UNESCO?",
 		"variante": ["Suceava", "Bistrița-Năsăud", "Sălaj", "Maramureș"],
 		"corect": 3,
@@ -42583,9 +45058,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3868",
+		"id": "mana:4093",
 		"verificat": false,
-		"fapt": "mana:3868",
+		"fapt": "mana:4093",
 		"text": "Ce limbă se vorbește oficial în Cehia?",
 		"variante": ["Ceha", "Slovaca", "Poloneza", "Germana"],
 		"corect": 0,
@@ -42594,9 +45069,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3869",
+		"id": "mana:4094",
 		"verificat": false,
-		"fapt": "mana:3869",
+		"fapt": "mana:4094",
 		"text": "Ce limbă se vorbește oficial în Coreea de Sud?",
 		"variante": ["Chineza", "Coreeana", "Japoneza", "Mongola"],
 		"corect": 1,
@@ -42605,9 +45080,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3870",
+		"id": "mana:4095",
 		"verificat": false,
-		"fapt": "mana:3870",
+		"fapt": "mana:4095",
 		"text": "Ce limbă se vorbește oficial în Grecia?",
 		"variante": ["Albaneza", "Turca", "Macedoneana", "Greaca"],
 		"corect": 3,
@@ -42616,9 +45091,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3871",
+		"id": "mana:4096",
 		"verificat": false,
-		"fapt": "mana:3871",
+		"fapt": "mana:4096",
 		"text": "Ce limbă se vorbește oficial în Serbia?",
 		"variante": ["Bulgara", "Albaneza", "Maghiara", "Serba"],
 		"corect": 3,
@@ -42627,9 +45102,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3872",
+		"id": "mana:4097",
 		"verificat": false,
-		"fapt": "mana:3872",
+		"fapt": "mana:4097",
 		"text": "Ce limbă se vorbește oficial în Ucraina?",
 		"variante": ["Ucraineana", "Rusa", "Poloneza", "Belarusa"],
 		"corect": 0,
@@ -42638,9 +45113,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3873",
+		"id": "mana:4098",
 		"verificat": false,
-		"fapt": "mana:3873",
+		"fapt": "mana:4098",
 		"text": "Ce monedă se folosește în Canada?",
 		"variante": ["Dolarul canadian", "Dolarul american", "Lira canadiană", "Francul"],
 		"corect": 0,
@@ -42649,9 +45124,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3874",
+		"id": "mana:4099",
 		"verificat": false,
-		"fapt": "mana:3874",
+		"fapt": "mana:4099",
 		"text": "Cum se numește cel care conduce Biserica Ortodoxă Română?",
 		"variante": ["Mitropolitul", "Patriarhul", "Episcopul", "Arhimandritul"],
 		"corect": 1,
@@ -42660,9 +45135,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3875",
+		"id": "mana:4100",
 		"verificat": false,
-		"fapt": "mana:3875",
+		"fapt": "mana:4100",
 		"text": "Ce țară are cea mai numeroasă populație din America de Sud?",
 		"variante": ["Argentina", "Columbia", "Brazilia", "Peru"],
 		"corect": 2,
@@ -42671,9 +45146,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3876",
+		"id": "mana:4101",
 		"verificat": false,
-		"fapt": "mana:3876",
+		"fapt": "mana:4101",
 		"text": "Ce țară are cea mai numeroasă populație din America de Nord?",
 		"variante": ["Statele Unite", "Mexic", "Canada", "Guatemala"],
 		"corect": 0,
@@ -42682,9 +45157,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3877",
+		"id": "mana:4102",
 		"verificat": false,
-		"fapt": "mana:3877",
+		"fapt": "mana:4102",
 		"text": "Ce religie e majoritară în Grecia?",
 		"variante": ["Ortodoxia", "Catolicismul", "Protestantismul", "Islamul"],
 		"corect": 0,
@@ -42693,9 +45168,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3878",
+		"id": "mana:4103",
 		"verificat": false,
-		"fapt": "mana:3878",
+		"fapt": "mana:4103",
 		"text": "Ce zi a săptămânii e zi de rugăciune în comun pentru musulmani?",
 		"variante": ["Vineri", "Sâmbătă", "Duminică", "Luni"],
 		"corect": 0,
@@ -42704,9 +45179,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3879",
+		"id": "mana:4104",
 		"verificat": false,
-		"fapt": "mana:3879",
+		"fapt": "mana:4104",
 		"text": "Ce zi a săptămânii e, prin tradiție, zi de odihnă pentru cei mai mulți creștini?",
 		"variante": ["Duminica", "Sâmbăta", "Vineri", "Joi"],
 		"corect": 0,
@@ -42715,9 +45190,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3880",
+		"id": "mana:4105",
 		"verificat": false,
-		"fapt": "mana:3880",
+		"fapt": "mana:4105",
 		"text": "În ce țară e limba maghiară limbă oficială?",
 		"variante": ["Austria", "Slovacia", "Croația", "Ungaria"],
 		"corect": 3,
@@ -42726,9 +45201,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3881",
+		"id": "mana:4106",
 		"verificat": false,
-		"fapt": "mana:3881",
+		"fapt": "mana:4106",
 		"text": "Care e cel mai populat oraș al României?",
 		"variante": ["Bucureștiul", "Clujul", "Iașiul", "Timișoara"],
 		"corect": 0,
@@ -42737,9 +45212,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3882",
+		"id": "mana:4107",
 		"verificat": false,
-		"fapt": "mana:3882",
+		"fapt": "mana:4107",
 		"text": "Ce țară are cea mai numeroasă populație din Uniunea Europeană?",
 		"variante": ["Germania", "Franța", "Italia", "Spania"],
 		"corect": 0,
@@ -42748,9 +45223,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3883",
+		"id": "mana:4108",
 		"verificat": false,
-		"fapt": "mana:3883",
+		"fapt": "mana:4108",
 		"text": "Ce prag a trecut populația lumii în 2022?",
 		"variante": ["5 miliarde", "8 miliarde", "10 miliarde", "12 miliarde"],
 		"corect": 1,
@@ -42759,9 +45234,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3884",
+		"id": "mana:4109",
 		"verificat": false,
-		"fapt": "mana:3884",
+		"fapt": "mana:4109",
 		"text": "Câți locuitori avea România la recensământul din 2021?",
 		"variante": ["Vreo 19 milioane", "Vreo 15 milioane", "Vreo 22 de milioane", "Vreo 26 de milioane"],
 		"corect": 0,
@@ -42770,9 +45245,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3885",
+		"id": "mana:4110",
 		"verificat": false,
-		"fapt": "mana:3885",
+		"fapt": "mana:4110",
 		"text": "Ce limbă se vorbește oficial în Turcia?",
 		"variante": ["Araba", "Persana", "Turca", "Kurda"],
 		"corect": 2,
@@ -42781,9 +45256,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3886",
+		"id": "mana:4111",
 		"verificat": false,
-		"fapt": "mana:3886",
+		"fapt": "mana:4111",
 		"text": "Ce limbă se vorbește oficial în Polonia?",
 		"variante": ["Poloneza", "Ceha", "Slovaca", "Rusa"],
 		"corect": 0,
@@ -42792,9 +45267,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3887",
+		"id": "mana:4112",
 		"verificat": false,
-		"fapt": "mana:3887",
+		"fapt": "mana:4112",
 		"text": "Ce continent are cele mai multe state?",
 		"variante": ["Asia", "Europa", "America de Sud", "Africa"],
 		"corect": 3,
@@ -42803,9 +45278,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3888",
+		"id": "mana:4113",
 		"verificat": false,
-		"fapt": "mana:3888",
+		"fapt": "mana:4113",
 		"text": "Ce limbă are cei mai mulți vorbitori în India, pe lângă engleză?",
 		"variante": ["Bengali", "Hindi", "Urdu", "Tamil"],
 		"corect": 1,
@@ -42814,9 +45289,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3889",
+		"id": "mana:4114",
 		"verificat": false,
-		"fapt": "mana:3889",
+		"fapt": "mana:4114",
 		"text": "Ce limbă se vorbește oficial în Țările de Jos?",
 		"variante": ["Germana", "Olandeza", "Flamanda", "Engleza"],
 		"corect": 1,
@@ -42825,9 +45300,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3890",
+		"id": "mana:4115",
 		"verificat": false,
-		"fapt": "mana:3890",
+		"fapt": "mana:4115",
 		"text": "Ce limbă se vorbește oficial în Italia?",
 		"variante": ["Italiana", "Latina", "Spaniola", "Franceza"],
 		"corect": 0,
@@ -42836,9 +45311,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3891",
+		"id": "mana:4116",
 		"verificat": false,
-		"fapt": "mana:3891",
+		"fapt": "mana:4116",
 		"text": "Ce limbă se vorbește oficial în Bulgaria?",
 		"variante": ["Rusa", "Serba", "Greaca", "Bulgara"],
 		"corect": 3,
@@ -42847,9 +45322,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3892",
+		"id": "mana:4117",
 		"verificat": false,
-		"fapt": "mana:3892",
+		"fapt": "mana:4117",
 		"text": "Cum se numește numărătoarea oficială a tuturor locuitorilor unei țări?",
 		"variante": ["Recensământul", "Sondajul", "Referendumul", "Cadastrul"],
 		"corect": 0,
@@ -42858,9 +45333,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3893",
+		"id": "mana:4118",
 		"verificat": false,
-		"fapt": "mana:3893",
+		"fapt": "mana:4118",
 		"text": "Ce monedă se folosește în Serbia?",
 		"variante": ["Leva", "Dinarul", "Kuna", "Denarul"],
 		"corect": 1,
@@ -42869,9 +45344,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3894",
+		"id": "mana:4119",
 		"verificat": false,
-		"fapt": "mana:3894",
+		"fapt": "mana:4119",
 		"text": "Ce monedă se folosește în Australia?",
 		"variante": ["Dolarul australian", "Lira australiană", "Dolarul neozeelandez", "Pesoul"],
 		"corect": 0,
@@ -42880,9 +45355,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3895",
+		"id": "mana:4120",
 		"verificat": false,
-		"fapt": "mana:3895",
+		"fapt": "mana:4120",
 		"text": "În ce altă țară, pe lângă Grecia, e greaca limbă oficială?",
 		"variante": ["Malta", "Albania", "Bulgaria", "Cipru"],
 		"corect": 3,
@@ -42891,9 +45366,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3896",
+		"id": "mana:4121",
 		"verificat": false,
-		"fapt": "mana:3896",
+		"fapt": "mana:4121",
 		"text": "Ce țară are cei mai mulți vorbitori nativi de spaniolă?",
 		"variante": ["Spania", "Argentina", "Mexic", "Columbia"],
 		"corect": 2,
@@ -42902,9 +45377,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3897",
+		"id": "mana:4122",
 		"verificat": false,
-		"fapt": "mana:3897",
+		"fapt": "mana:4122",
 		"text": "Ce monedă se folosește în Ucraina?",
 		"variante": ["Grivna", "Rubla", "Zlotul", "Leul moldovenesc"],
 		"corect": 0,
@@ -42913,9 +45388,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3898",
+		"id": "mana:4123",
 		"verificat": false,
-		"fapt": "mana:3898",
+		"fapt": "mana:4123",
 		"text": "Ce țară are cea mai numeroasă populație musulmană din lume?",
 		"variante": ["Pakistan", "India", "Arabia Saudită", "Indonezia"],
 		"corect": 3,
@@ -42924,9 +45399,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3899",
+		"id": "mana:4124",
 		"verificat": false,
-		"fapt": "mana:3899",
+		"fapt": "mana:4124",
 		"text": "Ce limbă se vorbește oficial în Slovenia?",
 		"variante": ["Serba", "Slovaca", "Slovena", "Croata"],
 		"corect": 2,
@@ -42935,9 +45410,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3900",
+		"id": "mana:4125",
 		"verificat": false,
-		"fapt": "mana:3900",
+		"fapt": "mana:4125",
 		"text": "Care e cel mai populat oraș din America de Sud?",
 		"variante": ["Buenos Aires", "Rio de Janeiro", "Lima", "São Paulo"],
 		"corect": 3,
@@ -42946,9 +45421,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3901",
+		"id": "mana:4126",
 		"verificat": false,
-		"fapt": "mana:3901",
+		"fapt": "mana:4126",
 		"text": "Ce oraș indian e cel mai mare port și centrul financiar al țării?",
 		"variante": ["Delhi", "Kolkata", "Mumbai", "Chennai"],
 		"corect": 2,
@@ -42957,9 +45432,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3902",
+		"id": "mana:4127",
 		"verificat": false,
-		"fapt": "mana:3902",
+		"fapt": "mana:4127",
 		"text": "Ce țară are a doua cea mai numeroasă populație din Africa, după Nigeria?",
 		"variante": ["Egipt", "Etiopia", "Congo", "Africa de Sud"],
 		"corect": 1,
@@ -42968,9 +45443,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3903",
+		"id": "mana:4128",
 		"verificat": false,
-		"fapt": "mana:3903",
+		"fapt": "mana:4128",
 		"text": "Ce limbă se vorbește oficial în Vietnam?",
 		"variante": ["Chineza", "Vietnameza", "Khmera", "Thailandeza"],
 		"corect": 1,
@@ -42979,9 +45454,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3904",
+		"id": "mana:4129",
 		"verificat": false,
-		"fapt": "mana:3904",
+		"fapt": "mana:4129",
 		"text": "Ce monedă se folosește în Thailanda?",
 		"variante": ["Bahtul", "Ringgitul", "Rupia", "Dongul"],
 		"corect": 0,
@@ -42990,9 +45465,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3905",
+		"id": "mana:4130",
 		"verificat": false,
-		"fapt": "mana:3905",
+		"fapt": "mana:4130",
 		"text": "Ce monedă se folosește în Argentina?",
 		"variante": ["Realul", "Escudo", "Peso argentinian", "Bolivarul"],
 		"corect": 2,
@@ -43001,9 +45476,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3906",
+		"id": "mana:4131",
 		"verificat": false,
-		"fapt": "mana:3906",
+		"fapt": "mana:4131",
 		"text": "Ce monedă se folosește în Arabia Saudită?",
 		"variante": ["Dirhamul", "Dinarul", "Lira", "Riyalul"],
 		"corect": 3,
@@ -43012,9 +45487,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3907",
+		"id": "mana:4132",
 		"verificat": false,
-		"fapt": "mana:3907",
+		"fapt": "mana:4132",
 		"text": "Cum se numește valoarea de 2,1 copii pe femeie, la care o populație rămâne la fel de numeroasă?",
 		"variante": ["Nivelul de înlocuire", "Sporul natural", "Vârsta mediană", "Rata brută de natalitate"],
 		"corect": 0,
@@ -43023,9 +45498,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3908",
+		"id": "mana:4133",
 		"verificat": false,
-		"fapt": "mana:3908",
+		"fapt": "mana:4133",
 		"text": "Cum se numește venirea oamenilor dintr-o altă țară, ca să se stabilească aici?",
 		"variante": ["Imigrația", "Emigrația", "Navetismul", "Repatrierea"],
 		"corect": 0,
@@ -43034,9 +45509,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3909",
+		"id": "mana:4134",
 		"verificat": false,
-		"fapt": "mana:3909",
+		"fapt": "mana:4134",
 		"text": "Cum se numește plecarea locuitorilor dintr-o țară, ca să se stabilească în alta?",
 		"variante": ["Imigrația", "Exodul", "Emigrația", "Azilul"],
 		"corect": 2,
@@ -43045,9 +45520,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3910",
+		"id": "mana:4135",
 		"verificat": false,
-		"fapt": "mana:3910",
+		"fapt": "mana:4135",
 		"text": "Ce arată numărul de locuitori pe kilometru pătrat?",
 		"variante": ["Rata natalității", "Densitatea populației", "Speranța de viață", "Indicele de dezvoltare"],
 		"corect": 1,
@@ -43056,9 +45531,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3911",
+		"id": "mana:4136",
 		"verificat": false,
-		"fapt": "mana:3911",
+		"fapt": "mana:4136",
 		"text": "Cum se numește graficul care arată populația împărțită pe vârste și pe sexe?",
 		"variante": ["Piramida vârstelor", "Curba natalității", "Histograma", "Harta demografică"],
 		"corect": 0,
@@ -43067,9 +45542,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3912",
+		"id": "mana:4137",
 		"verificat": false,
-		"fapt": "mana:3912",
+		"fapt": "mana:4137",
 		"text": "În ce țară trăia, în 2021, cea mai numeroasă comunitate de români plecați din țară?",
 		"variante": ["Spania", "Germania", "Italia", "Marea Britanie"],
 		"corect": 2,
@@ -43078,9 +45553,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3913",
+		"id": "mana:4138",
 		"verificat": false,
-		"fapt": "mana:3913",
+		"fapt": "mana:4138",
 		"text": "Ce limbă proprie are Luxemburgul, pe lângă franceză și germană?",
 		"variante": ["Luxemburgheza", "Olandeza", "Valona", "Alsaciana"],
 		"corect": 0,
@@ -43089,9 +45564,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3914",
+		"id": "mana:4139",
 		"verificat": false,
-		"fapt": "mana:3914",
+		"fapt": "mana:4139",
 		"text": "Care e cel mai populat oraș din Uniunea Europeană?",
 		"variante": ["Berlin", "Madrid", "Roma", "Paris"],
 		"corect": 0,
@@ -43100,9 +45575,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3915",
+		"id": "mana:4140",
 		"verificat": false,
-		"fapt": "mana:3915",
+		"fapt": "mana:4140",
 		"text": "Cum se numește o populație în care copiii sunt mulți și vârstnicii puțini?",
 		"variante": ["O populație tânără", "O populație îmbătrânită", "O populație stabilă", "O populație urbană"],
 		"corect": 0,
@@ -43111,9 +45586,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3916",
+		"id": "mana:4141",
 		"verificat": false,
-		"fapt": "mana:3916",
+		"fapt": "mana:4141",
 		"text": "Ce țară are cele mai multe orașe de peste un milion de locuitori?",
 		"variante": ["India", "Statele Unite", "China", "Brazilia"],
 		"corect": 2,
@@ -43122,9 +45597,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3917",
+		"id": "mana:4142",
 		"verificat": false,
-		"fapt": "mana:3917",
+		"fapt": "mana:4142",
 		"text": "Cum se numește limba pe care un om o învață în copilărie, în familie?",
 		"variante": ["Limba maternă", "Limba oficială", "Limba de circulație", "Lingua franca"],
 		"corect": 0,
@@ -43133,9 +45608,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3918",
+		"id": "mana:4143",
 		"verificat": false,
-		"fapt": "mana:3918",
+		"fapt": "mana:4143",
 		"text": "Ce limbă e oficială în Filipine, pe lângă engleză?",
 		"variante": ["Malaeza", "Spaniola", "Filipino", "Indoneziana"],
 		"corect": 2,
@@ -43144,9 +45619,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3919",
+		"id": "mana:4144",
 		"verificat": false,
-		"fapt": "mana:3919",
+		"fapt": "mana:4144",
 		"text": "Ce monedă comună folosesc mai multe state din Africa de Vest și Centrală, legată de euro?",
 		"variante": ["Randul", "Naira", "Francul CFA", "Șilingul"],
 		"corect": 2,
@@ -43155,9 +45630,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3920",
+		"id": "mana:4145",
 		"verificat": false,
-		"fapt": "mana:3920",
+		"fapt": "mana:4145",
 		"text": "Ce limbă a populației autohtone e oficială în Maroc, pe lângă araba?",
 		"variante": ["Franceza", "Hassaniya", "Swahili", "Amazigh"],
 		"corect": 3,
@@ -43166,9 +45641,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3921",
+		"id": "mana:4146",
 		"verificat": false,
-		"fapt": "mana:3921",
+		"fapt": "mana:4146",
 		"text": "Cum se numește, în China, sărbătoarea Anului Nou după calendarul lunar?",
 		"variante": ["Festivalul Lampioanelor", "Festivalul Primăverii", "Festivalul Lunii", "Qingming"],
 		"corect": 1,
@@ -43177,9 +45652,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3922",
+		"id": "mana:4147",
 		"verificat": false,
-		"fapt": "mana:3922",
+		"fapt": "mana:4147",
 		"text": "Ce monedă se folosește în Nigeria?",
 		"variante": ["Naira", "Cedi", "Randul", "Birrul"],
 		"corect": 0,
@@ -43188,9 +45663,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3923",
+		"id": "mana:4148",
 		"verificat": false,
-		"fapt": "mana:3923",
+		"fapt": "mana:4148",
 		"text": "Ce monedă se folosește în Kenya?",
 		"variante": ["Naira", "Șilingul", "Birrul", "Francul CFA"],
 		"corect": 1,
@@ -43199,9 +45674,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3924",
+		"id": "mana:4149",
 		"verificat": false,
-		"fapt": "mana:3924",
+		"fapt": "mana:4149",
 		"text": "Ce monedă se folosește în Vietnam?",
 		"variante": ["Bahtul", "Kipul", "Rielul", "Dongul"],
 		"corect": 3,
@@ -43210,9 +45685,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3925",
+		"id": "mana:4150",
 		"verificat": false,
-		"fapt": "mana:3925",
+		"fapt": "mana:4150",
 		"text": "Ce monedă se folosește în Peru?",
 		"variante": ["Pesoul", "Solul", "Bolivarul", "Guaraniul"],
 		"corect": 1,
@@ -43221,9 +45696,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3926",
+		"id": "mana:4151",
 		"verificat": false,
-		"fapt": "mana:3926",
+		"fapt": "mana:4151",
 		"text": "Ce limbă e oficială în Kazahstan, pe lângă rusă?",
 		"variante": ["Uzbeca", "Kazaha", "Tătara", "Mongola"],
 		"corect": 1,
@@ -43232,9 +45707,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3927",
+		"id": "mana:4152",
 		"verificat": false,
-		"fapt": "mana:3927",
+		"fapt": "mana:4152",
 		"text": "Ce limbă e vorbită în Groenlanda, alături de daneză?",
 		"variante": ["Islandeza", "Groenlandeza", "Norvegiana", "Feroeza"],
 		"corect": 1,
@@ -43243,9 +45718,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3928",
+		"id": "mana:4153",
 		"verificat": false,
-		"fapt": "mana:3928",
+		"fapt": "mana:4153",
 		"text": "Ce limbă celtică e vorbită în Țara Galilor?",
 		"variante": ["Irlandeza", "Bretona", "Scoțiana", "Galeza"],
 		"corect": 3,
@@ -43254,9 +45729,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3929",
+		"id": "mana:4154",
 		"verificat": false,
-		"fapt": "mana:3929",
+		"fapt": "mana:4154",
 		"text": "Ce popor din nordul Scandinaviei crește reni și are limbă proprie?",
 		"variante": ["Inuiții", "Finlandezii", "Samii", "Neneții"],
 		"corect": 2,
@@ -43265,9 +45740,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3930",
+		"id": "mana:4155",
 		"verificat": false,
-		"fapt": "mana:3930",
+		"fapt": "mana:4155",
 		"text": "Ce minoritate turcică trăiește în cea mai mare parte în regiunea chineză Xinjiang?",
 		"variante": ["Tibetanii", "Uigurii", "Kazahii", "Hui"],
 		"corect": 1,
@@ -43276,9 +45751,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3931",
+		"id": "mana:4156",
 		"verificat": false,
-		"fapt": "mana:3931",
+		"fapt": "mana:4156",
 		"text": "Ce comunitate din India, numeroasă la Mumbai, se trage din persanii plecați de acasă acum o mie de ani?",
 		"variante": ["Sikhii", "Parsii", "Jainii", "Bahaii"],
 		"corect": 1,
@@ -43287,9 +45762,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3932",
+		"id": "mana:4157",
 		"verificat": false,
-		"fapt": "mana:3932",
+		"fapt": "mana:4157",
 		"text": "Ce popor indigen din Noua Zeelandă are limba recunoscută oficial, alături de engleză?",
 		"variante": ["Aborigenii", "Maorii", "Samoanii", "Fijienii"],
 		"corect": 1,
@@ -43298,9 +45773,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3933",
+		"id": "mana:4158",
 		"verificat": false,
-		"fapt": "mana:3933",
+		"fapt": "mana:4158",
 		"text": "Ce biserică creștină e majoritară în Armenia, una dintre cele mai vechi din lume?",
 		"variante": ["Biserica Ortodoxă Rusă", "Biserica Catolică", "Biserica Apostolică Armeană", "Biserica Coptă"],
 		"corect": 2,
@@ -43309,9 +45784,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3934",
+		"id": "mana:4159",
 		"verificat": false,
-		"fapt": "mana:3934",
+		"fapt": "mana:4159",
 		"text": "Ce indicator arată câți copii mor înainte de a împlini un an, la mia de născuți?",
 		"variante": ["Rata natalității", "Sporul natural", "Speranța de viață", "Mortalitatea infantilă"],
 		"corect": 3,
@@ -43320,9 +45795,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3935",
+		"id": "mana:4160",
 		"verificat": false,
-		"fapt": "mana:3935",
+		"fapt": "mana:4160",
 		"text": "Cum se numește trecerea unei populații de la natalitate și mortalitate mari la amândouă mici?",
 		"variante": ["Explozia demografică", "Tranziția demografică", "Declinul demografic", "Migrația"],
 		"corect": 1,
@@ -43331,9 +45806,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3936",
+		"id": "mana:4161",
 		"verificat": false,
-		"fapt": "mana:3936",
+		"fapt": "mana:4161",
 		"text": "Ce țară avea, în 2023, cea mai scăzută vârstă mediană din lume?",
 		"variante": ["Mali", "Ciad", "Niger", "Uganda"],
 		"corect": 2,
@@ -43342,9 +45817,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3937",
+		"id": "mana:4162",
 		"verificat": false,
-		"fapt": "mana:3937",
+		"fapt": "mana:4162",
 		"text": "Ce popor nomad din Sahara e cunoscut pentru vălurile albastre ale bărbaților?",
 		"variante": ["Beduinii", "Masaii", "Fulanii", "Tuaregii"],
 		"corect": 3,
@@ -43353,9 +45828,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3938",
+		"id": "mana:4163",
 		"verificat": false,
-		"fapt": "mana:3938",
+		"fapt": "mana:4163",
 		"text": "Ce limbă are cei mai mulți vorbitori nativi în Africa de Sud?",
 		"variante": ["Xhosa", "Zulu", "Afrikaans", "Sotho"],
 		"corect": 1,
@@ -43364,9 +45839,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3939",
+		"id": "mana:4164",
 		"verificat": false,
-		"fapt": "mana:3939",
+		"fapt": "mana:4164",
 		"text": "Ce limbă vorbită în Africa de Sud s-a format din olandeza colonilor?",
 		"variante": ["Zulu", "Flamanda", "Creola", "Afrikaans"],
 		"corect": 3,
@@ -43375,9 +45850,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3940",
+		"id": "mana:4165",
 		"verificat": false,
-		"fapt": "mana:3940",
+		"fapt": "mana:4165",
 		"text": "Cum se numește scăderea numărului de locuitori ai unei regiuni, prin plecări și îmbătrânire?",
 		"variante": ["Depopularea", "Urbanizarea", "Suburbanizarea", "Concentrarea"],
 		"corect": 0,
@@ -43386,9 +45861,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3941",
+		"id": "mana:4166",
 		"verificat": false,
-		"fapt": "mana:3941",
+		"fapt": "mana:4166",
 		"text": "Ce raport arată câți bărbați revin la o sută de femei într-o populație?",
 		"variante": ["Rata de dependență", "Raportul de masculinitate", "Indicele de fertilitate", "Sporul migratoriu"],
 		"corect": 1,
@@ -43397,9 +45872,9 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "mana:3942",
+		"id": "mana:4167",
 		"verificat": false,
-		"fapt": "mana:3942",
+		"fapt": "mana:4167",
 		"text": "Cum se numește plecarea din țară a oamenilor cu școală înaltă, spre locuri care plătesc mai bine?",
 		"variante": ["Exodul de creiere", "Naveta", "Exodul rural", "Repatrierea"],
 		"corect": 0,
