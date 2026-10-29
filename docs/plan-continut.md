@@ -17,35 +17,74 @@ apropiată.
 
 ---
 
-## 1. Ce e o celulă, și cele trei trepte ale ei
+## 1. Ce e o celulă, și cele patru trepte ale ei
 
-O **celulă** e o pereche domeniu × nivel. Sunt 18, și fiecare se umple separat,
-fiindcă alegerea din luptă e în două trepte: întâi domeniul (uniform, între cele
-care trec pragul la nivelul cerut), apoi întrebarea. Un domeniu gros la nivelul I
-și gol la III e sărit la III și joacă la I.
+O **celulă** e o pereche **raft × nivel**. Sunt **93** (31 de rafturi × 3 niveluri),
+și fiecare se umple separat.
 
-Până azi ținta era una singură: „500 pe celulă acolo unde domeniul le poartă,
+**Cuvântul s-a mutat, și merită scris, fiindcă altfel cifrele din document nu se
+mai citesc.** Când s-a scris documentul (6 octombrie 2026) o celulă era o pereche
+*domeniu × nivel* — erau 18, fiindcă erau 6 domenii — iar grila se uita după ce
+alege LUPTA: întâi domeniul (uniform, între cele care trec pragul la nivelul cerut),
+apoi întrebarea. Un domeniu gros la nivelul I și gol la III e sărit la III și joacă
+la I; asta nu s-a schimbat.
+
+Ce s-a schimbat e că din 8 octombrie fiecare întrebare are și un **raft**
+(`subcategorie`), iar Practice te lasă să alegi raftul. De atunci, unitatea care se
+umple sau nu se umple e raftul pe nivel, nu domeniul pe nivel — și așa se numără și
+în `progres.md` („toate cele 93 de celule au cel puțin 25”). Documentul ăsta
+rămăsese în urmă cu vorba.
+
+**O singură treaptă se măsoară altfel, și e o excepție din cod, nu o inconsecvență:**
+PRAG = 8 e `TRIVIA.PRAG_DOMENIU`, iar codul îl verifică pe **domeniu × nivel**,
+fiindcă el decide dacă DOMENIUL intră în luptă — lupta nu știe că există rafturi.
+Celelalte trei trepte se măsoară pe celulă, adică pe raft × nivel.
+
+Prima țintă a fost una singură: „500 pe celulă acolo unde domeniul le poartă,
 150–250 la nivelul I” (`progres.md`, sesiunea CONȚINUTUL). Cifra e bună și rămâne,
 dar are un defect practic: nu se atinge în luni, deci **nu-mi spune niciodată
 „celula asta e gata pentru azi”**. Orice celulă sub 500 arată identic în grilă.
 
-Deci ținta capătă două trepte intermediare. Fiecare are un **înțeles mecanic**, nu
-o senzație:
+Deci ținta capătă trepte intermediare. Fiecare are un **înțeles mecanic**, nu o
+senzație — e singura regulă a tabelului, și singurul lucru care oprește o cifră
+rotundă să devină o țintă:
 
 | treaptă | cifră | ce se schimbă în joc când o atingi |
 |---|---|---|
-| **PRAG** | 8 | celula **intră în luptă** (`TRIVIA.PRAG_DOMENIU`). Sub ea, conținutul există în fișier și nu ajunge niciodată la mine |
+| **PRAG** | 8 | **domeniul intră în luptă** la nivelul ăla (`TRIVIA.PRAG_DOMENIU`) — singura treaptă măsurată pe domeniu × nivel, fiindcă așa o verifică codul. Sub ea, conținutul există în fișier și nu ajunge niciodată la mine |
 | **CONFORT** | 25 | **4-5 expediții lungi fără nicio repetiție** în celula aia. O expediție lungă trage 5-6 întrebări pe celulă, iar sacul nu repetă până se golește |
+| **RAFT** | 75 | **un singur raft, dus până la capăt, deschide nivelul următor** în Practice (`PRAG_PRACTICE` = 60 de răspunsuri corecte la întrebări distincte, pe domeniu). Sub ea, raftul se termină și ecranul îți spune să te duci în restul domeniului |
 | **PLIN** | 150–250 la nivelul I · 500 la II și III, unde domeniul le duce | ținta din CONȚINUTUL, neschimbată |
 
 Socoteala de la CONFORT e cea din sesiunea DOMENIILE: ~45 de întrebări de Cultură
 generală pe o expediție lungă, din care ~49% la nivelul I (fiindcă
 `TREPTE_PE_NIVEL = 3`), împărțite la domeniile care trec pragul → 5-6 pe celulă.
 
-**Treapta care lipsește peste tot e CONFORT, nu PLIN.** Azi nicio celulă scrisă de
-mână nu e la 25; cele fabricate sunt mult peste. Diferența dintre 8 și 25 e
-diferența dintre „domeniul apare” și „domeniul nu se simte subțire” — și e o
-diferență care se poate atinge într-o săptămână de scris, nu într-un an.
+**Socoteala de la RAFT, fiindcă e treapta nouă (29 octombrie 2026).** Celelalte
+trei trepte sunt despre LUPTĂ; asta e singura despre Practice, și de-aia lipsea.
+Nivelul în Practice urcă la `PRAG_PRACTICE` = 60 de întrebări distincte la care ai
+răspuns corect, numărate **pe domeniu** (nu pe raft — vezi antetul din
+`practice.gd`). Cu un raft de 25 sau 50, 60 nu se face dintr-un singur raft: ajungi
+la „ai răspuns corect la tot raftul”, iar `_anunt_raft_parcurs()` îți spune, corect,
+cât îți mai lipsește **din restul domeniului**. Cu 75 în celulă, raftul pe care l-ai
+ales îți ajunge singur, cu 15 de rezervă peste prag. Adică: alegi raftul care te
+interesează și poți rămâne în el până urci — alegerea raftului devine o lupă
+adevărată, nu o escală.
+
+Cifra e deci `PRAG_PRACTICE` + o rezervă, nu un număr rotund: dacă vreodată se
+reglează 60, se reglează și 75.
+
+**Treapta care lipsea peste tot era CONFORT, și s-a atins** (8 octombrie 2026, apoi
+loturile din 27-29 octombrie). De pe **29 octombrie 2026, ținta de lucru e RAFT**:
+2300 de întrebări pe 80 de celule, cu una singură deja trecută (Științe exacte).
+PLIN rămâne unde era — e ținta de anul viitor, nu cea de luna asta.
+
+**Ce NU e o treaptă, și merită spus aici.** 100 pe celulă a fost cântărit în aceeași
+zi și lăsat deoparte: 4360 de întrebări, dublu față de RAFT, pentru nimic ce se
+schimbă în joc — niciun prag din cod nu stă între 75 și 100. Argumentul lui era
+durata unui raft în Practice, care e o senzație, iar regula tabelului de deasupra e
+că fiecare treaptă are un înțeles mecanic. 75 → 100 rămâne un lot de scris oricând;
+100 scris în grabă nu se dez-scrie.
 
 ### Ținta pe celulă, pe domenii
 
@@ -84,23 +123,67 @@ se decide.
 
 ## 2. Ordinea de lucru
 
-**1. Istoria.** Singura celulă cu rezerva **zero**: 8/8/8, exact pragul. Nu e doar
-subțire — e fragilă. În ziua în care retrag o întrebare de istorie, domeniul iese
-din luptă fără nicio eroare și fără niciun avertisment; pur și simplu nu mai apare.
-Țintă imediată: **25 pe nivel** (CONFORT), adică +17 pe celulă.
+*Rescrisă pe 29 octombrie 2026, când ținta a devenit RAFT = 75. Ordinea de dinainte
+(istoria întâi, fiindcă era la 8/8/8, apoi Diversele, fiindcă erau la 0) s-a
+terminat: azi istoria e la 50/50/50 și Diversele la 600. Regula care a dat-o rămâne
+aceeași și o dă și pe asta.*
 
-**2. Diverse și curiozități.** E la **0**, deci nu e „subțire”, e **invizibil**:
-un domeniu din opt nu există în luptă. Țintă imediată: **8 pe nivel** (PRAG), adică
-24 de întrebări. Aceeași socoteală care a deschis Divertismentul și Sportul pe 7
-octombrie — cea mai mare schimbare pe cea mai mică muncă din tot documentul.
+Ordinea nu e după cât conținut lipsește, ci după **cât se schimbă în joc pe unitate
+de muncă scrisă**.
 
-**3. Restul**, unde fabrica face grosul și munca mea e selecția, gramatica și
-nivelul — nu volumul.
+**1. Nivelul I, peste tot.** 929 de întrebări din cele 2300. Două motive care arată
+în direcții diferite și se adună: e **cel mai tras în luptă** (~49% din întrebări,
+de la `TREPTE_PE_NIVEL = 3`) și e **cel mai subțire** — 12 din cele 23 de celule de
+sub 40 sunt de nivel I. Deci e singurul loc unde conținutul nou se vede imediat, la
+prima expediție. Al treilea motiv, mai puțin plăcut: e și cel mai greu de scris
+onest, fiindcă e plafonat de propria definiție („o știe orice adult”) — ceea ce e
+exact de ce nu trebuie lăsat la urmă, când oboseala de scris e maximă.
 
-Ordinea nu e după cât conținut lipsește (geografia până la PLIN are nevoie de mai
-mult decât toate celelalte la un loc), ci după **cât se schimbă în joc pe unitate
-de muncă scrisă**. 48 de întrebări deschid două domenii; 48 de întrebări de
-geografie nu se observă.
+**2. Cele cinci rafturi de 25, în toate cele trei niveluri.** Arte vizuale,
+Arhitectură și design, Televiziune, Pop culture și internet, Gaming și jocuri de
+masă. 150 fiecare, 750 la un loc — **o treime din toată munca în 5 rafturi din 31.**
+Sunt singurele care se SIMT subțiri: un raft de 25 se termină într-o șezută de
+Practice. Geografia politică, cu 123 la nivelul II, nu se simte deloc.
+
+**3. Restul nivelurilor II și III**, unde cele mai multe celule sunt la 50 și le
+lipsesc 25 — loturi mici, ușor de dus, fără nicio surpriză.
+
+### Cât lipsește, pe nivel și pe domeniu
+
+| | Nivel I | Nivel II | Nivel III | Total |
+|---|---:|---:|---:|---:|
+| **Toate domeniile** | **929** | **697** | **674** | **2300** |
+
+Nivelul I, pe domenii, fiindcă așa se comit loturile (un lot = un domeniu):
+
+| Domeniu | lipsă la nivelul I |
+|---|---:|
+| Artă și literatură | 177 |
+| Sport și jocuri | 175 |
+| Divertisment și media | 166 |
+| Geografie și explorare | 108 |
+| Istorie și societate | 100 |
+| Gastronomie și lifestyle | 100 |
+| Știință și tehnologie | 75 |
+| Diverse și curiozități | 28 |
+
+Primele trei sunt și cele cu rafturile de 25 în ele. Nu e o coincidență: Artă,
+Divertisment și Sport sunt domeniile tăiate cel mai târziu (6 și 8 octombrie), deci
+cele cu cel mai puțin timp de scris în spate.
+
+### Partea care nu se rezolvă cu volum
+
+La 29 octombrie 2026: **28 de întrebări din 5481 au `verificat: true`.** 0,5%.
+Toate au notă, dar 4139 sunt `verificat: false` — scrise și adnotate de un model de
+limbaj, exact ce regula „Modelul de limbaj formulează, nu informează” ține afară.
+
+RAFT duce grămada necitită de la ~5450 la ~7750. La un minut-două pe întrebare,
+asta e peste o sută de ore de citit, și e singura cifră din document care nu scade
+cu loturi mai mari. **Nu e un motiv să nu scriu conținut** — o întrebare necitită e
+tot o întrebare bună în 95% din cazuri, și asta e deja decis (vezi flagul din
+`CLAUDE.md`). E un motiv ca verificarea să-și capete o ordine a ei, în loc să fie
+ce fac când nu scriu: citite întâi celulele care intră cel mai des în luptă, adică
+nivelul I al domeniilor care trec pragul.
 
 ---
 
@@ -481,16 +564,16 @@ motivul, lângă date — și **oprește scriptul** dacă rândul reapare.
 
 ## 6. Ce se măsoară singur
 
-Documentul ăsta ar putea minți în liniște, și de-aia două lucruri din el se citesc
-dintr-o rulare headless, nu de aici:
+Documentul ăsta ar putea minți în liniște, și de-aia cifrele din el nu se cred de
+aici: se citesc dintr-o rulare headless.
 
 ```bash
 "$GODOT" --headless --path . res://tools/verificari/verifica_trivia.tscn
 ```
 
-- **grila 8 × 3**, cu întrebări, fapte și rezerva peste prag pe fiecare celulă —
-  deci treapta la care e fiecare celulă (PRAG / CONFORT / PLIN) se vede, nu se
-  presupune;
+- **grila 8 × 3**, cu întrebări, fapte și **rezerva peste PRAG** pe fiecare domeniu
+  și nivel — deci ziua în care un domeniu ar ieși din luptă în tăcere se vede
+  înainte, nu după;
 - **subcategoriile fără nicio întrebare**, tipărite pe domeniu. Un raft declarat
   aici și lăsat gol pentru totdeauna e o promisiune pe care n-o mai ține minte
   nimeni; așa, apare la fiecare rulare, până îl umplu sau îl șterg;
@@ -502,6 +585,22 @@ dintr-o rulare headless, nu de aici:
   întrebările fără raft, pe fiecare celulă. Dacă rafturile s-ar suprapune, cifrele de
   pe butoanele din Practice ar fi false și nimic nu te-ar avertiza — asta e chiar
   deosebirea dintre o ÎMPĂRȚIRE și niște etichete, pe care se sprijină secțiunea asta.
+- **grila pe CELULE** (raft × nivel, toate 93), de pe 29 octombrie 2026: la ce
+  treaptă e fiecare și cât îi lipsește până la RAFT, pe raft, pe domeniu și pe
+  nivel. Tot o măsurătoare, nu un verdict — o celulă subțire e muncă de scris, nu o
+  greșeală, iar un prag pe conținut ar fi o cifră pe care o ridic de câte ori scriu
+  un lot. Rândul care se citește primul e **„celule sub CONFORT"**: sub CONFORT,
+  4-5 expediții lungi repetă întrebări, adică singura treaptă care se simte la joc,
+  nu la numărat. Până la ea, cifrele din secțiunile 1 și 2 se scoteau cu scripturi
+  de unică folosință, pe dinafara proiectului — deci documentul ăsta putea minți în
+  liniște despre propria țintă, și chiar mințise (vezi definiția celulei, de la 18
+  la 93, în secțiunea 1);
+- **un singur verdict acolo, și e despre ÎNȚELESUL treptei RAFT**, nu despre
+  conținut: `RAFT >= PRAG_PRACTICE`. Treapta înseamnă „un raft dus până la capăt
+  deschide singur nivelul următor", iar tot înțelesul ei atârnă de cele două cifre.
+  Dacă `PRAG_PRACTICE` urcă vreodată la 100, treapta nu mai înseamnă nimic — și n-ar
+  crăpa nimic, n-ar avertiza nimic: ar rămâne o cifră într-un document, care pare
+  măsurată fiindcă apare într-o rulare.
 
 **Verificarea nu are unelte.** Fiecare întrebare are `verificat: true/false` în
 `data/intrebari_trivia.json`, pus de mână când citesc nota ei. Niciun script,

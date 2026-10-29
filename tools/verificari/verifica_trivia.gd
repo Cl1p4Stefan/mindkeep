@@ -74,6 +74,13 @@ extends Node
 ##   cuprinde domeniul ar șterge memoria tuturor celorlalte. Nu s-ar fi văzut ca
 ##   un bug — s-ar fi văzut ca „parcă se repetă ceva, uneori".
 ##
+##   GRILA PE CELULE, și ea o măsurătoare, nu un verdict (secțiunea 9c, de pe 29
+##   octombrie 2026). La ce treaptă e fiecare raft pe fiecare nivel — 93 de celule
+##   — și cât lipsește până la următoarea. Până la ea, `plan-continut.md` spunea
+##   că treptele conținutului „se văd, nu se presupun", dar grila de mai sus e pe
+##   DOMENIU × nivel, iar cifrele cu care s-a hotărât ținta se scoteau cu
+##   scripturi de unică folosință, pe dinafara proiectului.
+##
 ## Ce NU verifică: nimic despre CE SCRIE în note. Că un an e corect sau că nota
 ## se înțelege singură se citește cu ochiul, după `docs/ghid-note.md` — niciun
 ## script nu poate face asta, și e chiar motivul pentru care `verificat` e un
@@ -172,6 +179,7 @@ func _ready() -> void:
 	tot_bun = _sacurile_nu_se_amesteca(intrebari) and tot_bun
 	tot_bun = _rafturile(intrebari) and tot_bun
 	tot_bun = _nestiutele_intai() and tot_bun
+	tot_bun = _grila_pe_celule() and tot_bun
 	tot_bun = _imaginile() and tot_bun
 	# ULTIMA, fiindcă e singura care ÎNLOCUIEȘTE `TRIVIA.intrebari` cu o bază
 	# sintetică. O pune la loc când termină, dar o verificare care mișcă pământul
@@ -1158,6 +1166,145 @@ func _nestiutele_intai() -> bool:
 	tot_bun = _verdict("raftul e parcurs abia cu zero neștiute", not cu_una and cu_zero,
 		"cu una: %s, cu zero: %s" % [cu_una, cu_zero]) and tot_bun
 	return tot_bun
+
+
+# ─────────────────────────────────────────────────────────────
+# 9c. GRILA PE CELULE — la ce treaptă e fiecare raft, pe fiecare nivel
+#
+# O MĂSURĂTOARE, nu un verdict. Aceeași natură ca grila pe domenii din secțiunea
+# 1: o celulă subțire nu e o greșeală, e muncă de scris. Un verdict ar fi cerut
+# un prag, iar un prag pe conținut e o cifră pe care o ridici de câte ori scrii
+# un lot — adică o verificare pe care o actualizezi mecanic, fără s-o mai citești.
+#
+# ─── DE CE EXISTĂ, ȘI DE CE ABIA ACUM (29 octombrie 2026) ─────
+# `docs/plan-continut.md` spune, în secțiunea 6, că treptele conținutului „se
+# văd, nu se presupun". Nu era adevărat: grila din secțiunea 1 e pe DOMENIU ×
+# nivel, cu rezerva peste `PRAG_DOMENIU`, fiindcă aia e singura treaptă pe care o
+# verifică jocul. Celelalte trepte se măsoară pe CELULĂ — raft × nivel, 93 de ele
+# — și pentru ele nu exista nimic: cifrele cu care s-a hotărât ținta de 75 au
+# fost scoase cu un script de unică folosință, pe dinafara proiectului.
+#
+# Adică documentul putea minți în liniște despre propria țintă, și chiar a
+# mințit: tot în ziua aia s-a văzut că definiția „o celulă e domeniu × nivel,
+# sunt 18" rămăsese din vremea celor 6 domenii. Rândurile de mai jos sunt ce o
+# ține cinstită.
+#
+# ─── CE NU E AICI ─────────────────────────────────────────────
+# PLIN. E o țintă pe DOMENIU × nivel, și inegală pe domenii (tabelul din
+# secțiunea 1 a planului: 500 unde domeniul le poartă, 150-250 la nivelul I).
+# Pusă pe celulă ar fi fost o cifră inventată aici, nu una decisă acolo.
+# ─────────────────────────────────────────────────────────────
+
+# Treptele de conținut, în ordine. CONFORT și RAFT nu sunt constante ale jocului:
+# sunt ținte, și ținta trăiește în `docs/plan-continut.md`. Scrise aici fiindcă
+# aici se măsoară — dar cu numele lor, ca o cifră schimbată în plan să aibă un
+# singur loc de schimbat și în cod.
+#
+# PRAG nu se scrie: se citește din joc (`TRIVIA.PRAG_DOMENIU`), fiindcă pe el îl
+# verifică și codul.
+const CONFORT := 25
+const RAFT := 75
+
+
+func _grila_pe_celule() -> bool:
+	print("\n  GRILA PE CELULE (raft × nivel; treptele din docs/plan-continut.md)")
+	var tot_bun := true
+
+	print("    %-42s PRAG %d · CONFORT %d · RAFT %d" % [
+		"treptele", TRIVIA.PRAG_DOMENIU, CONFORT, RAFT])
+
+	# SINGURUL VERDICT din secțiune, și e despre ÎNȚELESUL treptei, nu despre
+	# conținut. RAFT = 75 nu e un număr rotund: e `PRAG_PRACTICE` plus o rezervă,
+	# și tot înțelesul ei („un raft dus până la capăt deschide singur nivelul
+	# următor") atârnă de asta. Dacă mâine `PRAG_PRACTICE` urcă la 100, treapta
+	# RAFT nu mai înseamnă nimic — și n-ar crăpa nimic, n-ar avertiza nimic: ar
+	# rămâne doar o cifră într-un document, care pare măsurată fiindcă apare aici.
+	var prag_practice: int = PRACTICE.PRAG_PRACTICE
+	tot_bun = _verdict("RAFT stă peste PRAG_PRACTICE", RAFT >= prag_practice,
+		"%d ≥ %d (+%d rezervă)" % [RAFT, prag_practice, RAFT - prag_practice]
+		if RAFT >= prag_practice
+		else "%d < %d — treapta RAFT nu mai deschide un nivel dintr-un raft" % [
+			RAFT, prag_practice]) and tot_bun
+
+	var sub_confort: Array[String] = []
+	var pe_treapta := {"sub PRAG": 0, "PRAG": 0, "CONFORT": 0, "RAFT": 0}
+	var lipsa_pe_nivel := {1: 0, 2: 0, 3: 0}
+	var celule := 0
+
+	var domenii: Array = TRIVIA.DOMENII.keys()
+	domenii.sort()
+	for domeniu in domenii:
+		var nume := String(domeniu)
+		var rafturi: Dictionary = TRIVIA.SUBCATEGORII.get(nume, {})
+		if rafturi.is_empty():
+			continue
+		print("    %s" % nume)
+		var pe_domeniu := {1: 0, 2: 0, 3: 0}
+		var lipsa_domeniu := 0
+		for cheie in rafturi:
+			var raft := String(cheie)
+			var cate := {}
+			var lipsa_raft := 0
+			var treapta_cea_mai_joasa := "RAFT"
+			for nivel in range(1, 4):
+				# Prin CHIAR funcția care scrie cifrele pe butoanele din Practice.
+				# O verificare care-și numără singură întrebările ar măsura copia.
+				var n: int = TRIVIA.raftul(nivel, nume, raft).size()
+				cate[nivel] = n
+				pe_domeniu[nivel] += n
+				celule += 1
+
+				var treapta := _treapta(n)
+				pe_treapta[treapta] = int(pe_treapta[treapta]) + 1
+				if n < CONFORT:
+					sub_confort.append("%s:%s:%d (%d)" % [nume, raft, nivel, n])
+				if _mai_jos(treapta, treapta_cea_mai_joasa):
+					treapta_cea_mai_joasa = treapta
+
+				var lipsa: int = maxi(0, RAFT - n)
+				lipsa_raft += lipsa
+				lipsa_pe_nivel[nivel] = int(lipsa_pe_nivel[nivel]) + lipsa
+			lipsa_domeniu += lipsa_raft
+			print("      %-36s %4d %4d %4d   %-8s %s" % [
+				raft, cate[1], cate[2], cate[3], treapta_cea_mai_joasa,
+				"gata" if lipsa_raft == 0 else "lipsă %d" % lipsa_raft])
+		print("      %-36s %4d %4d %4d   %-8s %s" % [
+			"(tot domeniul)", pe_domeniu[1], pe_domeniu[2], pe_domeniu[3], "",
+			"gata" if lipsa_domeniu == 0 else "lipsă %d" % lipsa_domeniu])
+
+	# CELULELE SUB CONFORT, numite. Nu e un verdict (vezi antetul), dar e rândul
+	# pe care-l citesc primul: sub CONFORT, 4-5 expediții lungi repetă întrebări
+	# în celula aia — adică singura treaptă care se SIMTE la joc, nu la numărat.
+	print("    %-42s %s" % ["celule sub CONFORT",
+		"niciuna din %d" % celule if sub_confort.is_empty()
+		else "%d: %s" % [sub_confort.size(), _primele(sub_confort, 5)]])
+	print("    %-42s sub PRAG %d · PRAG %d · CONFORT %d · RAFT %d" % [
+		"celule pe fiecare treaptă", pe_treapta["sub PRAG"], pe_treapta["PRAG"],
+		pe_treapta["CONFORT"], pe_treapta["RAFT"]])
+	var lipsa_tot: int = lipsa_pe_nivel[1] + lipsa_pe_nivel[2] + lipsa_pe_nivel[3]
+	print("    %-42s %d = I %d + II %d + III %d" % ["lipsă până la RAFT",
+		lipsa_tot, lipsa_pe_nivel[1], lipsa_pe_nivel[2], lipsa_pe_nivel[3]])
+	return tot_bun
+
+
+## Treapta la care e o celulă cu `cate` întrebări. Numele, nu cifra, fiindcă
+## numele e ce scrie în plan și ce caut cu ochiul în grilă.
+func _treapta(cate: int) -> String:
+	if cate >= RAFT:
+		return "RAFT"
+	if cate >= CONFORT:
+		return "CONFORT"
+	if cate >= TRIVIA.PRAG_DOMENIU:
+		return "PRAG"
+	return "sub PRAG"
+
+
+## E `a` o treaptă mai joasă decât `b`? Se compară pe ordinea treptelor, nu
+## alfabetic — „CONFORT" e înaintea lui „PRAG" în dicționar, dar deasupra lui în
+## plan.
+func _mai_jos(a: String, b: String) -> bool:
+	const ORDINE := ["sub PRAG", "PRAG", "CONFORT", "RAFT"]
+	return ORDINE.find(a) < ORDINE.find(b)
 
 
 # ─────────────────────────────────────────────────────────────
