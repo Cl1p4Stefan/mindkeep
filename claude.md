@@ -49,7 +49,7 @@ fișiere nici nu se compilează fără `Sac` și `Muzica`.
 
 | scenă | ce bate | verdicte | durată |
 |---|---|---|---|
-| `verifica_trivia` | întrebările, faptele, echilibrul pe domenii, sacul, pragul, rafturile din Practice, neștiutele întâi și distanța | 38 | ~20 s |
+| `verifica_trivia` | întrebările, faptele, echilibrul pe domenii, sacul, pragul, rafturile din Practice, neștiutele întâi și distanța; plus **grila pe cele 93 de celule**, cu treapta fiecăreia și cât lipsește până la RAFT | 39 | ~20 s |
 | `verifica_harta` | generatorul de hărți, pe sute de semințe | 28 | ~40 s |
 | `verifica_plansa` | fiecare hartă desenată din `data/harti/` | 26 | ~30 s |
 | `verifica_eveniment` | lacătul pe care-l dă harta, nu cel din F6 | 22 | ~30 s |
