@@ -14864,5 +14864,905 @@
 	{
 		"id": "mana:3717",
 		"nota": "Legenda pune învoiala pe seama Sfintei Brigida și a Sfântului Patrick. Ziua de 29 februarie se întoarce o dată la patru ani, iar un pretendent care refuza datora, prin obicei, o rochie de mătase."
+	},
+	{
+		"id": "mana:3718",
+		"nota": "Oceanul Arctic e cel mai mic și cel mai puțin adânc dintre cele cinci oceane. Gheața de deasupra lui plutește pe apă, nu stă pe uscat, așa că se topește din amândouă părțile."
+	},
+	{
+		"id": "mana:3719",
+		"nota": "Amazonul curge prin America de Sud, din Anzi până în Atlantic, și adună apele de pe un teritoriu mai mare decât toată Uniunea Europeană."
+	},
+	{
+		"id": "mana:3720",
+		"nota": "Un aisberg își ține deasupra apei cam o nouă parte din volum; restul e scufundat. De-aia Titanicul a lovit gheața pe care nu o vedea nimeni de pe punte."
+	},
+	{
+		"id": "mana:3721",
+		"nota": "O tornadă e un vârtej de aer care atinge pământul, cu un diametru de obicei sub câteva sute de metri. Cele mai multe din lume se formează în câmpia centrală a Statelor Unite."
+	},
+	{
+		"id": "mana:3722",
+		"nota": "Grindina se formează în norii de furtună, unde picătura urcă și coboară de mai multe ori, înghețând strat după strat. Tăiată în două, o boabă arată inele, ca o ceapă."
+	},
+	{
+		"id": "mana:3723",
+		"nota": "Alpii se întind pe vreo 1.200 de kilometri, prin opt țări, și s-au ridicat din ciocnirea plăcii africane cu cea europeană — o ciocnire care continuă, câțiva milimetri pe an."
+	},
+	{
+		"id": "mana:3724",
+		"nota": "În Australia e vară în decembrie, fiindcă anotimpurile se inversează între cele două hemisfere: când sudul e înclinat spre Soare, nordul e întors de la el."
+	},
+	{
+		"id": "mana:3725",
+		"nota": "Un canion se adâncește pe măsură ce râul taie roca, uneori milioane de ani. Marele Canion al Coloradului are peste un kilometru adâncime și scoate la vedere roci de două miliarde de ani."
+	},
+	{
+		"id": "mana:3726",
+		"nota": "Un deșert se definește prin lipsa ploii, sub 250 de milimetri pe an. De-aia Antarctica, uscată și înghețată, e socotită cel mai mare deșert de pe Pământ."
+	},
+	{
+		"id": "mana:3727",
+		"nota": "Izvorul e locul unde apa subterană iese la suprafață și pornește firul de râu. Un fluviu mare are, de obicei, mai multe izvoare, iar cel socotit „oficial” e o convenție."
+	},
+	{
+		"id": "mana:3728",
+		"nota": "Mareea e trasă mai ales de Lună, care atrage apa spre ea. În golful Fundy, din Canada, diferența dintre flux și reflux trece de 15 metri."
+	},
+	{
+		"id": "mana:3729",
+		"nota": "Ecuatorul are vreo 40.000 de kilometri și trece prin treisprezece țări. Pe el, ziua și noaptea sunt aproape egale tot anul, fără ierni și fără veri."
+	},
+	{
+		"id": "mana:3730",
+		"nota": "Zăpada se formează când vaporii îngheață direct pe un fir de praf, în cristale cu șase colțuri. Un strat proaspăt e, pe cam nouă zecimi din volum, aer."
+	},
+	{
+		"id": "mana:3731",
+		"nota": "Un tsunami are, în larg, abia câteva zeci de centimetri înălțime, dar aleargă cu viteza unui avion. Se înalță abia la coastă, unde apa devine puțin adâncă."
+	},
+	{
+		"id": "mana:3732",
+		"nota": "O mare e o parte a oceanului, mai mică și mărginită de uscat. Marea Neagră se leagă de Mediterană prin strâmtori atât de înguste că apa ei de adâncime stă nemișcată."
+	},
+	{
+		"id": "mana:3733",
+		"nota": "Atmosfera se subțiază repede cu altitudinea: jumătate din masa ei stă sub 5.500 de metri, adică sub vârfurile pe care alpiniștii le urcă fără oxigen."
+	},
+	{
+		"id": "mana:3734",
+		"nota": "Solul se formează foarte încet, din rocă sfărâmată și resturi de plante: pentru un centimetru pot trece sute de ani. De-aia e socotit o resursă care nu se reface."
+	},
+	{
+		"id": "mana:3735",
+		"nota": "Un uragan e același fenomen care, în Pacificul de nord-vest, se numește taifun. Se naște peste apă caldă, de peste 26 de grade, și se stinge repede deasupra uscatului."
+	},
+	{
+		"id": "mana:3736",
+		"nota": "Circuitul apei în natură mută în fiecare an sute de mii de kilometri cubi de apă. Nimic nu se pierde: apa dintr-un pahar a trecut, cândva, prin nori și prin ocean."
+	},
+	{
+		"id": "mana:3737",
+		"nota": "Delta Dunării are peste 5.000 de kilometri pătrați și crește încă, din aluviunile aduse de fluviu. E una dintre cele mai întinse zone de stuf din lume."
+	},
+	{
+		"id": "mana:3738",
+		"nota": "Punctele cardinale se sprijină pe rotația Pământului: nordul și sudul arată spre poli, iar estul spre partea în care răsare Soarele."
+	},
+	{
+		"id": "mana:3739",
+		"nota": "Sena străbate Parisul pe vreo 13 kilometri și înconjoară insula pe care s-a ridicat catedrala Notre-Dame. Se varsă în Canalul Mânecii, lângă Le Havre."
+	},
+	{
+		"id": "mana:3740",
+		"nota": "Etna are peste 3.300 de metri și erupe aproape în fiecare an, dar aproape mereu blând, cu lavă care curge încet. Pe pantele ei se cultivă viță de vie și fistic."
+	},
+	{
+		"id": "mana:3741",
+		"nota": "Marea Mediterană comunică cu Atlanticul doar prin strâmtoarea Gibraltar, lată de vreo 14 kilometri. Acum cinci milioane de ani era aproape secată."
+	},
+	{
+		"id": "mana:3742",
+		"nota": "O avalanșă poate coborî cu peste 100 de kilometri pe oră. Pornește adesea de la o pătură de zăpadă proaspătă așezată pe un strat vechi și tare, pe care alunecă."
+	},
+	{
+		"id": "mana:3743",
+		"nota": "Mont Blanc are vreo 4.800 de metri, la granița dintre Franța și Italia. Înălțimea lui se măsoară din nou la fiecare doi ani, fiindcă vârful e o calotă de gheață care se schimbă."
+	},
+	{
+		"id": "mana:3744",
+		"nota": "Yangtze are vreo 6.300 de kilometri și e al treilea din lume după Nil și Amazon. Pe el s-a ridicat barajul Trei Defilee, cea mai mare hidrocentrală de pe Pământ."
+	},
+	{
+		"id": "mana:3745",
+		"nota": "Marea Caspică are peste 370.000 de kilometri pătrați și nicio legătură cu oceanul, deci e un lac. Apa ei e sărată, dar de vreo trei ori mai puțin decât cea a mărilor."
+	},
+	{
+		"id": "mana:3746",
+		"nota": "Marea Baltică are apa cea mai puțin sărată dintre mările lumii, fiindcă primește multe fluvii și comunică greu cu oceanul. Iarna, nordul ei îngheață."
+	},
+	{
+		"id": "mana:3747",
+		"nota": "Marea Egee are peste 1.400 de insule și insulițe, din care sunt locuite vreo 200. Numele i-a rămas de la Egeu, regele din legenda lui Tezeu."
+	},
+	{
+		"id": "mana:3748",
+		"nota": "Sicilia are vreo 25.700 de kilometri pătrați și e despărțită de Italia printr-o strâmtoare de numai trei kilometri, peste care încă nu s-a construit niciun pod."
+	},
+	{
+		"id": "mana:3749",
+		"nota": "Tibrul taie Roma în două și, în Antichitate, era drumul pe care mărfurile urcau de la mare. Cetatea s-a născut pe dealurile de pe malul lui stâng."
+	},
+	{
+		"id": "mana:3750",
+		"nota": "Aurora polară se aprinde când particulele venite de la Soare lovesc aerul de la peste 100 de kilometri altitudine. Verdele vine de la oxigen, roșul tot de la el, dar mai sus."
+	},
+	{
+		"id": "mana:3751",
+		"nota": "Un arhipelag poate avea mii de insule: Indonezia numără peste 17.000, din care mai puțin de o treime au nume, iar vreo 6.000 sunt locuite."
+	},
+	{
+		"id": "mana:3752",
+		"nota": "O trecătoare a hotărât, de multe ori, istoria: pe la Termopile, Hannibal peste Alpi, Bran între Transilvania și Muntenia. Drumurile trec acolo fiindcă nu au pe unde altundeva."
+	},
+	{
+		"id": "mana:3753",
+		"nota": "La confluență, râul mai mic își pierde numele, oricât de lung ar fi. Uneori se vede o linie între cele două ape, fiindcă poartă nămol diferit."
+	},
+	{
+		"id": "mana:3754",
+		"nota": "Taigaua e cea mai întinsă pădure de pe Pământ, un inel aproape neîntrerupt în jurul nordului. Are puține specii de arbori, dar pe suprafețe imense."
+	},
+	{
+		"id": "mana:3755",
+		"nota": "În tundră copacii nu prind rădăcină fiindcă solul rămâne înghețat în adâncime tot anul. Vara, apa nu are unde să se scurgă, așa că se adună în mlaștini și bălți."
+	},
+	{
+		"id": "mana:3756",
+		"nota": "Savana trăiește din alternanța dintre un sezon ploios și unul uscat. Incendiile dese opresc pădurea să se închidă, iar ierbivorele mari fac restul."
+	},
+	{
+		"id": "mana:3757",
+		"nota": "Vârful Omu are 2.514 metri, în Bucegi, și adăpostește cea mai înaltă stație meteorologică din România, locuită tot anul."
+	},
+	{
+		"id": "mana:3758",
+		"nota": "Oltul are vreo 615 kilometri, de la izvoarele din Hășmaș până la Dunăre, și e singurul râu care taie de-a curmezișul Carpații Meridionali, prin defileul de la Cozia."
+	},
+	{
+		"id": "mana:3759",
+		"nota": "Mureșul are vreo 760 de kilometri și a fost, vreme de secole, drumul pe care sarea de la Turda cobora cu plutele spre Ungaria."
+	},
+	{
+		"id": "mana:3760",
+		"nota": "Prutul desparte cele două state pe vreo 700 de kilometri și se varsă în Dunăre lângă Galați. Până în 1812 curgea prin mijlocul Moldovei, nu pe marginea ei."
+	},
+	{
+		"id": "mana:3761",
+		"nota": "Calota glaciară a Antarcticii are pe alocuri peste 4 kilometri grosime și ține vreo 60 la sută din apa dulce a planetei."
+	},
+	{
+		"id": "mana:3762",
+		"nota": "Paralelele se micșorează spre poli, până se strâng într-un punct. Cea mai lungă e Ecuatorul, latitudinea zero, de la care se numără spre nord și spre sud."
+	},
+	{
+		"id": "mana:3763",
+		"nota": "Meridianele au toate aceeași lungime și se întâlnesc la poli. Pe un meridian, ora e aceeași în fiecare punct — de aici au pornit fusurile orare."
+	},
+	{
+		"id": "mana:3764",
+		"nota": "Meridianul de origine a fost fixat la Greenwich în 1884, prin vot, la o conferință internațională. A câștigat fiindcă cele mai multe hărți marine îl foloseau deja."
+	},
+	{
+		"id": "mana:3765",
+		"nota": "Soarele de la miezul nopții ține, la pol, o jumătate de an. Perechea lui e noaptea polară, când iarna Soarele nu răsare deloc."
+	},
+	{
+		"id": "mana:3766",
+		"nota": "Munții Atlas despart câmpia de pe litoral de Sahara și opresc umezeala venită de la ocean. Au vârfuri de peste 4.000 de metri, cu zăpadă iarna."
+	},
+	{
+		"id": "mana:3767",
+		"nota": "Peninsula Scandinavă e cea mai mare din Europa, cu vreo 750.000 de kilometri pătrați. Finlanda, deși e socotită scandinavă ca țară, nu se află pe ea."
+	},
+	{
+		"id": "mana:3768",
+		"nota": "Scara Beaufort a fost gândită în 1805 pentru marinari și are 12 trepte, descrise prin ce se vede: valuri, spumă, pânze. Nu măsura instrumente, ci efecte."
+	},
+	{
+		"id": "mana:3769",
+		"nota": "Föhnul se încălzește coborând, fiindcă aerul comprimat crește în temperatură. Poate topi zăpada în câteva ore și e dat vina, în Alpi, pentru dureri de cap."
+	},
+	{
+		"id": "mana:3770",
+		"nota": "Zambezi cade pe o lățime de peste 1.700 de metri, într-o crăpătură adâncă de o sută. Localnicii numesc cascada Mosi-oa-Tunya, „fumul care tună”."
+	},
+	{
+		"id": "mana:3771",
+		"nota": "Namib e socotit cel mai vechi deșert de pe Pământ, uscat de vreo 55 de milioane de ani. Plantele de acolo trăiesc din ceața adusă dimineața de curentul rece al oceanului."
+	},
+	{
+		"id": "mana:3772",
+		"nota": "Rub al-Khali înseamnă „locul gol” și acoperă vreo 650.000 de kilometri pătrați, cu dune de peste 200 de metri. Sub el se află unele dintre cele mai mari zăcăminte de petrol."
+	},
+	{
+		"id": "mana:3773",
+		"nota": "Marea Tireniană are cel mai adânc punct al Mediteranei de vest, peste 3.700 de metri, și vulcani activi la mijloc: Stromboli și Vulcano."
+	},
+	{
+		"id": "mana:3774",
+		"nota": "Orogeneza vine din grecescul pentru „naștere de munți”. Carpații și Alpii s-au ridicat în aceeași orogeneză alpină, începută acum vreo 60 de milioane de ani."
+	},
+	{
+		"id": "mana:3775",
+		"nota": "Aconcagua are vreo 6.960 de metri, în Argentina, și e cel mai înalt vârf din lume care se poate urca fără echipament de alpinism tehnic."
+	},
+	{
+		"id": "mana:3776",
+		"nota": "Denali are vreo 6.190 de metri, în Alaska, și numele lui înseamnă „cel înalt” în limba localnicilor koyukon. Până în 2015 se numea oficial Muntele McKinley."
+	},
+	{
+		"id": "mana:3777",
+		"nota": "Elbrus are 5.642 de metri și e un vulcan stins cu două vârfuri. Dacă granița Europei se duce pe culmea Caucazului, el e cel mai înalt vârf european, nu Mont Blanc."
+	},
+	{
+		"id": "mana:3778",
+		"nota": "Lacul Eyre se umple cu totul de vreo două ori într-un secol, când ploile din nord ajung până la el. Restul timpului e o crustă albă de sare, cel mai jos punct al continentului."
+	},
+	{
+		"id": "mana:3779",
+		"nota": "Marea Aral a pierdut, din 1960 încoace, cam nouă zecimi din suprafață, după ce apa râurilor a fost luată pentru plantațiile de bumbac. Pe fundul ei au rămas vapoare pe uscat."
+	},
+	{
+		"id": "mana:3780",
+		"nota": "O caldeira apare când camera de magmă se golește și tavanul cade în ea. Cea de la Santorini s-a format într-o erupție care a zguduit Mediterana acum vreo 3.600 de ani."
+	},
+	{
+		"id": "mana:3781",
+		"nota": "Un gheizer are nevoie de trei lucruri rare la un loc: apă, o sursă de căldură vulcanică și un canal îngust care ține apa sub presiune până fierbe. Pe Pământ sunt vreo mie."
+	},
+	{
+		"id": "mana:3782",
+		"nota": "Un fiord se formează când marea intră în valea pe care ghețarul a scobit-o sub nivelul ei. Sognefjord, în Norvegia, intră peste 200 de kilometri în uscat."
+	},
+	{
+		"id": "mana:3783",
+		"nota": "Un atol e inelul de corali rămas după ce insula vulcanică din mijloc s-a scufundat. Darwin a explicat asta încă în 1842, fără să fi văzut vreun atol de aproape."
+	},
+	{
+		"id": "mana:3784",
+		"nota": "Sirocoul suflă dinspre sud, primăvara, și poate lăsa un strat roșiatic de praf pe mașini și pe zăpada din Alpi. Praful ăsta fertilizează, în drumul lui, Mediterana."
+	},
+	{
+		"id": "mana:3785",
+		"nota": "Loessul e praf fin, așezat de vânt în timpul erelor glaciare, uneori în straturi de zeci de metri. Pe el stau cele mai bune pământuri de cultură din Ucraina și din China."
+	},
+	{
+		"id": "mana:3786",
+		"nota": "O dolină se naște când calcarul dizolvat de apă se lasă în jos sau se prăbușește peste o cavitate. Un platou acoperit de doline arată, de sus, ciuruit."
+	},
+	{
+		"id": "mana:3787",
+		"nota": "O stalactită crește din picătura care atârnă de tavan și lasă în urmă un inel de calcar. Perechea care urcă de pe podea e stalagmita, iar când se întâlnesc fac o coloană."
+	},
+	{
+		"id": "mana:3788",
+		"nota": "O dorsală oceanică e cea mai lungă formă de relief de pe Pământ: vreo 65.000 de kilometri, aproape toți sub apă. Pe ea se desfac plăcile, cu câțiva centimetri pe an."
+	},
+	{
+		"id": "mana:3789",
+		"nota": "Mantaua ține vreo 84 la sută din volumul Pământului și e solidă, deși curge foarte încet. Mișcarea ei lentă e ce plimbă plăcile de la suprafață."
+	},
+	{
+		"id": "mana:3790",
+		"nota": "Scara Fujita judecă tornada după urme, nu după vânt măsurat: un anemometru rar supraviețuiește. De aceea treptele se citesc pe case, pe copaci și pe mașini."
+	},
+	{
+		"id": "mana:3791",
+		"nota": "Debitul se măsoară în metri cubi pe secundă. Dunărea aduce în medie vreo 6.500 la vărsare, iar Amazonul de peste 25 de ori mai mult."
+	},
+	{
+		"id": "mana:3792",
+		"nota": "Bazinul hidrografic al Dunării acoperă vreo 800.000 de kilometri pătrați, cu bucăți din nouăsprezece țări. Granița dintre două bazine vecine se numește cumpăna apelor."
+	},
+	{
+		"id": "mana:3793",
+		"nota": "Marele Canion se află în Arizona, în Statele Unite, și are peste un kilometru adâncime. Pereții lui scot la vedere roci de aproape două miliarde de ani."
+	},
+	{
+		"id": "mana:3794",
+		"nota": "Casa Albă e locuită de președinți de la 1800, iar numele i-a venit de la varul alb cu care a fost acoperită piatra. John Adams a fost primul care a dormit în ea."
+	},
+	{
+		"id": "mana:3795",
+		"nota": "Amsterdam are peste 160 de canale și mai multe biciclete decât locuitori. Casele sunt înguste fiindcă impozitul se plătea, pe vremuri, după lățimea fațadei."
+	},
+	{
+		"id": "mana:3796",
+		"nota": "Dubai e cel mai populat oraș al Emiratelor Arabe Unite, dar capitala e Abu Dhabi. Acum șaptezeci de ani era un port de pescari și de culegători de perle."
+	},
+	{
+		"id": "mana:3797",
+		"nota": "British Museum s-a deschis în 1759 și a fost primul muzeu național din lume cu intrare liberă. Grecia cere înapoi marmurele Partenonului de aproape două secole."
+	},
+	{
+		"id": "mana:3798",
+		"nota": "Turnul Eiffel a avut 300 de metri și a ținut recordul patruzeci de ani, până la clădirea Chrysler din New York. Mulți parizieni au cerut, la vremea lui, să fie demolat."
+	},
+	{
+		"id": "mana:3799",
+		"nota": "Marea Barieră de Corali se întinde pe vreo 2.300 de kilometri în largul Australiei și e cea mai mare structură clădită de ființe vii. Se vede din spațiu."
+	},
+	{
+		"id": "mana:3800",
+		"nota": "Mamaia se întinde pe o limbă de pământ între mare și lacul Siutghiol și a început să fie stațiune încă de la 1906, cu un cazinou regal."
+	},
+	{
+		"id": "mana:3801",
+		"nota": "Castelul Peleș a fost ridicat de Carol I între 1873 și 1883 și a avut, de la început, curent electric propriu și un ascensor — rarități în Europa de atunci."
+	},
+	{
+		"id": "mana:3802",
+		"nota": "Palatul Westminster a ars aproape în întregime în 1834 și a fost refăcut în stil neogotic. Are vreo 1.100 de încăperi și stă chiar pe malul Tamisei."
+	},
+	{
+		"id": "mana:3803",
+		"nota": "Arcul de Triumf are 50 de metri și a fost gata abia în 1836, mult după căderea lui Napoleon. Sub el arde flacăra de la mormântul soldatului necunoscut."
+	},
+	{
+		"id": "mana:3804",
+		"nota": "Las Vegas a fost întemeiat în 1905 ca haltă de cale ferată, iar jocurile de noroc au fost legalizate în Nevada în 1931, în plină criză economică."
+	},
+	{
+		"id": "mana:3805",
+		"nota": "Rio de Janeiro a fost capitala Braziliei până în 1960, când rolul i-a trecut Brasíliei. Numele înseamnă „râul din ianuarie”, deși golful nu e deloc râu."
+	},
+	{
+		"id": "mana:3806",
+		"nota": "La Mecca vin, într-un an obișnuit, peste două milioane de pelerini. Pelerinajul, numit hagi, e una dintre cele cinci datorii de bază ale unui musulman."
+	},
+	{
+		"id": "mana:3807",
+		"nota": "Ierusalimul adăpostește locuri sfinte pentru trei religii, iar cele două monumente stau una peste alta, pe aceeași colină, numită Muntele Templului."
+	},
+	{
+		"id": "mana:3808",
+		"nota": "Palatul Buckingham are 775 de camere și a devenit reședință regală în 1837, cu Victoria. Steagul de pe el arată dacă monarhul se află înăuntru."
+	},
+	{
+		"id": "mana:3809",
+		"nota": "Muntele Fuji are 3.776 de metri și e un vulcan care a erupt ultima dată în 1707. Vara îl urcă vreo 200.000 de oameni, mulți dintre ei noaptea, ca să prindă răsăritul."
+	},
+	{
+		"id": "mana:3810",
+		"nota": "Central Park are 341 de hectare și nu e nimic natural în el: lacurile, dealurile și pădurile au fost proiectate și construite, din 1858 încoace."
+	},
+	{
+		"id": "mana:3811",
+		"nota": "Viena a fost capitala Imperiului Habsburgic, iar la Schönbrunn, palatul de vară, Mozart a cântat la șase ani în fața împărătesei Maria Tereza."
+	},
+	{
+		"id": "mana:3812",
+		"nota": "Oktoberfest se ține la München din 1810, când a început ca petrecere de nuntă princială. Începe, în ciuda numelui, în septembrie, ca vremea să fie mai bună."
+	},
+	{
+		"id": "mana:3813",
+		"nota": "Marele Bazar din Istanbul are peste 60 de străzi acoperite și vreo 4.000 de prăvălii, deschise de la 1461 încoace. E unul dintre cele mai vechi din lume."
+	},
+	{
+		"id": "mana:3814",
+		"nota": "Cascada Niagara nu e înaltă — vreo 50 de metri — dar are un debit uriaș, de mii de metri cubi pe secundă. Marginea ei se retrage cu câțiva centimetri pe an."
+	},
+	{
+		"id": "mana:3815",
+		"nota": "Empire State Building a fost ridicat în numai un an și 45 de zile, în 1930-1931, și a rămas cea mai înaltă clădire din lume patruzeci de ani."
+	},
+	{
+		"id": "mana:3816",
+		"nota": "Sagrada Família a fost începută în 1882, iar Gaudí a lucrat la ea până la moartea lui, în 1926. Se construiește din donații, de-aia merge atât de încet."
+	},
+	{
+		"id": "mana:3817",
+		"nota": "Bazilica Sfântul Petru încape vreo 60.000 de oameni, iar cupola, desenată de Michelangelo, trece de 130 de metri. S-a construit 120 de ani, din 1506."
+	},
+	{
+		"id": "mana:3818",
+		"nota": "Tower Bridge s-a deschis în 1894 și se ridică și azi, de vreo opt sute de ori pe an. Mecanismul merge acum pe electricitate, dar până în 1976 a mers cu abur."
+	},
+	{
+		"id": "mana:3819",
+		"nota": "Falezele de la Dover sunt făcute din scheletele unor alge microscopice, strânse în fundul mării acum vreo 70 de milioane de ani. Se văd din Franța, pe vreme senină."
+	},
+	{
+		"id": "mana:3820",
+		"nota": "Insula Paștelui aparține statului Chile de la 1888 și se află la peste 3.500 de kilometri de coasta lui. E una dintre cele mai izolate insule locuite din lume."
+	},
+	{
+		"id": "mana:3821",
+		"nota": "Prin Serengeti trece cea mai mare migrație de animale mari din lume: peste un milion de antilope gnu care urmează ploile, în cerc, între Tanzania și Kenya."
+	},
+	{
+		"id": "mana:3822",
+		"nota": "Cetatea Sighișoarei e una dintre puținele cetăți medievale locuite fără întrerupere din Europa. Turnul cu Ceas are figurine de lemn care se schimbă la miezul nopții."
+	},
+	{
+		"id": "mana:3823",
+		"nota": "Cimitirul Vesel din Săpânța a fost început în 1935 de meșterul Stan Ioan Pătraș, care scria el însuși epitafurile. Sunt peste opt sute de cruci albastre."
+	},
+	{
+		"id": "mana:3824",
+		"nota": "Champs-Élysées are aproape doi kilometri și 70 de metri lățime. Numele înseamnă „Câmpiile Elizee”, locul fericit din lumea de apoi a grecilor antici."
+	},
+	{
+		"id": "mana:3825",
+		"nota": "Walt Disney World s-a deschis în 1971, lângă Orlando, și acoperă o suprafață cam cât orașul San Francisco. Are patru parcuri tematice și propriul sistem de transport."
+	},
+	{
+		"id": "mana:3826",
+		"nota": "Canal Grande șerpuiește prin oraș pe vreo 3,8 kilometri și are numai patru poduri peste el. Rialto a fost, până în 1854, singurul."
+	},
+	{
+		"id": "mana:3827",
+		"nota": "Sankt Petersburg a fost ridicat de Petru cel Mare din 1703, pe o mlaștină, și are peste 300 de poduri. A fost capitala Rusiei două secole."
+	},
+	{
+		"id": "mana:3828",
+		"nota": "Kremlinul are ziduri de peste doi kilometri și cuprinde catedrale, palate și clopotul-țar, care n-a sunat niciodată: s-a crăpat încă în groapa de turnare."
+	},
+	{
+		"id": "mana:3829",
+		"nota": "Singapore e un oraș-stat de vreo 730 de kilometri pătrați, crescut cu nisip adus de pe mare. Piscina de pe cele trei turnuri stă la 190 de metri de la pământ."
+	},
+	{
+		"id": "mana:3830",
+		"nota": "Canalul Panama s-a deschis în 1914, după ce francezii renunțaseră, înfrânți de malarie. Are ecluze, fiindcă navele trebuie ridicate 26 de metri, peste un lac."
+	},
+	{
+		"id": "mana:3831",
+		"nota": "Moscheea din Córdoba are vreo opt sute de coloane și a fost, în secolul X, una dintre cele mai mari din lume. După 1236 a devenit catedrală, fără să fie dărâmată."
+	},
+	{
+		"id": "mana:3832",
+		"nota": "Lisabona a fost aproape distrusă de cutremurul din 1755 și refăcută pe un plan nou, cu străzi drepte. Turnul Belém, de la 1519, scăpase."
+	},
+	{
+		"id": "mana:3833",
+		"nota": "Piața din Marrakech e, de dimineață, un târg, iar seara se umple de povestitori, muzicanți și bucătari. UNESCO a înscris-o pentru obiceiuri, nu pentru clădiri."
+	},
+	{
+		"id": "mana:3834",
+		"nota": "Armata de teracotă are peste 8.000 de soldați, îngropați ca să păzească mormântul primului împărat al Chinei. A fost găsită de țărani care săpau un puț."
+	},
+	{
+		"id": "mana:3835",
+		"nota": "Loch Ness e adânc de vreo 230 de metri și ține mai multă apă decât toate lacurile din Anglia și Țara Galilor la un loc. Apa lui e tulbure de la turbă."
+	},
+	{
+		"id": "mana:3836",
+		"nota": "Castelul Edinburgh stă pe gâtul unui vulcan stins acum vreo 350 de milioane de ani. De pe el se trage, în fiecare zi la ora unu, un tun."
+	},
+	{
+		"id": "mana:3837",
+		"nota": "Palatul de la Knossos, din Creta, avea sute de încăperi legate prin coridoare — de aici, cel mai probabil, legenda labirintului și a Minotaurului."
+	},
+	{
+		"id": "mana:3838",
+		"nota": "Cupola Florenței a fost ridicată între 1420 și 1436 fără schelărie de sprijin, cu cărămizi așezate în spirală. Nimeni nu mai făcuse așa ceva de la romani."
+	},
+	{
+		"id": "mana:3839",
+		"nota": "La Mont-Saint-Michel mareea urcă atât de repede că, prin trecut, pelerinii erau prinși de apă pe nisip. Diferența dintre flux și reflux trece de 14 metri."
+	},
+	{
+		"id": "mana:3840",
+		"nota": "Poiana Brașov a fost deschisă ca stațiune în 1895 și are vreo zece pârtii. Cea mai lungă, Lupului, coboară peste 2.800 de metri."
+	},
+	{
+		"id": "mana:3841",
+		"nota": "Muzeul Satului s-a deschis în 1936, pe malul lacului Herăstrău, și are peste 300 de construcții demontate și ridicate din nou, bucată cu bucată."
+	},
+	{
+		"id": "mana:3842",
+		"nota": "La Rambla a fost, până în secolul XVIII, un curs de apă pe marginea zidurilor orașului. Numele vine din arabul „ramla”, care însemna chiar albie de torent."
+	},
+	{
+		"id": "mana:3843",
+		"nota": "Palatul Pena a fost ridicat în 1842 de regele Ferdinand al II-lea, pe ruinele unei mănăstiri, și amestecă dinadins stiluri maure, gotice și manueline."
+	},
+	{
+		"id": "mana:3844",
+		"nota": "Carcassonne are 52 de turnuri și trei kilometri de ziduri. Era pe punctul de a fi demolată când arhitectul Viollet-le-Duc a refăcut-o, cu acoperișuri ascuțite discutate până azi."
+	},
+	{
+		"id": "mana:3845",
+		"nota": "La Dresda, biserica a fost refăcută între 1994 și 2005, iar pietrele vechi, înnegrite, au fost puse la locul lor exact — de-aia fațada e pătată ca o tablă de șah."
+	},
+	{
+		"id": "mana:3846",
+		"nota": "Ghețarul de la Scărișoara are vreo 100.000 de metri cubi de gheață, iar straturile de jos s-au format acum peste 3.000 de ani. Aerul rece intră și nu mai iese."
+	},
+	{
+		"id": "mana:3847",
+		"nota": "Casa Milà a fost gata în 1912 și n-are niciun perete drept la fațadă. Hornurile de pe acoperiș, îmbrăcate în ceramică, arată ca niște soldați cu coif."
+	},
+	{
+		"id": "mana:3848",
+		"nota": "Mohenjo-daro a fost ridicat acum vreo 4.500 de ani, pe străzi drepte, cu case care aveau scurgere la canal. Scrierea lui n-a fost descifrată până azi."
+	},
+	{
+		"id": "mana:3849",
+		"nota": "Leptis Magna a fost orașul natal al împăratului Septimius Severus, care l-a împodobit cu un for și o bazilică uriașe. Nisipul l-a acoperit și, astfel, l-a păstrat."
+	},
+	{
+		"id": "mana:3850",
+		"nota": "Cartagina a fost întemeiată de fenicieni și a purtat cu Roma trei războaie. După ultimul, romanii au ras orașul, iar peste un secol l-au reclădit ei înșiși."
+	},
+	{
+		"id": "mana:3851",
+		"nota": "Templele din Malta au fost ridicate acum vreo 5.600 de ani, din blocuri de calcar de câteva tone, cu o mie de ani înaintea piramidei lui Keops."
+	},
+	{
+		"id": "mana:3852",
+		"nota": "Mănăstirea Sfânta Ecaterina a fost întărită de împăratul Iustinian și are una dintre cele mai vechi biblioteci din lume, cu manuscrise pe care nimeni nu le-a mutat niciodată."
+	},
+	{
+		"id": "mana:3853",
+		"nota": "Jaipur a fost vopsit în roz în 1876, pentru vizita prințului de Wales, și așa a rămas. Hawa Mahal are 953 de ferestruici prin care femeile curții priveau strada."
+	},
+	{
+		"id": "mana:3854",
+		"nota": "Palatul Topkapi a fost locuit de sultani din 1465 până în 1856 și e mai mult un oraș decât o clădire: curți, bucătării pentru mii de oameni și haremul."
+	},
+	{
+		"id": "mana:3855",
+		"nota": "Persepolis a fost început de Darius I pe la 518 î.Hr. și ars de armata lui Alexandru cel Mare în 330 î.Hr. Reliefurile lui arată soliile celor 23 de popoare supuse."
+	},
+	{
+		"id": "mana:3856",
+		"nota": "La Bagan s-au ridicat, între secolele XI și XIII, peste 10.000 de temple; au rămas în picioare vreo 2.200. Cutremurul din 2016 a stricat câteva sute."
+	},
+	{
+		"id": "mana:3857",
+		"nota": "Cusco însemna „buricul lumii” în limba quechua, iar orașul era desenat, se spune, în forma unei pume. Zidurile inca de la temelii stau și azi sub cele spaniole."
+	},
+	{
+		"id": "mana:3858",
+		"nota": "Liniile Nazca au fost făcute acum vreo 2.000 de ani prin îndepărtarea pietrelor roșietice de la suprafață. Nu plouă aproape niciodată acolo, de-aia s-au păstrat."
+	},
+	{
+		"id": "mana:3859",
+		"nota": "Marele Zimbabwe a fost capitala unui regat bogat din secolele XI-XV, cu ziduri de piatră clădite fără mortar. „Zimbabwe” înseamnă „casele de piatră”."
+	},
+	{
+		"id": "mana:3860",
+		"nota": "La Meroe și în jurul ei se află vreo 200 de piramide ale regilor din Kuș, mai mici și mai ascuțite decât cele egiptene. În Egipt sunt vreo 120 în total."
+	},
+	{
+		"id": "mana:3861",
+		"nota": "Fortul Roșu din Delhi a fost gata în 1648, din gresie roșie, și a rămas reședința mogulilor până în 1857. De pe zidurile lui se ține discursul de Ziua Independenței."
+	},
+	{
+		"id": "mana:3862",
+		"nota": "Palmira s-a îmbogățit din caravanele dintre Mediterana și Mesopotamia, iar în secolul III regina Zenobia a încercat de acolo să se rupă de Roma."
+	},
+	{
+		"id": "mana:3863",
+		"nota": "Paro Taktsang e numită „Cuibul Tigroaicei” și a fost ridicată în 1692, deasupra peșterii în care s-ar fi rugat Padmasambhava. Se ajunge la ea doar pe jos."
+	},
+	{
+		"id": "mana:3864",
+		"nota": "Kyoto a fost capitala Japoniei din 794 până în 1868. Porțile torii de la Fushimi Inari, peste 10.000, sunt daruri ale unor negustori, cu numele lor scris pe stâlp."
+	},
+	{
+		"id": "mana:3865",
+		"nota": "Histria a fost cea mai veche cetate din România, întemeiată de milesieni pe la 657 î.Hr. A fost părăsită în secolul VII, după ce golful i s-a închis și portul s-a umplut."
+	},
+	{
+		"id": "mana:3866",
+		"nota": "Via Appia a fost începută în 312 î.Hr. și pavată cu blocuri de bazalt atât de bine potrivite că se merge pe ele și azi. De-a lungul ei au fost crucificați sclavii lui Spartacus."
+	},
+	{
+		"id": "mana:3867",
+		"nota": "Cele opt biserici din Maramureș sunt din bârne de lemn, cu turle ascuțite și înalte. Cea de la Șurdești trece de 50 de metri, printre cele mai înalte construcții de lemn din Europa."
+	},
+	{
+		"id": "mana:3868",
+		"nota": "Ceha și slovaca sunt atât de apropiate că vorbitorii se înțeleg fără traducere. Ceha are o literă proprie, ř, pe care străinii aproape nu o pot rosti."
+	},
+	{
+		"id": "mana:3869",
+		"nota": "Coreeana e vorbită de vreo 80 de milioane de oameni, din cele două Corei, și se scrie cu un alfabet propriu, inventat dinadins ca să fie ușor de învățat."
+	},
+	{
+		"id": "mana:3870",
+		"nota": "Greaca se scrie cu același alfabet de vreo 2.800 de ani și e limba europeană cu cea mai lungă istorie scrisă neîntreruptă."
+	},
+	{
+		"id": "mana:3871",
+		"nota": "Serba e singura limbă europeană scrisă curent cu două alfabete, chirilic și latin, iar vorbitorii trec de la unul la altul fără nicio greutate."
+	},
+	{
+		"id": "mana:3872",
+		"nota": "Ucraineana e o limbă slavă de est, rudă cu rusa și cu belarusa, scrisă cu alfabetul chirilic, dar cu câteva litere proprii."
+	},
+	{
+		"id": "mana:3873",
+		"nota": "Dolarul canadian e numit, printre comercianți, „loonie”, după pasărea de pe moneda de un dolar. Canada a renunțat la moneda de un cent în 2012."
+	},
+	{
+		"id": "mana:3874",
+		"nota": "Biserica Ortodoxă Română e condusă de un patriarh de la 1925, când mitropolia a fost ridicată la rangul de patriarhie. Primul a fost Miron Cristea."
+	},
+	{
+		"id": "mana:3875",
+		"nota": "Brazilia avea, în 2023, peste 210 milioane de locuitori, adică aproape jumătate din populația continentului. Următoarea, Columbia, are de patru ori mai puțini."
+	},
+	{
+		"id": "mana:3876",
+		"nota": "Statele Unite aveau, în 2023, vreo 335 de milioane de locuitori, de două ori și jumătate mai mulți decât Mexicul și de opt ori mai mulți decât Canada."
+	},
+	{
+		"id": "mana:3877",
+		"nota": "În Grecia, ortodoxia e religia a vreo nouă zecimi din locuitori și e singura biserică numită în Constituție drept „religie dominantă”."
+	},
+	{
+		"id": "mana:3878",
+		"nota": "Vineri la amiază musulmanii se adună la moschee pentru rugăciunea numită jumuah, singura care se face obligatoriu împreună. Nu e, totuși, o zi de odihnă în toate țările."
+	},
+	{
+		"id": "mana:3879",
+		"nota": "Duminica a fost aleasă fiindcă în ea se prăznuiește învierea, iar numele ei românesc vine din latinescul „dies dominica”, adică ziua Domnului."
+	},
+	{
+		"id": "mana:3880",
+		"nota": "Maghiara e limba oficială a Ungariei și e vorbită de vreo 13 milioane de oameni, dintre care aproape trei milioane trăiesc în țările vecine."
+	},
+	{
+		"id": "mana:3881",
+		"nota": "Bucureștiul avea, la recensământul din 2021, vreo 1,7 milioane de locuitori, de șapte ori mai mulți decât următorul oraș. Zona lui metropolitană trece de două milioane."
+	},
+	{
+		"id": "mana:3882",
+		"nota": "Germania avea, în 2023, vreo 84 de milioane de locuitori, cu vreo 16 milioane mai mulți decât Franța. Numărul ei crește doar din imigrație, nu din nașteri."
+	},
+	{
+		"id": "mana:3883",
+		"nota": "În noiembrie 2022, ONU a anunțat că pe Pământ trăiesc 8 miliarde de oameni. Primul miliard a fost atins pe la 1800, iar al doilea abia în 1927."
+	},
+	{
+		"id": "mana:3884",
+		"nota": "La recensământul din 2021, România avea vreo 19 milioane de locuitori, cu peste două milioane mai puțini decât în 2011. Scăderea vine din plecări și din puține nașteri."
+	},
+	{
+		"id": "mana:3885",
+		"nota": "Turca s-a scris cu litere arabe până în 1928, când Atatürk a trecut-o la alfabetul latin. Schimbarea a fost făcută în numai câteva luni."
+	},
+	{
+		"id": "mana:3886",
+		"nota": "Poloneza e o limbă slavă de apus, scrisă cu alfabetul latin, și are grupuri de consoane cu care se chinuie aproape toți străinii."
+	},
+	{
+		"id": "mana:3887",
+		"nota": "Africa are 54 de state recunoscute de ONU, cu vreo douăzeci mai multe decât Europa. Cele mai multe granițe au fost trasate de europeni, la sfârșitul secolului XIX."
+	},
+	{
+		"id": "mana:3888",
+		"nota": "Hindi e vorbită de vreo 40 la sută din locuitorii Indiei, mai ales în nord. Constituția recunoaște, pe lângă ea, alte 21 de limbi."
+	},
+	{
+		"id": "mana:3889",
+		"nota": "Olandeza e vorbită de vreo 24 de milioane de oameni, în Țările de Jos, în nordul Belgiei și în Surinam. Varianta din Belgia e numită, în vorbire, flamandă."
+	},
+	{
+		"id": "mana:3890",
+		"nota": "Italiana de azi vine din dialectul toscan, ales fiindcă în el scriseseră Dante, Petrarca și Boccaccio. La unirea țării, în 1861, îl vorbea mai puțin de un italian din zece."
+	},
+	{
+		"id": "mana:3891",
+		"nota": "Bulgara a fost prima limbă slavă scrisă și e una dintre puținele limbi slave care nu mai declină substantivele. De la 2007 e una dintre limbile oficiale ale Uniunii Europene."
+	},
+	{
+		"id": "mana:3892",
+		"nota": "Un recensământ se ține, de obicei, o dată la zece ani și numără pe toți, nu pe un eșantion. Cel din România de la 2021 a fost primul la care se putea răspunde pe internet."
+	},
+	{
+		"id": "mana:3893",
+		"nota": "Dinarul serbesc își trage numele de la denarul roman, ca mai toate monedele numite așa, din Tunisia până în Irak."
+	},
+	{
+		"id": "mana:3894",
+		"nota": "Dolarul australian a înlocuit lira în 1966 și a fost, în 1988, prima monedă din lume tipărită pe plastic, nu pe hârtie."
+	},
+	{
+		"id": "mana:3895",
+		"nota": "În Cipru greaca e limbă oficială alături de turcă. Insula e împărțită de facto din 1974, iar cele două comunități folosesc fiecare limba ei."
+	},
+	{
+		"id": "mana:3896",
+		"nota": "Mexicul are peste 120 de milioane de vorbitori de spaniolă, de vreo două ori și jumătate mai mulți decât Spania. Tot acolo se vorbesc și vreo 60 de limbi indigene."
+	},
+	{
+		"id": "mana:3897",
+		"nota": "Grivna a fost introdusă în 1996 și are numele unei unități de greutate folosite în Rusia Kieveană: o grivnă era o bucată de argint de câteva sute de grame."
+	},
+	{
+		"id": "mana:3898",
+		"nota": "Indonezia are vreo 240 de milioane de musulmani, mai mulți decât toate țările arabe la un loc. Islamul a ajuns acolo prin comerț, nu prin cucerire."
+	},
+	{
+		"id": "mana:3899",
+		"nota": "Slovena e vorbită de vreo două milioane de oameni și a păstrat numărul dual, o formă gramaticală pentru exact două lucruri, pierdută de aproape toate limbile slave."
+	},
+	{
+		"id": "mana:3900",
+		"nota": "São Paulo are peste 11 milioane de locuitori în oraș și vreo 22 de milioane în zona metropolitană, printre cele mai mari aglomerări urbane din lume."
+	},
+	{
+		"id": "mana:3901",
+		"nota": "Mumbai s-a numit Bombay până în 1995 și s-a format din șapte insule unite prin umpluturi. Acolo e și cea mai cunoscută industrie de film a țării."
+	},
+	{
+		"id": "mana:3902",
+		"nota": "Etiopia avea, în 2023, peste 120 de milioane de locuitori și e a doua din Africa. E și singura țară africană care n-a fost niciodată colonie europeană durabilă."
+	},
+	{
+		"id": "mana:3903",
+		"nota": "Vietnameza se scria cu semne chinezești până în secolul XX, când s-a trecut la alfabetul latin, cu accente care arată tonul fiecărei silabe."
+	},
+	{
+		"id": "mana:3904",
+		"nota": "Bahtul era, la început, o unitate de greutate pentru argint, de vreo 15 grame. Thailanda e singura țară din Asia de Sud-Est care n-a fost colonie europeană."
+	},
+	{
+		"id": "mana:3905",
+		"nota": "Pesoul argentinian a fost schimbat de mai multe ori după perioade de inflație mare; între 1983 și 1992 moneda a fost reformată de patru ori."
+	},
+	{
+		"id": "mana:3906",
+		"nota": "Riyalul saudit e legat la un curs fix față de dolarul american de la 1986, ca prețul petrolului să nu clatine moneda."
+	},
+	{
+		"id": "mana:3907",
+		"nota": "Nivelul de înlocuire e puțin peste doi, nu exact doi, fiindcă unii copii nu ajung la vârsta la care ar putea avea ei copii. România e sub el din 1990."
+	},
+	{
+		"id": "mana:3908",
+		"nota": "Imigrația și emigrația sunt aceeași mișcare, privită din două locuri: un om care pleacă din România în Italia e emigrant acasă și imigrant acolo."
+	},
+	{
+		"id": "mana:3909",
+		"nota": "Emigrația a scăzut populația României cu câteva milioane de oameni după 1990. Cele mai căutate țări au fost Italia, Spania și Germania."
+	},
+	{
+		"id": "mana:3910",
+		"nota": "Densitatea populației poate ascunde mai mult decât arată: Egiptul pare rar locuit pe hârtie, dar aproape toți locuitorii lui stau pe o bandă îngustă, de-a lungul Nilului."
+	},
+	{
+		"id": "mana:3911",
+		"nota": "O piramidă a vârstelor cu bază largă arată o populație tânără; una îngustată jos și umflată la mijloc arată o țară care îmbătrânește. România are a doua formă."
+	},
+	{
+		"id": "mana:3912",
+		"nota": "În Italia trăiau peste un milion de români, cea mai mare comunitate străină din țară. Următoarele, în ordine, erau Germania și Spania."
+	},
+	{
+		"id": "mana:3913",
+		"nota": "Luxemburgheza a devenit limbă națională abia în 1984, deși era vorbită de secole. E atât de apropiată de germană că multă vreme a fost socotită un dialect al ei."
+	},
+	{
+		"id": "mana:3914",
+		"nota": "Berlinul are vreo 3,8 milioane de locuitori în oraș. Parisul are mai puțini înăuntru, cam 2,1 milioane, fiindcă granițele lui administrative sunt mult mai strânse."
+	},
+	{
+		"id": "mana:3915",
+		"nota": "O populație tânără cere școli și locuri de muncă, nu pensii. În Niger, jumătate din locuitori au sub cincisprezece ani; în Italia, jumătate au peste patruzeci și opt."
+	},
+	{
+		"id": "mana:3916",
+		"nota": "China are peste o sută de orașe de peste un milion de locuitori, multe dintre ele necunoscute în afara țării. India, a doua, are vreo cincizeci."
+	},
+	{
+		"id": "mana:3917",
+		"nota": "Limba maternă nu e totdeauna cea a țării: un copil poate crește cu maghiara acasă și cu româna la școală. Recensămintele le numără separat, tocmai de-aia."
+	},
+	{
+		"id": "mana:3918",
+		"nota": "Filipino e o formă standardizată a limbii tagalog, aleasă în 1937 dintre vreo 180 de limbi vorbite în arhipelag. Spaniola a fost oficială până în 1987."
+	},
+	{
+		"id": "mana:3919",
+		"nota": "Francul CFA e folosit de 14 state africane și are un curs fix față de euro, garantat de Franța. Legătura, veche din 1945, e discutată aprins în țările care îl folosesc."
+	},
+	{
+		"id": "mana:3920",
+		"nota": "Amazigh, limba berberilor, a devenit oficială în Maroc în 2011 și se scrie cu un alfabet propriu, tifinagh, folosit de tuaregi de peste două mii de ani."
+	},
+	{
+		"id": "mana:3921",
+		"nota": "Festivalul Primăverii pune în mișcare cea mai mare migrație anuală de oameni din lume: câteva miliarde de călătorii, în vreo patruzeci de zile."
+	},
+	{
+		"id": "mana:3922",
+		"nota": "Naira a înlocuit lira nigeriană în 1973, iar numele vine, pur și simplu, din prescurtarea cuvântului „Nigeria”. E moneda celei mai populate țări africane."
+	},
+	{
+		"id": "mana:3923",
+		"nota": "Șilingul kenyan a rămas după stăpânirea britanică și e folosit și în Tanzania și Uganda, fiecare cu versiunea lui. Kenya a dus plata prin telefon mai departe decât Europa."
+	},
+	{
+		"id": "mana:3924",
+		"nota": "Dongul are bancnote de până la 500.000, iar cele mai mari sunt tipărite pe plastic. Monedele metalice nu se mai folosesc aproape deloc."
+	},
+	{
+		"id": "mana:3925",
+		"nota": "Solul își trage numele din latinescul „solidus”, moneda romană târzie, nu din cuvântul pentru soare — deși stema lui îl arată pe cel al incașilor."
+	},
+	{
+		"id": "mana:3926",
+		"nota": "Kazaha e o limbă turcică, scrisă cu chirilice din 1940. Țara a decis în 2017 să treacă treptat la alfabetul latin, până la 2031."
+	},
+	{
+		"id": "mana:3927",
+		"nota": "Groenlandeza e o limbă inuită, vorbită de vreo 57.000 de oameni, și e singura limbă eschimo-aleută cu statut de limbă oficială a unui teritoriu."
+	},
+	{
+		"id": "mana:3928",
+		"nota": "Galeza e vorbită de vreo 900.000 de oameni și e obligatorie în școli până la șaisprezece ani. Numărul vorbitorilor crește, lucru rar printre limbile celtice."
+	},
+	{
+		"id": "mana:3929",
+		"nota": "Samii trăiesc în nordul Norvegiei, Suediei, Finlandei și Rusiei, au parlamente proprii în trei țări și vreo nouă limbi, din care unele cu mai puțin de o mie de vorbitori."
+	},
+	{
+		"id": "mana:3930",
+		"nota": "Uigurii sunt vreo 11 milioane, musulmani, și vorbesc o limbă turcică scrisă cu litere arabe. Xinjiang înseamnă, în chineză, „granița nouă”."
+	},
+	{
+		"id": "mana:3931",
+		"nota": "Parsii sunt vreo 60.000, țin religia zoroastriană și au dat Indiei câteva dintre cele mai mari familii de industriași, printre care Tata."
+	},
+	{
+		"id": "mana:3932",
+		"nota": "Maorii sunt vreo 900.000, adică a șasea parte din locuitorii Noii Zeelande, iar limba lor a devenit oficială în 1987, după ce fusese aproape să dispară."
+	},
+	{
+		"id": "mana:3933",
+		"nota": "Biserica Apostolică Armeană a devenit biserică de stat în anul 301, prima din lume. Armenii și-au făcut un alfabet propriu, la 405, tocmai ca să traducă Biblia."
+	},
+	{
+		"id": "mana:3934",
+		"nota": "Mortalitatea infantilă e socotită cea mai bună măsură a stării unui sistem de sănătate. În România a scăzut de la vreo 27 la mie în 1990 la sub 6 azi."
+	},
+	{
+		"id": "mana:3935",
+		"nota": "Tranziția demografică are o etapă de mijloc în care mortalitatea a scăzut deja, dar natalitatea nu — acolo se naște creșterea rapidă a populației."
+	},
+	{
+		"id": "mana:3936",
+		"nota": "În Niger, vârsta mediană era sub 15 ani, adică jumătate din locuitori erau copii. În Japonia, în același an, trecea de 48."
+	},
+	{
+		"id": "mana:3937",
+		"nota": "La tuaregi își acoperă fața bărbații, nu femeile. Vălul indigo lasă pe piele o urmă albastră, de unde li s-a zis „oamenii albaștri ai deșertului”."
+	},
+	{
+		"id": "mana:3938",
+		"nota": "Zulu e limba maternă a vreo 12 milioane de sud-africani, din cele douăsprezece limbi oficiale ale țării. Engleza e abia pe locul patru ca limbă vorbită acasă."
+	},
+	{
+		"id": "mana:3939",
+		"nota": "Afrikaans a crescut din olandeza secolului XVII, amestecată cu malaeză, portugheză și limbi locale. E cea mai nouă limbă germanică recunoscută ca limbă de sine stătătoare."
+	},
+	{
+		"id": "mana:3940",
+		"nota": "Depopularea golește mai întâi satele depărtate de orașe: în România sunt câteva sute de localități cu mai puțin de o sută de locuitori, cele mai multe vârstnici."
+	},
+	{
+		"id": "mana:3941",
+		"nota": "La naștere se nasc, în mod obișnuit, vreo 105 băieți la 100 de fete, dar raportul se întoarce cu vârsta, fiindcă femeile trăiesc mai mult."
+	},
+	{
+		"id": "mana:3942",
+		"nota": "Exodul de creiere costă țara de plecare de două ori: o dată școlirea, care a fost plătită acolo, și o dată munca, făcută în altă parte. Românii medici sunt exemplul cel mai des dat."
 	}
 ]
