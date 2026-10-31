@@ -57,21 +57,50 @@ const CULOARE_INFRANGERE := Color(0.72, 0.38, 0.38)
 
 # ─────────────────────────────────────────────────────────────
 # REGULA DE COST DE OPORTUNITATE
-# Amândouă rezolvă aceeași problemă de design: „dacă am 3 PA și 3 piese,
-# le apăs pe toate și n-am ales nimic". Dar o rezolvă opus —
+# Toate trei rezolvă aceeași problemă de design: „dacă am 3 PA și 3 piese,
+# le apăs pe toate și n-am ales nimic". Dar o rezolvă altfel —
 # COMBO te răsplătește pentru consecvență și te pedepsește cu blocarea,
-# RECARCARE îți ia pur și simplu opțiuni pentru o rundă.
+# RECARCARE îți ia pur și simplu opțiuni pentru o rundă,
+# DUEL scoate PA-ul din joc și face din ROTAȚIE singura regulă.
 # Comută linia REGULA_OBELISC și joacă o luptă cu fiecare.
+#
+# DE CE RĂMÂN TOATE TREI ÎN COD. Comutatorul e singurul lucru care face din
+# DUEL un experiment și nu o rescriere: COMBO stă întreg lângă el, deci poți
+# juca o luptă cu fiecare în aceeași seară și compara. Fără el, „sistemul nou"
+# ar fi fost o ștergere, iar peste două seri n-ai mai avut cu ce compara decât
+# cu o amintire — și o amintire nu se compară cu nimic.
 # ─────────────────────────────────────────────────────────────
 enum RegulaObelisc {
 	COMBO,        ## o activare pornește un lanț I→II→III; greșeala îl rupe și blochează Obeliscul
 	RECARCARE,    ## o singură întrebare per activare; Obeliscul folosit e blocat runda următoare
+	DUEL,         ## fără PA: un lanț plafonat pe tură, iar folosirea blochează Obeliscul o rundă
 }
 
 ## COMUTATORUL.
-const REGULA_OBELISC := RegulaObelisc.COMBO
+const REGULA_OBELISC := RegulaObelisc.DUEL
 
 const RUNDE_RECARCARE := 1      # (doar pentru RECARCARE) câte runde stă blocat
+
+# ─────────────────────────────────────────────────────────────
+# DUELUL — cele două cifre ale lui
+#
+# Regula întreagă, cu măsurătorile din care a ieșit, e în sesiunea DUELUL din
+# `docs/progres.md`. Aici stă doar ce se reglează.
+#
+# PLAFONUL. Sub COMBO lanțul nu are capăt, iar de când cronometrul s-a mutat pe
+# inamic nimic nu se mai opune lui: 10 răspunsuri corecte la rând omoară
+# Soldatul, deci o luptă se putea încheia în runda 1, fără ca inamicul să
+# acționeze vreodată. Cu plafon 5, un lanț face 1+2+3+3+6 = 15 daune (treapta a
+# 5-a e critică, deci dublă), adică exact jumătate din Soldat — două lanțuri,
+# două runde, iar inamicul apucă să se miște între ele.
+#
+# BLOCAREA. Folosirea blochează Obeliscul, fie că ai dus lanțul la 5, fie că
+# l-ai rupt la treapta 3: din punctul de vedere al blocării e același lucru.
+# Așa „loadout: 3 din 8" devine mecanic un loadout de 3 — sub COMBO puteai
+# apăsa același Obelisc de două ori pe rundă, la infinit, deci celelalte două
+# erau decor. Cu blocare, tura următoare te scoate din disciplina preferată.
+const PLAFON_TREPTE := 5        # (doar pentru DUEL) cel mai lung lanț posibil, în trepte
+const RUNDE_BLOCAT_DUEL := 1    # (doar pentru DUEL) câte runde stă blocat Obeliscul folosit
 
 const NIVEL_MAX := 3            # câte niveluri de DIFICULTATE există (nu câte trepte)
 const CIFRE_ROMANE := ["I", "II", "III"]
@@ -615,7 +644,14 @@ func _ready() -> void:
 	# tocmai ăsta e avantajul punctelor față de o cifră: vezi cât te costă.)
 	# `+ bonus_pa()`: Magazinul poate da PA în plus, iar un al patrulea PA fără
 	# un al patrulea punct desenat ar fi un PA pe care nu-l vezi.
-	for i in range(PA_PE_RUNDA + Expeditie.bonus_pa()):
+	#
+	# Sub DUEL nu se desenează NICIUNUL, și rândul întreg se ascunde: n-ar fi
+	# trei puncte stinse, ar fi trei puncte care nu înseamnă nimic. Un
+	# indicator care arată mereu la fel e mai rău decât niciunul — învață
+	# ochiul să nu se mai uite acolo. Bucla nici nu pornește, deci nu rămân în
+	# scenă obiecte invizibile despre care să te întrebi mai târziu.
+	rand_pa.visible = costa_pa()
+	for i in range((PA_PE_RUNDA + Expeditie.bonus_pa()) if costa_pa() else 0):
 		# Un `ColorRect` nu poate desena decât dreptunghiuri. Pentru cercuri
 		# folosim un `Panel` cu un `StyleBoxFlat` a cărui rază de colț e
 		# jumătate din latură — un pătrat cu colțurile rotunjite complet
@@ -819,15 +855,36 @@ func _cu_puterea_nodului(valoare: int) -> int:
 # BUCLA DE RUNDĂ
 # ─────────────────────────────────────────────────────────────
 
-## Începutul turei TALE: primești PA proaspăt.
+## Începutul turei TALE: primești PA proaspăt — sau, sub DUEL, doar dreptul la
+## un atac, prin orice Obelisc ți-a rămas liber.
 func incepe_runda() -> void:
 	# PA-ul de bază, plus ce ai cumpărat la Magazin. Adunarea se face AICI, la
 	# fiecare rundă, nu o dată la începutul luptei: dacă vreodată o putere se va
 	# putea pierde în mijlocul unei lupte, linia asta o va observa singură.
-	pa = PA_PE_RUNDA + Expeditie.bonus_pa()   # PA nu se reportează
+	#
+	# Sub DUEL rămâne 0 și nu se mai citește de nimeni: `ai_pa_pentru_obelisc()`
+	# întoarce `true` fără să se uite la el, iar punctele nici nu se desenează.
+	# Nu-l ȘTERGEM, fiindcă COMBO e tot acolo, la un comutator distanță.
+	pa = (PA_PE_RUNDA + Expeditie.bonus_pa()) if costa_pa() else 0
 	tura_se_incheie = false
-	scrie_in_jurnal("--- Runda %d: ai %d PA. ---" % [runda, pa])
+	if costa_pa():
+		scrie_in_jurnal("--- Runda %d: ai %d PA. ---" % [runda, pa])
+	else:
+		scrie_in_jurnal("--- Runda %d: un atac, prin orice Obelisc liber. ---" % runda)
 	actualizeaza_ui()
+
+	# PLASĂ DE SIGURANȚĂ, nu o regulă de joc. Azi nu se poate întâmpla: sub
+	# DUEL se blochează cel mult un Obelisc pe rundă, deci din trei îți rămân
+	# mereu două libere. Dar PARADA (sesiunea următoare) mai blochează unul la
+	# fiecare apărare ratată, iar atunci „toate trei blocate" devine o rundă
+	# posibilă — și fără linia asta ai fi blocat pe ecran, fiindcă butonul
+	# „Încheie tura" nu se vede. Așa, tura trece singură la inamic.
+	#
+	# `call_deferred`: `_incheie_tura()` așteaptă un cronometru, iar
+	# `incepe_runda()` e chemată DIN tura inamicului. Pornită direct, am fi
+	# predat tura din interiorul predării turii anterioare.
+	if not lupta_terminata and not mai_ai_ce_face():
+		_incheie_tura.call_deferred("Toate Obeliscurile sunt blocate — tura trece.")
 
 
 ## Chemată când apeși un Obelisc. `index` vine din .bind() de mai sus.
@@ -840,20 +897,29 @@ func _pe_obelisc_apasat(index: int) -> void:
 		return
 	if e_blocat(index):
 		return
-	if pa < COST_OBELISC:
+	if not ai_pa_pentru_obelisc():
 		scrie_in_jurnal("Nu mai ai PA. Incheie tura.")
 		return
 
 	# PA-ul se cheltuie ACUM, o singură dată, indiferent câte trepte urmează.
 	# Asta e ideea centrală a combo-ului: nu cumperi trepte, le CÂȘTIGI.
-	pa -= COST_OBELISC
+	# Sub DUEL nu se cheltuie nimic — plata e în ALTĂ monedă, blocarea de jos.
+	if costa_pa():
+		pa -= COST_OBELISC
 
-	# Sub RECARCARE, blocarea se plătește pentru ACTIVARE, nu pentru reușită.
-	# Sub COMBO nu blocăm nimic aici — blocarea e pedeapsa pentru greșeală
-	# și se decide în interiorul lanțului.
+	# Sub RECARCARE și sub DUEL, blocarea se plătește pentru ACTIVARE, nu
+	# pentru reușită: ai pus mâna pe unealtă, deci ea nu mai e disponibilă.
+	# Sub COMBO nu blocăm nimic aici — acolo blocarea e pedeapsa pentru
+	# greșeală și se decide în interiorul lanțului.
 	if REGULA_OBELISC == RegulaObelisc.RECARCARE:
 		# runda + 1 = runda următoare; + RUNDE_RECARCARE = cât stă blocat.
 		disponibil_din[index] = runda + 1 + RUNDE_RECARCARE
+	elif REGULA_OBELISC == RegulaObelisc.DUEL:
+		# Scrisă AICI, înainte de prima întrebare, nu la capătul lanțului.
+		# Asta e tot ce înseamnă „folosirea blochează": un lanț dus la 5 și
+		# unul rupt la treapta 3 lasă Obeliscul în aceeași stare, deci nu
+		# există o a doua linie, undeva mai jos, care să poată spune altceva.
+		disponibil_din[index] = runda + 1 + RUNDE_BLOCAT_DUEL
 
 	puzzle_activ = true
 	# Stinsă pe loc, nu la următorul `actualizeaza_ui()`: acela vine abia după
@@ -872,18 +938,24 @@ func _pe_obelisc_apasat(index: int) -> void:
 	await verifica_final_de_tura()
 
 
-## LANȚUL: nu are capăt. Merge treaptă după treaptă cât timp răspunzi corect
-## și se rupe la prima greșeală sau la primul timeout. Daunele se aplică
-## TREAPTĂ CU TREAPTĂ, imediat — ce ai câștigat rămâne câștigat.
+## LANȚUL. Merge treaptă după treaptă cât timp răspunzi corect și se rupe la
+## prima greșeală sau la primul timeout. Daunele se aplică TREAPTĂ CU TREAPTĂ,
+## imediat — ce ai câștigat rămâne câștigat.
 ##
-## `while true` în loc de `for`: lanțul nu mai are o lungime cunoscută
-## dinainte. Nu e o buclă infinită — are trei ieșiri (greșeală, inamic mort,
-## regula RECARCARE), iar cronometrul care se scurtează garantează că, mai
-## devreme sau mai târziu, una dintre ele se întâmplă.
+## CÂT ȚINE depinde de regulă: sub COMBO nu are capăt, sub DUEL cel mult
+## `PLAFON_TREPTE` trepte, sub RECARCARE o singură întrebare.
+##
+## `while true` în loc de `for`: lungimea nu se știe dinainte nici sub DUEL —
+## plafonul e un maxim, nu o lungime. Nu e o buclă infinită: are patru ieșiri
+## (greșeală, inamic mort, plafon atins, regula RECARCARE). Sub DUEL plafonul
+## o garantează singur; sub COMBO, cât timp inamicul are PV finit și fiecare
+## treaptă corectă îi ia cel puțin 1, lanțul se termină și dacă nu greșești
+## niciodată. (Garanția era cronometrul, până s-a mutat pe inamic.)
 func ruleaza_lant(index: int) -> void:
 	var date: Dictionary = loadout[index]
 	var disciplina: String = date["nume"]     # ce se scrie în jurnal
 	var cheie: String = date["cheie"]         # ce se compară cu vulnerabilitatea
+	var plafon := plafon_trepte()             # 0 = fără capăt
 
 	lant_daune = 0
 	# Lanț nou = combo de la zero. Indicatorul rămâne ascuns până la al
@@ -935,6 +1007,17 @@ func ruleaza_lant(index: int) -> void:
 				# Recărcarea — doar durata diferă.
 				disponibil_din[index] = runda + 1
 				mesaj += ". Obelisc blocat runda asta"
+			elif REGULA_OBELISC == RegulaObelisc.DUEL:
+				# NU scriem nimic în `disponibil_din`. Obeliscul e blocat de la
+				# activare (runda + 2), iar un `runda + 1` de aici i-ar SCURTA
+				# blocajul — ar face greșeala o scăpare, nu o pierdere.
+				#
+				# Și nici nu i-l lungim: sub DUEL greșeala la ATAC se plătește o
+				# singură dată, în daunele nefăcute (o rupere la treapta 3 te
+				# lasă cu 6 din 15). Pedeapsa a doua, pe unealtă, e rezervată
+				# greșelii la PARADĂ — vezi „Două greșeli, două monede" din
+				# sesiunea DUELUL.
+				mesaj += ". Tura ta se incheie"
 			scrie_in_jurnal(mesaj + ".")
 			return
 
@@ -1024,7 +1107,23 @@ func ruleaza_lant(index: int) -> void:
 			return
 
 		# Sub RECARCARE nu există lanț: o singură întrebare per activare.
-		if REGULA_OBELISC != RegulaObelisc.COMBO:
+		# `== RECARCARE`, nu `!= COMBO`: cu a treia regulă în enum, „nu e
+		# COMBO" a încetat să însemne „e RECARCARE" — iar DUEL, prins de
+		# condiția veche, ar fi avut lanțuri de exact o treaptă.
+		if REGULA_OBELISC == RegulaObelisc.RECARCARE:
+			return
+
+		# PLAFONUL. Lanțul s-a dus până la capăt — nu e o greșeală, e un lanț
+		# complet: daunele rămân, Obeliscul e deja blocat de la activare, iar
+		# tura ta se încheie de aici (vezi `verifica_final_de_tura`).
+		#
+		# Verificarea stă DUPĂ aplicarea daunelor, nu în condiția lui `while`:
+		# treapta a 5-a trebuie să fie întrebată, răspunsă și plătită ca toate
+		# celelalte. Un plafon pus în capul buclei ar fi oprit lanțul la 4.
+		if plafon > 0 and treapta >= plafon:
+			scrie_in_jurnal("%s: lantul s-a dus pana la capat — %d trepte, %s." % [
+				disciplina, treapta, text_daune(lant_daune)
+			])
 			return
 
 
@@ -1038,8 +1137,11 @@ func ruleaza_lant(index: int) -> void:
 ##
 ## Îl compunem AICI, în luptă, fiindcă doar lupta știe ce e un lanț.
 ## Puzzle-ul primește un String și îl afișează — nu-l interpretează.
+## Sub RECARCARE nu se arată niciodată (nu există lanț de numărat); sub COMBO
+## și sub DUEL, da — plafonat sau nu, un lanț e tot un lanț, iar cifra care
+## urcă e exact ce ai de pierdut la întrebarea următoare.
 func _text_combo() -> String:
-	if REGULA_OBELISC != RegulaObelisc.COMBO or combo_corecte < COMBO_MINIM_AFISAT:
+	if REGULA_OBELISC == RegulaObelisc.RECARCARE or combo_corecte < COMBO_MINIM_AFISAT:
 		return ""
 	return "COMBO ×%d" % combo_corecte
 
@@ -1141,10 +1243,34 @@ func pune_bara_acum(bara: ProgressBar, maxim: float, valoare: float) -> void:
 	bara.value = valoare
 
 
+## Costă PA o activare de Obelisc? Sub DUEL, NU — acolo resursa nu mai e o
+## cifră pe rundă, ci care Obeliscuri îți sunt libere.
+##
+## O funcție, nu un `if` repetat în cinci locuri: PA-ul se citește în patru
+## locuri (runda, apăsarea, bilanțul de final de tură, butoanele stinse) și
+## se DESENEAZĂ în al cincilea. Un `REGULA_OBELISC == ...` copiat în fiecare
+## e un loc în care, la a treia regulă, uiți să-l pui.
+func costa_pa() -> bool:
+	return REGULA_OBELISC != RegulaObelisc.DUEL
+
+
+## Ai cu ce plăti o activare? Sub DUEL întrebarea nu se pune, deci răspunsul
+## e „da" — singura piedică rămâne blocarea, și pe ea o verifică `e_blocat()`.
+func ai_pa_pentru_obelisc() -> bool:
+	return not costa_pa() or pa >= COST_OBELISC
+
+
+## Câte trepte are voie să țină un lanț. 0 înseamnă „fără plafon" — nu
+## `PLAFON_TREPTE` pus la o valoare uriașă, fiindcă „fără capăt" e o DECIZIE de
+## design (vezi „Combo: un lanț nelimitat" din CLAUDE.md), nu un număr mare.
+func plafon_trepte() -> int:
+	return PLAFON_TREPTE if REGULA_OBELISC == RegulaObelisc.DUEL else 0
+
+
 ## Mai există vreun Obelisc pe care îl poți folosi acum?
 ## Nu e același lucru cu „am PA": poți avea 2 PA și toate Obeliscurile blocate.
 func mai_ai_ce_face() -> bool:
-	if pa < COST_OBELISC:
+	if not ai_pa_pentru_obelisc():
 		return false
 	for index in range(loadout.size()):
 		if not e_blocat(index):
@@ -1153,30 +1279,53 @@ func mai_ai_ce_face() -> bool:
 
 
 ## Un Obelisc e blocat cât timp runda curentă e mai mică decât runda din care
-## redevine disponibil. Aceeași verificare servește ambele reguli — diferă
-## doar cine scrie în `disponibil_din` și cu ce durată:
-##   COMBO:     runda + 1                     → restul rundei curente
-##   RECARCARE: runda + 1 + RUNDE_RECARCARE   → și runda următoare
+## redevine disponibil. Aceeași verificare servește toate trei regulile —
+## diferă doar cine scrie în `disponibil_din` și cu ce durată:
+##   COMBO:     runda + 1                       → restul rundei curente
+##   RECARCARE: runda + 1 + RUNDE_RECARCARE     → și runda următoare
+##   DUEL:      runda + 1 + RUNDE_BLOCAT_DUEL   → la fel, dar scris la ACTIVARE
 func e_blocat(index: int) -> bool:
 	return runda < disponibil_din[index]
 
 
-## Chemată după FIECARE puzzle. Dacă nu mai ai PA, tura ta e oricum
-## terminată — n-are rost să te punem să apeși un buton ca s-o confirmi.
-## Pauza scurtă e ca să apuci să citești ce s-a întâmplat înainte
-## să sară inamicul la tine.
+## Chemată după FIECARE puzzle. Două reguli, două motive de a încheia tura:
+##
+##   COMBO / RECARCARE — tura ține cât ai PA. Dacă n-ai mai rămas cu nimic de
+##                       făcut, n-are rost să te punem să apeși un buton ca
+##                       s-o confirmi.
+##   DUEL              — tura ta ESTE un lanț. S-a încheiat lanțul, s-a
+##                       încheiat tura: nu mai e un caz-limită („nimic de
+##                       făcut"), e regula normală. De-aia butonul „Încheie
+##                       tura" n-are ce face sub DUEL — vezi `actualizeaza_ui`.
 func verifica_final_de_tura() -> void:
-	if lupta_terminata or mai_ai_ce_face():
+	if lupta_terminata:
 		return
 
+	if REGULA_OBELISC == RegulaObelisc.DUEL:
+		await _incheie_tura("Ai atacat o data — tura trece la %s." % nume_inamic())
+		return
+
+	if mai_ai_ce_face():
+		return
+	await _incheie_tura("Nimic de facut cu %d PA — tura se incheie." % pa)
+
+
+## Predarea turii, cu pauza de citit. Un singur drum, chemat din două locuri
+## (bilanțul de mai sus și plasa de siguranță din `incepe_runda`) — altfel
+## „ce se întâmplă la finalul turei" ar fi scris de două ori și ar ajunge,
+## într-o zi, să fie scris în două feluri.
+##
+## Pauza scurtă e ca să apuci să citești ce s-a întâmplat înainte
+## să sară inamicul la tine.
+func _incheie_tura(mesaj: String) -> void:
 	tura_se_incheie = true
-	# Rămâi fără PA (sau cu tot ce ai blocat) = combo-ul se stinge, la fel ca
-	# la o greșeală. În practică ajungi aici tocmai FIINDCĂ ai greșit — sub
-	# COMBO un lanț se rupe doar așa — deci contorul e deja 0. Îl punem
-	# oricum: regula e „combo-ul nu supraviețuiește turei tale", și vrem să
-	# scrie asta în cod, nu să depindă de un noroc de ordine.
+	# Combo-ul se stinge la finalul turei tale, oricum s-a încheiat ea. Sub
+	# COMBO ajungeai aici tocmai FIINDCĂ greșiseși, deci contorul era deja 0;
+	# sub DUEL poți ajunge cu un lanț de 5 dus perfect până la capăt, deci
+	# linia asta chiar are ce să stingă. Regula e „combo-ul nu supraviețuiește
+	# turei tale", și vrem să scrie asta în cod, nu să depindă de o ordine.
 	combo_corecte = 0
-	scrie_in_jurnal("Nimic de facut cu %d PA — tura se incheie." % pa)
+	scrie_in_jurnal(mesaj)
 	actualizeaza_ui()
 	await get_tree().create_timer(PAUZA_FINAL_TURA).timeout
 
@@ -1342,7 +1491,13 @@ func porneste_tween_panou() -> Tween:
 	return tween_panou
 
 
-## Butonul „Încheie tura". Dacă lupta s-a terminat, același buton repornește.
+## Butonul „Încheie tura" — ascuns de mult (vezi `actualizeaza_ui`), dar
+## handler-ul rămâne: e drumul prin care se iese spre hartă după verdict.
+##
+## Sub DUEL nu mai are a doua treabă. „Încheie tura" presupunea o tură din care
+## poți ieși lăsând ceva nefolosit — cu PA și mai multe activări pe rundă, asta
+## era o alegere. Sub DUEL tura ta ESTE un atac: ieșirea devreme nu e o decizie
+## tactică, e doar un atac dăruit inamicului.
 func _pe_incheie_tura_apasat() -> void:
 	if puzzle_activ:
 		return   # nu poți încheia tura cu un puzzle deschis
@@ -1356,6 +1511,8 @@ func _pe_incheie_tura_apasat() -> void:
 		return
 	if tura_se_incheie:
 		return   # tura se încheie deja singură — fără două ture de inamic
+	if REGULA_OBELISC == RegulaObelisc.DUEL:
+		return   # vezi mai sus: n-ai ce încheia, ai de atacat
 	tura_inamicului()
 
 
@@ -2285,14 +2442,16 @@ func actualizeaza_ui() -> void:
 	# Butonul de sub arenă rămâne ascuns TOT timpul.
 	#
 	# În timpul luptei n-are ce confirma: tura se încheie singură când nu mai
-	# ai ce face. Iar la final nu mai e nici el butonul de repornire — acela
-	# e acum în panoul de verdict, peste toată arena. Două butoane „Lupta din
-	# nou" pe același ecran, unul dintre ele pe jumătate acoperit de voal,
-	# nu sunt două șanse; sunt o întrebare inutilă despre care e cel adevărat.
+	# ai ce face — iar sub DUEL asta nu mai e nici măcar un caz-limită, e
+	# REGULA: un lanț = o tură. Iar la final nu mai e nici el butonul de
+	# repornire — acela e acum în panoul de verdict, peste toată arena. Două
+	# butoane „Lupta din nou" pe același ecran, unul dintre ele pe jumătate
+	# acoperit de voal, nu sunt două șanse; sunt o întrebare inutilă despre
+	# care e cel adevărat.
 	#
 	# Nodul și handler-ul rămân în scenă: `_pe_incheie_tura_apasat()` e în
-	# continuare drumul prin care se încheie o tură din cod, și e util să ai
-	# un buton de pornit înapoi când testezi. Doar nu se vede.
+	# continuare drumul prin care se iese spre hartă după verdict, și e util să
+	# ai un buton de pornit înapoi când testezi. Doar nu se vede.
 	buton_incheie_tura.visible = false
 
 	# Retragerea, stinsă exact când n-ar fi o pauză: cu o întrebare pe ecran
@@ -2315,7 +2474,7 @@ func actualizeaza_ui() -> void:
 		# stingea; lacătul din colț spune același lucru fără să miște nimic.
 		buton.seteaza_stare(
 			blocat,
-			lupta_terminata or puzzle_activ or blocat or pa < COST_OBELISC
+			lupta_terminata or puzzle_activ or blocat or not ai_pa_pentru_obelisc()
 		)
 
 

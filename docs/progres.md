@@ -12,7 +12,7 @@
 | 1. Setup, Git | ✅ gata |
 | 2. Scena de luptă cu placeholdere | ✅ gata |
 | 3. Trivia, ca scenă independentă | ✅ gata |
-| 4. Bucla completă a unei lupte | ✅ victorie · înfrângere · recompense (Fragmente) · 🔜 **bucla ÎNSĂȘI se reproiectează — vezi sesiunea DUELUL**: design complet, măsurat, NESCRIS |
+| 4. Bucla completă a unei lupte | ✅ victorie · înfrângere · recompense (Fragmente) · 🟡 **bucla ÎNSĂȘI se reproiectează — DUELUL**, a treia valoare din `RegulaObelisc`, cu comutatorul pe ea și COMBO neatins lângă: **partea JUCĂTORULUI e scrisă** (31 octombrie) — fără PA, lanț plafonat la `PLAFON_TREPTE = 5` (15 daune: 1+2+3+3+6), folosirea blochează Obeliscul o rundă (scris la ACTIVARE, nu la final), tura se încheie singură după lanț, punctele de PA nu se mai desenează; jucat cu scenele adevărate pe toți trei inamicii (Soldatul 10 întrebări / 2 runde, Lăncierul 13 / 3, Spadasinul 15 / 3) · **parada inamicului ❌, sesiunea următoare** — până atunci inamicul lovește fără să întrebe nimic · trei contradicții măsurate cu tabelul de design (Lăncierul nu lovește niciodată, R runde = R−1 ture de inamic, Nivelul III nu mai apare în luptă) · vezi sesiunile DUELUL, PARTEA JUCĂTORULUI și DUELUL |
 | 5. Trei inamici manuali | ✅ Soldatul · Lăncierul (ceas + **singurul cu cronometru pe întrebări**, de pe 31 octombrie) · Spadasinul (vulnerabilitate), aleși din joc |
 | 6. Harta de expediție | ✅ loadout „N din M" · **12-16 noduri**, ramificate, cu sămânță · Luptă / Elită / Odihnă / Eveniment / **Magazin** / **Boss** · **Monede + puteri temporare** · sumar de run · aspect: pergament, simboluri de cerneală, trasee punctate · **nodurile și drumurile stau pe o PANGLICĂ (curbă centrală + benzi)**, nu pe o grilă dreaptă · **patru trasee, toate verzi pe 300 de semințe** (POTCOAVĂ activă; POTCOAVA OGLINDITĂ e aceeași formă, întoarsă) · strat înclinat (forfecare) la ȘARPE · **drumuri care nu se încrucișează niciodată (0 la 300 de semințe)** · **nodul curent are și aură, și X, și stă nemișcat sub figurină** · **două surse de hartă: GENERATĂ (panglica) sau DESENATĂ dintr-un fișier `data/harti/*.json`** — comutatorul `Expeditie.SURSA_HARTII`; azi e pe DESENATĂ · **harta umple pergamentul**: pânza ține toată pagina, antetul plutește peste ea (805 × 427 px de hartă, de la 666 × 353) · **drumurile merg în amândouă sensurile**, cu nodul parcurs tăiat definitiv și cu garanția, verificată pe 16 000 de expediții simulate, că nu te poți înfunda · **figurina sare, cade ca un slam și zguduie ecranul la aterizare**, cu un răgaz de 0,5 s înainte să se deschidă nodul · **tipurile nodurilor se împart după o REȚETĂ fixă, nu se trag cu zarul**: 11 reguli de vecinătate, de început și de FINAL, printre ele **o podea de 3 lupte pe cel mai ieftin drum Start → Boss** (21 octombrie), plasare conștientă de reguli, verificare completă și reîncercare cu sub-sămânță (0 eșecuri pe 500 de semințe × 3 surse de hartă) · **la cel mult 2 pași de Boss e garantat un nod de bătaie** (100% pe 300 de semințe × 3 surse, de la 85% / 96% / 81%) · **niciun nod special nu mai are un geamăn lipit**, nici Evenimentul (0 pe 900 de hărți) · **rețeta nu se mai crede pe cuvânt: se PROBEAZĂ** — plafonul comun încearcă plasarea adevărată și taie un nod când forma nu le încape pe toate · rețeta se **plafonează după forma hărții**, nu după numărul de noduri · **nodul de Eveniment deschide Lacătul** (nivel din adâncime, sămânță din nodul, 6/10/14 Monede la succes) |
 | 7. Cetatea | ❌ |
@@ -37,6 +37,117 @@ buget, generare) rămâne acolo unde era.
 Am sărit peste ordinea recomandată la pasul 12 (artă): imaginile pentru rege,
 cavaler și pentru cele trei piese de șah de pe butoane au intrat mai devreme, dar
 restul rămâne placeholder. Bucla de luptă e în continuare cea validată, nu arta.
+
+---
+
+## DUELUL, PARTEA JUCĂTORULUI (31 octombrie 2026) — scrisă, jucată, măsurată
+
+Sesiunea de dinainte (DUELUL, mai jos) a hotărât bucla și a lăsat-o nescrisă.
+Azi a intrat **jumătatea ta** din ea: fără PA, lanț plafonat, rotația prin cele
+trei Obeliscuri. **Parada inamicului NU e scrisă** — rămâne pe sesiunea
+următoare, și toate cifrele de mai jos sunt dinainte de ea.
+
+### Ce s-a schimbat în cod (un singur fișier, `scenes/lupta/lupta.gd`)
+
+**O a treia valoare în `RegulaObelisc`, nu o rescriere.** `DUEL` stă lângă
+`COMBO` și `RECARCARE`, comutatorul e pe ea, iar COMBO e neatins: se comută o
+linie și se joacă vechea buclă. Contractul `Puzzle`, `trivia.gd` și `logica.gd`
+n-au fost atinse deloc — nicio linie.
+
+Două cifre noi, amândouă „doar pentru DUEL": `PLAFON_TREPTE = 5` și
+`RUNDE_BLOCAT_DUEL = 1`.
+
+Trei funcții scurte, ca regula să nu se scrie de cinci ori:
+`costa_pa()`, `ai_pa_pentru_obelisc()` și `plafon_trepte()` (0 = fără plafon,
+nu un număr uriaș — „fără capăt" e o decizie de design, nu o cifră mare).
+
+| unde | ce face |
+|---|---|
+| `incepe_runda()` | `pa = 0` sub DUEL, altă linie de jurnal („un atac, prin orice Obelisc liber"), plus o **plasă de siguranță**: dacă toate Obeliscurile sunt blocate, tura trece singură. Azi imposibil (se blochează cel mult unul pe rundă), dar parada mai blochează unul la fiecare apărare ratată — iar butonul „Încheie tura" e ascuns, deci fără linia asta rămâneai blocat pe ecran |
+| `_pe_obelisc_apasat()` | nu mai scade PA; scrie blocarea **la ACTIVARE** (`runda + 1 + RUNDE_BLOCAT_DUEL`), ca un lanț dus la 5 și unul rupt la 3 să lase Obeliscul în aceeași stare |
+| `ruleaza_lant()` | plafonul, verificat **după** ce treapta a fost plătită (în capul buclei ar fi oprit lanțul la 4). Ieșirea veche `if REGULA_OBELISC != RegulaObelisc.COMBO: return` a devenit `== RECARCARE`: cu a treia regulă în enum, „nu e COMBO" încetase să însemne „e RECARCARE", iar DUEL ar fi avut lanțuri de exact o treaptă |
+| ramura de greșeală | sub DUEL **nu scrie nimic** în `disponibil_din`: Obeliscul e deja blocat, iar `runda + 1` i-ar fi SCURTAT blocajul. Nici nu-l lungește — greșeala la atac se plătește o singură dată, în daunele nefăcute |
+| `verifica_final_de_tura()` | sub DUEL încheie tura **necondiționat**: un lanț = o tură. Corpul comun a ieșit în `_incheie_tura(mesaj)`, chemat din două locuri |
+| `_pe_incheie_tura_apasat()` | sub DUEL, `return`. Rămâne drumul spre hartă de după verdict |
+| `actualizeaza_ui()` | rândul de puncte de PA nu se mai **construiește** sub DUEL și e ascuns; `pa < COST_OBELISC` a devenit `not ai_pa_pentru_obelisc()` |
+| `_text_combo()` | se arată și sub DUEL (plafonat sau nu, un lanț e tot un lanț) |
+
+**Butonul „Încheie tura" nu a fost ȘTERS, deși designul spunea „dispare".** Era
+deja `visible = false` permanent, și sub COMBO — deci n-avea ce dispărea pe
+ecran; ce a dispărut e REGULA lui. Nodul și handler-ul rămân fiindcă
+`verifica_podeaua` ține calea `Margini/Coloana/IncheieTura` în lista lui, și
+fiindcă handler-ul e în continuare drumul prin care se iese spre hartă după
+verdict. Sub DUEL e un `return`: „încheie tura" presupunea o tură din care poți
+ieși lăsând ceva nefolosit, iar acum ieșirea devreme nu e o decizie tactică, e
+un atac dăruit inamicului.
+
+### Jucat, nu presupus
+
+`verifica_retragerea`: **27 OK, cod de ieșire 0** — lupta din ea a trecut pe
+drumul nou cu jurnalul care scrie „Runda 1: un atac, prin orice Obelisc liber".
+
+Și o **probă aruncată** (o scenă temporară, ștearsă după), care a jucat lupte
+întregi cu scenele adevărate, răspunzând corect la fiecare întrebare, cu
+`Engine.time_scale = 12`. Lanțul măsurat: `1 + 2 + 3 + 3 + 6 (CRITIC) = 15
+daune`, exact cifra din design. Apoi tura trece singură, Obeliscul folosit e
+blocat în runda 2 iar celelalte două libere, combo-ul se stinge.
+
+**Ar merita o verificare permanentă, `verifica_duelul`** — n-am scris-o azi
+fiindcă jumătate din buclă (parada) lipsește, și o verificare scrisă pe
+jumătatea asta ar trebui rescrisă săptămâna viitoare.
+
+### Cifrele adevărate, pe toți trei — și unde NU se potrivesc cu designul
+
+Joc perfect, zero greșeli, fără paradă (deci încasezi tot ce apucă să dea):
+
+| inamic | PV | întrebări | runde | lanțuri | regele | ceasul lui |
+|---|---|---|---|---|---|---|
+| SOLDATUL | 30 | 10 | 2 | 2 | 15 → 12 (−3) | — |
+| LĂNCIERUL | 34 | 13 | 3 | 3 | 15 → **15 (−0)** | **2 din 3** |
+| SPADASINUL | 40 | 15 | 3 | 3 | 15 → 7 (−8) | — |
+
+**Trei contradicții cu tabelul din sesiunea DUELUL, toate măsurate azi:**
+
+1. **LĂNCIERUL nu lovește niciodată.** Designul îi dă „1 parare (ceas 3) × 8,
+   adică jumătate din rege — o singură întrebare, în toată lupta, care
+   valorează jumătate din rege". În realitate ceasul ajunge la **2 din 3** și se
+   oprește acolo: lupta se termină în MIJLOCUL lanțului tău din runda 3, înainte
+   de tura lui. Adică plafonul de 5 a recreat exact problema pentru care a fost
+   inventat DUELUL — *„Lăncierul, singurul al cărui caracter e o cursă contra
+   ceas, era singurul de care nu trebuia să te temi"*. Lipsește o singură rundă.
+2. **Off-by-one în tot tabelul: o luptă de R runde dă inamicului R−1 ture.**
+   Tu ataci primul, deci lanțul care-l omoară cade înaintea ultimei lui ture.
+   Soldatul: 1 atac, nu 2 (−3, nu −6). Spadasinul: 2, nu 3 (−8, nu −12). După
+   paradă, asta înseamnă **1 paradă la Soldat, 0 la Lăncier, 2 la Spadasin**.
+3. **Nivelul III nu mai apare în luptă.** `TREPTE_PE_NIVEL = 3` înseamnă că
+   Nivelul III începe la treapta 7, iar plafonul e 5 — un lanț e I, I, I, II,
+   II. (Măsurat: treapta 5, cea critică, e Nivel II.) Deci o treime din
+   conținut — 31 din cele 93 de celule, toate duse la RAFT = 75 pe 29 octombrie
+   — se joacă de acum numai în Practice. Nu e un bug: e consecința a două cifre
+   care nu s-au uitat una la alta. Și e **același levier** cu cel notat deja la
+   „Rămas deschis" în sesiunea DUELUL: dacă plafonul devine **7** (*„acolo unde
+   `nivel_treapta` se plafonează"*), criticul redevine un pariu ȘI Nivelul III
+   reintră în luptă, dintr-o singură cifră.
+
+### Rămas deschis (peste ce era deja scris la DUELUL)
+
+- **Parada**, toată: `tura_inamicului()` nu s-a atins azi. Inamicul lovește ca
+  înainte, fără să te întrebe nimic — deci cele −3 / −0 / −8 de mai sus sunt
+  daune pe care azi nu le poți evita deloc.
+- **Recompensa „cel mai lung lanț" a devenit o constantă.** Linia plătea
+  `FRAGMENTE_PE_TREAPTA_LANT` pentru *cel mai lung, nu suma tuturor*, exact ca
+  să prețuiască un risc asumat. Sub DUEL fiecare lanț complet are 5 trepte și
+  exact un critic, deci linia plătește 5 + 3 Fragmente în aproape fiecare luptă,
+  pentru nimic. Nu e urgent (n-ai încă pe ce cheltui Fragmente), dar e o linie
+  de design care și-a pierdut înțelesul în tăcere.
+- **`bonus_pa()` e confirmat mort în cod**, nu doar pe hârtie: punctele de PA
+  nu se mai desenează, iar Magazinul îl vinde în continuare
+  (`expeditie.gd:1277`, „De acum, +N PA in fiecare runda").
+- **Tabelul „Bucla de luptă" din `CLAUDE.md`** descrie în continuare COMBO ca
+  fiind bucla jocului (PA, lanț nelimitat, „greșeală = Obeliscul rămâne blocat
+  până la finalul rundei"). Comutatorul e pe DUEL, deci rândurile alea descriu
+  acum o regulă care stă pe bancă. N-am rescris tabelul: jumătatea lipsă
+  (parada) l-ar face rescris de două ori.
 
 ---
 
