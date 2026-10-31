@@ -205,6 +205,11 @@ const NUME_ARHETIP := {
 #   daune            — cât lovește o lovitură a lui (la GRABNIC: descărcarea)
 #   ceas             — DOAR la GRABNIC: în câte runde se umple. Lipsește la
 #                      ceilalți, fiindcă n-au ce încărca (vezi `ceas_max()`).
+#   cronometru       — pune ceas pe ÎNTREBĂRILE TALE? Lipsește = nu (vezi
+#                      `pune_cronometru()`). NU e același lucru cu „ceas":
+#                      acela numără rundele LUI, ăsta secundele TALE. Azi îl
+#                      poartă doar Lăncierul, dar e un CÂMP, nu o ramură pe
+#                      arhetip — motivul e scris la `pune_cronometru()`.
 #   vulnerabilitate  — numele unei discipline din `OBELISCURI`, sau "" dacă n-are
 #   colorare         — aceeași siluetă, altă lumină pe ea (`aplica_infatisarea()`)
 #
@@ -232,10 +237,11 @@ const INAMICI := [
 		"cost": 1.6,   # bugetul de la care are voie sa apara: dupa un nod-doua
 		"factiune": "Garnizoana",
 		"arhetip": Arhetip.GRABNIC,
-		"descriere": "Loveste o singura data, dar isi pregateste lovitura la vedere: numara rundele cu varful lancei coborat spre tine. Ai doua runde in care nu te atinge si una in care te costa jumatate din rege — deci intrebarea nu e daca ataca, ci daca apuci sa-l dobori inainte.",
+		"descriere": "Loveste o singura data, dar isi pregateste lovitura la vedere: numara rundele cu varful lancei coborat spre tine. Ai doua runde in care nu te atinge si una in care te costa jumatate din rege — deci intrebarea nu e daca ataca, ci daca apuci sa-l dobori inainte. Si nu te lasa sa gandesti in tihna: cat sta cu lancea pe tine, intrebarile tale curg la cronometru.",
 		"pv": 34,
 		"daune": 8,
 		"ceas": 3,
+		"cronometru": true,
 		"vulnerabilitate": "",
 		"colorare": Color(0.74, 0.86, 1.00),
 	},
@@ -1202,6 +1208,17 @@ func creeaza_puzzle(scena: PackedScene, nivel: int, context := "", scurtare := 0
 	# sau o zguduire a figurii lovite. Dacă îl legi cândva, leagă-l ÎNAINTE de
 	# `porneste()`: acolo pornește cronometrul, iar o întrebare cu timpul deja
 	# curgând ar putea expira în cadrul următor și ar striga în gol.
+
+	# CRONOMETRUL, ÎNAINTE de `porneste()`: acolo pornește timpul, deci pus
+	# după ar fi ajuns la o întrebare deja în curs. La un inamic fără
+	# cronometru, scena ascunde bara și nu pornește `_process` — adică nu curge
+	# nimic, nu expiră nimic și nu ticăie nimic, fără nicio ramură nouă pe
+	# drumul răspunsului. Exact drumul pe care merge Practice de la bun început.
+	#
+	# `scurtare` se trimite oricum. Fără cronometru n-o citește nimeni, iar un
+	# `if` aici ar fi fost pus doar ca să nu calculăm un număr pe care scena îl
+	# ignoră singură.
+	puzzle.cu_cronometru = pune_cronometru()
 	puzzle.porneste(nivel, context, scurtare)
 	return puzzle
 
@@ -1927,6 +1944,28 @@ func ceas_max() -> int:
 	return inamic().get("ceas", 0)
 
 
+## Pune inamicul ăsta cronometru pe ÎNTREBĂRILE TALE?
+##
+## Cronometrul nu mai e o regulă a jocului, e o proprietate a adversarului: la
+## majoritatea inamicilor bara de timp nu apare deloc, iar cine o aduce o
+## declară cu un câmp în rândul lui. Ce se câștigă: presiunea de timp devine o
+## INFORMAȚIE DESPRE ADVERSAR — o citești pe card înainte de luptă și îți alegi
+## loadout-ul pentru ea. Până acum era o constantă de mediu, deci prezentă în
+## fiecare luptă și tactic invizibilă în toate.
+##
+## UN CÂMP, NU `arhetip() == Arhetip.GRABNIC`, din exact motivul scris la
+## `are_ceas()`: azi îl poartă singurul Grabnic din tabel, dar un bos care te
+## grăbește fără să încarce nicio lovitură e un rând în tabel, nu o ramură
+## nouă aici — și un Grabnic blând, la fel.
+##
+## Numele e `cronometru`, nu `ceas`, fiindcă în jocul ăsta sunt DOUĂ lucruri
+## care numără: `ceas` e încărcarea Grabnicului (rundele lui până la lovitură),
+## `cronometru` e secundele tale până la răspuns. Puzzle-ul folosește deja al
+## doilea cuvânt pentru exact lucrul ăsta (`cu_cronometru`, în `puzzle.gd`).
+func pune_cronometru() -> bool:
+	return inamic().get("cronometru", false)
+
+
 ## Lovitura asta cade pe slăbiciunea lui?
 ##
 ## Se compară CHEIA disciplinei („cuvinte"), nu numele afișat („Cuvinte").
@@ -2011,6 +2050,29 @@ func text_comportament(index: int) -> String:
 	return "—"
 
 
+## Rândul „Cronometru" din card: curge timpul la întrebările inamicului ăsta?
+##
+## RÂNDUL EXISTĂ ȘI CÂND RĂSPUNSUL E „NU", stins cu o liniuță, ca
+## vulnerabilitățile și rezistențele. „Fără cronometru" e cea mai bună veste pe
+## care ți-o poate da un card, iar un rând care apare doar uneori e un rând pe
+## care nu te uiți.
+##
+## CIFRELE SE CITESC DIN `Puzzle`, nu se scriu aici. Un card care spune altceva
+## decât face lupta e mai rău decât niciun card (vezi `text_comportament`), iar
+## secundele nu sunt ale luptei: scena de puzzle e singura care știe cât durează
+## să citești o întrebare, deci podeaua e a ei (`TIMP_MINIM`, în `puzzle.gd`).
+## Copiate aici, s-ar fi depărtat de adevăr la prima reglare. Scăderea pe
+## treaptă o ține lupta, deci pe aceea o întrebăm pe `reducere_timp()` — e
+## aceeași funcție care o aplică, nu un 1 scris de mână lângă ea.
+func text_cronometru(index: int) -> String:
+	if not INAMICI[index].get("cronometru", false):
+		return "—"
+	var timpi: Array = Puzzle.TIMP_PE_NIVEL
+	return "%d-%d s pe intrebare, minus %d s pe treapta (minim %d)" % [
+		timpi.min(), timpi.max(), reducere_timp(2), Puzzle.TIMP_MINIM,
+	]
+
+
 ## Slăbiciunea inamicului, scrisă pentru ochi. Liniuță dacă n-are — la fel ca
 ## modificatorii și rezistențele, ca rândurile cardului să arate la fel.
 func text_vulnerabilitate(index: int) -> String:
@@ -2036,6 +2098,7 @@ func date_card_inamic() -> Array:
 		{"eticheta": "Factiune", "valoare": date["factiune"]},
 		{"eticheta": "Arhetip", "valoare": NUME_ARHETIP[date["arhetip"]]},
 		{"eticheta": "Comportament", "valoare": text_comportament(inamic_curent)},
+		{"eticheta": "Cronometru", "valoare": text_cronometru(inamic_curent)},
 		{"eticheta": "Puncte de viata", "valoare": "%d / %d" % [pv_inamic, pv_max_inamic]},
 		{"eticheta": "Modificatori", "valoare": _lista_sau_liniuta(MODIFICATORI_INAMIC)},
 		{"eticheta": "Vulnerabilitati", "valoare": text_vulnerabilitate(inamic_curent)},

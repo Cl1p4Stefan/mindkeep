@@ -1,6 +1,6 @@
 # MINDKEEP — Jurnal de progres
 
-*Ultima actualizare: 29 octombrie 2026*
+*Ultima actualizare: 31 octombrie 2026*
 *Atașează acest fișier la începutul fiecărei sesiuni noi, împreună cu `CLAUDE.md` și `docs/pitch-document.md`.*
 
 ---
@@ -12,8 +12,8 @@
 | 1. Setup, Git | ✅ gata |
 | 2. Scena de luptă cu placeholdere | ✅ gata |
 | 3. Trivia, ca scenă independentă | ✅ gata |
-| 4. Bucla completă a unei lupte | ✅ victorie · înfrângere · recompense (Fragmente) |
-| 5. Trei inamici manuali | ✅ Soldatul · Lăncierul (ceas) · Spadasinul (vulnerabilitate), aleși din joc |
+| 4. Bucla completă a unei lupte | ✅ victorie · înfrângere · recompense (Fragmente) · 🔜 **bucla ÎNSĂȘI se reproiectează — vezi sesiunea DUELUL**: design complet, măsurat, NESCRIS |
+| 5. Trei inamici manuali | ✅ Soldatul · Lăncierul (ceas + **singurul cu cronometru pe întrebări**, de pe 31 octombrie) · Spadasinul (vulnerabilitate), aleși din joc |
 | 6. Harta de expediție | ✅ loadout „N din M" · **12-16 noduri**, ramificate, cu sămânță · Luptă / Elită / Odihnă / Eveniment / **Magazin** / **Boss** · **Monede + puteri temporare** · sumar de run · aspect: pergament, simboluri de cerneală, trasee punctate · **nodurile și drumurile stau pe o PANGLICĂ (curbă centrală + benzi)**, nu pe o grilă dreaptă · **patru trasee, toate verzi pe 300 de semințe** (POTCOAVĂ activă; POTCOAVA OGLINDITĂ e aceeași formă, întoarsă) · strat înclinat (forfecare) la ȘARPE · **drumuri care nu se încrucișează niciodată (0 la 300 de semințe)** · **nodul curent are și aură, și X, și stă nemișcat sub figurină** · **două surse de hartă: GENERATĂ (panglica) sau DESENATĂ dintr-un fișier `data/harti/*.json`** — comutatorul `Expeditie.SURSA_HARTII`; azi e pe DESENATĂ · **harta umple pergamentul**: pânza ține toată pagina, antetul plutește peste ea (805 × 427 px de hartă, de la 666 × 353) · **drumurile merg în amândouă sensurile**, cu nodul parcurs tăiat definitiv și cu garanția, verificată pe 16 000 de expediții simulate, că nu te poți înfunda · **figurina sare, cade ca un slam și zguduie ecranul la aterizare**, cu un răgaz de 0,5 s înainte să se deschidă nodul · **tipurile nodurilor se împart după o REȚETĂ fixă, nu se trag cu zarul**: 11 reguli de vecinătate, de început și de FINAL, printre ele **o podea de 3 lupte pe cel mai ieftin drum Start → Boss** (21 octombrie), plasare conștientă de reguli, verificare completă și reîncercare cu sub-sămânță (0 eșecuri pe 500 de semințe × 3 surse de hartă) · **la cel mult 2 pași de Boss e garantat un nod de bătaie** (100% pe 300 de semințe × 3 surse, de la 85% / 96% / 81%) · **niciun nod special nu mai are un geamăn lipit**, nici Evenimentul (0 pe 900 de hărți) · **rețeta nu se mai crede pe cuvânt: se PROBEAZĂ** — plafonul comun încearcă plasarea adevărată și taie un nod când forma nu le încape pe toate · rețeta se **plafonează după forma hărții**, nu după numărul de noduri · **nodul de Eveniment deschide Lacătul** (nivel din adâncime, sămânță din nodul, 6/10/14 Monede la succes) |
 | 7. Cetatea | ❌ |
 | 8. Save/Load | ✅ **pe disc**, de pe 12 octombrie 2026. `autoload/arhiva.gd` — singurul fișier din joc care atinge discul, fără nicio regulă de joc în el; dependența merge într-un singur sens (apelurile de salvare stau în SCENE, ca uneltele de verificare să rămână uscate) · **două fișiere în `user://`**: `permanent.json` (Tezaur + progresul din Antrenament + sacurile permanente) și `expeditie.json`, care există doar cât e un run viu · **scriere prin fișier temporar și redenumire**, cu adoptarea unui `.nou` orfan la citire · **`versiune` în save**: mai vechi se citește prin `_migreaza()`, mai nou se pune deoparte · **un fișier ilizibil nu se șterge și nu se suprascrie** — se redenumește `*.stricat.json` (cu data în nume dacă e deja unul pus deoparte), iar meniul o spune, cu mesaje separate pentru progres și pentru expediție · **butonul din meniu devine „Continua expeditia"**, cu nodurile în urmă și PV-ul pe rândul de sub el · **sacul are acum DURATĂ pe cheie** (`Sac.Durata`): rafturile din Practice sunt permanente, sacurile de luptă rămân pe expediție · **nodul se scrie pe disc la INTRARE**, deci a apărut `nod_nerezolvat` și coloana `reluabil` din `DATE_NOD` — altfel o luptă întreruptă era sărită, iar la Boss era chiar victorie · 54 de verdicte în `verifica_salvarea`, ~1 s · vezi sesiunea SAVE
@@ -37,6 +37,302 @@ buget, generare) rămâne acolo unde era.
 Am sărit peste ordinea recomandată la pasul 12 (artă): imaginile pentru rege,
 cavaler și pentru cele trei piese de șah de pe butoane au intrat mai devreme, dar
 restul rămâne placeholder. Bucla de luptă e în continuare cea validată, nu arta.
+
+---
+
+## DUELUL (31 octombrie 2026) — bucla de luptă, hotărâtă și măsurată, NESCRISĂ
+
+**Nu e cod.** E un design complet, verificat prin simulare, care așteaptă
+implementarea. Tot ce scrie mai jos e decis; nimic nu e construit.
+
+### De unde a pornit
+
+Cronometrul s-a mutat pe inamic în aceeași zi (vezi sesiunea următoare) și a
+lăsat un gol: LANȚUL NELIMITAT nu mai avea nimic împotriva lui. Socotit din
+constante, nu presupus: **10 răspunsuri corecte la rând omoară Soldatul, 11
+Lăncierul, 13 Spadasinul (7 pe slăbiciune), ~20 o Elită.** Adică o luptă se
+putea încheia în runda 1, fără ca inamicul să acționeze vreodată — iar
+Lăncierul, singurul al cărui caracter e o cursă contra ceas, era singurul de
+care nu trebuia să te temi.
+
+### Trei propuneri care n-au trecut, și ce a scos la lumină fiecare
+
+**1. O întrebare = un atac, alternat.** Fiecare atac, al tău și al lui, cu o
+întrebare. **Respinsă:** regele are 15 PV pe TOATĂ expediția, iar Soldatul ar fi
+primit ~10 ture × 3 daune = 30 de daune din PRIMUL inamic. Cerea rescris PV-ul
+regelui, daunele tuturor inamicilor și recompensele. A scos la lumină că
+inamicul n-are nicio voce. A scos și că răspunsul greșit ar fi devenit un nimic
+(„nu ataci”), mai rău decât regula de azi, unde greșeala costă UNEALTA.
+
+**2. Plafon de 5 sau 10 trepte pe lanț.** **Măsurat:** plafon 5 = 15 daune pe
+lanț × 2 PA = 30 = exact PV-ul Soldatului, deci moare tot în runda 1; plafon 10
+= 33 de daune pe un singur lanț, adică indistinct de „fără plafon”. A scos la
+lumină că **sub COMBO nu există nicio recărcare** — blocarea de la
+`disponibil_din[index] = runda + 1 + RUNDE_RECARCARE` se aplică doar sub
+RECARCARE — deci poți folosi același Obelisc de două ori pe rundă, la infinit.
+„Loadout: 3 din 8” e mecanic loadout de 1.
+
+**3. Plafon + recărcare.** Runda 1 e imună la recărcare (nimic nu e încă
+blocat), iar o luptă se termină în runda 1-2: recărcarea s-ar fi aplicat într-o
+rundă care de obicei nu există.
+
+**Aritmetica drumului, scrisă ca să nu se redeschidă din senin:** un inamic are
+30-40 PV, tu faci ~3 daune pe răspuns, deci o luptă e **~10-13 răspunsuri
+oricum le grupezi**. Lungimea lanțului nu e levierul. Levierele sunt două:
+PV-ul inamicului ×3 (40 de întrebări pe luptă — iese din cele 15 minute), sau
+**inamicul lovește ÎN TIMPUL lanțului**. Doar al doilea nu rupe altceva.
+
+### DUELUL — regulile, complete
+
+Numele e doar o etichetă: **a treia valoare în `RegulaObelisc`**, lângă COMBO și
+RECARCARE. Rostul numelui e ca vechiul sistem **să nu fie șters** — comuți o
+linie și joci COMBO, ca să poți compara. Fără nume, „sistemul nou” ar fi fost o
+rescriere în care vechiul dispare, iar după două seri de duel vei vrea să
+compari, și o amintire nu se compară cu nimic.
+
+1. **Fără PA.** Runda e: tu ataci, apoi inamicul atacă. Se repetă până moare
+   unul dintre voi.
+2. **Atacul tău:** alegi un Obelisc LIBER și pornești un lanț de cel mult
+   **5 trepte** (plafon nou, `PLAFON_TREPTE`).
+3. **Folosirea blochează Obeliscul 1 rundă** — fie că ai dus lanțul la 5, fie că
+   l-ai rupt la treapta 3. Același lucru din punctul de vedere al blocării.
+4. **Atacul inamicului se declanșează doar când lovește de-adevărat**, nu în
+   fiecare rundă. Așa `ceas`-ul Grabnicului rămâne întreg: rundele lui de
+   încărcare sunt LINIȘTITE, iar a treia e o singură întrebare terifiantă. Și
+   orice arhetip viitor merge neatins.
+5. Când lovește, alege **aleator unul din cele 3 Obeliscuri ale tale** și-ți pune
+   **o întrebare** — parada.
+6. **Corect → atacul e parat**, zero daune. **Greșit →** încasezi daunele lui
+   **ȘI** Obeliscul acela se blochează 1 rundă. **FĂRĂ CUMUL.**
+
+```gdscript
+disponibil_din[index] = runda + 2                               # folosire
+disponibil_din[tinta] = maxi(disponibil_din[tinta], runda + 2)  # parare ratată
+```
+
+`maxi` e tot ce a rămas din ideea „cumulativ”: acolo doar ca să nu SCURTEZE un
+blocaj existent.
+
+### De ce funcționează cu cifrele de azi, fără nicio reechilibrare
+
+Plafon 5 = 1+2+3+3+6 = **15 daune pe lanț**. Regele are 15 PV.
+
+| inamic | PV | runde | parări | dacă ratezi toate |
+|---|---|---|---|---|
+| SOLDATUL | 30 | 2 | 2 × 3 daune | −6 din 15 |
+| LĂNCIERUL | 34 | 3 | **1** (ceas 3) × 8 | −8, jumătate din rege |
+| SPADASINUL | 40 | 3 | 3 × 4 | −12, supraviețuiești cu 3 |
+| Spadasinul la Elită | 64 | 5 | 5 × 4 | mort |
+
+**Joc perfect vs. Soldatul: 11 întrebări (5 + 1 parare + 5), 2 runde, zero
+daune. Azi: 10 întrebări, 1 rundă, zero daune.** O singură întrebare în plus
+cumpără o tură GARANTATĂ a inamicului — și zero daune devine CÂȘTIGAT, nu primit
+cadou pentru că inamicul n-a apucat să se miște. Aceeași cifră, alt înțeles.
+
+Iar rândul Lăncierului: **o singură întrebare, în toată lupta, care valorează
+jumătate din rege.**
+
+### Pedeapsa NU e cumulativă, și asta e MĂSURAT
+
+Prima recomandare a fost „+1 rundă peste cât mai avea” (cumulativ), ca pedeapsa
+să doară și când inamicul lovește prin Obeliscul tocmai folosit. **A fost
+greșită, și a fost prinsă de intuiția mea, nu de simulare.**
+
+Două simulări cu strategii de inamic ALESE de mine („lovește mereu ce-ai
+folosit”, „lovește ce revine cel mai repede”) au dat amândouă minim 1 Obelisc
+liber, deci „sigur”. Dar o **căutare epuizantă** (minimax peste toate alegerile
+inamicului ȘI ale jucătorului, 14 runde) spune altceva — iar secvența care
+blochează folosește prima strategie în runda 1 și a doua în runda 2, deci
+niciuna dintre euristici nu o putea găsi:
+
+| variantă | blocare totală | pedeapsa doare mereu? | alt cost |
+|---|---|---|---|
+| **necumulativ** | **IMPOSIBILĂ** | nu — 1 din 3 parări ratate e „gratis” | — |
+| cumulativ | **forțată în runda 3**; 6,4% din lupte la 70% parare | da | tura pierdută |
+| inamicul lovește doar Obeliscurile libere | imposibilă | da | **20,8% din atacuri FĂRĂ paradă** |
+
+Secvența care forțează blocarea totală, cumulativ, și pe care **nu o poți evita**
+prin cum alegi:
+
+> **R1:** toate libere. Folosești Memorie → blocat 1 rundă. Inamicul atacă prin
+> Memorie, ratezi → blocat 2 runde.
+> **R2:** libere doar Cuvinte și Logica. Folosești Cuvinte → blocat. Inamicul
+> atacă prin Logica, ratezi → blocat.
+> **R3:** toate trei blocate. **Nu poți ataca.**
+
+Două motive în plus pentru necumulativ, dincolo de măsurătoare: pedeapsa pentru
+parada ratată **există deja** (ai încasat daune), deci cumulul pedepsește a doua
+oară aceeași greșeală; iar o blocare mai lungă **reintroduce pierderea turii pe
+ușa din spate**, exact ce decizia „Greșeală = pierzi 1 PA, NU tura” a exclus
+pentru că *pierderea turii pedepsește ignoranța în loc s-o corecteze*.
+
+**Și „pedeapsa gratis” nu e un defect.** Când inamicul lovește prin Obeliscul pe
+care l-ai tocmai golit, ai plătit în PV, iar unealta era deja jos — nu există ce
+să mai pierzi. Pedeapsa nu lipsește, e de alt fel. Iar din asta iese o textură
+tactică pe gratis: **o paradă prin Obeliscul epuizat e cea mai IEFTINĂ de
+ratat** (doar PV), una prin Obeliscul proaspăt e cea SCUMPĂ (PV + unealta). Nu e
+inconsecvență — e consecința de a te fi întins.
+
+### Ce a câștigat designul fără să coste nimic
+
+- **Loadout-ul devine VULNERABILITATE, nu doar trusă.** Inamicul atacă PRIN
+  Obeliscurile tale, deci o disciplină luată pentru rolul ei tactic deși ești
+  slab la ea va fi găsită. Alegerea celor 3 devine un pariu adevărat.
+- **Cârlig direct pentru pasul 10 (generatorul).** Un arhetip care atacă prin
+  Obeliscul tocmai folosit; unul care caută mereu disciplina ta cea mai slabă;
+  unul care TELEGRAFIAZĂ prin ce va ataca și te lasă să-l golești dinainte. Trei
+  arhetipuri, zero sisteme noi.
+- **Cele 8 discipline se amortizează de două ori:** azi diferă prin rolul tactic
+  la ATAC, de acum și la APĂRARE.
+- **Două greșeli, două monede.** La atacul tău, o greșeală la treapta 3 costă 12
+  daune nefăcute (3 în loc de 15) — pedeapsa e în daune. La paradă, costă PV plus
+  unealta — pedeapsa e în sânge și în opțiuni. Aceeași acțiune, consecințe
+  diferite, după CÂND greșești.
+- **Trei Obeliscuri e minimul la care bucla funcționează** — o justificare
+  retroactivă pentru „loadout 3 din 8”, pe care n-o aveam.
+
+### Rămas deschis
+
+- **17,5% din rundele unui bos îți lasă o SINGURĂ opțiune** (la 70% parare;
+  29,2% la 50%, 5,9% la 90%). Nu-ți pierzi tura, dar nu decizi nimic. E primul
+  lucru de urmărit la joc; leacul, dacă deranjează, e **al patrulea Obelisc în
+  loadout**, nu o regulă nouă.
+- **`bonus_pa()` rămâne fără sens.** Magazinul îl vinde deja
+  (`expeditie.gd:1277`, cu textul „De acum, +N PA in fiecare runda”), iar fără
+  PA obiectul nu mai înseamnă nimic — și dacă e într-un save, e o migrare.
+  Înlocuitorii stau pe axa nouă și sunt mai buni decât el: **+1 la plafonul de
+  trepte**, sau **un al patrulea Obelisc**. „+1 PA” cumpăra o repetiție; „+1
+  Obelisc” cumpără o alegere.
+- **Un arhetip MULTI-HIT (2 atacuri pe rundă) sparge garanția:** cu 3
+  Obeliscuri, căutarea epuizantă găsește blocare totală; cu 4, nu. Regula,
+  scrisă acum cât e ieftină: *un arhetip multi-hit cere loadout de 4, sau nu
+  aplică blocarea la a doua lovitură.*
+- **Plafonul 5 și treapta critică.** 5 e multiplu de `TREAPTA_CRITICA`, deci
+  treapta a 5-a e mereu ULTIMA: criticul încetează să fie un pariu („mai risc
+  una?”) și devine un bonus garantat la capătul fiecărui lanț. Sub COMBO ar fi
+  fost un defect; aici nu, fiindcă tensiunea s-a mutat pe PARADĂ, iar 2 lanțuri
+  × 15 = 30 = exact Soldatul. Dacă vreodată vrei criticul ca pariu, numărul e
+  **7** — acolo unde `nivel_treapta` se plafonează, deci lanțul ar ține exact cât
+  timp devine mai greu.
+- **Ce se atinge la implementare:** `tura_inamicului()` (parada),
+  `ruleaza_lant()` (plafonul), UI-ul de PA (punctele de la linia 618), și
+  `incheie_tura`, care **dispare** — decizia „tura se încheie automat când nu mai
+  ai Obeliscuri utilizabile” devine regula normală, nu cazul-limită. Plus
+  `verifica_retragerea`, care joacă o luptă adevărată. **Contractul `Puzzle` NU
+  se atinge:** parada e un `creeaza_puzzle()` cu alt context, iar
+  `porneste(nivel, context, scurtare)` primește deja un context.
+- **Onest despre scope:** două-trei sesiuni. E o rescriere a BUCLEI, nu a
+  sistemelor — iar „prototip întâi” spune s-o validezi înainte să construiești
+  altceva peste ea, deci e și momentul potrivit.
+
+---
+
+## CRONOMETRUL E AL INAMICULUI (31 octombrie 2026) — bara de timp apare doar la Grabnic
+
+### Cererea
+
+Sesiunea a început cu tipuri noi la Logică și s-a oprit într-o constrângere:
+fiecare tip propus trebuia să încapă în 10 secunde, fiindcă atât dă
+cronometrul. De aici întrebarea *„ce ar fi daca as scoate cronometrul de la
+expeditie?"*, apoi *„dar daca pun cronometrul doar pe inamicii din factiunea
+grabnic, atunci pentru inamicii grabnici ar trebui sa limitez sacul cu
+intrebarile?"*, și decizia: *„o sa las ceasul doar la inamicii cu arhetip
+grabnic"*.
+
+### Ce atârna de cronometru (măsurat înainte de a-l atinge)
+
+- **Timp expirat = răspuns greșit, literal.** `_process` cheamă
+  `_termina(false, -1)`, adică exact ieșirea clicului prost: rupe lanțul ȘI
+  blochează Obeliscul până la finalul rundei. Nu era o pedeapsă mai blândă.
+- **Era singura forță care se opunea unui lanț lung.** Nivelul se plafonează la
+  III (treapta 7), daunele la 3 (treapta 4), lanțul e nelimitat prin decizie —
+  iar comentariul de la `nivel_treapta()` o spunea pe față: „presiunea
+  suplimentară de după treapta a 7-a vine din cronometru, nu din întrebări
+  imposibile". Asta rămâne deschis, vezi mai jos.
+- **Scurtarea se plafonează la treapta 5.** `reducere_timp` taie 1 s pe
+  treaptă, podeaua e 8 s, deci de la treapta 5 încolo toate întrebările au
+  același timp. Ceasul nu escalada; era un gard de 8 secunde.
+- **`scurtare` nu era folosit de nimeni.** Parametrul exista în contractul
+  `porneste()`, dar niciun inamic nu-l trimitea: Grabnicul are un ceas pe
+  TURE, nu pe întrebări. Axa „inamic care-ți fură secunde" era proiectată și
+  neconstruită.
+
+### Ce s-a schimbat (patru locuri, toate în `lupta.gd`)
+
+1. **Un câmp nou în rândul inamicului**, `cronometru: true`, pus azi doar pe
+   Lăncierul. Lipsa lui înseamnă „fără ceas", ca la `ceas`.
+2. **`pune_cronometru()`**, lângă `are_ceas()`.
+3. **`creeaza_puzzle()` îl trimite ÎNAINTE de `porneste()`**:
+   `puzzle.cu_cronometru = pune_cronometru()`.
+4. **Un rând nou în cardul inamicului**, „Cronometru", care există și când
+   răspunsul e „—", ca vulnerabilitățile și rezistențele.
+
+**Scena de puzzle n-a fost atinsă deloc.** Comutatorul exista deja:
+`cu_cronometru`, cele două linii scrise pentru Practice (bara se ascunde,
+`set_process(false)`). Fără `_process` nu curge timpul, nu expiră nimic și nu
+pornește ticăitul — deci drumul „fără ceas" era deja construit și probat de
+Antrenamentul liber, iar lupta doar a început să-l folosească. Zero ramuri noi
+pe drumul răspunsului.
+
+### De ce un CÂMP și nu `arhetip() == Arhetip.GRABNIC`
+
+Din exact motivul scris mai demult la `are_ceas()`: cine se uită la ceas are
+nevoie să știe DACĂ există, nu CINE îl aduce. Un bos care te grăbește fără să
+încarce nicio lovitură e un rând în tabel, nu o ramură nouă — și un Grabnic
+blând, la fel. Numele e `cronometru`, nu `ceas`, fiindcă în jocul ăsta sunt
+două lucruri care numără: `ceas` e încărcarea Grabnicului (rundele lui până la
+lovitură), `cronometru` e secundele tale până la răspuns.
+
+### Sacul NU s-a atins, și asta a fost toată întrebarea
+
+Întrebarea „pentru Grabnic ar trebui să limitez sacul?" are trei răspunsuri,
+toate „nu":
+
+- **La Logică nu există sac de limitat.** Logica generează; `Sac` e folosit
+  acolo doar ca memorie a ce s-a văzut (cheia `logica:<nivel>`), cu
+  reîncercări. Nu există nicio listă din care să scoți ceva.
+- **La Trivia, un filtru pe sac e bug-ul deja scris în `trivia.gd`.**
+  `Sac.extrage` golește registrul unei chei când lista primită se epuizează:
+  o listă filtrată sub aceeași cheie ar șterge memoria întregului domeniu în
+  clipa în care se termină întrebările scurte. Corect ar fi fost filtrul ÎN
+  CHEIE (ca la Practice), adică două registre paralele — deci o întrebare
+  văzută într-o luptă cu ceas ar reveni proaspătă în următoarea.
+- **Costul de timp nu e o proprietate a întrebării, e a REȚETEI.**
+  `_pas_constant` se rezolvă în 3 secunde, o asociere 4×4 cere 30. Amândouă
+  sunt „o întrebare de Logică".
+
+**Măsurat pe Trivia, ca să nu rămână o presupunere:** 6515 întrebări scrise de
+mână, enunț plus cele patru variante, în caractere — mediana 111, p90 152, p99
+194, maximul 247. **Peste 200 de caractere sunt 47 de întrebări, adică 0,7%.**
+Ceasul nu face o întrebare de cunoștințe nerezolvabilă (ori știi capitala
+Boliviei, ori nu), deci singura problemă reală e cititul, și are 47 de cazuri —
+se scurtează de mână, nu cu o arhitectură.
+
+### Verificat
+
+`verifica_retragerea`, cu scenele adevărate: **27 OK, cod de ieșire 0**. Lupta
+din ea e cu Soldatul, deci a trecut pe drumul nou (fără cronometru) cu o
+întrebare pe ecran. Textul rândului din card, probat pe toți trei: Soldatul
+„—", Lăncierul „12-15 s pe intrebare, minus 1 s pe treapta (minim 8)",
+Spadasinul „—". Cifrele din card se citesc din `Puzzle.TIMP_PE_NIVEL`,
+`Puzzle.TIMP_MINIM` și `reducere_timp()`, nu sunt copiate — un card care spune
+altceva decât face lupta e mai rău decât niciun card.
+
+### Rămas deschis
+
+- **Lanțul nelimitat nu mai are nimic împotriva lui la 2 din 3 inamici.** Cele
+  două decizii se sprijineau una pe alta. A doua limită trebuie să vină de
+  undeva: un plafon de trepte pe tură, un nivel care urcă dincolo de III, sau
+  răspunsul asumat că o luptă se termină într-un singur lanț.
+- **Coloana de secunde în `GENERATOARE` (Logică)**, ca rețetele grele să nu
+  iasă sub ceas: un al treilea filtru în `_alege_reteta`, lângă nivel și date.
+  Capcana: loteria trage întâi TIPUL, deci un tip rămas fără nicio rețetă iute
+  pe un nivel dispare de tot din luptele cu Grabnic.
+- **Cele 5 tipuri noi de Logică** propuse în aceeași sesiune (implicație,
+  adevăr și minciună, asocieri, calendarul, rândul) — nescrise încă.
+- **Tabelul din `pitch-document.md` (p. 409)** separă Campania de Turnul
+  Perseverenței pe rândul „Timp: cronometru strict". De azi nu mai e adevărat
+  pentru toată Campania; rândul n-a fost rescris.
 
 ---
 
