@@ -12,7 +12,7 @@
 | 1. Setup, Git | ✅ gata |
 | 2. Scena de luptă cu placeholdere | ✅ gata |
 | 3. Trivia, ca scenă independentă | ✅ gata |
-| 4. Bucla completă a unei lupte | ✅ victorie · înfrângere · recompense (Fragmente) · 🟡 **bucla ÎNSĂȘI se reproiectează — DUELUL**, a treia valoare din `RegulaObelisc`, cu comutatorul pe ea și COMBO neatins lângă: **partea JUCĂTORULUI e scrisă** (31 octombrie) — fără PA, lanț plafonat la `PLAFON_TREPTE = 5` (15 daune: 1+2+3+3+6), folosirea blochează Obeliscul o rundă (scris la ACTIVARE, nu la final), tura se încheie singură după lanț, punctele de PA nu se mai desenează; jucat cu scenele adevărate pe toți trei inamicii (Soldatul 10 întrebări / 2 runde, Lăncierul 13 / 3, Spadasinul 15 / 3) · **parada inamicului ❌, sesiunea următoare** — până atunci inamicul lovește fără să întrebe nimic · trei contradicții măsurate cu tabelul de design (Lăncierul nu lovește niciodată, R runde = R−1 ture de inamic, Nivelul III nu mai apare în luptă) · vezi sesiunile DUELUL, PARTEA JUCĂTORULUI și DUELUL |
+| 4. Bucla completă a unei lupte | ✅ victorie · înfrângere · recompense (Fragmente) · 🟡 **bucla ÎNSĂȘI se reproiectează — DUELUL**, a treia valoare din `RegulaObelisc`, cu comutatorul pe ea și COMBO neatins lângă: **partea JUCĂTORULUI e scrisă** (31 octombrie) — fără PA, lanț plafonat la `PLAFON_TREPTE = 5` (15 daune: 1+2+3+3+6), folosirea blochează Obeliscul o rundă (scris la ACTIVARE, nu la final), tura se încheie singură după lanț, punctele de PA nu se mai desenează; jucat cu scenele adevărate pe toți trei inamicii · **PARADA e scrisă** (31 octombrie) — când inamicul lovește de-adevărat alege la întâmplare unul din cele 3 Obeliscuri și-ți pune O întrebare prin el (`NIVEL_PARADA = 2`); corect = zero daune, greșit = încasezi tot ȘI acel Obelisc se blochează o rundă, FĂRĂ CUMUL; rundele de încărcare ale Grabnicului rămân liniștite, fiindcă parada stă în `_ataca_jucatorul()`, nu în `tura_inamicului()` · contractul `Puzzle` neatins, nicio linie · **bucla DUELULUI e completă**, iar joc perfect înseamnă acum Soldatul 11 întrebări / 2 runde / 1 paradă, Lăncierul 13 / 3 / **0**, Spadasinul 17 / 3 / 2, toți trei cu regele neatins — dar CÂȘTIGAT, nu primit cadou · verificare permanentă nouă, `verifica_duelul`, 29 de verdicte · două contradicții rămân (Lăncierul tot nu lovește, Nivelul III tot nu apare în luptă) · vezi sesiunile PARADA, PARTEA JUCĂTORULUI și DUELUL |
 | 5. Trei inamici manuali | ✅ Soldatul · Lăncierul (ceas + **singurul cu cronometru pe întrebări**, de pe 31 octombrie) · Spadasinul (vulnerabilitate), aleși din joc |
 | 6. Harta de expediție | ✅ loadout „N din M" · **12-16 noduri**, ramificate, cu sămânță · Luptă / Elită / Odihnă / Eveniment / **Magazin** / **Boss** · **Monede + puteri temporare** · sumar de run · aspect: pergament, simboluri de cerneală, trasee punctate · **nodurile și drumurile stau pe o PANGLICĂ (curbă centrală + benzi)**, nu pe o grilă dreaptă · **patru trasee, toate verzi pe 300 de semințe** (POTCOAVĂ activă; POTCOAVA OGLINDITĂ e aceeași formă, întoarsă) · strat înclinat (forfecare) la ȘARPE · **drumuri care nu se încrucișează niciodată (0 la 300 de semințe)** · **nodul curent are și aură, și X, și stă nemișcat sub figurină** · **două surse de hartă: GENERATĂ (panglica) sau DESENATĂ dintr-un fișier `data/harti/*.json`** — comutatorul `Expeditie.SURSA_HARTII`; azi e pe DESENATĂ · **harta umple pergamentul**: pânza ține toată pagina, antetul plutește peste ea (805 × 427 px de hartă, de la 666 × 353) · **drumurile merg în amândouă sensurile**, cu nodul parcurs tăiat definitiv și cu garanția, verificată pe 16 000 de expediții simulate, că nu te poți înfunda · **figurina sare, cade ca un slam și zguduie ecranul la aterizare**, cu un răgaz de 0,5 s înainte să se deschidă nodul · **tipurile nodurilor se împart după o REȚETĂ fixă, nu se trag cu zarul**: 11 reguli de vecinătate, de început și de FINAL, printre ele **o podea de 3 lupte pe cel mai ieftin drum Start → Boss** (21 octombrie), plasare conștientă de reguli, verificare completă și reîncercare cu sub-sămânță (0 eșecuri pe 500 de semințe × 3 surse de hartă) · **la cel mult 2 pași de Boss e garantat un nod de bătaie** (100% pe 300 de semințe × 3 surse, de la 85% / 96% / 81%) · **niciun nod special nu mai are un geamăn lipit**, nici Evenimentul (0 pe 900 de hărți) · **rețeta nu se mai crede pe cuvânt: se PROBEAZĂ** — plafonul comun încearcă plasarea adevărată și taie un nod când forma nu le încape pe toate · rețeta se **plafonează după forma hărții**, nu după numărul de noduri · **nodul de Eveniment deschide Lacătul** (nivel din adâncime, sămânță din nodul, 6/10/14 Monede la succes) |
 | 7. Cetatea | ❌ |
@@ -37,6 +37,159 @@ buget, generare) rămâne acolo unde era.
 Am sărit peste ordinea recomandată la pasul 12 (artă): imaginile pentru rege,
 cavaler și pentru cele trei piese de șah de pe butoane au intrat mai devreme, dar
 restul rămâne placeholder. Bucla de luptă e în continuare cea validată, nu arta.
+
+---
+
+## PARADA (31 octombrie 2026) — cealaltă jumătate a DUELULUI, scrisă și jucată
+
+Sesiunea de dinainte a scris jumătatea TA din duel și a lăsat inamicul să
+lovească fără să întrebe nimic. Azi a intrat jumătatea LUI. Bucla e completă.
+
+### Regula, în trei rânduri
+
+Când inamicul lovește **de-adevărat** — nu în fiecare tură a lui — alege la
+întâmplare unul din cele trei Obeliscuri ale tale și-ți pune **o** întrebare
+prin el. **Corect:** atacul e parat, zero daune. **Greșit:** încasezi daunele
+lui **ȘI** Obeliscul acela se blochează o rundă, **fără cumul**.
+
+### Ce s-a schimbat în cod (tot un singur fișier, `scenes/lupta/lupta.gd`)
+
+Două cifre noi: `NIVEL_PARADA = 2` și `TEXT_PARADA = "PARADA!"`. Nu există
+`RUNDE_BLOCAT_PARADA` — blocarea e aceeași durată ca la folosire, iar „se
+blochează o rundă" e o regulă, nu două care s-ar putea despărți în tăcere.
+
+| unde | ce face |
+|---|---|
+| `tura_inamicului()` | `await` la fiecare ramură de arhetip, fiindcă o lovitură nu mai e instantanee. Plus o a doua gardă `if lupta_terminata: return` înainte de `runda += 1`: între verificarea morții și runda nouă trec acum secundele în care citești o întrebare |
+| `_tura_atac_constant()` / `_tura_grabnic()` | nu mai lovesc singure; trimit daunele și un ÎNCEPUT de propoziție („Lancierul loveste") prin poarta comună. Ramura `else` a Grabnicului a rămas NEATINSĂ — acolo se vede regula |
+| `_ataca_jucatorul()` (nouă) | poarta prin care trece fiecare lovitură. Sub COMBO/RECARCARE lovește ca până acum; sub DUEL cheamă parada |
+| `_parada()` (nouă) | alege ținta, deschide panoul, pune întrebarea prin `creeaza_puzzle()`, aplică (sau nu) daunele cât întrebarea e încă pe ecran, scrie blocarea cu `maxi`, închide panoul — instant dacă regele a căzut, altfel alunecând |
+| `incepe_runda()` | plasa de siguranță „toate blocate" a rămas, dar comentariul ei s-a schimbat din „azi imposibil, mâine posibil" în demonstrația de ce rămâne imposibilă — și când se rupe |
+
+**De ce parada stă în `_ataca_jucatorul()` și nu în `tura_inamicului()`.** E tot
+rostul ceasului Grabnicului. Pusă o treaptă mai sus, ai fi răspuns la o
+întrebare în fiecare rundă oricum, iar „două runde liniștite și una
+terifiantă" ar fi devenit „trei runde la fel". Așa, ramura `else` a
+Grabnicului — cea care doar scrie „se incarca (2/3)" — n-a fost atinsă deloc.
+
+**Contractul `Puzzle` nu s-a atins, nicio linie.** `creeaza_puzzle()` primea
+deja `nivel`, `context` și `scurtare`; parada e același apel cu alt context.
+Scena de disciplină nu capătă niciun steag „ești o apărare" și n-are de unde
+să afle — pune o întrebare și strigă `rezolvat(succes)`, ca în orice treaptă de
+lanț. Tot de-aici vine și că parada NU trece prin `ruleaza_lant()`: bucla aia
+e despre a-ți CREȘTE lovitura (treaptă, nivel, combo, critic, daune, plafon) —
+șase lucruri care la paradă n-au ce crește, deci ar fi fost șase `if`-uri.
+
+**Trei decizii mici pe care designul nu le hotărâse:**
+
+1. **Nivelul paradei e o CONSTANTĂ, `NIVEL_PARADA = 2`, nu o formulă.** O
+   singură întrebare poate valora jumătate din rege (la Lăncier), deci Nivelul
+   I ar fi făcut-o o formalitate, iar III un pariu pe noroc. II e mijlocul, și
+   e o cifră NEJUCATĂ încă — de-aia e o constantă: se reglează dintr-un loc.
+2. **Cronometrul paradei nu e o regulă nouă.** Îl decide tot `pune_cronometru()`,
+   adică inamicul, ca la întrebările tale. Iese exact cum trebuie: singura
+   paradă a Lăncierului e și singura cu ceas pe ea.
+3. **Ținta se alege cu `randi_range`, nu pe sămânța nodului.** Lungimea
+   lanțurilor tale e a ta, deci o serie pornită din sămânță s-ar desincroniza
+   oricum de la prima greșeală — iar o paradă pe care o poți învăța pe de rost
+   încetează să fie o paradă.
+
+### Jucat, nu presupus — și de acum verificat PERMANENT
+
+Sesiunea de ieri nota că „ar merita o verificare permanentă, `verifica_duelul`"
+și n-a scris-o fiindcă jumătatea asta lipsea. Acum nu mai lipsește, deci există:
+**`tools/verificari/verifica_duelul.tscn`, 29 de verdicte, ~25 s.** Joacă lupte
+întregi cu scenele adevărate (aceeași `lupta.tscn`, aceleași întrebări din
+JSON), răspunzând pe unde intră un click — `_pe_varianta_aleasa()` —, cu
+`Engine.time_scale = 20`. Șase probe:
+
+| probă | ce bate |
+|---|---|
+| 1. lanțul tău | 5 trepte, 15 daune, Obeliscul folosit blocat, tura se încheie **într-o paradă**, runda NU crește cât parada e pe ecran |
+| 2. parada parată | joc perfect vs. Soldatul: 11 întrebări (5 + paradă + 5), o singură paradă, regele neatins |
+| 3. parada ratată | încasezi exact lovitura lui, se blochează cel mult două Obeliscuri, amândouă exact o rundă, rămâne mereu unul liber |
+| 4. Grabnicul | rundele de încărcare nu pun nicio întrebare; la ceasul plin vine parada |
+| 5. fără cumul | un blocaj de aceeași lungime nu se lungește; unul mai lung nu se scurtează |
+| 6. blocarea totală | 2000 de lupte × 14 runde pe FORMULA din cod: cel mai rău caz rămâne 1 Obelisc liber din 3 |
+
+Proba 6 nu joacă nicio luptă — bate aritmetica. Merită să existe fiindcă
+demonstrația („într-o rundă se scriu cel mult două blocaje, amândouă cu
+`runda + 2`") ține de o singură cifră: dacă `RUNDE_BLOCAT_DUEL` devine 2,
+verdictul pică, și așa trebuie.
+
+Prima rulare a dat **3 picări, toate în VERIFICARE, niciuna în joc**, și merită
+scrise fiindcă sunt o capcană a corutinelor: o probă se încheia cu o întrebare
+de paradă nerăspunsă, iar `reseteaza_lupta()` golește jurnalul și pune runda la
+1 **fără să oprească** corutina care așteaptă `puzzle.rezolvat`. Ea se trezea în
+mijlocul probei următoare și juca o a doua luptă peste prima: două lanțuri
+întrețesute în jurnal, întrebări numărate de două ori, blocări scrise cu runda
+altei lupte. Leacul: `_goleste_ecranul()` înaintea fiecărei reporniri. A doua
+rulare a mai dat 8 picări, din aceeași familie — `_reporneste()` devenise
+corutină și probele o chemau fără `await`, deci verdictele citeau starea
+dinaintea resetului.
+
+`verifica_retragerea`: **27 OK, cod de ieșire 0**, neatins.
+
+### Cifrele adevărate, cu parada în joc
+
+Joc perfect, zero greșeli — deci toate paradele țin:
+
+| inamic | PV | întrebări | runde | parade | regele |
+|---|---|---|---|---|---|
+| SOLDATUL | 30 | 11 (era 10) | 2 | **1** | 15 → 15 |
+| LĂNCIERUL | 34 | 13 | 3 | **0** | 15 → 15 |
+| SPADASINUL | 40 | 17 (era 15) | 3 | **2** | 15 → 15 |
+
+**Regele iese neatins din toate trei — dar asta e exact ce prezicea designul, și
+e altceva decât ieri.** Ieri zero daune însemna „inamicul n-a apucat să se
+miște"; azi înseamnă „ai parat tot ce a aruncat". Aceeași cifră, alt înțeles.
+Ce se schimbă la prima greșeală: −3, −8 sau −4 din 15, pe loc, plus unealta.
+
+**Cele două contradicții de ieri n-au fost reparate de paradă, și nici nu puteau
+fi:**
+
+1. **LĂNCIERUL tot nu lovește niciodată** (0 parade). Lupta se termină în
+   mijlocul lanțului tău din runda 3, înainte de tura lui — ceasul ajunge la
+   2 din 3 și se oprește acolo. Parada i-ar fi dat cea mai bună întrebare din
+   joc, și nu apucă s-o pună. Lipsește tot o singură rundă.
+2. **Nivelul III tot nu apare în lanț** (plafon 5, `TREPTE_PE_NIVEL = 3`).
+   Parada aduce Nivelul II, nu III.
+
+Și amândouă au **același levier**, tot cel scris ieri: dacă `PLAFON_TREPTE`
+devine **7**, lanțul face 1+2+3+3+6+3+3 = 21 de daune în 7 trepte, deci Soldatul
+cere tot 2 runde dar Lăncierul ar ajunge în runda 3 cu ceasul plin — ȘI
+Nivelul III reintră în lanț (treapta 7) — ȘI criticul redevine un pariu (5 nu
+mai e ultima treaptă). O cifră, trei lucruri. **N-am atins-o azi**, fiindcă 5 e
+cifra pe care s-a măsurat tot restul, iar schimbată în aceeași zi cu parada
+n-aș mai ști care jumătate a mișcat ce. E prima de încercat la joc.
+
+### Rămas deschis
+
+- **`PLAFON_TREPTE = 5` → 7**, de mai sus. Prima de probat, și de probat
+  SINGURĂ.
+- **Nu se VEDE prin ce Obelisc lovește inamicul.** Linia de context a
+  întrebării scrie „PARADA!" și jurnalul spune disciplina, dar Obeliscul-țintă
+  nu se aprinde în rândul de jos. `obelisc.gd` are azi două stări (blocat,
+  dezactivat); a treia, „ținta paradei", e artă, nu regulă — dar e primul lucru
+  de adăugat dacă la joc parada se simte ca o întrebare venită de nicăieri.
+- **`NIVEL_PARADA = 2` e nejucat.** Dacă paradele se ratează prea des (și
+  Spadasinul are două pe luptă), 1 e cifra următoare.
+- **Recompensa „cel mai lung lanț" e tot o constantă** — plătește 5 + 3
+  Fragmente în aproape fiecare luptă, pentru nimic (vezi sesiunea de ieri).
+  Parada n-a atins-o.
+- **`bonus_pa()` e tot mort**, iar Magazinul îl vinde în continuare
+  (`expeditie.gd:1277`).
+- **Tabelul „Bucla de luptă" din `CLAUDE.md`** descrie în continuare COMBO (PA,
+  lanț nelimitat, „greșeală = Obeliscul rămâne blocat până la finalul rundei").
+  Acum bucla e ÎNTREAGĂ, deci motivul de ieri pentru care n-a fost rescris
+  („jumătatea lipsă l-ar face rescris de două ori") a dispărut. **E următoarea
+  datorie de hârtie**, și se face o dată, după ce duelul se joacă o seară-două
+  și se vede dacă plafonul rămâne 5.
+- **Un arhetip MULTI-HIT rupe garanția blocării**, cum era scris: două parade
+  pe rundă + Obeliscul folosit = trei blocaje, deci blocare totală posibilă cu
+  loadout de 3. Regula rămâne cea scrisă ieri — *multi-hit cere loadout de 4,
+  sau nu aplică blocarea la a doua lovitură* —, iar plasa de siguranță din
+  `incepe_runda()` există tocmai pentru ziua aia.
 
 ---
 

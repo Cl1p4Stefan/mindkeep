@@ -82,7 +82,7 @@ const REGULA_OBELISC := RegulaObelisc.DUEL
 const RUNDE_RECARCARE := 1      # (doar pentru RECARCARE) câte runde stă blocat
 
 # ─────────────────────────────────────────────────────────────
-# DUELUL — cele două cifre ale lui
+# DUELUL — cifrele lui
 #
 # Regula întreagă, cu măsurătorile din care a ieșit, e în sesiunea DUELUL din
 # `docs/progres.md`. Aici stă doar ce se reglează.
@@ -101,6 +101,27 @@ const RUNDE_RECARCARE := 1      # (doar pentru RECARCARE) câte runde stă bloca
 # erau decor. Cu blocare, tura următoare te scoate din disciplina preferată.
 const PLAFON_TREPTE := 5        # (doar pentru DUEL) cel mai lung lanț posibil, în trepte
 const RUNDE_BLOCAT_DUEL := 1    # (doar pentru DUEL) câte runde stă blocat Obeliscul folosit
+
+# PARADA. Când inamicul lovește de-adevărat, alege la întâmplare unul din cele
+# trei Obeliscuri și-ți pune O întrebare prin el. Corect = atac parat, zero
+# daune. Greșit = încasezi tot ȘI Obeliscul ăla se blochează o rundă.
+#
+# Nivelul e o cifră NOUĂ, nejucată încă, și de-aia e o constantă și nu o
+# formulă: parada e o singură întrebare care poate valora jumătate din rege (la
+# Lăncier), deci Nivelul I ar fi făcut-o o formalitate, iar III un pariu pe
+# noroc. II e mijlocul, și se reglează dintr-un singur loc.
+#
+# Nu există `RUNDE_BLOCAT_PARADA`: blocarea e ACEEAȘI durată ca la folosire —
+# „se blochează o rundă" e o regulă, nu două care s-ar putea despărți în
+# tăcere. De-aia se refolosește `RUNDE_BLOCAT_DUEL`.
+const NIVEL_PARADA := 2         # (doar pentru DUEL) ce dificultate are întrebarea de paradă
+
+# Ce SCRIE pe linia de context a întrebării de paradă — același slot în care, la
+# atacul tău, apare „×4". Cuvântul trăiește aici, lângă `TEXT_CRITIC`, din
+# același motiv: „paradă" e vocabular de LUPTĂ. Scena de disciplină primește un
+# String pe care îl afișează și nu află niciodată ce înseamnă — exact așa
+# rămâne contractul `Puzzle` neatins.
+const TEXT_PARADA := "PARADA!"
 
 const NIVEL_MAX := 3            # câte niveluri de DIFICULTATE există (nu câte trepte)
 const CIFRE_ROMANE := ["I", "II", "III"]
@@ -873,12 +894,17 @@ func incepe_runda() -> void:
 		scrie_in_jurnal("--- Runda %d: un atac, prin orice Obelisc liber. ---" % runda)
 	actualizeaza_ui()
 
-	# PLASĂ DE SIGURANȚĂ, nu o regulă de joc. Azi nu se poate întâmpla: sub
-	# DUEL se blochează cel mult un Obelisc pe rundă, deci din trei îți rămân
-	# mereu două libere. Dar PARADA (sesiunea următoare) mai blochează unul la
-	# fiecare apărare ratată, iar atunci „toate trei blocate" devine o rundă
-	# posibilă — și fără linia asta ai fi blocat pe ecran, fiindcă butonul
-	# „Încheie tura" nu se vede. Așa, tura trece singură la inamic.
+	# PLASĂ DE SIGURANȚĂ, nu o regulă de joc — și, cu parada scrisă, se poate
+	# acum demonstra că nu se declanșează niciodată sub DUEL: într-o rundă se
+	# blochează cel mult două Obeliscuri (cel folosit + cel ratat la paradă),
+	# amândouă până la `runda + 2`, iar blocajele mai vechi au expirat deja.
+	# Deci din trei îți rămâne mereu cel puțin unul liber.
+	#
+	# Rămâne totuși, fiindcă demonstrația ține de trei cifre care se pot
+	# schimba: un arhetip MULTI-HIT (două lovituri pe rundă, deci două parade)
+	# o rupe cu loadout de 3 — e scris la „Rămas deschis" în sesiunea DUELUL.
+	# În ziua aia, fără linia asta, ai rămâne blocat pe ecran: butonul „Încheie
+	# tura" nu se vede. Așa, tura trece singură la inamic.
 	#
 	# `call_deferred`: `_incheie_tura()` așteaptă un cronometru, iar
 	# `incepe_runda()` e chemată DIN tura inamicului. Pornită direct, am fi
@@ -1519,17 +1545,33 @@ func _pe_incheie_tura_apasat() -> void:
 ## Tura inamicului. Funcția asta NU mai știe cum atacă inamicul — doar
 ## întreabă arhetipul. `match` = un lanț de if-uri, dar citibil: pentru
 ## fiecare arhetip nou adaugi o ramură, fără să atingi restul buclei.
+##
+## `await` la fiecare ramură, de când există PARADA. O lovitură nu mai e
+## instantanee: deschide o întrebare și așteaptă răspunsul. Ramurile au devenit
+## corutine fiindcă amândouă trec prin `_ataca_jucatorul()`, iar în GDScript o
+## funcție care conține `await` e o corutină — chemată FĂRĂ `await`, pornește și
+## se întoarce pe loc. Fără cele două `await` de mai jos, `runda += 1` s-ar fi
+## executat cât întrebarea de paradă era încă pe ecran: ai fi parat o lovitură
+## din runda trecută, iar blocarea Obeliscului s-ar fi scris cu runda greșită.
 func tura_inamicului() -> void:
 	match arhetip():
 		Arhetip.ATAC_CONSTANT:
-			_tura_atac_constant()
+			await _tura_atac_constant()
 		Arhetip.GRABNIC:
-			_tura_grabnic()
+			await _tura_grabnic()
 
 	# Verificarea morții stă AICI, într-un singur loc, nu în fiecare arhetip.
 	# Așa, un arhetip viitor nu poate uita s-o facă.
 	if pv_jucator == 0:
 		termina_lupta(false)
+		return
+
+	# A doua gardă, pentru fereastra deschisă de paradă. Între linia de mai sus
+	# și cea de jos trec acum secunde în care citești o întrebare, iar în timpul
+	# ăla lupta s-ar putea încheia pe alt drum (azi: o resetare de la tastatură;
+	# mâine, orice). Fără ea, am porni o rundă nouă într-o luptă deja scrisă —
+	# exact felul de bug pe care `tura_se_incheie` l-a avut la înfrângere.
+	if lupta_terminata:
 		return
 
 	runda += 1
@@ -1539,9 +1581,7 @@ func tura_inamicului() -> void:
 ## Arhetipul de bază: lovește puțin, dar în fiecare tură. Fără surprize —
 ## presiunea vine din cronometrul puzzle-ului, nu din inamic.
 func _tura_atac_constant() -> void:
-	var daune := daune_inamic()
-	loveste_jucatorul(daune)
-	scrie_in_jurnal("%s ataca pentru %d." % [nume_inamic(), daune])
+	await _ataca_jucatorul(daune_inamic(), "%s ataca" % nume_inamic())
 
 
 ## Arhetipul „Grabnic", acum CHIAR folosit: e Lăncierul. Ceasul urcă cu 1 pe
@@ -1549,17 +1589,141 @@ func _tura_atac_constant() -> void:
 ## îl dobori la timp, sau încasezi?
 ##
 ## Cifrele nu mai sunt constante de fișier, ci coloane în `INAMICI`: un al
-## doilea Grabnic, cu alt ceas și altă lovitură, e un rând în tabel. Codul de
-## aici rămâne exact cum e.
+## doilea Grabnic, cu alt ceas și altă lovitură, e un rând în tabel.
+##
+## AICI SE VEDE de ce parada se declanșează „doar când lovește de-adevărat" și
+## nu în fiecare tură de inamic: ramura `else` de mai jos a rămas neatinsă.
+## Rundele de încărcare sunt LINIȘTITE — ceasul urcă, nimeni nu te întreabă
+## nimic —, iar a treia e o singură întrebare terifiantă. Dacă parada ar fi stat
+## în `tura_inamicului()`, ceasul Grabnicului și-ar fi pierdut tot rostul: ai fi
+## răspuns la o întrebare în fiecare rundă oricum.
 func _tura_grabnic() -> void:
 	ceas_inamic += 1
 	if ceas_inamic >= ceas_max():
 		ceas_inamic = 0
-		var daune := daune_inamic()
-		loveste_jucatorul(daune)
-		scrie_in_jurnal("CEASUL S-A UMPLUT! %s loveste pentru %d." % [nume_inamic(), daune])
+		await _ataca_jucatorul(
+			daune_inamic(),
+			"CEASUL S-A UMPLUT! %s loveste" % nume_inamic()
+		)
 	else:
 		scrie_in_jurnal("%s se incarca (%d/%d)." % [nume_inamic(), ceas_inamic, ceas_max()])
+
+
+## POARTA prin care trece FIECARE lovitură a inamicului.
+##
+## De ce aici și nu în fiecare arhetip: „inamicul lovește → ai o șansă să
+## parezi" e o regulă a BUCLEI, nu a vreunui arhetip anume. Scrisă o dată, al
+## treilea arhetip o primește pe gratis; scrisă în fiecare ramură, al treilea
+## arhetip ar putea uita s-o pună — exact argumentul pentru care verificarea
+## morții stă deja într-un singur loc, în `tura_inamicului()`.
+##
+## `anunt` e doar ÎNCEPUTUL propoziției („Lancierul loveste"), nu toată linia de
+## jurnal. Restul îl compune funcția asta, fiindcă restul depinde de ce se
+## întâmplă: cât ai încasat se știe DUPĂ paradă, nu înainte de ea. Sub COMBO se
+## știe dinainte, deci acolo linia se încheie pe loc.
+func _ataca_jucatorul(daune: int, anunt: String) -> void:
+	if REGULA_OBELISC != RegulaObelisc.DUEL:
+		# COMBO și RECARCARE: lovitura cade, fără nicio întrebare — exact ca
+		# până acum. Comutatorul de la `REGULA_OBELISC` rămâne o linie.
+		scrie_in_jurnal("%s pentru %d." % [anunt, daune])
+		loveste_jucatorul(daune)
+		return
+
+	await _parada(daune, anunt)
+
+
+## PARADA: o întrebare, pe disciplina aleasă de inamic. Ții, sau încasezi
+## daunele ȘI pierzi unealta o rundă.
+##
+## NU trece prin `ruleaza_lant()`, deși și acolo se pun întrebări. Bucla aia e
+## despre a-ți CREȘTE lovitura: are treaptă, nivel care urcă, combo, critic,
+## daune de dat, plafon. Aici nu crește nimic — răspunzi o dată și ori ține, ori
+## nu. Trecută prin `ruleaza_lant()`, parada ar fi cerut un `if` la fiecare
+## dintre cele șase, iar bucla n-ar mai fi răspuns la o singură întrebare.
+##
+## Contractul `Puzzle` NU s-a atins, nici cu o linie: `creeaza_puzzle()` primea
+## deja `nivel`, `context` și `scurtare`. Scena de disciplină nu capătă niciun
+## steag „ești o apărare" și n-are de unde să afle — pune o întrebare și strigă
+## `rezolvat(succes)`, ca în orice treaptă de lanț.
+func _parada(daune: int, anunt: String) -> void:
+	# ȚINTA: la întâmplare din TOATE cele trei Obeliscuri, inclusiv cele deja
+	# blocate. Nu e o scăpare, e varianta MĂSURATĂ: a treia din simulare,
+	# „inamicul lovește doar Obeliscurile libere", lăsa 20,8% din atacuri fără
+	# nicio paradă — adică o lovitură pe care n-aveai cum s-o oprești.
+	#
+	# Și din asta iese o textură tactică pe gratis: o paradă prin Obeliscul pe
+	# care tocmai l-ai golit e cea mai IEFTINĂ de ratat (pierzi doar PV, unealta
+	# era deja jos), una prin cel proaspăt e cea mai scumpă (PV + unealta).
+	# Vezi „Pedeapsa NU e cumulativă" din sesiunea DUELUL.
+	#
+	# Alegerea NU merge pe sămânța nodului (cea din `_alege_inamicul()`),
+	# dinadins: lungimea lanțurilor tale e a ta, deci o serie pornită din
+	# sămânță s-ar desincroniza oricum de la prima greșeală — iar o paradă pe
+	# care o poți învăța pe de rost încetează să fie o paradă.
+	var tinta := randi_range(0, loadout.size() - 1)
+	var disciplina: String = loadout[tinta]["nume"]
+	scrie_in_jurnal("%s — parada prin %s!" % [anunt, disciplina])
+
+	puzzle_activ = true
+	# Stinsă pe loc, ca la atacul tău: cât e o întrebare pe ecran, retragerea
+	# n-are ce căuta aprinsă. (`actualizeaza_ui()` ar face-o oricum, dar el vine
+	# abia după ce se deschide panoul.)
+	buton_harta.disabled = true
+	# `await`: întâi se deschide panoul, ABIA APOI apare întrebarea.
+	# Vezi `deschide_panou()` pentru de ce contează ordinea.
+	await deschide_panou()
+	# `creeaza_puzzle()` cu ALT CONTEXT — exact ce spunea designul. `scurtare`
+	# rămâne 0 (implicit): parada nu e o treaptă dintr-un lanț care se strânge,
+	# e o singură întrebare, deci primește timpul întreg. DACĂ are cronometru o
+	# decide tot inamicul, prin `pune_cronometru()`, la fel ca la întrebările
+	# tale — n-am adăugat nicio regulă de timp aici.
+	var puzzle := creeaza_puzzle(loadout[tinta]["scena"], NIVEL_PARADA, TEXT_PARADA)
+	var succes: bool = await puzzle.rezolvat
+
+	if succes:
+		scrie_in_jurnal("PARAT! %s tine — zero daune." % disciplina)
+	else:
+		# Daunele se aplică ACUM, cât întrebarea e încă pe ecran: bara regelui
+		# scade sub ochii tăi, lângă răspunsul greșit. Aceeași alegere ca în
+		# lanț, unde bara inamicului scade peste răspunsul corect.
+		loveste_jucatorul(daune)
+
+		# FĂRĂ CUMUL. `maxi` e tot ce a rămas din ideea „cumulativ", și e aici
+		# doar ca să nu SCURTEZE un blocaj existent — nu ca să-l lungească.
+		#
+		# De ce nu cumulativ, și de ce e măsurat: cu „+1 rundă peste cât mai
+		# avea", o căutare epuizantă (toate alegerile inamicului ȘI ale tale,
+		# 14 runde) găsește o secvență care te lasă în runda 3 cu toate trei
+		# blocate, deci fără atac — adică pierderea turii pe ușa din spate,
+		# exact ce decizia „Greșeală = pierzi 1 PA, NU tura" a exclus.
+		#
+		# Necumulativ, blocarea totală e IMPOSIBILĂ, și se vede din formulă:
+		# într-o rundă se scriu cel mult două blocaje (Obeliscul folosit + cel
+		# ratat la paradă), amândouă cu `runda + 2`; blocajele scrise cu două
+		# runde în urmă au expirat deja. Deci la începutul oricărei runde ai cel
+		# puțin un Obelisc liber din trei.
+		disponibil_din[tinta] = maxi(
+			disponibil_din[tinta], runda + 1 + RUNDE_BLOCAT_DUEL
+		)
+		scrie_in_jurnal("Parada a cazut: incasezi %s, iar %s se blocheaza o runda." % [
+			text_daune(daune), disciplina
+		])
+		# Barele alunecă la valorile noi cât panoul e încă deschis — altfel
+		# lovitura s-ar vedea abia după ce întrebarea a dispărut de pe ecran.
+		actualizeaza_ui()
+
+	await get_tree().create_timer(PAUZA_IMPACT).timeout
+	inchide_puzzle(puzzle)
+	puzzle_activ = false
+
+	# Panoul: INSTANT dacă regele a căzut, altfel alunecând. Aceeași alegere ca
+	# la victorie în `ruleaza_lant()` — o închidere animată în spatele voalului
+	# de înfrângere ar arăta ca o luptă care mai continuă 0,55 s.
+	if pv_jucator == 0:
+		ascunde_panou_acum()
+	else:
+		inchide_panou()
+	actualizeaza_ui()
 
 
 ## O singură funcție prin care trec TOATE daunele către jucător.

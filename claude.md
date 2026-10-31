@@ -59,6 +59,7 @@ fișiere nici nu se compilează fără `Sac` și `Muzica`.
 | `verifica_cifru` | generatorul de lacăte și dificultatea măsurată | `VERDICT` | **~10 min** |
 | `verifica_salvarea` | drumul stare → disc → stare, câmp cu câmp; chei lipsă și în plus; fișiere stricate; versiunea; nodul nerezolvat | 54 | ~1 s |
 | `verifica_retragerea` | ieșirile din expediție, cu scenele adevărate: luptă → „HARTA” → hartă (nodul te așteaptă, fără fugă) → aceeași luptă → „Meniu” | 27 | ~2 s |
+| `verifica_duelul` | bucla de luptă, jucată cap-coadă cu scenele adevărate: lanțul plafonat, blocarea la activare, **parada** (ținta, daunele, unealta pierdută), liniștea rundelor de încărcare ale Grabnicului, lipsa cumulului și imposibilitatea blocării totale | 29 | ~25 s |
 
 **Două scot altceva decât „OK”**, deci nu le căuta verdictele cu grep:
 `verifica_coltul` tipărește un tabel de distanțe pe semințe (se citește, nu se
