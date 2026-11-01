@@ -62,6 +62,123 @@
 		"sinonime": ["silitor", "sârguincios", "muncitor"],
 		"antonime": ["leneș", "trândav", "delăsător"]
 	},
+	{
+		"cuvant": "mare",
+		"clasa": "adjectiv",
+		"nivel": 1,
+		"domeniu": "masura",
+		"definitie": "care are întindere sau însemnătate peste cea obișnuită",
+		"sinonime": ["vast", "imens", "uriaș"],
+		"antonime": ["mic", "mărunt", "minuscul"]
+	},
+	{
+		"cuvant": "frumos",
+		"clasa": "adjectiv",
+		"nivel": 1,
+		"domeniu": "simtire",
+		"definitie": "care place privirii sau sufletului",
+		"sinonime": ["chipeș", "arătos", "mândru"],
+		"antonime": ["urât", "hidos", "respingător"]
+	},
+	{
+		"cuvant": "bun",
+		"clasa": "adjectiv",
+		"nivel": 1,
+		"domeniu": "caracter",
+		"definitie": "care face bine celor din jur",
+		"sinonime": ["blajin", "binevoitor", "milostiv"],
+		"antonime": ["rău", "hain", "crud"]
+	},
+	{
+		"cuvant": "deștept",
+		"clasa": "adjectiv",
+		"nivel": 1,
+		"domeniu": "minte",
+		"definitie": "care înțelege repede și fără greutate",
+		"sinonime": ["isteț", "ager", "inteligent"],
+		"antonime": ["prost", "neghiob", "mărginit"]
+	},
+	{
+		"cuvant": "greu",
+		"clasa": "adjectiv",
+		"nivel": 1,
+		"domeniu": "masura",
+		"definitie": "care apasă mult sau cere multă trudă",
+		"sinonime": ["anevoios", "apăsător", "împovărător"],
+		"antonime": ["ușor", "lesnicios", "neînsemnat"]
+	},
+	{
+		"cuvant": "plin",
+		"clasa": "adjectiv",
+		"nivel": 1,
+		"domeniu": "masura",
+		"definitie": "în care nu mai încape nimic",
+		"sinonime": ["umplut", "îndesat", "doldora"],
+		"antonime": ["gol", "deșert", "secat"]
+	},
+	{
+		"cuvant": "nou",
+		"clasa": "adjectiv",
+		"nivel": 1,
+		"domeniu": "timp",
+		"definitie": "apărut sau făcut de puțină vreme",
+		"sinonime": ["recent", "proaspăt", "neînceput"],
+		"antonime": ["vechi", "uzat", "învechit"]
+	},
+	{
+		"cuvant": "bătrân",
+		"clasa": "adjectiv",
+		"nivel": 1,
+		"domeniu": "timp",
+		"definitie": "ajuns la o vârstă înaintată",
+		"sinonime": ["vârstnic", "în vârstă", "cărunt"],
+		"antonime": ["tânăr", "june", "crud"]
+	},
+	{
+		"cuvant": "limpede",
+		"clasa": "adjectiv",
+		"nivel": 1,
+		"domeniu": "lumina",
+		"definitie": "prin care se vede fără nicio piedică",
+		"sinonime": ["clar", "cristalin", "transparent"],
+		"antonime": ["tulbure", "murdar", "înnorat"]
+	},
+	{
+		"cuvant": "curat",
+		"clasa": "adjectiv",
+		"nivel": 1,
+		"domeniu": "fapta",
+		"definitie": "din care a fost scoasă orice murdărie",
+		"sinonime": ["nepătat", "imaculat", "îngrijit"],
+		"antonime": ["murdar", "soios", "mânjit"]
+	},
+	{
+		"cuvant": "liniștit",
+		"clasa": "adjectiv",
+		"nivel": 1,
+		"domeniu": "simtire",
+		"definitie": "care nu se tulbură și nu face zgomot",
+		"sinonime": ["calm", "pașnic", "așezat"],
+		"antonime": ["agitat", "zbuciumat", "nervos"]
+	},
+	{
+		"cuvant": "darnic",
+		"clasa": "adjectiv",
+		"nivel": 1,
+		"domeniu": "avere",
+		"definitie": "care dă altora cu bucurie",
+		"sinonime": ["generos", "mărinimos", "binefăcător"],
+		"antonime": ["zgârcit", "avar", "calic"]
+	},
+	{
+		"cuvant": "cinstit",
+		"clasa": "adjectiv",
+		"nivel": 1,
+		"domeniu": "caracter",
+		"definitie": "care nu înșală și nu minte",
+		"sinonime": ["onest", "drept", "corect"],
+		"antonime": ["necinstit", "mincinos", "prefăcut"]
+	},
 
 	{
 		"cuvant": "a începe",
@@ -125,6 +242,123 @@
 		"definitie": "a spune despre cineva vorbe bune",
 		"sinonime": ["a elogia", "a preamări", "a slăvi"],
 		"antonime": ["a critica", "a ocărî", "a defăima"]
+	},
+	{
+		"cuvant": "a vorbi",
+		"clasa": "verb",
+		"nivel": 1,
+		"domeniu": "vorbire",
+		"definitie": "a spune ceva cu glas tare",
+		"sinonime": ["a grăi", "a cuvânta", "a rosti"],
+		"antonime": ["a tăcea", "a amuți"]
+	},
+	{
+		"cuvant": "a merge",
+		"clasa": "verb",
+		"nivel": 1,
+		"domeniu": "miscare",
+		"definitie": "a te muta dintr-un loc în altul cu pasul",
+		"sinonime": ["a umbla", "a păși", "a se deplasa"],
+		"antonime": ["a sta", "a se opri", "a rămâne"]
+	},
+	{
+		"cuvant": "a alerga",
+		"clasa": "verb",
+		"nivel": 1,
+		"domeniu": "miscare",
+		"definitie": "a merge foarte repede, în pas de fugă",
+		"sinonime": ["a fugi", "a zori", "a se repezi"],
+		"antonime": ["a sta", "a se târî", "a încetini"]
+	},
+	{
+		"cuvant": "a lucra",
+		"clasa": "verb",
+		"nivel": 1,
+		"domeniu": "fapta",
+		"definitie": "a-ți folosi puterile ca să iasă un lucru",
+		"sinonime": ["a munci", "a trudi", "a osteni"],
+		"antonime": ["a lenevi", "a trândăvi", "a sta degeaba"]
+	},
+	{
+		"cuvant": "a învăța",
+		"clasa": "verb",
+		"nivel": 1,
+		"domeniu": "minte",
+		"definitie": "a-ți pune în minte ceva nou",
+		"sinonime": ["a studia", "a deprinde", "a se instrui"],
+		"antonime": ["a uita", "a se dezvăța"]
+	},
+	{
+		"cuvant": "a găsi",
+		"clasa": "verb",
+		"nivel": 1,
+		"domeniu": "fapta",
+		"definitie": "a da peste lucrul pe care îl căutai",
+		"sinonime": ["a afla", "a descoperi", "a dibui"],
+		"antonime": ["a pierde", "a rătăci", "a scăpa"]
+	},
+	{
+		"cuvant": "a deschide",
+		"clasa": "verb",
+		"nivel": 1,
+		"domeniu": "fapta",
+		"definitie": "a da la o parte ce ținea ceva închis",
+		"sinonime": ["a desface", "a destupa", "a descuia"],
+		"antonime": ["a închide", "a astupa", "a zăvorî"]
+	},
+	{
+		"cuvant": "a aduna",
+		"clasa": "verb",
+		"nivel": 1,
+		"domeniu": "fapta",
+		"definitie": "a strânge la un loc lucruri risipite",
+		"sinonime": ["a strânge", "a culege", "a îngrămădi"],
+		"antonime": ["a împrăștia", "a răvăși", "a risipi"]
+	},
+	{
+		"cuvant": "a ajuta",
+		"clasa": "verb",
+		"nivel": 1,
+		"domeniu": "relatie",
+		"definitie": "a-i ușura altuia o greutate",
+		"sinonime": ["a sprijini", "a susține", "a asista"],
+		"antonime": ["a împiedica", "a stingheri", "a încurca"]
+	},
+	{
+		"cuvant": "a râde",
+		"clasa": "verb",
+		"nivel": 1,
+		"domeniu": "simtire",
+		"definitie": "a-ți arăta veselia cu glas și cu fața",
+		"sinonime": ["a chicoti", "a hohoti", "a se veseli"],
+		"antonime": ["a plânge", "a suspina", "a se boci"]
+	},
+	{
+		"cuvant": "a cumpăra",
+		"clasa": "verb",
+		"nivel": 1,
+		"domeniu": "avere",
+		"definitie": "a lua un lucru dând bani pe el",
+		"sinonime": ["a achiziționa", "a procura", "a târgui"],
+		"antonime": ["a vinde", "a înstrăina", "a da"]
+	},
+	{
+		"cuvant": "a curăța",
+		"clasa": "verb",
+		"nivel": 1,
+		"domeniu": "fapta",
+		"definitie": "a scoate murdăria de pe ceva",
+		"sinonime": ["a spăla", "a șterge", "a limpezi"],
+		"antonime": ["a murdări", "a mânji", "a păta"]
+	},
+	{
+		"cuvant": "a ierta",
+		"clasa": "verb",
+		"nivel": 1,
+		"domeniu": "relatie",
+		"definitie": "a nu mai cere socoteală pentru o greșeală",
+		"sinonime": ["a scuza", "a absolvi", "a amnistia"],
+		"antonime": ["a pedepsi", "a osândi", "a învinui"]
 	},
 
 	{
@@ -190,6 +424,123 @@
 		"sinonime": ["șansă", "baftă"],
 		"antonime": ["ghinion", "nenoroc", "neșansă"]
 	},
+	{
+		"cuvant": "putere",
+		"clasa": "substantiv",
+		"nivel": 1,
+		"domeniu": "masura",
+		"definitie": "însușirea de a face sau de a stăpâni",
+		"sinonime": ["forță", "vigoare", "tărie"],
+		"antonime": ["slăbiciune", "neputință", "moleșeală"]
+	},
+	{
+		"cuvant": "muncă",
+		"clasa": "substantiv",
+		"nivel": 1,
+		"domeniu": "fapta",
+		"definitie": "efortul pus ca să iasă un lucru",
+		"sinonime": ["trudă", "caznă", "lucrare"],
+		"antonime": ["odihnă", "lene", "trândăvie"]
+	},
+	{
+		"cuvant": "timp",
+		"clasa": "substantiv",
+		"nivel": 1,
+		"domeniu": "timp",
+		"definitie": "curgerea în care se petrec toate lucrurile",
+		"sinonime": ["vreme", "durată", "răstimp"],
+		"antonime": []
+	},
+	{
+		"cuvant": "durere",
+		"clasa": "substantiv",
+		"nivel": 1,
+		"domeniu": "simtire",
+		"definitie": "suferința trupului sau a sufletului",
+		"sinonime": ["chin", "suferință", "usturime"],
+		"antonime": ["alinare", "ușurare", "plăcere"]
+	},
+	{
+		"cuvant": "poveste",
+		"clasa": "substantiv",
+		"nivel": 1,
+		"domeniu": "vorbire",
+		"definitie": "istorisirea unor întâmplări",
+		"sinonime": ["istorisire", "narațiune", "snoavă"],
+		"antonime": []
+	},
+	{
+		"cuvant": "lumină",
+		"clasa": "substantiv",
+		"nivel": 1,
+		"domeniu": "lumina",
+		"definitie": "ceea ce face lucrurile să se vadă",
+		"sinonime": ["strălucire", "lucire", "licărire"],
+		"antonime": ["întuneric", "beznă", "umbră"]
+	},
+	{
+		"cuvant": "obicei",
+		"clasa": "substantiv",
+		"nivel": 1,
+		"domeniu": "fapta",
+		"definitie": "felul de a face mereu la fel",
+		"sinonime": ["deprindere", "datină", "rânduială"],
+		"antonime": []
+	},
+	{
+		"cuvant": "speranță",
+		"clasa": "substantiv",
+		"nivel": 1,
+		"domeniu": "simtire",
+		"definitie": "așteptarea încrezătoare a unui lucru bun",
+		"sinonime": ["nădejde", "încredere", "așteptare"],
+		"antonime": ["deznădejde", "disperare", "descurajare"]
+	},
+	{
+		"cuvant": "cuvânt",
+		"clasa": "substantiv",
+		"nivel": 1,
+		"domeniu": "vorbire",
+		"definitie": "sunetul sau semnul care poartă un înțeles",
+		"sinonime": ["vorbă", "termen", "zicere"],
+		"antonime": []
+	},
+	{
+		"cuvant": "greșeală",
+		"clasa": "substantiv",
+		"nivel": 1,
+		"domeniu": "fapta",
+		"definitie": "fapta care iese altfel decât trebuia",
+		"sinonime": ["eroare", "scăpare", "abatere"],
+		"antonime": []
+	},
+	{
+		"cuvant": "rușine",
+		"clasa": "substantiv",
+		"nivel": 1,
+		"domeniu": "simtire",
+		"definitie": "stânjeneala celui care se simte privit sau vinovat",
+		"sinonime": ["jenă", "sfială", "stânjeneală"],
+		"antonime": ["nerușinare", "obrăznicie", "îndrăzneală"]
+	},
+	{
+		"cuvant": "cinste",
+		"clasa": "substantiv",
+		"nivel": 1,
+		"domeniu": "caracter",
+		"definitie": "purtarea dreaptă, fără înșelăciune",
+		"sinonime": ["onestitate", "corectitudine", "dreptate"],
+		"antonime": ["necinste", "înșelăciune", "viclenie"]
+	},
+	{
+		"cuvant": "nevoie",
+		"clasa": "substantiv",
+		"nivel": 1,
+		"domeniu": "avere",
+		"definitie": "lipsa unui lucru de care nu te poți lipsi",
+		"sinonime": ["trebuință", "necesitate", "lipsă"],
+		"antonime": ["prisos", "îndestulare"]
+	},
 
 	{
 		"cuvant": "efemer",
@@ -253,6 +604,123 @@
 		"definitie": "care are mare valoare",
 		"sinonime": ["valoros", "scump", "neprețuit"],
 		"antonime": ["ieftin", "neînsemnat", "mărunt"]
+	},
+	{
+		"cuvant": "dibaci",
+		"clasa": "adjectiv",
+		"nivel": 2,
+		"domeniu": "fapta",
+		"definitie": "care se descurcă ușor cu mâinile și cu mintea",
+		"sinonime": ["priceput", "iscusit", "abil"],
+		"antonime": ["nepriceput", "neîndemânatic", "stângaci"]
+	},
+	{
+		"cuvant": "cumpătat",
+		"clasa": "adjectiv",
+		"nivel": 2,
+		"domeniu": "caracter",
+		"definitie": "care se ține în măsură la tot ce face",
+		"sinonime": ["moderat", "măsurat", "temperat"],
+		"antonime": ["nestăpânit", "nesățios", "dezlănțuit"]
+	},
+	{
+		"cuvant": "anost",
+		"clasa": "adjectiv",
+		"nivel": 2,
+		"domeniu": "simtire",
+		"definitie": "fără gust și fără farmec",
+		"sinonime": ["plicticos", "searbăd", "insipid"],
+		"antonime": ["atrăgător", "savuros", "antrenant"]
+	},
+	{
+		"cuvant": "necruțător",
+		"clasa": "adjectiv",
+		"nivel": 2,
+		"domeniu": "caracter",
+		"definitie": "care nu iartă și nu se îndoaie",
+		"sinonime": ["neînduplecat", "nemilos", "aspru"],
+		"antonime": ["milostiv", "blând", "îngăduitor"]
+	},
+	{
+		"cuvant": "tainic",
+		"clasa": "adjectiv",
+		"nivel": 2,
+		"domeniu": "vorbire",
+		"definitie": "ținut ascuns de ochii altora",
+		"sinonime": ["misterios", "ascuns", "enigmatic"],
+		"antonime": ["vădit", "dezvăluit", "știut"]
+	},
+	{
+		"cuvant": "vestit",
+		"clasa": "adjectiv",
+		"nivel": 2,
+		"domeniu": "relatie",
+		"definitie": "despre care au auzit mulți",
+		"sinonime": ["renumit", "celebru", "faimos"],
+		"antonime": ["necunoscut", "neînsemnat", "anonim"]
+	},
+	{
+		"cuvant": "încăpățânat",
+		"clasa": "adjectiv",
+		"nivel": 2,
+		"domeniu": "caracter",
+		"definitie": "care nu-și schimbă gândul nici când greșește",
+		"sinonime": ["îndărătnic", "cerbicos", "inflexibil"],
+		"antonime": ["maleabil", "docil", "înțelegător"]
+	},
+	{
+		"cuvant": "cuviincios",
+		"clasa": "adjectiv",
+		"nivel": 2,
+		"domeniu": "relatie",
+		"definitie": "care se poartă cum se cade",
+		"sinonime": ["politicos", "respectuos", "decent"],
+		"antonime": ["nepoliticos", "obraznic", "necuviincios"]
+	},
+	{
+		"cuvant": "primejdios",
+		"clasa": "adjectiv",
+		"nivel": 2,
+		"domeniu": "fapta",
+		"definitie": "care te poate duce la rău",
+		"sinonime": ["periculos", "riscant", "amenințător"],
+		"antonime": ["sigur", "ferit", "nevătămător"]
+	},
+	{
+		"cuvant": "istovit",
+		"clasa": "adjectiv",
+		"nivel": 2,
+		"domeniu": "fapta",
+		"definitie": "căruia nu i-au mai rămas puteri",
+		"sinonime": ["sleit", "extenuat", "sfârșit"],
+		"antonime": ["odihnit", "întremat", "viguros"]
+	},
+	{
+		"cuvant": "îmbelșugat",
+		"clasa": "adjectiv",
+		"nivel": 2,
+		"domeniu": "avere",
+		"definitie": "din care se adună mai mult decât trebuie",
+		"sinonime": ["roditor", "mănos", "prisositor"],
+		"antonime": ["sărăcăcios", "neroditor", "sterp"]
+	},
+	{
+		"cuvant": "straniu",
+		"clasa": "adjectiv",
+		"nivel": 2,
+		"domeniu": "simtire",
+		"definitie": "care nu se potrivește cu ce știi",
+		"sinonime": ["ciudat", "bizar", "neobișnuit"],
+		"antonime": ["obișnuit", "firesc", "comun"]
+	},
+	{
+		"cuvant": "cumplit",
+		"clasa": "adjectiv",
+		"nivel": 2,
+		"domeniu": "simtire",
+		"definitie": "care umple de groază",
+		"sinonime": ["groaznic", "îngrozitor", "înfiorător"],
+		"antonime": ["plăcut", "blând", "ușor"]
 	},
 
 	{
@@ -318,6 +786,123 @@
 		"sinonime": ["a nega", "a contesta", "a dezminți"],
 		"antonime": ["a recunoaște", "a mărturisi", "a admite"]
 	},
+	{
+		"cuvant": "a ocroti",
+		"clasa": "verb",
+		"nivel": 2,
+		"domeniu": "relatie",
+		"definitie": "a ține pe cineva ferit de rău",
+		"sinonime": ["a apăra", "a păzi", "a adăposti"],
+		"antonime": ["a primejdui", "a năpăstui", "a părăsi"]
+	},
+	{
+		"cuvant": "a potoli",
+		"clasa": "verb",
+		"nivel": 2,
+		"domeniu": "simtire",
+		"definitie": "a face să se liniștească",
+		"sinonime": ["a domoli", "a alina", "a liniști"],
+		"antonime": ["a stârni", "a ațâța", "a învrăjbi"]
+	},
+	{
+		"cuvant": "a cerceta",
+		"clasa": "verb",
+		"nivel": 2,
+		"domeniu": "minte",
+		"definitie": "a căuta cu luare-aminte ca să afli",
+		"sinonime": ["a iscodi", "a scruta", "a examina"],
+		"antonime": []
+	},
+	{
+		"cuvant": "a năzui",
+		"clasa": "verb",
+		"nivel": 2,
+		"domeniu": "caracter",
+		"definitie": "a tinde cu tot sufletul spre ceva",
+		"sinonime": ["a râvni", "a tinde", "a aspira"],
+		"antonime": []
+	},
+	{
+		"cuvant": "a îngădui",
+		"clasa": "verb",
+		"nivel": 2,
+		"domeniu": "relatie",
+		"definitie": "a lăsa pe cineva să facă un lucru",
+		"sinonime": ["a permite", "a încuviința", "a tolera"],
+		"antonime": ["a opri", "a interzice", "a împiedica"]
+	},
+	{
+		"cuvant": "a se căi",
+		"clasa": "verb",
+		"nivel": 2,
+		"domeniu": "simtire",
+		"definitie": "a-ți părea rău de ce ai făcut",
+		"sinonime": ["a se pocăi", "a regreta", "a-și reproșa"],
+		"antonime": []
+	},
+	{
+		"cuvant": "a tăinui",
+		"clasa": "verb",
+		"nivel": 2,
+		"domeniu": "vorbire",
+		"definitie": "a ține un lucru numai pentru tine",
+		"sinonime": ["a ascunde", "a dosi", "a camufla"],
+		"antonime": ["a dezvălui", "a divulga", "a destăinui"]
+	},
+	{
+		"cuvant": "a prevesti",
+		"clasa": "verb",
+		"nivel": 2,
+		"domeniu": "vorbire",
+		"definitie": "a spune dinainte ce are să vină",
+		"sinonime": ["a prezice", "a profeți", "a presimți"],
+		"antonime": []
+	},
+	{
+		"cuvant": "a stăpâni",
+		"clasa": "verb",
+		"nivel": 2,
+		"domeniu": "fapta",
+		"definitie": "a ține ceva sau pe cineva sub puterea ta",
+		"sinonime": ["a cârmui", "a domina", "a ține în frâu"],
+		"antonime": ["a se supune", "a asculta", "a ceda"]
+	},
+	{
+		"cuvant": "a osteni",
+		"clasa": "verb",
+		"nivel": 2,
+		"domeniu": "fapta",
+		"definitie": "a-ți pierde puterile de la trudă",
+		"sinonime": ["a obosi", "a slei", "a istovi"],
+		"antonime": ["a se întrema", "a se odihni", "a se întări"]
+	},
+	{
+		"cuvant": "a chibzui",
+		"clasa": "verb",
+		"nivel": 2,
+		"domeniu": "minte",
+		"definitie": "a cântări bine înainte de a face",
+		"sinonime": ["a cumpăni", "a cântări", "a socoti"],
+		"antonime": ["a se pripi", "a se năpusti", "a se grăbi"]
+	},
+	{
+		"cuvant": "a făgădui",
+		"clasa": "verb",
+		"nivel": 2,
+		"domeniu": "vorbire",
+		"definitie": "a da cuiva cuvântul că vei face ceva",
+		"sinonime": ["a promite", "a jura", "a se lega"],
+		"antonime": ["a refuza", "a se dezice", "a se răzgândi"]
+	},
+	{
+		"cuvant": "a dărui",
+		"clasa": "verb",
+		"nivel": 2,
+		"domeniu": "avere",
+		"definitie": "a da ceva fără să ceri nimic în schimb",
+		"sinonime": ["a oferi", "a hărăzi", "a închina"],
+		"antonime": ["a lua", "a răpi", "a reține"]
+	},
 
 	{
 		"cuvant": "mâhnire",
@@ -372,6 +957,132 @@
 		"definitie": "rușinea care te oprește să te arăți",
 		"sinonime": ["timiditate", "rușine", "jenă"],
 		"antonime": ["îndrăzneală", "semeție", "obrăznicie"]
+	},
+	{
+		"cuvant": "trufie",
+		"clasa": "substantiv",
+		"nivel": 2,
+		"domeniu": "caracter",
+		"definitie": "părerea prea bună despre tine însuți",
+		"sinonime": ["îngâmfare", "mândrie", "aroganță"],
+		"antonime": ["modestie", "smerenie", "umilință"]
+	},
+	{
+		"cuvant": "dibăcie",
+		"clasa": "substantiv",
+		"nivel": 2,
+		"domeniu": "fapta",
+		"definitie": "ușurința de a face bine un lucru greu",
+		"sinonime": ["iscusință", "îndemânare", "pricepere"],
+		"antonime": ["neîndemânare", "nepricepere", "stângăcie"]
+	},
+	{
+		"cuvant": "osteneală",
+		"clasa": "substantiv",
+		"nivel": 2,
+		"domeniu": "fapta",
+		"definitie": "sleirea puterilor după multă muncă",
+		"sinonime": ["trudă", "oboseală", "istovire"],
+		"antonime": ["odihnă", "răgaz", "destindere"]
+	},
+	{
+		"cuvant": "cumpătare",
+		"clasa": "substantiv",
+		"nivel": 2,
+		"domeniu": "caracter",
+		"definitie": "măsura ținută în toate poftele",
+		"sinonime": ["moderație", "măsură", "înfrânare"],
+		"antonime": ["desfrâu", "nestăpânire", "lăcomie"]
+	},
+	{
+		"cuvant": "îngăduință",
+		"clasa": "substantiv",
+		"nivel": 2,
+		"domeniu": "relatie",
+		"definitie": "răbdarea cu care treci peste greșelile altuia",
+		"sinonime": ["indulgență", "blândețe", "răbdare"],
+		"antonime": ["asprime", "severitate", "intransigență"]
+	},
+	{
+		"cuvant": "taină",
+		"clasa": "substantiv",
+		"nivel": 2,
+		"domeniu": "vorbire",
+		"definitie": "lucrul ținut ascuns de ceilalți",
+		"sinonime": ["secret", "mister", "ascunziș"],
+		"antonime": ["dezvăluire", "destăinuire", "mărturisire"]
+	},
+	{
+		"cuvant": "primejdie",
+		"clasa": "substantiv",
+		"nivel": 2,
+		"domeniu": "fapta",
+		"definitie": "apropierea unui rău care te poate lovi",
+		"sinonime": ["pericol", "risc", "amenințare"],
+		"antonime": ["siguranță", "adăpost", "ocrotire"]
+	},
+	{
+		"cuvant": "batjocură",
+		"clasa": "substantiv",
+		"nivel": 2,
+		"domeniu": "vorbire",
+		"definitie": "luarea în râs care înjosește",
+		"sinonime": ["zeflemea", "ocară", "derâdere"],
+		"antonime": ["respect", "prețuire", "cinstire"]
+	},
+	{
+		"cuvant": "vrajbă",
+		"clasa": "substantiv",
+		"nivel": 2,
+		"domeniu": "relatie",
+		"definitie": "cearta care desparte oamenii",
+		"sinonime": ["dușmănie", "discordie", "învrăjbire"],
+		"antonime": ["înțelegere", "prietenie", "armonie"]
+	},
+	{
+		"cuvant": "dărnicie",
+		"clasa": "substantiv",
+		"nivel": 2,
+		"domeniu": "avere",
+		"definitie": "bucuria de a da altora",
+		"sinonime": ["generozitate", "mărinimie", "largheță"],
+		"antonime": ["zgârcenie", "avariție", "meschinărie"]
+	},
+	{
+		"cuvant": "deznădejde",
+		"clasa": "substantiv",
+		"nivel": 2,
+		"domeniu": "simtire",
+		"definitie": "pierderea oricărei speranțe",
+		"sinonime": ["disperare", "descurajare", "dezolare"],
+		"antonime": ["nădejde", "încredere", "avânt"]
+	},
+	{
+		"cuvant": "făgăduință",
+		"clasa": "substantiv",
+		"nivel": 2,
+		"domeniu": "vorbire",
+		"definitie": "cuvântul dat că vei face ceva",
+		"sinonime": ["promisiune", "legământ", "jurământ"],
+		"antonime": ["refuz", "dezicere", "tăgadă"]
+	},
+	{
+		"cuvant": "pizmă",
+		"clasa": "substantiv",
+		"nivel": 2,
+		"domeniu": "simtire",
+		"definitie": "necazul pe care ți-l face binele altuia",
+		"sinonime": ["invidie", "gelozie", "ciudă"],
+		"antonime": ["bunăvoință", "admirație", "mulțumire"]
+	},
+	{
+		"cuvant": "povață",
+		"clasa": "substantiv",
+		"nivel": 2,
+		"domeniu": "vorbire",
+		"definitie": "vorba bună dată cuiva ca să-l îndrepte",
+		"sinonime": ["sfat", "îndrumare", "învățătură"],
+		"antonime": []
 	},
 
 	{
@@ -428,6 +1139,132 @@
 		"sinonime": ["exemplar", "edificator", "grăitor"],
 		"antonime": ["banal", "neconcludent", "nesemnificativ"]
 	},
+	{
+		"cuvant": "insidios",
+		"clasa": "adjectiv",
+		"nivel": 3,
+		"domeniu": "caracter",
+		"definitie": "care face rău pe ascuns, pas cu pas",
+		"sinonime": ["subversiv", "înșelător", "perfid"],
+		"antonime": ["deschis", "leal", "direct"]
+	},
+	{
+		"cuvant": "imuabil",
+		"clasa": "adjectiv",
+		"nivel": 3,
+		"domeniu": "timp",
+		"definitie": "care nu se schimbă niciodată",
+		"sinonime": ["neschimbător", "invariabil", "nestrămutat"],
+		"antonime": ["schimbător", "nestatornic", "fluctuant"]
+	},
+	{
+		"cuvant": "pueril",
+		"clasa": "adjectiv",
+		"nivel": 3,
+		"domeniu": "caracter",
+		"definitie": "potrivit unui copil, nu unui om mare",
+		"sinonime": ["copilăros", "infantil", "neserios"],
+		"antonime": ["matur", "serios", "chibzuit"]
+	},
+	{
+		"cuvant": "sibilin",
+		"clasa": "adjectiv",
+		"nivel": 3,
+		"domeniu": "vorbire",
+		"definitie": "spus în așa fel încât nu se înțelege",
+		"sinonime": ["criptic", "enigmatic", "întortocheat"],
+		"antonime": ["limpede", "clar", "neîndoielnic"]
+	},
+	{
+		"cuvant": "fastuos",
+		"clasa": "adjectiv",
+		"nivel": 3,
+		"domeniu": "avere",
+		"definitie": "făcut cu mare cheltuială și strălucire",
+		"sinonime": ["somptuos", "luxos", "princiar"],
+		"antonime": ["modest", "sobru", "simplu"]
+	},
+	{
+		"cuvant": "placid",
+		"clasa": "adjectiv",
+		"nivel": 3,
+		"domeniu": "caracter",
+		"definitie": "pe care nimic nu-l tulbură",
+		"sinonime": ["flegmatic", "impasibil", "nepăsător"],
+		"antonime": ["impulsiv", "agitat", "vulcanic"]
+	},
+	{
+		"cuvant": "inexorabil",
+		"clasa": "adjectiv",
+		"nivel": 3,
+		"domeniu": "caracter",
+		"definitie": "care nu poate fi oprit sau înduplecat",
+		"sinonime": ["implacabil", "neînduplecat", "de neoprit"],
+		"antonime": ["îngăduitor", "maleabil", "evitabil"]
+	},
+	{
+		"cuvant": "inefabil",
+		"clasa": "adjectiv",
+		"nivel": 3,
+		"domeniu": "vorbire",
+		"definitie": "care nu poate fi spus în cuvinte",
+		"sinonime": ["inexprimabil", "indicibil", "de nespus"],
+		"antonime": []
+	},
+	{
+		"cuvant": "lacunar",
+		"clasa": "adjectiv",
+		"nivel": 3,
+		"domeniu": "masura",
+		"definitie": "din care lipsesc bucăți",
+		"sinonime": ["incomplet", "fragmentar", "cu lipsuri"],
+		"antonime": ["complet", "întreg", "desăvârșit"]
+	},
+	{
+		"cuvant": "nefast",
+		"clasa": "adjectiv",
+		"nivel": 3,
+		"domeniu": "fapta",
+		"definitie": "care aduce numai rău",
+		"sinonime": ["funest", "dăunător", "păgubitor"],
+		"antonime": ["binefăcător", "prielnic", "norocos"]
+	},
+	{
+		"cuvant": "iminent",
+		"clasa": "adjectiv",
+		"nivel": 3,
+		"domeniu": "timp",
+		"definitie": "care are să se întâmple îndată",
+		"sinonime": ["apropiat", "grabnic", "neîntârziat"],
+		"antonime": ["îndepărtat", "improbabil", "amânat"]
+	},
+	{
+		"cuvant": "acerb",
+		"clasa": "adjectiv",
+		"nivel": 3,
+		"domeniu": "vorbire",
+		"definitie": "aspru și tăios până la a răni",
+		"sinonime": ["mușcător", "tăios", "vehement"],
+		"antonime": ["blând", "îngăduitor", "măgulitor"]
+	},
+	{
+		"cuvant": "rudimentar",
+		"clasa": "adjectiv",
+		"nivel": 3,
+		"domeniu": "masura",
+		"definitie": "rămas la forma cea mai simplă",
+		"sinonime": ["primitiv", "simplist", "nedezvoltat"],
+		"antonime": ["evoluat", "rafinat", "complex"]
+	},
+	{
+		"cuvant": "perspicace",
+		"clasa": "adjectiv",
+		"nivel": 3,
+		"domeniu": "minte",
+		"definitie": "care vede repede ce alții nu văd",
+		"sinonime": ["pătrunzător", "sagace", "clarvăzător"],
+		"antonime": ["obtuz", "mărginit", "naiv"]
+	},
 
 	{
 		"cuvant": "a elucida",
@@ -482,6 +1319,132 @@
 		"definitie": "a recomanda dinainte o cale de urmat",
 		"sinonime": ["a propune", "a recomanda", "a susține"],
 		"antonime": ["a respinge", "a combate", "a descuraja"]
+	},
+	{
+		"cuvant": "a disemina",
+		"clasa": "verb",
+		"nivel": 3,
+		"domeniu": "miscare",
+		"definitie": "a împrăștia în multe locuri deodată",
+		"sinonime": ["a răspândi", "a difuza", "a semăna"],
+		"antonime": ["a strânge", "a aduna", "a concentra"]
+	},
+	{
+		"cuvant": "a abroga",
+		"clasa": "verb",
+		"nivel": 3,
+		"domeniu": "fapta",
+		"definitie": "a scoate din puterea legii",
+		"sinonime": ["a anula", "a desființa", "a revoca"],
+		"antonime": ["a institui", "a promulga", "a menține"]
+	},
+	{
+		"cuvant": "a reitera",
+		"clasa": "verb",
+		"nivel": 3,
+		"domeniu": "vorbire",
+		"definitie": "a spune sau a face din nou același lucru",
+		"sinonime": ["a repeta", "a relua", "a reafirma"],
+		"antonime": []
+	},
+	{
+		"cuvant": "a corobora",
+		"clasa": "verb",
+		"nivel": 3,
+		"domeniu": "vorbire",
+		"definitie": "a întări o spusă cu alte dovezi",
+		"sinonime": ["a confirma", "a întări", "a adeveri"],
+		"antonime": ["a infirma", "a contrazice", "a dezminți"]
+	},
+	{
+		"cuvant": "a temporiza",
+		"clasa": "verb",
+		"nivel": 3,
+		"domeniu": "timp",
+		"definitie": "a trage de timp dinadins",
+		"sinonime": ["a amâna", "a tergiversa", "a tărăgăna"],
+		"antonime": ["a grăbi", "a urgenta", "a zori"]
+	},
+	{
+		"cuvant": "a cizela",
+		"clasa": "verb",
+		"nivel": 3,
+		"domeniu": "fapta",
+		"definitie": "a lucra ceva până la ultimul amănunt",
+		"sinonime": ["a șlefui", "a finisa", "a desăvârși"],
+		"antonime": ["a strica", "a schimonosi", "a neglija"]
+	},
+	{
+		"cuvant": "a jubila",
+		"clasa": "verb",
+		"nivel": 3,
+		"domeniu": "simtire",
+		"definitie": "a-ți arăta bucuria fără nicio reținere",
+		"sinonime": ["a exulta", "a se desfăta", "a triumfa"],
+		"antonime": ["a se mâhni", "a deplânge", "a jeli"]
+	},
+	{
+		"cuvant": "a sintetiza",
+		"clasa": "verb",
+		"nivel": 3,
+		"domeniu": "vorbire",
+		"definitie": "a strânge multe lucruri în puține vorbe",
+		"sinonime": ["a rezuma", "a condensa", "a comprima"],
+		"antonime": ["a dezvolta", "a detalia", "a amplifica"]
+	},
+	{
+		"cuvant": "a stipula",
+		"clasa": "verb",
+		"nivel": 3,
+		"domeniu": "vorbire",
+		"definitie": "a trece anume într-o înțelegere scrisă",
+		"sinonime": ["a prevedea", "a specifica", "a consemna"],
+		"antonime": []
+	},
+	{
+		"cuvant": "a imputa",
+		"clasa": "verb",
+		"nivel": 3,
+		"domeniu": "vorbire",
+		"definitie": "a pune în sarcina cuiva o vină",
+		"sinonime": ["a învinui", "a incrimina", "a reproșa"],
+		"antonime": ["a dezvinovăți", "a scuza", "a absolvi"]
+	},
+	{
+		"cuvant": "a estompa",
+		"clasa": "verb",
+		"nivel": 3,
+		"domeniu": "lumina",
+		"definitie": "a face să se vadă mai puțin limpede",
+		"sinonime": ["a șterge", "a încețoșa", "a învălui"],
+		"antonime": ["a accentua", "a limpezi", "a scoate în relief"]
+	},
+	{
+		"cuvant": "a denigra",
+		"clasa": "verb",
+		"nivel": 3,
+		"domeniu": "vorbire",
+		"definitie": "a vorbi de rău pe cineva ca să-l scazi",
+		"sinonime": ["a defăima", "a ponegri", "a calomnia"],
+		"antonime": ["a elogia", "a preamări", "a cinsti"]
+	},
+	{
+		"cuvant": "a abdica",
+		"clasa": "verb",
+		"nivel": 3,
+		"domeniu": "fapta",
+		"definitie": "a lăsa din mână puterea sau un drept",
+		"sinonime": ["a renunța", "a se retrage", "a ceda"],
+		"antonime": []
+	},
+	{
+		"cuvant": "a eclipsa",
+		"clasa": "verb",
+		"nivel": 3,
+		"domeniu": "masura",
+		"definitie": "a trece pe cineva cu mult în umbră",
+		"sinonime": ["a întrece", "a umbri", "a depăși"],
+		"antonime": []
 	},
 
 	{
@@ -546,5 +1509,122 @@
 		"definitie": "întinderea și importanța unui lucru",
 		"sinonime": ["amploare", "cuprindere", "răsunet"],
 		"antonime": ["îngustime", "mărginire"]
+	},
+	{
+		"cuvant": "probitate",
+		"clasa": "substantiv",
+		"nivel": 3,
+		"domeniu": "caracter",
+		"definitie": "cinstea care nu se abate niciodată",
+		"sinonime": ["integritate", "onestitate", "incoruptibilitate"],
+		"antonime": ["corupție", "necinste", "venalitate"]
+	},
+	{
+		"cuvant": "abnegație",
+		"clasa": "substantiv",
+		"nivel": 3,
+		"domeniu": "caracter",
+		"definitie": "uitarea de sine în folosul altora",
+		"sinonime": ["devotament", "dăruire", "sacrificiu de sine"],
+		"antonime": ["egoism", "nepăsare", "indiferență"]
+	},
+	{
+		"cuvant": "acrimonie",
+		"clasa": "substantiv",
+		"nivel": 3,
+		"domeniu": "vorbire",
+		"definitie": "asprimea acră din vorbă",
+		"sinonime": ["asprime", "înțepătură", "iritare"],
+		"antonime": ["blândețe", "amabilitate", "bunăvoință"]
+	},
+	{
+		"cuvant": "sagacitate",
+		"clasa": "substantiv",
+		"nivel": 3,
+		"domeniu": "minte",
+		"definitie": "ascuțimea minții care pătrunde repede",
+		"sinonime": ["perspicacitate", "pătrundere", "agerime"],
+		"antonime": ["obtuzitate", "naivitate", "mărginire"]
+	},
+	{
+		"cuvant": "magnanimitate",
+		"clasa": "substantiv",
+		"nivel": 3,
+		"domeniu": "caracter",
+		"definitie": "mărimea de suflet care trece peste jigniri",
+		"sinonime": ["mărinimie", "noblețe", "largheță"],
+		"antonime": ["meschinărie", "răzbunare", "îngustime"]
+	},
+	{
+		"cuvant": "circumspecție",
+		"clasa": "substantiv",
+		"nivel": 3,
+		"domeniu": "caracter",
+		"definitie": "grija de a nu te pripi",
+		"sinonime": ["prudență", "prevedere", "chibzuință"],
+		"antonime": ["imprudență", "nechibzuință", "pripeală"]
+	},
+	{
+		"cuvant": "opulență",
+		"clasa": "substantiv",
+		"nivel": 3,
+		"domeniu": "avere",
+		"definitie": "bogăția care se vede în toate",
+		"sinonime": ["bogăție", "lux", "fast"],
+		"antonime": ["sărăcie", "lipsă", "austeritate"]
+	},
+	{
+		"cuvant": "tenacitate",
+		"clasa": "substantiv",
+		"nivel": 3,
+		"domeniu": "caracter",
+		"definitie": "puterea de a nu lăsa din mână ce ai început",
+		"sinonime": ["perseverență", "stăruință", "dârzenie"],
+		"antonime": ["slăbiciune", "nestatornicie", "moleșeală"]
+	},
+	{
+		"cuvant": "ingeniozitate",
+		"clasa": "substantiv",
+		"nivel": 3,
+		"domeniu": "minte",
+		"definitie": "iuțeala minții de a găsi căi noi",
+		"sinonime": ["inventivitate", "imaginație", "originalitate"],
+		"antonime": ["nepricepere", "neputință"]
+	},
+	{
+		"cuvant": "solicitudine",
+		"clasa": "substantiv",
+		"nivel": 3,
+		"domeniu": "relatie",
+		"definitie": "grija caldă purtată altuia",
+		"sinonime": ["grijă", "atenție", "bunăvoință"],
+		"antonime": ["nepăsare", "răceală", "indiferență"]
+	},
+	{
+		"cuvant": "fervoare",
+		"clasa": "substantiv",
+		"nivel": 3,
+		"domeniu": "simtire",
+		"definitie": "căldura cu care te dedai unui lucru drag",
+		"sinonime": ["înflăcărare", "ardoare", "zel"],
+		"antonime": ["răceală", "nepăsare", "moleșeală"]
+	},
+	{
+		"cuvant": "perplexitate",
+		"clasa": "substantiv",
+		"nivel": 3,
+		"domeniu": "minte",
+		"definitie": "nedumerirea care te lasă fără răspuns",
+		"sinonime": ["nedumerire", "uimire", "zăpăceală"],
+		"antonime": []
+	},
+	{
+		"cuvant": "dexteritate",
+		"clasa": "substantiv",
+		"nivel": 3,
+		"domeniu": "fapta",
+		"definitie": "îndemânarea câștigată prin multă deprindere",
+		"sinonime": ["abilitate", "îndemânare", "măiestrie"],
+		"antonime": ["neîndemânare", "stângăcie"]
 	}
 ]
