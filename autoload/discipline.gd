@@ -11,18 +11,19 @@ extends Node
 ## ─────────────────────────────────────────────────────────────
 ## „ALEGE N DIN M" — DE CE NU SCRIE NICĂIERI 3, ȘI NICI 8
 ##
-## Azi M e 3 și N e 3, deci loadout-ul e „le iei pe toate" și pare că n-are
-## rost. Are: singurul moment în care poți scrie corect regula e ACUM, cât
-## e banală. Peste câteva luni, cu M = 8, un „3" scris în cinci locuri ar
-## însemna cinci locuri de găsit, iar al șaselea, uitat.
+## Regula a fost scrisă pe vremea când M era 3 și N era 3, deci loadout-ul era
+## „le iei pe toate" și părea că n-are rost. Avea: singurul moment în care poți
+## scrie corect regula e cât e banală. Astăzi M e 5 și N e 3 — „alege 3 din 5",
+## 10 combinații — iar niciun „3" și niciun „5" n-a trebuit căutat prin cod.
 ##
 ## Deci:
 ##   M = `CATALOG.size()`             — câte discipline există
 ##   N = `Expeditie.DISCIPLINE_IN_LOADOUT` — câte iei într-o expediție
 ##
 ## Nicăieri altundeva. Ecranul de loadout desenează M rânduri și numără până la
-## N; lupta construiește exact atâtea Obeliscuri câte are loadout-ul. Când apare
-## a patra disciplină, ea e un RÂND în tabelul de mai jos și nimic altceva.
+## N; lupta construiește exact atâtea Obeliscuri câte are loadout-ul. A patra
+## disciplină (Numere) și a cincea (Tipare) au fost, fiecare, un RÂND în
+## tabelul de mai jos și nimic altceva — proba promisiunii, făcută de două ori.
 ##
 ## ─────────────────────────────────────────────────────────────
 ## CÂMPURILE
@@ -52,6 +53,7 @@ const SCENA_TRIVIA := preload("res://scenes/trivia/trivia.tscn")
 const SCENA_LOGICA := preload("res://scenes/logica/logica.tscn")
 const SCENA_CUVINTE := preload("res://scenes/cuvinte/cuvinte.tscn")
 const SCENA_NUMERE := preload("res://scenes/numere/numere.tscn")
+const SCENA_TIPARE := preload("res://scenes/tipare/tipare.tscn")
 
 ## CULORILE. Fiecare e folosită în patru locuri de pe butonul ei — bordura,
 ## numele, halo-ul, piesa — iar de aici se schimbă toate patru deodată.
@@ -64,6 +66,17 @@ const CULOARE_CUVINTE := Color(1.00, 0.85, 0.55)   # auriu
 # aceeași culoare cu două înțelesuri. La fel se vor alege și următoarele:
 # culorile de verdict se ocolesc, nu se împart.
 const CULOARE_NUMERE := Color(0.78, 0.66, 1.00)    # violet
+# A cincea: ROZ. S-au cântărit două, și motivul pentru care a câștigat rozul e
+# o regulă pentru următoarele. Celălalt candidat era un verde-albastru (teal),
+# care ar fi fost o culoare frumoasă și o greșeală: pe un buton de 40 px, lângă
+# albastrul Memoriei și verdele Logicii, el ar fi fost „a treia nuanță dintre
+# ele". O culoare de disciplină nu trebuie să fie plăcută, trebuie să fie
+# RECUNOSCUTĂ periferic, în mijlocul unei ture — același criteriu care alege și
+# siluetele din `glifa_sah.gd`.
+# Rozul e departe de toate patru, și destul de departe și de roșu: `CULOARE_RAU`
+# e un roșu-somon (1, 0.4, 0.4), iar aici verdele e urcat la 0.66 tocmai ca
+# nuanța să cadă limpede în roz, nu la jumătatea drumului spre el.
+const CULOARE_TIPARE := Color(1.00, 0.66, 0.88)    # roz
 
 const CATALOG := [
 	{
@@ -78,13 +91,20 @@ const CATALOG := [
 	},
 	{
 		"cheie": "logica", "nume": "Logica",
-		"rol": "Siruri, intrusul, analogii, silogisme, ordonari.",
+		"rol": "Deductii, enigme, silogisme, numaratori, ordonari.",
+		# Cele PATRUSPREZECE tipuri ale Logicii nu încap aici ca patrusprezece
+		# rânduri — cartea de pe hartă ar fi devenit un perete de text. Deci
+		# rândurile sunt FAMILIILE, cele cinci din antetul lui `logica.gd`, și
+		# fiecare le numește pe ale ei. Regula din antetul fișierului („un fel
+		# nou de întrebare e un rând nou și aici") ține în continuare, numai că
+		# unitatea e familia: un tip nou intră în rândul familiei lui, iar o
+		# familie nouă e un rând nou.
 		"sarcini": [
-			"Siruri de numere: gasesti termenul care urmeaza.",
-			"Intrusul: care dintre patru nu e din aceeasi familie.",
-			"Analogii: A e fata de B cum e C fata de ...",
-			"Silogisme: ce rezulta sigur din doua premise.",
-			"Ordonari: din cateva comparatii, afli cine sta unde.",
+			"Intrusul si analogiile: ce nu e din familie, si A e fata de B cum e C fata de ...",
+			"Logica propozitionala: silogisme, daca-atunci, negatii, si/sau, premisa lipsa.",
+			"Enigme: cine minte si cine spune adevarul.",
+			"Numaratori: multimi, cel mai rau caz, roata saptamanii.",
+			"Constrangeri: din cateva indicii, afli cine sta unde si cine are ce.",
 		],
 		"piesa": GlifaSah.Piesa.CAL,
 		"imagine": "res://assets/art/cal_sah.png",
@@ -116,6 +136,20 @@ const CATALOG := [
 		# gol, deci rândul merge așa cum e până apare PNG-ul.
 		"imagine": "",
 		"culoare": CULOARE_NUMERE, "scena": SCENA_NUMERE,
+	},
+	{
+		"cheie": "tipare", "nume": "Tipare",
+		"rol": "Siruri, litere, sabloane care se repeta, numarul care strica regula.",
+		"sarcini": [
+			"Siruri de numere: gasesti termenul care urmeaza.",
+			"Siruri de litere: acelasi lucru, dar numarat pe alfabet.",
+			"Sabloane: ce urmeaza, si ce semn e pe locul 23.",
+			"Intrusul din sir: care numar nu respecta regula.",
+		],
+		"piesa": GlifaSah.Piesa.REGINA,
+		# Fără artă încă, ca la Numere: regina se desenează.
+		"imagine": "",
+		"culoare": CULOARE_TIPARE, "scena": SCENA_TIPARE,
 	},
 ]
 

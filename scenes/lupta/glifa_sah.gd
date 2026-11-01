@@ -1,6 +1,7 @@
 class_name GlifaSah
 extends Silueta
-## PIESA DE ȘAH de pe butonul unui Obelisc: pionul, calul, nebunul, turnul.
+## PIESA DE ȘAH de pe butonul unui Obelisc: pionul, calul, nebunul, turnul,
+## regina.
 ##
 ## ─────────────────────────────────────────────────────────────
 ## DE CE DESENATĂ, ȘI NU SCRISĂ CU ♟ ♞ ♝
@@ -33,7 +34,7 @@ extends Silueta
 ## (`amplitudine = 0`) și, ca urmare, nu are nevoie de `_process` — trei icoane
 ## care pulsează sub trei butoane ar fi zgomot, nu viață.
 
-enum Piesa { PION, CAL, NEBUN, TURN }
+enum Piesa { PION, CAL, NEBUN, TURN, REGINA }
 
 ## Culoarea piesei. O pune `obelisc.gd`, din tabelul disciplinelor.
 @export var culoare := Color(0.85, 0.88, 1.0):
@@ -211,11 +212,66 @@ static var TURN_TALPA := PackedVector2Array([
 	Vector2(0.125, 0.965), Vector2(0.145, 0.898),
 ])
 
+# REGINA — a cincea piesă, pentru Tipare. Și ULTIMA care putea fi o piesă de
+# șah, ceea ce merită scris aici fiindcă nu se vede de nicăieri altundeva:
+# șahul are șase piese, regele e deja luat (el E PV-ul jucătorului, vezi
+# `rege.gd`), deci cinci au fost tot ce se putea împărți Obeliscurilor. A șasea
+# disciplină — Reținere, Spațial sau Reflex, oricare vine prima — n-are de unde
+# să-și ia una. Când va fi nevoie, întrebarea nu e „ce piesă mai e liberă", e
+# dacă piesele de șah rămân skin-ul comun al tuturor Obeliscurilor (decizia din
+# CLAUDE.md) sau devin skin-ul primelor cinci. Pitch-ul a propus de la început
+# un simbol pentru fiecare disciplină (clepsidră, spirală, busolă, fulger), deci
+# ieșirea e scrisă, nu trebuie inventată.
+#
+# NUMELE SE LOVEȘTE CU O MECANICĂ AMÂNATĂ, și nu e o neatenție: „Regina" era
+# supapa care dădea acces, contra cost, la o disciplină neechipată, iar ea stă
+# amânată (vezi CLAUDE.md). Piesa de aici e un DESEN pe un buton, nu mecanica;
+# dacă supapa se întoarce vreodată, ce trebuie să se schimbe e numele ei, nu
+# această formă — o supapă nu e un Obelisc și n-ar purta niciodată glifa unuia.
+#
+# FORMA: o coroană cu cinci colțuri ascuțite, cel din mijloc cel mai înalt, cu
+# o bilă pe el. Criteriul e cel din pitch („distinct ca siluetă, recunoscut
+# periferic"), iar la 40 px el se traduce tot în conturul de SUS, fiindcă
+# pionul, nebunul, turnul și regina sunt toate coloane cu talpă:
+#   pion → bilă · nebun → mitră ascuțită · turn → creneluri drepte ·
+#   regina → colțuri ascuțite, cu vârful mijlociu mai înalt.
+# Turnul și regina sunt perechea cea mai apropiată (amândouă au un contur
+# dințat), și de-aia diferența dintre ele e făcută pe DOUĂ căi deodată: dinți
+# drepți contra colțuri ascuțite, și o coroană plată contra una cu vârf.
+#
+# Coroana e UN SINGUR poligon în zigzag, nu cinci triunghiuri lipite — același
+# motiv ca la crenelurile turnului: formele alăturate lasă fire de fond între
+# ele la anumite mărimi, fiindcă marginile cad între pixeli.
+static var REGINA_COROANA := PackedVector2Array([
+	Vector2(0.215, 0.300),
+	Vector2(0.258, 0.140), Vector2(0.320, 0.248),
+	Vector2(0.379, 0.102), Vector2(0.440, 0.232),
+	Vector2(0.500, 0.070), Vector2(0.560, 0.232),
+	Vector2(0.621, 0.102), Vector2(0.680, 0.248),
+	Vector2(0.742, 0.140), Vector2(0.785, 0.300),
+])
+static var REGINA_GULER := PackedVector2Array([
+	Vector2(0.228, 0.294), Vector2(0.772, 0.294),
+	Vector2(0.742, 0.366), Vector2(0.258, 0.366),
+])
+static var REGINA_CORP := PackedVector2Array([
+	Vector2(0.318, 0.358), Vector2(0.682, 0.358),
+	Vector2(0.716, 0.700), Vector2(0.758, 0.790),
+	Vector2(0.242, 0.790), Vector2(0.284, 0.700),
+])
+static var REGINA_TALPA := PackedVector2Array([
+	Vector2(0.192, 0.775), Vector2(0.808, 0.775),
+	Vector2(0.868, 0.898), Vector2(0.888, 0.965),
+	Vector2(0.112, 0.965), Vector2(0.132, 0.898),
+])
+
 ## Catalogul formelor. Un rând per piesă: poligoanele pline, cercurile pline,
 ## „golurile" (desenate peste, în culoarea fondului) și proporția casetei.
 ## Turnul a fost chiar proba promisiunii scrise aici înainte („o a patra piesă
 ## e un rând"): a costat un rând în `enum`, cinci forme și rândul de mai jos.
-## A cincea — regina, dacă se întoarce vreodată — la fel.
+## Regina, a cincea, a costat exact la fel — a doua probă a aceleiași
+## promisiuni, și ultima pe care șahul o mai putea plăti (vezi comentariul de
+## la formele ei).
 static var FORME := {
 	Piesa.PION: {
 		"proportie": 0.62,
@@ -251,6 +307,20 @@ static var FORME := {
 		"poligoane": [TURN_TALPA, TURN_CORP, TURN_GULER, TURN_CRENELURI],
 		"cercuri": [],
 		"goluri": [TURN_CRESTATURA_STANGA, TURN_CRESTATURA_DREAPTA],
+		"cercuri_gol": [],
+	},
+	# Cea mai lată din toate cinci (0.68): regina are nevoie de lățime ca
+	# zigzagul coroanei să aibă loc. Strânsă la lățimea pionului, cele cinci
+	# colțuri ar fi căzut unul peste altul la 40 px și ar fi arătat ca o pată
+	# dințată.
+	Piesa.REGINA: {
+		"proportie": 0.68,
+		"poligoane": [REGINA_TALPA, REGINA_CORP, REGINA_GULER, REGINA_COROANA],
+		# Bila din vârful colțului mijlociu. Mai mică decât cea a pionului
+		# (0.145) și cât cea a nebunului: ea nu e capul piesei, e bijuteria de
+		# pe el.
+		"cercuri": [{"centru": Vector2(0.500, 0.062), "raza": 0.052}],
+		"goluri": [],
 		"cercuri_gol": [],
 	},
 }

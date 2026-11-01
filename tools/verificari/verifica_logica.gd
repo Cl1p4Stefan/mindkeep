@@ -1,5 +1,5 @@
 extends Node
-## VERIFICAREA LOGICII — cele 15 tipuri, tiparele lor și răspunsurile.
+## VERIFICAREA LOGICII — cele 14 tipuri, tiparele lor și răspunsurile.
 ##
 ## Se cheamă din afara jocului, fără fereastră:
 ##   godot --headless --path . res://tools/verificari/verifica_logica.tscn
@@ -7,7 +7,7 @@ extends Node
 ## ─────────────────────────────────────────────────────────────
 ## DE CE O UNEALTĂ, ȘI NU O PARTIDĂ
 ##
-## Logica nu are un fișier de întrebări care s-ar putea citi cu ochiul: are 56
+## Logica nu are un fișier de întrebări care s-ar putea citi cu ochiul: are 47
 ## de TIPARE care nasc întrebări la infinit. O greșeală într-unul din ele nu se
 ## vede la o partidă, fiindcă tiparul ăla iese o dată la cincizeci de întrebări
 ## — iar când iese, arată ca o întrebare normală. „Cel mai rău caz" cu răspunsul
@@ -98,8 +98,8 @@ const TRAGERI_PE_TIPAR := 200
 ## aici se compune și TEXTUL, nu doar structura.
 const TRAGERI_ENUNT := 120
 
-# Câte trageri la măsurarea echilibrului, pe nivel. La 15 tipuri și 9000 de
-# trageri fiecare ar trebui să iasă pe la 600; împrăștierea întâmplătoare e de
+# Câte trageri la măsurarea echilibrului, pe nivel. La 14 tipuri și 9000 de
+# trageri fiecare ar trebui să iasă pe la 640; împrăștierea întâmplătoare e de
 # vreo ±25, deci toleranța de mai jos e cu mult peste ea. Verificarea pică doar
 # dacă alegerea e strâmbă, nu dacă zarul a avut o zi.
 const TRAGERI_ECHILIBRU := 9000
@@ -292,8 +292,13 @@ func _tabelul() -> bool:
 
 	var tipuri := _tipurile()
 	tot_bun = _verdict(
-		"cincisprezece tipuri",
-		tipuri.size() == 15,
+		"patrusprezece tipuri",
+		# ERA 15. Șirurile numerice (tipul SIR, nouă tipare) au plecat la Tipare
+		# pe 1 noiembrie 2026 — pasul 2 din rută, ca același conținut să nu mai
+		# vină din două Obeliscuri. Cifra se scrie, nu se citește din tabel: un
+		# tip șters din greșeală trebuie să PICE aici, iar o cifră dedusă din
+		# `GENERATOARE` ar fi fost de acord cu orice tabel.
+		tipuri.size() == 14,
 		"%d: %s" % [tipuri.size(), ", ".join(tipuri)]
 	) and tot_bun
 
@@ -1088,7 +1093,7 @@ func _cat_se_citeste() -> void:
 # AJUTOARE
 # ─────────────────────────────────────────────────────────────
 
-## Numele celor 15 tipuri, în ordinea din tabel.
+## Numele celor 14 tipuri, în ordinea din tabel.
 func _tipurile() -> Array[String]:
 	var tipuri: Array[String] = []
 	for generator in LOGICA.GENERATOARE:

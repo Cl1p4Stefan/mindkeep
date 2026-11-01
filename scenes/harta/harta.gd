@@ -907,8 +907,9 @@ func _arata_loadout() -> void:
 
 
 ## Un rând per disciplină din CATALOG. Nicio cifră scrisă de mână: numărul de
-## rânduri e M, iar cât poți bifa e N. Când apare a patra disciplină, apare al
-## patrulea rând, fără nicio linie schimbată aici.
+## rânduri e M, iar cât poți bifa e N. Probat de două ori în aceeași zi: a
+## patra disciplină (Numere) și a cincea (Tipare) au adus fiecare un rând, fără
+## nicio linie schimbată aici.
 func _construieste_loadout() -> void:
 	for copil in loadout_lista.get_children():
 		loadout_lista.remove_child(copil)
@@ -3142,7 +3143,7 @@ func _pe_mesaj_inchis() -> void:
 ## mai ales cu opt discipline — și răspunsul stă în carte, la un clic.
 ##
 ## Totul vine din `Discipline.CATALOG` („rol”, „sarcini”, „culoare”,
-## „imagine”), deci a patra disciplină apare aici fără nicio linie schimbată.
+## „imagine”), deci o disciplină nouă apare aici fără nicio linie schimbată.
 ## Nivelul de dificultate se citește din regulile luptei, nu se scrie de mână.
 func _arata_cartea() -> void:
 	# Cât sare piesa, harta nu primește comenzi — vezi `_sare`.

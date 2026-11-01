@@ -8,10 +8,10 @@ extends Puzzle
 ## DE UNDE VIN ÎNTREBĂRILE. Sunt două feluri de tipuri, și fiecare își ia
 ## materia primă de unde îi e mai ieftin:
 ##
-##   PUR GENERATIVE (șirurile numerice, deducțiile, enigmele, calendarul) — nu
-##   au nevoie de niciun fișier. Regula E conținutul: „adună 4 de fiecare dată"
-##   produce o infinitate de întrebări din trei numere alese la întâmplare. Un
-##   fișier de date aici ar fi fost muncă de scris pentru zero câștig.
+##   PUR GENERATIVE (deducțiile, enigmele, calendarul) — nu au nevoie de niciun
+##   fișier. Regula E conținutul: „cine stă la stânga lui Anton" produce o
+##   infinitate de întrebări din patru nume amestecate. Un fișier de date aici
+##   ar fi fost muncă de scris pentru zero câștig.
 ##
 ##   ALIMENTATE CU DATE (analogiile, intrusul, silogismele, logica
 ##   propozițională, numărătorile) — au nevoie de cunoștințe despre lume sau de
@@ -22,10 +22,18 @@ extends Puzzle
 ## de mai jos nu conține niciun nume de categorie și niciun cuvânt din
 ## vocabular — lucrează pe ce găsește.
 ##
-## CELE CINCIISPREZECE TIPURI, pe familii (vezi tabelul `GENERATOARE`):
+## CELE PATRUSPREZECE TIPURI, pe familii (vezi tabelul `GENERATOARE`):
 ##
-##   ȘIRURI ȘI SEMNIFICAȚII — SIR, INTRUS, ANALOGIE. Primele trei de la care a
-##     pornit disciplina.
+##   SEMNIFICAȚII — INTRUS, ANALOGIE. Două din cele trei tipuri de la care a
+##     pornit disciplina. Al treilea era SIR (șirurile numerice), și de pe
+##     1 noiembrie 2026 nu mai e aici: a plecat la TIPARE, disciplina a cincea.
+##     Nu era o curățenie, era pasul 2 din ruta de construcție — pitch-ul o
+##     ceruse de la început („altfel același conținut apare în două
+##     Obeliscuri"), iar cu Logica și Tipare în același loadout chiar așa s-ar
+##     fi întâmplat. Logica a scăzut de la 15 tipuri la 14 și de la 56 de
+##     tipare la 47, și n-a pierdut nimic: șirurile nu cereau nici vocabular,
+##     nici categorii, deci erau singurul tip din disciplină care n-avea nicio
+##     legătură cu restul ei.
 ##   LOGICĂ PROPOZIȚIONALĂ — SILOGISM, CONDITIONAL, NEGATIE, CONECTORI,
 ##     PREMISA. Propoziții asamblate din vocabular, rezolvate din FORMĂ.
 ##   ENIGME — MINCINOSI. Cine spune adevărul, dedus prin forță brută.
@@ -39,10 +47,6 @@ extends Puzzle
 ## 4 — formate multiple de Logică — costă mult mai puțin decât o disciplină
 ## complet nouă și rezolvă aceeași problemă". Un tip nou e o funcție și un rând
 ## în tabel; o disciplină nouă e o scenă, un Obelisc, o statistică și o clădire.
-
-# Câți termeni se VĂD într-un șir. Generatoarele produc unul în plus: ultimul
-# e răspunsul.
-const TERMENI_VIZIBILI := 5
 
 # ─────────────────────────────────────────────────────────────
 # FIȘIERELE DE DATE
@@ -119,8 +123,8 @@ static var incarcare_incercata := false
 # feedback) nu se atinge, fiindcă nu știe ce fel de întrebare a primit.
 #
 #   „tip"      — familia de puzzle. ASTA se alege prima, nu tiparul: altfel
-#                un tip cu 3 tipare ar apărea de 3 ori mai des decât unul cu
-#                unul singur, și ai juca aproape numai șiruri numerice.
+#                un tip cu 5 tipare ar apărea de 5 ori mai des decât unul cu
+#                unul singur, și ai juca aproape numai logică propozițională.
 #   „niveluri" — la ce dificultăți poate apărea. Un tipar poate fi bun la mai
 #                multe: intrusul greu merge și la II, și la III.
 #   „metoda"   — NUMELE funcției, ca text. `call(nume)` o cheamă după nume.
@@ -140,17 +144,6 @@ static var incarcare_incercata := false
 # Când adaugi un tip nou, dă-i cel puțin un tipar pe fiecare nivel.
 # ─────────────────────────────────────────────────────────────
 const GENERATOARE := [
-	# ȘIRURI NUMERICE — pur generative.
-	{"tip": "SIR", "niveluri": [1], "categorie": "SIR NUMERIC", "necesita": "", "metoda": "_pas_constant"},
-	{"tip": "SIR", "niveluri": [1], "categorie": "SIR NUMERIC", "necesita": "", "metoda": "_factor_constant"},
-	{"tip": "SIR", "niveluri": [1], "categorie": "SIR NUMERIC", "necesita": "", "metoda": "_pas_negativ"},
-	{"tip": "SIR", "niveluri": [2], "categorie": "SIR NUMERIC", "necesita": "", "metoda": "_pas_crescator"},
-	{"tip": "SIR", "niveluri": [2], "categorie": "SIR NUMERIC", "necesita": "", "metoda": "_alternant"},
-	{"tip": "SIR", "niveluri": [2], "categorie": "SIR NUMERIC", "necesita": "", "metoda": "_pas_dublat"},
-	{"tip": "SIR", "niveluri": [3], "categorie": "SIR NUMERIC", "necesita": "", "metoda": "_mixt"},
-	{"tip": "SIR", "niveluri": [3], "categorie": "SIR NUMERIC", "necesita": "", "metoda": "_fibonacci"},
-	{"tip": "SIR", "niveluri": [3], "categorie": "SIR NUMERIC", "necesita": "", "metoda": "_patrate"},
-
 	# INTRUSUL — dificultatea stă în cât de aproape e străinul de grup.
 	{"tip": "INTRUS", "niveluri": [1], "categorie": "INTRUSUL", "necesita": "categorii", "metoda": "_intrus_din_alt_domeniu"},
 	{"tip": "INTRUS", "niveluri": [2, 3], "categorie": "INTRUSUL", "necesita": "categorii", "metoda": "_intrus_din_acelasi_domeniu"},
@@ -165,7 +158,7 @@ const GENERATOARE := [
 	{"tip": "SILOGISM", "niveluri": [2], "categorie": "SILOGISM", "necesita": "vocabular", "metoda": "_silogism_celarent"},
 	{"tip": "SILOGISM", "niveluri": [3], "categorie": "SILOGISM", "necesita": "vocabular", "metoda": "_silogism_darii"},
 
-	# DEDUCȚII DE ORDONARE — pur generative, ca și șirurile.
+	# DEDUCȚII DE ORDONARE — pur generative, ca și enigmele.
 	{"tip": "DEDUCTIE", "niveluri": [1], "categorie": "ORDONARE", "necesita": "", "metoda": "_deductie_in_ordine"},
 	{"tip": "DEDUCTIE", "niveluri": [2], "categorie": "ORDONARE", "necesita": "", "metoda": "_deductie_amestecata"},
 	{"tip": "DEDUCTIE", "niveluri": [3], "categorie": "ORDONARE", "necesita": "", "metoda": "_deductie_lunga"},
@@ -284,8 +277,9 @@ func _compune_intrebare(nivel: int) -> Dictionary:
 
 
 ## Ce fișiere să cauți dacă ecranul de eroare apare vreodată în luptă.
-## (Greu de atins: șirurile și deducțiile n-au nevoie de niciun fișier, deci
-## Logica produce întrebări chiar și cu tot folderul `data/` șters.)
+## (Greu de atins: deducțiile, enigmele și calendarul n-au nevoie de niciun
+## fișier, deci Logica produce întrebări chiar și cu tot folderul `data/`
+## șters.)
 func _descriere_sursa() -> String:
 	return "%s / %s" % [CALE_CATEGORII, CALE_VOCABULAR]
 
@@ -294,9 +288,11 @@ func _descriere_sursa() -> String:
 ## funcției: întâi tragem la sorți TIPUL, apoi un tipar din el.
 ##
 ## Dacă am trage direct dintre tipare, tipul cu cele mai multe ar câștiga
-## proporțional: 9 șiruri numerice contra unui silogism însemna 90% șiruri.
-## Așa, cele cinci tipuri au aceeași șansă indiferent câte tipare are fiecare,
-## iar când mai adaugi un șir numeric nu strici echilibrul.
+## proporțional. Funcția s-a scris pe vremea când existau cinci tipuri, iar
+## unul din ele (șirurile numerice, plecate de atunci la Tipare) avea nouă
+## tipare contra unui silogism: 90% din întrebări erau șiruri. Așa, cele
+## patrusprezece tipuri au aceeași șansă indiferent câte tipare are fiecare,
+## iar când mai adaugi un tipar nu strici echilibrul.
 func _alege_reteta(nivel: int) -> Dictionary:
 	# `filter` păstrează doar intrările pentru care funcția anonimă (lambda)
 	# întoarce true: nivelul cerut ȘI datele necesare, prezente.
@@ -304,7 +300,7 @@ func _alege_reteta(nivel: int) -> Dictionary:
 		func(g): return nivel in g["niveluri"] and _date_disponibile(g["necesita"])
 	)
 	# Plasă de siguranță: dacă un nivel rămâne fără nimic, luăm orice putem
-	# genera. Nu poate fi gol — șirurile și deducțiile n-au nevoie de date.
+	# genera. Nu poate fi gol — deducțiile și enigmele n-au nevoie de date.
 	if disponibile.is_empty():
 		disponibile = GENERATOARE.filter(func(g): return _date_disponibile(g["necesita"]))
 
@@ -429,188 +425,6 @@ static func _date_disponibile(necesita: String) -> bool:
 		"masculine":
 			return masculine.size() >= 3
 	return true
-
-
-# ─────────────────────────────────────────────────────────────
-# ȘIRURI NUMERICE — pur generative, fără fișiere.
-# Fiecare produce TERMENI_VIZIBILI + 1 numere; ultimul e răspunsul.
-# Intervalele sunt alese ca numerele să rămână calculabile în cap: un șir
-# corect matematic dar cu termeni de cinci cifre nu e mai greu, e doar obositor.
-# ─────────────────────────────────────────────────────────────
-
-## NIVEL I — se adună mereu același număr. 3, 7, 11, 15, 19, ?
-func _pas_constant() -> Dictionary:
-	var valoare := randi_range(1, 9)
-	var pas := randi_range(2, 6)
-	var termeni: Array[int] = []
-	for i in range(TERMENI_VIZIBILI + 1):
-		termeni.append(valoare)
-		valoare += pas
-	return _intrebare_din_sir(termeni, "PAS CONSTANT")
-
-
-## NIVEL I — se înmulțește mereu cu același număr. 3, 6, 12, 24, 48, ?
-func _factor_constant() -> Dictionary:
-	# Factorul 3 crește mult mai repede, deci pornește de mai jos:
-	# altfel ultimul termen ajunge la patru cifre și devine calcul, nu logică.
-	var factor := 2 if randf() < 0.75 else 3
-	var valoare := randi_range(1, 5) if factor == 2 else randi_range(1, 3)
-	var termeni: Array[int] = []
-	for i in range(TERMENI_VIZIBILI + 1):
-		termeni.append(valoare)
-		valoare *= factor
-	return _intrebare_din_sir(termeni, "INMULTIRE CU %d" % factor)
-
-
-## NIVEL I — același pas, dar în jos. 58, 51, 44, 37, 30, ?
-func _pas_negativ() -> Dictionary:
-	var pas := randi_range(3, 7)
-	# Pornim destul de sus cât ultimul termen să rămână pozitiv: numere
-	# negative ar cere o a doua idee, iar la nivelul I vrem una singură.
-	var valoare := randi_range(45, 70)
-	var termeni: Array[int] = []
-	for i in range(TERMENI_VIZIBILI + 1):
-		termeni.append(valoare)
-		valoare -= pas
-	return _intrebare_din_sir(termeni, "PAS CONSTANT")
-
-
-## NIVEL II — pasul crește de fiecare dată. 2, 3, 5, 8, 12, ?
-func _pas_crescator() -> Dictionary:
-	var valoare := randi_range(1, 6)
-	var pas := randi_range(1, 3)
-	var crestere := randi_range(1, 3)
-	var termeni: Array[int] = []
-	for i in range(TERMENI_VIZIBILI + 1):
-		termeni.append(valoare)
-		valoare += pas
-		pas += crestere
-	return _intrebare_din_sir(termeni, "PAS CRESCATOR")
-
-
-## NIVEL II — două operații care se schimbă între ele. 5, 12, 10, 17, 15, ?
-## Adaosul e mereu mai mare decât scăderea, deci șirul urcă în zigzag.
-func _alternant() -> Dictionary:
-	var valoare := randi_range(4, 12)
-	var adaos := randi_range(5, 9)
-	var scadere := randi_range(1, 4)
-	var termeni: Array[int] = []
-	for i in range(TERMENI_VIZIBILI + 1):
-		termeni.append(valoare)
-		valoare += adaos if i % 2 == 0 else -scadere
-	return _intrebare_din_sir(termeni, "ALTERNANT")
-
-
-## NIVEL II — pasul se dublează. 3, 5, 9, 17, 33, ?
-func _pas_dublat() -> Dictionary:
-	var valoare := randi_range(2, 7)
-	var pas := randi_range(1, 3)
-	var termeni: Array[int] = []
-	for i in range(TERMENI_VIZIBILI + 1):
-		termeni.append(valoare)
-		valoare += pas
-		pas *= 2
-	return _intrebare_din_sir(termeni, "PAS DUBLAT")
-
-
-## NIVEL III — două reguli în același șir: înmulțire, apoi adunare.
-## 3, 6, 8, 16, 18, ?
-func _mixt() -> Dictionary:
-	var valoare := randi_range(2, 5)
-	var adaos := randi_range(1, 3)
-	var termeni: Array[int] = []
-	for i in range(TERMENI_VIZIBILI + 1):
-		termeni.append(valoare)
-		valoare = valoare * 2 if i % 2 == 0 else valoare + adaos
-	return _intrebare_din_sir(termeni, "MIXT: x2, APOI +%d" % adaos)
-
-
-## NIVEL III — fiecare termen e suma celor doi dinainte. 2, 5, 7, 12, 19, ?
-## Nu pornește mereu de la 1, 1: altfel ai memora șirul, nu regula.
-func _fibonacci() -> Dictionary:
-	var primul := randi_range(1, 5)
-	var al_doilea := randi_range(2, 7)
-	while al_doilea == primul:   # „4, 4, 8, ..." se citește ca o greșeală de tipar
-		al_doilea = randi_range(2, 7)
-	var termeni: Array[int] = [primul, al_doilea]
-	while termeni.size() < TERMENI_VIZIBILI + 1:
-		termeni.append(termeni[-1] + termeni[-2])
-	return _intrebare_din_sir(termeni, "FIBONACCI")
-
-
-## NIVEL III — pătrate perfecte, uneori decalate cu o constantă.
-## 9, 16, 25, 36, 49, ?   sau   11, 18, 27, 38, 51, ?
-func _patrate() -> Dictionary:
-	var start := randi_range(1, 5)
-	var adaos := randi_range(0, 2)
-	var termeni: Array[int] = []
-	for i in range(TERMENI_VIZIBILI + 1):
-		var n := start + i
-		termeni.append(n * n + adaos)
-	return _intrebare_din_sir(termeni, "PATRATE" if adaos == 0 else "PATRATE +%d" % adaos)
-
-
-## Împachetează un șir în forma pe care o așteaptă scena.
-func _intrebare_din_sir(termeni: Array[int], nume_regula: String) -> Dictionary:
-	var raspuns: int = termeni[-1]
-	var afisati := termeni.slice(0, termeni.size() - 1)
-	var numere := _variante_numerice(raspuns, afisati)
-
-	# Butoanele afișează text, deci numerele devin șiruri de caractere aici.
-	var variante: Array[String] = []
-	for numar in numere:
-		variante.append(str(numar))
-
-	return {
-		"text": ", ".join(afisati.map(func(n): return str(n))) + ", ?",
-		"variante": variante,
-		"corect": numere.find(raspuns),
-		"explicatie": nume_regula,
-	}
-
-
-## Cele 3 variante greșite NU sunt numere la întâmplare — sunt GREȘELI
-## PLAUZIBILE, adică rezultatele pe care le obții dacă te înșeli puțin:
-## mai aplici o dată pasul, folosești diferența anterioară, sau ratezi cu 1-2.
-##
-## De ce contează: cu distractori aleatori, răspunsul corect e cel care „arată
-## bine" și poți nimeri fără să calculezi. Puzzle-ul ar arăta la fel și n-ar
-## mai măsura nimic.
-func _variante_numerice(raspuns: int, afisati: Array[int]) -> Array[int]:
-	var pas: int = afisati[-1] - afisati[-2]
-	var pas_anterior: int = afisati[-2] - afisati[-3]
-	# `absi` = valoarea absolută a unui întreg (fără semn). Pasul poate fi
-	# negativ, la șirurile descrescătoare, iar noi vrem mărimea lui.
-	var jumatate_pas: int = maxi(1, absi(pas) / 2)
-
-	var candidati := [
-		raspuns + 1, raspuns - 1,                    # ratat cu puțin
-		raspuns + 2, raspuns - 2,
-		raspuns + pas, raspuns - pas,                # aplicat pasul de două ori / deloc
-		afisati[-1] + pas_anterior,                  # folosit diferența veche
-		raspuns + jumatate_pas, raspuns - jumatate_pas,
-	]
-	candidati.shuffle()
-
-	var variante: Array[int] = [raspuns]
-	for candidat in candidati:
-		if variante.size() == 4:
-			break
-		# Sărim peste: numere negative sau zero (se citesc ca greșeli de generator),
-		# duplicate, și termeni care se văd deja în șir — ăia nu păcălesc pe nimeni.
-		if candidat > 0 and not (candidat in variante) and not (candidat in afisati):
-			variante.append(candidat)
-
-	# Plasă de siguranță: dacă filtrele au fost prea severe (șiruri mici, cu
-	# pas 1), completăm cu vecini. Fără asta, un buton ar rămâne gol.
-	var distanta := 3
-	while variante.size() < 4:
-		if not (raspuns + distanta in variante):
-			variante.append(raspuns + distanta)
-		distanta += 1
-
-	variante.shuffle()
-	return variante
 
 
 # ─────────────────────────────────────────────────────────────
@@ -913,7 +727,7 @@ func _unii_nu(x: Dictionary, y: Dictionary) -> String:
 
 # -------------------------------------------------------------
 # DEDUCTII DE ORDONARE
-# Pur generative, ca si sirurile: regula E continutul. Primesti cateva
+# Pur generative, ca si enigmele: regula E continutul. Primesti cateva
 # comparatii si trebuie sa reconstruiesti ordinea din ele.
 #
 # Numele sunt toate masculine, dinadins: „Dalia e mai inalt" ar fi fost o
@@ -1055,7 +869,8 @@ func _pachet(enunt: String, raspuns: String, gresite: Array, explicatie: String)
 ## Ca `_pachet`, dar pentru răspunsuri NUMERICE: primește o listă de greșeli
 ## plauzibile, le amestecă și ia primele trei care sunt pozitive și diferite.
 ##
-## Aceeași regulă ca la șirurile numerice (vezi `_variante_numerice`): un
+## Aceeași regulă ca la șirurile numerice (vezi `_variante_numerice` din
+## `tipare.gd`, unde s-a scris întâi și unde trăiește de pe 1 noiembrie): un
 ## distractor trebuie să fie rezultatul pe care-l obții dacă te înșeli — ai
 ## uitat să scazi intersecția, ai scăzut-o de două ori, ai numărat grupul
 ## greșit. Cu numere la întâmplare, răspunsul bun ar fi cel care „arată bine",
@@ -1071,7 +886,7 @@ func _pachet_numeric(enunt: String, raspuns: int, candidati: Array, explicatie: 
 		if numar > 0 and not (numar in numere):
 			numere.append(numar)
 
-	# Plasă de siguranță, ca la șiruri: dacă greșelile plauzibile s-au suprapus
+	# Plasă de siguranță, ca la șirurile de la Tipare: dacă greșelile s-au suprapus
 	# între ele, completăm cu vecini, ca să nu rămână un buton gol.
 	var distanta := 1
 	while numere.size() < 4:

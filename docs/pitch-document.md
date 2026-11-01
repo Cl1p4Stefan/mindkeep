@@ -109,7 +109,7 @@ Fără constrângeri, „ce Obelisc activez" nu e o alegere reală — dacă am 
 
 - **PV nu se refac complet între lupte.** Tensiunea centrală a unei expediții: victoria rapidă vs. victoria ieftină. Un fight câștigat cu 2 PV rămași e o problemă pentru nodul următor.
 - **Ruta pe hartă e o decizie.** Nodurile își arată tipul dinainte (Elită = loot bun, risc mare; Eveniment = necunoscut; Odihnă = PV recuperate). Cu PV limitate și un loadout fix de 3 discipline, alegerea drumului devine strategie, nu plimbare.
-- **Loadout-ul de 3 din 4** e prima decizie strategică a fiecărei expediții și influențează tot ce urmează pe hartă.
+- **Loadout-ul de 3 din 5** (de pe 1 noiembrie 2026, cu Tipare) e prima decizie strategică a fiecărei expediții și influențează tot ce urmează pe hartă.
 
 ### Cele 8 Discipline
 
@@ -175,7 +175,7 @@ Atunci disciplinele 5-8 sunt update-uri de conținut, nu rescrieri.
 
 ### Conflicte de rezolvat în cod
 
-- **Seriile numerice** sunt acum la Tipare (#6), nu la Logică (#2) — trebuie mutate din generatorul actual de Logică, altfel același conținut apare în două Obeliscuri.
+- ~~**Seriile numerice** sunt acum la Tipare (#6), nu la Logică (#2) — trebuie mutate din generatorul actual de Logică, altfel același conținut apare în două Obeliscuri.~~ **REZOLVAT** (1 noiembrie 2026): tipul SIR, cu cele nouă tipare ale lui, a plecat din `logica.gd` în `tipare.gd` în aceeași zi în care a apărut disciplina. Logica a scăzut la 14 tipuri.
 - **„Memorie"** își schimbă sensul: în cod și UI e acum trivia, dar în structura nouă Cultură generală (#1) preia trivia, iar Reținere (#5) e memoria de lucru. Redenumire necesară ca să nu se încurce.
 - **Mecanica „intrus"** apare la mai multe discipline — corect, dar cu conținut diferit (cuvinte la #3, forme la #7, simboluri la #8). Confirmă separarea axei _mecanică_ de axa _domeniu_.
 
