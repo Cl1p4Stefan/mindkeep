@@ -1,6 +1,6 @@
 # MINDKEEP — Jurnal de progres
 
-*Ultima actualizare: 31 octombrie 2026*
+*Ultima actualizare: 1 noiembrie 2026*
 *Atașează acest fișier la începutul fiecărei sesiuni noi, împreună cu `CLAUDE.md` și `docs/pitch-document.md`.*
 
 ---
@@ -17,7 +17,7 @@
 | 6. Harta de expediție | ✅ loadout „N din M" · **12-16 noduri**, ramificate, cu sămânță · Luptă / Elită / Odihnă / Eveniment / **Magazin** / **Boss** · **Monede + puteri temporare** · sumar de run · aspect: pergament, simboluri de cerneală, trasee punctate · **nodurile și drumurile stau pe o PANGLICĂ (curbă centrală + benzi)**, nu pe o grilă dreaptă · **patru trasee, toate verzi pe 300 de semințe** (POTCOAVĂ activă; POTCOAVA OGLINDITĂ e aceeași formă, întoarsă) · strat înclinat (forfecare) la ȘARPE · **drumuri care nu se încrucișează niciodată (0 la 300 de semințe)** · **nodul curent are și aură, și X, și stă nemișcat sub figurină** · **două surse de hartă: GENERATĂ (panglica) sau DESENATĂ dintr-un fișier `data/harti/*.json`** — comutatorul `Expeditie.SURSA_HARTII`; azi e pe DESENATĂ · **harta umple pergamentul**: pânza ține toată pagina, antetul plutește peste ea (805 × 427 px de hartă, de la 666 × 353) · **drumurile merg în amândouă sensurile**, cu nodul parcurs tăiat definitiv și cu garanția, verificată pe 16 000 de expediții simulate, că nu te poți înfunda · **figurina sare, cade ca un slam și zguduie ecranul la aterizare**, cu un răgaz de 0,5 s înainte să se deschidă nodul · **tipurile nodurilor se împart după o REȚETĂ fixă, nu se trag cu zarul**: 11 reguli de vecinătate, de început și de FINAL, printre ele **o podea de 3 lupte pe cel mai ieftin drum Start → Boss** (21 octombrie), plasare conștientă de reguli, verificare completă și reîncercare cu sub-sămânță (0 eșecuri pe 500 de semințe × 3 surse de hartă) · **la cel mult 2 pași de Boss e garantat un nod de bătaie** (100% pe 300 de semințe × 3 surse, de la 85% / 96% / 81%) · **niciun nod special nu mai are un geamăn lipit**, nici Evenimentul (0 pe 900 de hărți) · **rețeta nu se mai crede pe cuvânt: se PROBEAZĂ** — plafonul comun încearcă plasarea adevărată și taie un nod când forma nu le încape pe toate · rețeta se **plafonează după forma hărții**, nu după numărul de noduri · **nodul de Eveniment deschide Lacătul** (nivel din adâncime, sămânță din nodul, 6/10/14 Monede la succes) |
 | 7. Cetatea | ❌ |
 | 8. Save/Load | ✅ **pe disc**, de pe 12 octombrie 2026. `autoload/arhiva.gd` — singurul fișier din joc care atinge discul, fără nicio regulă de joc în el; dependența merge într-un singur sens (apelurile de salvare stau în SCENE, ca uneltele de verificare să rămână uscate) · **două fișiere în `user://`**: `permanent.json` (Tezaur + progresul din Antrenament + sacurile permanente) și `expeditie.json`, care există doar cât e un run viu · **scriere prin fișier temporar și redenumire**, cu adoptarea unui `.nou` orfan la citire · **`versiune` în save**: mai vechi se citește prin `_migreaza()`, mai nou se pune deoparte · **un fișier ilizibil nu se șterge și nu se suprascrie** — se redenumește `*.stricat.json` (cu data în nume dacă e deja unul pus deoparte), iar meniul o spune, cu mesaje separate pentru progres și pentru expediție · **butonul din meniu devine „Continua expeditia"**, cu nodurile în urmă și PV-ul pe rândul de sub el · **sacul are acum DURATĂ pe cheie** (`Sac.Durata`): rafturile din Practice sunt permanente, sacurile de luptă rămân pe expediție · **nodul se scrie pe disc la INTRARE**, deci a apărut `nod_nerezolvat` și coloana `reluabil` din `DATE_NOD` — altfel o luptă întreruptă era sărită, iar la Boss era chiar victorie · 54 de verdicte în `verifica_salvarea`, ~1 s · vezi sesiunea SAVE
-| 9. Celelalte discipline | 🟡 Cultură generală ✅ (**7829 de întrebări în joc, toate** (de pe 29 octombrie 2026, când toate cele 93 de celule au trecut de RAFT = 75; vezi sesiunea TOATE CELULELE LA 75): 6515 scrise de mână (`mana:0001`…, dintre care **600 de științe exacte**, `mana:2143`…`mana:2742`, **375 de Diverse**, `mana:2743`…`mana:3117`, și **300 de Istorie și societate**, `mana:3118`…`mana:3417`, și **300 de Gastronomie și lifestyle**, `mana:3418`…`mana:3717`, toate pe 27 octombrie, și **225 de Știință și tehnologie**, `mana:3718`…`mana:3942`, și **225 de Geografie**, `mana:3943`…`mana:4167`, amândouă pe 28 octombrie; vezi DIVERSE, +375, ISTORIE ȘI SOCIETATE, +300, GASTRONOMIE ȘI LIFESTYLE, +300, ȘTIINȚĂ ȘI TEHNOLOGIE, +225 și GEOGRAFIE, +225) + **69 fabricate, elemente chimice** (`wd:Q556:simbol:…`; un singur sens pe element de pe 27 octombrie, vezi UN SENS PE ELEMENT) + **160 fabricate, operă → autor** (`wd:Q12730777:autor:…`) + **251 fabricate, țară ↔ capitală** (`wd:Q142:capitala:…`) + **147 fabricate, lucrare ↔ compozitor** (`wd:Q11980:compozitor:…`) + **687 fabricate de Divertisment și Sport** (27 octombrie: 203 film → regizor, 156 album → interpret, 143 de fotbal, 27 de Jocuri Olimpice, 158 de Formula 1; vezi DIVERTISMENT ȘI SPORT DIN FABRICĂ) — **conținutul fabricat stă într-un DOSAR**, `data/trivia_gen/`, citit întreg de încărcător: un tabel nou = două fișiere, zero linii de cod · **4163 fapte, TOATE cu notă** (cele 600 de științe exacte, cele 375 de Diverse, cele 300 de istorie, cele 300 de gastronomie, cele 225 de științe și cele 225 de geografie au venit cu nota lor) (503 fabricate din șabloane: la elemente **la ce folosește elementul** (o propoziție scrisă de mână pe element, coloana `folosinta`, de pe 21 octombrie) plus simbolul și numărul atomic, anul apariției și anii autorului la opere, descrierea țării la capitale, anii compozitorului la lucrările muzicale · 92 scrise mai devreme de mână · **2046 scrise de mână în sesiunea TOATE AU NOTĂ**, câte una pentru fiecare întrebare rămasă fără) — deci **5481 din 5481 de întrebări ajung la o notă, de la 96 pe 21 octombrie**, fiecare domeniu și fiecare dintre cele 31 de rafturi; sursa celor 2046 sunt EU, nu un tabel, deci nu le poate bate niciun validator și singura verificare e citirea (28 citite din 2142), iar un validator cere ca fiecare cifră și fiecare nume propriu dintr-o notă să existe în datele sursă · **OPT DOMENII** (Geografie și explorare, Istorie și societate, Știință și tehnologie, Artă și literatură, Divertisment și media, Sport și jocuri, Gastronomie și lifestyle, Diverse și curiozități), cu **31 de subcategorii** — **toate OPT domeniile sunt în luptă, niciunul din cele 31 de rafturi nu e gol și nicio întrebare nu e fără raft** (cele 135 scrise înaintea câmpului au fost clasificate, iar 21 de întrebări de mitologie au trecut de la Artă la Istorie); **toate cele 93 de celule (subdomeniu × nivel) au cel puțin 75 de întrebări**, adică treapta RAFT — treapta CONFORT din `plan-continut.md`, cea la care 4-5 expediții lungi nu repetă nimic; **ținta de lucru de pe 29 octombrie e treapta nouă RAFT = 75**, adică 2300 de întrebări pe 80 de celule (nivelul I întâi, 929 din ele), fiindcă la 75 un singur raft dus până la capăt deschide singur nivelul următor în Practice — 100 pe celulă a fost cântărit în aceeași zi și lăsat deoparte, 4360 de întrebări pentru niciun prag din cod (vezi ȚINTA DE 75), tăiate după cum se joacă, nu după cum crescuse baza: artă + mitologie + literatură s-au unit, Divertisment și Sport pornesc goale · `CATEGORII` (listă) a devenit `DOMENII` (dicționar cheie → nume afișat), deci antetul scrie „ARTĂ ȘI LITERATURĂ”, nu cheia · **alegerea din luptă e în două trepte** — întâi domeniul, uniform, apoi întrebarea, cu sacul pe cheie de domeniu ȘI nivel — iar de azi **domeniul intră doar peste `PRAG_DOMENIU = 8` întrebări pe celulă**, cu plasă dacă nu trece niciunul; sub prag e sărit, nu golit (istoria trecea cu rezerva ZERO și era următoarea țintă de conținut; de pe 27 octombrie are 200 pe fiecare nivel) · comutator `FOLOSESTE_WIKIDATA` · **fabrica are un modul comun**, `tools/fabrica/comun.py`, iar grila marchează celulele sărite · **faptele capitalelor au o LISTĂ de imagini**, `imagini: [{tip, …}]`: **126 de steaguri pe disc** (`assets/imagini_fapte/steaguri/`, PNG 320 px, 0,53 MB sursă, toate în domeniul public, cu manifest de credite), plus o intrare de hartă pe fiecare din cele 127 de fapte; Omanul e singurul refuzat, cu motivul scris · **fiecare întrebare are și o `subcategorie`**, una singură, din listă închisă pe domeniu (36 de chei, 4 folosite; la istorie sunt erele, tăiate pe dată) — cele 135 scrise de mână o primesc într-un lot de clasificare, cu un clichet în verificator · **istoria e la 200 pe fiecare nivel**, câte 150 pe fiecare din cele patru rafturi (vezi ISTORIE ȘI SOCIETATE, +300), **gastronomia la fel, 200 / 200 / 200, cu 50 pe fiecare celulă** (vezi GASTRONOMIE ȘI LIFESTYLE, +300), iar **cele trei rafturi de științe hrănite de mână — Lumea vie, Tehnologie și invenții, Astronomie și spațiu — au 150 fiecare, câte 50 pe celulă** (vezi ȘTIINȚĂ ȘI TEHNOLOGIE, +225), **iar geografia are tot 50 pe fiecare celulă a celor trei rafturi scrise de mână** — fizica, turismul și demografia — a patra, `geografie_politica`, venind din fabrică (vezi GEOGRAFIE, +225), iar **Divertismentul și Sportul au câte 50 pe fiecare celulă**, pe 11 subcategorii cu care se poate filtra (filme 48, muzică 36, fotbal 30, olimpiade 30…) — deci **toate ȘASE domeniile sunt în luptă**, fiecare cu 1/6 din întrebări, și toate cele 11 subcategorii ale celor două domenii noi au conținut · **verificarea e un singur câmp**, `verificat: true/false` pe întrebare, pus de mână: întrebarea intră în joc oricum, iar flagul spune doar dacă i-am citit nota. Niciun script, niciun parametru — mecanismul de ciorne, al doilea flag de pe fapt și cele două unelte de confirmare s-au desfăcut (vezi UN SINGUR FLAG) · planul de conținut al tuturor celor șase domenii, cu subcategorii, tabele propuse și capcanele lor, e în **`docs/plan-continut.md`** · vezi sesiunile UN SINGUR FLAG, ȘASE DOMENII ÎN LUPTĂ, PLANUL ȘI CIORNELE, DOMENIILE, CONȚINUTUL, ID ȘI FAPT, FABRICA, AL DOILEA TABEL, MODULUL COMUN și STEAGURILE) · Logica ✅ (80 de categorii) · Cuvinte ✅ · toate trei fără repetiții pe expediție, **Cultura generală după `id`, nu după text** · celelalte 5 ❌ |
+| 9. Celelalte discipline | 🟡 Cultură generală ✅ (**7829 de întrebări în joc, toate** (de pe 29 octombrie 2026, când toate cele 93 de celule au trecut de RAFT = 75; vezi sesiunea TOATE CELULELE LA 75): 6515 scrise de mână (`mana:0001`…, dintre care **600 de științe exacte**, `mana:2143`…`mana:2742`, **375 de Diverse**, `mana:2743`…`mana:3117`, și **300 de Istorie și societate**, `mana:3118`…`mana:3417`, și **300 de Gastronomie și lifestyle**, `mana:3418`…`mana:3717`, toate pe 27 octombrie, și **225 de Știință și tehnologie**, `mana:3718`…`mana:3942`, și **225 de Geografie**, `mana:3943`…`mana:4167`, amândouă pe 28 octombrie; vezi DIVERSE, +375, ISTORIE ȘI SOCIETATE, +300, GASTRONOMIE ȘI LIFESTYLE, +300, ȘTIINȚĂ ȘI TEHNOLOGIE, +225 și GEOGRAFIE, +225) + **69 fabricate, elemente chimice** (`wd:Q556:simbol:…`; un singur sens pe element de pe 27 octombrie, vezi UN SENS PE ELEMENT) + **160 fabricate, operă → autor** (`wd:Q12730777:autor:…`) + **251 fabricate, țară ↔ capitală** (`wd:Q142:capitala:…`) + **147 fabricate, lucrare ↔ compozitor** (`wd:Q11980:compozitor:…`) + **687 fabricate de Divertisment și Sport** (27 octombrie: 203 film → regizor, 156 album → interpret, 143 de fotbal, 27 de Jocuri Olimpice, 158 de Formula 1; vezi DIVERTISMENT ȘI SPORT DIN FABRICĂ) — **conținutul fabricat stă într-un DOSAR**, `data/trivia_gen/`, citit întreg de încărcător: un tabel nou = două fișiere, zero linii de cod · **4163 fapte, TOATE cu notă** (cele 600 de științe exacte, cele 375 de Diverse, cele 300 de istorie, cele 300 de gastronomie, cele 225 de științe și cele 225 de geografie au venit cu nota lor) (503 fabricate din șabloane: la elemente **la ce folosește elementul** (o propoziție scrisă de mână pe element, coloana `folosinta`, de pe 21 octombrie) plus simbolul și numărul atomic, anul apariției și anii autorului la opere, descrierea țării la capitale, anii compozitorului la lucrările muzicale · 92 scrise mai devreme de mână · **2046 scrise de mână în sesiunea TOATE AU NOTĂ**, câte una pentru fiecare întrebare rămasă fără) — deci **5481 din 5481 de întrebări ajung la o notă, de la 96 pe 21 octombrie**, fiecare domeniu și fiecare dintre cele 31 de rafturi; sursa celor 2046 sunt EU, nu un tabel, deci nu le poate bate niciun validator și singura verificare e citirea (28 citite din 2142), iar un validator cere ca fiecare cifră și fiecare nume propriu dintr-o notă să existe în datele sursă · **OPT DOMENII** (Geografie și explorare, Istorie și societate, Știință și tehnologie, Artă și literatură, Divertisment și media, Sport și jocuri, Gastronomie și lifestyle, Diverse și curiozități), cu **31 de subcategorii** — **toate OPT domeniile sunt în luptă, niciunul din cele 31 de rafturi nu e gol și nicio întrebare nu e fără raft** (cele 135 scrise înaintea câmpului au fost clasificate, iar 21 de întrebări de mitologie au trecut de la Artă la Istorie); **toate cele 93 de celule (subdomeniu × nivel) au cel puțin 75 de întrebări**, adică treapta RAFT — treapta CONFORT din `plan-continut.md`, cea la care 4-5 expediții lungi nu repetă nimic; **ținta de lucru de pe 29 octombrie e treapta nouă RAFT = 75**, adică 2300 de întrebări pe 80 de celule (nivelul I întâi, 929 din ele), fiindcă la 75 un singur raft dus până la capăt deschide singur nivelul următor în Practice — 100 pe celulă a fost cântărit în aceeași zi și lăsat deoparte, 4360 de întrebări pentru niciun prag din cod (vezi ȚINTA DE 75), tăiate după cum se joacă, nu după cum crescuse baza: artă + mitologie + literatură s-au unit, Divertisment și Sport pornesc goale · `CATEGORII` (listă) a devenit `DOMENII` (dicționar cheie → nume afișat), deci antetul scrie „ARTĂ ȘI LITERATURĂ”, nu cheia · **alegerea din luptă e în două trepte** — întâi domeniul, uniform, apoi întrebarea, cu sacul pe cheie de domeniu ȘI nivel — iar de azi **domeniul intră doar peste `PRAG_DOMENIU = 8` întrebări pe celulă**, cu plasă dacă nu trece niciunul; sub prag e sărit, nu golit (istoria trecea cu rezerva ZERO și era următoarea țintă de conținut; de pe 27 octombrie are 200 pe fiecare nivel) · comutator `FOLOSESTE_WIKIDATA` · **fabrica are un modul comun**, `tools/fabrica/comun.py`, iar grila marchează celulele sărite · **faptele capitalelor au o LISTĂ de imagini**, `imagini: [{tip, …}]`: **126 de steaguri pe disc** (`assets/imagini_fapte/steaguri/`, PNG 320 px, 0,53 MB sursă, toate în domeniul public, cu manifest de credite), plus o intrare de hartă pe fiecare din cele 127 de fapte; Omanul e singurul refuzat, cu motivul scris · **fiecare întrebare are și o `subcategorie`**, una singură, din listă închisă pe domeniu (36 de chei, 4 folosite; la istorie sunt erele, tăiate pe dată) — cele 135 scrise de mână o primesc într-un lot de clasificare, cu un clichet în verificator · **istoria e la 200 pe fiecare nivel**, câte 150 pe fiecare din cele patru rafturi (vezi ISTORIE ȘI SOCIETATE, +300), **gastronomia la fel, 200 / 200 / 200, cu 50 pe fiecare celulă** (vezi GASTRONOMIE ȘI LIFESTYLE, +300), iar **cele trei rafturi de științe hrănite de mână — Lumea vie, Tehnologie și invenții, Astronomie și spațiu — au 150 fiecare, câte 50 pe celulă** (vezi ȘTIINȚĂ ȘI TEHNOLOGIE, +225), **iar geografia are tot 50 pe fiecare celulă a celor trei rafturi scrise de mână** — fizica, turismul și demografia — a patra, `geografie_politica`, venind din fabrică (vezi GEOGRAFIE, +225), iar **Divertismentul și Sportul au câte 50 pe fiecare celulă**, pe 11 subcategorii cu care se poate filtra (filme 48, muzică 36, fotbal 30, olimpiade 30…) — deci **toate ȘASE domeniile sunt în luptă**, fiecare cu 1/6 din întrebări, și toate cele 11 subcategorii ale celor două domenii noi au conținut · **verificarea e un singur câmp**, `verificat: true/false` pe întrebare, pus de mână: întrebarea intră în joc oricum, iar flagul spune doar dacă i-am citit nota. Niciun script, niciun parametru — mecanismul de ciorne, al doilea flag de pe fapt și cele două unelte de confirmare s-au desfăcut (vezi UN SINGUR FLAG) · planul de conținut al tuturor celor șase domenii, cu subcategorii, tabele propuse și capcanele lor, e în **`docs/plan-continut.md`** · vezi sesiunile UN SINGUR FLAG, ȘASE DOMENII ÎN LUPTĂ, PLANUL ȘI CIORNELE, DOMENIILE, CONȚINUTUL, ID ȘI FAPT, FABRICA, AL DOILEA TABEL, MODULUL COMUN și STEAGURILE) · Logica ✅ (**15 tipuri de întrebare**, 56 de tipare, de pe 1 noiembrie 2026 — vezi CINCISPREZECE TIPURI; 80 de categorii, 25 de cuvinte) · Cuvinte ✅ · toate trei fără repetiții pe expediție, **Cultura generală după `id`, nu după text** · celelalte 5 ❌ |
 | 10–13. Generator de inamici, artă, web | ❌ (artă parțial: figurile principale și piesele de pe butoanele de Obelisc au imagini reale · **arena are fundal: biblioteca gotică**, cu personajele așezate pe dalele din prim-plan, umbră de contact și lumină de sală) · Regina: **amânată**, vezi CLAUDE.md · **pasul 13 (Practice) — prima felie ✅**: **meniu de start** (`scenes/meniu/`, de azi `run/main_scene`) cu două butoane, și **Antrenament liber** (`scenes/practice/`) — alegi domeniul, apoi raftul, din `DOMENII` și `SUBCATEGORII`, cu o iconiță și nivelul pe fiecare domeniu și rafturile goale stinse („gol la nivelul II”); întrebările vin prin **chiar scena de trivia a luptei**, fără cronometru (`cu_cronometru`, două linii în `puzzle.gd`); nivel pe DOMENIU, urcat singur la `PRAG_PRACTICE` = 60 de întrebări distincte știute; sac propriu, pe cheie cu filtru (`practice:<domeniu>:<raft>:<nivel>`); progres scris pe disc de la Save (12 octombrie), în `permanent.json` · **„Afla mai multe" ✓** (12 octombrie): după fiecare răspuns, corect sau greșit, un buton deschide nota faptului, citită din `explicatie` (contractul cu `puzzle.gd`), nu din `TRIVIA.fapte`; **de pe 21 octombrie butonul e un CREIER în colțul chenarului**, stins până la verdict și aprins când există notă — de azi apare la **TOATE cele 5481 de întrebări** (era 1 din 28 dimineață, apoi 1 din 3,6); imaginea din popup e felia următoare · **neștiutele întâi ✓** (21 octombrie): greșitele revin la distanță, iar raftul știut tot se anunță o singură dată și apoi poartă „Nivel I · 100%" în lista de rafturi · **trecerea singură ✓** (21 octombrie): după un răspuns CORECT, „Următoarea" se umple în 2 s și trece fără click; o oprește doar apăsarea creierului (sau un anunț), iar la greșit nu curge nimic · **pergament în bibliotecă ✓** (21 octombrie): o temă comună (`assets/tema/pergament.tres`), fonturile Cinzel + Alegreya (OFL) și biblioteca din luptă estompată ca fundal; scena de trivia se îmbracă singură în Practice și rămâne neschimbată în luptă · **meniul în bibliotecă ✓** (22 octombrie): aceeași temă, biblioteca abia estompată, două pagini (figurina, creierul), intrare scurtă și praf în lumină · **iconițe pictate ✓** (23 octombrie): domeniile și creierul sunt PNG-uri colorate (generate cu AI, decupate, 256 px), nu SVG-uri albe vopsite de temă · vezi sesiunile ICONIȚE PICTATE, MENIUL ÎN BIBLIOTECĂ, MENIUL ȘI PRACTICE, AFLĂ MAI MULTE, TOATE AU NOTĂ, RAFTUL PARCURS, TRECEREA SINGURĂ, PERGAMENT ÎN BIBLIOTECĂ, ICONIȚE PE DOMENII și CREIERUL DIN CHENAR |
 
 Nodul de **Eveniment** are primul lui conținut: **Lacătul** — un cufăr cu cifru,
@@ -37,6 +37,290 @@ buget, generare) rămâne acolo unde era.
 Am sărit peste ordinea recomandată la pasul 12 (artă): imaginile pentru rege,
 cavaler și pentru cele trei piese de șah de pe butoane au intrat mai devreme, dar
 restul rămâne placeholder. Bucla de luptă e în continuare cea validată, nu arta.
+
+---
+
+## CINCISPREZECE TIPURI (1 noiembrie 2026) — Logica de la 5 la 15 feluri de întrebare
+
+Logica avea cinci tipuri: șiruri numerice, intrusul, analogia, silogismul,
+ordonarea. De azi are **cincisprezece**, cu 56 de tipare în loc de 20. Niciun
+pixel nou, nicio scenă nouă, nicio linie în `lupta.gd`, nicio linie în
+contractul `Puzzle`.
+
+### De ce aici, și de ce atâtea
+
+Drumul e scris în pitch, la „de ce rămânem la 4 discipline, nu mai multe":
+*„varietate ÎN interiorul celor 4 — categorii de Trivia rotative, formate
+multiple de Logică, grid-uri Sudoku de mărimi diferite — costă mult mai puțin
+decât o disciplină complet nouă și rezolvă aceeași problemă"*.
+
+Aritmetica e brutal de clară. Un tip nou de Logică = o funcție și un rând în
+`GENERATOARE`. O disciplină nouă = o scenă, un buton de Obelisc, un rol tactic,
+o statistică, probabil o clădire în Cetate. Zece tipuri noi costă azi mai puțin
+decât ar costa a cincea disciplină, și dau mai multă varietate.
+
+### Cele zece, pe familii
+
+| familie | tip | ce te pune să faci |
+|---|---|---|
+| **logică propozițională** | DACA-ATUNCI | implicația: modus ponens, modus tollens, contrapozitiva, și cele două capcane la care NU rezultă nimic |
+| | NEGATIA | ce spune exact contrariul: „toți" nu se neagă cu „niciunul", se neagă cu „unii nu" |
+| | SI / SAU | silogismul disjunctiv, „nu amândouă", și cele două legi ale lui De Morgan |
+| | PREMISA LIPSA | nu tragi concluzia, o repari: ți se ia o premisă din mijloc, din lanț sau de la început |
+| **enigme** | ADEVAR SI MINCIUNA | cavalerii spun adevărul, mincinoșii mint. Cine minte? Câți mint? |
+| **numărătoare** | MULTIMI | reuniune, intersecție, „numai una", „niciuna" |
+| | CEL MAI RAU CAZ | principiul sertarelor: câți trebuie ca să nu mai depinzi de noroc |
+| | CALENDAR | roata săptămânii, înainte și înapoi |
+| **constrângeri** | LOCURILE | cine stă pe al câtelea loc, din capete, vecinătăți și „nu lângă" |
+| | POTRIVIRE | cine are ce, din indicii negative și parțiale |
+
+Fiecare are **cel puțin un tipar pe fiecare nivel**. Regula era deja scrisă în
+`logica.gd` („un tip care lipsește de la un nivel lasă celelalte să-și împartă
+între ele toată probabilitatea"), dar nimeni n-o verifica. Acum o verifică
+`verifica_logica`, și e genul de regulă care se rupe în tăcere: jocul merge, doar
+că la nivelul II nu mai apar silogisme.
+
+**Ce am evitat dinadins.** Jocul e proiectat pentru opt discipline, iar patru din
+ele nu există încă — deci un tip de Logică n-avea voie să ciupească din ele.
+Nimic cu rotații mentale (ăla e Spațialul), nimic cu calcul rapid sau procente
+(Numere), nimic de reținut dintr-o privire (Reținere), niciun cifru de litere și
+nicio serie nouă de simboluri (Tipare — unde oricum se mută șirurile numerice, la
+pasul 2 din rută). Cele zece sunt toate DEDUCȚIE, și de-aia încap toate la
+Logică.
+
+### Trei tipuri CAUTĂ răspunsul, nu-l construiesc
+
+Până azi fiecare generator pornea de la o regulă și scria întrebarea din ea.
+MINCINOSI, LOCURILE și POTRIVIRE merg invers: trag indicii la întâmplare despre
+o situație ascunsă, apoi trec prin **toate** situațiile posibile (8 atribuiri la
+mincinoși, 24 sau 120 de permutări la celelalte) și păstrează enigma doar dacă
+răspunsul iese același peste tot. Aceeași metodă ca la Lacăt: un puzzle nu se
+crede pe cuvânt, se rezolvă.
+
+De ce nu se poate altfel, la mincinoși: o afirmație e adevărată sau falsă
+DEPINZÂND de ce fel de om o rostește, iar ce fel de om e depinde de ce au spus
+ceilalți. Nu există formulă; există doar încercarea tuturor combinațiilor. Opt.
+
+Două urmări care n-au mai fost în cod până azi:
+
+1. **Un generator are voie să dea greș.** Întoarce `{}`, iar `_compune_intrebare`
+   alege altă rețetă — de-aia are acum o buclă de `INCERCARI_COMPUNERE = 8`
+   încercări. O întrebare cu două răspunsuri bune e mai rea decât niciuna.
+2. **Se cere doar ca RĂSPUNSUL să fie determinat, nu toată soluția.** Ca să
+   întreb „cine stă pe locul 3?" nu-mi trebuie toată așezarea, îmi trebuie locul
+   3. Nu e lene, e citibilitate: unicitatea întreagă ar fi cerut cinci indicii
+   acolo unde doi ajung, adică cinci rânduri de citit sub cronometru. Când totuși
+   iese o soluție unică, explicația o arată întreagă; când nu, spune exact atât
+   cât s-a dedus. O explicație n-are voie să pretindă mai mult.
+
+### Ce a prins verificarea, din prima rulare
+
+`verifica_logica` a fost scrisă odată cu tipurile, nu după, și a găsit imediat o
+problemă pe care n-aș fi văzut-o jucând **niciodată**:
+
+```
+niciun tipar nu pica mai des de 50%   PICAT   _asezare_cinci: 91%, _potrivire_patru: 83%, …
+nivelul 3: 15 tipuri, ~600 fiecare    PICAT   ASEZARE 57, POTRIVIRE 164
+```
+
+La cinci inși, 91% din enigme nu ajungeau niciodată la un răspuns determinat, așa
+că tipul apărea **de zece ori mai rar** decât ar fi trebuit — 57 de trageri din
+600 așteptate. Și fără nicio eroare nicăieri: `_compune_intrebare` alegea
+liniștit altă rețetă, exact cum fusese scrisă să facă.
+
+Cauza: indiciile se trăgeau la noroc, iar un indiciu tras la noroc e de obicei
+moale. „X sta undeva la stanga lui Y" taie o jumătate din 120 de așezări și nu te
+duce nicăieri.
+
+**Leacul n-a fost să ridic plafonul de indicii**, deși ăsta era primul reflex.
+S-a scris `_cel_mai_taios`: la fiecare pas se trag opt indicii adevărate și se
+păstrează cel care lasă cele mai puține situații în picioare. Enigma se închide
+în două-trei indicii în loc de cinci. Rata de eșec a căzut de la 91% la 9%, și
+enunțul a devenit mai SCURT — adică exact invers de cum ar fi arătat cu plafonul
+ridicat. Plafonul a scăzut, de la 5 la 4.
+
+Pe urmă încă un pas, `_taie_de_prisos`: după ce răspunsul s-a închis, se încearcă
+scoaterea fiecărui indiciu, iar cel fără de care răspunsul rămâne determinat
+pleacă. Alegerea lacomă poate pune un indiciu care devine de prisos DUPĂ ce vine
+următorul — un generator n-are cum să știe asta în avans, dar poate verifica la
+sfârșit, și costă cinci rezolvări. POTRIVIRE a scăzut de la 6,2 rânduri la 5,6.
+
+### A doua unealtă: ce un script nu poate judeca
+
+`verifica_logica` bate FORMA, și o bate tare: răspunsul de la mulțimi, de la cel
+mai rău caz și de la calendar e **recalculat din enunț** (cifrele se citesc din
+text cu o expresie regulată, iar socoteala e scrisă a doua oară în verificare —
+dacă ar chema codul din `logica.gd`, ar confirma doar că acel cod e egal cu el
+însuși). Enigmele sunt rezolvate din nou. Echilibrul pe tipuri se măsoară pe
+27 000 de trageri.
+
+Dar forma nu e tot. „Emil e calugarita" trece orice verificare automată și e
+totuși greșit. De-aia există a doua unealtă, `verifica_mostrele`: tipărește câte
+o întrebare din fiecare din cele 56 de tipare, ca să le citesc. Nu dă verdicte și
+nu iese cu cod de eroare, ca `verifica_coltul`.
+
+Și chiar acolo s-a văzut ce nu se putea vedea altfel. Tiparele cu UN personaj
+scoteau „Emil e calugarita" — nume masculin, substantiv feminin. Leacul: ele trag
+acum numai cuvinte masculine, dintr-o listă făcută la încărcare. Distincția
+merită ținută minte, fiindcă pare o inconsecvență: nonsensul de ÎNȚELES („Toate
+stelele sunt corabii") e BUN, te împiedică să răspunzi din memorie; o greșeală de
+ACORD nu aduce nimic, doar te face să te întrebi dacă generatorul e stricat.
+
+### Datele: un câmp nou, care cere sens
+
+`data/logica_vocabular.json` a crescut de la 18 la 25 de cuvinte și a primit un
+câmp: **`om`**. MULȚIMILE și CERTITUDINEA povestesc ceva — „în cetate sunt 12
+cavaleri și 9 santinele" — iar o poveste despre 12 stele și 9 cărți nu se
+citește ca o poveste. E singurul câmp din vocabular care cere o judecată despre
+înțeles, și e OPȚIONAL: lipsa lui înseamnă `false`, deci un cuvânt nou intră la
+silogisme fără să fi hotărât nimic despre el. Rândul tipărit la încărcare spune
+câți oameni s-au găsit, ca o listă fără niciunul să nu treacă în tăcere.
+
+`logica_categorii.json` **nu s-a atins**. Cele 80 de categorii hrănesc în
+continuare intrusul și analogiile, exact ca înainte.
+
+Un singur lucru nou stă în COD și nu în date: lista de `LUCRURI` pentru
+POTRIVIRE (spadă, scut, arc…). Categoriile din fișier n-ar fi mers, și merită
+scris de ce, dacă vreodată cineva vrea să le lege: jumătate din ele sunt NOȚIUNI
+(„zilele saptamanii", „operatii aritmetice", „stari de agregare"), iar „Anton nu
+are luni" nu e o propoziție.
+
+### Enunțul care nu se ținea singur
+
+Prima întrebare de POTRIVIRE pe care am văzut-o cu ochii, în joc:
+
+```
+Fiecare are alt lucru.
+Luca nu are pumnal.
+Anton nu are buzdugan.
+Anton are buzdugan sau coif.
+
+Ce are Luca?        pumnal · arc · buzdugan · coif
+```
+
+Întrebarea mea, uitându-mă la ea: **„asta nu poate avea două răspunsuri bune,
+arc și buzdugan?"** Ba da. Și cele 52 de verdicte erau toate verzi.
+
+**Ce se întâmplase.** Generatorul lucrează pe o lume în care lucrurile împărțite
+sunt pumnal, buzdugan și coif, și nimic altceva. În lumea aia răspunsul chiar e
+unul singur: Anton ia coiful (din ultimele două rânduri), Luca n-are voie la
+pumnal, deci lui Luca îi rămâne buzdugan. Dar lumea aia nu era scrisă nicăieri în
+enunț. Cititorul nu afla nici câți oameni sunt, nici care sunt lucrurile — iar
+„arc", de pe al patrulea buton, era la fel de bun ca „buzdugan". Două răspunsuri
+corecte, cu toată verificarea verde.
+
+**De ce verificarea n-a prins.** Fiindcă toate verdictele de la enigme lucrau pe
+`_enigma_*`, adică pe STRUCTURĂ: indiciile sunt adevărate, soluția ascunsă e
+printre soluții, nicio altă soluție nu dă alt răspuns. Niciunul nu se uita la
+TEXTUL tipărit. Verificam ce știe rezolvitorul, nu ce știe cititorul — și tot
+rostul unei întrebări e ce ajunge la cititor.
+
+**Cine mai avea boala.** LOCURILE, la fel și mai rău: enunțul nu spunea nici
+câți stau pe rând, nici cine, nici că locul 1 e cel din stânga. La cinci inși,
+butoanele arată doar patru nume, deci un ins putea să nu apară NICĂIERI — nici în
+indicii, nici pe butoane — și totuși deducția avea nevoie de el. MINCINOSI și
+DEDUCTIE sunt sănătoase, și merită știut de ce: acolo forma enunțului îi aduce pe
+toți de la sine (un lanț de comparații îi atinge pe toți, fiecare mincinos are
+replica lui), pe când la LOCURI și la POTRIVIRE indiciile se trag la întâmplare.
+**Asta e regula generală**: un tip de întrebare care își alege indiciile la
+întâmplare trebuie să-și declare distribuția, unul care le derivă din distribuție
+nu.
+
+**Leacul**, un rând la începutul enunțului:
+
+```
+Anton, Emil si Radu au, fiecare, alt lucru: arc, buzdugan sau topor.
+Anton, Bran, Grigore si Luca stau pe locurile 1-4, de la stanga la dreapta.
+```
+
+Numele se înșiră alfabetic, dintr-o COPIE a listei: `nume` se citește peste tot
+prin indice (`nume[indiciu["a"]]`), deci sortarea originalului ar fi mutat
+oamenii între ei. Rândul de la locuri spune trei lucruri deodată — cine, câte
+locuri, și în ce direcție se numără.
+
+**Al patrulea buton de la grila de trei** rămâne un lucru din afara listei (la
+trei oameni se împart trei lucruri, dar butoane sunt patru). Acum e o alegere, nu
+o scăpare: cine citește primul rând îl taie din ochi. Plata e o ghicire din trei
+în loc de una din patru la nivelul I — mai ieftină decât o întrebare cu două
+răspunsuri. Varianta „patru lucruri pentru trei oameni, unul nefolosit" ar fi
+dus nivelul I la 24 de situații, adică exact cât nivelul II, cu indicii mai
+slabe: mai greu, nu mai ușor.
+
+**Secțiunea nouă din verificare** (11, „enunțul se ține singur") nu se uită la
+enigmă, ci la textul tipărit, și cere un singur lucru: nimeni și nimic să nu
+apară nedeclarat. Desface primul rând, scoate distribuția și recuzita, apoi
+trece prin tot restul — indicii, întrebare, butoane — și cade dacă găsește un
+nume sau un lucru care nu e în ele. Plus numărătorile: atâtea locuri câți inși,
+atâtea lucruri câți oameni, exact un buton din afara listei la grila de trei.
+
+Rostul ei e să lege unicitatea de enunț: cu primul rând la locul lui, cititorul
+cunoaște exact distribuția pe care rezolvitorul a presupus-o, deci verdictele de
+unicitate de deasupra devin și ale lui.
+
+**Proba că e un verdict adevărat, nu unul care spune mereu „OK":** am pus enunțul
+vechi la loc pentru o rulare. Toate șase au picat — „primul rand nu prezinta
+scena: Fiecare are alt lucru.", „primul rand nu prezinta scena: Iancu sta imediat
+la stanga lui Emil." — și restul verificării a rămas verde, adică secțiunea bate
+exact ce zice că bate. Apoi am pus enunțul nou înapoi.
+
+### Cât se citește — o măsurătoare, nu un verdict
+
+Ultima secțiune din `verifica_logica` tipărește un tabel. La inamicul cu
+cronometru (azi doar Lăncierul) ai 12 secunde pentru TOT, citit inclusiv, iar un
+tip care cere constant șase rânduri e corect și nejucabil.
+
+| tip | rânduri, mediu | rânduri, maxim | semne, maxim |
+|---|---|---|---|
+| SIR, INTRUS, CALENDAR | 1,0 | 1 | 59 |
+| ANALOGIE, NEGATIE, CERTITUDINE | 3,0 | 3 | 144 |
+| CONDITIONAL, CONECTORI | 3,5–3,8 | 4 | 80 |
+| SILOGISM, MULTIMI | 4,0–4,3 | 5 | 145 |
+| PREMISA, DEDUCTIE | 5,0–5,3 | 6 | 161 |
+| MINCINOSI, POTRIVIRE | 5,7 | 6–7 | 235 |
+| ASEZARE | 6,1 | 7 | 257 |
+
+Tabelul e de după rândul de prezentare (vezi mai jos): ASEZARE și POTRIVIRE au
+crescut fiecare cu un rând și cu vreo 50-70 de semne, iar ASEZARE a ajuns cel mai
+lung tip din joc — 6,1 rânduri în medie, 7 la vârf.
+
+La RÂNDURI, restul stau la nivelul vechii ORDONARE (5,3 rânduri), care e în joc
+de la jumătatea lui septembrie, deci acolo nu se deschide un prag nou. La SEMNE
+se deschide: ASEZARE (257) și POTRIVIRE (235) trec cu 60% peste cele 158 ale
+ORDONĂRII, fiindcă rândurile lor sunt propoziții întregi, nu „Anton e mai inalt
+decat Bran". Ăsta e singurul loc în care măsurătoarea spune ceva ce nu știam, și
+e de recitit după prima luptă cu Lăncierul: dacă 12 secunde nu ajung pentru
+ASEZARE la nivelul I, ce se reglează e numărul de indicii, nu rândul de
+prezentare — fără el întrebarea n-are răspuns. CALENDAR e surpriza plăcută din
+partea cealaltă: un singur rând, 59 de semne, și totuși o deducție adevărată.
+
+### Tabla de la sfârșit
+
+- **15 tipuri, 56 de tipare**, toate la toate trei nivelurile.
+- `verifica_logica`: **58 de verdicte, ~6 s**, toate verzi.
+- `verifica_mostrele`: 56 de mostre, citite.
+- `verifica_duelul`, `verifica_retragerea`, `verifica_salvarea`: neatinse, verzi
+  (ele joacă lupte adevărate cu Obeliscul de Logică pe masă).
+- Contractul `Puzzle`: **nicio linie**. `lupta.gd`: **nicio linie**.
+
+### Rămas deschis
+
+- **SIR a scăzut de la 1/5 la 1/15 din întrebările de Logică.** Plătit conștient,
+  și e mai bine așa: seriile numerice oricum se mută la Tipare (pasul 2 din
+  rută), iar până atunci apar mai rar în locul în care n-ar trebui să fie.
+- **Nivelul III tot nu apare în luptă.** Contradicția era deja scrisă la DUEL și
+  rămâne — doar că acum costă mai mult: nouă tipare noi trăiesc numai la nivelul
+  III (cele două capcane de implicație, De Morgan, premisa de la început,
+  numărătoarea mincinoșilor, cele două mulțimi grele, „câte unul din fiecare",
+  cei cinci inși și potrivirea întoarsă) și nu s-au văzut niciodată în joc.
+  S-au văzut în `verifica_mostrele`, ceea ce nu e același lucru.
+- **Nicio întrebare de Logică nu are „Află mai multe".** `explicatie` e plină
+  (regula, ordinea, socoteala, cine minte), iar creierul din chenar o citește
+  din exact acel câmp. N-am probat-o în Practice, fiindcă Practice e deocamdată
+  numai Cultură generală. Când se deschide, e pe gratis.
+- **„Nu se poate stabili" la nivelurile I și II.** Apare ca variantă la toate
+  tiparele de inferență (ca să nu fie un semn) și e verificat că nu e niciodată
+  răspunsul bun acolo. Dacă vreodată se adaugă un tipar la care E răspunsul bun
+  la nivelul I, verificarea aia trebuie schimbată — nu ștearsă.
 
 ---
 
