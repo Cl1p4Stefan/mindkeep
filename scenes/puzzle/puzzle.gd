@@ -46,6 +46,14 @@ extends Control
 ## Opțional, dacă vrei un mesaj de eroare mai limpede:
 ##   `_descriere_sursa()`          — de unde ar fi trebuit să vină întrebările.
 ##
+## Opțional, dacă întrebarea ta are nevoie de o IMAGINE:
+##   `_plansa_pentru(q)`           — întoarce un `Control` desenat de tine, sau
+##                                   `null`. Baza îl pune deasupra enunțului și
+##                                   îl îngroapă la întrebarea următoare.
+##                                   Vezi `_pune_plansa()` pentru ce înseamnă
+##                                   „deasupra" și de ce e un NOD, nu o
+##                                   descriere de forme.
+##
 ## Scena nu știe NIMIC despre luptă, PV, PA sau inamici — nici baza, nici
 ## disciplinele. Fiecare disciplină poate fi testată singură cu F6.
 
@@ -354,6 +362,10 @@ var stil_bara: StyleBoxFlat = null
 var culoare_sant_repaus := Color.BLACK
 
 @onready var bara_timp: ProgressBar = %BaraTimp
+# CUTIA PLANȘEI: locul în care o disciplină are voie să deseneze.
+# Golă și ascunsă la toate cele cinci discipline de până acum — vezi
+# `_pune_plansa()` pentru ce e înăuntru și de ce stă AICI, în bază.
+@onready var cutia_plansa: CenterContainer = %Plansa
 @onready var eticheta_intrebare: Label = %Intrebare
 @onready var butoane := [%Varianta1, %Varianta2, %Varianta3, %Varianta4]
 
@@ -403,6 +415,39 @@ func _compune_intrebare(_nivel: int) -> Dictionary:
 ## să știi ce fișier să cauți fără să deschizi consola. Opțională.
 func _descriere_sursa() -> String:
 	return ""
+
+
+## ── PLANȘA: SINGURUL CÂRLIG DE DESENARE DIN CONTRACT ──────────
+##
+## Întoarce un `Control` pe care disciplina l-a construit singură, sau `null`
+## dacă întrebarea e numai text. Chemată de `porneste()` DUPĂ ce întrebarea a
+## fost acceptată — vezi mai jos de ce momentul contează.
+##
+## DE CE EXISTĂ. Patru dintre cele cinci discipline de până acum se puteau
+## scrie cu patru butoane și un rând de text, iar a cincea (Tipare) a plătit
+## pentru asta: matricea 3×3 și șirurile de simboluri au CĂZUT din ea, scris
+## negru pe alb în antetul lui `tipare.gd`, fiindcă „un tabel scris ca text nu
+## se aliniază" — Cinzel și Alegreya nu sunt monospațiate. A șasea disciplină
+## e Spațial, iar o întrebare spațială fără imagine nu e o întrebare spațială,
+## e o ghicitoare despre o imagine pe care nu o vezi.
+##
+## DE CE UN NOD, ȘI NU O DESCRIERE DE FORME. Varianta cealaltă era ca
+## întrebarea să poarte o listă de celule, iar baza să le deseneze. Ar fi
+## însemnat că `puzzle.gd` știe ce e o celulă, un chenar și o literă într-o
+## casetă — adică exact ramura pe care o interzice regula din CLAUDE.md („o
+## disciplină nouă trebuie să fie un rând în tabel, nu o ramură nouă în cod").
+## Așa cum e, baza știe un singur lucru: „un Control, sau nimic". Reținerea
+## (#7), cu faza ei de arătat-apoi-ascuns, și matricea care a căzut din Tipare
+## pot folosi același cârlig fără să-l schimbe.
+##
+## DE CE SE CHEAMĂ DUPĂ ALEGERE, ȘI NU ÎN `_compune_intrebare`. Fiindcă
+## `_compune_nerepetata()` cere până la 12 întrebări și păstrează una. Dacă
+## planșa s-ar naște odată cu întrebarea, 11 noduri din 12 ar rămâne orfane la
+## fiecare apăsare de Obelisc — noduri nelegate de arbore, pe care nu le
+## eliberează nimeni. Întrebarea poartă deci DATE (pe care și verificarea le
+## poate citi), iar nodul se naște o singură dată, pentru cea aleasă.
+func _plansa_pentru(_q: Dictionary) -> Control:
+	return null
 
 
 # ────────────────────────────────────────────────────────────
@@ -573,6 +618,9 @@ func porneste(nivel: int, context := "", scurtare := 0.0) -> void:
 	# Pulsează doar prin `arata_combo()`, adică exact când crește.
 	_scrie_context(context)
 	eticheta_intrebare.text = String(intrebare["text"])
+	# PLANȘA, dacă disciplina are una. Deasupra enunțului: te uiți la figură,
+	# apoi citești ce se cere. Invers, ai citi o întrebare despre nimic.
+	_pune_plansa(_plansa_pentru(intrebare))
 
 	var variante: Array = intrebare["variante"]
 	# Oprim întâi aprinderea rămasă de la răspunsul precedent. Dacă un tween ar
@@ -655,12 +703,35 @@ func _fara_intrebari() -> void:
 	_scrie_context("")
 	eticheta_categorie.text = "EROARE"
 	bara_timp.visible = false
+	_pune_plansa(null)
 	eticheta_intrebare.text = "Nu am putut compune o intrebare.\n%s" % sursa
 	for buton: Button in butoane:
 		buton.text = "—"
 		buton.disabled = true
 	await get_tree().create_timer(PAUZA_FEEDBACK).timeout
 	rezolvat.emit(false)
+
+
+## Pune planșa primită în cutia dintre bara de timp și enunț, și ÎNGROAPĂ pe
+## cea de la întrebarea trecută. `null` = nicio planșă, cutia se ascunde.
+##
+## Cutia e un `CenterContainer`, deci planșa se desenează la mărimea ei proprie
+## (`custom_minimum_size`), centrată. Ascunsă, ea nu ocupă nicio înălțime: cele
+## cinci discipline de până acum arată exact cum arătau, pixel cu pixel.
+##
+## `remove_child` ÎNAINTE de `queue_free`, și nu doar `queue_free`: a doua
+## eliberează nodul la finalul cadrului, dar îl lasă copil până atunci — iar
+## planșa nouă s-ar adăuga lângă cea veche, deci containerul le-ar centra pe
+## amândouă, una lângă alta, pentru un cadru. Un cadru e exact cât se vede.
+func _pune_plansa(nod: Control) -> void:
+	for copil in cutia_plansa.get_children():
+		cutia_plansa.remove_child(copil)
+		copil.queue_free()
+	if nod == null:
+		cutia_plansa.visible = false
+		return
+	cutia_plansa.add_child(nod)
+	cutia_plansa.visible = true
 
 
 ## INERTĂ ACUM, dar păstrată: face parte din contractul pe care îl are orice

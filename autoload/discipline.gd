@@ -13,8 +13,8 @@ extends Node
 ##
 ## Regula a fost scrisă pe vremea când M era 3 și N era 3, deci loadout-ul era
 ## „le iei pe toate" și părea că n-are rost. Avea: singurul moment în care poți
-## scrie corect regula e cât e banală. Astăzi M e 5 și N e 3 — „alege 3 din 5",
-## 10 combinații — iar niciun „3" și niciun „5" n-a trebuit căutat prin cod.
+## scrie corect regula e cât e banală. Astăzi M e 6 și N e 3 — „alege 3 din 6",
+## 20 de combinații — iar niciun „3" și niciun „6" n-a trebuit căutat prin cod.
 ##
 ## Deci:
 ##   M = `CATALOG.size()`             — câte discipline există
@@ -22,8 +22,16 @@ extends Node
 ##
 ## Nicăieri altundeva. Ecranul de loadout desenează M rânduri și numără până la
 ## N; lupta construiește exact atâtea Obeliscuri câte are loadout-ul. A patra
-## disciplină (Numere) și a cincea (Tipare) au fost, fiecare, un RÂND în
-## tabelul de mai jos și nimic altceva — proba promisiunii, făcută de două ori.
+## disciplină (Numere), a cincea (Tipare) și a șasea (Spațial) au fost, fiecare,
+## un RÂND în tabelul de mai jos și nimic altceva — proba promisiunii, făcută de
+## trei ori.
+##
+## A ȘASEA A COSTAT ȘI DOUĂ LUCRURI CARE NU SUNT AICI, și merită spus care, ca
+## să nu pară că rândul a fost tot: un cârlig OPȚIONAL de desenare în
+## `puzzle.gd` (o întrebare spațială fără imagine nu e o întrebare spațială) și
+## o glifă care nu mai e o piesă de șah (șahul are șase piese, iar regele e
+## luat). Niciuna nu e o ramură pe disciplină: cârligul întoarce `null` la
+## celelalte cinci, iar glifa e un rând în alt tabel.
 ##
 ## ─────────────────────────────────────────────────────────────
 ## CÂMPURILE
@@ -54,6 +62,7 @@ const SCENA_LOGICA := preload("res://scenes/logica/logica.tscn")
 const SCENA_CUVINTE := preload("res://scenes/cuvinte/cuvinte.tscn")
 const SCENA_NUMERE := preload("res://scenes/numere/numere.tscn")
 const SCENA_TIPARE := preload("res://scenes/tipare/tipare.tscn")
+const SCENA_SPATIAL := preload("res://scenes/spatial/spatial.tscn")
 
 ## CULORILE. Fiecare e folosită în patru locuri de pe butonul ei — bordura,
 ## numele, halo-ul, piesa — iar de aici se schimbă toate patru deodată.
@@ -77,6 +86,25 @@ const CULOARE_NUMERE := Color(0.78, 0.66, 1.00)    # violet
 # e un roșu-somon (1, 0.4, 0.4), iar aici verdele e urcat la 0.66 tocmai ca
 # nuanța să cadă limpede în roz, nu la jumătatea drumului spre el.
 const CULOARE_TIPARE := Color(1.00, 0.66, 0.88)    # roz
+# A ȘASEA: ARGINTIU. Și aici criteriul s-a schimbat, fiindcă s-au terminat
+# nuanțele, nu ideile.
+#
+# Cele cinci de mai sus stau, pe roata culorilor, la 205°, 100°, 42°, 265° și
+# 322°. Singurul gol rămas între ele e la 170° — verde-albastru — adică exact
+# culoarea respinsă la a cincea, și pentru un motiv care n-a încetat să fie
+# adevărat: lângă albastrul Memoriei și verdele Logicii, ea e „a treia nuanță
+# dintre ele". Ce era o alegere acolo e o fundătură aici: nu mai există nicio
+# NUANȚĂ liberă, iar roșul rămâne oprit (`Puzzle.CULOARE_RAU`).
+#
+# Deci a șasea se deosebește pe CEALALTĂ axă: e singura NESATURATĂ. Toate cinci
+# sunt pasteluri colorate; argintiul e, periferic, „cel fără culoare" — și asta
+# se vede dintr-o privire mai bine decât o nuanță la 15° de alta. Are o bătaie
+# rece (albastrul puțin peste roșu) ca să nu pară un buton stins sau nedesenat.
+#
+# Se potrivește și cu glifa: un instrument de metal, nu o piesă de joc. De la a
+# șaptea, axa asta e tot plină — atunci ce se schimbă e fondul butonului, nu
+# culoarea glifei.
+const CULOARE_SPATIAL := Color(0.86, 0.89, 0.96)   # argintiu
 
 const CATALOG := [
 	{
@@ -150,6 +178,22 @@ const CATALOG := [
 		# Fără artă încă, ca la Numere: regina se desenează.
 		"imagine": "",
 		"culoare": CULOARE_TIPARE, "scena": SCENA_TIPARE,
+	},
+	{
+		"cheie": "spatial", "nume": "Spatial",
+		"rol": "Caroiaje, rotatii, oglindiri, drumuri si cubul desfasurat.",
+		"sarcini": [
+			"Caroiaj: ce litera e intr-o parte, pe ce linie si coloana sta, unde ajungi dupa doi pasi.",
+			"Rotatii si oglindiri: in ce celula ajunge punctul dupa ce intorci plansa.",
+			"Busola: intoarceri, incotro e cetatea, cum se face drumul intors.",
+			"Plierea: care fete ale cubului desfasurat sunt opuse.",
+		],
+		# Prima glifă care nu e o piesă de șah — vezi antetul lui
+		# `glifa_sah.gd`. Șahul are șase piese și regele e luat, deci cinci au
+		# fost tot ce se putea împărți aici.
+		"piesa": GlifaSah.Piesa.BUSOLA,
+		"imagine": "",
+		"culoare": CULOARE_SPATIAL, "scena": SCENA_SPATIAL,
 	},
 ]
 

@@ -1,7 +1,28 @@
 class_name GlifaSah
 extends Silueta
-## PIESA DE ȘAH de pe butonul unui Obelisc: pionul, calul, nebunul, turnul,
-## regina.
+## GLIFA de pe butonul unui Obelisc: pionul, calul, nebunul, turnul, regina —
+## și, de la a șasea disciplină, busola.
+##
+## ─────────────────────────────────────────────────────────────
+## DE CE NU MAI SUNT TOATE PIESE DE ȘAH
+##
+## Fișierul se cheamă `glifa_sah.gd` fiindcă primele cinci glife au fost piese
+## de șah, iar numele lui a rămas: șahul are ȘASE piese, regele e luat (el E
+## PV-ul jucătorului, vezi `rege.gd`), deci cinci au fost tot ce se putea
+## împărți Obeliscurilor. Problema era scrisă de mult, lângă formele reginei, cu
+## întrebarea care trebuia pusă când va veni a șasea: rămân piesele skin-ul
+## comun al TUTUROR Obeliscurilor, sau devin skin-ul primelor cinci?
+##
+## RĂSPUNS, dat la Spațial: devin skin-ul primelor cinci. Ieșirea e cea scrisă
+## în pitch de la bun început, care propunea un simbol pe disciplină (clepsidră,
+## spirală, busolă, fulger) — deci nu s-a inventat azi, s-a folosit. Cele cinci
+## de dinainte nu se ating: o renumerotare a glifelor ar fi însemnat cinci
+## siluete noi și patru PNG-uri aruncate, pentru o disciplină în plus.
+##
+## Numele fișierului NU s-a schimbat. O redenumire ar fi atins `obelisc.gd`,
+## `discipline.gd` și cheia `piesa` din catalog — adică o zi de curățenie
+## pentru un cuvânt. Ce contează e scris aici: de la a șasea încolo, glifa unei
+## discipline e simbolul ei, nu o piesă.
 ##
 ## ─────────────────────────────────────────────────────────────
 ## DE CE DESENATĂ, ȘI NU SCRISĂ CU ♟ ♞ ♝
@@ -34,7 +55,7 @@ extends Silueta
 ## (`amplitudine = 0`) și, ca urmare, nu are nevoie de `_process` — trei icoane
 ## care pulsează sub trei butoane ar fi zgomot, nu viață.
 
-enum Piesa { PION, CAL, NEBUN, TURN, REGINA }
+enum Piesa { PION, CAL, NEBUN, TURN, REGINA, BUSOLA }
 
 ## Culoarea piesei. O pune `obelisc.gd`, din tabelul disciplinelor.
 @export var culoare := Color(0.85, 0.88, 1.0):
@@ -212,16 +233,13 @@ static var TURN_TALPA := PackedVector2Array([
 	Vector2(0.125, 0.965), Vector2(0.145, 0.898),
 ])
 
-# REGINA — a cincea piesă, pentru Tipare. Și ULTIMA care putea fi o piesă de
-# șah, ceea ce merită scris aici fiindcă nu se vede de nicăieri altundeva:
-# șahul are șase piese, regele e deja luat (el E PV-ul jucătorului, vezi
-# `rege.gd`), deci cinci au fost tot ce se putea împărți Obeliscurilor. A șasea
-# disciplină — Reținere, Spațial sau Reflex, oricare vine prima — n-are de unde
-# să-și ia una. Când va fi nevoie, întrebarea nu e „ce piesă mai e liberă", e
-# dacă piesele de șah rămân skin-ul comun al tuturor Obeliscurilor (decizia din
-# CLAUDE.md) sau devin skin-ul primelor cinci. Pitch-ul a propus de la început
-# un simbol pentru fiecare disciplină (clepsidră, spirală, busolă, fulger), deci
-# ieșirea e scrisă, nu trebuie inventată.
+# REGINA — a cincea piesă, pentru Tipare. Și ULTIMA piesă de șah din joc.
+#
+# Întrebarea pe care o pusese comentariul ăsta — „rămân piesele skin-ul comun
+# al tuturor Obeliscurilor, sau devin skin-ul primelor cinci?" — a primit
+# răspuns la a șasea disciplină (Spațial): skin-ul primelor cinci. Vezi antetul
+# fișierului. Problema fusese scrisă aici înainte să existe, și de-aia a costat
+# o decizie și nu o zi: ieșirea era deja aleasă când a venit nevoia.
 #
 # NUMELE SE LOVEȘTE CU O MECANICĂ AMÂNATĂ, și nu e o neatenție: „Regina" era
 # supapa care dădea acces, contra cost, la o disciplină neechipată, iar ea stă
@@ -263,6 +281,43 @@ static var REGINA_TALPA := PackedVector2Array([
 	Vector2(0.192, 0.775), Vector2(0.808, 0.775),
 	Vector2(0.868, 0.898), Vector2(0.888, 0.965),
 	Vector2(0.112, 0.965), Vector2(0.132, 0.898),
+])
+
+# BUSOLA — a șasea glifă, pentru Spațial, și prima care nu e o piesă de șah
+# (vezi antetul fișierului pentru decizia întreagă).
+#
+# FORMA: un DISC, cu o roză a vânturilor tăiată în el. E singura glifă care nu
+# e o coloană cu talpă, și asta nu e o întâmplare — e chiar criteriul din pitch
+# („distinct ca siluetă, recunoscut periferic, la 40 px") luat în serios.
+#
+# Pionul, nebunul, turnul și regina se deosebesc între ele prin CONTURUL DE
+# SUS: bilă, mitră, creneluri, colțuri. Patru diferențe pe o siluetă comună,
+# și la a cincea (regina lângă turn) a trebuit deja să fie făcută pe două căi
+# deodată ca să se mai vadă. A șasea pe aceeași siluetă n-ar fi fost
+# recognoscibilă nici cu cea mai inspirată coroană.
+#
+# Deci busola rupe silueta: un cerc nu seamănă cu nicio coloană, la nicio
+# mărime, nici cu ochiul periferic. Ăsta e și tot câștigul renunțării la șah —
+# dacă n-ar fi fost, n-ar fi meritat plătit.
+#
+# DE CE ROZA E TĂIATĂ, NU DESENATĂ DEASUPRA. Un inel plus o stea desenată
+# înăuntru ar fi avut, la 40 px, un gol de doi pixeli între vârfurile stelei și
+# inel — iar două forme despărțite de doi pixeli se lipesc pe ecran într-o pată.
+# Tăiată, roza e chiar fondul butonului care se vede prin disc: nu poate să se
+# lipească de nimic, fiindcă nu e desenată, e absentă. Aceeași metodă ca ochiul
+# calului și fanta nebunului, care sunt tot „goluri".
+#
+# Vârfurile ajung la 0,36 din casetă, deci rămâne o margine de disc de 0,10 —
+# patru pixeli la 40 px. Sub atât, discul s-ar fi rupt în patru felii.
+static var BUSOLA_ROZA := PackedVector2Array([
+	Vector2(0.500, 0.140),                          # nord
+	Vector2(0.585, 0.415),
+	Vector2(0.860, 0.500),                          # est
+	Vector2(0.585, 0.585),
+	Vector2(0.500, 0.860),                          # sud
+	Vector2(0.415, 0.585),
+	Vector2(0.140, 0.500),                          # vest
+	Vector2(0.415, 0.415),
 ])
 
 ## Catalogul formelor. Un rând per piesă: poligoanele pline, cercurile pline,
@@ -321,6 +376,16 @@ static var FORME := {
 		# pe el.
 		"cercuri": [{"centru": Vector2(0.500, 0.062), "raza": 0.052}],
 		"goluri": [],
+		"cercuri_gol": [],
+	},
+	# Singura glifă PĂTRATĂ (proporția 1.0): un cerc turtit după proporția unei
+	# piese de șah n-ar mai fi fost un cerc, ar fi fost o elipsă — adică o
+	# busolă văzută dintr-o parte.
+	Piesa.BUSOLA: {
+		"proportie": 1.0,
+		"poligoane": [],
+		"cercuri": [{"centru": Vector2(0.5, 0.5), "raza": 0.46}],
+		"goluri": [BUSOLA_ROZA],
 		"cercuri_gol": [],
 	},
 }
