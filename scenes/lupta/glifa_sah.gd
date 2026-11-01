@@ -1,6 +1,6 @@
 class_name GlifaSah
 extends Silueta
-## PIESA DE ȘAH de pe butonul unui Obelisc: pionul, calul, nebunul.
+## PIESA DE ȘAH de pe butonul unui Obelisc: pionul, calul, nebunul, turnul.
 ##
 ## ─────────────────────────────────────────────────────────────
 ## DE CE DESENATĂ, ȘI NU SCRISĂ CU ♟ ♞ ♝
@@ -33,7 +33,7 @@ extends Silueta
 ## (`amplitudine = 0`) și, ca urmare, nu are nevoie de `_process` — trei icoane
 ## care pulsează sub trei butoane ar fi zgomot, nu viață.
 
-enum Piesa { PION, CAL, NEBUN }
+enum Piesa { PION, CAL, NEBUN, TURN }
 
 ## Culoarea piesei. O pune `obelisc.gd`, din tabelul disciplinelor.
 @export var culoare := Color(0.85, 0.88, 1.0):
@@ -170,9 +170,52 @@ static var CAL_URECHE_SPATE := PackedVector2Array([
 	Vector2(0.700, 0.052), Vector2(0.768, 0.156), Vector2(0.648, 0.150),
 ])
 
+# TURNUL — a patra piesă, pentru Numere. Cea mai simplă din toate patru, și
+# singura care nu are nimic rotund în ea: numai drepte și colțuri.
+#
+# Asta nu e o întâmplare, e tot ce o face recognoscibilă. Criteriul din pitch
+# („distinct ca siluetă, recunoscut periferic, în mijlocul unei ture
+# cronometrate") e cel care alege forma: pionul, nebunul și turnul sunt toate
+# trei coloane cu talpă, deci ce le deosebește la 40 px e DOAR vârful —
+# o bilă, o mitră ascuțită, o coroană crenelată. Trei feluri de contur de sus:
+# rotund, ascuțit, dințat.
+#
+# Crenelurile sunt o bandă plină cu două CRESTĂTURI tăiate în ea (în
+# „goluri"), nu trei dreptunghiuri desenate separat. Același truc ca fanta
+# nebunului, și din același motiv: trei forme lipite una de alta lasă fire de
+# fond între ele la anumite mărimi, fiindcă marginile cad între pixeli.
+static var TURN_CRENELURI := PackedVector2Array([
+	Vector2(0.255, 0.140), Vector2(0.745, 0.140),
+	Vector2(0.745, 0.300), Vector2(0.255, 0.300),
+])
+static var TURN_CRESTATURA_STANGA := PackedVector2Array([
+	Vector2(0.360, 0.132), Vector2(0.448, 0.132),
+	Vector2(0.448, 0.232), Vector2(0.360, 0.232),
+])
+static var TURN_CRESTATURA_DREAPTA := PackedVector2Array([
+	Vector2(0.553, 0.132), Vector2(0.641, 0.132),
+	Vector2(0.641, 0.232), Vector2(0.553, 0.232),
+])
+static var TURN_GULER := PackedVector2Array([
+	Vector2(0.235, 0.296), Vector2(0.765, 0.296),
+	Vector2(0.738, 0.362), Vector2(0.262, 0.362),
+])
+static var TURN_CORP := PackedVector2Array([
+	Vector2(0.330, 0.355), Vector2(0.670, 0.355),
+	Vector2(0.700, 0.700), Vector2(0.740, 0.790),
+	Vector2(0.260, 0.790), Vector2(0.300, 0.700),
+])
+static var TURN_TALPA := PackedVector2Array([
+	Vector2(0.205, 0.775), Vector2(0.795, 0.775),
+	Vector2(0.855, 0.898), Vector2(0.875, 0.965),
+	Vector2(0.125, 0.965), Vector2(0.145, 0.898),
+])
+
 ## Catalogul formelor. Un rând per piesă: poligoanele pline, cercurile pline,
 ## „golurile" (desenate peste, în culoarea fondului) și proporția casetei.
-## O a patra piesă — regina, dacă se întoarce vreodată — e un rând aici.
+## Turnul a fost chiar proba promisiunii scrise aici înainte („o a patra piesă
+## e un rând"): a costat un rând în `enum`, cinci forme și rândul de mai jos.
+## A cincea — regina, dacă se întoarce vreodată — la fel.
 static var FORME := {
 	Piesa.PION: {
 		"proportie": 0.62,
@@ -199,6 +242,15 @@ static var FORME := {
 		"poligoane": [NEBUN_TALPA, NEBUN_CORP, NEBUN_GULER, NEBUN_MITRA],
 		"cercuri": [{"centru": Vector2(0.5, 0.086), "raza": 0.049}],
 		"goluri": [NEBUN_FANTA],
+		"cercuri_gol": [],
+	},
+	# Mai lat decât pionul și nebunul (0.64 față de 0.62): un turn îndesat se
+	# citește ca un turn, unul subțire ca un pion cu capul tăiat.
+	Piesa.TURN: {
+		"proportie": 0.64,
+		"poligoane": [TURN_TALPA, TURN_CORP, TURN_GULER, TURN_CRENELURI],
+		"cercuri": [],
+		"goluri": [TURN_CRESTATURA_STANGA, TURN_CRESTATURA_DREAPTA],
 		"cercuri_gol": [],
 	},
 }

@@ -51,6 +51,7 @@ extends Node
 const SCENA_TRIVIA := preload("res://scenes/trivia/trivia.tscn")
 const SCENA_LOGICA := preload("res://scenes/logica/logica.tscn")
 const SCENA_CUVINTE := preload("res://scenes/cuvinte/cuvinte.tscn")
+const SCENA_NUMERE := preload("res://scenes/numere/numere.tscn")
 
 ## CULORILE. Fiecare e folosită în patru locuri de pe butonul ei — bordura,
 ## numele, halo-ul, piesa — iar de aici se schimbă toate patru deodată.
@@ -58,6 +59,11 @@ const SCENA_CUVINTE := preload("res://scenes/cuvinte/cuvinte.tscn")
 const CULOARE_MEMORIE := Color(0.60, 0.85, 1.00)   # albastru
 const CULOARE_LOGICA := Color(0.70, 1.00, 0.60)    # verde
 const CULOARE_CUVINTE := Color(1.00, 0.85, 0.55)   # auriu
+# Violetul e a patra fiindcă roșul NU e liber: `Puzzle.CULOARE_RAU` e un roșu
+# deschis, iar un Obelisc roșu lângă un buton de răspuns greșit ar fi fost
+# aceeași culoare cu două înțelesuri. La fel se vor alege și următoarele:
+# culorile de verdict se ocolesc, nu se împart.
+const CULOARE_NUMERE := Color(0.78, 0.66, 1.00)    # violet
 
 const CATALOG := [
 	{
@@ -95,6 +101,21 @@ const CATALOG := [
 		"piesa": GlifaSah.Piesa.NEBUN,
 		"imagine": "res://assets/art/nebun_sah.png",
 		"culoare": CULOARE_CUVINTE, "scena": SCENA_CUVINTE,
+	},
+	{
+		"cheie": "numere", "nume": "Numere",
+		"rol": "Calcul rapid, procente, estimare, fractii si zecimale.",
+		"sarcini": [
+			"Calcul: lanturi de adunari, inmultiri, impartiri, ordinea operatiilor.",
+			"Procente: cat la suta, procent dintr-un numar, reduceri de pret.",
+			"Estimare: cam cat e, fara sa calculezi exact.",
+			"Cantarul: care valoare e cea mai mare, intre fractii, zecimale si procente.",
+		],
+		"piesa": GlifaSah.Piesa.TURN,
+		# Fără artă încă: turnul se desenează. `_pune_imaginea` acceptă șirul
+		# gol, deci rândul merge așa cum e până apare PNG-ul.
+		"imagine": "",
+		"culoare": CULOARE_NUMERE, "scena": SCENA_NUMERE,
 	},
 ]
 

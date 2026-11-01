@@ -1,0 +1,7 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/puzzle/puzzle.tscn" id="1_baza"]
+[ext_resource type="Script" path="res://scenes/numere/numere.gd" id="2_numere"]
+
+[node name="Numere" instance=ExtResource("1_baza")]
+script = ExtResource("2_numere")
