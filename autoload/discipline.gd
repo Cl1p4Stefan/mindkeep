@@ -246,9 +246,10 @@ const CATALOG := [
 			"Cantarul: care valoare e cea mai mare, intre fractii, zecimale si procente.",
 		],
 		"piesa": GlifaSah.Piesa.TURN,
-		# Fără artă încă: turnul se desenează. `_pune_imaginea` acceptă șirul
-		# gol, deci rândul merge așa cum e până apare PNG-ul.
-		"imagine": "",
+		# Arta, tăiată cu `tools/decupeaza_piesa.py` din `rook.jpg`. Turnul
+		# desenat rămâne în `glifa_sah.gd` ca plasă de siguranță: ștergi PNG-ul
+		# și butonul merge mai departe cu desenul.
+		"imagine": "res://assets/art/turn_sah.png",
 		"culoare": CULOARE_NUMERE, "scena": SCENA_NUMERE,
 	},
 	{
@@ -261,8 +262,9 @@ const CATALOG := [
 			"Intrusul din sir: care numar nu respecta regula.",
 		],
 		"piesa": GlifaSah.Piesa.REGINA,
-		# Fără artă încă, ca la Numere: regina se desenează.
-		"imagine": "",
+		# Arta, tăiată din `queen.jpg` cu aceeași unealtă ca turnul. Regina
+		# desenată rămâne, ca la toate celelalte, plasa de siguranță.
+		"imagine": "res://assets/art/regina_sah.png",
 		"culoare": CULOARE_TIPARE, "scena": SCENA_TIPARE,
 	},
 	{
@@ -278,7 +280,7 @@ const CATALOG := [
 		# `glifa_sah.gd`. Șahul are șase piese și regele e luat, deci cinci au
 		# fost tot ce se putea împărți aici.
 		"piesa": GlifaSah.Piesa.BUSOLA,
-		"imagine": "",
+		"imagine": "res://assets/art/busola.png",
 		"culoare": CULOARE_SPATIAL, "scena": SCENA_SPATIAL,
 	},
 	{
@@ -292,7 +294,7 @@ const CATALOG := [
 		],
 		# A doua glifă care nu e o piesă de șah, și tot din lista pitch-ului.
 		"piesa": GlifaSah.Piesa.CLEPSIDRA,
-		"imagine": "",
+		"imagine": "res://assets/art/clepsidra.png",
 		"culoare": CULOARE_RETINERE, "scena": SCENA_RETINERE,
 	},
 	{
@@ -307,7 +309,7 @@ const CATALOG := [
 		# A treia glifă care nu e o piesă de șah, și a treia din cele patru
 		# simboluri propuse de pitch.
 		"piesa": GlifaSah.Piesa.FULGER,
-		"imagine": "",
+		"imagine": "res://assets/art/fulger.png",
 		"culoare": CULOARE_REFLEX, "scena": SCENA_REFLEX,
 	},
 ]
