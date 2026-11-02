@@ -720,6 +720,13 @@ const CULOARE_PV_PUTIN := Color(1.00, 0.52, 0.45)
 const SCENA_OBELISC := preload("res://scenes/lupta/obelisc.tscn")
 
 @onready var panou_loadout: Control = %PanouLoadout
+## Titlul îl scrie `_actualizeaza_loadout`, din N — nu stă scris în scenă.
+@onready var loadout_titlu: Label = %LoadoutTitlu
+## Rândul de sub titlu nu mai spune „alege N din M": butonul numără deja
+## („Alese: 1 / 3"), iar restul („rămân fixe pe toată expediția") era o regulă
+## pe care o afli din faptul că nu mai poți schimba nimic după pornire. A rămas
+## pentru SINGURUL caz în care are ceva de spus: M <= N, când nu e nimic de
+## ales. Atunci se aprinde; altfel e ascuns.
 @onready var loadout_subtitlu: Label = %LoadoutSubtitlu
 ## O GRILĂ de patru coloane, nu o listă. Vezi `_construieste_loadout`.
 @onready var loadout_lista: GridContainer = %LoadoutLista
@@ -1004,17 +1011,19 @@ func _pe_disciplina_bifata(bifat: bool, cheie: String) -> void:
 	_actualizeaza_loadout()
 
 
-## Subtitlul și butonul, scrise din N și M — niciodată din cifre.
+## Titlul, rândul de sub el și butonul, scrise din N și M — niciodată din cifre.
 func _actualizeaza_loadout() -> void:
 	var n := Expeditie.DISCIPLINE_IN_LOADOUT
 	var m := Discipline.cate()
 
+	# „ALEGE 3 UNELTE", nu „ALEGE-TI UNELTELE": titlul spune și CÂTE, deci
+	# rândul de dedesubt n-are ce să mai adauge. Tot din N, ca butonul.
+	loadout_titlu.text = "ALEGE %d UNELTE" % n
+
+	# Singurul lucru pe care titlul nu-l poate spune: că nu e nimic de ales.
+	loadout_subtitlu.visible = m <= n
 	if m <= n:
-		# Cazul de azi: ai exact atâtea discipline câte încap. Spune-o pe față,
-		# în loc să ceri o „alegere” care n-are variante.
 		loadout_subtitlu.text = "Ai %d discipline si incap toate %d. Alegerea incepe cand vei avea mai multe." % [m, n]
-	else:
-		loadout_subtitlu.text = "Alege %d din %d. Raman fixe pe toata expeditia." % [n, m]
 
 	# PLAFONUL. Cu N alese, celelalte se sting: nu poți aprinde a patra unealtă
 	# ca pe urmă să ți se spună că n-ai voie. Butonul ales rămâne mereu apăsabil,
