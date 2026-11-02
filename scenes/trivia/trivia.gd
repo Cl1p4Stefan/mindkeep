@@ -569,9 +569,14 @@ func _compune_intrebare(nivel: int) -> Dictionary:
 	# „de unde vine întrebarea", deci aici e locul cinstit pentru a doua sursă.
 	# Filtru gol = lupta, cu echilibrul pe domenii și pragul ei; filtru pus =
 	# Practice, unde domeniul l-a ales jucătorul, deci n-are ce echilibra nimeni.
+	#
+	# `tip_de_ocolit()` e domeniul de la treapta trecută. Se trece numai pe
+	# drumul LUPTEI: în Practice domeniul e ales de jucător și e același la
+	# fiecare întrebare, deci n-ar fi nimic de ocolit — iar dacă ar fi, raftul
+	# ales ar fi primul lucru sărit.
 	var q := trage_din_raft(nivel, filtru_domeniu, filtru_subcategorie,
 			stiute_raft, recente_raft) \
-		if filtru_domeniu != "" else trage_intrebarea(nivel)
+		if filtru_domeniu != "" else trage_intrebarea(nivel, tip_de_ocolit())
 
 	# Reținem BRUTA înainte de orice împachetare — vezi `ultima_trasa`. Se scrie
 	# și când e gol, dinadins: altfel un ecran care n-a putut trage nimic ar
@@ -596,6 +601,11 @@ func _compune_intrebare(nivel: int) -> Dictionary:
 		# cu domeniu necunoscut — dar, dacă prinde, pe ecran apare ceva citibil
 		# în loc de gol.
 		"categorie": String(domenii_practice().get(String(q["categorie"]), q["categorie"])).to_upper(),
+		# TIPUL: aici e CHEIA domeniului, nu numele afișat. Baza o ține minte și
+		# o dă înapoi la treapta următoare, iar `trage_intrebarea` compară cu
+		# chei, nu cu antete. Vezi „FĂRĂ DOUĂ TREPTE DIN ACELAȘI TIP" din
+		# `puzzle.gd`.
+		"tip": String(q["categorie"]),
 		"text": q["text"],
 		"variante": amestecate["variante"],
 		"corect": amestecate["corect"],
@@ -657,7 +667,20 @@ func _compune_intrebare(nivel: int) -> Dictionary:
 ## Deci un domeniu intră în alegere doar dacă are `PRAG_DOMENIU` întrebări la
 ## nivelul cerut. Cele de sub prag sunt SĂRITE, nu scoase: rămân în `intrebari`,
 ## rămân numărate de verificator, și reintră singure când celula se umple.
-static func trage_intrebarea(nivel: int) -> Dictionary:
+##
+## ─────────────────────────────────────────────────────────────
+## ȘI DE CE PRIMEȘTE UN DOMENIU DE OCOLIT
+##
+## `de_ocolit` e domeniul de la treapta trecută a lanțului, trimis la coada
+## tragerii ca să nu primești două întrebări de geografie una după alta — regula
+## din `puzzle.gd`, „FĂRĂ DOUĂ TREPTE DIN ACELAȘI TIP". La celelalte șapte
+## discipline „tipul" e familia de puzzle; aici e DOMENIUL, fiindcă el e ce scrie
+## în antet și ce deosebește două întrebări de cultură generală una de alta.
+##
+## Gol = nu ocoli nimic, și ăsta e implicitul dinadins: verificarea cheamă
+## funcția cu un singur parametru, iar echilibrul pe domenii se măsoară pe
+## tragerea curată.
+static func trage_intrebarea(nivel: int, de_ocolit := "") -> Dictionary:
 	# `filter` trece prin array și păstrează doar elementele pentru care
 	# funcția anonimă (lambda) întoarce true. Aici: doar întrebările de nivelul cerut.
 	var pool: Array = intrebari.filter(func(q): return int(q["nivel"]) == nivel)
@@ -702,7 +725,13 @@ static func trage_intrebarea(nivel: int) -> Dictionary:
 	# Ordinea din `destule` nu contează, și nici nu e promisă. Ce ne trebuie e ca
 	# fiecare domeniu ADMIS să aibă șansa 1/N, indiferent câte întrebări are — și
 	# asta o dă `pick_random` peste lista de CHEI, nu peste întrebări.
-	var domeniu_ales: String = String(destule.pick_random())
+	#
+	# Nu `pick_random`, ci PRIMUL dintr-o ordine amestecată: ea e cea care
+	# trimite domeniul de la treapta trecută la coadă, deci el iese doar dacă
+	# n-a mai rămas altul peste prag. Șansa fiecărui domeniu ADMIS rămâne egală
+	# (vezi verdictul de echilibru din `verifica_treptele`: a nu repeta nu
+	# înclină nimic, doar împrăștie).
+	var domeniu_ales: String = String(tipuri_amestecate(destule, de_ocolit)[0])
 	pool = pe_domenii[domeniu_ales]
 
 	# TREAPTA 2: întrebarea.

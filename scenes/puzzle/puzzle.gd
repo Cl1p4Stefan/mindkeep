@@ -62,6 +62,15 @@ extends Control
 ##   expunerea. Pe urmă planșa se îngroapă, enunțul adevărat ia locul textului
 ##   de expunere, variantele apar și ABIA ATUNCI începe timpul întrebării.
 ##
+## Opțional, dacă nu vrei două trepte la rând din același fel de întrebare:
+##   un CÂMP în dicționar, luat din chiar tabelul tău de generatoare:
+##     "tip": "CONDITIONAL"                 # familia din care e întrebarea
+##   Baza ține minte tipul pe care l-a SERVIT și ți-l spune la întrebarea
+##   următoare, prin `tip_de_ocolit()`. Ce faci cu el e treaba ta — ce ai de
+##   făcut e să-l trimiți la coada listei de tipuri, cu `tipuri_amestecate()`.
+##   Vezi secțiunea „FĂRĂ DOUĂ TREPTE DIN ACELAȘI TIP". Fără câmp, baza nu ține
+##   minte nimic și nu se ocolește nimic.
+##
 ## Scena nu știe NIMIC despre luptă, PV, PA sau inamici — nici baza, nici
 ## disciplinele. Fiecare disciplină poate fi testată singură cu F6.
 
@@ -557,6 +566,75 @@ func _compune_nerepetata(nivel: int) -> Dictionary:
 	return ultima
 
 
+# ────────────────────────────────────────────────────────────
+# FĂRĂ DOUĂ TREPTE DIN ACELAȘI TIP
+#
+# Regula: la un Obelisc, două trepte consecutive ale lanțului nu sunt din
+# același FEL de întrebare. La Logică nu primești două „DACA-ATUNCI" una după
+# alta, la Numere nu primești două socoteli, la Reținere nu ți se arată de două
+# ori un caroiaj.
+#
+# CE APĂRĂ, ȘI CE APĂRĂ SECȚIUNEA DE DEASUPRA. Aia apără repetarea aceleiași
+# ÎNTREBĂRI; asta apără repetarea aceleiași SARCINI. Sunt lucruri diferite, și
+# se vede la cifre: cu patru tipuri într-o disciplină, una din patru trepte
+# venea din tipul de dinainte — adică un lanț de opt trepte avea, de obicei,
+# două perechi lipite, toate întrebări DIFERITE, deci nevăzute de prima regulă.
+#
+# Costul nu e de plictiseală, e de ANTRENAMENT. A doua întrebare din același
+# tip o prinzi cu metoda de rezolvare deja încălzită: ai pe ecran altă
+# întrebare, dar același mușchi, scutit de pornirea din frig. Într-un joc în
+# care treptele cresc în daune, asta e exact pe dos — treapta care valorează
+# mai mult cere mai puțin.
+#
+# ȘI DE CE SE AMÂNĂ, NU SE INTERZICE. Tipul de la treapta trecută nu se SCOATE
+# din tragere, se trimite la COADA listei de tipuri. Un tip scos ar putea goli
+# lista (o disciplină cu un singur tip la un nivel azi, un tabel editat mâine),
+# iar un Obelisc care refuză să se deschidă în mijlocul unui lanț e un preț mult
+# mai mare decât două întrebări asemănătoare. Aceeași judecată, scrisă la
+# `_compune_nerepetata`: „ȘI NU EȘUEAZĂ NICIODATĂ".
+#
+# MEMORIA E `static`, ȘI TREBUIE SĂ FIE. Fiecare treaptă e o SCENĂ NOUĂ: lupta
+# cheamă `creeaza_puzzle` și `inchide_puzzle` la fiecare întrebare din lanț, deci
+# o variabilă de instanță s-ar naște goală la fiecare treaptă și regula n-ar
+# exista deloc — ar fi un cod care arată că merge. Dicționarul ține minte PE
+# DISCIPLINĂ, cu aceeași etichetă ca sacul: altfel o întrebare de Logică ar
+# ocoli un tip de la Numere, adică un tip care nici nu există la ea.
+# ────────────────────────────────────────────────────────────
+
+## Ce tip a fost servit ultima dată, pe disciplină: „logica" → „CONDITIONAL".
+## Scris într-un singur loc (`porneste`), citit prin `tip_de_ocolit()`.
+static var tip_servit := {}
+
+
+## Tipul pe care întrebarea care urmează are de ocolit.
+##
+## Șir gol = „nu ocoli nimic", și sunt trei feluri în care se ajunge acolo,
+## toate normale: prima treaptă a unui lanț, o disciplină care nu scrie câmpul
+## `tip`, și o întrebare care n-a putut fi compusă.
+func tip_de_ocolit() -> String:
+	return String(tip_servit.get(_eticheta_sac(), ""))
+
+
+## Tipurile, amestecate, cu `de_ocolit` trimis la coada listei.
+##
+## `static` ca s-o poată chema și `Trivia.trage_intrebarea`, care e statică
+## tocmai ca verificarea să-i poată bate echilibrul pe domenii fără scenă. Nu
+## atinge lista primită: cine o cheamă trece de obicei `pe_tip.keys()`.
+static func tipuri_amestecate(tipuri: Array, de_ocolit: String) -> Array:
+	var ordine: Array = tipuri.duplicate()
+	ordine.shuffle()
+	# `size() > 1` e garda care face din regulă o AMÂNARE și nu o interdicție:
+	# cu un singur tip disponibil, el rămâne primul și întrebarea se naște
+	# oricum. Fără ea, o listă de un element ar ieși cu el „la coadă" — adică
+	# tot primul, dar din accident, nu din regulă.
+	if de_ocolit != "" and ordine.size() > 1:
+		var unde := ordine.find(de_ocolit)
+		if unde != -1:
+			ordine.remove_at(unde)
+			ordine.append(de_ocolit)
+	return ordine
+
+
 # ─────────────────────────────────────────────────────────────
 # CITITORUL DE JSON, comun
 #
@@ -637,6 +715,13 @@ func porneste(nivel: int, context := "", scurtare := 0.0) -> void:
 	indice_corect = int(intrebare["corect"])
 	explicatie = String(intrebare.get("explicatie", ""))
 	raspuns_dat = false
+	# TIPUL SERVIT, pentru treapta următoare a lanțului. Se scrie AICI, în
+	# `porneste`, și nu în `_compune_intrebare`, din exact motivul pentru care
+	# planșa se naște aici: `_compune_nerepetata` cere până la 12 întrebări și
+	# păstrează una, deci 11 din 12 ar lăsa în urmă un tip pe care nu l-a văzut
+	# nimeni — iar întrebarea următoare ar ocoli un tip care n-a apărut.
+	# Câmpul e opțional: lipsa lui scrie „", adică „nu ocoli nimic".
+	tip_servit[_eticheta_sac()] = String(intrebare.get("tip", ""))
 	# Expunerea rămasă de la întrebarea trecută se stinge AICI, înainte de
 	# orice: o a doua chemare a lui `porneste()` în timpul unei expuneri (lupta
 	# n-o face azi, dar nimeni nu-i interzice) ar lăsa altfel scena cu butoanele

@@ -272,6 +272,10 @@ func _compune_intrebare(nivel: int) -> Dictionary:
 		# Antetul: ce fel de puzzle e, nu care e regula. „SIR NUMERIC" spune la
 		# fel de mult cât spune „ISTORIE" la Trivia — domeniul, nu răspunsul.
 		intrebare["categorie"] = reteta["categorie"]
+		# TIPUL, din același rând al tabelului. Nu ajunge pe ecran: baza îl ține
+		# minte și îl ocolește la treapta următoare a lanțului — vezi „FĂRĂ DOUĂ
+		# TREPTE DIN ACELAȘI TIP" din `puzzle.gd`.
+		intrebare["tip"] = reteta["tip"]
 		return intrebare
 	return {}
 
@@ -311,7 +315,12 @@ func _alege_reteta(nivel: int) -> Dictionary:
 			pe_tip[tip] = []
 		pe_tip[tip].append(generator)
 
-	var tip_ales = pe_tip.keys().pick_random()
+	# PRIMUL din ordinea amestecată, nu `pick_random` — și tot rostul ocolului e
+	# că ordinea aia trimite tipul de la treapta trecută la coadă, deci aici el
+	# iese doar dacă n-a mai rămas altul. Cu un singur tip disponibil, el rămâne
+	# primul: regula amână, nu interzice. Vezi „FĂRĂ DOUĂ TREPTE DIN ACELAȘI
+	# TIP" din `puzzle.gd`.
+	var tip_ales = tipuri_amestecate(pe_tip.keys(), tip_de_ocolit())[0]
 	return pe_tip[tip_ales].pick_random()
 
 

@@ -268,6 +268,9 @@ func _compune_intrebare(nivel: int) -> Dictionary:
 		var intrebare: Dictionary = call(reteta["metoda"], nivel)
 		if not intrebare.is_empty():
 			intrebare["categorie"] = reteta["categorie"]
+			# TIPUL, luat din același rând al tabelului. Nu se afișează nicăieri:
+			# baza îl ține minte și-l ocolește la treapta următoare.
+			intrebare["tip"] = reteta["tip"]
 			return intrebare
 	return {}
 
@@ -337,8 +340,10 @@ func _retete_amestecate(nivel: int) -> Array:
 			pe_tip[tip] = []
 		pe_tip[tip].append(generator)
 
-	var tipuri: Array = pe_tip.keys()
-	tipuri.shuffle()
+	# Amestecate, dar cu tipul de la treapta trecută trimis la COADĂ: două
+	# trepte la rând din același fel de întrebare o prinzi pe a doua cu metoda
+	# deja încălzită. Vezi „FĂRĂ DOUĂ TREPTE DIN ACELAȘI TIP" din `puzzle.gd`.
+	var tipuri: Array = tipuri_amestecate(pe_tip.keys(), tip_de_ocolit())
 
 	var ordine: Array = []
 	for tip in tipuri:
