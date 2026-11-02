@@ -14,7 +14,7 @@
 | 3. Trivia, ca scenă independentă | ✅ gata |
 | 4. Bucla completă a unei lupte | ✅ victorie · înfrângere · recompense (Fragmente) · 🟡 **bucla ÎNSĂȘI se reproiectează — DUELUL**, a treia valoare din `RegulaObelisc`, cu comutatorul pe ea și COMBO neatins lângă: **partea JUCĂTORULUI e scrisă** (31 octombrie) — fără PA, lanț plafonat la `PLAFON_TREPTE = 5` (15 daune: 1+2+3+3+6), folosirea blochează Obeliscul o rundă (scris la ACTIVARE, nu la final), tura se încheie singură după lanț, punctele de PA nu se mai desenează; jucat cu scenele adevărate pe toți trei inamicii · **PARADA e scrisă** (31 octombrie) — când inamicul lovește de-adevărat alege la întâmplare unul din cele 3 Obeliscuri și-ți pune O întrebare prin el (`NIVEL_PARADA = 2`); corect = zero daune, greșit = încasezi tot ȘI acel Obelisc se blochează o rundă, FĂRĂ CUMUL; rundele de încărcare ale Grabnicului rămân liniștite, fiindcă parada stă în `_ataca_jucatorul()`, nu în `tura_inamicului()` · contractul `Puzzle` neatins, nicio linie · **bucla DUELULUI e completă**, iar joc perfect înseamnă acum Soldatul 11 întrebări / 2 runde / 1 paradă, Lăncierul 13 / 3 / **0**, Spadasinul 17 / 3 / 2, toți trei cu regele neatins — dar CÂȘTIGAT, nu primit cadou · verificare permanentă nouă, `verifica_duelul`, 29 de verdicte · două contradicții rămân (Lăncierul tot nu lovește, Nivelul III tot nu apare în luptă) · vezi sesiunile PARADA, PARTEA JUCĂTORULUI și DUELUL |
 | 5. Trei inamici manuali | ✅ Soldatul · Lăncierul (ceas + **singurul cu cronometru pe întrebări**, de pe 31 octombrie) · Spadasinul (vulnerabilitate), aleși din joc |
-| 6. Harta de expediție | ✅ loadout „N din M" — **de pe 2 noiembrie 2026 e „3 din 8", 56 de combinații, adică numărul scris în pitch de la bun început**, iar ecranul lui e de azi o GRILĂ DE DOUĂ COLOANE pe un panou de 760 px: cu șapte rânduri într-o singură coloană panoul ieșea 692 px pe o pânză de 648 (măsurat), deci butonul „Porneste expeditia" cădea sub marginea de jos — la șase încăpea la 635 px, adică ecranul era deja la limită și nimeni n-o știa; **cu opt discipline grila măsoară 590 px pe 648** — măsurat în ziua Reflexului, cu o scenă de unică folosință, fiindcă însemnarea de la a șaptea era o PREZICERE („intră și a opta fără să crească deloc") și prezicerile se verifică înainte de a fi crezute: a intrat, dar a crescut cu 21 px față de cei 569 de la șapte, fiindcă al patrulea rând își ia înălțimea de la cel mai înalt copil al lui. Au rămas 58 px de rezervă (vezi AL ȘAPTELEA OBELISC și AL OPTULEA OBELISC): întâia alegere adevărată a apărut cu Numere (3 din 4) și s-a lărgit în aceeași zi cu Tipare (ramura `m > n`, scrisă cu luni în urmă, rulează în serios de atunci; vezi AL PATRULEA și AL CINCILEA OBELISC) · **12-16 noduri**, ramificate, cu sămânță · Luptă / Elită / Odihnă / Eveniment / **Magazin** / **Boss** · **Monede + puteri temporare** · sumar de run · aspect: pergament, simboluri de cerneală, trasee punctate · **nodurile și drumurile stau pe o PANGLICĂ (curbă centrală + benzi)**, nu pe o grilă dreaptă · **patru trasee, toate verzi pe 300 de semințe** (POTCOAVĂ activă; POTCOAVA OGLINDITĂ e aceeași formă, întoarsă) · strat înclinat (forfecare) la ȘARPE · **drumuri care nu se încrucișează niciodată (0 la 300 de semințe)** · **nodul curent are și aură, și X, și stă nemișcat sub figurină** · **două surse de hartă: GENERATĂ (panglica) sau DESENATĂ dintr-un fișier `data/harti/*.json`** — comutatorul `Expeditie.SURSA_HARTII`; azi e pe DESENATĂ · **harta umple pergamentul**: pânza ține toată pagina, antetul plutește peste ea (805 × 427 px de hartă, de la 666 × 353) · **drumurile merg în amândouă sensurile**, cu nodul parcurs tăiat definitiv și cu garanția, verificată pe 16 000 de expediții simulate, că nu te poți înfunda · **figurina sare, cade ca un slam și zguduie ecranul la aterizare**, cu un răgaz de 0,5 s înainte să se deschidă nodul · **tipurile nodurilor se împart după o REȚETĂ fixă, nu se trag cu zarul**: 11 reguli de vecinătate, de început și de FINAL, printre ele **o podea de 3 lupte pe cel mai ieftin drum Start → Boss** (21 octombrie), plasare conștientă de reguli, verificare completă și reîncercare cu sub-sămânță (0 eșecuri pe 500 de semințe × 3 surse de hartă) · **la cel mult 2 pași de Boss e garantat un nod de bătaie** (100% pe 300 de semințe × 3 surse, de la 85% / 96% / 81%) · **niciun nod special nu mai are un geamăn lipit**, nici Evenimentul (0 pe 900 de hărți) · **rețeta nu se mai crede pe cuvânt: se PROBEAZĂ** — plafonul comun încearcă plasarea adevărată și taie un nod când forma nu le încape pe toate · rețeta se **plafonează după forma hărții**, nu după numărul de noduri · **nodul de Eveniment deschide Lacătul** (nivel din adâncime, sămânță din nodul, 6/10/14 Monede la succes) |
+| 6. Harta de expediție | ✅ loadout „N din M" — **de pe 2 noiembrie 2026 e „3 din 8", 56 de combinații, adică numărul scris în pitch de la bun început**, iar ecranul lui e de azi o GRILĂ DE DOUĂ COLOANE pe un panou de 760 px: cu șapte rânduri într-o singură coloană panoul ieșea 692 px pe o pânză de 648 (măsurat), deci butonul „Porneste expeditia" cădea sub marginea de jos — la șase încăpea la 635 px, adică ecranul era deja la limită și nimeni n-o știa; **cu opt discipline grila măsoară 590 px pe 648** — măsurat în ziua Reflexului, cu o scenă de unică folosință, fiindcă însemnarea de la a șaptea era o PREZICERE („intră și a opta fără să crească deloc") și prezicerile se verifică înainte de a fi crezute: a intrat, dar a crescut cu 21 px față de cei 569 de la șapte, fiindcă al patrulea rând își ia înălțimea de la cel mai înalt copil al lui. Au rămas 58 px de rezervă (vezi AL ȘAPTELEA OBELISC și AL OPTULEA OBELISC) · **de pe 2 noiembrie 2026 ecranul arată CHIAR BUTOANELE DE OBELISC din luptă**, nu o listă de `CheckButton`-uri cu text: patru coloane pe un panou de 1000 px, **535 px pe 648** (măsurat), aceeași scenă `obelisc.tscn` pe care o instanțiază `lupta.gd`; **alegerea se plafonează la N** (cu trei aprinse, celelalte cinci se sting și nu se mai pot apăsa) și **câmpul de sămânță a ieșit din ecran** — era o unealtă de depanare pusă în fața jucătorului (vezi UNELTELE SE VĂD): întâia alegere adevărată a apărut cu Numere (3 din 4) și s-a lărgit în aceeași zi cu Tipare (ramura `m > n`, scrisă cu luni în urmă, rulează în serios de atunci; vezi AL PATRULEA și AL CINCILEA OBELISC) · **12-16 noduri**, ramificate, cu sămânță · Luptă / Elită / Odihnă / Eveniment / **Magazin** / **Boss** · **Monede + puteri temporare** · sumar de run · aspect: pergament, simboluri de cerneală, trasee punctate · **nodurile și drumurile stau pe o PANGLICĂ (curbă centrală + benzi)**, nu pe o grilă dreaptă · **patru trasee, toate verzi pe 300 de semințe** (POTCOAVĂ activă; POTCOAVA OGLINDITĂ e aceeași formă, întoarsă) · strat înclinat (forfecare) la ȘARPE · **drumuri care nu se încrucișează niciodată (0 la 300 de semințe)** · **nodul curent are și aură, și X, și stă nemișcat sub figurină** · **două surse de hartă: GENERATĂ (panglica) sau DESENATĂ dintr-un fișier `data/harti/*.json`** — comutatorul `Expeditie.SURSA_HARTII`; azi e pe DESENATĂ · **harta umple pergamentul**: pânza ține toată pagina, antetul plutește peste ea (805 × 427 px de hartă, de la 666 × 353) · **drumurile merg în amândouă sensurile**, cu nodul parcurs tăiat definitiv și cu garanția, verificată pe 16 000 de expediții simulate, că nu te poți înfunda · **figurina sare, cade ca un slam și zguduie ecranul la aterizare**, cu un răgaz de 0,5 s înainte să se deschidă nodul · **tipurile nodurilor se împart după o REȚETĂ fixă, nu se trag cu zarul**: 11 reguli de vecinătate, de început și de FINAL, printre ele **o podea de 3 lupte pe cel mai ieftin drum Start → Boss** (21 octombrie), plasare conștientă de reguli, verificare completă și reîncercare cu sub-sămânță (0 eșecuri pe 500 de semințe × 3 surse de hartă) · **la cel mult 2 pași de Boss e garantat un nod de bătaie** (100% pe 300 de semințe × 3 surse, de la 85% / 96% / 81%) · **niciun nod special nu mai are un geamăn lipit**, nici Evenimentul (0 pe 900 de hărți) · **rețeta nu se mai crede pe cuvânt: se PROBEAZĂ** — plafonul comun încearcă plasarea adevărată și taie un nod când forma nu le încape pe toate · rețeta se **plafonează după forma hărții**, nu după numărul de noduri · **nodul de Eveniment deschide Lacătul** (nivel din adâncime, sămânță din nodul, 6/10/14 Monede la succes) |
 | 7. Cetatea | ❌ |
 | 8. Save/Load | ✅ **pe disc**, de pe 12 octombrie 2026. `autoload/arhiva.gd` — singurul fișier din joc care atinge discul, fără nicio regulă de joc în el; dependența merge într-un singur sens (apelurile de salvare stau în SCENE, ca uneltele de verificare să rămână uscate) · **două fișiere în `user://`**: `permanent.json` (Tezaur + progresul din Antrenament + sacurile permanente) și `expeditie.json`, care există doar cât e un run viu · **scriere prin fișier temporar și redenumire**, cu adoptarea unui `.nou` orfan la citire · **`versiune` în save**: mai vechi se citește prin `_migreaza()`, mai nou se pune deoparte · **un fișier ilizibil nu se șterge și nu se suprascrie** — se redenumește `*.stricat.json` (cu data în nume dacă e deja unul pus deoparte), iar meniul o spune, cu mesaje separate pentru progres și pentru expediție · **butonul din meniu devine „Continua expeditia"**, cu nodurile în urmă și PV-ul pe rândul de sub el · **sacul are acum DURATĂ pe cheie** (`Sac.Durata`): rafturile din Practice sunt permanente, sacurile de luptă rămân pe expediție · **nodul se scrie pe disc la INTRARE**, deci a apărut `nod_nerezolvat` și coloana `reluabil` din `DATE_NOD` — altfel o luptă întreruptă era sărită, iar la Boss era chiar victorie · 54 de verdicte în `verifica_salvarea`, ~1 s · vezi sesiunea SAVE
 | 9. Celelalte discipline | 🟡 Cultură generală ✅ (**7829 de întrebări în joc, toate** (de pe 29 octombrie 2026, când toate cele 93 de celule au trecut de RAFT = 75; vezi sesiunea TOATE CELULELE LA 75): 6515 scrise de mână (`mana:0001`…, dintre care **600 de științe exacte**, `mana:2143`…`mana:2742`, **375 de Diverse**, `mana:2743`…`mana:3117`, și **300 de Istorie și societate**, `mana:3118`…`mana:3417`, și **300 de Gastronomie și lifestyle**, `mana:3418`…`mana:3717`, toate pe 27 octombrie, și **225 de Știință și tehnologie**, `mana:3718`…`mana:3942`, și **225 de Geografie**, `mana:3943`…`mana:4167`, amândouă pe 28 octombrie; vezi DIVERSE, +375, ISTORIE ȘI SOCIETATE, +300, GASTRONOMIE ȘI LIFESTYLE, +300, ȘTIINȚĂ ȘI TEHNOLOGIE, +225 și GEOGRAFIE, +225) + **69 fabricate, elemente chimice** (`wd:Q556:simbol:…`; un singur sens pe element de pe 27 octombrie, vezi UN SENS PE ELEMENT) + **160 fabricate, operă → autor** (`wd:Q12730777:autor:…`) + **251 fabricate, țară ↔ capitală** (`wd:Q142:capitala:…`) + **147 fabricate, lucrare ↔ compozitor** (`wd:Q11980:compozitor:…`) + **687 fabricate de Divertisment și Sport** (27 octombrie: 203 film → regizor, 156 album → interpret, 143 de fotbal, 27 de Jocuri Olimpice, 158 de Formula 1; vezi DIVERTISMENT ȘI SPORT DIN FABRICĂ) — **conținutul fabricat stă într-un DOSAR**, `data/trivia_gen/`, citit întreg de încărcător: un tabel nou = două fișiere, zero linii de cod · **4163 fapte, TOATE cu notă** (cele 600 de științe exacte, cele 375 de Diverse, cele 300 de istorie, cele 300 de gastronomie, cele 225 de științe și cele 225 de geografie au venit cu nota lor) (503 fabricate din șabloane: la elemente **la ce folosește elementul** (o propoziție scrisă de mână pe element, coloana `folosinta`, de pe 21 octombrie) plus simbolul și numărul atomic, anul apariției și anii autorului la opere, descrierea țării la capitale, anii compozitorului la lucrările muzicale · 92 scrise mai devreme de mână · **2046 scrise de mână în sesiunea TOATE AU NOTĂ**, câte una pentru fiecare întrebare rămasă fără) — deci **5481 din 5481 de întrebări ajung la o notă, de la 96 pe 21 octombrie**, fiecare domeniu și fiecare dintre cele 31 de rafturi; sursa celor 2046 sunt EU, nu un tabel, deci nu le poate bate niciun validator și singura verificare e citirea (28 citite din 2142), iar un validator cere ca fiecare cifră și fiecare nume propriu dintr-o notă să existe în datele sursă · **OPT DOMENII** (Geografie și explorare, Istorie și societate, Știință și tehnologie, Artă și literatură, Divertisment și media, Sport și jocuri, Gastronomie și lifestyle, Diverse și curiozități), cu **31 de subcategorii** — **toate OPT domeniile sunt în luptă, niciunul din cele 31 de rafturi nu e gol și nicio întrebare nu e fără raft** (cele 135 scrise înaintea câmpului au fost clasificate, iar 21 de întrebări de mitologie au trecut de la Artă la Istorie); **toate cele 93 de celule (subdomeniu × nivel) au cel puțin 75 de întrebări**, adică treapta RAFT — treapta CONFORT din `plan-continut.md`, cea la care 4-5 expediții lungi nu repetă nimic; **ținta de lucru de pe 29 octombrie e treapta nouă RAFT = 75**, adică 2300 de întrebări pe 80 de celule (nivelul I întâi, 929 din ele), fiindcă la 75 un singur raft dus până la capăt deschide singur nivelul următor în Practice — 100 pe celulă a fost cântărit în aceeași zi și lăsat deoparte, 4360 de întrebări pentru niciun prag din cod (vezi ȚINTA DE 75), tăiate după cum se joacă, nu după cum crescuse baza: artă + mitologie + literatură s-au unit, Divertisment și Sport pornesc goale · `CATEGORII` (listă) a devenit `DOMENII` (dicționar cheie → nume afișat), deci antetul scrie „ARTĂ ȘI LITERATURĂ”, nu cheia · **alegerea din luptă e în două trepte** — întâi domeniul, uniform, apoi întrebarea, cu sacul pe cheie de domeniu ȘI nivel — iar de azi **domeniul intră doar peste `PRAG_DOMENIU = 8` întrebări pe celulă**, cu plasă dacă nu trece niciunul; sub prag e sărit, nu golit (istoria trecea cu rezerva ZERO și era următoarea țintă de conținut; de pe 27 octombrie are 200 pe fiecare nivel) · comutator `FOLOSESTE_WIKIDATA` · **fabrica are un modul comun**, `tools/fabrica/comun.py`, iar grila marchează celulele sărite · **faptele capitalelor au o LISTĂ de imagini**, `imagini: [{tip, …}]`: **126 de steaguri pe disc** (`assets/imagini_fapte/steaguri/`, PNG 320 px, 0,53 MB sursă, toate în domeniul public, cu manifest de credite), plus o intrare de hartă pe fiecare din cele 127 de fapte; Omanul e singurul refuzat, cu motivul scris · **fiecare întrebare are și o `subcategorie`**, una singură, din listă închisă pe domeniu (36 de chei, 4 folosite; la istorie sunt erele, tăiate pe dată) — cele 135 scrise de mână o primesc într-un lot de clasificare, cu un clichet în verificator · **istoria e la 200 pe fiecare nivel**, câte 150 pe fiecare din cele patru rafturi (vezi ISTORIE ȘI SOCIETATE, +300), **gastronomia la fel, 200 / 200 / 200, cu 50 pe fiecare celulă** (vezi GASTRONOMIE ȘI LIFESTYLE, +300), iar **cele trei rafturi de științe hrănite de mână — Lumea vie, Tehnologie și invenții, Astronomie și spațiu — au 150 fiecare, câte 50 pe celulă** (vezi ȘTIINȚĂ ȘI TEHNOLOGIE, +225), **iar geografia are tot 50 pe fiecare celulă a celor trei rafturi scrise de mână** — fizica, turismul și demografia — a patra, `geografie_politica`, venind din fabrică (vezi GEOGRAFIE, +225), iar **Divertismentul și Sportul au câte 50 pe fiecare celulă**, pe 11 subcategorii cu care se poate filtra (filme 48, muzică 36, fotbal 30, olimpiade 30…) — deci **toate ȘASE domeniile sunt în luptă**, fiecare cu 1/6 din întrebări, și toate cele 11 subcategorii ale celor două domenii noi au conținut · **verificarea e un singur câmp**, `verificat: true/false` pe întrebare, pus de mână: întrebarea intră în joc oricum, iar flagul spune doar dacă i-am citit nota. Niciun script, niciun parametru — mecanismul de ciorne, al doilea flag de pe fapt și cele două unelte de confirmare s-au desfăcut (vezi UN SINGUR FLAG) · planul de conținut al tuturor celor șase domenii, cu subcategorii, tabele propuse și capcanele lor, e în **`docs/plan-continut.md`** · vezi sesiunile UN SINGUR FLAG, ȘASE DOMENII ÎN LUPTĂ, PLANUL ȘI CIORNELE, DOMENIILE, CONȚINUTUL, ID ȘI FAPT, FABRICA, AL DOILEA TABEL, MODULUL COMUN și STEAGURILE) · Logica ✅ (**14 tipuri de întrebare**, 47 de tipare, de pe 1 noiembrie 2026 — au fost 15 și 56 o zi, până a plecat SIR la Tipare, vezi CINCISPREZECE TIPURI și AL CINCILEA OBELISC; 80 de categorii, 25 de cuvinte) · Cuvinte ✅ (**180 de cuvinte**, 20 în fiecare din cele 9 găleți (clasă × nivel), de pe 1 noiembrie 2026 — era cel mai subțire Obelisc din joc, cu 60; vezi MAI MULTE CUVINTE) · **Numere ✅** (1 noiembrie 2026 — al patrulea Obelisc: **4 tipuri, 11 tipare** (CALCUL, PROCENTE, ESTIMARE, CÂNTARUL), **prima disciplină fără niciun fișier de date** — numerele nu sunt conținut, sunt intervale, deci `_pregateste_datele()` rămâne gol și dificultatea se reglează cu un număr; piesa e TURNUL, a patra din `glifa_sah.gd`, culoarea violet; `puzzle.gd`, `lupta.gd`, `harta.gd` și `expeditie.gd` neatinse, nicio linie; verificare permanentă nouă, `verifica_numere`, 19 verdicte, cu **răspunsul recalculat din enunț la toate cele 11 tipare** și cu caracterele cerute în Cinzel, Alegreya și fontul implicit; vezi sesiunea AL PATRULEA OBELISC) · **Tipare ✅** (1 noiembrie 2026 — al cincilea Obelisc: **4 tipuri, 18 tipare** (SIR, LITERE, CICLUL, INTRUS), **prima disciplină care primește conținut de la alta**: cele nouă tipare de șiruri numerice au venit din `logica.gd`, adică pasul 2 din rută, făcut în sfârșit · singura disciplină la care dificultatea e deodată a REGULII (coloana „niveluri", ca la Logică) și a NUMERELOR (metodele primesc `nivel`, ca la Numere) · piesa e REGINA, **ultima piesă de șah liberă**, culoarea roz · `puzzle.gd`, `lupta.gd`, `harta.gd`, `expeditie.gd` neatinse, nicio linie · verificare permanentă nouă, `verifica_tipare`, **33 de verdicte**, cu regula dedusă din enunț la toate cele 18 tipare și cu **intrusul rezolvat din nou prin enumerare**, ca să nu creadă pe cuvânt determinanții din joc; vezi sesiunea AL CINCILEA OBELISC) · **Spațial ✅** (1 noiembrie 2026 — al șaselea Obelisc: **4 tipuri, 12 tipare** (GRILA, ROTATIA, BUSOLA, PLIEREA), **prima disciplină care DESENEAZĂ** și deci prima care schimbă contractul `Puzzle` de la Practice încoace: un cârlig OPȚIONAL, `_plansa_pentru()`, care întoarce un `Control` sau `null` · răspunsul e o CELULĂ, nu o imagine (patru figuri pe butoane ar fi dat celule de 12 px și o întrebare pe care o rezolvi din formă) · piesa e BUSOLA, **prima glifă care nu e o piesă de șah**, culoarea argintiu, **prima nesaturată** · `lupta.gd`, `harta.gd`, `expeditie.gd` neatinse, nicio linie · verificare permanentă nouă, `verifica_spatial`, **29 de verdicte**, cu răspunsul rezolvat din nou cu ALTĂ metodă la toate cele 12 tipare (matricea întoarsă cu `Array.reverse()`, cubul chiar PLIAT) și cu o secțiune nouă, PLANȘELE; vezi sesiunea AL ȘASELEA OBELISC) · **Reținere ✅** (2 noiembrie 2026 — al șaptelea Obelisc: **4 tipuri, 13 tipare** (SIRUL, CAROIAJUL, LISTA, PERECHILE), **prima disciplină la care întrebarea are DOUĂ TIMPURI** și deci a doua care schimbă contractul `Puzzle`: EXPUNEREA, două câmpuri opționale în dicționarul întrebării (`expunere`, `text_expunere`) prin care ce trebuie ținut minte stă pe ecran și pe urmă DISPARE · expunerea se măsoară PE SEMN (0,62 s), nu pe întrebare — trei secunde fixe ar fi făcut nivelul III o probă de viteză de citit · ceasul expunerii curge ȘI în Practice, unde cel al întrebării e stins, fiindcă altfel întrebarea ar avea răspunsul scris deasupra ei · desenează un singur tip din patru, cu desenatorul Spațialului (`PlansaSpatiala`), nefolosit de celelalte trei · piesa e CLEPSIDRA, a doua glifă care nu e o piesă de șah, culoarea verde-albastru — exact cea respinsă la a cincea disciplină, acum folosită fiindcă de la busolă încoace recunoașterea o duce FORMA, nu nuanța · `lupta.gd`, `expeditie.gd` neatinse, nicio linie; `harta.gd` atins doar pentru ecranul de loadout, care nu mai încăpea · verificare permanentă nouă, `verifica_retinere`, **41 de verdicte**, cu răspunsul rezolvat din nou din CE S-A ARĂTAT la toate cele 13 tipare și cu o secțiune care joacă expunerea cu SCENA ADEVĂRATĂ, în amândouă modurile; vezi sesiunea AL ȘAPTELEA OBELISC) · **Reflex ✅** (2 noiembrie 2026 — al optulea Obelisc, și ULTIMUL: **4 tipuri, 12 tipare** (CUVANTUL, CIFRELE, SAGETILE, FORMELE), **singura disciplină care n-a costat nimic în afara tabelului** — nici un câmp, nici un cârlig, nicio linie în `puzzle.gd`: desenează prin cârligul adus de Spațial și nu folosește deloc expunerea Reținerii, ceea ce dovedește că cele două sunt independente · **nu e o disciplină de viteză, e una de INHIBIȚIE**: blocajul ei de o săptămână era o decizie, nu cod — cronometrul e al inamicului de pe 31 octombrie — iar ieșirea a fost să se mute capcana ÎN întrebare, exact mutarea pe care o făcuse Reținerea cu timpul ei · **răspunsul care-ți vine primul e dinadins greșit**, iar `verifica_reflex` are o secțiune (IMPULSUL) care verifică o intenție de DESIGN, nu o socoteală: impulsul nu e niciodată răspunsul și e mereu pe un buton · **Stroop FĂRĂ culoare**, fiindcă verdele și roșul sunt culori de verdict — cuvântul se bate cu LOCUL, cu DE CÂTE ORI e scris, cu MĂRIMEA și cu FORMA de lângă el, și tocmai asta a ales cele patru tipuri · desenator propriu (`scenes/reflex/plansa.gd`, semne AȘEZATE, fără caroiaj), folosit de toate cele 12 tipare · piesa e FULGERUL, a treia glifă care nu e de șah și singura ASIMETRICĂ, culoarea galben-verde electric — cea mai saturată din tabel, pe ultimul gol de pe roata culorilor · `puzzle.gd`, `lupta.gd`, `harta.gd`, `expeditie.gd` neatinse, nicio linie · verificare permanentă nouă, `verifica_reflex`, **32 de verdicte**, cu răspunsul refăcut din PLANȘĂ la toate cele 12 tipare; vezi sesiunea AL OPTULEA OBELISC) · **toate OPT fără repetiții pe expediție**, **Cultura generală după `id`, nu după text** · **și, de pe 2 noiembrie 2026, fără două trepte la rând din același TIP de întrebare**: un câmp opțional (`tip`) plus o memorie `static` în `puzzle.gd`, tipul servit trimis la coada tragerii la treapta următoare — la Trivia „tipul" e domeniul; verificare permanentă nouă, `verifica_treptele`, 13 verdicte, ~5 s (vezi sesiunea FĂRĂ DOUĂ TREPTE LA RÂND) · **PASUL 9 E TERMINAT** |
@@ -37,6 +37,227 @@ buget, generare) rămâne acolo unde era.
 Am sărit peste ordinea recomandată la pasul 12 (artă): imaginile pentru rege,
 cavaler și pentru TOATE cele opt glife de pe butoanele de Obelisc au intrat mai
 devreme, dar restul rămâne placeholder. Bucla de luptă e în continuare cea validată, nu arta.
+
+---
+
+## UNELTELE SE VĂD (2 noiembrie 2026) — ecranul de loadout arată chiar butoanele din luptă
+
+**Ce s-a schimbat:** în ecranul „Alege-ti uneltele", cele opt discipline nu mai
+sunt o listă de nume cu un comutator lângă fiecare. Sunt **chiar butoanele de
+Obelisc din luptă** — aceeași scenă, aceeași glifă, aceeași culoare, aceeași
+bordură — iar alegerea se face aprinzându-le.
+
+### De ce conta
+
+Până azi alegeai niște CUVINTE: „Memorie", „Logica", „Numere", scrise cu
+culoarea disciplinei pe un `CheckButton`. Butonul pe care aveai să-l apeși de
+zeci de ori în expediție — silueta lui, fondul lui, numele scris pe el — îl
+vedeai pentru prima oară în luptă, **după** ce alegerea era deja făcută și fixă
+până la capătul expediției.
+
+Iar asta se agravase exact în ziua în care s-a terminat tabelul. Comentariile
+culorilor din `discipline.gd` spun, pe rând, că la opt discipline ce duce
+recunoașterea periferică e **culoarea și FORMA glifei** — argintiul nesaturat
+al Spațialului, clepsidra simetrică a Reținerii, fulgerul asimetric al
+Reflexului. Toate alese cu grijă, și toate absente tocmai din ecranul în care
+alegi.
+
+### Ce a costat
+
+O scenă nouă: **niciuna.** `obelisc.tscn` știa deja să se configureze dintr-un
+rând din CATALOG — `configureaza(nume, piesa, culoare, imagine)`, exact apelul
+pe care i-l face `lupta.gd`.
+
+Ce a trebuit adăugat în `obelisc.gd` e un **mod alegere**, și e scris cu două
+câmpuri în loc de unul dinadins:
+
+```gdscript
+var modul_alegere := false
+var ales := false
+```
+
+Cu un singur `ales`, orice valoare implicită ar fi schimbat ceva în arenă:
+`true` ar fi aprins baza celor trei butoane din luptă, `false` le-ar fi stins pe
+toate. Cu un comutator **stins implicit**, lupta nu simte nicio linie din ce
+s-a adăugat — iar asta nu e o speranță, cele trei ramuri noi din `_tinta()` se
+citesc pe loc: cu `modul_alegere` fals, fiecare dă exact valoarea de dinainte.
+
+`_tinta()` rămâne, ca de la bun început, **singurul loc care răspunde la „cum
+arăt eu?"** — deci alegerea se animă cu aceleași patru proprietăți ca hover-ul,
+fără nicio a doua cale prin care butonul ar putea ajunge într-o stare pe care
+nimeni n-o mai stinge.
+
+Starea de comutator o ține `Button.toggle_mode`, care aduce gratis tot ce e
+plictisitor (ține apăsarea, o arată tastaturii, emite `toggled`) — exact
+argumentul pentru care rădăcina scenei era un `Button` și nu un `Control`.
+Butonul se ascultă singur pe `toggled` ca să știe cum să arate; ecranul de
+loadout ascultă același semnal pentru numărătoarea lui. Două lucruri din același
+semnal, fără ca cineva din afară să-i spună butonului cum să se deseneze.
+
+### Cele trei stări, și de ce „neales" nu e „indisponibil"
+
+| stare | ce se vede |
+|---|---|
+| ales | față aprinsă pe jumătate (`EVIDENTIERE_ALES` = 0,55), halo de 11 px |
+| neales | tot butonul la 52% (`ALFA_NEALES`) |
+| sub mouse | ce era și până acum: ridicat 3 px, față la 1,0, halo de 15 px |
+
+`ALFA_NEALES` e 0,52, iar `ALFA_INDISPONIBIL` (cel din luptă) e 0,42 — și
+diferența e intenția: un Obelisc indisponibil **nu se poate apăsa**, unul neales
+**se poate**. Dacă ar arăta la fel, ecranul ar spune „nu ai voie" acolo unde
+vrea să spună „nu ai luat-o pe asta".
+
+Un ales în repaus stă la jumătatea drumului spre hover, nu la capăt: destul cât
+să se vadă dintr-o privire care sunt cele trei, nu atât încât hover-ul să nu mai
+aibă ce adăuga.
+
+### Ecranul, măsurat și nu bănuit
+
+Lecția de la a șaptea disciplină („panoul ieșea 692 px pe o pânză de 648 —
+măsurat, nu bănuit") s-a aplicat din prima: un buton e **lat și scund** acolo
+unde un rând de text era îngust și înalt, deci grila a trecut de la două coloane
+la patru.
+
+| încercare | panou | rezervă pe înălțime |
+|---|---|---|
+| 4 coloane pe 760 px (lățimea veche) | — nu încăpea | — |
+| 4 coloane pe 900 px | 900 × 619 | 29 px |
+| **4 coloane pe 1000 px** | **1000 × 577** | **71 px** |
+
+Varianta de 900 px intra, dar cu 29 px de rezervă — adică exact situația de la
+șase discipline, când ecranul era la 13 px de limită și nimeni n-o știa. La 1000
+px descrierile încap pe două rânduri în loc de trei, deci panoul **scade** cu
+42 px, iar rezerva e mai mare decât cea de dinainte (71 față de 58). Mai lat și
+mai scund, dintr-o singură mutare.
+
+Măsurătoarea s-a făcut cu o scenă de unică folosință, ștearsă după (ca la a
+opta disciplină): suita de verificări din CLAUDE.md nu primește o intrare nouă
+pentru un ecran care nu se va mai schimba.
+
+Căsuțele nu mai au înălțime minimă scrisă de mână. Într-un `GridContainer`,
+toate căsuțele unui rând primesc înălțimea celei mai înalte, iar un
+`VBoxContainer` își lipește copiii de sus — deci butoanele unui rând stau oricum
+pe aceeași linie, oricât de lungă ar fi descrierea de sub unul dintre ele. O
+înălțime minimă ar fi fost o a doua regulă care spune ce spunea deja prima.
+
+### Ce NU s-a atins
+
+`lupta.gd`, `expeditie.gd`, `discipline.gd`, `puzzle.gd` — nicio linie. Regula
+„o disciplină nouă e un rând în tabel" ține și aici: `_rand_disciplina()` citește
+din CATALOG exact câmpurile pe care le citea și înainte, plus `piesa` și
+`imagine`, care existau de la prima disciplină.
+
+Verificate după: `verifica_retragerea` (27), `verifica_duelul` (29),
+`verifica_treptele` (13) — toate verzi, cod de ieșire 0.
+
+### A doua trecere, în aceeași zi
+
+Trei lucruri, dintre care primul era chiar „Rămas deschis"-ul scris mai sus.
+
+**1. Alegerea se plafonează la N.** Puteai aprinde un al patrulea Obelisc, iar
+butonul de pornire rămânea stins și scria „Alese: 4 / 3" — adică jocul te lăsa
+să faci o mișcare și pe urmă îți spunea că n-avea voie să fie făcută. Era așa și
+cu comutatoarele, dar cu butoane care arată a unelte gata de folosit întrebarea
+se punea mai tare. De azi, cu N aprinse, celelalte se sting și nu se mai pot
+apăsa; cele N rămân mereu apăsabile, altfel alegerea ar fi fost definitivă, nu
+plafonată.
+
+Aici s-a plătit, a doua oară în aceeași zi, o deosebire scrisă de dimineață:
+`ALFA_NEALES` (nu l-ai luat) față de `ALFA_INDISPONIBIL` (nu se poate). Până azi
+cele două stări nu se vedeau niciodată împreună — una era în loadout, cealaltă
+în arenă. Acum stau una lângă alta, pe același ecran, la o secundă distanță. Și
+s-a văzut imediat că 0,52 față de 0,42 nu se citește ca o schimbare, ci ca o
+nuanță: `ALFA_NEALES` a urcat la **0,62**, deci căderea e de o treime.
+
+**2. Câmpul de sămânță a ieșit din ecran.** Era unealta de depanare care face o
+hartă reproductibilă — și stătea, gol, în ecranul pe care jucătorul îl vede
+înaintea fiecărei expediții. Ce făcea el se face în continuare din cod
+(`Expeditie.incepe(alese, 4242)`), de unde oricum se foloseau semințele alese;
+sămânța CHIAR folosită se vede în continuare în sumarul de la finalul expediției.
+Panoul a scăzut de la 577 la **535 px**, deci rezerva e acum de 113 px.
+
+**3. Busola avea un inel de pixeli albi**, și cauza n-a fost unde părea — vezi
+secțiunea următoare.
+
+---
+
+## FRANJUL BUSOLEI (2 noiembrie 2026) — două unelte care se băteau cap în cap
+
+**Simptomul:** glifa Spațialului ieșea cu un pieptene de puncte albe lipit de
+contur și cu așchii albe în crestăturile stelei. Pe un buton de 46 px, un halou.
+
+Ciudat, fiindcă unealta de decupare avea deja o regulă scrisă chiar pentru asta,
+cu comentariu cu tot: „Fără pasul ăsta, busola iese cu un inel de puncte albe în
+jur." Regula exista, era pornită, și busola ieșea exact așa.
+
+### Prima cauză: ordinea
+
+`decupeaza_piesa.py` făcea, în ordinea asta: umple fundalul → **cojește**
+franjul luminos de pe margine (25 de straturi la busolă) → **netezește**
+conturul cu o mediană de 31 → roade 2 px.
+
+Cojirea și netezirea se anulau una pe alta, și aritmetica o spune: un pixel din
+mijlocul unei fâșii subțiri de 25, rase de pe marginea unui DISC de 700, are
+majoritatea vecinilor înăuntru — iar o mediană înseamnă „fii ce sunt majoritatea
+vecinilor tăi". Netezirea punea la loc aproape tot ce cojirea scosese.
+
+Mutarea e lecția deja scrisă o dată în comentariul cojirii: *„e o întrebare
+despre MARGINE, iar marginea nu există până nu s-a așezat fundalul."* Netezirea
+MUTĂ marginea — deci după ea e altă margine, și întrebarea trebuie pusă din nou.
+Cojirea s-a mutat după netezire (și s-a rescris cu filtre, nu cu bucle: 25 de
+straturi peste două milioane de pixeli în Python ar fi fost cincizeci de
+milioane de pași pe glifă).
+
+Pixeli prea deschiși, pe busolă: **169 → 25**.
+
+### A doua cauză: micșorarea
+
+Au rămas 25, aproape toți pe contur, și ei nu veneau din randare, ci din
+MICȘORARE. Două greșeli care trag amândouă spre alb:
+
+- **Lanczos supra-oscilează.** La o trecere bruscă întuneric → lumină aruncă
+  valori peste capetele intervalului. Măsurat, pe aceeași mască: 37 de pixeli
+  prea deschiși pe contur cu Lanczos, 21 cu bicubic, 13 cu bilinear și 13 cu
+  BOX, care nu oscilează deloc.
+- **Împărțirea la alfa amplifică.** Un pixel acoperit 10% are culoarea împărțită
+  la 0,1 ca să se afle tonul adevărat, deci orice urmă de eroare din numărător
+  se înmulțește cu zece.
+
+Filtrul NU s-a schimbat: Lanczos e cel mai limpede la micșorare, iar coroana
+reginei are nevoie de limpezime. S-a pus, în schimb, un **PLAFON DE TON**,
+măsurat din glifa însăși: cel mai deschis pixel din interiorul măștii (la 4 px
+de margine) care nu e deja în harta franjului. Niciun număr scris de mână, și
+nicio atingere a formei.
+
+Prima scriere a plafonului s-a uitat doar la interior, și **n-a tăiat nimic**:
+la busolă ieșea 255. Netezirea de 31 umple cu material sliturile subțiri din
+vârfurile stelei, iar ele sunt tablă albă — pixeli de 255 aflați ADÂNC în mască,
+nu pe contur. Cu „și nu în harta franjului" adăugat, plafonul devine 189 la
+busolă și rămâne 244 la fulger, care e deschis de la natură și nu e cenușiu,
+deci harta franjului nu-l atinge deloc.
+
+### Ce s-a măsurat și NU s-a păstrat
+
+Două idei au fost scrise, măsurate și aruncate, și merită notate ca să nu fie
+rescrise peste o lună:
+
+- **„Cea mai mare pată" încă o dată, după cojire** — ideea era că o margine
+  roasă poate rupe stropi din contur. Rezultatul: **exact aceleași cifre**.
+  Stropii erau legați de disc, nu rupți din el.
+- **O netezire mică DUPĂ cojire**, ca să se îndrepte conturul pe care cojirea îl
+  zimțase. Măsurat pe toate cinci glifele, cu fereastra 0, 5, 9, 13 și 21: zimții
+  busolei fac 99 → 86 → 89 → 83 → **107**. Zgomot, nu tendință, iar la 21 e mai
+  rău. Un pas care nu se vede în cifre nu rămâne în unealtă.
+
+### Rezultatul
+
+| glifă | pixeli peste 200, înainte | după |
+|---|---|---|
+| busolă | 169 (max 255) | **0** (max 189) |
+| clepsidră | 28 | 0 |
+| regină | 1 | 0 |
+| turn | 1 | 0 |
+| fulger | 11 133 | 11 111 (neatins — e galben-verde, nu cenușiu) |
 
 ---
 

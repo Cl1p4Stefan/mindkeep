@@ -14,6 +14,13 @@ extends Button
 ##
 ## Aici, un Obelisc nou e un rând în tabelul `OBELISCURI` din `lupta.gd`.
 ##
+## Și scena a mai dovedit ceva, de pe 2 noiembrie 2026: ECRANUL DE LOADOUT
+## folosește exact aceiași butoane. Înainte îți alegeai uneltele dintr-o listă
+## de `CheckButton`-uri cu text — adică alegeai niște cuvinte, iar în luptă
+## vedeai pentru prima oară niște butoane. Acum alegi CHIAR lucrul pe care o
+## să-l apeși. N-a costat o a doua scenă: un comutator (`modul_alegere`) și
+## două stări în `_tinta()`.
+##
 ## DE CE RĂDĂCINA E TOT UN `Button`, deși nu i se vede nimic din înfățișare:
 ## `Button` aduce gratis tot ce e greu și plictisitor — zona de click, hover-ul,
 ## `disabled`, semnalul `pressed`, navigarea cu tastatura. Noi îi stingem doar
@@ -77,12 +84,48 @@ const ALFA_PIESA_BLOCATA := 0.30
 ## un colț luminos în afara butonului.
 const RAZA_COLT := 12
 
+# ─── MODUL ALEGERE (doar ecranul de loadout) ─────────────────
+## Cât de stins e un Obelisc pe care NU l-ai ales. Mai aprins decât
+## `ALFA_INDISPONIBIL`, dinadins: un buton indisponibil nu se poate apăsa, iar
+## unul neales se poate — dacă ar arăta la fel, ecranul ar spune „nu ai voie"
+## acolo unde vrea să spună „nu ai luat-o pe asta".
+##
+## A fost 0,52 o jumătate de oră, și era prea aproape de 0,42: în ecranul de
+## loadout cele două stări se văd UNA LÂNGĂ ALTA (după ce alegi al treilea, cele
+## rămase se sting), iar o zecime de transparență între ele nu se citește ca o
+## schimbare, se citește ca o nuanță. La 0,62 căderea e de o treime și se vede
+## că s-a întâmplat ceva.
+const ALFA_NEALES := 0.62
+
+## Cât de aprinsă e fața unui Obelisc ALES, cât timp nu e sub mouse. La
+## jumătatea drumului spre hover: destul cât să se vadă dintr-o privire care
+## sunt cele N alese, nu atât încât hover-ul să nu mai aibă ce adăuga.
+const EVIDENTIERE_ALES := 0.55
+
+## Halo-ul unui Obelisc ales, tot între repaus și hover, din același motiv.
+const UMBRA_ALES := 11
+const ALFA_UMBRA_ALES := 0.24
+
 # ─────────────────────────────────────────────────────────────
 # STARE
 # ─────────────────────────────────────────────────────────────
 ## Obeliscul e blocat până la finalul rundei (ai greșit la el)?
 ## Nu îl setezi direct — vine prin `seteaza_stare()`, împreună cu disponibilitatea.
 var blocat := false
+
+## MODUL ALEGERE — aprins DOAR de ecranul de loadout, prin `porneste_alegerea()`.
+##
+## În luptă, un Obelisc nu se „alege": îl apeși și pune o întrebare. În loadout,
+## exact același buton e un comutator, iar ce trebuie să se vadă dintr-o privire
+## nu e care e sub mouse, ci CARE SUNT APRINSE.
+##
+## De ce DOUĂ câmpuri și nu doar `ales`: orice valoare implicită a lui `ales`
+## ar fi schimbat ceva în arenă — `true` ar fi aprins baza celor trei butoane,
+## `false` le-ar fi stins pe toate. Cu un comutator stins implicit, lupta nu
+## simte nicio linie din ce urmează, iar `_tinta()` rămâne singurul loc care
+## răspunde la „cum arăt eu?".
+var modul_alegere := false
+var ales := false
 
 ## Culoarea disciplinei. Sursa tuturor culorilor butonului.
 var culoare := Color(0.6, 0.85, 1.0)
@@ -193,6 +236,53 @@ func seteaza_stare(blocat_acum: bool, indisponibil: bool) -> void:
 	_asaza_acum()
 
 
+## Transformă butonul în comutator. Chemată o dată, din ecranul de loadout,
+## după `configureaza()`.
+##
+## `toggle_mode` e al lui `Button` și face toată munca grea: ține starea
+## apăsată, o arată tastaturii, emite `toggled`. Noi adăugăm doar ce se VEDE —
+## iar asta trece, ca tot restul, prin `_tinta()`.
+func porneste_alegerea() -> void:
+	modul_alegere = true
+	toggle_mode = true
+	ales = button_pressed
+	if not toggled.is_connected(_pe_comutare):
+		toggled.connect(_pe_comutare)
+	_asaza_acum()
+
+
+## Butonul își urmărește singur starea de comutator. Ecranul de loadout ascultă
+## tot `toggled` pentru NUMĂRĂTOAREA lui — două lucruri diferite din același
+## semnal, ca să nu fie nevoie ca cineva din afară să-i spună butonului cum să
+## arate.
+func _pe_comutare(pornit: bool) -> void:
+	ales = pornit
+	_animeaza(DURATA_APASARE)
+
+
+## „Îl mai poți aprinde?" — ușa prin care ecranul de loadout stinge Obeliscurile
+## rămase după ce ai ales deja N.
+##
+## E a doua ușă spre `disabled`, lângă `seteaza_stare()`, și diferența dintre
+## ele e una singură: ANIMAȚIA. În luptă, starea se schimbă ca urmare a unei
+## reguli (n-ai PA, s-a deschis un puzzle) și `actualizeaza_ui()` o cere de zeci
+## de ori pe rundă, deci acolo butonul trebuie să fie pe loc ce i se spune. Aici
+## se schimbă ca urmare a CLICULUI TĂU, iar cinci butoane care se sting alunecat
+## se citesc ca un răspuns la ce tocmai ai făcut; stinse brusc, par un bug.
+##
+## Culoarea nu se recalculează: `blocat` nu s-a schimbat, iar `_tinta()` știe
+## deja ce înseamnă `disabled`.
+func seteaza_disponibilitatea(indisponibil: bool) -> void:
+	if disabled == indisponibil:
+		return
+	disabled = indisponibil
+	if disabled:
+		# Nu mai ești „sub mouse" pe un buton pe care nu-l poți apăsa.
+		_sub_mouse = false
+		_apasat = false
+	_animeaza(DURATA_HOVER)
+
+
 # ─────────────────────────────────────────────────────────────
 # CULORILE — ce nu se animă
 # ─────────────────────────────────────────────────────────────
@@ -259,13 +349,18 @@ func _aplica_culoarea() -> void:
 ## alta, și butonul rămâne cu un halo pe care nu-l mai stinge nimeni).
 func _tinta() -> Dictionary:
 	var aprins := _sub_mouse and not disabled
+	# Cele două stări pe care le aduce modul alegere. În luptă sunt amândouă
+	# `false` (fiindcă `modul_alegere` e stins), deci rândurile de mai jos se
+	# citesc exact ca înainte.
+	var neales := modul_alegere and not ales
+	var ales_in_repaus := modul_alegere and ales and not aprins
 	return {
 		"ridicare": -(RIDICARE_APASAT if _apasat else (RIDICARE if aprins else 0.0)),
-		"evidentiere": 1.0 if aprins else 0.0,
+		"evidentiere": 1.0 if aprins else (EVIDENTIERE_ALES if ales_in_repaus else 0.0),
 		"glow": (GLOW_PIESA_HOVER if aprins else GLOW_PIESA) if not blocat else 0.0,
-		"umbra": UMBRA_HOVER if aprins else UMBRA,
-		"alfa_umbra": ALFA_UMBRA_HOVER if aprins else ALFA_UMBRA,
-		"alfa": ALFA_INDISPONIBIL if disabled else 1.0,
+		"umbra": UMBRA_HOVER if aprins else (UMBRA_ALES if ales_in_repaus else UMBRA),
+		"alfa_umbra": ALFA_UMBRA_HOVER if aprins else (ALFA_UMBRA_ALES if ales_in_repaus else ALFA_UMBRA),
+		"alfa": ALFA_INDISPONIBIL if disabled else (ALFA_NEALES if neales else 1.0),
 	}
 
 

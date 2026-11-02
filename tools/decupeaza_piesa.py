@@ -151,6 +151,69 @@ PRAG_FRANJ = 193
 ## cele cinci randări nu are material peste `PRAG_FRANJ`.
 COJIRI = 3
 
+## DE CE COJIREA S-A MUTAT DUPĂ NETEZIRE (2 noiembrie 2026)
+##
+## A stat o zi înainte de ea, și o zi busola a ieșit cu exact inelul alb pe
+## care cojirea îl scrisese în comentariu că-l scoate. Cele două se băteau cap
+## în cap, și aritmetica o spune: cojirea taie `cojiri` straturi lipite de
+## margine (25 la busolă), iar netezirea de după trece peste mască cu o
+## fereastră de 31 și cere fiecărui pixel „fii ce sunt majoritatea vecinilor
+## tăi". Un pixel din mijlocul unei fâșii subțiri de 25, rase de pe marginea
+## unui DISC de 700, are majoritatea vecinilor înăuntru — deci netezirea punea
+## înapoi aproape tot ce cojirea scosese, iar `MinFilter`-ul de la final nu mai
+## roade decât 2 pixeli din el.
+##
+## Mutarea e o lecție, nu un reglaj, și e chiar cea scrisă deja o dată în
+## comentariul cojirii: „e o întrebare despre MARGINE, iar marginea nu există
+## până nu s-a așezat fundalul." Netezirea MUTĂ marginea, deci după ea e altă
+## margine, și întrebarea trebuie pusă din nou.
+##
+## Cojirea dinaintea netezirii n-a fost scoasă: ea curăță pata din care se
+## alege „cea mai mare", deci ce face ea nu e același lucru cu ce face asta.
+
+
+def _pata_cea_mai_mare(plin, latime: int, inaltime: int) -> list[int]:
+    """Indicii celei mai mari pete legate din `plin` (1 = face parte din formă).
+
+    Celelalte pete sunt cioburi de compresie agățate prin colțurile casetelor:
+    câțiva pixeli fiecare, invizibili pe randare și foarte vizibili pe un buton
+    de 46 px.
+    """
+    vazut = bytearray(latime * inaltime)
+    cea_mai_mare: list[int] = []
+    coada: deque[int] = deque()
+    for start in range(latime * inaltime):
+        if not plin[start] or vazut[start]:
+            continue
+        pata: list[int] = []
+        vazut[start] = 1
+        coada.append(start)
+        while coada:
+            i = coada.popleft()
+            pata.append(i)
+            y, x = divmod(i, latime)
+            vecini = (
+                i - 1 if x else -1,
+                i + 1 if x < latime - 1 else -1,
+                i - latime if y else -1,
+                i + latime if y < inaltime - 1 else -1,
+            )
+            for j in vecini:
+                if j >= 0 and plin[j] and not vazut[j]:
+                    vazut[j] = 1
+                    coada.append(j)
+        if len(pata) > len(cea_mai_mare):
+            cea_mai_mare = pata
+    return cea_mai_mare
+
+
+def _masca(indici: list[int], latime: int, inaltime: int) -> Image.Image:
+    """O mască alb-negru din indicii dați."""
+    pixeli = bytearray(latime * inaltime)
+    for i in indici:
+        pixeli[i] = 255
+    return Image.frombytes("L", (latime, inaltime), bytes(pixeli))
+
 
 def _taie(cale: Path, caseta: int, prag: int, cojiri: int):
     """Întoarce (griuri, lățime, înălțime, pixelii glifei) pentru o randare."""
@@ -260,45 +323,43 @@ def _taie(cale: Path, caseta: int, prag: int, cojiri: int):
     # CEA MAI MARE pată rămasă e glifa. Celelalte sunt cioburi de compresie
     # agățate prin colțurile casetelor — câțiva pixeli fiecare, invizibili pe
     # randare și foarte vizibili pe un buton de 46 px.
-    vazut = bytearray(latime * inaltime)
-    glifa: list[int] = []
-    for start in range(latime * inaltime):
-        if fundal[start] or vazut[start]:
-            continue
-        pata: list[int] = []
-        vazut[start] = 1
-        coada.append(start)
-        while coada:
-            i = coada.popleft()
-            pata.append(i)
-            y, x = divmod(i, latime)
-            vecini = (
-                i - 1 if x else -1,
-                i + 1 if x < latime - 1 else -1,
-                i - latime if y else -1,
-                i + latime if y < inaltime - 1 else -1,
-            )
-            for j in vecini:
-                if j >= 0 and not fundal[j] and not vazut[j]:
-                    vazut[j] = 1
-                    coada.append(j)
-        if len(pata) > len(glifa):
-            glifa = pata
-    return imagine, latime, inaltime, glifa
+    glifa = _pata_cea_mai_mare(
+        bytes(0 if f else 1 for f in fundal), latime, inaltime)
+
+    # HARTA FRANJULUI: pixelii prea luminoși ca să fie material, oriunde ar fi.
+    # Nu „pe margine" — marginea se mai mișcă o dată, la netezire, iar atunci
+    # întrebarea se pune din nou (vezi comentariul lui `COJIRI`).
+    franj = Image.frombytes("L", (latime, inaltime), bytes(
+        255 if (croma[i] <= PRAG_CROMA and gri[i] >= PRAG_FRANJ) else 0
+        for i in range(latime * inaltime)))
+    return imagine, latime, inaltime, glifa, franj
+
+
+def _cojeste(alfa: Image.Image, franj: Image.Image, cojiri: int) -> Image.Image:
+    """Rade de pe conturul măștii, strat cu strat, pixelii din `franj`.
+
+    Scris cu filtre, nu cu bucle peste pixeli: masca are două milioane de
+    pixeli, iar 25 de straturi în Python ar fi însemnat cincizeci de milioane
+    de pași pentru o glifă. `MinFilter(3)` pe o mască alb-negru E eroziunea cu
+    un pixel, deci „masca minus masca erodată" E conturul.
+    """
+    for _ in range(cojiri):
+        contur = ImageChops.subtract(alfa, alfa.filter(ImageFilter.MinFilter(3)))
+        de_cojit = ImageChops.multiply(contur, franj)
+        if not de_cojit.getbbox():
+            break
+        alfa = ImageChops.subtract(alfa, de_cojit)
+    return alfa
 
 
 def decupeaza(nume: str, date: dict) -> Path:
     netezire = date.get("netezire", NETEZIRE)
     sursa = ARTA / date["sursa"]
-    imagine, latime, inaltime, glifa = _taie(
-        sursa, date["caseta"], date.get("prag", PRAG_LUMINA),
-        date.get("cojiri", COJIRI))
+    cojiri = date.get("cojiri", COJIRI)
+    imagine, latime, inaltime, glifa, franj = _taie(
+        sursa, date["caseta"], date.get("prag", PRAG_LUMINA), cojiri)
 
-    alfa = Image.new("L", (latime, inaltime), 0)
-    pixeli = alfa.load()
-    for i in glifa:
-        y, x = divmod(i, latime)
-        pixeli[x, y] = 255
+    alfa = _masca(glifa, latime, inaltime)
     # NETEZIREA conturului. Conturul unui obiect randat e neted; unul zimțat e
     # o hotărâre care a PÂLPÂIT, nu o margine. La busolă pâlpâie tot timpul,
     # fiindcă discul ei (185) și caseta închisă a tablei (198) sunt la
@@ -312,9 +373,45 @@ def decupeaza(nume: str, date: dict) -> Path:
     # adevărată, care are vecinii de partea ei. Nouă pixeli dintr-o randare de
     # ~800 nu rotunjesc nici vârfurile stelei.
     alfa = alfa.filter(ImageFilter.MedianFilter(netezire))
+    # COJIREA, A DOUA OARĂ — pe marginea pe care netezirea tocmai a așezat-o.
+    # Fără ea, busola iese cu un inel alb de jur împrejur și cu așchii albe în
+    # crestăturile stelei: netezirea pune înapoi aproape tot ce cojirea
+    # dinaintea ei scosese. Vezi comentariul lui `COJIRI`.
+    alfa = _cojeste(alfa, franj, cojiri)
     # Rodere: `MinFilter` ia cel mai mic pixel din fereastră, deci pe o mască
     # alb-negru înseamnă „taie `RODERE` pixeli de jur împrejur".
     alfa = alfa.filter(ImageFilter.MinFilter(RODERE * 2 + 1))
+
+    # PLAFONUL DE TON — cât de deschisă are voie să fie glifa micșorată.
+    #
+    # Se măsoară din ea însăși: cel mai deschis pixel din INTERIORUL măștii (la
+    # cel puțin 4 pixeli de margine) care NU e în harta franjului. Adică tonul
+    # cel mai deschis pe care materialul îl are cu adevărat — iar un pixel pe
+    # care regula franjului îl numește deja prea deschis ca să fie material nu
+    # are ce căuta în măsurătoare.
+    #
+    # Nu era de ajuns „cel mai deschis din interior", și s-a văzut din prima
+    # rulare: la busolă ieșea 255, deci plafonul nu tăia nimic. Netezirea de 31
+    # umple cu material sliturile subțiri din vârfurile stelei, iar ele sunt
+    # tablă albă — pixeli de 255 aflați adânc în mască, nu pe contur.
+    #
+    # DE CE E NEVOIE DE EL. Micșorarea amestecă pixeli, iar pe contur se adună
+    # două greșeli care trag amândouă spre alb:
+    #   • LANCZOS SUPRA-OSCILEAZĂ. La o trecere bruscă întuneric → lumină,
+    #     filtrul aruncă valori peste capetele intervalului. Măsurat pe busolă:
+    #     37 de pixeli prea deschiși pe contur cu Lanczos, 13 cu BOX, care nu
+    #     oscilează deloc. Nu se schimbă filtrul — Lanczos e cel mai limpede la
+    #     micșorare, iar coroana reginei are nevoie de limpezime.
+    #   • ÎMPĂRȚIREA LA ALFA amplifică. Un pixel acoperit 10% are culoarea
+    #     împărțită la 0,1 ca să se afle tonul adevărat — deci orice urmă de
+    #     eroare din numărător se înmulțește cu zece.
+    #
+    # Amândouă dau același lucru: un pieptene de puncte albe lipit de contur,
+    # care pe un disc cenușiu de 134 se vede ca un halou. Plafonul le taie pe
+    # amândouă fără să atingă forma și fără niciun număr scris de mână — la
+    # fulger, care e deschis de la natură (218), nu taie nimic.
+    interior = ImageChops.subtract(alfa.filter(ImageFilter.MinFilter(9)), franj)
+    plafon = ImageChops.multiply(imagine, interior).getextrema()[1]
 
     decupaj = Image.merge("RGBA", (imagine, imagine, imagine, alfa))
     decupaj = decupaj.crop(alfa.getbbox())
@@ -330,7 +427,7 @@ def decupeaza(nume: str, date: dict) -> Path:
     mic = Image.merge("RGBA", (r, g, b, a)).resize((tinta_w, tinta_h), Image.LANCZOS)
     r, g, b, a = mic.split()
     canal = Image.new("L", mic.size)
-    canal.putdata([0 if av == 0 else min(255, cv * 255 // av)
+    canal.putdata([0 if av == 0 else min(plafon, cv * 255 // av)
                    for cv, av in zip(r.getdata(), a.getdata())])
     mic = Image.merge("RGBA", (canal, canal, canal, a))
 

@@ -715,11 +715,14 @@ const CULOARE_PV_PUTIN := Color(1.00, 0.52, 0.45)
 @onready var carte_lista: VBoxContainer = %CarteLista
 @onready var buton_carte: Button = %CarteButon
 
+## Butonul de Obelisc — ACELAȘI pe care îl instanțiază `lupta.gd`. Vezi
+## `_rand_disciplina`: ecranul în care îți alegi uneltele arată chiar uneltele.
+const SCENA_OBELISC := preload("res://scenes/lupta/obelisc.tscn")
+
 @onready var panou_loadout: Control = %PanouLoadout
 @onready var loadout_subtitlu: Label = %LoadoutSubtitlu
-## O GRILĂ de două coloane, nu o coloană. Vezi `_construieste_loadout`.
+## O GRILĂ de patru coloane, nu o listă. Vezi `_construieste_loadout`.
 @onready var loadout_lista: GridContainer = %LoadoutLista
-@onready var camp_samanta: LineEdit = %CampSamanta
 @onready var buton_loadout: Button = %LoadoutButon
 @onready var buton_loadout_meniu: Button = %LoadoutMeniu
 
@@ -907,25 +910,24 @@ func _arata_loadout() -> void:
 	_actualizeaza_loadout()
 
 
-## Un rând per disciplină din CATALOG. Nicio cifră scrisă de mână: numărul de
-## rânduri e M, iar cât poți bifa e N. Probat de trei ori: a patra disciplină
-## (Numere), a cincea (Tipare) și a șasea (Spațial) au adus fiecare un rând,
-## fără nicio linie schimbată aici.
+## O căsuță per disciplină din CATALOG. Nicio cifră scrisă de mână: numărul de
+## căsuțe e M, iar cât poți aprinde e N. Probat de cinci ori: a patra
+## disciplină (Numere), a cincea (Tipare), a șasea (Spațial), a șaptea
+## (Reținerea) și a opta (Reflexul) au adus fiecare o căsuță, fără nicio linie
+## schimbată aici.
 ##
-## A ȘAPTEA (Reținerea) a adus tot un rând, dar a plătit și un ecran: cu șapte
-## rânduri într-o singură coloană, panoul ieșea 692 px pe o pânză de 648 —
-## MĂSURAT, nu bănuit — deci „Porneste expeditia" cădea sub marginea de jos.
-## Șase rânduri încăpeau la 635 px, adică ecranul era deja la limită și nimeni
-## n-o știa.
+## A ȘAPTEA a plătit și un ecran: cu șapte rânduri într-o singură coloană,
+## panoul ieșea 692 px pe o pânză de 648 — MĂSURAT, nu bănuit — deci
+## „Porneste expeditia" cădea sub marginea de jos. Atunci lista a devenit o
+## grilă de două coloane pe un panou de 760 px.
 ##
-## Deci lista e de azi o GRILĂ DE DOUĂ COLOANE, iar panoul s-a lărgit de la 520
-## la 760 px. Nu e o înfrumusețare, e aritmetica: patru rânduri în loc de opt
-## intră și cu a opta disciplină, iar o a noua ar adăuga un rând, nu o pagină.
-## Codul de mai jos n-a fost atins — un `GridContainer` primește copii exact ca
-## un `VBoxContainer`, deci promisiunea „o disciplină nouă e un rând în tabel" a
-## ținut și de data asta; ce s-a schimbat e cutia, nu regula.
+## ACUM E O GRILĂ DE PATRU, pe un panou de 1000 px, fiindcă s-a schimbat ce stă
+## într-o căsuță: nu un text cu un comutator lângă el, ci CHIAR BUTONUL DE
+## OBELISC din luptă. Un buton e lat și scund acolo unde un rând de text era
+## îngust și înalt, deci patru pe rând în loc de două — aceeași aritmetică,
+## alt conținut.
 ##
-## N-am ALES între asta și un `ScrollContainer`: la șapte discipline, o listă
+## N-am ALES între asta și un `ScrollContainer`: la opt discipline, o listă
 ## care se derulează ascunde jumătate din alegere exact în ecranul în care
 ## trebuie s-o vezi întreagă.
 func _construieste_loadout() -> void:
@@ -937,37 +939,61 @@ func _construieste_loadout() -> void:
 		loadout_lista.add_child(_rand_disciplina(date))
 
 
-## `CheckButton` = un comutator care își ține singur starea apăsată. Pentru o
-## alegere multiplă e mai cinstit decât un buton obișnuit: vezi dintr-o privire
-## ce e bifat, fără să ții minte pe ce ai apăsat.
+## O căsuță: butonul de Obelisc și, sub el, ce antrenează disciplina.
+##
+## DE CE CHIAR BUTONUL DIN LUPTĂ, ȘI NU UN `CheckButton`
+##
+## Până azi alegeai dintr-o listă de comutatoare cu text, adică alegeai niște
+## CUVINTE: „Memorie", „Logica", „Numere". Butonul pe care aveai să-l apeși de
+## zeci de ori în expediție — silueta lui, culoarea lui, numele scris pe el —
+## îl vedeai pentru prima oară în luptă, după ce alegerea era deja făcută și
+## fixă până la capătul expediției.
+##
+## Acum alegi exact lucrul pe care o să-l apeși. Nu e o înfrumusețare: la opt
+## discipline, ce le deosebește periferic e culoarea și FORMA glifei (vezi
+## comentariile culorilor din `discipline.gd`), iar amândouă lipseau cu totul
+## din ecranul în care contau cel mai mult.
+##
+## N-a costat o scenă nouă: `obelisc.tscn` știe deja să se configureze dintr-un
+## rând din CATALOG — aceleași patru câmpuri pe care i le dă `lupta.gd` — iar
+## starea de comutator e `modul_alegere` din `obelisc.gd`, stinsă implicit.
+## O disciplină nouă rămâne un rând în tabel și aici.
 func _rand_disciplina(date: Dictionary) -> Control:
-	var coloana := VBoxContainer.new()
-	coloana.add_theme_constant_override("separation", 0)
-	# ÎNTINDE-TE pe jumătatea ta de grilă. Într-un `VBoxContainer` rândul se
-	# lățea de la sine (acolo copilul primește toată lățimea); într-un
-	# `GridContainer` o coloană e lată cât cel mai lat copil al ei, deci fără
-	# rândul ăsta descrierea s-ar strânge pe 118 px și ar curge pe șase rânduri.
-	# Măsurat: panoul sărea la 779 px, adică mai rău decât problema pe care
-	# grila o rezolvă.
-	coloana.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	var casuta := VBoxContainer.new()
+	casuta.add_theme_constant_override("separation", 6)
+	# ÎNTINDE-TE pe pătrimea ta de grilă. Într-un `GridContainer` o coloană e
+	# lată cât cel mai lat copil al ei, iar un text cu `autowrap` nu cere decât
+	# cel mai lung cuvânt al lui — fără rândul ăsta, cele patru coloane ar ieși
+	# de lățimi diferite, după cât de lung e un cuvânt dintr-o descriere.
+	casuta.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 
-	var comutator := CheckButton.new()
-	comutator.text = String(date["nume"])
-	comutator.modulate = date["culoare"]
-	comutator.toggled.connect(_pe_disciplina_bifata.bind(String(date["cheie"])))
-	coloana.add_child(comutator)
+	var buton: Obelisc = SCENA_OBELISC.instantiate()
+	buton.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	# `add_child` ÎNAINTE de `configureaza`: altfel butonul nu e încă „ready"
+	# și ar trebui să-și aștepte singur nodurile (vezi `configureaza`). Aceeași
+	# ordine ca în `lupta.gd`.
+	casuta.add_child(buton)
+	buton.configureaza(
+		String(date["nume"]), date["piesa"], date["culoare"], String(date["imagine"])
+	)
+	buton.porneste_alegerea()
+	buton.toggled.connect(_pe_disciplina_bifata.bind(String(date["cheie"])))
 
-	# Ce ANTRENEAZĂ, sub nume. O alegere între trei cuvinte fără explicație nu
-	# e o alegere — e o ghicitoare. (Azi le iei pe toate trei, deci rândul ăsta
-	# pare degeaba; cu opt discipline, el e tot ecranul.)
+	# Ce ANTRENEAZĂ, sub buton. O alegere între opt nume fără explicație nu e o
+	# alegere — e o ghicitoare.
 	var rol := Label.new()
 	rol.text = String(date["rol"])
 	rol.modulate = Color(0.58, 0.58, 0.66)
 	rol.add_theme_font_size_override("font_size", 13)
 	rol.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	coloana.add_child(rol)
+	rol.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	# Nicio înălțime minimă: într-un `GridContainer` toate căsuțele unui rând
+	# primesc înălțimea celei mai înalte, iar un `VBoxContainer` își lipește
+	# copiii de sus — deci butoanele unui rând stau oricum pe aceeași linie,
+	# oricât de lungă ar fi descrierea de sub unul dintre ele.
+	casuta.add_child(rol)
 
-	return coloana
+	return casuta
 
 
 func _pe_disciplina_bifata(bifat: bool, cheie: String) -> void:
@@ -990,6 +1016,19 @@ func _actualizeaza_loadout() -> void:
 	else:
 		loadout_subtitlu.text = "Alege %d din %d. Raman fixe pe toata expeditia." % [n, m]
 
+	# PLAFONUL. Cu N alese, celelalte se sting: nu poți aprinde a patra unealtă
+	# ca pe urmă să ți se spună că n-ai voie. Butonul ales rămâne mereu apăsabil,
+	# altfel alegerea ar fi fost și definitivă, nu doar plafonată — te-ai fi
+	# trezit cu trei butoane stinse și fără nicio cale înapoi.
+	#
+	# Stinse cu `ALFA_INDISPONIBIL` (0,42), nu cu `ALFA_NEALES` (0,52), iar
+	# deosebirea e chiar înțelesul celor două: „nu se poate" față de „nu l-ai
+	# luat". Ecranul le arată acum pe amândouă, una lângă alta.
+	var plin := alese.size() >= n
+	for casuta in loadout_lista.get_children():
+		var buton: Obelisc = casuta.get_child(0)
+		buton.seteaza_disponibilitatea(plin and not buton.button_pressed)
+
 	buton_loadout.disabled = alese.size() != n
 	if alese.size() == n:
 		buton_loadout.text = "Porneste expeditia"
@@ -998,12 +1037,16 @@ func _actualizeaza_loadout() -> void:
 
 
 func _pe_pornire() -> void:
-	# Sămânța scrisă de mână e unealta de depanare: același număr, aceeași
-	# hartă, de fiecare dată. Gol sau nenumeric = una la întâmplare, dar tot
-	# ținută minte (vezi `Expeditie.incepe`).
-	var text := camp_samanta.text.strip_edges()
-	var samanta := int(text) if text.is_valid_int() else 0
-	Expeditie.incepe(alese, samanta)
+	# Sămânța 0 = una la întâmplare, dar tot ținută minte: ecranul de sumar o
+	# arată la finalul expediției, iar `verifica_harta` și celelalte verificări
+	# i-o dau direct lui `Expeditie.incepe()`.
+	#
+	# Câmpul în care o scriai de mână a ieșit din ecran pe 2 noiembrie 2026: era
+	# o unealtă de depanare pusă în fața jucătorului, iar un `LineEdit` gol într-un
+	# ecran de alegere e primul lucru la care se uită cineva care nu știe ce e.
+	# Ce făcea el se poate face în continuare din cod, de unde se și foloseau
+	# semințele alese: `Expeditie.incepe(alese, 4242)`.
+	Expeditie.incepe(alese, 0)
 	# AMBELE fișiere: expediția se naște, iar `incepe()` a chemat
 	# `Sac.expeditie_noua()`, deci s-au schimbat și sacurile din permanent.
 	Arhiva.salveaza_tot()

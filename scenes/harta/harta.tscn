@@ -313,7 +313,7 @@ grow_vertical = 2
 mouse_filter = 2
 
 [node name="Panou" type="PanelContainer" parent="PanouLoadout/Centru"]
-custom_minimum_size = Vector2(760, 0)
+custom_minimum_size = Vector2(1000, 0)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_panou")
 
@@ -347,26 +347,9 @@ autowrap_mode = 3
 [node name="LoadoutLista" type="GridContainer" parent="PanouLoadout/Centru/Panou/Margini/Coloana"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_constants/h_separation = 28
-theme_override_constants/v_separation = 10
-columns = 2
-
-[node name="RandSamanta" type="HBoxContainer" parent="PanouLoadout/Centru/Panou/Margini/Coloana"]
-layout_mode = 2
-theme_override_constants/separation = 10
-
-[node name="EtichetaSamanta" type="Label" parent="PanouLoadout/Centru/Panou/Margini/Coloana/RandSamanta"]
-modulate = Color(0.58, 0.58, 0.66, 1)
-layout_mode = 2
-theme_override_font_sizes/font_size = 14
-text = "Samanta (gol = la intamplare)"
-
-[node name="CampSamanta" type="LineEdit" parent="PanouLoadout/Centru/Panou/Margini/Coloana/RandSamanta"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 14
-placeholder_text = "ex. 4242"
+theme_override_constants/h_separation = 16
+theme_override_constants/v_separation = 14
+columns = 4
 
 [node name="LoadoutButon" type="Button" parent="PanouLoadout/Centru/Panou/Margini/Coloana"]
 unique_name_in_owner = true
