@@ -717,7 +717,8 @@ const CULOARE_PV_PUTIN := Color(1.00, 0.52, 0.45)
 
 @onready var panou_loadout: Control = %PanouLoadout
 @onready var loadout_subtitlu: Label = %LoadoutSubtitlu
-@onready var loadout_lista: VBoxContainer = %LoadoutLista
+## O GRILĂ de două coloane, nu o coloană. Vezi `_construieste_loadout`.
+@onready var loadout_lista: GridContainer = %LoadoutLista
 @onready var camp_samanta: LineEdit = %CampSamanta
 @onready var buton_loadout: Button = %LoadoutButon
 @onready var buton_loadout_meniu: Button = %LoadoutMeniu
@@ -907,9 +908,26 @@ func _arata_loadout() -> void:
 
 
 ## Un rând per disciplină din CATALOG. Nicio cifră scrisă de mână: numărul de
-## rânduri e M, iar cât poți bifa e N. Probat de două ori în aceeași zi: a
-## patra disciplină (Numere) și a cincea (Tipare) au adus fiecare un rând, fără
-## nicio linie schimbată aici.
+## rânduri e M, iar cât poți bifa e N. Probat de trei ori: a patra disciplină
+## (Numere), a cincea (Tipare) și a șasea (Spațial) au adus fiecare un rând,
+## fără nicio linie schimbată aici.
+##
+## A ȘAPTEA (Reținerea) a adus tot un rând, dar a plătit și un ecran: cu șapte
+## rânduri într-o singură coloană, panoul ieșea 692 px pe o pânză de 648 —
+## MĂSURAT, nu bănuit — deci „Porneste expeditia" cădea sub marginea de jos.
+## Șase rânduri încăpeau la 635 px, adică ecranul era deja la limită și nimeni
+## n-o știa.
+##
+## Deci lista e de azi o GRILĂ DE DOUĂ COLOANE, iar panoul s-a lărgit de la 520
+## la 760 px. Nu e o înfrumusețare, e aritmetica: patru rânduri în loc de opt
+## intră și cu a opta disciplină, iar o a noua ar adăuga un rând, nu o pagină.
+## Codul de mai jos n-a fost atins — un `GridContainer` primește copii exact ca
+## un `VBoxContainer`, deci promisiunea „o disciplină nouă e un rând în tabel" a
+## ținut și de data asta; ce s-a schimbat e cutia, nu regula.
+##
+## N-am ALES între asta și un `ScrollContainer`: la șapte discipline, o listă
+## care se derulează ascunde jumătate din alegere exact în ecranul în care
+## trebuie s-o vezi întreagă.
 func _construieste_loadout() -> void:
 	for copil in loadout_lista.get_children():
 		loadout_lista.remove_child(copil)
@@ -925,6 +943,13 @@ func _construieste_loadout() -> void:
 func _rand_disciplina(date: Dictionary) -> Control:
 	var coloana := VBoxContainer.new()
 	coloana.add_theme_constant_override("separation", 0)
+	# ÎNTINDE-TE pe jumătatea ta de grilă. Într-un `VBoxContainer` rândul se
+	# lățea de la sine (acolo copilul primește toată lățimea); într-un
+	# `GridContainer` o coloană e lată cât cel mai lat copil al ei, deci fără
+	# rândul ăsta descrierea s-ar strânge pe 118 px și ar curge pe șase rânduri.
+	# Măsurat: panoul sărea la 779 px, adică mai rău decât problema pe care
+	# grila o rezolvă.
+	coloana.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 
 	var comutator := CheckButton.new()
 	comutator.text = String(date["nume"])

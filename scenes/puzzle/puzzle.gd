@@ -54,6 +54,14 @@ extends Control
 ##                                   „deasupra" și de ce e un NOD, nu o
 ##                                   descriere de forme.
 ##
+## Opțional, dacă întrebarea ta trebuie ARĂTATĂ ÎNAINTE de a fi pusă:
+##   două CÂMPURI în dicționar, nu o funcție (vezi `_incepe_expunerea`):
+##     "expunere":      3.0,                 # câte secunde stă pe ecran
+##     "text_expunere": "Tine minte: 7 2 9"  # ce se citește în timpul lor
+##   Cât ține expunerea, butoanele sunt stinse și scriu „?", iar bara măsoară
+##   expunerea. Pe urmă planșa se îngroapă, enunțul adevărat ia locul textului
+##   de expunere, variantele apar și ABIA ATUNCI începe timpul întrebării.
+##
 ## Scena nu știe NIMIC despre luptă, PV, PA sau inamici — nici baza, nici
 ## disciplinele. Fiecare disciplină poate fi testată singură cu F6.
 
@@ -243,6 +251,17 @@ const CULOARE_BARA_EXPIRATA := Color(0.45, 0.16, 0.14, 1.0)
 const CULOARE_URGENTA := Color(1, 0.35, 0.3)
 const CULOARE_CALM := Color(0.55, 0.85, 1)
 
+# A TREIA stare a barei: EXPUNEREA (vezi `_incepe_expunerea`). Nici albastră,
+# nici roșie, fiindcă nu măsoară același lucru — albastrul și roșul spun „ai
+# atât ca să RĂSPUNZI", iar aici n-ai încă la ce. Chihlimbar, culoarea
+# clepsidrei care a adus faza asta în joc.
+#
+# Și nu are prag de urgență: bara scade de la plin la zero fără să se
+# înroșească și fără ticăit. Un „grăbește-te" la o întrebare care nu s-a pus
+# încă ar fi o alarmă pentru nimic — tot ce poți face în secundele alea e să te
+# uiți, iar graba nu ajută la ținut minte.
+const CULOARE_EXPUNERE := Color(1, 0.78, 0.38)
+
 # Culorile liniei de context: aurie TOT TIMPUL. Portocaliul nu mai e o stare
 # în care poate sta linia, ci culoarea unui singur moment — cel marcat prin
 # `arata_combo()`. O culoare care ține minute întregi nu mai anunță nimic;
@@ -283,6 +302,18 @@ const PAUZA_CITIRE := PAUZA_FEEDBACK - PAUZA_SUSPANS
 # ─────────────────────────────────────────────────────────────
 var timp_ramas := 0.0
 var indice_corect := -1
+
+## ── STAREA EXPUNERII ──────────────────────────────────────────
+## Toate trei sunt goale la orice disciplină care nu cere o expunere, deci
+## drumul obișnuit nu trece niciodată prin ele. Vezi `_incepe_expunerea`.
+var in_expunere := false
+var expunere_ramasa := 0.0
+## Întrebarea adevărată, ținută deoparte cât se arată ce trebuie ținut minte.
+## Nu e o copie a ei pe ecran: pe ecran e textul de expunere.
+var intrebare_amanata := {}
+## Cât va dura întrebarea DUPĂ expunere. Calculat o dată, în `porneste()`, ca
+## podeaua (`TIMP_MINIM`) și scurtarea cerută de luptă să se aplice tot acolo.
+var timp_dupa_expunere := 0.0
 var raspuns_dat := false   # ca un al doilea click să nu poată răspunde de două ori
 var pornit := false        # a chemat cineva porneste()?
 var explicatie := ""       # regula rezolvării; azi neafișată (vezi `_termina`)
@@ -606,6 +637,12 @@ func porneste(nivel: int, context := "", scurtare := 0.0) -> void:
 	indice_corect = int(intrebare["corect"])
 	explicatie = String(intrebare.get("explicatie", ""))
 	raspuns_dat = false
+	# Expunerea rămasă de la întrebarea trecută se stinge AICI, înainte de
+	# orice: o a doua chemare a lui `porneste()` în timpul unei expuneri (lupta
+	# n-o face azi, dar nimeni nu-i interzice) ar lăsa altfel scena cu butoanele
+	# stinse și un „?" pe ele, așteptând un cronometru care nu mai curge.
+	in_expunere = false
+	intrebare_amanata = {}
 
 	# Antetul are un singur rost: să-ți spună ce fel de provocare e.
 	# Nivelul nu apare — îl simți oricum din cronometru și din dificultate,
@@ -663,6 +700,94 @@ func porneste(nivel: int, context := "", scurtare := 0.0) -> void:
 	# ABIA ACUM pornește timpul — și numai dacă e cerut. Vezi `cu_cronometru`.
 	set_process(cu_cronometru)
 
+	# EXPUNEREA, dacă întrebarea cere una. Dinadins ULTIMA linie: până aici
+	# scena e deja pregătită normal, cu enunțul, variantele și planșa la locul
+	# lor, iar expunerea doar le ACOPERĂ pentru câteva secunde. Așa nu există
+	# două drumuri prin `porneste()` — există unul, plus un capac.
+	var durata := float(intrebare.get("expunere", 0.0))
+	if durata > 0.0:
+		_incepe_expunerea(intrebare, durata, timp_total)
+
+
+## ── EXPUNEREA: AL DOILEA CÂRLIG DIN CONTRACT, ȘI SINGURUL CARE E UN TIMP ──
+##
+## A adus-o Reținerea (#7): „vezi o secvență, apoi spui ce era în ea". Fără o
+## fază în care ceva se arată și pe urmă DISPARE, disciplina aia nu există — ar
+## fi o întrebare de citit, cu răspunsul pe ecran.
+##
+## DE CE DOUĂ CÂMPURI ÎN ÎNTREBARE, ȘI NU O FUNCȚIE CA PLANȘA. Fiindcă planșa e
+## un NOD (baza nu poate ști ce e o celulă, deci îl cere gata făcut), iar
+## expunerea e un NUMĂR și un TEXT. Pentru date, un câmp e tot ce trebuie; o
+## funcție în plus în contract ar fi fost o ceremonie pe care o plătesc toate
+## disciplinele, inclusiv cele șase care n-o cheamă niciodată.
+##
+## DE CE EXPUNEREA E A ÎNTREBĂRII, NU A LUPTEI. Ăsta e miezul, și e aceeași
+## decizie ca la planșă. `cu_cronometru` e stins în Practice, fiindcă presiunea
+## de timp e a luptei. Dacă expunerea ar atârna de el, în Practice planșa ar
+## rămâne pe ecran la nesfârșit — și întrebarea „ce era în linia 2?" ar avea
+## răspunsul scris deasupra ei. Deci: în Practice întrebarea nu are ceas, dar
+## expunerea are, fiindcă fără ea nu mai e o întrebare de reținere.
+##
+## Urmarea, scrisă ca să nu pară un bug: bara de timp SE VEDE în timpul
+## expunerii chiar și în Practice, unde altminteri e ascunsă. Regula din
+## `cu_cronometru` nu se încalcă, se respectă — „ori măsoară ceva, ori nu
+## există". Acum măsoară ceva.
+##
+## CE SE ÎNTÂMPLĂ CU VARIANTELE. Sunt stinse și scriu „?". Nu din grijă pentru
+## clickuri (un buton stins nu se apasă oricum), ci fiindcă patru variante
+## citite în timpul expunerii schimbă sarcina: „ține minte caroiajul" devine
+## „ține minte dacă pe caroiaj era K, M, T sau V" — adică o întrebare mult mai
+## ușoară, pusă cu aceleași cuvinte. Butoanele rămân însă VIZIBILE, cu un semn
+## pe ele: dacă ar dispărea, enunțul ar sări în jos exact când apare întrebarea.
+func _incepe_expunerea(intrebare: Dictionary, durata: float, timp_total: float) -> void:
+	in_expunere = true
+	expunere_ramasa = durata
+	intrebare_amanata = intrebare
+	timp_dupa_expunere = timp_total
+
+	eticheta_intrebare.text = String(intrebare.get("text_expunere", "Tine minte."))
+	for buton: Button in butoane:
+		buton.text = "?"
+		buton.disabled = true
+
+	bara_timp.max_value = durata
+	bara_timp.value = durata
+	bara_timp.modulate = CULOARE_EXPUNERE
+	bara_timp.visible = true
+	# Ceasul expunerii curge ÎNTOTDEAUNA, și în Practice. Vezi mai sus.
+	set_process(true)
+
+
+## Expunerea s-a terminat: ce trebuia ținut minte dispare, întrebarea apare.
+##
+## Ordinea liniilor de mai jos e ordinea în care le vede jucătorul, și contează:
+## planșa se îngroapă ÎNTÂI. Dacă variantele ar apărea cât figura e încă pe
+## ecran, fie și pentru un cadru, ai avea o fracțiune de secundă în care se pot
+## citi amândouă — adică exact ce faza asta există ca să împiedice.
+func _incheie_expunerea() -> void:
+	in_expunere = false
+	var intrebare := intrebare_amanata
+	intrebare_amanata = {}
+
+	_pune_plansa(null)
+	eticheta_intrebare.text = String(intrebare["text"])
+
+	var variante: Array = intrebare["variante"]
+	for index in range(butoane.size()):
+		var buton: Button = butoane[index]
+		buton.text = String(variante[index])
+		buton.disabled = false
+
+	timp_ramas = timp_dupa_expunere
+	bara_timp.max_value = timp_dupa_expunere
+	# `actualizeaza_cronometru()` pune și valoarea, și culoarea (deci șterge
+	# chihlimbarul expunerii), și stinge un ticăit rămas în aer — tot ce
+	# trebuie, dintr-un singur loc, exact ca la finalul lui `porneste()`.
+	actualizeaza_cronometru()
+	bara_timp.visible = cu_cronometru
+	butoane[0].grab_focus()   # un buton stins pierduse focusul
+	set_process(cu_cronometru)
+
 
 ## Vama dintre disciplină și restul scenei: verifică dicționarul primit ÎNAINTE
 ## să apuce să strice ceva pe ecran.
@@ -700,6 +825,8 @@ func _fara_intrebari() -> void:
 	push_error("Puzzle: nicio intrebare disponibila. %s" % sursa)
 	raspuns_dat = true
 	set_process(false)
+	in_expunere = false
+	intrebare_amanata = {}
 	_scrie_context("")
 	eticheta_categorie.text = "EROARE"
 	bara_timp.visible = false
@@ -895,6 +1022,20 @@ func _ascunde_marcaj() -> void:
 ## `delta` = câte secunde au trecut de la cadrul precedent.
 ## Scădem delta, nu 1/60 — așa cronometrul e corect și dacă jocul încetinește.
 func _process(delta: float) -> void:
+	# EXPUNEREA are ceasul ei, și iese de aici înainte de orice. Nu trece prin
+	# `actualizeaza_cronometru()` dinadins: funcția aia înroșește bara și
+	# pornește ticăitul sub `PRAG_URGENTA`, iar amândouă spun „răspunde acum"
+	# la o întrebare care încă nu s-a pus. Vezi `CULOARE_EXPUNERE`.
+	if in_expunere:
+		expunere_ramasa -= delta
+		if expunere_ramasa <= 0.0:
+			expunere_ramasa = 0.0
+			bara_timp.value = 0.0
+			_incheie_expunerea()
+			return
+		bara_timp.value = expunere_ramasa
+		return
+
 	timp_ramas -= delta
 	if timp_ramas <= 0.0:
 		timp_ramas = 0.0

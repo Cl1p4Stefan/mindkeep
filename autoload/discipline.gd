@@ -13,8 +13,8 @@ extends Node
 ##
 ## Regula a fost scrisă pe vremea când M era 3 și N era 3, deci loadout-ul era
 ## „le iei pe toate" și părea că n-are rost. Avea: singurul moment în care poți
-## scrie corect regula e cât e banală. Astăzi M e 6 și N e 3 — „alege 3 din 6",
-## 20 de combinații — iar niciun „3" și niciun „6" n-a trebuit căutat prin cod.
+## scrie corect regula e cât e banală. Astăzi M e 7 și N e 3 — „alege 3 din 7",
+## 35 de combinații — iar niciun „3" și niciun „7" n-a trebuit căutat prin cod.
 ##
 ## Deci:
 ##   M = `CATALOG.size()`             — câte discipline există
@@ -22,9 +22,9 @@ extends Node
 ##
 ## Nicăieri altundeva. Ecranul de loadout desenează M rânduri și numără până la
 ## N; lupta construiește exact atâtea Obeliscuri câte are loadout-ul. A patra
-## disciplină (Numere), a cincea (Tipare) și a șasea (Spațial) au fost, fiecare,
-## un RÂND în tabelul de mai jos și nimic altceva — proba promisiunii, făcută de
-## trei ori.
+## disciplină (Numere), a cincea (Tipare), a șasea (Spațial) și a șaptea
+## (Reținerea) au fost, fiecare, un RÂND în tabelul de mai jos și nimic altceva
+## — proba promisiunii, făcută de patru ori.
 ##
 ## A ȘASEA A COSTAT ȘI DOUĂ LUCRURI CARE NU SUNT AICI, și merită spus care, ca
 ## să nu pară că rândul a fost tot: un cârlig OPȚIONAL de desenare în
@@ -32,6 +32,12 @@ extends Node
 ## o glifă care nu mai e o piesă de șah (șahul are șase piese, iar regele e
 ## luat). Niciuna nu e o ramură pe disciplină: cârligul întoarce `null` la
 ## celelalte cinci, iar glifa e un rând în alt tabel.
+##
+## A ȘAPTEA (Reținerea) a costat tot un lucru din afara tabelului, și tot
+## opțional: EXPUNEREA — două câmpuri în dicționarul întrebării, prin care ce
+## trebuie ținut minte stă pe ecran câteva secunde și pe urmă dispare. Vezi
+## `_incepe_expunerea` din `puzzle.gd`. Celelalte șase nu scriu câmpurile, deci
+## nu simt nimic: fără ele, întrebarea apare pe loc, exact ca până acum.
 ##
 ## ─────────────────────────────────────────────────────────────
 ## CÂMPURILE
@@ -63,6 +69,7 @@ const SCENA_CUVINTE := preload("res://scenes/cuvinte/cuvinte.tscn")
 const SCENA_NUMERE := preload("res://scenes/numere/numere.tscn")
 const SCENA_TIPARE := preload("res://scenes/tipare/tipare.tscn")
 const SCENA_SPATIAL := preload("res://scenes/spatial/spatial.tscn")
+const SCENA_RETINERE := preload("res://scenes/retinere/retinere.tscn")
 
 ## CULORILE. Fiecare e folosită în patru locuri de pe butonul ei — bordura,
 ## numele, halo-ul, piesa — iar de aici se schimbă toate patru deodată.
@@ -101,10 +108,40 @@ const CULOARE_TIPARE := Color(1.00, 0.66, 0.88)    # roz
 # se vede dintr-o privire mai bine decât o nuanță la 15° de alta. Are o bătaie
 # rece (albastrul puțin peste roșu) ca să nu pară un buton stins sau nedesenat.
 #
-# Se potrivește și cu glifa: un instrument de metal, nu o piesă de joc. De la a
-# șaptea, axa asta e tot plină — atunci ce se schimbă e fondul butonului, nu
-# culoarea glifei.
+# Se potrivește și cu glifa: un instrument de metal, nu o piesă de joc.
 const CULOARE_SPATIAL := Color(0.86, 0.89, 0.96)   # argintiu
+
+# A ȘAPTEA: VERDE-ALBASTRU. Adică exact culoarea respinsă la a cincea și
+# declarată fundătură la a șasea — deci rândul ăsta datorează o explicație, nu
+# doar o valoare.
+#
+# Comentariul de deasupra spunea, până azi, că „de la a șaptea ce se schimbă e
+# fondul butonului, nu culoarea glifei". Prima treabă a zilei a fost să mă uit
+# dacă se poate: NU. Fondul butonului nu e o a doua axă, e ACEEAȘI —
+# `FataObelisc.fond()` îl calculează din culoarea disciplinei
+# (`FOND.lerp(culoare, AMESTEC_FOND)`), deci un fond nou cere tot o culoare
+# nouă. Prezicerea era greșită, și se șterge aici în loc să fie urmată.
+#
+# Axa care s-a eliberat între timp e cu totul alta, și e a FORMEI. Până la a
+# cincea, toate glifele erau variații pe aceeași siluetă (coloană grea jos,
+# contur diferit sus), deci deosebirea le cădea aproape toată pe culoare — și
+# de-aia un verde-albastru între albastru și verde era, atunci, o greșeală. De
+# la busolă încoace glifele nu mai seamănă între ele: un disc și o clepsidră
+# simetrică se deosebesc dintr-o privire de orice coloană (vezi comentariul
+# formelor din `glifa_sah.gd`). Forma poate purta singură recunoașterea, iar
+# culoarea a devenit al doilea semnal, nu singurul.
+#
+# Așa că nuanța de la 170° se folosește, și se folosește cât mai departe de
+# vecini pe CEALALTĂ axă: saturația. Toate cinci colorate de mai sus stau la
+# 0,34-0,45, iar argintiul aproape la zero; asta e la 0,57, deci cea mai
+# saturată din tabel. Lângă albastrul palid al Memoriei și verdele palid al
+# Logicii, ea e „cea tare", nu „a treia dintre ele".
+#
+# Ce rămâne adevărat din vechea însemnare: nuanțele s-au terminat. A opta
+# disciplină (Reflex) nu mai are de unde să-și ia una, iar roșul rămâne oprit
+# (`Puzzle.CULOARE_RAU`). Pentru ea întrebarea se pune cinstit atunci — și de
+# data asta fără o prezicere pe care n-am verificat-o.
+const CULOARE_RETINERE := Color(0.40, 0.92, 0.84)  # verde-albastru
 
 const CATALOG := [
 	{
@@ -194,6 +231,20 @@ const CATALOG := [
 		"piesa": GlifaSah.Piesa.BUSOLA,
 		"imagine": "",
 		"culoare": CULOARE_SPATIAL, "scena": SCENA_SPATIAL,
+	},
+	{
+		"cheie": "retinere", "nume": "Retinere",
+		"rol": "Vezi ceva cateva secunde, dispare, si spui ce era in el.",
+		"sarcini": [
+			"Siruri de cifre: ce era pe locul 3, ce venea dupa 9, cum arata sirul intors.",
+			"Caroiaj cu litere: ce litera era intr-o celula, si in ce celula era o litera.",
+			"Liste de cuvinte: care cuvant nu era, cate erau, pe ce loc era unul.",
+			"Perechi: cine avea ce.",
+		],
+		# A doua glifă care nu e o piesă de șah, și tot din lista pitch-ului.
+		"piesa": GlifaSah.Piesa.CLEPSIDRA,
+		"imagine": "",
+		"culoare": CULOARE_RETINERE, "scena": SCENA_RETINERE,
 	},
 ]
 

@@ -1,7 +1,7 @@
 class_name GlifaSah
 extends Silueta
 ## GLIFA de pe butonul unui Obelisc: pionul, calul, nebunul, turnul, regina —
-## și, de la a șasea disciplină, busola.
+## și, de la a șasea disciplină, busola și clepsidra.
 ##
 ## ─────────────────────────────────────────────────────────────
 ## DE CE NU MAI SUNT TOATE PIESE DE ȘAH
@@ -13,7 +13,9 @@ extends Silueta
 ## întrebarea care trebuia pusă când va veni a șasea: rămân piesele skin-ul
 ## comun al TUTUROR Obeliscurilor, sau devin skin-ul primelor cinci?
 ##
-## RĂSPUNS, dat la Spațial: devin skin-ul primelor cinci. Ieșirea e cea scrisă
+## RĂSPUNS, dat la Spațial: devin skin-ul primelor cinci. A șaptea (Reținerea)
+## a luat clepsidra din aceeași listă, fără ca întrebarea să se mai pună — ceea
+## ce e tot rostul unei decizii scrise o dată. Ieșirea e cea scrisă
 ## în pitch de la bun început, care propunea un simbol pe disciplină (clepsidră,
 ## spirală, busolă, fulger) — deci nu s-a inventat azi, s-a folosit. Cele cinci
 ## de dinainte nu se ating: o renumerotare a glifelor ar fi însemnat cinci
@@ -55,7 +57,7 @@ extends Silueta
 ## (`amplitudine = 0`) și, ca urmare, nu are nevoie de `_process` — trei icoane
 ## care pulsează sub trei butoane ar fi zgomot, nu viață.
 
-enum Piesa { PION, CAL, NEBUN, TURN, REGINA, BUSOLA }
+enum Piesa { PION, CAL, NEBUN, TURN, REGINA, BUSOLA, CLEPSIDRA }
 
 ## Culoarea piesei. O pune `obelisc.gd`, din tabelul disciplinelor.
 @export var culoare := Color(0.85, 0.88, 1.0):
@@ -320,6 +322,70 @@ static var BUSOLA_ROZA := PackedVector2Array([
 	Vector2(0.415, 0.415),
 ])
 
+# CLEPSIDRA — a șaptea glifă, pentru Reținere.
+#
+# FORMA: capac, talpă, și două pahare care se ating la mijloc. Nu e o coloană
+# cu talpă (pionul, nebunul, turnul, regina) și nu e un disc (busola) — e
+# SIMETRICĂ SUS-JOS, și ăsta e tot criteriul.
+#
+# Cele cinci piese de șah se deosebesc între ele prin conturul de SUS, pe o
+# siluetă comună care e grea jos și subțire sus. Busola a rupt silueta cu un
+# cerc. Clepsidra o rupe pe cealaltă axă: la 40 px, „la fel de greu sus ca
+# jos" se prinde cu coada ochiului mai repede decât orice coroană — și e
+# singura formă din tabel despre care se poate spune asta.
+#
+# ASTA E ȘI AL DOILEA SEMN AL DISCIPLINEI, nu doar un desen frumos. Culoarea
+# ei (verde-albastru, vezi `discipline.gd`) e cea care fusese respinsă la a
+# cincea disciplină, fiindcă stă între albastrul Memoriei și verdele Logicii.
+# Argumentul s-a schimbat fiindcă s-a schimbat ce duce recunoașterea: de la a
+# șasea încoace, glifele nu mai sunt variații pe aceeași siluetă, deci forma
+# poate purta singură deosebirea, iar culoarea rămâne al doilea semnal.
+#
+# DE CE PATRU POLIGOANE ȘI NU UNUL. Un singur poligon în formă de clepsidră e
+# CONCAV (se strânge la mijloc). `draw_colored_polygon` îl taie în triunghiuri
+# și, până la proba contrarie, corect — dar „până la proba contrarie" nu e un
+# verdict. Patru forme convexe (capac, pahar sus, gât, pahar jos, talpă) nu au
+# nimic de dedus, iar gâtul e chiar ce le ține lipite: fără el, cele două
+# pahare s-ar atinge într-un punct, adică ar părea rupte la mijloc.
+static var CLEPSIDRA_CAPAC := PackedVector2Array([
+	Vector2(0.060, 0.020), Vector2(0.940, 0.020),
+	Vector2(0.940, 0.130), Vector2(0.060, 0.130),
+])
+static var CLEPSIDRA_PAHAR_SUS := PackedVector2Array([
+	Vector2(0.170, 0.130), Vector2(0.830, 0.130),
+	Vector2(0.560, 0.480), Vector2(0.440, 0.480),
+])
+static var CLEPSIDRA_GAT := PackedVector2Array([
+	Vector2(0.440, 0.460), Vector2(0.560, 0.460),
+	Vector2(0.560, 0.540), Vector2(0.440, 0.540),
+])
+static var CLEPSIDRA_PAHAR_JOS := PackedVector2Array([
+	Vector2(0.440, 0.520), Vector2(0.560, 0.520),
+	Vector2(0.830, 0.870), Vector2(0.170, 0.870),
+])
+static var CLEPSIDRA_TALPA := PackedVector2Array([
+	Vector2(0.060, 0.870), Vector2(0.940, 0.870),
+	Vector2(0.940, 0.980), Vector2(0.060, 0.980),
+])
+
+# NISIPUL SCURS: golul din vârful paharului de sus. E un „gol", deci chiar
+# fondul butonului văzut prin sticlă — aceeași metodă ca ochiul calului și roza
+# busolei, și singurul fel în care se poate arăta „pe jumătate golită" fără o a
+# doua culoare în tabel.
+#
+# Și e tot ce face clepsidra să fie o clepsidră care MERGE, nu un simbol gol:
+# un pahar plin de sus în jos ar fi arătat ca un X îngroșat.
+#
+# Adâncimea (0,32 din casetă) e măsurată, nu aleasă: la prima scriere golul
+# cobora până la 0,37, iar pe butonul de 40 px paharul de sus rămânea aproape
+# negru — adică exact simetria sus-jos pe care se bazează recunoașterea se
+# pierdea tocmai la mărimea la care contează. Mai sus de atât, nisipul n-ar mai
+# părea scurs.
+static var CLEPSIDRA_SCURS := PackedVector2Array([
+	Vector2(0.235, 0.180), Vector2(0.765, 0.180),
+	Vector2(0.645, 0.320), Vector2(0.355, 0.320),
+])
+
 ## Catalogul formelor. Un rând per piesă: poligoanele pline, cercurile pline,
 ## „golurile" (desenate peste, în culoarea fondului) și proporția casetei.
 ## Turnul a fost chiar proba promisiunii scrise aici înainte („o a patra piesă
@@ -386,6 +452,20 @@ static var FORME := {
 		"poligoane": [],
 		"cercuri": [{"centru": Vector2(0.5, 0.5), "raza": 0.46}],
 		"goluri": [BUSOLA_ROZA],
+		"cercuri_gol": [],
+	},
+	# Cea mai ÎNGUSTĂ din toate șapte (0.56, față de 0.62-0.68 la piesele de
+	# șah și 1.0 la busolă). Nu e o preferință: o clepsidră lată seamănă cu o
+	# fundă, iar una îngustă se citește din prima. Lățimea e și al doilea semn
+	# al simetriei — un dreptunghi înalt și subțire, strâns la mijloc.
+	Piesa.CLEPSIDRA: {
+		"proportie": 0.56,
+		"poligoane": [
+			CLEPSIDRA_CAPAC, CLEPSIDRA_PAHAR_SUS, CLEPSIDRA_GAT,
+			CLEPSIDRA_PAHAR_JOS, CLEPSIDRA_TALPA,
+		],
+		"cercuri": [],
+		"goluri": [CLEPSIDRA_SCURS],
 		"cercuri_gol": [],
 	},
 }
