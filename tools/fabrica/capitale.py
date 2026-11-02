@@ -249,6 +249,12 @@ DUBLURI = {
 	("Q45", "cere_capitala"): "mana:0009",     # Care este capitala Portugaliei?
 	("Q408", "cere_capitala"): "mana:0057",    # Care este capitala Australiei?
 	("Q232", "cere_capitala"): "mana:0101",    # Care este capitala Kazahstanului?
+	# „Ce capitală a Țărilor de Jos e cunoscută pentru canale, biciclete și case
+	# înguste?" — răspunsul e Amsterdam, iar în text apare genitivul țării, deci
+	# întrebarea de mână spune deja ce-ar genera sensul direct. Sensul invers
+	# („Amsterdam este capitala cărei țări?") rămâne, deci țara nu pierde nici
+	# faptul, nici nota.
+	("Q29999", "cere_capitala"): "mana:4020",
 }
 
 # Câte propuneri se scriu la `--propune`. Toate cele ~193, fiindcă tabelul se
@@ -332,6 +338,54 @@ SELECT ?tara ?steag ?rang ?de_cand ?pana_cand WHERE {
 """ % ONU
 
 
+# MĂRIMILE, PENTRU A TREIA PROPOZIȚIE A NOTEI. O cerere a patra, nu coloane în
+# prima, din exact motivul scris mai sus la despărțirea celor două: cu suprafața
+# și populația băgate în `GROUP BY`-ul țărilor, o țară cu două suprafețe ar fi
+# înmulțit rândurile ei cu toate celelalte însușiri, iar `GROUP_CONCAT` ar fi
+# ascuns tocmai ce vreau să VĂD — că sunt două.
+#
+# De-aia totul vine ca `GROUP_CONCAT`, chiar și ce ar trebui să fie o singură
+# valoare: o măsurătoare cu două valori nu e o măsurătoare, iar nota ei nu se
+# scrie (vezi `cat_de_remarcabil`). `MIN()` ar fi ales în tăcere.
+#
+# Se cere pentru TOȚI membrii ONU, nu doar pentru țările din tabel, fiindcă
+# superlativele se judecă pe toată lumea: „cea mai întinsă țară din Africa",
+# calculată pe cele 127 din tabel, ar fi fost o afirmație despre tabelul meu
+# îmbrăcată ca o afirmație despre Africa.
+INTEROGARE_MARIMI = """
+SELECT ?tara
+       (GROUP_CONCAT(DISTINCT STR(?suprafata); separator=" ") AS ?suprafete)
+       (GROUP_CONCAT(DISTINCT STR(?populatie); separator=" ") AS ?populatii)
+       (GROUP_CONCAT(DISTINCT STR(?anul); separator=" ") AS ?anii)
+       (GROUP_CONCAT(DISTINCT ?varf_ro; separator="|") AS ?varfuri)
+       (GROUP_CONCAT(DISTINCT STR(?altitudine); separator=" ") AS ?altitudini)
+       (GROUP_CONCAT(DISTINCT ?continent_ro; separator="|") AS ?continente_nume)
+WHERE {
+  ?tara p:P463 ?membru .
+  ?membru ps:P463 wd:%s .
+  FILTER NOT EXISTS { ?membru pq:P582 ?a_ieșit }
+  OPTIONAL { ?tara wdt:P2046 ?suprafata . }
+  OPTIONAL {
+    ?tara p:P1082 ?decl_pop .
+    ?decl_pop ps:P1082 ?populatie .
+    FILTER NOT EXISTS { ?decl_pop wikibase:rank wikibase:DeprecatedRank }
+    FILTER EXISTS { ?tara wdt:P1082 ?populatie }
+    OPTIONAL { ?decl_pop pq:P585 ?data_pop . BIND(YEAR(?data_pop) AS ?anul) }
+  }
+  OPTIONAL {
+    ?tara wdt:P610 ?varf .
+    OPTIONAL { ?varf wdt:P2044 ?altitudine . }
+    OPTIONAL { ?varf rdfs:label ?varf_ro . FILTER(lang(?varf_ro) = "ro") }
+  }
+  OPTIONAL {
+    ?tara wdt:P30 ?continent .
+    ?continent rdfs:label ?continent_ro . FILTER(lang(?continent_ro) = "ro")
+  }
+}
+GROUP BY ?tara
+""" % ONU
+
+
 def ia_datele(reincarca):
 	"""Cele două răspunsuri brute, din cache sau din rețea.
 
@@ -365,6 +419,16 @@ def ia_datele(reincarca):
 				"cache-ul e luat înainte să existe `?descriere` în interogarea țărilor.\n"
 				"  Rulează cu --reincarca. (Fără oprirea asta, toate notele ar ieși "
 				"fără cârlig, iar cifra ar arăta ca o lipsă de date la Wikidata.)")
+		# A TREIA OARĂ ACEEAȘI LECȚIE, și de-aia oprirea e scrisă la fel: un cache
+		# luat înainte să existe interogarea mărimilor n-are cheia „marimi", iar
+		# fără oprire toate cele 127 de note ar fi ieșit cu a treia propoziție
+		# lipsă — adică exact nota de dinainte, în tăcere, și aș fi crezut că
+		# Wikidata n-are suprafețe. Are, pentru toate.
+		if "marimi" not in pachet:
+			raise Eroare(
+				"cache-ul e luat înainte să existe interogarea mărimilor.\n"
+				"  Rulează cu --reincarca. (Fără oprirea asta, notele ar rămâne cu "
+				"două propoziții, iar lipsa ar arăta ca o lipsă de date.)")
 		return pachet
 
 	print("  Reîncarc din rețea.")
@@ -373,6 +437,7 @@ def ia_datele(reincarca):
 		"tari": comun.interogheaza(INTEROGARE_TARI, "țările membre ONU"),
 		"capitale": comun.interogheaza(INTEROGARE_CAPITALE, "capitalele actuale"),
 		"steaguri": comun.interogheaza(INTEROGARE_STEAGURI, "steagurile"),
+		"marimi": comun.interogheaza(INTEROGARE_MARIMI, "suprafețele, populațiile și vârfurile"),
 	})
 
 
@@ -489,6 +554,188 @@ def desfa_steagurile(pachet):
 			"pana_cand": r.get("pana_cand", {}).get("value", "")[:4],
 		})
 	return steaguri
+
+
+def _numerele(rand, camp):
+	"""Un `GROUP_CONCAT` de numere, desfăcut în listă de `float`.
+
+	Lista, nu o valoare: cu două suprafețe declarate, răspunsul CORECT la
+	întrebarea „cât e suprafața" e „Wikidata spune două lucruri", iar o funcție
+	care întoarce un singur număr n-are cum s-o spună.
+	"""
+	brut = rand.get(camp, {}).get("value", "").strip()
+	if not brut:
+		return []
+	numere = []
+	for bucata in brut.split():
+		try:
+			numere.append(float(bucata))
+		except ValueError:
+			pass
+	return sorted(set(numere))
+
+
+def _textele(rand, camp):
+	"""Un `GROUP_CONCAT` cu separator `|`, desfăcut în listă de texte.
+
+	Separatorul e `|` și nu spațiul fiindcă valorile sunt NUME, iar numele au
+	spații în ele: „America de Nord" tăiată pe spații dă trei continente.
+	"""
+	brut = rand.get(camp, {}).get("value", "").strip()
+	if not brut:
+		return []
+	return sorted({p.strip() for p in brut.split("|") if p.strip()})
+
+
+def desfa_marimile(pachet):
+	"""Rândurile → un dicționar QID de țară → măsurătorile ei.
+
+	Nu se alege și nu se judecă nimic aici, ca la celelalte trei desfaceri. Ce
+	face funcția asta în plus e că PĂSTREAZĂ multiplicitatea: `suprafete` e o
+	listă, nu un număr, fiindcă de lungimea ei atârnă dacă măsurătoarea se poate
+	folosi deloc.
+	"""
+	marimi = {}
+	for r in comun.legaturi(pachet["marimi"]):
+		qid = comun.qid_din(r["tara"]["value"])
+		marimi[qid] = {
+			"suprafete": _numerele(r, "suprafete"),
+			"populatii": _numerele(r, "populatii"),
+			# Anii măsurătorilor de populație, ca mulțime. Vezi `cat_de_remarcabil`
+			# pentru de ce o populație fără an nu se scrie în notă.
+			"anii": [int(a) for a in _numerele(r, "anii")],
+			# NUMELE vârfului, nu QID-ul: fără etichetă română n-am ce scrie în
+			# notă, deci un vârf nenumit e, pentru nota mea, un vârf care nu există.
+			"varfuri": _textele(r, "varfuri"),
+			"altitudini": _numerele(r, "altitudini"),
+			"continente_nume": _textele(r, "continente_nume"),
+		}
+	return marimi
+
+
+# ─────────────────────────────────────────────────────────────
+# SUPERLATIVELE DE SUPRAFAȚĂ
+#
+# „Cu 17.098.246 km², este cea mai întinsă țară din lume."
+#
+# ── DE CE NUMAI SUPRAFAȚA, DEȘI POPULAȚIA E MAI INTERESANTĂ ───
+# Fiindcă un superlativ de populație calculat din Wikidata ar fi FALS azi.
+# Măsurat, pe toți cei 195 de membri cu populație:
+#
+#     China   1.404.890.000  măsurată în 2025
+#     India   1.326.093.247  măsurată în 2020
+#
+# Deci „cea mai populată țară din lume" ar fi ieșit China — iar India a
+# depășit-o în 2023. Greșeala nu e a Wikidatei: fiecare cifră e corectă pentru
+# anul ei. Greșeala ar fi a mea, pentru că aș fi comparat două măsurători făcute
+# la cinci ani distanță ca și cum ar fi fost una. Anii se întind din 2005 până
+# în 2026, deci problema nu e la China, e la tot clasamentul.
+#
+# Suprafața nu are boala asta: o țară nu se întinde de la un an la altul, iar
+# cifrele vin din aceeași geografie. Un superlativ de suprafață e o afirmație
+# despre lume; unul de populație ar fi fost o afirmație despre ce an a fost
+# recensământul.
+#
+# Aceeași lecție ca la `vecini` (P47), scrisă la secțiunea NOTA: o cifră corectă
+# pentru Wikidata poate fi falsă pentru orice manual de geografie, și atunci ea
+# NU intră în notă.
+#
+# ── DE CE CONTINENTELE SUNT O LISTĂ SCRISĂ ────────────────────
+# Etichetele române ale continentelor de la Wikidata nu sunt toate șlefuite:
+# Australia iese „cea mai întinsă din Oceania și Australia". Și sunt două
+# grupuri care se suprapun („Oceania" cu 6 membri, „Oceania și Australia" cu
+# 12), deci o țară ar fi primit două superlative pentru același lucru.
+#
+# Harta de mai jos face amândouă: dă numele cu care se scrie în notă și
+# CONTOPEȘTE grupurile care au același nume afișat. `None` înseamnă „nu se
+# folosește ca grup", cu motivul scris. Un continent nou OPREȘTE scriptul, în
+# loc să intre în notă cu eticheta lui brută.
+# ─────────────────────────────────────────────────────────────
+
+CONTINENTE = {
+	"Africa": "Africa",
+	"Asia": "Asia",
+	"Europa": "Europa",
+	"America de Nord": "America de Nord",
+	"America de Sud": "America de Sud",
+	# Cele două se contopesc: sunt același continent, cu două etichete.
+	"Oceania": "Oceania",
+	"Oceania și Australia": "Oceania",
+	# Un singur membru (Turcia), deci n-are cum să fie un clasament. Și, mai
+	# important, „cea mai întinsă țară din Eurasia" n-ar însemna nimic pentru un
+	# cititor: Eurasia nu e un continent în geografia pe care o învață cineva la
+	# școală, e o însușire pe care Wikidata o pune pe țările transcontinentale.
+	"Eurasia": None,
+}
+
+# Sub atâția membri, un grup nu e un clasament: cu trei țări, „cea mai întinsă"
+# e o constatare despre o listă, nu despre un continent.
+MINIM_CLASAMENT = 4
+
+
+# ─────────────────────────────────────────────────────────────
+# DE CE NUMAI „CEA MAI ÎNTINSĂ", ȘI NICIODATĂ „CEA MAI MICĂ"
+#
+# Prima scriere le dădea pe amândouă, și măsurătoarea a scos imediat de ce nu se
+# poate: „Cea mai mică țară din lume: 2 km²" — Monaco. Pentru orice manual de
+# geografie, cea mai mică țară din lume e VATICANUL. Doar că Vaticanul e
+# observator la ONU, nu membru, deci criteriul de intrare al tabelului îl lasă
+# afară — ceea ce e corect pentru a ALEGE întrebări și greșit pentru a face o
+# afirmație despre lume.
+#
+# ASIMETRIA E REALĂ, nu o precauție în plus. La capătul de sus, o țară lăsată
+# afară de filtru nu poate schimba clasamentul: toate țările mari sunt membre
+# ONU, deci „cea mai întinsă din Africa" rămâne aceeași cu sau fără filtru. La
+# capătul de jos, clasamentul e decis TOCMAI de cine lipsește — Vaticanul, iar
+# pe continente și teritoriile care nu sunt state.
+#
+# Deci capătul de sus e o afirmație despre lume, iar capătul de jos ar fi fost o
+# afirmație despre lista mea de membri ONU, îmbrăcată la fel. Aceeași formă ca
+# la populație (vezi mai sus): o cifră corectă pentru datele mele, falsă pentru
+# cititor, nu intră în notă.
+# ─────────────────────────────────────────────────────────────
+
+
+def superlativele(marimi, de_azi, probleme):
+	"""Măsurătorile tuturor → dicționar QID → lista superlativelor lui.
+
+	`de_azi` e mulțimea QID-urilor care sunt țări de azi (fără statele istorice
+	scoase de `desfa_tarile`): Republica Populară Mongolă n-are ce căuta în
+	clasamentul Asiei.
+
+	Un superlativ e `(text, grup)` — textul care intră în notă și numele grupului,
+	pentru raport. Lista e în ORDINEA PRIORITĂȚII: lumea înaintea continentului,
+	„cea mai mare" înaintea lui „cea mai mică". Nota ia primul.
+	"""
+	# O țară cu două suprafețe declarate nu intră în NICIUN clasament — nici ca
+	# să fie clasată, nici ca s-o clatine. Dacă nu știu cât se întinde, nu știu
+	# nici dacă e cea mai întinsă, nici pe cine a depășit.
+	masurate = {qid: m["suprafete"][0] for qid, m in marimi.items()
+	            if qid in de_azi and len(m["suprafete"]) == 1}
+
+	grupuri = {"lume": list(masurate)}
+	for qid in masurate:
+		for eticheta in marimi[qid]["continente_nume"]:
+			if eticheta not in CONTINENTE:
+				probleme.append(
+					"%s: Wikidata îi dă continentul „%s”, care nu e în CONTINENTE — "
+					"scrie-l acolo (sau pune-l pe None, cu motivul)" % (qid, eticheta))
+				continue
+			nume = CONTINENTE[eticheta]
+			if nume:
+				grupuri.setdefault(nume, []).append(qid)
+
+	# „lume" se scrie „din lume", un continent se scrie „din Africa" — aceeași
+	# prepoziție, deci nicio ramură. Ordinea: lumea întâi.
+	sup = {}
+	ordinea = ["lume"] + sorted(g for g in grupuri if g != "lume")
+	for grup in ordinea:
+		membri = sorted(set(grupuri[grup]))
+		if len(membri) < MINIM_CLASAMENT:
+			continue
+		cea_mare = max(membri, key=lambda q: masurate[q])
+		sup.setdefault(cea_mare, []).append(("cea mai întinsă țară din %s" % grup, grup))
+	return sup
 
 
 def alege_steagul(ale_lui, de_mana, unde, nume, probleme):
@@ -764,13 +1011,19 @@ def cod_iso_ales(de_la_wikidata, de_mana, unde, nume, probleme):
 	return de_la_wikidata
 
 
-def leaga_tabelul(alese, tari, capitale, steaguri):
+def leaga_tabelul(alese, tari, capitale, steaguri, marimi):
 	"""`tari.json` + datele de la Wikidata → lista de lucru. Strict la fiecare pas.
 
 	Adună TOATE neconcordanțele înainte să se oprească. Un script care cade la
 	prima nepotrivire te pune să rulezi de 30 de ori ca să repari 30 de rânduri.
 	"""
 	probleme = []
+
+	# SUPERLATIVELE SE CALCULEAZĂ O DATĂ, pe toți membrii ONU de azi, înainte să
+	# înceapă legarea rândurilor. Nu pe tabel: „cea mai întinsă țară din Africa"
+	# socotită pe cele 127 alese ar fi o afirmație despre alegerile mele.
+	superlative = superlativele(marimi, set(tari), probleme)
+	verifica_masuratorile_respinse(marimi, probleme)
 
 	qiduri = [str(r.get("qid", "")) for r in alese if isinstance(r, dict)]
 	duble = sorted({q for q in qiduri if qiduri.count(q) > 1})
@@ -917,6 +1170,11 @@ def leaga_tabelul(alese, tari, capitale, steaguri):
 			"continente": set(t["continente"]),
 			"vecini": set(t["vecini"]),
 			"unde": t["unde"],
+			# Măsurătorile și superlativele, pentru a treia propoziție a notei.
+			# Lipsa e un dicționar gol, nu `None`: `cat_de_remarcabil` întreabă
+			# despre câmpuri, nu despre existență.
+			"marime": marimi.get(qid, {}),
+			"superlative": superlative.get(qid, []),
 		})
 
 	# UNICITATEA CELOR DOUĂ FEȚE. Două țări cu același nume afișat ar da, la sensul
@@ -1057,6 +1315,47 @@ def arata_steagurile(lista):
 		print("    Întrebările ies normal; ce lipsește e imaginea de la pasul 13.")
 		for e in sorted(fara, key=lambda x: x["tara"]):
 			print("    %-26s %s" % (e["tara"], e["qid"]))
+
+
+def arata_remarcabilele(lista):
+	"""Tipărește pe ce treaptă a căzut fiecare țară, cu propozițiile ca mostre.
+
+	Rostul e același ca la `arata_steagurile`: o alegere automată care nu se vede
+	e o alegere pe care n-o mai verific niciodată. Aici se citesc două lucruri
+	care nu se pot verifica automat — dacă propoziția SUNĂ a românește și dacă ce
+	spune merită citit.
+	"""
+	treptele = ["superlativ", "vârful", "mărimea", "doar suprafața",
+	            "doar populația", "nimic"]
+	pe_treapta = {t: [] for t in treptele}
+	for e in lista:
+		text, _surse, treapta = cat_de_remarcabil(e, [])
+		pe_treapta[treapta].append((e["tara"], text))
+
+	print("\n  ── A TREIA PROPOZIȚIE A NOTEI: PE CE TREAPTĂ A CĂZUT FIECARE ──")
+	for treapta in treptele:
+		ale_lui = sorted(pe_treapta[treapta])
+		print("    %-16s %3d țări" % (treapta, len(ale_lui)))
+		# Superlativele se tipăresc TOATE (sunt puține și sunt afirmațiile cele
+		# mai tari din notă, deci cele mai scumpe dacă greșesc); din celelalte
+		# trepte, trei mostre, cât să se vadă forma.
+		cate = len(ale_lui) if treapta in ("superlativ", "nimic") else 3
+		for tara, text in ale_lui[:cate]:
+			if text:
+				print("      %-24s %s" % (tara, text))
+				continue
+			# TREAPTA „NIMIC" SPUNE DE CE. O țară fără a treia propoziție e ori o
+			# lipsă de date, ori o măsurătoare dublă — două lucruri cu două
+			# urmări diferite, iar un raport care le arată la fel mă lasă să cred
+			# că Wikidata n-are suprafețe.
+			e = next(x for x in lista if x["tara"] == tara)
+			suprafete = (e.get("marime") or {}).get("suprafete", [])
+			if len(suprafete) > 1:
+				print("      %-24s Wikidata îi dă %d suprafețe (%s), deci niciuna"
+				      % (tara, len(suprafete),
+				         ", ".join(numar_ro(s) for s in suprafete)))
+			else:
+				print("      %-24s Wikidata nu-i dă nicio suprafață" % tara)
 
 
 def pune_metadatele_steagurilor(lista, reincarca):
@@ -1512,6 +1811,233 @@ def acordul(tara, qid, probleme):
 	return "este"
 
 
+# ─────────────────────────────────────────────────────────────
+# A TREIA PROPOZIȚIE: CÂTE CEVA DESPRE ȚARĂ
+#
+# Primele două spun răspunsul și unde e țara. A treia e ce ceream de la „Află
+# mai multe": ceva ce nu știai dinainte.
+#
+#     Capitala Rusiei este Moscova. Rusia este o țară transcontinentală din
+#     Europa de Est și Asia de Nord. Cea mai întinsă țară din lume: 17.098.246 km².
+#
+#     Capitala Franței este Paris. Franța este o țară transcontinentală din
+#     Europa de Vest. Cel mai înalt punct al țării este Mont Blanc, 4.806 m.
+#
+#     Capitala Maltei este Valletta. Malta este o țară din Europa de Sud.
+#     Suprafața țării e de 316 km², cu o populație de 519.891 (2023).
+#
+# O SCARĂ DE PRIORITĂȚI, nu un câmp. Fiecare treaptă e mai spusă-ceva decât
+# următoarea, iar ultima există ca să aibă toate cele 127 o a treia propoziție:
+#
+#   1. superlativul de suprafață, dacă țara are vreunul  (cel mai tare, 8 țări)
+#   2. vârful cel mai înalt, dacă are nume românesc      (75 din 127)
+#   3. suprafața și populația                            (toate)
+#
+# ── NICIUN VERB CARE SE ACORDĂ CU NUMELE ȚĂRII ────────────────
+# „Țările de Jos SE ÎNTIND pe…", nu „se întinde". Lecția e deja scrisă la
+# `PLURAL`, unde trei nume de plural au trecut toate verificările cu „este" în
+# loc de „sunt", fiindcă validatorul apără faptele, nu gramatica.
+#
+# Aici n-am mai adăugat un al doilea tabel de excepții: am scris propozițiile
+# așa încât SUBIECTUL să nu fie niciodată țara. „Suprafața țării e de…",
+# „Cel mai înalt punct al țării este…", iar superlativul n-are verb deloc („Cea
+# mai întinsă țară din lume: …"). O propoziție care nu se poate acorda greșit e
+# mai bună decât una păzită de o listă.
+#
+# ── DE CE POPULAȚIA ARE ANUL LÂNGĂ EA ─────────────────────────
+# Fiindcă fără an e o afirmație care se stinge. Anii din Wikidata se întind din
+# 2005 până în 2026, deci „are 68,6 milioane de locuitori" e, pentru o parte din
+# țări, o cifră de acum douăzeci de ani prezentată ca de azi — exact greșeala
+# pentru care decizia „la Divertisment și Sport, numai trecut, cu data spusă"
+# există. Cu anul scris, propoziția rămâne adevărată oricât trece.
+#
+# Cele două țări fără an pe nicio declarație de populație nu primesc cifra: cad
+# pe treapta de mai jos, adică rămân doar cu suprafața.
+# ─────────────────────────────────────────────────────────────
+
+def numar_ro(x, zecimale=0):
+	"""Un număr → scris românește: punct la mii, virgulă la zecimale."""
+	intreg, _, zec = ("%.*f" % (zecimale, x)).partition(".")
+	semn, cifre = ("-", intreg[1:]) if intreg.startswith("-") else ("", intreg)
+	grupe = []
+	while cifre:
+		grupe.insert(0, cifre[-3:])
+		cifre = cifre[:-3]
+	return semn + ".".join(grupe) + ("," + zec if zec else "")
+
+
+def citeste_ro(text):
+	"""Drumul invers: „4.805,59" → 4805.59.
+
+	EXISTĂ CA SĂ VERIFICE ROTUNJIREA, nu ca să citească date. `verifica_nota` îi
+	cere fiecărei cifre din notă să existe în sursele notei — numai că sursa
+	cifrei rotunjite e chiar textul rotunjit, deci acolo verificarea n-are ce să
+	spună: ar compara formula cu ea însăși.
+
+	E lecția scrisă în CLAUDE.md la „o verificare care copiază formula nu
+	verifică formula". Deci rotunjirea își are plasa ei, independentă: textul se
+	citește ÎNAPOI ca număr și se compară cu valoarea brută de la Wikidata.
+	"""
+	return float(text.replace(".", "").replace(",", "."))
+
+
+def _rotunjit(valoare, zecimale, unde, ce, probleme):
+	"""Valoarea brută → textul românesc, verificat prin drumul invers.
+
+	Gol (și o problemă scrisă) dacă textul nu se citește înapoi la valoarea de
+	la care a plecat, cu cel mult o jumătate de pas de rotunjire diferență.
+	"""
+	text = numar_ro(valoare, zecimale)
+	pas = 10.0 ** -zecimale
+	if abs(citeste_ro(text) - valoare) > pas / 2:
+		probleme.append("%s: %s rotunjit la „%s” nu se mai citește ca %s"
+		                % (unde, ce, text, valoare))
+		return ""
+	return text
+
+
+# MĂSURĂTORILE RESPINSE DE MÂNĂ, cu motivul scris lângă ele.
+#
+# Criteriul de intrare al tabelului e „stat membru ONU", iar la trei țări
+# membrul ONU e REGATUL, nu țara de pe hartă la care se gândește cineva. Cifra
+# Wikidatei e corectă pentru entitatea aceea și e totuși un răspuns greșit la
+# întrebarea pe care o pune nota mea.
+#
+# Aceeași formă ca excluderea Israelului din tabelul capitalelor: scrisă, cu
+# motivul, și PĂZITĂ — `verifica_masuratorile_respinse` oprește scriptul dacă o
+# respingere nu se mai potrivește cu nimic. Altfel ar fi o părere într-un
+# comentariu, iar ziua în care Wikidata se schimbă ar fi ziua în care nota tace
+# despre o țară fără ca nimic să semnaleze.
+#
+# Se resping MĂSURĂTORI, nu țări: Țările de Jos își pierd vârful și își păstrează
+# suprafața. O respingere pe toată țara ar fi aruncat date bune.
+MASURATORI_RESPINSE = {
+	("Q756617", "suprafete"):
+		"Q756617 e REGATUL Danemarcei, membrul ONU, iar suprafața lui "
+		"(2.220.930 km²) e în cea mai mare parte Groenlanda. „Suprafața țării e "
+		"de 2.220.930 km²” lângă „Capitala Danemarcei este Copenhaga” e un "
+		"răspuns la altă întrebare decât cea pusă. Populația regatului, în "
+		"schimb, e practic a Danemarcei, deci rămâne.",
+	("Q29999", "varfuri"):
+		"Cel mai înalt punct al Regatului Țărilor de Jos e muntele Scenery, 870 "
+		"m, pe insula Saba din Caraibe. Al Țărilor de Jos din Europa e "
+		"Vaalserberg, 322 m. Cifra e corectă pentru regat și de patru ori "
+		"greșită pentru țara de pe hartă, deci vârful nu se scrie. Suprafața și "
+		"populația regatului sunt practic cele europene, deci rămân.",
+}
+
+
+def verifica_masuratorile_respinse(marimi, probleme):
+	"""Fiecare respingere scrisă mai are ce să respingă?
+
+	O listă de excepții care nu se verifică putrezește: Wikidata se editează, iar
+	o respingere rămasă fără obiect ar însemna că nota tace despre o țară pentru
+	un motiv care nu mai există. Lecția e scrisă la `DUBLURI`, care oprește la
+	fel când o declarație nu se mai găsește.
+	"""
+	for (qid, camp), motiv in sorted(MASURATORI_RESPINSE.items()):
+		if not (marimi.get(qid) or {}).get(camp):
+			probleme.append(
+				"MASURATORI_RESPINSE: %s / %s nu mai există în Wikidata, deci "
+				"respingerea n-are ce să respingă. Șterge rândul (motivul scris "
+				"era: %s)" % (qid, camp, motiv.split(".")[0]))
+
+
+def _o_masuratoare(marime, camp, qid=""):
+	"""Valoarea unică a unei măsurători, sau `None` dacă nu se poate folosi.
+
+	`None` pentru „lipsește", pentru „Wikidata spune două lucruri" și pentru
+	„respinsă de mână" — toate trei sunt, pentru notă, același lucru: n-am ce
+	scrie. Pentru cea din mijloc, aceeași judecată ca la `de_cand` din secțiunea
+	NOTA: un câmp cu două valori dintre care una se ia la întâmplare nu e o dată,
+	e un zar.
+	"""
+	if (qid, camp) in MASURATORI_RESPINSE:
+		return None
+	valori = marime.get(camp, [])
+	return valori[0] if len(valori) == 1 else None
+
+
+def cat_de_remarcabil(e, probleme):
+	"""O țară → (a treia propoziție, valorile din care e făcută, treapta).
+
+	Gol dacă nici măcar suprafața nu se poate scrie — iar atunci nota rămâne cu
+	două propoziții, ca înainte, în loc să mintă.
+
+	TREAPTA se întoarce ca să poată fi RAPORTATĂ. O scară de priorități care nu
+	spune pe ce treaptă a căzut fiecare țară e o scară despre care, peste trei
+	luni, nu mai știu dacă treapta de sus mai pornește vreodată — aceeași
+	judecată ca la `distractori_departe` și la steagurile lăsate pe dinafară.
+	"""
+	marime = e.get("marime") or {}
+	unde = "%s (%s)" % (e["qid"], e["tara"])
+	suprafata = _o_masuratoare(marime, "suprafete", e["qid"])
+
+	# ── TREAPTA 1: SUPERLATIVUL ──
+	# Numai cu suprafața unică: superlativul SPUNE o suprafață, deci fără ea
+	# propoziția ar fi o afirmație fără cifra care o susține.
+	for text, grup in e.get("superlative") or []:
+		km = _rotunjit(suprafata, 0, unde, "suprafața", probleme) if suprafata else ""
+		if km:
+			cap = text[0].upper() + text[1:]
+			return "%s: %s km²." % (cap, km), [km, grup], "superlativ"
+
+	# ── TREAPTA 2: VÂRFUL ──
+	varf = _o_masuratoare(marime, "varfuri", e["qid"])
+	altitudine = _o_masuratoare(marime, "altitudini", e["qid"])
+	if varf and altitudine:
+		metri = _rotunjit(altitudine, 0, unde, "altitudinea", probleme)
+		if metri:
+			# PARANTEZA DE DEZAMBIGUIZARE NU E PARTE DIN NUME. Etichetele Wikidatei
+			# o poartă când numele e purtat de mai multe locuri: „Königstein
+			# (Namibia)", „Muntele Olympus (Chionistra)". În notă ar fi arătat ca
+			# o scăpare de generator. Sursa rămâne eticheta ÎNTREAGĂ, deci
+			# `verifica_nota` se uită tot la ce spune Wikidata, nu la ce am tăiat
+			# eu — parantezele sunt oricum un loc în care `_bucatile` taie.
+			nume = re.sub(r"\s*\([^)]*\)", "", varf).strip()
+			if nume:
+				return ("Cel mai înalt punct al țării este %s, %s m."
+				        % (nume, metri), [varf, metri], "vârful")
+
+	# ── TREAPTA 3: MĂRIMEA ──
+	# Cele două cifre se pregătesc separat, fiindcă oricare poate lipsi singură.
+	# Mexicul și Sudanul au, fiecare, DOUĂ suprafețe declarate în Wikidata — deci
+	# fără treapta pe populație singură ar fi rămas cu nota de două propoziții,
+	# nu pentru că nu se știe nimic despre ele, ci pentru că se știe prea mult
+	# despre un singur lucru.
+	km = _rotunjit(suprafata, 0, unde, "suprafața", probleme) if suprafata else ""
+
+	cat, an = "", ""
+	populatia = _o_masuratoare(marime, "populatii", e["qid"])
+	anii = marime.get("anii") or []
+	if populatia and anii:
+		# ANUL CEL MAI NOU dintre declarațiile nedeprecate. Nu e o alegere la
+		# întâmplare între mai mulți ani: cifra truthy e una, iar anul cel mai
+		# recent e cel al măsurătorii pe care Wikidata o dă ca fiind de azi.
+		an = str(max(anii))
+		if populatia >= 1_050_000_000:
+			cifra = _rotunjit(populatia / 1_000_000_000, 1, unde, "populația", probleme)
+			cat = "%s miliarde" % cifra if cifra else ""
+		elif populatia >= 1_000_000:
+			cifra = _rotunjit(populatia / 1_000_000, 1, unde, "populația", probleme)
+			cat = "%s milioane" % cifra if cifra else ""
+		else:
+			cifra = _rotunjit(populatia, 0, unde, "populația", probleme)
+			cat = cifra
+		if not cat:
+			an = ""
+
+	if km and cat:
+		return ("Suprafața țării e de %s km², cu o populație de %s (%s)."
+		        % (km, cat, an), [km, cifra, an], "mărimea")
+	if km:
+		return "Suprafața țării e de %s km²." % km, [km], "doar suprafața"
+	if cat:
+		return ("Populația țării e de %s (%s)." % (cat, an), [cifra, an],
+		        "doar populația")
+	return "", [], "nimic"
+
+
 def compune_nota(e, probleme):
 	"""O țară → (nota, valorile din care e făcută)."""
 	# PUNCTUL NU SE PUNE DE DOUĂ ORI. „Washington, D.C." se termină deja cu
@@ -1540,7 +2066,15 @@ def compune_nota(e, probleme):
 		return "", surse
 
 	surse.append(descriere)
-	return "%s %s %s %s %s." % (baza, e["tara"], acord, ARTICOL[cap], descriere), surse
+	unde = "%s %s %s %s %s." % (baza, e["tara"], acord, ARTICOL[cap], descriere)
+
+	# A TREIA PROPOZIȚIE E OPȚIONALĂ, nu obligatorie: lipsa ei lasă nota de
+	# dinainte, care era bună — doar scurtă. Un câmp lipsă la Wikidata nu are
+	# dreptul să șteargă o notă care funcționează.
+	remarcabil, surse_remarcabil, _treapta = cat_de_remarcabil(e, probleme)
+	if remarcabil:
+		return "%s %s" % (unde, remarcabil), surse + surse_remarcabil
+	return unde, surse
 
 
 def construieste(lista):
@@ -1717,6 +2251,7 @@ def main():
 	tari, istorice = desfa_tarile(pachet)
 	capitale = desfa_capitalele(pachet)
 	steaguri = desfa_steagurile(pachet)
+	marimi = desfa_marimile(pachet)
 	print("  Țări de azi, membre ONU: %d  (plus %d state istorice, scoase)"
 	      % (len(tari), len(istorice)))
 
@@ -1727,7 +2262,7 @@ def main():
 		print("\n══ DOAR PROPUS. Nimic scris în data/. ══\n")
 		return 0
 
-	lista_toata = leaga_tabelul(alese, tari, capitale, steaguri)
+	lista_toata = leaga_tabelul(alese, tari, capitale, steaguri, marimi)
 
 	if arg.masoara:
 		masoara(tari, capitale, istorice, lista_toata, steaguri)
@@ -1748,6 +2283,7 @@ def main():
 	arata_numele_de_mana(lista_toata)
 	arata_mutarile_recente(lista_toata)
 	arata_steagurile(lista_toata)
+	arata_remarcabilele(lista_toata)
 
 	intrebari_mana = comun.citeste_lista(comun.CALE_MANA, "întrebările scrise de mână")
 	# DUBLURILE SE CAUTĂ PE TABELUL ÎNTREG, ciorne incluse. Suprapunerea cu

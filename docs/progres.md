@@ -40,6 +40,168 @@ devreme, dar restul rămâne placeholder. Bucla de luptă e în continuare cea v
 
 ---
 
+## A TREIA PROPOZIȚIE (2 noiembrie 2026) — notele capitalelor spun și câte ceva despre țară
+
+**Ce s-a schimbat:** cele 127 de note ale tabelului țară ↔ capitală (domeniul
+Geografie și explorare, raftul Geografie politică) aveau două propoziții —
+răspunsul și unde e țara:
+
+> Capitala Franței este Paris. Franța este o țară transcontinentală din Europa de Vest.
+
+A doua spune ceva ce nu e întrebat, deci nota nu era goală de rost. Dar la al
+treilea raft parcurs în Practice, „Află mai multe" nu mai afla nimic: forma era
+mereu aceeași. De azi fiecare notă are **o a treia propoziție**, din Wikidata:
+
+> Capitala Franței este Paris. Franța este o țară transcontinentală din Europa
+> de Vest. **Cel mai înalt punct al țării este Mont Blanc, 4.806 m.**
+>
+> Capitala Rusiei este Moscova. Rusia este o țară din Europa de Est și Asia de
+> Nord. **Cea mai întinsă țară din lume: 17.075.400 km².**
+>
+> Capitala Nigeriei este Abuja. Nigeria este o țară din Africa de Vest.
+> **Suprafața țării e de 923.768 km², cu o populație de 211,4 milioane (2021).**
+
+**Unde:** `tools/fabrica/capitale.py` (o interogare nouă, `INTEROGARE_MARIMI`, și
+o secțiune nouă de notă), plus fișierele rescrise de `--scrie`. Nicio linie de
+GDScript: notele intră prin `explicatie`, câmpul care exista de la Practice.
+
+### De unde vine informația, fiindcă asta a fost toată întrebarea
+
+„Prin ce iese în evidență o țară" n-are câmp în Wikidata. E o afirmație
+editorială, iar regula proiectului e scrisă: **modelul de limbaj formulează, nu
+informează**. Deci au fost trei drumuri, și alegerea a fost pusă pe masă înainte
+să se scrie cod:
+
+1. **Wikidata, pe o scară de priorități** — ales. Totul CC0, totul verificabil.
+2. Un câmp nou în `date/tari.json`, scris de mână, 127 de rânduri. Calitatea
+   maximă, o săptămână de scris.
+3. Scrise de Claude din memorie, ca excepție conștientă (ca `alergologie.json`).
+   Respins de decizia din 12 octombrie, luată cu cifrele pe masă: la 1% greșeli,
+   fapte false predate de un joc de învățare.
+
+Alegerea costă ceva, și e scris: nu sunt „prima țară care a abolit sclavia", sunt
+un vârf și două cifre. Drumul 2 rămâne deschis peste drumul 1, fără migrare — un
+câmp scris de mână ar deveni pur și simplu treapta de sus a scării.
+
+### Scara, și de ce e o scară
+
+| treaptă | ce scrie | câte țări |
+|---|---|---|
+| superlativ | „Cea mai întinsă țară din Africa: 2.381.741 km²." | 5 |
+| vârful | „Cel mai înalt punct al țării este Mont Blanc, 4.806 m." | 73 |
+| mărimea | „Suprafața țării e de 923.768 km², cu o populație de 211,4 milioane (2021)." | 60 |
+| doar populația | „Populația țării e de 132,3 milioane (2024)." | 2 |
+
+Superlativul singur ar fi fost prea puțin: **măsurat, 8 țări din 127**, iar după
+tăierile de mai jos 5. O treaptă de jos care prinde pe toată lumea e ce face
+scara folositoare — 140 din 140 de rânduri ale tabelului primesc a treia
+propoziție, ciornele incluse.
+
+### Ce s-a măsurat și a fost ARUNCAT
+
+Două lucruri au fost scrise, măsurate și scoase în aceeași zi. Amândouă erau
+cifre CORECTE pentru datele mele și FALSE pentru cititor — exact forma lecției
+scrise deja la `vecini` (P47), unde Wikidata numără Brazilia ca vecină a Franței,
+prin Guyana Franceză.
+
+**1. Superlativele de populație.** Prima scriere le dădea. Măsurat, pe cei 195 de
+membri ONU cu populație:
+
+    China   1.404.890.000  măsurată în 2025
+    India   1.326.093.247  măsurată în 2020
+
+Deci „cea mai populată țară din lume" ar fi ieșit **China** — iar India a
+depășit-o în 2023. Nicio cifră nu e greșită; greșeala ar fi fost a mea, fiindcă
+aș fi comparat două măsurători făcute la cinci ani distanță ca și cum ar fi fost
+una. Anii se întind din 2005 până în 2026, deci problema nu era la China, era la
+tot clasamentul. **Suprafața nu are boala asta** (o țară nu se întinde de la un
+an la altul), deci superlativele au rămas numai de suprafață.
+
+**2. „Cea mai mică țară din…".** Măsurat, ieșea „Cea mai mică țară din lume: 2
+km²" — Monaco. Pentru orice manual, cea mai mică țară din lume e **Vaticanul**,
+care e observator la ONU, nu membru, deci nu e în date deloc.
+
+Asimetria e reală, nu o precauție în plus: **la capătul de sus, o țară lăsată
+afară de filtru nu poate schimba clasamentul** (toate țările mari sunt membre
+ONU), iar **la capătul de jos clasamentul e decis tocmai de cine lipsește**. Deci
+„cea mai întinsă" e o afirmație despre lume, iar „cea mai mică" ar fi fost o
+afirmație despre lista mea de membri ONU, îmbrăcată la fel.
+
+### Patru lucruri găsite CITIND cele 127, nu rulând verificările
+
+Validatorul trecea toate 127 de la prima rulare. Astea patru nu le-ar fi prins
+niciodată, fiindcă niciuna nu e o greșeală de date:
+
+- **Danemarca: „Suprafața țării e de 2.220.930 km²."** Membrul ONU e `Q756617`,
+  REGATUL, deci suprafața e în cea mai mare parte Groenlanda. Cifra e corectă
+  pentru entitate și e un răspuns la altă întrebare decât cea de deasupra ei
+  („Capitala Danemarcei este Copenhaga").
+- **Țările de Jos: „muntele Scenery, 870 m."** Cel mai înalt punct al regatului,
+  pe insula Saba, în Caraibe. Al țării din Europa e Vaalserberg, 322 m — de patru
+  ori mai jos.
+- **„Königstein (Namibia)", „Muntele Olympus (Chionistra)."** Paranteza de
+  dezambiguizare a etichetei Wikidata, ajunsă în notă ca o scăpare de generator.
+- **Mexicul și Sudanul fără a treia propoziție.** Nu lipsă de date: Wikidata le
+  dă **două** suprafețe fiecăruia, iar o măsurătoare dublă nu se scrie.
+
+Primele două au devenit `MASURATORI_RESPINSE` — respingeri **pe măsurătoare, nu
+pe țară**, deci Țările de Jos își pierd vârful și își păstrează suprafața. Scrise
+cu motivul, ca excluderea Israelului din tabelul capitalelor, și **păzite**:
+`verifica_masuratorile_respinse` oprește scriptul dacă o respingere nu mai are ce
+să respingă. A treia e o tăiere de paranteză care lasă sursa întreagă. A patra a
+devenit o treaptă în plus în scară (populația singură), deci cele două țări au
+acum o propoziție în loc de nimic.
+
+### Cele două lucruri care apără notele
+
+**`verifica_nota()` nu putea apăra rotunjirea.** Validatorul cere ca fiecare
+cifră din notă să existe în datele sursă — dar sursa cifrei rotunjite e chiar
+textul rotunjit, deci acolo verificarea compara formula cu ea însăși. Fix lecția
+scrisă în CLAUDE.md la „o verificare care copiază formula nu verifică formula".
+Deci rotunjirea are plasa ei, independentă: `citeste_ro()` citește textul ÎNAPOI
+ca număr și-l compară cu valoarea brută de la Wikidata, cu cel mult o jumătate de
+pas diferență. „4.805,59 → 4.806 m" trece; o formatare stricată nu.
+
+**Niciun verb nu se acordă cu numele țării.** „Țările de Jos SE ÎNTIND pe…", nu
+„se întinde" — lecția e deja scrisă la `PLURAL`, unde trei nume de plural
+trecuseră toate verificările cu „este" în loc de „sunt". Aici n-a mai apărut un
+al doilea tabel de excepții: propozițiile sunt scrise așa încât **subiectul să nu
+fie niciodată țara** („Suprafața țării e de…", „Cel mai înalt punct al țării
+este…"), iar superlativul n-are verb deloc („Cea mai întinsă țară din lume: …").
+O propoziție care nu se poate acorda greșit e mai bună decât una păzită de o
+listă.
+
+### Raportul, fiindcă o alegere automată care nu se vede nu se mai verifică
+
+`arata_remarcabilele()` tipărește, la fiecare rulare, pe ce treaptă a căzut
+fiecare țară: **toate** superlativele (puține și cele mai scumpe dacă greșesc),
+trei mostre din fiecare altă treaptă, și pentru treapta „nimic" **motivul**
+(câte suprafețe îi dă Wikidata). Rostul e același ca la `arata_steagurile`: aici
+se citesc cele două lucruri pe care nu le poate verifica niciun script — dacă
+propoziția sună a românește și dacă ce spune merită citit.
+
+### Ce s-a mai curățat în drum
+
+Fabrica se oprea, **de dinainte de sesiunea asta**, la o verificare de dubluri:
+întrebarea scrisă de mână `mana:4020` („Ce capitală a Țărilor de Jos e cunoscută
+pentru canale, biciclete și case înguste?") spune deja ce-ar genera sensul direct
+pentru `Q29999`. Verificat rulând versiunea comisă a scriptului cu cache-ul comis
+— aceeași oprire, deci nu venea de la schimbările de azi. Declarată în `DUBLURI`,
+ca celelalte trei. Sensul invers rămâne, deci țara nu pierde nici faptul, nici
+nota; tabelul a trecut de la 251 la **250 de întrebări**.
+
+**Cifrele:** 127 din 127 de note trec validatorul, lungimea 106–179 de caractere
+(maximum 240, mediana 138, de la 138 pe două propoziții). `verifica_trivia`: 39
+de verdicte, toate OK.
+
+**Rămas deschis:** notele celorlalte opt tabele ale fabricii au tot două
+propoziții, și acolo a treia ar cere altceva decât suprafețe — la opere și la
+compozitori ar fi un fapt despre lucrare, nu despre autor. Dacă vreodată apare
+un câmp `remarcabil` scris de mână în `tari.json`, el intră ca treapta de sus a
+scării, fără nicio migrare.
+
+---
+
 ## UNELTELE SE VĂD (2 noiembrie 2026) — ecranul de loadout arată chiar butoanele din luptă
 
 **Ce s-a schimbat:** în ecranul „Alege-ti uneltele", cele opt discipline nu mai

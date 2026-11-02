@@ -941,16 +941,6 @@
 		"categorie": "geografie"
 	},
 	{
-		"id": "wd:Q29999:capitala:cere_capitala",
-		"fapt": "wd:Q29999",
-		"text": "Care este capitala Țărilor de Jos?",
-		"variante": ["Bruxelles", "Amsterdam", "Paris", "Berlin"],
-		"corect": 1,
-		"nivel": 2,
-		"subcategorie": "geografie_politica",
-		"categorie": "geografie"
-	},
-	{
 		"id": "wd:Q29999:capitala:cere_tara",
 		"fapt": "wd:Q29999",
 		"text": "Amsterdam este capitala cărei țări?",
