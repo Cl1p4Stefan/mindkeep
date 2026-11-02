@@ -13,8 +13,9 @@ extends Node
 ##
 ## Regula a fost scrisă pe vremea când M era 3 și N era 3, deci loadout-ul era
 ## „le iei pe toate" și părea că n-are rost. Avea: singurul moment în care poți
-## scrie corect regula e cât e banală. Astăzi M e 7 și N e 3 — „alege 3 din 7",
-## 35 de combinații — iar niciun „3" și niciun „7" n-a trebuit căutat prin cod.
+## scrie corect regula e cât e banală. Astăzi M e 8 și N e 3 — „alege 3 din 8",
+## 56 de combinații, adică TOCMAI numărul scris în pitch de la bun început —
+## iar niciun „3" și niciun „8" n-a trebuit căutat prin cod.
 ##
 ## Deci:
 ##   M = `CATALOG.size()`             — câte discipline există
@@ -22,9 +23,11 @@ extends Node
 ##
 ## Nicăieri altundeva. Ecranul de loadout desenează M rânduri și numără până la
 ## N; lupta construiește exact atâtea Obeliscuri câte are loadout-ul. A patra
-## disciplină (Numere), a cincea (Tipare), a șasea (Spațial) și a șaptea
-## (Reținerea) au fost, fiecare, un RÂND în tabelul de mai jos și nimic altceva
-## — proba promisiunii, făcută de patru ori.
+## disciplină (Numere), a cincea (Tipare), a șasea (Spațial), a șaptea
+## (Reținerea) și a opta (Reflexul) au fost, fiecare, un RÂND în tabelul de mai
+## jos și nimic altceva — proba promisiunii, făcută de cinci ori, și acum
+## terminată: jocul e proiectat pentru opt discipline, iar a opta a costat exact
+## cât prima dintre cele adăugate.
 ##
 ## A ȘASEA A COSTAT ȘI DOUĂ LUCRURI CARE NU SUNT AICI, și merită spus care, ca
 ## să nu pară că rândul a fost tot: un cârlig OPȚIONAL de desenare în
@@ -36,8 +39,18 @@ extends Node
 ## A ȘAPTEA (Reținerea) a costat tot un lucru din afara tabelului, și tot
 ## opțional: EXPUNEREA — două câmpuri în dicționarul întrebării, prin care ce
 ## trebuie ținut minte stă pe ecran câteva secunde și pe urmă dispare. Vezi
-## `_incepe_expunerea` din `puzzle.gd`. Celelalte șase nu scriu câmpurile, deci
+## `_incepe_expunerea` din `puzzle.gd`. Celelalte șapte nu scriu câmpurile, deci
 ## nu simt nimic: fără ele, întrebarea apare pe loc, exact ca până acum.
+##
+## A OPTA (Reflexul) n-a costat NIMIC în afara tabelului — nici un câmp, nici un
+## cârlig, nici o linie în `puzzle.gd`. Are un desenator al ei
+## (`scenes/reflex/plansa.gd`), dar el intră prin cârligul pe care Spațialul îl
+## adusese deja, iar expunerea Reținerii n-o folosește deloc. Și tocmai asta e
+## ce dovedește a opta, și n-o putea dovedi nici a șasea, nici a șaptea: cele
+## două cârlige sunt independente, iar o disciplină poate lua unul fără
+## celălalt. Reflexul a fost blocat o săptămână de o DECIZIE (ce e o disciplină
+## de viteză într-un joc în care ceasul e al inamicului?), nu de cod — vezi
+## antetul lui `reflex.gd`.
 ##
 ## ─────────────────────────────────────────────────────────────
 ## CÂMPURILE
@@ -70,6 +83,7 @@ const SCENA_NUMERE := preload("res://scenes/numere/numere.tscn")
 const SCENA_TIPARE := preload("res://scenes/tipare/tipare.tscn")
 const SCENA_SPATIAL := preload("res://scenes/spatial/spatial.tscn")
 const SCENA_RETINERE := preload("res://scenes/retinere/retinere.tscn")
+const SCENA_REFLEX := preload("res://scenes/reflex/reflex.tscn")
 
 ## CULORILE. Fiecare e folosită în patru locuri de pe butonul ei — bordura,
 ## numele, halo-ul, piesa — iar de aici se schimbă toate patru deodată.
@@ -142,6 +156,41 @@ const CULOARE_SPATIAL := Color(0.86, 0.89, 0.96)   # argintiu
 # (`Puzzle.CULOARE_RAU`). Pentru ea întrebarea se pune cinstit atunci — și de
 # data asta fără o prezicere pe care n-am verificat-o.
 const CULOARE_RETINERE := Color(0.40, 0.92, 0.84)  # verde-albastru
+
+# A OPTA: GALBEN-VERDE ELECTRIC. Și aici însemnarea de deasupra trebuie plătită,
+# fiindcă ea spunea negru pe alb că „a opta disciplină (Reflex) nu mai are de
+# unde să-și ia o nuanță".
+#
+# E adevărat, și se vede numărând. Pe roata culorilor sunt ocupate: 0° (roșul
+# de verdict, `Puzzle.CULOARE_RAU`), 18° (portocaliul lui „CRITIC!" din
+# `puzzle.tscn`), 42°, 100°, 170°, 205°, 265°, 322° — cele șase discipline
+# colorate — plus argintiul, care nu e pe roată. Cel mai mare gol rămas e între
+# 100° și 170°, adică între verdele Logicii și verde-albastrul Reținerii: 35° de
+# fiecare parte, exact „a treia nuanță dintre ele" care a fost respinsă o dată
+# și declarată fundătură a doua oară.
+#
+# Deci a opta nu ia un gol, ia GOLUL DE LÂNGĂ DOUĂ PASTELURI și se depărtează pe
+# axa pe care a șaptea a arătat că se poate merge: SATURAȚIA. 71° stă între
+# auriul Cuvintelor (42°) și verdele Logicii (100°), la 29° de fiecare — dar
+# amândouă sunt palide (0,45 și 0,40), iar asta e la 0,68, cea mai saturată din
+# tabel. Lângă o cremă și o mentă, un galben-verde acid nu e „a treia dintre
+# ele", e singura care strigă.
+#
+# Și e culoarea lucrului: un fulger nu e pastel. Ce duce însă recunoașterea la
+# 40 px e tot FORMA — fulgerul e singura glifă asimetrică din tabel (vezi
+# `glifa_sah.gd`), iar asta nu se poate confunda cu nimic.
+#
+# CE RĂMÂNE ADEVĂRAT, și acum fără scăpare: NU mai există nicio nuanță liberă,
+# saturația e folosită în amândouă capetele (argintiul la zero, asta la maxim),
+# iar valoarea nu e o axă — toate șapte de mai sus sunt deschise fiindcă
+# butoanele stau pe fond închis, deci o culoare întunecată s-ar citi ca un
+# Obelisc STINS, nu ca o disciplină nouă. A noua disciplină n-ar mai avea ce să
+# împartă, dar a noua nu există: jocul e proiectat pentru opt, și de azi are
+# opt. Dacă vreodată apare, ce se schimbă nu e culoarea, e că butonul are nevoie
+# de o a doua axă adevărată — iar asta e o zi de lucru în `fata_obelisc.gd`, nu
+# un rând aici. Scris ca o constatare, nu ca o prezicere: vezi ce s-a întâmplat
+# cu cea de la a șasea.
+const CULOARE_REFLEX := Color(0.82, 1.00, 0.32)    # galben-verde electric
 
 const CATALOG := [
 	{
@@ -245,6 +294,21 @@ const CATALOG := [
 		"piesa": GlifaSah.Piesa.CLEPSIDRA,
 		"imagine": "",
 		"culoare": CULOARE_RETINERE, "scena": SCENA_RETINERE,
+	},
+	{
+		"cheie": "reflex", "nume": "Reflex",
+		"rol": "Raspunsul care-ti vine primul e gresit: tine-l deoparte.",
+		"sarcini": [
+			"Cuvinte asezate pe dos: \"SUS\" e scris jos, \"DREAPTA\" la stanga.",
+			"Cifre: cate sunt, nu care e; si care e mai mare la valoare, nu pe ecran.",
+			"Sageti: incotro arata cea din mijloc, cate arata intr-o parte, si partea opusa.",
+			"Forme si cuvinte care se contrazic: sub un romb scrie \"CERC\".",
+		],
+		# A treia glifă care nu e o piesă de șah, și a treia din cele patru
+		# simboluri propuse de pitch.
+		"piesa": GlifaSah.Piesa.FULGER,
+		"imagine": "",
+		"culoare": CULOARE_REFLEX, "scena": SCENA_REFLEX,
 	},
 ]
 

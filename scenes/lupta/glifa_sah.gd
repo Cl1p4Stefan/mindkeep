@@ -1,7 +1,7 @@
 class_name GlifaSah
 extends Silueta
 ## GLIFA de pe butonul unui Obelisc: pionul, calul, nebunul, turnul, regina —
-## și, de la a șasea disciplină, busola și clepsidra.
+## și, de la a șasea disciplină, busola, clepsidra și fulgerul.
 ##
 ## ─────────────────────────────────────────────────────────────
 ## DE CE NU MAI SUNT TOATE PIESE DE ȘAH
@@ -14,8 +14,11 @@ extends Silueta
 ## comun al TUTUROR Obeliscurilor, sau devin skin-ul primelor cinci?
 ##
 ## RĂSPUNS, dat la Spațial: devin skin-ul primelor cinci. A șaptea (Reținerea)
-## a luat clepsidra din aceeași listă, fără ca întrebarea să se mai pună — ceea
-## ce e tot rostul unei decizii scrise o dată. Ieșirea e cea scrisă
+## a luat clepsidra din aceeași listă, iar a opta (Reflexul) fulgerul, fără ca
+## întrebarea să se mai pună nici o dată — ceea ce e tot rostul unei decizii
+## scrise o dată. Din cele patru simboluri propuse de pitch s-au folosit trei;
+## al patrulea (spirala) rămâne nefolosit, fiindcă Tiparele, singura disciplină
+## pentru care fusese propus, își primise deja regina. Ieșirea e cea scrisă
 ## în pitch de la bun început, care propunea un simbol pe disciplină (clepsidră,
 ## spirală, busolă, fulger) — deci nu s-a inventat azi, s-a folosit. Cele cinci
 ## de dinainte nu se ating: o renumerotare a glifelor ar fi însemnat cinci
@@ -57,7 +60,7 @@ extends Silueta
 ## (`amplitudine = 0`) și, ca urmare, nu are nevoie de `_process` — trei icoane
 ## care pulsează sub trei butoane ar fi zgomot, nu viață.
 
-enum Piesa { PION, CAL, NEBUN, TURN, REGINA, BUSOLA, CLEPSIDRA }
+enum Piesa { PION, CAL, NEBUN, TURN, REGINA, BUSOLA, CLEPSIDRA, FULGER }
 
 ## Culoarea piesei. O pune `obelisc.gd`, din tabelul disciplinelor.
 @export var culoare := Color(0.85, 0.88, 1.0):
@@ -386,6 +389,40 @@ static var CLEPSIDRA_SCURS := PackedVector2Array([
 	Vector2(0.645, 0.320), Vector2(0.355, 0.320),
 ])
 
+# FULGERUL — a opta glifă, pentru Reflex. A treia care nu e o piesă de șah, și
+# tot din lista pitch-ului (clepsidră, spirală, busolă, fulger): până aici s-au
+# folosit trei din cele patru propuse, fără să se inventeze niciuna.
+#
+# FORMA: două tăieturi oblice, decalate, cu vârf în jos. E singura glifă
+# ASIMETRICĂ din tabel, și ăsta e criteriul — exact cum al clepsidrei era
+# simetria sus-jos.
+#
+# Cele cinci piese de șah sunt simetrice stânga-dreapta (o coloană grea jos),
+# busola e simetrică în toate părțile (un disc), clepsidra e simetrică și
+# sus-jos. La 40 px, o formă care se CLATINĂ pe diagonală se prinde periferic
+# fără să fie recunoscută: nu trebuie să vezi că e un fulger ca să vezi că nu e
+# niciuna din celelalte șapte.
+#
+# DE CE DOUĂ POLIGOANE ȘI NU UNUL. Un fulger dintr-o bucată e concav de două
+# ori (la fiecare cot), iar `draw_colored_polygon` ar trebui să-l taie singur în
+# triunghiuri. Aceeași însemnare ca la clepsidră: până la proba contrarie îl
+# taie bine, dar „până la proba contrarie" nu e un verdict, iar două
+# patrulatere CONVEXE n-au nimic de dedus.
+#
+# Se suprapun la mijloc (de la 0,42 la 0,50): fără suprapunere, cele două
+# tăieturi s-ar atinge într-un punct, adică fulgerul ar părea rupt în două —
+# aceeași grijă pentru care clepsidra are un gât.
+static var FULGER_SUS := PackedVector2Array([
+	Vector2(0.520, 0.020), Vector2(0.980, 0.020),
+	Vector2(0.620, 0.500), Vector2(0.160, 0.500),
+])
+# Partea de jos se termină într-un VÂRF (un singur punct, la 0,42 / 0,98), nu
+# într-o latură: un fulger cu fundul drept arată ca o treaptă de scară.
+static var FULGER_JOS := PackedVector2Array([
+	Vector2(0.380, 0.420), Vector2(0.840, 0.420),
+	Vector2(0.420, 0.980), Vector2(0.240, 0.700),
+])
+
 ## Catalogul formelor. Un rând per piesă: poligoanele pline, cercurile pline,
 ## „golurile" (desenate peste, în culoarea fondului) și proporția casetei.
 ## Turnul a fost chiar proba promisiunii scrise aici înainte („o a patra piesă
@@ -466,6 +503,17 @@ static var FORME := {
 		],
 		"cercuri": [],
 		"goluri": [CLEPSIDRA_SCURS],
+		"cercuri_gol": [],
+	},
+	# A doua cea mai îngustă (0,58), aproape cât clepsidra — și tocmai de-aia
+	# forma trebuia să fie asimetrică: dacă ar fi fost și ea lată, deosebirea de
+	# clepsidră ar fi căzut iar pe culoare, adică pe axa terminată. Un fulger
+	# lat se citește ca un zigzag decorativ; unul îngust cade ca o lovitură.
+	Piesa.FULGER: {
+		"proportie": 0.58,
+		"poligoane": [FULGER_SUS, FULGER_JOS],
+		"cercuri": [],
+		"goluri": [],
 		"cercuri_gol": [],
 	},
 }
