@@ -40,6 +40,66 @@ devreme, dar restul rămâne placeholder. Bucla de luptă e în continuare cea v
 
 ---
 
+## DOUĂ BUILD-URI WEB (3 noiembrie 2026) — `--public`, și eticheta verificată în amândouă sensurile
+
+**Ce s-a cerut:** un zip de urcat pe itch.io **fără** Alergologia, lângă cel cu ea.
+
+**De ce nu era doar o bifă scoasă.** Alergologia se aprinde dintr-o etichetă de
+export (`alergologie` în Custom Features, vezi `ALERGOLOGIE` din `trivia.gd`),
+iar `exporta_web.py` o CEREA — de două ori, în preset și în pachetul ieșit.
+Varianta leneșă ar fi fost să scot eticheta din presetul „Web" și să o pun
+înapoi după. A căzut din exact motivul pentru care verificarea exista de la
+început: **greșeala nu s-ar fi văzut pe disc.** Un build public cu eticheta
+rămasă pe el arată identic cu unul fără ea până deschide cineva Practice, deci
+ziua în care uitam s-o scot era ziua în care urcam Alergologia pe o pagină
+publică, fără niciun semn.
+
+**Ce s-a scris:** un al doilea preset („Web public", fără `custom_features`, cu
+alt `export_path`) și un flag:
+
+```bash
+python tools/exporta_web.py            # CU Alergologia  → ../mindkeep_web.zip
+python tools/exporta_web.py --public   # FĂRĂ Alergologia → ../mindkeep_web_public.zip
+```
+
+Cele două build-uri sunt **un RÂND în `BUILDURI`** (preset, dosar, etichetă),
+nu o ramură în `main()` — aceeași judecată ca la disciplinele din `CATALOG`: un
+al treilea build (altă etichetă, altă pagină) ar fi tot un rând.
+
+**Verificarea e acum în AMÂNDOUĂ sensurile**, și asta e miezul zilei. Până azi
+scriptul putea răspunde doar la „lipsește eticheta?"; de azi răspunde și la
+„e acolo și n-ar trebui?". Nu e simetrie de dragul simetriei: a doua întrebare
+e chiar cea la care ochiul nu poate răspunde, fiindcă lipsa Alergologiei se
+vede, iar prezența ei într-un build public nu.
+
+**Trei lucruri ieșite din decizie:**
+
+- **Dosarele sunt despărțite**, nu doar arhivele (`mindkeep_web/` și
+  `mindkeep_web_public/`). Verificările citesc `index.pck` din dosarul
+  build-ului, deci cu un singur dosar al doilea export ar fi spus „OK"
+  uitându-se la pachetul primului — adică o verificare care se uită la fișierul
+  greșit, cel mai rău fel de verde.
+- **`alergologie.json` intră în amândouă pachetele** (filtrul `*.json` îl
+  prinde; 100 KB). Scriptul nici nu-l cere, nici nu-l interzice la cel public:
+  **poarta e ETICHETA, nu prezența datelor** — două porți pentru același lucru
+  se pot contrazice, iar atunci nu mai știi care minte.
+- Eticheta s-a verificat și cu **altă metodă decât scriptul**, citind octeții
+  din fiecare pachet: cel cu Alergologia are `_custom_features` → `alergologie`,
+  iar la cel public cheia **lipsește cu totul**, fiindcă Godot o omite când
+  lista e goală. Deci `OS.has_feature("alergologie")` întoarce `false` din
+  lipsa cheii, nu din valoarea ei.
+
+**Măsurat:** amândouă arhivele, 44,6 MB, 9 fișiere. Exportul implicit a fost
+rerulat după schimbare, ca să se vadă că tabelul n-a stricat drumul vechi.
+
+**Fișiere atinse:** `tools/exporta_web.py` (tabelul, flagul, cele patru funcții
+care primesc acum build-ul ca parametru), `CLAUDE.md` (secțiunea build-ului web
+și rândul Alergologiei), `export_presets.cfg` (local, în `.gitignore`: al doilea
+preset trăiește doar pe mașina asta — dacă se pierde, scriptul oprește și spune
+cum se reface).
+
+---
+
 ## MENIUL PRINS DIN URMĂ (3 noiembrie 2026) — o iconiță, și trei rânduri care nu mai erau adevărate
 
 **Ce s-a cerut:** iconița Tavernei schimbată cu o poză atașată, scos „Cu

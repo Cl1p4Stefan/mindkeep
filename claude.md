@@ -98,16 +98,39 @@ semințe.
 **Build-ul web** (demo pe https://gyarados9.itch.io/mindkeep, Restricted, cu parolă):
 
 ```bash
-python tools/exporta_web.py      # export + ../mindkeep_web.zip
+python tools/exporta_web.py            # CU Alergologia  → ../mindkeep_web.zip
+python tools/exporta_web.py --public   # FĂRĂ Alergologia → ../mindkeep_web_public.zip
 ```
 
-Exportă cu presetul „Web” (`export_presets.cfg`, local, în `.gitignore`) în
-`../mindkeep_web/`, verifică că JSON-urile au intrat în pachet și face zip-ul cu
-`index.html` la rădăcină. Presetul poartă eticheta `alergologie` (Custom
-Features), care aprinde Alergologia DOAR în build; scriptul oprește dacă
-eticheta lipsește din preset sau din pachet. Exportul ia
-proiectul de pe DISC, nu din Git. `../mindkeep_web/` e o ieșire: nu se
-modifică de mână. Urcarea zip-ului pe itch.io rămâne manuală.
+**Două build-uri, un RÂND în `BUILDURI`** (de pe 3 noiembrie 2026). Fiecare are
+presetul lui, dosarul lui și arhiva lui:
+
+| comanda | presetul | dosarul | eticheta `alergologie` |
+|---|---|---|---|
+| (fără flag) | `Web` | `../mindkeep_web/` | **CERUTĂ** — oprește dacă lipsește |
+| `--public` | `Web public` | `../mindkeep_web_public/` | **INTERZISĂ** — oprește dacă e acolo |
+
+Ambele exportă prin Godot fără fereastră, verifică că JSON-urile au intrat în
+pachet și fac zip-ul cu `index.html` la rădăcină. Presetul „Web” poartă eticheta
+`alergologie` (Custom Features), care aprinde Alergologia DOAR în build;
+„Web public” n-o poartă. Eticheta se verifică de DOUĂ ori, **în amândouă
+sensurile**: în preset înainte de export, și în pachetul ieșit după (Godot o
+scrie în `project.binary`, ca `_custom_features`; la build-ul public cheia
+lipsește cu totul, fiindcă Godot o omite când lista e goală).
+
+Dosarele sunt despărțite dinadins, nu doar arhivele: verificările citesc
+`index.pck` din dosarul build-ului, deci cu un singur dosar al doilea export ar
+fi spus „OK” uitându-se la pachetul primului. `data/alergologie.json` intră în
+AMÂNDOUĂ pachetele (filtrul `*.json` îl prinde, 100 KB) și scriptul nici nu-l
+cere, nici nu-l interzice la cel public: poarta e ETICHETA, nu prezența datelor
+— două porți s-ar putea contrazice. Dacă vreodată nu vrei să se expedieze, se
+adaugă în `exclude_filter`-ul presetului public.
+
+`export_presets.cfg` e local, în `.gitignore`, deci cele două preseturi trăiesc
+doar pe mașina asta; dacă se pierd, scriptul oprește și spune cum se refac
+(Project → Export → Add… → Web, cu numele exact). Exportul ia proiectul de pe
+DISC, nu din Git. `../mindkeep_web/` și `../mindkeep_web_public/` sunt ieșiri:
+nu se modifică de mână. Urcarea zip-ului pe itch.io rămâne manuală.
 
 **Fabrica de întrebări** (Python, nu are nevoie de Godot):
 
@@ -187,7 +210,7 @@ Fiecare din astea a fost dezbătută și decisă conștient. Dacă propui altcev
 | **Apelurile de salvare stau în SCENE**   | `Arhiva` adună dicționarele celorlalți și nu știe nicio regulă de joc; nimeni nu depinde de ea. Dacă salvarea ar fi în autoload-uri, `verifica_drumuri` (~20.000 de expediții jucate, adică sute de mii de intrări în noduri) ar bate discul și ar scrie peste save-ul adevărat |
 | **Nodul se scrie pe disc la INTRARE**    | Înainte să se deschidă ce te așteaptă, nu la finalul nodului — altfel un lacăt ratat se reia cu codul deja văzut pe roți. Consecința: un nod poate fi „intrat dar nerezolvat", iar ce se întâmplă la reluare e coloana `reluabil` din `DATE_NOD` (Evenimentul NU se reia; lupta repornește de la zero) |
 | **Un save mai nou NU se citește**        | Vechi se deschide chiar și strâmb (cheie lipsă = implicit, cheie necunoscută = ignorată). Mai nou se pune deoparte: cheile pe care nu le știu pot însemna altceva decât cred. Un fișier ilizibil se redenumește, nu se șterge, și faptul se spune în meniu |
-| **Alergologia: secțiune doar pentru Practice, stinsă implicit** | 300 de întrebări (`data/alergologie.json`) pentru o rezidentă la alergologie, pe 6 rafturi, fără niveluri. Comutatorul `ALERGOLOGIE` din `trivia.gd` o aprinde DOAR în build-ul de pe itch.io: e `OS.has_feature("alergologie")`, iar eticheta o poartă presetul de export „Web”, nu codul. În editor și pe desktop e stinsă; `ALERGOLOGIE_LOCAL` o aprinde pentru un test și se pune înapoi pe false. Eticheta e a presetului, nu `"web"`, ca un build web public să nu o primească pe nesimțite. Nu intră în luptă: listă separată (`intrebari_doar_practice`), domeniu separat (`DOMENII_DOAR_PRACTICE`). Excepție conștientă de la „modelul de limbaj nu informează”: le-a scris Claude din memorie, le citește un medic. Vezi sesiunea ALERGOLOGIE |
+| **Alergologia: secțiune doar pentru Practice, stinsă implicit** | 300 de întrebări (`data/alergologie.json`) pentru o rezidentă la alergologie, pe 6 rafturi, fără niveluri. Comutatorul `ALERGOLOGIE` din `trivia.gd` o aprinde DOAR în build-ul de pe itch.io: e `OS.has_feature("alergologie")`, iar eticheta o poartă presetul de export „Web”, nu codul. În editor și pe desktop e stinsă; `ALERGOLOGIE_LOCAL` o aprinde pentru un test și se pune înapoi pe false. Eticheta e a presetului, nu `"web"`, ca un build web public să nu o primească pe nesimțite — iar de pe 3 noiembrie 2026 build-ul public EXISTĂ: al doilea preset („Web public”, fără etichetă) și `--public` în `exporta_web.py`, cu eticheta verificată în amândouă sensurile. Alternativa — să scot eticheta din presetul „Web” și s-o pun înapoi — ar fi pus pe mine să țin minte, iar ziua în care uitam urcam un build care arată identic: Alergologia lipsește abia când deschizi Practice, adică greșeala s-ar fi văzut pe itch.io, nu pe disc. Nu intră în luptă: listă separată (`intrebari_doar_practice`), domeniu separat (`DOMENII_DOAR_PRACTICE`). Excepție conștientă de la „modelul de limbaj nu informează”: le-a scris Claude din memorie, le citește un medic. Vezi sesiunea ALERGOLOGIE |
 | **Meniul de start e scena principală**   | Două moduri de joc înseamnă o răscruce, iar răscrucea trebuie să fie un ecran, nu un `run/main_scene` schimbat de mână. Meniul ÎNCARCĂ o scenă și nu știe nimic despre ea: harta își alege singură ecranul (loadout / hartă / sumar) din starea lui `Expeditie`, exact ca până acum — deci `harta.tscn` și `lupta.tscn` pornesc în continuare singure cu F6. Ieșire spre meniu de pe loadout, de pe sumar și, **de pe 26 octombrie 2026, de pe hartă**: fără Save ar fi fost o abandonare deghizată în pauză, cu Save e o pauză adevărată. O expediție vie nu se golește la ieșire, una moartă da. Vezi sesiunea IEȘIRILE DIN EXPEDIȚIE |
 | **Cronometrul e al INAMICULUI, nu al jocului** | Bara de timp apare doar la inamicii care o declară în rândul lor (`cronometru: true`; azi doar Lăncierul, singurul Grabnic). Era o constantă de mediu — prezentă în fiecare luptă, deci tactic invizibilă în toate; acum e o INFORMAȚIE DESPRE ADVERSAR, pe care o citești pe card (rândul „Cronometru”) și pentru care îți alegi loadout-ul. Un CÂMP, nu `== Arhetip.GRABNIC`, din exact motivul scris la `are_ceas()`: un bos care te grăbește fără să încarce nicio lovitură e un rând în tabel, nu o ramură nouă. Scena de puzzle n-a fost atinsă: comutatorul `cu_cronometru` exista de la Practice. Plătit conștient: fără ceas, LANȚUL NELIMITAT nu mai are nimic împotriva lui la 2 din 3 inamici, iar a doua limită e nehotărâtă. Și NICIUN sac nu s-a atins — costul de timp e al rețetei care generează întrebarea, nu al întrebării: la Logică nu există listă de filtrat, iar la Trivia un filtru sub aceeași cheie ar fi șters memoria întregului domeniu (vezi `trivia.gd`). Decis pe 31 octombrie 2026, vezi sesiunea CRONOMETRUL E AL INAMICULUI |
 | **Logica are PATRUSPREZECE tipuri de întrebare, nu cinci** | Cincisprezece de pe 1 noiembrie 2026, patrusprezece de la sfârșitul aceleiași zile: SIR (șirurile numerice, nouă tipare) a plecat la TIPARE, disciplina a cincea — vezi rândul de mai jos și pasul 2 din rută. Drumul e cel scris în pitch (secțiunea „de ce rămânem la 4 discipline"): „varietate ÎN interiorul celor 4 — formate multiple de Logică — costă mult mai puțin decât o disciplină complet nouă și rezolvă aceeași problemă”. Un tip nou e o funcție și un rând în `GENERATOARE`; o disciplină nouă e o scenă, un Obelisc, o statistică și o clădire. Cele zece noi, pe familii: **logică propozițională** (DACA-ATUNCI, NEGATIA, SI/SAU, PREMISA LIPSA — propoziții din vocabular, rezolvate din formă), **enigme** (ADEVAR SI MINCIUNA), **numărătoare** (MULTIMI, CEL MAI RAU CAZ, CALENDAR), **constrângeri** (LOCURILE, POTRIVIRE). Fiecare are cel puțin un tipar pe fiecare nivel — regula era deja scrisă, acum o bate și `verifica_logica`. Consecința de echilibru a fost, o zi, că SIR a scăzut de la 1/5 la 1/15 din întrebări — iar asta a fost chiar semnul că nu era al Logicii: un tip care nu cerea nici vocabular, nici categorii, și care se rărea cu fiecare tip nou. Nu s-a atins nici contractul `Puzzle`, nici o linie din `lupta.gd`. Vezi sesiunile CINCISPREZECE TIPURI și AL CINCILEA OBELISC |
