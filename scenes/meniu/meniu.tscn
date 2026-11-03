@@ -6,7 +6,7 @@
 [ext_resource type="Shader" path="res://assets/tema/fundal_estompat.gdshader" id="4_estompat"]
 [ext_resource type="Texture2D" path="res://assets/art/campaign_token.png" id="5_figurina"]
 [ext_resource type="Texture2D" path="res://assets/iconite/practice/nota.png" id="6_creier"]
-[ext_resource type="Texture2D" path="res://assets/art/campaign_nodes/campaign_bonfire.png" id="7_foc"]
+[ext_resource type="Texture2D" path="res://assets/art/taverna.png" id="7_taverna"]
 [ext_resource type="Script" path="res://assets/tema/fundal_estompat.gd" id="9_fundal_o_data"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_estompat"]
@@ -150,7 +150,7 @@ mouse_filter = 2
 layout_mode = 2
 theme_type_variation = &"AntetSecundar"
 theme_override_font_sizes/font_size = 19
-text = "Antrenament mental, deghizat în expediție."
+text = "Antrenament mental."
 horizontal_alignment = 1
 
 [node name="Spatiu" type="Control" parent="Margini/Coloana"]
@@ -200,8 +200,7 @@ custom_minimum_size = Vector2(0, 48)
 layout_mode = 2
 theme_type_variation = &"SubtitluPergament"
 theme_override_font_sizes/font_size = 16
-text = "Hartă, lupte, recompense.
-Cu cronometru."
+text = "Hartă, lupte, recompense."
 horizontal_alignment = 1
 autowrap_mode = 3
 
@@ -256,7 +255,7 @@ stretch_mode = 5
 layout_mode = 2
 theme_type_variation = &"TitluPergament"
 theme_override_font_sizes/font_size = 26
-text = "PRACTICE"
+text = "ANTRENAMENT"
 horizontal_alignment = 1
 
 [node name="PracticeRol" type="Label" parent="Margini/Coloana/Carti/CartePractice/Margini/Coloana"]
@@ -264,8 +263,7 @@ custom_minimum_size = Vector2(0, 48)
 layout_mode = 2
 theme_type_variation = &"SubtitluPergament"
 theme_override_font_sizes/font_size = 16
-text = "Cultură generală, pe domeniul ales.
-Fără cronometru."
+text = "Cultură generală, pe domeniul ales."
 horizontal_alignment = 1
 autowrap_mode = 3
 
@@ -303,7 +301,7 @@ theme_override_constants/separation = 6
 custom_minimum_size = Vector2(0, 104)
 layout_mode = 2
 mouse_filter = 2
-texture = ExtResource("7_foc")
+texture = ExtResource("7_taverna")
 expand_mode = 1
 stretch_mode = 5
 
@@ -319,8 +317,7 @@ custom_minimum_size = Vector2(0, 48)
 layout_mode = 2
 theme_type_variation = &"SubtitluPergament"
 theme_override_font_sizes/font_size = 16
-text = "Jocuri de masă, pe îndelete.
-Fără cronometru."
+text = "Jocuri de masă, pe îndelete."
 horizontal_alignment = 1
 autowrap_mode = 3
 
