@@ -123,6 +123,60 @@ const NIVEL_PARADA := 2         # (doar pentru DUEL) ce dificultate are întreba
 # rămâne contractul `Puzzle` neatins.
 const TEXT_PARADA := "PARADA!"
 
+# ─────────────────────────────────────────────────────────────
+# ANUNȚUL DE TURĂ
+#
+# „PARADA!" de mai sus e tot ce spunea ecranul despre rândul inamicului, și o
+# spunea PE întrebare — adică te prindea când erai deja în ea. Cât e rândul
+# cui se citea doar din punctele de PA, din Obeliscurile care se sting și din
+# jurnal, care nu se vede. Iar la runda de încărcare a Grabnicului nu se
+# întâmpla nimic pe ecran: jocul părea blocat o jumătate de secundă.
+#
+# DOUĂ SEMNE, PENTRU DOUĂ ÎNTREBĂRI DIFERITE — aceeași despărțire ca între
+# `anima_bara()` și `pune_bara_acum()`:
+#   banda (`anunt_tura.gd`)   răspunde la „S-A SCHIMBAT ceva chiar acum"
+#   eticheta de rundă         răspunde la „al cui e rândul ACUM"
+# Primul e un moment și trece; al doilea stă pe ecran toată tura. Numai cu
+# banda, cine a clipit a pierdut informația; numai cu eticheta, trecerea nu se
+# simte deloc. De-aia sunt amândouă, și de-aia scriu același lucru.
+#
+# TITLUL ARE ACEEAȘI FORMĂ pe ambele ture („TURA X"), deci ochiul nu citește
+# cuvinte: citește CULOAREA și al doilea cuvânt. Detaliul de dedesubt îl
+# lămurește — la tine runda, la inamic numele lui.
+const TEXT_TURA_TA := "TURA TA"
+const TEXT_TURA_INAMIC := "TURA INAMICULUI"
+
+# DETALIUL INAMICULUI E NUMELE LUI GOL, fără verb. „SOLDATUL ATACA" ar fi fost
+# mai viu și ar fi MINȚIT în runda de încărcare a Grabnicului, când inamicul nu
+# atacă (vezi `_tura_grabnic()`) — iar un ecran care spune altceva decât face
+# lupta e mai rău decât un ecran mut (vezi `text_comportament()`). „TURA
+# SOLDATULUI" ar fi cerut genitivul, deci un tabel de forme pentru fiecare nume
+# nou din `INAMICI`: aceeași capcană ca la `PLURAL` din fabrică. Un text care
+# nu se poate acorda greșit e mai bun decât unul păzit de o listă.
+
+# Auriul e deja al tău în interfața asta (punctele de PA, cifra de victorie),
+# roșul e deja al inamicului (bara lui de PV, cifra lui). Anunțul nu aduce
+# două culori noi de învățat — le folosește pe cele pe care ochiul le-a legat
+# deja de cele două părți.
+const CULOARE_TURA_TA := Color(1.00, 0.85, 0.45)
+const CULOARE_TURA_INAMIC := Color(0.92, 0.36, 0.38)
+
+# CÂT SE AȘTEAPTĂ ÎNAINTE DE PRIMA BANDĂ A LUPTEI, și numai a ei.
+#
+# Arena se deschide dintr-o tăietură, fără nicio trecere: într-o clipă erai pe
+# hartă, în următoarea e un rege și un adversar pe care nu i-ai văzut încă. O
+# bandă care intră în același cadru se așază peste exact lucrul pentru care te
+# uiți acolo — CINE e în fața ta — și cele două sosiri se încalecă.
+#
+# Numai la deschidere: în restul luptei banda ta vine după tura inamicului,
+# adică după ceva ce tocmai s-a terminat sub ochii tăi, deci n-are ce aștepta.
+# O jumătate de secundă acolo n-ar fi un respiro, ar fi o pauză goală.
+#
+# Nu costă nimic din timpul tău: cât ține, Obeliscurile sunt deja apăsabile,
+# iar dacă apeși, `_pe_obelisc_apasat()` stinge anunțul care n-a apucat să
+# apară (vezi contorul de generație din `anunt_tura.gd`).
+const INTARZIERE_PRIMA_BANDA := 0.5
+
 const NIVEL_MAX := 3            # câte niveluri de DIFICULTATE există (nu câte trepte)
 const CIFRE_ROMANE := ["I", "II", "III"]
 
@@ -607,6 +661,10 @@ var panoul_e_pe_ecran := false
 ## Rândul în care se nasc butoanele de Obelisc. Gol în scenă: câte butoane
 ## are lupta e o întrebare la care răspunde loadout-ul, nu editorul.
 @onready var rand_obeliscuri: HBoxContainer = %RandObeliscuri
+## Banda care anunță schimbarea de tură. NU e în scenă: se naște în `_ready()`,
+## ca punctele de PA — n-are nimic de reglat cu ochiul în editor, iar locul ei
+## în arbore (deasupra arenei, sub panouri) e o regulă, nu o alegere de așezare.
+var anunt_tura: AnuntTura
 
 ## Butoanele construite, în aceeași ordine ca `loadout`. Indicele dintr-o
 ## listă e indicele din cealaltă — tot codul de mai jos se bazează pe asta.
@@ -618,6 +676,7 @@ var butoane_obelisc: Array[Obelisc] = []
 func _ready() -> void:
 	_pregateste_loadout()
 	_construieste_obeliscurile()
+	_construieste_anuntul()
 
 	buton_incheie_tura.pressed.connect(_pe_incheie_tura_apasat)
 	buton_jurnal.pressed.connect(_pe_jurnal_apasat)
@@ -777,6 +836,23 @@ func _construieste_obeliscurile() -> void:
 		butoane_obelisc.append(buton)
 
 
+## Naște banda de anunț și o așază în arbore.
+##
+## POZIȚIA E TOT ROSTUL FUNCȚIEI ĂSTEIA. `add_child()` pune nodul la capătul
+## listei, adică peste TOT — inclusiv peste panoul de verdict, peste card și
+## peste jurnal. Un anunț de tură care se desenează peste ecranul de victorie
+## ar fi exact genul de strat rătăcit pe care nu-l mai găsești. Așa că îl mutăm
+## imediat după `Margini` (arena): deasupra luptei, dedesubtul oricărui panou.
+##
+## Căutăm indicele lui `Margini`, nu scriem o cifră: ordinea copiilor din scenă
+## e o chestiune de editor, iar un „4" scris aici s-ar strica în ziua în care
+## cineva adaugă un nod deasupra, fără nicio eroare care s-o spună.
+func _construieste_anuntul() -> void:
+	anunt_tura = AnuntTura.new()
+	add_child(anunt_tura)
+	move_child(anunt_tura, $Margini.get_index() + 1)
+
+
 ## PE CINE ÎNTÂLNEȘTI LA NODUL ĂSTA.
 ##
 ## Aici se vede granița trasă dinadins între hartă și luptă: **expediția știe
@@ -894,6 +970,26 @@ func incepe_runda() -> void:
 		scrie_in_jurnal("--- Runda %d: un atac, prin orice Obelisc liber. ---" % runda)
 	actualizeaza_ui()
 
+	# ANUNȚUL, și e singurul din cele două care NU se așteaptă.
+	#
+	# La inamic banda e pauza dinaintea loviturii, deci are rost să ținem
+	# bucla pe loc cât ține. Aici ar fi invers: ar fi o jumătate de secundă în
+	# care jocul îți spune că e rândul tău și nu te lasă să joci. Banda nu
+	# prinde clicuri, deci poți apăsa un Obelisc peste ea — iar dacă o faci,
+	# `_pe_obelisc_apasat()` o stinge pe loc.
+	#
+	# Detaliul e RUNDA, nu PA-ul sau Obeliscul liber: punctele de PA și
+	# butoanele spun deja asta, și o spun tot timpul. Numărul rundei e singurul
+	# lucru care s-a schimbat chiar acum.
+	#
+	# Runda 1 ESTE deschiderea luptei — `reseteaza_lupta()` pune runda pe 1 și
+	# cheamă funcția asta —, deci singurul anunț care așteaptă e primul. Vezi
+	# `INTARZIERE_PRIMA_BANDA` pentru ce se câștigă din jumătatea aia de
+	# secundă. Întrebăm runda, nu ținem un steag „e prima": starea există deja
+	# și nu se poate contrazice.
+	var intarziere := INTARZIERE_PRIMA_BANDA if runda == 1 else 0.0
+	anunt_tura.arata(TEXT_TURA_TA, "RUNDA %d" % runda, CULOARE_TURA_TA, intarziere)
+
 	# PLASĂ DE SIGURANȚĂ, nu o regulă de joc — și, cu parada scrisă, se poate
 	# acum demonstra că nu se declanșează niciodată sub DUEL: într-o rundă se
 	# blochează cel mult două Obeliscuri (cel folosit + cel ratat la paradă),
@@ -920,6 +1016,13 @@ func _pe_obelisc_apasat(index: int) -> void:
 	# „Gărzi": ieșim devreme din cazurile în care acțiunea n-are voie să se întâmple.
 	# E mai ușor de citit decât un if care înghite tot restul funcției.
 	if lupta_terminata or puzzle_activ:
+		return
+	# NU ÎN TURA LUI. Gaura exista și înainte — jumătatea de secundă de
+	# `PAUZA_FINAL_TURA`, în care butoanele rămâneau aprinse —, dar era prea
+	# îngustă ca s-o nimerești; cu banda, fereastra crește la vreo secundă și
+	# devine o apăsare firească. Sub DUEL ar fi fost un atac în plus, dăruit:
+	# tura ta ESTE un lanț, iar aici ai fi pornit al doilea în tura lui.
+	if e_tura_inamicului():
 		return
 	if e_blocat(index):
 		return
@@ -948,6 +1051,10 @@ func _pe_obelisc_apasat(index: int) -> void:
 		disponibil_din[index] = runda + 1 + RUNDE_BLOCAT_DUEL
 
 	puzzle_activ = true
+	# Banda de „TURA TA" poate fi încă pe ecran, stingându-se: ai apăsat repede.
+	# Stinsă pe loc, altfel ar pluti peste panoul care se deschide și peste
+	# primul rând al întrebării.
+	anunt_tura.ascunde_acum()
 	# Stinsă pe loc, nu la următorul `actualizeaza_ui()`: acela vine abia după
 	# lanț, iar cât curge cronometrul retragerea n-are ce căuta aprinsă.
 	buton_harta.disabled = true
@@ -1304,6 +1411,21 @@ func mai_ai_ce_face() -> bool:
 	return false
 
 
+## E rândul inamicului ACUM?
+##
+## Steagul se cheamă `tura_se_incheie` fiindcă pe vremea când a fost scris
+## acoperea doar jumătatea de secundă de pauză dinaintea loviturii. De când
+## există parada, el stă ridicat toată tura inamicului — întrebare, lovitură și
+## tot. Numele nu se schimbă (e scris și în două verificări, iar o redenumire ar
+## fi o zi de curățenie pentru un cuvânt), dar întrebarea care se pune aici se
+## poate pune cinstit: aceeași judecată ca la `are_ceas()`.
+##
+## `lupta_terminata` intră în răspuns fiindcă `termina_lupta()` coboară steagul:
+## fără el, ecranul de verdict ar scrie „TURA TA".
+func e_tura_inamicului() -> bool:
+	return tura_se_incheie and not lupta_terminata
+
+
 ## Un Obelisc e blocat cât timp runda curentă e mai mică decât runda din care
 ## redevine disponibil. Aceeași verificare servește toate trei regulile —
 ## diferă doar cine scrie în `disponibil_din` și cu ce durată:
@@ -1554,6 +1676,24 @@ func _pe_incheie_tura_apasat() -> void:
 ## executat cât întrebarea de paradă era încă pe ecran: ai fi parat o lovitură
 ## din runda trecută, iar blocarea Obeliscului s-ar fi scris cu runda greșită.
 func tura_inamicului() -> void:
+	# ANUNȚUL, ÎNAINTEA ORICĂREI RAMURI, și aici e locul lui din exact motivul
+	# pentru care parada stă în `_ataca_jucatorul()`: „a început rândul
+	# inamicului" e o regulă a BUCLEI, nu a vreunui arhetip. Scris o dată, al
+	# treilea arhetip îl primește pe gratis; scris în fiecare ramură, al treilea
+	# arhetip ar putea uita să-l pună.
+	#
+	# Se AȘTEAPTĂ: banda nu e un ornament care curge peste ce urmează, e pauza
+	# dintre „tura ta s-a încheiat" și prima mișcare a lui. E și singurul lucru
+	# care se întâmplă pe ecran în rundele de încărcare ale Grabnicului, unde
+	# ramura `else` de mai jos scrie doar o linie de jurnal pe care n-o vezi.
+	await anunt_tura.arata(TEXT_TURA_INAMIC, nume_inamic(), CULOARE_TURA_INAMIC)
+
+	# Aceeași gardă ca după paradă, pentru aceeași fereastră: cât ține banda,
+	# lupta se poate încheia pe alt drum (azi o resetare de la tastatură; mâine,
+	# orice). Fără ea, inamicul ar lovi într-o luptă deja scrisă.
+	if lupta_terminata:
+		return
+
 	match arhetip():
 		Arhetip.ATAC_CONSTANT:
 			await _tura_atac_constant()
@@ -1762,6 +1902,13 @@ func termina_lupta(victorie: bool) -> void:
 	# înfrângere se încheie CHIAR în tura inamicului, pornită din pauză — deci
 	# steagul era sus și nu-l mai cobora nimeni.
 	tura_se_incheie = false
+
+	# Și banda de anunț, dacă mai e pe ecran. Nu e o chestiune de straturi
+	# (panoul de verdict se desenează oricum peste ea, vezi
+	# `_construieste_anuntul()`), ci de adevăr: lupta s-a încheiat, deci nu mai
+	# e rândul nimănui. Un „TURA INAMICULUI" care se stinge în spatele
+	# voalului de victorie ar arăta ca o luptă care mai continuă.
+	anunt_tura.ascunde_acum()
 
 	# Recompensa se calculează ȘI se plătește aici, înainte de panou: panoul doar
 	# CITEȘTE lista de linii pe care o primește. Dacă ar calcula-o el, cifra de pe
@@ -2188,6 +2335,10 @@ func reseteaza_lupta() -> void:
 	jurnal.clear()
 	panou_verdict.visible = false
 	ascunde_panou_acum()
+	# O bandă rămasă din lupta de dinainte („TURA LANCIERULUI") peste arena
+	# luptei noi. Resetarea pune totul la starea de start, deci și stratul ăsta:
+	# `incepe_runda()`, de la capătul funcției, îl aprinde din nou cu „TURA TA".
+	anunt_tura.ascunde_acum()
 
 	# Sunetul luptei încheiate se retrage, muzica luptei noi intră în locul lui.
 	#
@@ -2549,7 +2700,23 @@ func antetele_sunt_stramte() -> bool:
 
 
 func actualizeaza_ui() -> void:
-	eticheta_runda.text = "RUNDA %d" % runda
+	# ETICHETA DE RUNDĂ DUCE ACUM DOUĂ LUCRURI: a câta rundă e și al cui e
+	# rândul. Banda spune că s-a schimbat, asta spune ce e acum — vezi nota de
+	# la `TEXT_TURA_TA`. Culoarea face jumătate din treabă: auriu = al tău, roșu
+	# = al lui, și sunt chiar culorile punctelor de PA și ale barei inamicului.
+	#
+	# După verdict rămâne doar cifra, necolorată: lupta s-a încheiat, deci nu
+	# mai e rândul nimănui, iar un „TURA TA" peste ecranul de înfrângere ar fi
+	# o invitație la o tură care nu mai vine.
+	if lupta_terminata:
+		eticheta_runda.text = "RUNDA %d" % runda
+		eticheta_runda.modulate = Color.WHITE
+	elif e_tura_inamicului():
+		eticheta_runda.text = "RUNDA %d  ·  %s" % [runda, TEXT_TURA_INAMIC]
+		eticheta_runda.modulate = CULOARE_TURA_INAMIC
+	else:
+		eticheta_runda.text = "RUNDA %d  ·  %s" % [runda, TEXT_TURA_TA]
+		eticheta_runda.modulate = CULOARE_TURA_TA
 
 	# Numele e tot un BUTON — click pe el deschide cardul —, dar acum duce DOAR
 	# numele. Nu mai poartă nici indiciul („[i]" s-a mutat pe figură, vezi
@@ -2636,9 +2803,18 @@ func actualizeaza_ui() -> void:
 		# Textul „(blocat)" a dispărut odată cu el. Ocupa un rând întreg sub nume
 		# și muta tot ce era pe buton de fiecare dată când se aprindea sau se
 		# stingea; lacătul din colț spune același lucru fără să miște nimic.
+		# `e_tura_inamicului()` stă în listă de când există banda de anunț:
+		# garda din `_pe_obelisc_apasat()` oprește apăsarea, dar un buton care
+		# arată apăsabil și nu face nimic e mai rău decât unul stins. Toate
+		# celelalte patru motive de stingere se văd deja pe buton; al cui e
+		# rândul merita să se vadă la fel.
 		buton.seteaza_stare(
 			blocat,
-			lupta_terminata or puzzle_activ or blocat or not ai_pa_pentru_obelisc()
+			lupta_terminata
+				or puzzle_activ
+				or e_tura_inamicului()
+				or blocat
+				or not ai_pa_pentru_obelisc()
 		)
 
 

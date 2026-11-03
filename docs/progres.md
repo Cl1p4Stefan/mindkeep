@@ -1,6 +1,6 @@
 # MINDKEEP — Jurnal de progres
 
-*Ultima actualizare: 2 noiembrie 2026*
+*Ultima actualizare: 3 noiembrie 2026*
 *Atașează acest fișier la începutul fiecărei sesiuni noi, împreună cu `CLAUDE.md` și `docs/pitch-document.md`.*
 
 ---
@@ -12,7 +12,7 @@
 | 1. Setup, Git | ✅ gata |
 | 2. Scena de luptă cu placeholdere | ✅ gata |
 | 3. Trivia, ca scenă independentă | ✅ gata |
-| 4. Bucla completă a unei lupte | ✅ victorie · înfrângere · recompense (Fragmente) · 🟡 **bucla ÎNSĂȘI se reproiectează — DUELUL**, a treia valoare din `RegulaObelisc`, cu comutatorul pe ea și COMBO neatins lângă: **partea JUCĂTORULUI e scrisă** (31 octombrie) — fără PA, lanț plafonat la `PLAFON_TREPTE = 5` (15 daune: 1+2+3+3+6), folosirea blochează Obeliscul o rundă (scris la ACTIVARE, nu la final), tura se încheie singură după lanț, punctele de PA nu se mai desenează; jucat cu scenele adevărate pe toți trei inamicii · **PARADA e scrisă** (31 octombrie) — când inamicul lovește de-adevărat alege la întâmplare unul din cele 3 Obeliscuri și-ți pune O întrebare prin el (`NIVEL_PARADA = 2`); corect = zero daune, greșit = încasezi tot ȘI acel Obelisc se blochează o rundă, FĂRĂ CUMUL; rundele de încărcare ale Grabnicului rămân liniștite, fiindcă parada stă în `_ataca_jucatorul()`, nu în `tura_inamicului()` · contractul `Puzzle` neatins, nicio linie · **bucla DUELULUI e completă**, iar joc perfect înseamnă acum Soldatul 11 întrebări / 2 runde / 1 paradă, Lăncierul 13 / 3 / **0**, Spadasinul 17 / 3 / 2, toți trei cu regele neatins — dar CÂȘTIGAT, nu primit cadou · verificare permanentă nouă, `verifica_duelul`, 29 de verdicte · două contradicții rămân (Lăncierul tot nu lovește, Nivelul III tot nu apare în luptă) · vezi sesiunile PARADA, PARTEA JUCĂTORULUI și DUELUL |
+| 4. Bucla completă a unei lupte | ✅ victorie · înfrângere · recompense (Fragmente) · 🟡 **bucla ÎNSĂȘI se reproiectează — DUELUL**, a treia valoare din `RegulaObelisc`, cu comutatorul pe ea și COMBO neatins lângă: **partea JUCĂTORULUI e scrisă** (31 octombrie) — fără PA, lanț plafonat la `PLAFON_TREPTE = 5` (15 daune: 1+2+3+3+6), folosirea blochează Obeliscul o rundă (scris la ACTIVARE, nu la final), tura se încheie singură după lanț, punctele de PA nu se mai desenează; jucat cu scenele adevărate pe toți trei inamicii · **PARADA e scrisă** (31 octombrie) — când inamicul lovește de-adevărat alege la întâmplare unul din cele 3 Obeliscuri și-ți pune O întrebare prin el (`NIVEL_PARADA = 2`); corect = zero daune, greșit = încasezi tot ȘI acel Obelisc se blochează o rundă, FĂRĂ CUMUL; rundele de încărcare ale Grabnicului rămân liniștite, fiindcă parada stă în `_ataca_jucatorul()`, nu în `tura_inamicului()` · contractul `Puzzle` neatins, nicio linie · **de pe 3 noiembrie 2026 trecerile de tură se VĂD**: o bandă peste mijlocul arenei la fiecare schimbare de rând (`scenes/lupta/anunt_tura.gd`), așteptată la tura inamicului și nu la a ta, plus „RUNDA 3 · TURA INAMICULUI" pe eticheta de rundă — cel mai rău caz era runda de încărcare a Grabnicului, în care pe ecran nu se întâmpla absolut nimic; pe drum s-a închis și o gaură veche, Obeliscurile apăsabile în `PAUZA_FINAL_TURA` (vezi ANUNȚUL DE TURĂ) · **bucla DUELULUI e completă**, iar joc perfect înseamnă acum Soldatul 11 întrebări / 2 runde / 1 paradă, Lăncierul 13 / 3 / **0**, Spadasinul 17 / 3 / 2, toți trei cu regele neatins — dar CÂȘTIGAT, nu primit cadou · verificare permanentă nouă, `verifica_duelul`, 29 de verdicte · două contradicții rămân (Lăncierul tot nu lovește, Nivelul III tot nu apare în luptă) · vezi sesiunile PARADA, PARTEA JUCĂTORULUI și DUELUL |
 | 5. Trei inamici manuali | ✅ Soldatul · Lăncierul (ceas + **singurul cu cronometru pe întrebări**, de pe 31 octombrie) · Spadasinul (vulnerabilitate), aleși din joc |
 | 6. Harta de expediție | ✅ loadout „N din M" — **de pe 2 noiembrie 2026 e „3 din 8", 56 de combinații, adică numărul scris în pitch de la bun început**, iar ecranul lui e de azi o GRILĂ DE DOUĂ COLOANE pe un panou de 760 px: cu șapte rânduri într-o singură coloană panoul ieșea 692 px pe o pânză de 648 (măsurat), deci butonul „Porneste expeditia" cădea sub marginea de jos — la șase încăpea la 635 px, adică ecranul era deja la limită și nimeni n-o știa; **cu opt discipline grila măsoară 590 px pe 648** — măsurat în ziua Reflexului, cu o scenă de unică folosință, fiindcă însemnarea de la a șaptea era o PREZICERE („intră și a opta fără să crească deloc") și prezicerile se verifică înainte de a fi crezute: a intrat, dar a crescut cu 21 px față de cei 569 de la șapte, fiindcă al patrulea rând își ia înălțimea de la cel mai înalt copil al lui. Au rămas 58 px de rezervă (vezi AL ȘAPTELEA OBELISC și AL OPTULEA OBELISC) · **de pe 2 noiembrie 2026 ecranul arată CHIAR BUTOANELE DE OBELISC din luptă**, nu o listă de `CheckButton`-uri cu text: patru coloane pe un panou de 1000 px, **535 px pe 648** (măsurat), aceeași scenă `obelisc.tscn` pe care o instanțiază `lupta.gd`; **și, tot pe 2 noiembrie, ecranul s-a curățat**: titlul e scris din N („ALEGE 3 UNELTE"), rândul „Alege 3 din 8. Raman fixe pe toata expeditia" e ascuns, nu șters, cele două butoane au stil și stau centrate (340 px și 180 px, nu 938), iar grila are deasupra și dedesubt câte un gol de 46 px — **566 px pe 648** (măsurat), cu 82 px de rezervă (vezi ECRANUL DE LOADOUT); **alegerea se plafonează la N** (cu trei aprinse, celelalte cinci se sting și nu se mai pot apăsa) și **câmpul de sămânță a ieșit din ecran** — era o unealtă de depanare pusă în fața jucătorului (vezi UNELTELE SE VĂD): întâia alegere adevărată a apărut cu Numere (3 din 4) și s-a lărgit în aceeași zi cu Tipare (ramura `m > n`, scrisă cu luni în urmă, rulează în serios de atunci; vezi AL PATRULEA și AL CINCILEA OBELISC) · **12-16 noduri**, ramificate, cu sămânță · Luptă / Elită / Odihnă / Eveniment / **Magazin** / **Boss** · **Monede + puteri temporare** · sumar de run · aspect: pergament, simboluri de cerneală, trasee punctate · **nodurile și drumurile stau pe o PANGLICĂ (curbă centrală + benzi)**, nu pe o grilă dreaptă · **patru trasee, toate verzi pe 300 de semințe** (POTCOAVĂ activă; POTCOAVA OGLINDITĂ e aceeași formă, întoarsă) · strat înclinat (forfecare) la ȘARPE · **drumuri care nu se încrucișează niciodată (0 la 300 de semințe)** · **nodul curent are și aură, și X, și stă nemișcat sub figurină** · **două surse de hartă: GENERATĂ (panglica) sau DESENATĂ dintr-un fișier `data/harti/*.json`** — comutatorul `Expeditie.SURSA_HARTII`; azi e pe DESENATĂ · **harta umple pergamentul**: pânza ține toată pagina, antetul plutește peste ea (805 × 427 px de hartă, de la 666 × 353) · **drumurile merg în amândouă sensurile**, cu nodul parcurs tăiat definitiv și cu garanția, verificată pe 16 000 de expediții simulate, că nu te poți înfunda · **figurina sare, cade ca un slam și zguduie ecranul la aterizare**, cu un răgaz de 0,5 s înainte să se deschidă nodul · **tipurile nodurilor se împart după o REȚETĂ fixă, nu se trag cu zarul**: 11 reguli de vecinătate, de început și de FINAL, printre ele **o podea de 3 lupte pe cel mai ieftin drum Start → Boss** (21 octombrie), plasare conștientă de reguli, verificare completă și reîncercare cu sub-sămânță (0 eșecuri pe 500 de semințe × 3 surse de hartă) · **la cel mult 2 pași de Boss e garantat un nod de bătaie** (100% pe 300 de semințe × 3 surse, de la 85% / 96% / 81%) · **niciun nod special nu mai are un geamăn lipit**, nici Evenimentul (0 pe 900 de hărți) · **rețeta nu se mai crede pe cuvânt: se PROBEAZĂ** — plafonul comun încearcă plasarea adevărată și taie un nod când forma nu le încape pe toate · rețeta se **plafonează după forma hărții**, nu după numărul de noduri · **nodul de Eveniment deschide Lacătul** (nivel din adâncime, sămânță din nodul, 6/10/14 Monede la succes) |
 | 7. Cetatea | ❌ |
@@ -37,6 +37,143 @@ buget, generare) rămâne acolo unde era.
 Am sărit peste ordinea recomandată la pasul 12 (artă): imaginile pentru rege,
 cavaler și pentru TOATE cele opt glife de pe butoanele de Obelisc au intrat mai
 devreme, dar restul rămâne placeholder. Bucla de luptă e în continuare cea validată, nu arta.
+
+---
+
+## ANUNȚUL DE TURĂ (3 noiembrie 2026) — banda care spune al cui e rândul
+
+**Ce s-a schimbat:** lupta are două stări — rândul tău, rândul inamicului — și
+până azi ecranul spunea în care ești numai prin lucruri pe care le ratezi:
+punctele de PA, Obeliscurile care se sting, jurnalul (ascuns în spatele unui
+buton) și marcajul „PARADA!" de pe întrebare, care te prinde când ești DEJA în
+ea. Acum trece o bandă peste mijlocul arenei la fiecare schimbare de rând.
+
+**Cel mai rău caz, cel care a cerut-o:** runda de încărcare a Grabnicului. În
+`_tura_grabnic()`, pe ramura `else`, se scrie un rând în jurnal și nimic
+altceva — pe ecran nu se întâmplă absolut nimic, iar jocul pare blocat o
+jumătate de secundă. Nu era un bug; era o tură fără imagine.
+
+### Fișier nou: `scenes/lupta/anunt_tura.gd` (`class_name AnuntTura`)
+
+Un `Control` care nu știe nimic despre ture, runde, inamici sau reguli.
+Primește două texte și o culoare și le arată; cine decide CE scrie pe ea e
+`lupta.gd`, singura care știe al cui e rândul — aceeași despărțire ca la cardul
+de inamic, unde `date_card_inamic()` socotește și `construieste_card()`
+desenează.
+
+Se naște DIN COD, ca punctele de PA, nu din editor: e un strat de deasupra fără
+nimic de reglat cu ochiul, iar `lupta.gd` o așază singură în arbore exact
+deasupra arenei și sub panourile de jurnal, card și verdict
+(`move_child(anunt_tura, $Margini.get_index() + 1)` — indicele se CAUTĂ, nu se
+scrie de mână).
+
+**De ce o bandă și nu un popup cu buton de închidere.** Un popup care trebuie
+închis ar fi fost un clic ceremonial în fiecare rundă — exact motivul pentru
+care butonul „Încheie tura" s-a ascuns („Jocul nu trebuie să-mi ceară să
+confirm că n-am ce face"). Într-o sesiune de 15 minute sunt zeci de treceri de
+tură; un popup le-ar fi făcut pe toate un zid. Banda e la fel de mare și de
+centrată ca un popup, dar nu oprește nimic: nu prinde clicuri
+(`MOUSE_FILTER_IGNORE`) și se stinge singură.
+
+### DOUĂ semnale pentru DOUĂ întrebări
+
+Despărțirea e chiar cea pe care o face deja `anima_bara()` față de
+`pune_bara_acum()`:
+
+| semnal | la ce întrebare răspunde | cât ține |
+|---|---|---|
+| **banda** | „s-a schimbat ceva chiar acum?" | 1,5 s și se stinge |
+| **eticheta de rundă** | „al cui e rândul ACUM?" | tot timpul |
+
+Eticheta scrie de azi „RUNDA 3 · TURA INAMICULUI", colorată ca banda. O bandă
+singură ar fi lăsat întrebarea a doua fără răspuns pentru cine s-a uitat în
+altă parte două secunde.
+
+### Cum curge, și unde se așteaptă
+
+- **rândul tău** (`incepe_runda()`): anunțul se cheamă FĂRĂ `await` — n-ai de
+  ce să aștepți, poți apăsa un Obelisc peste bandă, iar apăsarea o stinge pe
+  loc (`ascunde_acum()`).
+- **rândul inamicului** (`tura_inamicului()`): se cheamă CU `await`, înaintea
+  oricărei ramuri de arhetip. Acolo banda ESTE pauza dinaintea loviturii. După
+  `await` se întreabă `lupta_terminata`, fiindcă o jumătate de secundă e timp
+  destul ca lupta să se fi încheiat din altă parte.
+
+**Așteptarea merge pe CRONOMETRU, nu pe `_tween.finished`**, dinadins: un tween
+omorât de `ascunde_acum()` nu mai emite niciodată `finished`, deci un `await` pe
+el ar putea îngheța tura inamicului pe vecie. Un cronometru se declanșează orice
+se întâmplă cu animația.
+
+**Contorul de generație** (`_generatie`): două anunțuri lipite înseamnă două
+corutine `arata()` în aer, iar fără contor coada celei vechi ar ascunde banda
+celei noi. Îl incrementează și `ascunde_acum()`.
+
+### Întârzierea de la deschiderea luptei
+
+`INTARZIERE_PRIMA_BANDA` = 0,5 s, în `lupta.gd`, aplicată numai când
+`runda == 1`. Arena se deschide dintr-o tăietură — într-o clipă erai pe hartă,
+în următoarea e un adversar pe care nu l-ai văzut încă — iar o bandă în același
+cadru se așază exact peste lucrul pentru care te uiți acolo: cine e în fața ta.
+În restul luptei banda ta vine după tura inamicului, adică după ceva ce tocmai
+s-a terminat sub ochii tăi; o jumătate de secundă acolo n-ar fi un respiro, ar
+fi o pauză goală.
+
+Condiția e `runda == 1`, nu un steag „e prima": starea există deja și nu se
+poate contrazice. Și e un PARAMETRU al lui `arata()`, nu o constantă în
+`anunt_tura.gd`, fiindcă e o decizie despre ritmul LUPTEI (când intră anunțul în
+raport cu deschiderea arenei), nu despre cum se mișcă banda — iar banda nu știe
+ce e o luptă.
+
+### Ce se reglează din durate, și ce nu
+
+`DURATA_PAUZA` (1,0 s) e singura. Intrarea (0,25) și ieșirea (0,25) sunt
+MIȘCARE: o mișcare mai lentă se citește ca o animație leneșă, nu ca un anunț
+care stă mai mult. Pauza e singura în care banda chiar STĂ, la putere plină, și
+e singura pe care o simți ca „am apucat să citesc".
+
+Costul, scris pe față: pauza se plătește la fiecare tură a inamicului, unde
+banda se așteaptă, deci o trecere de tură ajunge la ~2 s cu tot cu
+`PAUZA_FINAL_TURA` — vreo 20 de secunde într-o luptă de 10 runde. La rândul TĂU
+nu costă nimic.
+
+### Trei lucruri respinse
+
+- **„SOLDATUL ATACA" ca detaliu al turei inamicului** — ar fi MINȚIT în runda
+  de încărcare a Grabnicului, adică exact în runda pentru care s-a scris banda.
+  Detaliul e numele inamicului, care e adevărat orice face el.
+- **„TURA SOLDATULUI"** — cere genitivul românesc, deci un tabel de gramatică
+  pe nume de inamic: aceeași capcană ca `PLURAL` din fabrica de întrebări. Un
+  text care nu se poate acorda greșit e mai bun decât unul păzit de o listă.
+- **un steag „e primul anunț"** — `runda == 1` e deja starea aia.
+
+### O gaură veche, închisă pe drum
+
+În cele 0,5 s de `PAUZA_FINAL_TURA` Obeliscurile rămâneau aprinse, deci sub
+DUEL puteai porni un al doilea lanț în timpul turei inamicului. Era greu de
+nimerit și de-aia nu se văzuse; banda a lărgit fereastra la ~2 s și a făcut-o
+nimerabilă. S-a adăugat `e_tura_inamicului()` — un accesor, nu o a doua stare —
+și el intră în amândouă locurile: garda din `_pe_obelisc_apasat()` și condiția
+de stingere din `actualizeaza_ui()`.
+
+### `verifica_podeaua` compila de-adevărat prima oară din septembrie
+
+Verificarea capturilor de podea avea o eroare de parsare veche
+(`Cannot get index "intentie inamic"`), deci **fișierul întreg nu se compila** —
+nu rulase din 28 septembrie. Nodul pe care-l păzea fusese scos dinadins din joc
+(vezi „INTENȚIA TELEGRAFIATĂ A IEȘIT CU TOTUL" din `lupta.gd`), deci verdictul
+s-a ȘTERS, nu s-a făcut tolerant: o verificare care caută un nod inexistent și
+trece fiindcă nu-l găsește e o verificare care minte. Plus un rând nou în
+`_masoara()` care stinge banda înainte de capturi — altfel ea stă exact peste
+podea.
+
+**Verificări:** `verifica_duelul` 31 OK, `verifica_retragerea` 27 OK,
+`verifica_podeaua` „VERDICT: podeaua tine" (prima rulare reușită din
+septembrie), toate cu cod de ieșire 0. Comportamentele întârzierii (șase) s-au
+probat cu o scenă de unică folosință, ștearsă după.
+
+**Rămâne de judecat cu ochiul, în F6:** dacă 0,5 s de respiro la deschidere e
+cât trebuie și dacă 1,5 s de bandă e destul. Niciun script nu poate măsura alea
+două numere.
 
 ---
 

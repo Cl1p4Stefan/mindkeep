@@ -205,6 +205,14 @@ func _masoara(rezolutie: Vector2i) -> bool:
 	for i in range(8):
 		await get_tree().process_frame
 
+	# BANDA DE ANUNȚ, dată la o parte. Lupta se deschide cu „TURA TA" peste
+	# mijlocul arenei (vezi `anunt_tura.gd`), iar ea ține o secundă și jumătate —
+	# adică fix cât apucăm să măsurăm și să facem captura. Ar fi acoperit chiar
+	# podeaua și umbrele pentru care există verificarea asta. Nu e o regulă de
+	# joc ocolită: anunțul se judecă cu ochiul, în joc, nu pe o captură a
+	# podelei.
+	_lupta.anunt_tura.ascunde_acum()
+
 	# Ecranul LOGIC: în el trăiesc nodurile. Poate fi mai mic decât fereastra.
 	var ecran := get_viewport().get_visible_rect().size
 	var inaltime := ecran.y
@@ -293,11 +301,15 @@ func _masoara(rezolutie: Vector2i) -> bool:
 	])
 	if abatere > TOLERANTA_NUME:
 		bine = false
-	# Intentia ramane SUB numele inamicului.
-	var r_intentie := _dreptunghi_vizibil(DE_MASURAT["intentie inamic"])
-	if r_intentie.has_area() and r_intentie.position.y < r_soldat.end.y - 1.0:
-		print("  intentia nu mai e sub numele inamicului")
-		bine = false
+	# AICI ERA „intentia ramane SUB numele inamicului", și plecarea ei e tot ce
+	# a mai rămas de făcut din ziua în care intenția telegrafiată a ieșit din
+	# joc. Rândul din `DE_MASURAT` s-a șters atunci, apelul de aici nu — iar un
+	# `DE_MASURAT["intentie inamic"]` pe o cheie care nu mai există e o eroare
+	# de PARSARE, nu una de rulare: fișierul întreg nu se mai compila, deci
+	# verificarea asta n-a mai pornit de atunci (ultimele capturi sunt din 28
+	# septembrie). Șters, nu făcut îngăduitor: o verificare care caută un nod
+	# inexistent și trece fiindcă nu-l găsește e o verificare care minte.
+	# Vezi „INTENȚIA TELEGRAFIATĂ A IEȘIT CU TOTUL" din `lupta.gd`.
 
 	print("")
 	print("  -- ASEZAREA, IN FRACTIUNI ------------------------")
