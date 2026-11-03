@@ -6,6 +6,7 @@
 [ext_resource type="Shader" path="res://assets/tema/fundal_estompat.gdshader" id="4_estompat"]
 [ext_resource type="Texture2D" path="res://assets/art/campaign_token.png" id="5_figurina"]
 [ext_resource type="Texture2D" path="res://assets/iconite/practice/nota.png" id="6_creier"]
+[ext_resource type="Texture2D" path="res://assets/art/campaign_nodes/campaign_bonfire.png" id="7_foc"]
 [ext_resource type="Script" path="res://assets/tema/fundal_estompat.gd" id="9_fundal_o_data"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_estompat"]
@@ -160,12 +161,12 @@ mouse_filter = 2
 [node name="Carti" type="HBoxContainer" parent="Margini/Coloana"]
 layout_mode = 2
 mouse_filter = 2
-theme_override_constants/separation = 40
+theme_override_constants/separation = 28
 alignment = 1
 
 [node name="CarteExpeditie" type="PanelContainer" parent="Margini/Coloana/Carti"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(330, 0)
+custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
 
 [node name="Margini" type="MarginContainer" parent="Margini/Coloana/Carti/CarteExpeditie"]
@@ -229,7 +230,7 @@ text = "Pornește expediția"
 
 [node name="CartePractice" type="PanelContainer" parent="Margini/Coloana/Carti"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(330, 0)
+custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
 
 [node name="Margini" type="MarginContainer" parent="Margini/Coloana/Carti/CartePractice"]
@@ -281,6 +282,61 @@ layout_mode = 2
 theme_type_variation = &"ButonRubrica"
 theme_override_font_sizes/font_size = 17
 text = "Începe antrenamentul"
+
+[node name="CarteTaverna" type="PanelContainer" parent="Margini/Coloana/Carti"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+
+[node name="Margini" type="MarginContainer" parent="Margini/Coloana/Carti/CarteTaverna"]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 18
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 22
+
+[node name="Coloana" type="VBoxContainer" parent="Margini/Coloana/Carti/CarteTaverna/Margini"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Icoana" type="TextureRect" parent="Margini/Coloana/Carti/CarteTaverna/Margini/Coloana"]
+custom_minimum_size = Vector2(0, 104)
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("7_foc")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Nume" type="Label" parent="Margini/Coloana/Carti/CarteTaverna/Margini/Coloana"]
+layout_mode = 2
+theme_type_variation = &"TitluPergament"
+theme_override_font_sizes/font_size = 26
+text = "TAVERNA"
+horizontal_alignment = 1
+
+[node name="TavernaRol" type="Label" parent="Margini/Coloana/Carti/CarteTaverna/Margini/Coloana"]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+theme_type_variation = &"SubtitluPergament"
+theme_override_font_sizes/font_size = 16
+text = "Jocuri de masă, pe îndelete.
+Fără cronometru."
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Spatiu" type="Control" parent="Margini/Coloana/Carti/CarteTaverna/Margini/Coloana"]
+custom_minimum_size = Vector2(0, 6)
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="ButonTaverna" type="Button" parent="Margini/Coloana/Carti/CarteTaverna/Margini/Coloana"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 46)
+layout_mode = 2
+theme_type_variation = &"ButonRubrica"
+theme_override_font_sizes/font_size = 17
+text = "Intră în tavernă"
 
 [node name="Avertisment" type="Label" parent="Margini/Coloana"]
 unique_name_in_owner = true

@@ -399,7 +399,7 @@ Cantitatea de conținut rezolvă doar repetiția, și numai pentru Trivia (celel
 
 ---
 
-## 8. Cele Două Moduri de Joc
+## 8. Modurile de Joc
 
 _Adăugat după revizuirea taxonomiei de brain training_
 
@@ -422,6 +422,36 @@ Soluția: două moduri, cu reguli de timp diferite.
 **Nu construi Turnul acum.** E un mod întreg, cu propriile reguli de progresie și propriul UI. Campania nu e completă — lipsesc harta, Cetatea, save-ul, 6 din 8 discipline. Turnul vine după.
 
 **Ce trebuie făcut ACUM, însă:** fiecare provocare are nevoie de un câmp care spune unde poate apărea (`campanie`, `turn`, sau `ambele`). Sudoku e `turn`, trivia e `ambele`. Costă o linie acum, evită reetichetarea a mii de intrări mai târziu.
+
+### Taverna — al treilea mod (adăugat pe 3 noiembrie 2026, construit)
+
+Tabelul de mai sus avea două coloane fiindcă despărțea după TIMP. Taverna n-a
+apărut ca a treia coloană acolo, ci ca răspuns la o întrebare pe care tabelul
+n-o punea: unde stau jocurile ÎNTREGI, cele care nu sunt nici o întrebare, nici
+un run?
+
+|                | **Campanie**                       | **Taverna**                                  | **Turnul Perseverenței**                   |
+| -------------- | ---------------------------------- | -------------------------------------------- | ------------------------------------------ |
+| Timp           | Ceasul inamicului (vezi 31 oct.)   | Niciun ceas                                   | Fără limită de timp                        |
+| Structură      | Expediții pe hartă, Obeliscuri     | O cameră cu mese. Te așezi, joci, pleci       | Etaje succesive, dificultate crescătoare   |
+| O partidă      | O întrebare, patru butoane         | Un joc întreg, cu starea lui                  | Un run fără ceas                           |
+| Conținut       | Cele 8 discipline                  | Cuvântul Ascuns ✅ · Sudoku · Decretul Zilei  | Probleme în mai mulți pași                 |
+| Contract în cod| `Puzzle` (o bază)                  | `Joc` (un contract)                           | — (va folosi mesele Tavernei)              |
+
+**De ce nu e Turnul.** Turnul e un mod de RUN: etaje, progresie, un capăt.
+Taverna n-are run. Au în comun doar lipsa cronometrului, iar aia e o absență, nu
+o mecanică. Turnul rămâne în ruta de construcție, iar când vine poate FOLOSI
+mesele de aici: `joc.gd` nu știe cine l-a deschis, exact ca scenele de puzzle,
+care nu știu nimic despre luptă.
+
+**Decretul Zilnic (secțiunea 6) intră aici**, ca masă. De-aia `porneste()`
+primește o sămânță: jocul liber vrea „niciodată același cuvânt de două ori"
+(sacul), iar Decretul vrea „același cuvânt toată ziua" (o sămânță din dată).
+Niciuna nu o înlocuiește pe cealaltă, deci contractul le ține pe amândouă.
+
+**Economie comună, dar nu azi.** Taverna nu plătește nimic — nici Monede, nici
+Fragmente. Cetatea nu există, deci nu se știe ce cumperi cu o Monedă; un număr
+pus acum ar intra în save și ar cere migrare când se reechilibrează.
 
 ---
 
@@ -478,7 +508,8 @@ asset_vizual        # opțional
 - **Cele 8 discipline** — Cultură generală, Logică, Cuvinte, Numere, Reținere, Tipare, Spațial, Reflex. Fiecare cu simbol propriu și rol tactic distinct.
 - **Rol tactic** — ce face o disciplină în luptă dincolo de daune (multi-hit, crit, ignoră armura, încărcare). Motivul pentru care alegi o disciplină chiar dacă nu e punctul tău forte.
 - **Campanie** — modul principal: expediții pe hartă, cronometru strict de 12-15s.
-- **Turnul Perseverenței** — mod secundar, fără limită de timp: Sudoku, probleme, puzzle-uri în mai mulți pași. Economie comună cu campania.
+- **Taverna** — al treilea mod, construit pe 3 noiembrie 2026: o cameră cu jocuri de masă, fără ceas (Cuvântul Ascuns azi; Sudoku și Decretul Zilei, în catalog, stinse).
+- **Turnul Perseverenței** — mod secundar, fără limită de timp: probleme, puzzle-uri în mai mulți pași. Economie comună cu campania.
 - **Antrenament liber** — mod fără luptă, unde alegi exact ce categorie exersezi. Filtru peste baza de date existentă.
 
 ---

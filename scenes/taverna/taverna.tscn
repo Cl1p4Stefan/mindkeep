@@ -1,0 +1,150 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scenes/taverna/taverna.gd" id="1_taverna"]
+[ext_resource type="Theme" path="res://assets/tema/pergament.tres" id="2_tema"]
+[ext_resource type="Texture2D" path="res://assets/art/fight_background.jpg" id="3_biblioteca"]
+[ext_resource type="Shader" path="res://assets/tema/fundal_estompat.gdshader" id="4_estompat"]
+[ext_resource type="Script" path="res://assets/tema/fundal_estompat.gd" id="9_fundal_o_data"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_estompat"]
+shader = ExtResource("4_estompat")
+shader_parameter/raza = 22.0
+shader_parameter/luminozitate = 0.42
+shader_parameter/tenta = Color(1, 0.86, 0.68, 1)
+shader_parameter/vinieta = 0.7
+
+[node name="Taverna" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_tema")
+script = ExtResource("1_taverna")
+
+[node name="Fundal" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.06, 0.045, 0.035, 1)
+
+[node name="Biblioteca" type="TextureRect" parent="."]
+material = SubResource("ShaderMaterial_estompat")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("3_biblioteca")
+expand_mode = 1
+stretch_mode = 6
+script = ExtResource("9_fundal_o_data")
+
+[node name="Margini" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 28
+theme_override_constants/margin_top = 18
+theme_override_constants/margin_right = 28
+theme_override_constants/margin_bottom = 20
+
+[node name="Coloana" type="VBoxContainer" parent="Margini"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Antet" type="HBoxContainer" parent="Margini/Coloana"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Titlu" type="Label" parent="Margini/Coloana/Antet"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"TitluMeniu"
+theme_override_font_sizes/font_size = 34
+text = "TAVERNA"
+vertical_alignment = 1
+
+[node name="ButonMese" type="Button" parent="Margini/Coloana/Antet"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(120, 38)
+layout_mode = 2
+size_flags_vertical = 4
+theme_type_variation = &"ButonRubrica"
+theme_override_font_sizes/font_size = 15
+text = "Mesele"
+
+[node name="ButonMeniu" type="Button" parent="Margini/Coloana/Antet"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(110, 38)
+layout_mode = 2
+size_flags_vertical = 4
+theme_type_variation = &"ButonRubrica"
+theme_override_font_sizes/font_size = 15
+text = "Meniu"
+
+[node name="Ajutor" type="Label" parent="Margini/Coloana"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+theme_type_variation = &"AntetSecundar"
+theme_override_font_sizes/font_size = 16
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="PanouMese" type="CenterContainer" parent="Margini/Coloana"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Mese" type="HBoxContainer" parent="Margini/Coloana/PanouMese"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 28
+alignment = 1
+
+[node name="PanouJoc" type="VBoxContainer" parent="Margini/Coloana"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 10
+
+[node name="ZonaJoc" type="PanelContainer" parent="Margini/Coloana/PanouJoc"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_type_variation = &"ChenarPergament"
+
+[node name="RandRezultat" type="HBoxContainer" parent="Margini/Coloana/PanouJoc"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="Rezultat" type="Label" parent="Margini/Coloana/PanouJoc/RandRezultat"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 4
+theme_type_variation = &"TitluPergament"
+theme_override_font_sizes/font_size = 19
+vertical_alignment = 1
+
+[node name="ButonIncaUnul" type="Button" parent="Margini/Coloana/PanouJoc/RandRezultat"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(150, 42)
+layout_mode = 2
+theme_type_variation = &"ButonRubrica"
+theme_override_font_sizes/font_size = 16
+text = "Încă unul"

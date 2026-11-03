@@ -64,10 +64,19 @@ extends Control
 ## (`fundal_estompat.gdshader`), dar ABIA estompată: aici nu se citește un
 ## paragraf peste ea, deci are voie să se vadă ca loc.
 ##
-## Cele două moduri sunt două PAGINI una lângă alta, nu două butoane una sub
-## alta: o răscruce se vede ca două drumuri. Fiecare pagină are o imagine care
-## există deja în joc — figurina de pe hartă și creierul din chenarul de
-## Practice — ca să recunoști ecranul în care intri înainte să intri.
+## Cele TREI moduri sunt trei PAGINI una lângă alta, nu trei butoane unul sub
+## altul: o răscruce se vede ca niște drumuri. Fiecare pagină are o imagine care
+## există deja în joc — figurina de pe hartă, creierul din chenarul de Practice
+## și focul de pe nodul de Odihnă — ca să recunoști ecranul în care intri
+## înainte să intri.
+##
+## Al treilea (Taverna, 3 noiembrie 2026) a costat o măsurătoare: la 330 px pe
+## pagină și 40 px între ele, trei pagini ar fi cerut 1070 px plus 80 de
+## margini, adică 1150 pe o pânză de 1152 — adică exact pe muchie, ca panoul de
+## loadout înainte să fie o grilă. Deci paginile au scăzut la 300 și golul la
+## 28: 956 px, cu 116 de rezervă. Focul e ÎMPRUMUTAT de la nodul de Odihnă: e
+## un placeholder conștient, ca tot ce nu e încă artă proprie, și singura
+## imagine din joc care înseamnă deja „un loc cald în care te oprești".
 ##
 ## Mișcarea e puțină, dinadins (meniul îl vezi în fiecare zi):
 ##   - o intrare de sub o secundă (voal care se ridică, pagini care apar);
@@ -79,15 +88,18 @@ extends Control
 
 const SCENA_HARTA := "res://scenes/harta/harta.tscn"
 const SCENA_PRACTICE := "res://scenes/practice/practice.tscn"
+const SCENA_TAVERNA := "res://scenes/taverna/taverna.tscn"
 
 @onready var buton_expeditie: Button = %ButonExpeditie
 @onready var buton_practice: Button = %ButonPractice
+@onready var buton_taverna: Button = %ButonTaverna
 @onready var expeditie_stare: Label = %ExpeditieStare
 @onready var avertisment: Label = %Avertisment
 @onready var antet: Control = %Antet
 @onready var ornament: Control = %Ornament
 @onready var carte_expeditie: Control = %CarteExpeditie
 @onready var carte_practice: Control = %CartePractice
+@onready var carte_taverna: Control = %CarteTaverna
 @onready var praf: CPUParticles2D = %Praf
 @onready var voal: ColorRect = %Voal
 
@@ -100,8 +112,10 @@ const CULOARE_ORNAMENT := Color(0.82, 0.74, 0.58, 0.85)
 func _ready() -> void:
 	buton_expeditie.pressed.connect(_pe_expeditie)
 	buton_practice.pressed.connect(_pe_practice)
+	buton_taverna.pressed.connect(_pe_taverna)
 	_leaga_pagina(buton_expeditie, carte_expeditie)
 	_leaga_pagina(buton_practice, carte_practice)
+	_leaga_pagina(buton_taverna, carte_taverna)
 	ornament.draw.connect(_deseneaza_ornament)
 	resized.connect(_aseaza_praful)
 	_aseaza_praful()
@@ -125,6 +139,10 @@ func _pe_practice() -> void:
 	get_tree().change_scene_to_file(SCENA_PRACTICE)
 
 
+func _pe_taverna() -> void:
+	get_tree().change_scene_to_file(SCENA_TAVERNA)
+
+
 # ─────────────────────────────────────────────────────────────
 # MIȘCAREA
 # ─────────────────────────────────────────────────────────────
@@ -139,14 +157,14 @@ func _intrare() -> void:
 	voal.show()
 	voal.modulate.a = 1.0
 	antet.modulate.a = 0.0
-	for carte in [carte_expeditie, carte_practice]:
+	for carte in [carte_expeditie, carte_practice, carte_taverna]:
 		carte.modulate.a = 0.0
 
 	var t := create_tween().set_parallel(true)
 	t.tween_property(voal, "modulate:a", 0.0, 0.7).set_ease(Tween.EASE_OUT)
 	t.tween_property(antet, "modulate:a", 1.0, 0.6).set_delay(0.1)
 	var intarziere := 0.3
-	for carte in [carte_expeditie, carte_practice]:
+	for carte in [carte_expeditie, carte_practice, carte_taverna]:
 		t.tween_property(carte, "modulate:a", 1.0, 0.45).set_delay(intarziere)
 		intarziere += 0.12
 	# Voalul nu mai are ce face după ce s-a ridicat; ascuns, nu mai costă nimic

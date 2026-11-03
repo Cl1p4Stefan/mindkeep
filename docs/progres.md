@@ -40,6 +40,201 @@ devreme, dar restul rămâne placeholder. Bucla de luptă e în continuare cea v
 
 ---
 
+## TAVERNA (3 noiembrie 2026) — al treilea mod de joc, și al doilea contract
+
+**Ce s-a schimbat:** jocul avea două uși în meniu (Expediție, Practice). De azi
+are trei. Taverna e o cameră cu mese: te așezi la una, joci un joc ÎNTREG și
+pleci. Prima masă e **Cuvântul Ascuns** (tiparul lui Wordle), scrisă cap-coadă
+azi. Sudoku și Decretul Zilei sunt rânduri în catalog, pe ecran, stinse.
+
+### Întâi: Taverna NU e Turnul Perseverenței
+
+Prima treabă a zilei n-a fost cod. Pitch-ul avea deja nișa ocupată: „Turnul
+Perseverenței — mod secundar, fără limită de timp: Sudoku, probleme", plus
+„Decretul Zilnic, un puzzle rotativ la 24h, gen Wordle". Adică exact cuvintele
+„Sudoku" și „Wordle", scrise de luni. Dacă n-aș fi deschis pitch-ul, azi ar fi
+existat două moduri care fac același lucru cu nume diferite.
+
+Ce le desparte, și de-aia pot sta amândouă:
+
+| | **Turnul** | **Taverna** |
+|---|---|---|
+| Formă | Un RUN: etaje, progresie, un capăt | O cameră. Intri, joci o partidă, pleci |
+| Când se termină | Când cazi sau ajungi în vârf | Când vrei tu |
+| Ce au în comun | — fără ceas — | — fără ceas — |
+
+Și tocmai rândul de jos a fost argumentul: **o absență nu e o mecanică.** Două
+moduri care se aseamănă doar prin ce NU au nu sunt același mod.
+
+Deci Turnul rămâne în pitch, cu etajele lui, iar când vine **poate folosi
+mesele de aici** — `joc.gd` nu știe cine l-a deschis, exact cum scenele de
+puzzle nu știu nimic despre luptă. Decretul Zilnic devine o MASĂ din tavernă,
+nu un sistem. Pitch-ul s-a actualizat: secțiunea 8 nu se mai cheamă „Cele Două
+Moduri de Joc".
+
+### Fișier nou: `scenes/taverna/joc.gd` (`class_name Joc`)
+
+A doua întrebare a fost: „Wordle nu e un rând în `CATALOG`, ca disciplinele?"
+
+Nu, și motivul nu e de mărime, e de FORMĂ. Un `Puzzle` are **un singur moment
+de decizie**: apeși unul din patru butoane și s-a terminat. Wordle are șase,
+Sudoku are optzeci și unu, iar între ele starea se ADUNĂ — ce afli la
+încercarea a treia schimbă ce merită încercat la a patra. `Puzzle` n-are unde
+să țină așa ceva, fiindcă n-are nevoie.
+
+Deci al doilea contract. Și, important, **un CONTRACT, nu o bază**:
+
+- `puzzle.gd` are **1443 de linii** fiindcă opt discipline împart tot ecranul:
+  cronometrul, cele patru butoane, cei trei timpi ai verdictului, sunetele.
+- `joc.gd` are **sub 150** fiindcă două mese n-au nimic la fel în afară de
+  margini: una e o grilă de litere, alta una de cifre.
+
+O bază groasă scrisă azi ar fi făcut din prima mea presupunere despre „ce au
+jocurile în comun" un zid pentru al treilea joc. Un contract subțire nu poate
+greși așa: nu promite nimic despre interior.
+
+Tot ce cere o masă nouă: `extends Joc`, `_porneste(samanta)`, și un apel la
+`termina(reusit, rezumat)` când s-a terminat. Plus un rând în `mese.gd`.
+
+### Sămânța, scrisă înainte să fie nevoie de ea
+
+`porneste(samanta)`, cu `SAMANTA_LIBERA = 0` însemnând „alege tu". Pare o
+complicație pentru un joc care azi se deschide într-un singur fel. Nu e: sunt
+**două garanții diferite**, și niciuna n-o poate înlocui pe cealaltă.
+
+- **Jocul liber** vrea „niciodată același cuvânt de două ori". Asta o dă
+  `Sac` — care alege dintre biletele RĂMASE, deci rezultatul lui atârnă de tot
+  istoricul tău, nu de un număr. Un sac nu se poate sămânța.
+- **Decretul Zilei** va vrea „același cuvânt toată ziua, oricâte ori îl
+  deschid". Asta o dă o sămânță din dată. Sacul ar fi dat fix invers: alt
+  cuvânt la fiecare deschidere.
+
+Așa, Decretul Zilei devine un rând în catalog și un calcul de dată. Scris azi,
+costă o linie; scris după ce există trei mese, ar fi fost o migrare — aceeași
+judecată ca la „alege N din M", scrisă pe vremea când N și M erau amândouă 3.
+
+### Fișier nou: `scenes/taverna/mese.gd` (`class_name Mese`)
+
+Catalogul, fratele lui `Discipline.CATALOG`. Patru câmpuri: `cheie`, `nume`,
+`rol`, `scena`. Un joc nou e un rând plus o scenă.
+
+**Nu e autoload**, deși `Discipline` e, și motivul e scris în antet:
+`Discipline` e global fiindcă au nevoie de el DOUĂ scene care nu se cunosc
+(lupta și harta). De mese are nevoie una singură. Lista autoload-urilor e exact
+locul în care se adună, pe nesimțite, tot ce „era mai ușor așa".
+
+**`scena: ""` înseamnă o masă în lucru**, iar ea apare pe ecran, STINSĂ, cu „În
+lucru" pe buton. E decizia luată la rafturile din Practice: un raft ascuns e un
+raft despre care nu afli niciodată nimic. În plus, lista mea de lucru stă acum
+la vedere, în joc.
+
+### Fișier nou: `scenes/taverna/cuvantul/cuvantul.gd` — prima masă
+
+Șase încercări, cinci litere, verde / chihlimbar / stins. Tastatură pe ecran ȘI
+tastatură adevărată, pe aceleași trei funcții.
+
+**Partea grea e marcarea literelor duble.** Dacă răspunsul e „carte" și
+ghicești „aaaaa", un singur „a" are dreptul la culoare, fiindcă în „carte" e un
+singur „a". O trecere naivă („e litera în cuvânt?") le-ar fi colorat pe toate
+cinci și ar fi mințit. Deci două treceri: întâi verzii, numărând câte din
+fiecare literă RĂMÂN neconsumate; abia pe urmă chihlimbarurile, fiecare scăzând
+din ce a rămas. Funcția e `static`, deci se bate fără ecran.
+
+**Patru decizii de design, fiecare cu costul ei:**
+
+1. **Cuvintele n-au diacritice.** Alfabetul are 31 de litere, tastatura 26. Cu
+   „Ă" în răspuns ar trebui să ghicești și CUM se scrie, nu doar CE cuvânt e —
+   iar o literă pe care n-o poți tasta nu e o ghicitoare, e o piedică. Regula se
+   DECLARĂ în rândul de ajutor: a patra aplicare a regulii de la enigmele
+   Logicii. **Costul**: româna își pune aproape toate substantivele feminine la
+   singular în „-ă", deci lista e mai săracă în ele decât limba.
+2. **O ghicire nu se verifică în dicționar.** Lista are 308 cuvinte, româna are
+   zeci de mii; un filtru ar fi respins aproape tot ce încearcă un jucător,
+   adică l-ar fi pedepsit pentru conținutul care-mi lipsește MIE. **Costul**: se
+   poate trage cu „aeiou" ca sondă. `CERE_CUVANT_DIN_LISTA` așteaptă ziua în
+   care lista are mii de cuvinte.
+3. **Nimic nu e roșu.** O literă care nu e în cuvânt e o INFORMAȚIE câștigată,
+   nu o greșeală. Roșul rămâne culoarea de verdict din restul jocului.
+4. **Taverna nu plătește nimic.** Nici Monede, nici Fragmente — deși pitch-ul
+   cere economie comună. Cetatea nu există, deci nu se știe ce cumperi cu o
+   Monedă; un număr pus azi ar intra în save și ar cere migrare la prima
+   reechilibrare. Ce se scrie pe disc e doar sacul cuvintelor ieșite, și ăla nu
+   e o recompensă, e o memorie.
+
+### Conținut nou: `data/taverna_cuvinte.json`
+
+**308 cuvinte** de cinci litere, scrise din a-z. Sursa sunt EU, nu un tabel —
+exact situația celor 2046 de note scrise de mână, deci **singura verificare
+adevărată e citirea**. `verifica_taverna` apără forma (lungime, alfabet,
+dubluri), nu limba. 308 cuvinte se citesc într-un sfert de oră; merită făcut.
+
+### Meniul are trei pagini
+
+A treia pagină a costat o măsurătoare, nu un rând. La 330 px pe pagină și 40 px
+între ele, trei pagini ar fi cerut 1070 px plus 80 de margini — **1150 pe o
+pânză de 1152**, adică exact pe muchie, ca panoul de loadout înainte să devină
+o grilă. Deci paginile au scăzut la 300 și golul la 28.
+
+**Măsurat după schimbare: meniul cere 1038 × 599 px pe 1152 × 648**, cu 114 px
+și 49 px de rezervă. Taverna cere 1012 × 334, cu 140 și 314.
+
+Iconița paginii e **focul de pe nodul de Odihnă**, împrumutat: un placeholder
+conștient, și singura imagine din joc care înseamnă deja „un loc cald în care
+te oprești".
+
+### Verificare permanentă nouă: `verifica_taverna` — 52 de verdicte, ~14 s
+
+Cinci secțiuni: catalogul (scena există ȘI extinde `Joc` — instanțiată, nu
+dedusă din cale), lista de cuvinte, marcarea, partidele jucate cu scena
+adevărată (308 partide libere fără nicio repetiție; o partidă câștigată și una
+pierdută, tastate literă cu literă; o tastă trimisă prin `push_input`) și
+ecranele măsurate.
+
+**Două lucruri învățate chiar la scrierea ei, amândouă merită ținute minte:**
+
+**1. O verificare care își scrie singură așteptările le poate scrie greșit.**
+Trei din cele opt cazuri de mână au picat la prima rulare — și codul avea
+dreptate la toate trei. Scrisesem că „a"-ul din „lapte" pe „carte" e o literă
+mutată, când el e chiar pe locul lui. Lecția NU e „refă așteptarea până trece"
+(aia ar fi transformat verificarea într-o oglindă a codului), ci că un caz
+scris de mână se rezolvă pe hârtie înainte de a fi crezut. Ce a ieșit curat din
+prima au fost INVARIANTELE de alături — 4000 de perechi, „nicio literă nu
+primește mai multă culoare decât are cuvântul" — adică tocmai partea care nu
+cere de la mine să știu răspunsul. Sora regulii de la `_reducere`.
+
+**2. Un ecran se măsoară pe cât CERE, nu pe cât ocupă.** Prima scriere măsura
+`size` și a dat 1114 px pentru un ecran care încape lejer: pe o pânză dată,
+containerele își strâng copiii până încape, iar butonul de jos iese pe sub
+margine fără să se plângă. Ce se măsoară e `get_combined_minimum_size()`. Exact
+așa stătuse ecranul de loadout o zi: arăta bine și cerea 692 px pe 648.
+
+Și **un amănunt de unealtă, care a costat zece minute**: o eroare de parsare
+într-o scenă de verificare nu face headless-ul să iasă cu cod 1 — îl face să
+**rămână agățat**, cu CPU-ul la zero. Dacă o verificare nu se mai termină, prima
+bănuială e o greșeală de sintaxă, nu o buclă infinită.
+
+### Ce NU s-a atins
+
+`puzzle.gd`, `lupta.gd`, `harta.gd`, `expeditie.gd` — nicio linie. Taverna nu
+atinge nimic din ce exista: meniul a primit o pagină, și atât.
+
+### Ce a rămas
+
+- **Cele 308 cuvinte, citite cu ochiul.** Niciun validator nu poate spune dacă
+  un cuvânt e românesc.
+- **Sudoku** — masa a doua. Cere un generator cu unicitate garantată, adică un
+  rezolvitor care probează fiecare grilă: aceeași mașinărie ca la Lacăt, și o
+  sesiune în sine.
+- **Decretul Zilei** — masa a treia. Sămânța din dată există deja în contract;
+  ce lipsește e cine alege masa zilei și cum se ține minte că ai jucat-o.
+- **Artă proprie pentru Tavernă.** Azi: focul împrumutat de la Odihnă și trei
+  pagini de pergament fără iconiță.
+- **Un avertisment cosmetic la ieșirea verificării** („8 ObjectDB instances
+  were leaked at exit"), pe care `verifica_treptele` nu-l are. Codul de ieșire e
+  0 și toate verdictele trec; n-am căutat de unde vine.
+
+---
+
 ## ANUNȚUL DE TURĂ (3 noiembrie 2026) — banda care spune al cui e rândul
 
 **Ce s-a schimbat:** lupta are două stări — rândul tău, rândul inamicului — și
