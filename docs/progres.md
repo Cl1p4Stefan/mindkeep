@@ -40,6 +40,129 @@ devreme, dar restul rămâne placeholder. Bucla de luptă e în continuare cea v
 
 ---
 
+## MENIUL PRINS DIN URMĂ (3 noiembrie 2026) — o iconiță, și trei rânduri care nu mai erau adevărate
+
+**Ce s-a cerut:** iconița Tavernei schimbată cu o poză atașată, scos „Cu
+cronometru" de la Expediție, scurtat subtitlul de sub MINDKEEP. Pe urmă, în a
+doua rundă: scos „Fără cronometru" de la Practice și de la Tavernă, și
+„PRACTICE" redenumit „ANTRENAMENT".
+
+Pare o sesiune de text. Nu e: două din cele patru schimbări sunt meniul prins
+din urmă cu decizii luate zilele astea, iar una e un decupaj care avea o
+capcană.
+
+### Tabla de șah era DESENATĂ în poză
+
+Poza atașată arăta ca un PNG cu transparență — han pe carouri gri. Era un JPG,
+iar carourile erau pixeli ca oricare alții. Pusă așa în joc, iconița Tavernei
+ar fi fost un dreptunghi în carouri cu o casă în mijloc.
+
+Decupajul are trei lucruri care nu erau evidente:
+
+- **Fondul iese prin umplere pornită de la MARGINE, nu prin „orice pixel gri".**
+  Acoperișul e ardezie, adică exact același gri desaturat ca o jumătate a
+  carourilor. Un filtru pe culoare l-ar fi scos odată cu fondul. Ce deosebește
+  fondul de acoperiș nu e nuanța, e că fondul e LEGAT de marginea pozei.
+- **Pragul trebuie să prindă și TRECEREA dintre carouri.** Prima scriere căuta
+  cele două nuanțe măsurate (129 și 184) cu toleranță mică, și a lăsat în urmă
+  o plasă de pixeli la granița dintre pătrate: JPEG-ul le amestecase la ~155,
+  adică fix în golul dintre cele două ferestre. Bbox-ul a rămas cât poza
+  întreagă, și ăsta a fost semnul. Cu un interval continuu (108–206) a ieșit
+  curat, fiindcă acoperișul e la 5–92, mult sub el.
+- **Fumul nu s-a putut salva.** Era semitransparent, deci în JPG e deja
+  amestecat cu carourile — nu există dedesubt nimic de recuperat. A ieșit în
+  cioburi albe. Întâi am încercat scoaterea insulelor mici (a luat una de 806
+  px), dar plumul principal e LEGAT de coș, deci a trecut. S-a șters pe
+  regiune: rândurile de deasupra coșului, unde nu e nimic altceva, plus ce
+  rămăsese alb și fără culoare lângă el. Deasupra coșului nu mai iese fum.
+
+Marginea tăiată la 1 bit e înmuiată cu un blur de 0,8 px pe alfa, altfel la
+104 px se văd dinți. Rezultatul: `assets/art/taverna.png`, 512 × 381, 314 KB —
+mic dinadins, e principiul scris la imaginile faptelor („mici, ~400 px"),
+fiindcă fiecare poză cântărește la exportul web.
+
+**Iar `--import` simplu nu scrie `.import`-ul în 4.7.2.** L-a scris
+`--headless --editor --quit`. Merită ținut minte: fără fișierul ăla, scena
+pornește cu textura nerezolvată.
+
+### Cele trei „cronometru" erau pe jumătate false
+
+Asta e partea care nu e cosmetică. Cardurile spuneau:
+
+| card | rândul |
+|---|---|
+| EXPEDIȚIE | Cu cronometru. |
+| PRACTICE | Fără cronometru. |
+| TAVERNA | Fără cronometru. |
+
+**De pe 31 octombrie cronometrul e al INAMICULUI, nu al jocului.** Bara apare
+doar la cine o declară în rândul lui, iar azi doar Lăncierul o are. Deci
+„Expediție, cu cronometru" spunea ceva neadevărat despre 2 lupte din 3 — un
+meniu care promitea o constantă de mediu desființată de trei zile.
+
+Iar odată scos rândul ăla, celelalte două se dărâmă singure: „Fără cronometru"
+era informație numai cât exista un mod CU. O absență care nu se opune nimănui
+nu spune nimic. De-aia au ieșit toate trei deodată și nu doar cel cerut întâi —
+a doua rundă a cererii a fost, de fapt, consecința primei.
+
+Ce rămâne scris pe carduri e ce DESPARTE modurile: hartă-lupte-recompense,
+domeniul ales, jocuri de masă. Exact axa pe care CLAUDE.md o numește la
+Tavernă: „acolo nu se pune o ÎNTREBARE, se joacă un JOC întreg".
+
+### „ANTRENAMENT" e doar pe ecran
+
+`text = "PRACTICE"` → `text = "ANTRENAMENT"`. Atât. Nodul rămâne
+`CartePractice`, scena `scenes/practice/practice.tscn`, constanta
+`SCENA_PRACTICE`, folderul `scenes/practice/`.
+
+Aceeași judecată ca la `glifa_sah.gd`: o redenumire adevărată ar fi atins
+scena, folderul, verificările ȘI cheia din `permanent.json` unde stă progresul
+pe domenii — adică o migrare de save pentru un cuvânt pe care nu-l vede nimeni.
+Numele de pe ecran e al jucătorului, numele din cod e al meu.
+
+Semnul că titlul era cel nelalocul lui, nu butonul: **butonul spunea deja
+„Începe antrenamentul"**. Cardul se contrazicea singur de când există.
+
+### Măsurat, fiindcă un cuvânt mai lung împinge
+
+„ANTRENAMENT" e mai lat decât „PRACTICE", deci cardul a cerut 302 px în loc de
+300 (`custom_minimum_size` era 300). Mic, dar regula e regulă: **un ecran se
+măsoară pe cât CERE, nu pe cât ocupă.** Cu o scenă de unică folosință, ștearsă
+după:
+
+```
+PANZA:        1152 × 648
+MENIUL CERE:  1038 × 598
+```
+
+114 px de rezervă pe lățime, 50 pe înălțime.
+
+`custom_minimum_size = Vector2(0, 48)` a rămas la toate trei rândurile de rol,
+deși acum fiecare are o singură linie. Dinadins: locul celei de-a doua linii
+stă rezervat, deci cardurile își păstrează înălțimea și butoanele rămân
+aliniate. Dacă îl scoteam, cele trei butoane ar fi urcat cu un rând fiecare,
+dar nu toate la fel.
+
+### Ce NU s-a verificat
+
+**Cum arată iconița pe ecran la 104 px.** Verificarea e headless: scena
+încarcă, textura se rezolvă la `res://assets/art/taverna.png`, textele sunt
+cele cerute, ecranul intră în pânză. Nu că hanul se CITEȘTE mic — are mult
+detaliu mărunt (butoaie, roata de căruță, iedera). E aceeași limită ca la
+`verifica_steaguri`: „arată bine?" nu e un verdict pe care-l poate da un
+script. Se deschide cu F6. Dacă se pierde, răspunsul e o tăiere mai strânsă pe
+clădire, nu o poză mai mare.
+
+O rulare cu fereastră care să salveze o captură a rămas atârnată fără să scrie
+nimic (scena de meniu nu ajunge la `frame_post_draw` în felul în care o
+chemam). N-am insistat — `verifica_podeaua` face capturi și merge, deci drumul
+există dacă devine nevoie.
+
+**Fișiere atinse:** `scenes/meniu/meniu.tscn` (6 texte și o resursă),
+`assets/art/taverna.png` (nou). `meniu.gd` neatins, nicio linie.
+
+---
+
 ## MASA FĂRĂ TĂBLIE (3 noiembrie 2026) — chenarul iese, și culorile pleacă cu el
 
 **Ce s-a cerut:** scos dreptunghiul de pergament de sub Cuvântul Ascuns, ca
