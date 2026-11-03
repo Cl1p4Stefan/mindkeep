@@ -10,7 +10,7 @@ extends Node
 ##   1. CATALOGUL — un rând stricat (scenă care nu există, scenă care nu e un
 ##      `Joc`) nu se vede decât în clipa în care deschizi masa, adică în joc.
 ##      Aici se vede la fiecare rulare, pe toate rândurile deodată.
-##   2. CUVINTELE — sunt DATE, deci se pot strica dintr-o scăpare de tastatură:
+##   2. LISTELE — sunt DATE, deci se pot strica dintr-o scăpare de tastatură:
 ##      un cuvânt de patru litere în listă ar fi o partidă imposibilă, iar unul
 ##      cu „ă" ar fi una pe care n-o poți tasta. Regula „fără diacritice" e
 ##      scrisă ca decizie în antetul lui `cuvantul.gd`; aici devine un verdict.
@@ -39,6 +39,7 @@ const CUVANTUL := preload("res://scenes/taverna/cuvantul/cuvantul.gd")
 const SCENA_CUVANTUL := preload("res://scenes/taverna/cuvantul/cuvantul.tscn")
 const SCENA_TAVERNA := preload("res://scenes/taverna/taverna.tscn")
 const SCENA_MENIU := preload("res://scenes/meniu/meniu.tscn")
+const TAVERNA := preload("res://scenes/taverna/taverna.gd")
 
 ## Câte perechi (ghicire, cuvânt) se bat în secțiunea MARCAREA. Regula are patru
 ## feluri de a fi greșită și toate patru se văd pe litere duble, care apar rar
@@ -49,21 +50,47 @@ const PERECHI_MARCATE := 4000
 ## conținut, e o podea: ținta e scrisă în `progres.md`.
 const PODEA_CUVINTE := 100
 
+## Sub atâtea ghiciri acceptate, filtrul din dicționar începe să refuze cuvinte
+## adevărate — adică se întoarce exact problema pentru care stătuse stins.
+## Extragerea din hunspell dă ~13.000; podeaua e departe, dinadins, fiindcă ea
+## apără împotriva unei extrageri STRICATE, nu a uneia sărace.
+const PODEA_ACCEPTATE := 5000
+
 ## Pânza jocului, din `project.godot` (valorile implicite ale lui Godot 4).
 const PANZA := Vector2(1152, 648)
 
+## UNDE SCRIE VERIFICAREA ASTA. `Arhiva.dosar` se mută pe prima linie din
+## `_ready`, ca la `verifica_salvarea`, iar dosarul se golește la început și la
+## final.
+##
+## Nu e o grijă teoretică, și n-a fost mereu adevărat: secțiunea 4 cheamă
+## `_pe_joc_terminat`, care scrie sacul pe disc; de pe 3 noiembrie 2026,
+## `_deschide_masa` scrie și „ți-am arătat regulile". Fără rândul ăsta, o
+## rulare a verificării ți-ar fi MÂNCAT prima dată: ai fi deschis Cuvântul
+## Ascuns în joc, iar regulile n-ar mai fi apărut niciodată — fiindcă le
+## „văzuse" o unealtă.
+const DOSAR := "user://verificare_taverna/"
+
 var tot_bun := true
 var cuvinte: Array[String] = []
+var acceptate: Array[String] = []
+## Verdictele strânse de `_lista`, care întoarce cuvinte, nu adevăr.
+var tot_bun_liste := true
 
 
 func _ready() -> void:
 	print("\n══ VERIFICAREA TAVERNEI ══\n")
+	print("Dosar de probă: %s" % DOSAR)
+	Arhiva.dosar = DOSAR
+	_goleste_dosarul()
 
 	tot_bun = _catalogul() and tot_bun
 	tot_bun = _cuvintele() and tot_bun
 	tot_bun = _marcarea() and tot_bun
 	tot_bun = await _partidele() and tot_bun
 	tot_bun = await _ecranele() and tot_bun
+	tot_bun = await _regulile() and tot_bun
+	_goleste_dosarul()
 
 	print("\n══ %s ══\n" % ("TOTUL E BUN" if tot_bun else "SUNT PROBLEME, vezi mai sus"))
 	get_tree().quit(0 if tot_bun else 1)
@@ -123,26 +150,65 @@ func _catalogul() -> bool:
 # ─────────────────────────────────────────────────────────────
 
 func _cuvintele() -> bool:
-	print("  LISTA DE CUVINTE")
+	print("  LISTELE DE CUVINTE")
 	var rezultat := true
 
-	var text := FileAccess.get_file_as_string(CUVANTUL.CALE_CUVINTE)
-	rezultat = _verdict(text != "", "fișierul se poate citi (%s)" % CUVANTUL.CALE_CUVINTE) and rezultat
-	if text == "":
+	# DOUĂ liste, cu aceleași cerințe de formă și cu roluri diferite (vezi
+	# antetul lui `cuvantul.gd`). Forma se bate o singură dată, într-o funcție:
+	# două copii ale acelorași verdicte ar fi avut două șanse să se despartă.
+	cuvinte = _lista(CUVANTUL.CALE_CUVINTE, "răspunsurile", PODEA_CUVINTE)
+	acceptate = _lista(CUVANTUL.CALE_ACCEPTATE, "ghicirile acceptate", PODEA_ACCEPTATE)
+	rezultat = tot_bun_liste and rezultat
+	if cuvinte.is_empty() or acceptate.is_empty():
 		return false
-	var date = JSON.parse_string(text)
-	rezultat = _verdict(typeof(date) == TYPE_DICTIONARY and date.has("cuvinte"),
-		"are cheia cuvinte") and rezultat
-	if typeof(date) != TYPE_DICTIONARY or not date.has("cuvinte"):
-		return false
-	for c in date["cuvinte"]:
-		cuvinte.append(String(c))
 
-	rezultat = _verdict(cuvinte.size() >= PODEA_CUVINTE,
-		"sunt destule: %d (podeaua e %d)" % [cuvinte.size(), PODEA_CUVINTE]) and rezultat
+	# LEGĂTURA DINTRE CELE DOUĂ, și singurul verdict care nu e despre o listă,
+	# ci despre perechea lor: un răspuns care n-ar fi acceptat ca ghicire e un
+	# cuvânt pe care jocul ÎL ASCUNDE ȘI ÎL REFUZĂ. S-ar vedea o dată la 308
+	# partide, în partida aia, după cinci încercări bune.
+	var in_dictionar := {}
+	for c in acceptate:
+		in_dictionar[c] = true
+	var neacceptate: Array[String] = []
+	for c in cuvinte:
+		if not in_dictionar.has(c):
+			neacceptate.append(c)
+	rezultat = _verdict(neacceptate.is_empty(),
+		"toate cele %d răspunsuri sunt primite ca ghiciri%s"
+		% [cuvinte.size(), _exemple(neacceptate)]) and rezultat
+
+	# Și proba pe dos: tocmai ce ținea filtrul deschis.
+	for sonda in ["aeiou", "qwert", "zzzzz"]:
+		rezultat = _verdict(not in_dictionar.has(sonda),
+			"„%s\" nu e primit" % sonda) and rezultat
+
+	return rezultat
+
+
+## O listă de cuvinte, cu toate cerințele de formă bătute pe ea.
+##
+## Întoarce cuvintele; verdictele se adună în `tot_bun_liste`, fiindcă o
+## funcție care întoarce și listă, și adevăr, ar fi cerut un dicționar pentru
+## un lucru care se citește o dată.
+func _lista(cale: String, cine: String, podea: int) -> Array[String]:
+	var gasite: Array[String] = []
+	var text := FileAccess.get_file_as_string(cale)
+	tot_bun_liste = _verdict(text != "", "%s: fișierul se poate citi (%s)" % [cine, cale]) and tot_bun_liste
+	if text == "":
+		return gasite
+	var date = JSON.parse_string(text)
+	tot_bun_liste = _verdict(typeof(date) == TYPE_DICTIONARY and date.has("cuvinte"),
+		"%s: are cheia cuvinte" % cine) and tot_bun_liste
+	if typeof(date) != TYPE_DICTIONARY or not date.has("cuvinte"):
+		return gasite
+	for c in date["cuvinte"]:
+		gasite.append(String(c))
+
+	tot_bun_liste = _verdict(gasite.size() >= podea,
+		"%s: sunt destule, %d (podeaua e %d)" % [cine, gasite.size(), podea]) and tot_bun_liste
 
 	# Lungimea. Un cuvânt de altă lungime n-ar încăpea în grilă și n-ar putea fi
-	# ghicit niciodată.
+	# nici ghicit, nici ascuns.
 	var alta_lungime: Array[String] = []
 	# Alfabetul. Regula „fără diacritice" din antetul lui `cuvantul.gd`, ca
 	# verdict: literele românești care nu sunt pe tastatură (ă â î ș ț) ar face
@@ -151,7 +217,7 @@ func _cuvintele() -> bool:
 	var cu_majuscule: Array[String] = []
 	var vazute := {}
 	var dubluri: Array[String] = []
-	for c in cuvinte:
+	for c in gasite:
 		if c.length() != CUVANTUL.LUNGIME:
 			alta_lungime.append(c)
 		for i in c.length():
@@ -166,14 +232,15 @@ func _cuvintele() -> bool:
 			dubluri.append(c)
 		vazute[c] = true
 
-	rezultat = _verdict(alta_lungime.is_empty(),
-		"toate au %d litere%s" % [CUVANTUL.LUNGIME, _exemple(alta_lungime)]) and rezultat
-	rezultat = _verdict(cu_diacritice.is_empty(),
-		"toate sunt scrise din a-z, fără diacritice%s" % _exemple(cu_diacritice)) and rezultat
-	rezultat = _verdict(cu_majuscule.is_empty(),
-		"toate sunt cu litere mici%s" % _exemple(cu_majuscule)) and rezultat
-	rezultat = _verdict(dubluri.is_empty(), "niciun cuvânt de două ori%s" % _exemple(dubluri)) and rezultat
-	return rezultat
+	tot_bun_liste = _verdict(alta_lungime.is_empty(),
+		"%s: toate au %d litere%s" % [cine, CUVANTUL.LUNGIME, _exemple(alta_lungime)]) and tot_bun_liste
+	tot_bun_liste = _verdict(cu_diacritice.is_empty(),
+		"%s: toate sunt scrise din a-z, fără diacritice%s" % [cine, _exemple(cu_diacritice)]) and tot_bun_liste
+	tot_bun_liste = _verdict(cu_majuscule.is_empty(),
+		"%s: toate sunt cu litere mici%s" % [cine, _exemple(cu_majuscule)]) and tot_bun_liste
+	tot_bun_liste = _verdict(dubluri.is_empty(),
+		"%s: niciun cuvânt de două ori%s" % [cine, _exemple(dubluri)]) and tot_bun_liste
+	return gasite
 
 
 func _exemple(rele: Array[String]) -> String:
@@ -354,6 +421,29 @@ func _partidele() -> bool:
 	rezultat = _verdict(joc.incercari.is_empty() and joc.mesaj.text != "",
 		"un rând de o literă nu se trimite, și ecranul spune de ce") and rezultat
 
+	# e2) UN CUVÂNT CARE NU E CUVÂNT nu se trimite, și NU se șterge.
+	#     Jucat cu scena adevărată, fiindcă aici se leagă cele două liste de
+	#     regula din `_trimite_randul`: lista o bate secțiunea 2, dar că Enter
+	#     chiar o consultă nu se vede decât apăsând Enter. Iar „rândul rămâne"
+	#     e o decizie de ecran: ai scris cinci litere, vrei să schimbi una.
+	joc.queue_free()
+	joc = _masa_noua(80)
+	for c in "aeiou":
+		joc._scrie_litera(c)
+	joc._trimite_randul()
+	rezultat = _verdict(joc.incercari.is_empty(),
+		"«aeiou» nu consumă o încercare") and rezultat
+	rezultat = _verdict(joc.rand_curent == "aeiou",
+		"rândul refuzat rămâne scris, ca să-l poți corecta") and rezultat
+	rezultat = _verdict(joc.mesaj.text.to_lower().contains("aeiou"),
+		"ecranul spune ce a refuzat: %s" % joc.mesaj.text) and rezultat
+	# Și imediat după refuz, un cuvânt bun trece: refuzul nu blochează nimic.
+	for i in CUVANTUL.LUNGIME:
+		joc._sterge_litera()
+	await _scrie(joc, cuvinte[0])
+	rezultat = _verdict(joc.incercari.size() == 1,
+		"după un refuz, un cuvânt adevărat se trimite") and rezultat
+
 	# f) TASTATURA ADEVĂRATĂ. Până aici am chemat funcțiile de-a dreptul; asta e
 	#    singura probă că o tastă apăsată ajunge la ele.
 	var inainte: String = joc.rand_curent
@@ -414,8 +504,13 @@ func _scrie(joc: Node, cuvant: String) -> void:
 	joc._trimite_randul()
 	# Dezvăluirea întoarce celulele una câte una; până nu se termină, jocul nu
 	# primește nimic (vezi `in_dezvaluire`).
+	# Pașii dintre celule, plus rotirea ÎNTREAGĂ a ultimei. Scris din constante
+	# și nu dintr-un număr: de pe 3 noiembrie 2026 dezvăluirea nu mai e o
+	# colorare, e o întoarcere, iar o așteptare prea scurtă ar fi tipărit
+	# „rândul nu s-a trimis" despre un rând care se trimisese.
 	await get_tree().create_timer(
-		CUVANTUL.PAS_DEZVALUIRE * CUVANTUL.LUNGIME + 0.1).timeout
+		CUVANTUL.PAS_DEZVALUIRE * (CUVANTUL.LUNGIME - 1)
+		+ CUVANTUL.DURATA_INTOARCERE * 2.0 + 0.15).timeout
 
 
 # ─────────────────────────────────────────────────────────────
@@ -449,6 +544,59 @@ func _ecranele() -> bool:
 	rezultat = _verdict(cerut.y <= PANZA.y,
 		"ecranul Tavernei încape în înălțime (%d px, rezervă %d)"
 		% [cerut.y, PANZA.y - cerut.y]) and rezultat
+
+	# ANTETUL SUPRAPUS. Titlul ține toată lățimea și se centrează în ea, iar
+	# butoanele plutesc peste el, ancorate la dreapta (vezi antetul lui
+	# `taverna.gd`). Două noduri suprapuse nu se feresc unul de altul: un titlu
+	# prea lung intră sub butoane și NICIUN container nu se plânge. Deci se
+	# măsoară, pe fiecare nume din catalog — și pe cel mai rău caz, ecranul cu
+	# mese, unde butonul „Mesele" e ascuns dar locul lui tot nu se eliberează.
+	var titlu: Label = taverna.get_node("%Titlu")
+	var butoane: Control = taverna.get_node("Margini/Coloana/Antet/Butoane")
+	var latime_butoane := butoane.get_combined_minimum_size().x
+	# Lățimea pe care o are antetul: pânza, fără marginile laterale.
+	var latime_antet := PANZA.x - 2 * 28
+	for m in Mese.CATALOG:
+		titlu.text = String(m["nume"])
+		await get_tree().process_frame
+		# Centrat, titlul se întinde de o parte și de alta a mijlocului.
+		var jumatate := titlu.get_combined_minimum_size().x / 2.0
+		var pana_la_butoane := latime_antet / 2.0 - latime_butoane
+		rezultat = _verdict(jumatate <= pana_la_butoane,
+			"titlul „%s\" nu ajunge sub butoane (%d px de la mijloc, loc până la ele %d)"
+			% [m["nume"], jumatate, pana_la_butoane]) and rezultat
+	titlu.text = "TAVERNA"
+
+	# ȘI ECRANUL CU MASA DESCHISĂ, în AMÂNDOUĂ stările lui.
+	#
+	# Măsurătoarea de mai sus se uită la ecranul cu mese; a lui se vedea, a
+	# jocului nu — iar jocul era chiar cel care ieșea pe sub margine. Și nu
+	# oricând: numai DUPĂ ce-l câștigai, fiindcă rândul de rezultat apărea
+	# abia atunci și fura înălțime de la chenar. Deci se măsoară de două ori,
+	# iar al treilea verdict cere ca cele două numere să fie EGALE: un ecran
+	# care-și schimbă înălțimea la jumătatea unui joc se poate strica într-o
+	# stare și arăta bine în cealaltă.
+	taverna._deschide_masa(Mese.masa("cuvantul_ascuns"))
+	await get_tree().process_frame
+	await get_tree().process_frame
+	var cerut_joc := margini.get_combined_minimum_size()
+	print("         masa deschisă cere %d × %d px" % [cerut_joc.x, cerut_joc.y])
+	rezultat = _verdict(cerut_joc.y <= PANZA.y,
+		"Cuvântul Ascuns încape în înălțime (%d px, rezervă %d)"
+		% [cerut_joc.y, PANZA.y - cerut_joc.y]) and rezultat
+
+	taverna._pe_joc_terminat({"reusit": true, "rezumat": "COPAC, din 3 încercări."})
+	await get_tree().process_frame
+	await get_tree().process_frame
+	var cerut_final := margini.get_combined_minimum_size()
+	print("         după ce l-ai câștigat cere %d × %d px" % [cerut_final.x, cerut_final.y])
+	rezultat = _verdict(cerut_final.y <= PANZA.y,
+		"ecranul de după câștig încape în înălțime (%d px, rezervă %d)"
+		% [cerut_final.y, PANZA.y - cerut_final.y]) and rezultat
+	rezultat = _verdict(is_equal_approx(cerut_final.y, cerut_joc.y),
+		"câștigul nu schimbă înălțimea cerută (%d px înainte, %d după)"
+		% [cerut_joc.y, cerut_final.y]) and rezultat
+
 	taverna.queue_free()
 
 	var meniu := SCENA_MENIU.instantiate()
@@ -478,3 +626,175 @@ func _ecranele() -> bool:
 	await get_tree().process_frame
 	await get_tree().process_frame
 	return rezultat
+
+
+# ─────────────────────────────────────────────────────────────
+# 6. REGULILE
+#
+# „O singură dată" e o promisiune făcută jucătorului, iar promisiunile de felul
+# ăsta se strică în tăcere: a doua oară când deschizi masa, panoul sau apare,
+# sau nu, și nimeni nu se plânge în niciunul din cazuri. Deci se joacă.
+# ─────────────────────────────────────────────────────────────
+
+func _regulile() -> bool:
+	print("  REGULILE")
+	var rezultat := true
+
+	# a) CONTRACTUL. O masă fără reguli nu plătește nimic, iar una cu reguli le
+	#    COMPUNE din constantele ei, nu le scrie de mână — altfel textul ar
+	#    rămâne în urma codului în ziua în care „șase încercări" devine cinci.
+	var gol := Joc.new()
+	rezultat = _verdict(gol.reguli() == null,
+		"o masă care nu-și scrie regulile întoarce `null`") and rezultat
+	gol.free()
+
+	var masa := SCENA_CUVANTUL.instantiate()
+	var cuprins: Control = masa.reguli()
+	rezultat = _verdict(cuprins != null, "Cuvântul Ascuns își scrie regulile") and rezultat
+
+	# Tot textul din nod, adunat: numerele trebuie să vină din constante, nu
+	# dintr-un „5" scris de mână care ar rămâne în urmă.
+	var scris := _textul_din(cuprins)
+	rezultat = _verdict(scris.contains(str(CUVANTUL.LUNGIME)) and scris.contains(str(CUVANTUL.RANDURI)),
+		"regulile spun câte litere (%d) și câte încercări (%d)"
+		% [CUVANTUL.LUNGIME, CUVANTUL.RANDURI]) and rezultat
+
+	# Cele trei culori sunt ARĂTATE, pe celule adevărate: se caută fondul
+	# fiecărei celule din nod, nu un nume de culoare scris în text.
+	var fonduri := _fondurile_din(cuprins)
+	for pereche in [["bun", CUVANTUL.CULOARE_BUN], ["altundeva", CUVANTUL.CULOARE_ALTUNDEVA],
+			["absent", CUVANTUL.CULOARE_ABSENT]]:
+		rezultat = _verdict(fonduri.has((pereche[1] as Color).to_html(false)),
+			"regulile ARATĂ culoarea „%s\" pe o celulă, n-o numesc" % pereche[0]) and rezultat
+
+	# Și exemplele sunt cuvinte pe care jocul le-ar PRIMI. Un rând de exemplu
+	# pe care l-ar refuza ar fi cea mai proastă primă impresie cu putință.
+	var in_dictionar := {}
+	for c in acceptate:
+		in_dictionar[c] = true
+	for e in CUVANTUL.EXEMPLE_REGULI:
+		var cuvant := String(e["cuvant"])
+		rezultat = _verdict(in_dictionar.has(cuvant),
+			"exemplul „%s\" e un cuvânt primit ca ghicire" % cuvant.to_upper()) and rezultat
+		rezultat = _verdict(cuvant.length() == CUVANTUL.LUNGIME
+			and int(e["loc"]) >= 0 and int(e["loc"]) < cuvant.length(),
+			"exemplul „%s\" are %d litere, iar litera arătată e una din ele"
+			% [cuvant.to_upper(), CUVANTUL.LUNGIME]) and rezultat
+	cuprins.free()
+	masa.free()
+
+	# b) PRIMA AȘEZARE o deschide, a doua nu. Jucat cu scena adevărată.
+	var vazute_inainte := TAVERNA._reguli_vazute.duplicate()
+	TAVERNA._reguli_vazute.clear()
+
+	var taverna := SCENA_TAVERNA.instantiate()
+	add_child(taverna)
+	taverna.set_deferred("size", PANZA)
+	await get_tree().process_frame
+	await get_tree().process_frame
+
+	var panou: Control = taverna.get_node("%PanouReguli")
+	var buton: Button = taverna.get_node("%ButonReguli")
+	rezultat = _verdict(not panou.visible, "pe ecranul cu mese panoul e închis") and rezultat
+	rezultat = _verdict(not buton.visible,
+		"pe ecranul cu mese nu e niciun buton „i\"") and rezultat
+
+	taverna._deschide_masa(Mese.masa("cuvantul_ascuns"))
+	await get_tree().process_frame
+	rezultat = _verdict(panou.visible, "prima așezare la masă deschide regulile") and rezultat
+	rezultat = _verdict(buton.visible, "butonul „i\" e acolo") and rezultat
+
+	# c) CÂT E PANOUL DESCHIS, TASTELE NU AJUNG LA JOC. Aici e deosebirea față
+	#    de popup-ul din Practice: masa ascultă tastatura adevărată, deci fără
+	#    oprire ai fi scris litere în grilă citind regulile despre ea.
+	var inainte: String = taverna.joc.rand_curent
+	var tasta := InputEventKey.new()
+	tasta.keycode = KEY_B
+	tasta.pressed = true
+	get_viewport().push_input(tasta)
+	await get_tree().process_frame
+	rezultat = _verdict(taverna.joc.rand_curent == inainte,
+		"o tastă apăsată peste reguli nu scrie în grilă") and rezultat
+
+	taverna._inchide_regulile()
+	await get_tree().process_frame
+	get_viewport().push_input(tasta)
+	await get_tree().process_frame
+	rezultat = _verdict(taverna.joc.rand_curent == inainte + "b",
+		"după ce panoul se închide, tastatura merge din nou") and rezultat
+
+	# d) A DOUA AȘEZARE, și „Încă unul" între ele: niciuna nu redeschide.
+	taverna._inca_unul()
+	await get_tree().process_frame
+	rezultat = _verdict(not panou.visible, "«Încă unul» nu redeschide regulile") and rezultat
+
+	taverna._arata_mesele()
+	await get_tree().process_frame
+	taverna._deschide_masa(Mese.masa("cuvantul_ascuns"))
+	await get_tree().process_frame
+	rezultat = _verdict(not panou.visible, "a doua așezare NU mai deschide regulile") and rezultat
+
+	# e) BUTONUL „i" le redeschide oricând — altfel „o singură dată" ar
+	#    însemna „o singură șansă".
+	taverna._arata_regulile()
+	await get_tree().process_frame
+	rezultat = _verdict(panou.visible, "butonul „i\" le redeschide") and rezultat
+	taverna._inchide_regulile()
+	taverna.queue_free()
+	await get_tree().process_frame
+	await get_tree().process_frame
+
+	# f) DRUMUL PRIN DISC. Cheia scrisă trebuie să se întoarcă; un save vechi
+	#    (fără cheia asta) înseamnă „n-ai văzut nimic", adică taman purtarea de
+	#    la prima instalare — deci nu cere migrare.
+	var pe_disc := TAVERNA.spre_dictionar()
+	rezultat = _verdict(pe_disc["reguli_vazute"].has("cuvantul_ascuns"),
+		"masa deschisă ajunge pe disc: %s" % [pe_disc["reguli_vazute"]]) and rezultat
+	TAVERNA.din_dictionar(pe_disc)
+	rezultat = _verdict(TAVERNA._reguli_vazute.has("cuvantul_ascuns"),
+		"și se întoarce de pe disc") and rezultat
+	TAVERNA.din_dictionar({})
+	rezultat = _verdict(TAVERNA._reguli_vazute.is_empty(),
+		"un save fără cheia asta înseamnă «n-ai văzut nimic»") and rezultat
+	TAVERNA.din_dictionar({"reguli_vazute": 7})
+	rezultat = _verdict(TAVERNA._reguli_vazute.is_empty(),
+		"un save strâmb (un număr în loc de listă) e citit la fel") and rezultat
+
+	TAVERNA._reguli_vazute = vazute_inainte
+	return rezultat
+
+
+## Tot textul dintr-un arbore de noduri, pus cap la cap.
+func _textul_din(nod: Node) -> String:
+	var adunat := ""
+	if nod is Label:
+		adunat += (nod as Label).text + "
+"
+	for copil in nod.get_children():
+		adunat += _textul_din(copil)
+	return adunat
+
+
+## Culorile de fond ale tuturor panourilor dintr-un arbore, ca TEXTE (un `Color`
+## nu se poate căuta cu `has()` într-un dicționar fără să cadă pe virgulă).
+func _fondurile_din(nod: Node) -> Dictionary:
+	var gasite := {}
+	if nod is PanelContainer:
+		var stil = (nod as PanelContainer).get_theme_stylebox("panel")
+		if stil is StyleBoxFlat:
+			gasite[(stil as StyleBoxFlat).bg_color.to_html(false)] = true
+	for copil in nod.get_children():
+		gasite.merge(_fondurile_din(copil))
+	return gasite
+
+
+# ─────────────────────────────────────────────────────────────
+# DOSARUL DE PROBĂ
+# ─────────────────────────────────────────────────────────────
+
+func _goleste_dosarul() -> void:
+	if not DirAccess.dir_exists_absolute(DOSAR):
+		DirAccess.make_dir_recursive_absolute(DOSAR)
+		return
+	for nume in DirAccess.get_files_at(DOSAR):
+		DirAccess.remove_absolute(Arhiva.cale_catre(String(nume)))

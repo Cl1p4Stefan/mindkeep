@@ -40,6 +40,332 @@ devreme, dar restul rămâne placeholder. Bucla de luptă e în continuare cea v
 
 ---
 
+## MASA FĂRĂ TĂBLIE (3 noiembrie 2026) — chenarul iese, și culorile pleacă cu el
+
+**Ce s-a cerut:** scos dreptunghiul de pergament de sub Cuvântul Ascuns, ca
+grila și tastatura să stea de-a dreptul pe fundalul camerei.
+
+**Ce a însemnat de fapt.** Un `StyleBoxEmpty` pe `ZonaJoc` — o linie. Dar
+scoaterea chenarului schimbă **fondul de sub grilă**, din pergament în
+biblioteca estompată, iar celulele crem erau crem tocmai fiindcă stăteau pe
+pergament. Lăsate așa, ar fi fost 30 de pătrate luminoase pe o cameră
+întunecată, dintre care cele mai multe nu spun nimic — exact ecranul care a
+fost respins o dată azi, pe negru.
+
+Deci celulele și tastele neîncepute s-au întors la aproape-transparent, cu
+chenar, iar literele la deschis. **Lumina se dă celor care poartă informație:**
+rândurilor jucate și tastelor aflate.
+
+**Regula asta a fost scrisă, ștearsă și scrisă din nou în aceeași zi**, și nu
+din nehotărâre: a fost adevărată pe negru, falsă pe pergament (unde o celulă
+crem nu iese în evidență pe o pagină crem), și e iar adevărată acum, fiindcă
+fondul s-a schimbat din nou. O regulă de înfățișare e adevărată **despre un
+fond**, nu în sine — iar locul unde se vede asta e tocmai că regula n-a
+trebuit rescrisă, ci doar reatașată.
+
+**Ce a mai plecat după ea**, fiindcă fondul atârnă unul de altul:
+
+- Inelul „i" are acum chenar și literă DESCHISE: cel brun era pe pergament.
+- Panoul cu reguli a trecut pe fond închis, cu titlul auriu. Nu din gust:
+  exemplele din el sunt CHIAR celulele jocului, deci literele lor sunt acum
+  deschise — pe pergament ar fi fost albe pe crem. Mai e și cel mai aproape de
+  poza după care l-am făcut.
+
+**Măsurat:** masa deschisă cere acum 597 px pe 648 (de la 625), fiindcă au
+plecat și marginile de conținut ale chenarului — 51 px de rezervă, de la 22.
+`verifica_taverna`: 98 de verdicte, toate verzi.
+
+---
+
+## TREI RÂNDURI ADEVĂRATE (3 noiembrie 2026) — regulile se arată, iar literele se întorc
+
+Cinci schimbări la Cuvântul Ascuns, și prima le-a hotărât pe celelalte.
+
+**1. Fondul s-a întors la biblioteca estompată.** Negrul a trăit o zi. Ce
+lasă în urmă e o regulă care s-a dovedit falsă CA REGULĂ GENERALĂ, și de-aia
+merită scrisă: pe negru, cele 30 de celule crem și cele 26 de taste crem erau
+cel mai luminos lucru de pe ecran deși cele mai multe nu spuneau nimic, așa că
+le-am făcut transparente — „lumina se dă celor care poartă informație". Pe
+pergament, regula n-are ce apăra: o celulă crem nu iese în evidență pe o pagină
+crem. Deci celulele, tastele și culorile verdictului s-au întors cum erau.
+**O regulă de înfățișare e adevărată despre un FOND, nu în sine.**
+
+**2. Butonul „i" s-a mutat pe tăblia mesei**, în colțul de sus-stânga, din
+antetul Tavernei. E o unealtă a JOCULUI, nu a camerei — iar în antet stătea
+lângă „Mesele" și „Meniu", adică printre lucrurile care te scot de la masă.
+Tehnic e un `Control` suprapus peste `ZonaJoc`; fiindcă un `PanelContainer`
+desenează copiii în ordinea din arbore și jocul intră ULTIMUL, suprapunerea e
+trimisă înapoi deasupra cu un `move_child` la fiecare pornire.
+
+**3. Arată ca un inel**, nu ca un buton roșu: fond transparent, chenar de 2 px,
+„i" în Alegreya (Cinzel n-are litere mici).
+
+**4. Panoul s-a refăcut, și contractul odată cu el.** `Joc.reguli()` întorcea
+un `String` cu BBCode și cu pătrate scrise „███". Mergea, și totuși spunea mai
+puțin: **regulile unui joc de grilă se înțeleg uitându-te la trei rânduri
+adevărate, nu citind despre ele.** Deci întoarce acum un `Control`.
+
+Nodul poartă chiar celulele jocului, construite de ACELEAȘI două funcții pe
+care le folosește grila (`_celula_noua`, `_imbraca_celula`) — scoase într-un
+loc tocmai pentru asta. Exemplul nu poate ajunge să arate altfel decât masa pe
+care o explică. E judecata de la cârligul de desenare din `puzzle.gd`: baza nu
+poate construi ce nu știe, deci primește un NOD, nu o listă de forme. Taverna
+îi pune „CUM SE JOACĂ" deasupra și un „✕" în colț, și nu se uită înăuntru.
+
+Cele trei exemple (COPIL, GULER, HAINE) sunt DATE, nu cod: nota își ia litera
+din cuvânt, deci nu poate spune „litera C" despre un rând care arată un G. Și
+verificarea cere ca toate trei să fie **primite ca ghiciri** — un rând de
+exemplu pe care jocul l-ar refuza ar fi cea mai proastă primă impresie cu
+putință.
+
+Nodul se construiește O DATĂ, la deschiderea mesei, nu la fiecare apăsare pe
+„i": nu se schimbă între două deschideri, iar construit de fiecare dată ar fi
+cerut și un al doilea drum doar ca să afli DACĂ masa are reguli.
+
+**5. Literele se întorc, una câte una.** Era o colorare instantanee cu 0,14 s
+între celule; e o rotire adevărată: celula se strânge pe verticală până dispare
+(acolo i se schimbă fața), apoi se desface la loc. `scale:y`, nu o rotație 3D —
+o celulă turtită și desfăcută E întoarcerea, văzută din față, iar un `Control`
+2D n-are perspectivă, deci orice altceva ar fi cerut o cameră și un viewport
+pentru o jumătate de secundă de efect.
+
+Pasul a crescut la 0,30 s, și nu doar „ca să fie mai lent": **sub
+`DURATA_INTOARCERE` (0,22 s), a doua celulă ar începe să se întoarcă înainte ca
+prima să-și fi arătat culoarea**, iar rândul s-ar citi tot ca o bufnitură.
+Pasul trebuie să fie cel puțin cât o jumătate de rotire. Două amănunte care nu
+sunt amănunte: `pivot_offset` se pune la întoarcere, nu la naștere (o celulă
+nou făcută n-are încă mărime, deci s-ar strânge spre colț), iar un rând
+repictat își pune `scale` pe 1 — altfel o rotire întreruptă de o partidă nouă
+ar fi lăsat celula turtită pentru totdeauna.
+
+`verifica_taverna`: 92 → **98 de verdicte**. Așteptarea dintre rânduri e scrisă
+din constante (`PAS_DEZVALUIRE * (LUNGIME-1) + DURATA_INTOARCERE * 2`), nu
+dintr-un număr — altfel ar fi tipărit „rândul nu s-a trimis" despre un rând
+care se trimisese. Iar verdictele despre reguli se uită acum ÎN NOD: adună tot
+textul din etichete (pentru numerele luate din constante) și toate culorile de
+fond ale panourilor (pentru cele trei celule colorate), în loc să caute un
+`#3d7338` într-un șir.
+
+---
+
+## REGULILE MESEI (3 noiembrie 2026) — se arată o dată, și rămân la un buton
+
+**Ce s-a schimbat:** prima dată când te așezi la Cuvântul Ascuns, regulile se
+deschid singure. A doua oară, nu — dar rămân sub un buton „i" rotund, din antet.
+
+**Unde stau regulile, și de ce acolo.** Un al treilea membru OPȚIONAL în
+contractul `Joc`, lângă `rand_de_ajutor()`: `reguli()`. Gol = masa n-are ce
+explica, deci Taverna nu deschide nimic și nu arată butonul. Într-un tabel al
+Tavernei, un joc nou s-ar fi scris în două locuri, iar textul ar fi putut rămâne
+în urma codului fără ca nimic să se plângă. Aici stă lângă constantele pe care
+le descrie — și e **compus din ele**: „5 litere" și „6 încercări" vin din
+`LUNGIME` și `RANDURI`, iar cele trei pătrate colorate chiar din culorile cu
+care se zugrăvesc celulele. `verifica_taverna` cere exact asta, deci textul nu
+poate rămâne în urmă pe furiș.
+
+**Pătratele nu sunt înfrumusețare.** Panoul e un `RichTextLabel`, deci regulile
+pot purta BBCode — nu ca să fie frumoase, ci ca o masă să-și poată **ARĂTA**
+culorile. „Chihlimbar" scris cu cerneală obișnuită e un cuvânt pe care trebuie
+să-l traduci în timp ce joci; un pătrat chihlimbar e chiar regula.
+
+**„O singură dată" e pe CHEIE**, nu un singur adevăr: `_reguli_vazute` ține
+cheile meselor văzute, deci Sudoku va avea prima LUI dată chiar dacă ai citit
+deja regulile de aici. Două lucruri care par detalii și nu sunt:
+
+- `static`, ca `_nivel_atins` din Practice. Taverna e o SCENĂ, care se naște din
+  nou la fiecare intrare — o variabilă de instanță ar fi făcut „o dată" să
+  însemne „o dată la fiecare venire în tavernă", adică de fiecare dată.
+- **Steagul se scrie pe disc imediat**, nu la plecarea din tavernă. Un joc
+  închis din colțul ferestrei ar fi lăsat „prima dată" nescrisă, iar regulile
+  s-ar fi deschis a doua oară — exact promisiunea încălcată.
+
+Starea intră în `permanent.json` sub cheia „taverna", pe forma de la Practice:
+starea stă în scena care o produce, `Arhiva` doar adună dicționarele. Un save
+mai vechi n-are cheia, ceea ce înseamnă „n-ai văzut nimic" — adică purtarea de
+la prima instalare, deci **nu cere migrare**.
+
+**Ce a fost nou față de popup-ul din Practice:** acolo umbra `ColorRect` ajungea,
+fiindcă oprește clickurile. Aici nu — masa ascultă tastatura ADEVĂRATĂ prin
+`_unhandled_key_input`, deci cu panoul deschis ai fi scris litere în grilă în
+timp ce citeai regulile despre ea. Jocului i se oprește ascultarea cât ține
+panoul, iar la închidere focusul se ELIBEREAZĂ în loc să treacă pe alt buton:
+un buton cu focus mănâncă Enter, iar Enter e tasta cu care trimiți rândul.
+
+**Și o portiță închisă pe drum.** `verifica_taverna` scria în save-ul ADEVĂRAT:
+secțiunea 4 cheamă `_pe_joc_terminat`, care scrie sacul. Nimeni n-o observase,
+fiindcă până azi scria înapoi aceleași date. De azi ar fi fost altceva — o
+rulare a verificării ți-ar fi **mâncat prima dată**: ai fi deschis Cuvântul
+Ascuns în joc și regulile n-ar mai fi apărut niciodată, fiindcă le „văzuse" o
+unealtă. `Arhiva.dosar` se mută acum pe `user://verificare_taverna/`, ca la
+`verifica_salvarea`.
+
+73 → **92 de verdicte**, printre care „prima așezare le deschide", „a doua NU",
+„«Încă unul» nici atât", „o tastă apăsată peste reguli nu scrie în grilă" și
+drumul prin disc.
+
+**Butonul „i"** e rotund, în antet, lângă „Mesele". Își ia fontul din Alegreya,
+nu din tema paginii: Cinzel n-are litere mici, deci „i" ieșea „I". Se vede doar
+când e deschisă o masă care are reguli — pe ecranul cu mese n-ai ales niciuna,
+deci n-ar ști ale cui reguli să arate.
+
+---
+
+## DOUĂ LISTE (3 noiembrie 2026) — „aeiou" nu mai trece, și de ce a trebuit un dicționar
+
+**Ce se vedea:** la Cuvântul Ascuns puteai trimite „AEIOU" ca sondă de litere.
+Nu era un bug — era o decizie scrisă, cu motivul ei: filtrul exista
+(`CERE_CUVANT_DIN_LISTA`), dar singura listă din joc avea 308 cuvinte, iar
+româna are zeci de mii. Pornit pe ea, jocul ar fi refuzat aproape tot ce
+tastezi.
+
+**Ce era greșit în decizia aia:** nu costul — ăla era calculat corect — ci
+presupunerea că e o singură listă. Cele două întrebări sunt diferite:
+
+| listă | întrebarea | cât | de unde |
+|---|---|---|---|
+| `taverna_cuvinte.json` | ce poate **FI** răspunsul | 308 | scrise de mână |
+| `taverna_acceptate.json` | ce ai voie să **SCRII** | 13.304 | dicționarul hunspell |
+
+La prima contează gustul (un răspuns trebuie să fie un cuvânt cunoscut); la a
+doua contează doar să nu lipsească nimic. **Una singură nu le putea face pe
+amândouă**: largă, ar fi ascuns cuvinte pe care nu le-am auzit niciodată;
+strâmtă, ar fi refuzat ghiciri bune. E chiar despărțirea lui Wordle, și acum e
+scrisă cu motivul, nu copiată.
+
+**Dicționarul.** Hunspell românesc (rospell 3.3.10), din depozitul
+LibreOffice/dictionaries, tri-licențiat GPL 2.0 / LGPL 2.1 / MPL 1.1 — am ales
+MPL. Cele 2,2 MB de rădăcini **nu intră în depozit**: intră lista extrasă (120
+KB) și licența, lângă ea, exact ca OFL-ul fonturilor. Se reface cu
+`tools/extrage_dictionar.py`, care are în antet și comanda de descărcare.
+
+Două lucruri despre extragere, amândouă decizii:
+
+- **Formele flexionare se CONSTRUIESC din regulile de afixe** (SFX/PFX ale
+  dicționarului), nu se iau de-a gata — altfel „apele" și „casei" n-ar exista
+  în listă, fiindcă în `.dic` stau doar rădăcinile.
+- **Diacriticele se SCOT, nu resping cuvântul.** Tastatura n-are 31 de litere,
+  deci orice cuvânt la care se gândește jucătorul e tastat fără ele; „masca"
+  refuzat fiindcă se scrie „mască" ar fi fost exact piedica pe care o scoate
+  din joc decizia „cuvintele n-au diacritice".
+
+Din 165.498 de rădăcini cu literă mică au ieșit **13.304 cuvinte de cinci
+litere scrise din a-z**.
+
+**Garanția care leagă cele două liste e un VERDICT, nu o speranță:** toate cele
+308 răspunsuri trebuie să fie primite ca ghiciri. Un cuvânt pe care jocul îl
+ascunde ȘI îl refuză s-ar vedea o dată la 308 partide — în partida aia, după
+cinci încercări bune. `verifica_taverna` îl bate, plus forma amândurora (aceeași
+funcție pentru amândouă: două copii ale acelorași verdicte ar fi avut două
+șanse să se despartă), plus refuzul JUCAT cu scena adevărată. 55 → **70 de
+verdicte**.
+
+**Pe ecran:** rândul refuzat **rămâne scris**. Ai pus cinci litere ca să schimbi
+una, nu ca să le scrii din nou. Și rândul de ajutor spune de acum „Cuvinte
+românești de 5 litere" — a cincea aplicare a regulii „un enunț care are nevoie
+de o convenție o declară": de când ghicirile se verifică, „ce am voie să scriu"
+e o convenție, iar un jucător care o află dintr-un refuz a aflat-o pe pielea
+lui.
+
+---
+
+## LUMINA PE INFORMAȚIE (3 noiembrie 2026) — Taverna rămâne neagră, iar grila se stinge
+
+**Negrul rămâne.** Biblioteca estompată s-a stins cu totul, pagina e neagră,
+tăblia mesei e închisă în loc de pergament. Comutatorul `FUNDAL_NEGRU` a
+dispărut odată cu hotărârea, iar culorile au trecut din cod în SCENĂ: un
+comutator ținut după ce decizia s-a luat e o întrebare la care nimeni nu mai
+răspunde.
+
+**Ce a scos negrul la iveală.** Cel mai luminos lucru de pe ecran erau 30 de
+celule crem și 26 de taste crem — adică TOCMAI pătratele care nu spuneau nimic.
+O celulă nejucată și o tastă neîncercată sunt goluri, nu informație. Acum
+amândouă sunt aproape transparente (`Color(1, 1, 1, 0.045)`), cu chenar:
+chenarul e ce spune „aici urmează o literă", iar fără el nu rămâne o celulă
+goală, rămâne o gaură. Lumina stă pe rândurile jucate și pe tastele aflate.
+
+**Transparente, nu stinse-cu-o-culoare**, și asta nu e o nuanță de vorbire: așa
+celula ia fondul mesei oricare ar fi el, deci grila nu mai e o a doua părere
+despre culoarea Tavernei. Verdele și portocaliul de verdict s-au ridicat până
+se citesc pe fond închis — aceleași două culori din tot jocul, nu altele.
+
+**Și titlul s-a mutat la mijlocul PAGINII.** Stătea într-un `HBoxContainer`,
+lângă butoane, deci „la mijloc" însemna mijlocul spațiului RĂMAS după ele — iar
+spațiul rămas se schimbă singur, fiindcă „Mesele" se ascunde pe ecranul cu
+mese. Același titlu ar fi stat în două locuri diferite, în două ecrane. Acum
+antetul nu mai e un rând, e un STRAT: titlul ține toată lățimea și se
+centrează în ea, butoanele plutesc ancorate la dreapta, peste el.
+
+Prețul, plătit conștient: **două noduri suprapuse nu se mai feresc unul de
+altul** — un titlu destul de lung ar intra sub butoane fără ca niciun container
+să se plângă. De-aia verificarea măsoară, pentru FIECARE nume din catalog, cât
+se întinde titlul de la mijloc și cât loc e până la butoane („CUVÂNTUL ASCUNS":
+178 px din 438). 70 → **73 de verdicte**. Aceeași judecată ca la înălțime: o
+înțelegere pe care containerele n-o mai apără trebuie apărată de un verdict.
+
+---
+
+## MASA MĂSURATĂ (3 noiembrie 2026) — ecranul care se strica DOAR după ce câștigai
+
+**Ce se vedea:** la Cuvântul Ascuns, grila și tastatura stăteau cuminți în
+chenar toată partida — iar în clipa în care ghiceai cuvântul, rândul de jos al
+tastaturii ieșea pe sub marginea chenarului, și textul „Ai găsit!" cu butonul
+„Încă unul" cădeau peste el. Un ecran care se strică exact în momentul lui bun.
+
+**De ce.** Două greșeli, și a doua o ascundea pe prima.
+
+1. **Rândul de rezultat apărea din nimic.** `RandRezultat` era `visible = false`
+   până la final; ascuns, el iese din socoteala containerului. Când apărea, își
+   lua 52 px (42 de rând + 10 de separație) de la singurul frate care se putea
+   întinde — chenarul jocului. Deci jocul avea, brusc, cu 52 px mai puțin decât
+   avusese toată partida.
+
+2. **Jocul nu-și CEREA înălțimea.** Rădăcina lui `cuvantul.tscn` era un `Control`
+   ancorat la tot ecranul, cu un `VBoxContainer` dedesubt, tot ancorat. Un
+   `Control` ancorat n-are minim: pus într-un `PanelContainer`, el raportează
+   zero și se lasă strâns la orice mărime, iar copiii lui ies pur și simplu
+   afară, fără ca nimeni să se plângă. Măsurat, ecranul cu masa deschisă cerea
+   **209 px** — adică rama, și NIMIC din joc.
+
+**Ce s-a făcut.**
+
+- Rădăcina lui `cuvantul.tscn` e acum chiar `VBoxContainer`-ul (scriptul tot
+  `extends Joc`, fiindcă `Control` e strămoșul lui `VBoxContainer`). Jocul
+  începe să-și ceară înălțimea — și adevărul a ieșit la iveală: **709 px pe o
+  pânză de 648**, cu 61 px peste margine. Exact povestea ecranului de loadout,
+  care a stat o zi la 692 px pe 648.
+- Rândul de rezultat **se golește, nu se ascunde**: locul lui e rezervat din
+  scenă (`custom_minimum_size`), iar ce apare și dispare sunt cei doi copii ai
+  lui. Un ecran care își schimbă înălțimea la jumătatea unui joc se poate
+  strica într-o stare și arăta bine în cealaltă — adică taman în starea în
+  care nu te uiți când îl măsori.
+- Cei 61 px s-au luat din amândouă părțile, nu dintr-una: celula de la 48 la
+  **42**, tasta de la 42 la **36**, rândul de mesaj 26 → 24, separațiile 10 → 8
+  și 5 → 4; iar din rama Tavernei, marginile 18/20 → 14, separațiile 10 → 8 și
+  10 → 6, rândul de rezultat 42 → 40. **626 px pe 648, cu 22 de rezervă.**
+
+**Verificarea.** `verifica_taverna` măsura ecranul cu MESE, nu pe cel cu masa
+deschisă — adică exact ecranul care se strica. Acum îl măsoară, și de două ori:
+cu jocul în desfășurare și după ce l-ai câștigat, cu un al treilea verdict care
+cere ca cele două numere să fie EGALE. 52 → **55 de verdicte**. Primul lucru pe
+care l-a spus secțiunea nouă a fost „209 px" — numărul care nu însemna nimic și
+care a arătat unde e buba.
+
+**Regula, scrisă:** *un ecran se măsoară în fiecare STARE a lui, nu doar în cea
+în care se naște.* Sora celei de la ecranul de loadout („un ecran se măsoară pe
+cât CERE, nu pe cât ocupă"), și completarea ei: o măsurătoare făcută într-o
+singură stare apără doar starea aia.
+
+**Pe deasupra — Taverna pe negru.** Un experiment cerut: biblioteca estompată se
+stinge, pagina rămâne neagră (`FUNDAL_NEGRU` în `taverna.gd`, un cuvânt de
+întors), tăblia mesei devine închisă în loc de pergament, iar verdele și
+portocaliul de verdict se ridică până se citesc pe fond închis. Celulele goale
+ale grilei **rămân de pergament**, dinadins: culorile Cuvântului Ascuns nu sunt
+culori de ecran, sunt regulile jocului — și o masă neagră cu plăcuțe de hârtie
+pe ea e chiar imaginea unei mese de tavernă. Dacă negrul rămâne, culorile se
+mută din cod în scenă și funcția dispare.
+
+---
+
 ## TAVERNA (3 noiembrie 2026) — al treilea mod de joc, și al doilea contract
 
 **Ce s-a schimbat:** jocul avea două uși în meniu (Expediție, Practice). De azi

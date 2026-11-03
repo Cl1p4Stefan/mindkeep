@@ -97,6 +97,7 @@ extends Node
 ## din Practice (greșitele care revin, Jurnalul); până atunci, un `preload` și
 ## două funcții statice. Scris la „Rămas deschis" în jurnalul de progres.
 const PRACTICE := preload("res://scenes/practice/practice.gd")
+const TAVERNA := preload("res://scenes/taverna/taverna.gd")
 
 ## Versiunea formatului de pe disc. Crește când o cheie își schimbă ÎNȚELESUL,
 ## nu când se adaugă una nouă: o cheie în plus e citită de un joc vechi ca
@@ -147,6 +148,7 @@ func incarca() -> void:
 		Tezaur.din_dictionar(_sub(permanent, "tezaur"))
 		Sac.din_dictionar(_sub(permanent, "sac"), Sac.Durata.PERMANENT)
 		PRACTICE.din_dictionar(_sub(permanent, "practice"))
+		TAVERNA.din_dictionar(_sub(permanent, "taverna"))
 
 	var expeditie = _citeste(NUME_EXPEDITIE)
 	if expeditie is Dictionary:
@@ -182,6 +184,7 @@ func salveaza_permanent() -> bool:
 		"tezaur": Tezaur.spre_dictionar(),
 		"sac": Sac.spre_dictionar(Sac.Durata.PERMANENT),
 		"practice": PRACTICE.spre_dictionar(),
+		"taverna": TAVERNA.spre_dictionar(),
 	})
 
 

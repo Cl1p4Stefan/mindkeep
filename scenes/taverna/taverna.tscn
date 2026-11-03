@@ -1,6 +1,7 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://scenes/taverna/taverna.gd" id="1_taverna"]
+[ext_resource type="FontFile" path="res://assets/fonturi/Alegreya.ttf" id="5_alegreya"]
 [ext_resource type="Theme" path="res://assets/tema/pergament.tres" id="2_tema"]
 [ext_resource type="Texture2D" path="res://assets/art/fight_background.jpg" id="3_biblioteca"]
 [ext_resource type="Shader" path="res://assets/tema/fundal_estompat.gdshader" id="4_estompat"]
@@ -12,6 +13,60 @@ shader_parameter/raza = 22.0
 shader_parameter/luminozitate = 0.42
 shader_parameter/tenta = Color(1, 0.86, 0.68, 1)
 shader_parameter/vinieta = 0.7
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_inel_clar"]
+bg_color = Color(1, 1, 1, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.72, 0.64, 0.52, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_inel_clar_hover"]
+bg_color = Color(1, 1, 1, 0.12)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.92, 0.86, 0.74, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_inel_clar_apasat"]
+bg_color = Color(1, 1, 1, 0.2)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.92, 0.86, 0.74, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panou_inchis"]
+content_margin_left = 26.0
+content_margin_top = 22.0
+content_margin_right = 26.0
+content_margin_bottom = 22.0
+bg_color = Color(0.11, 0.09, 0.08, 0.98)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.4, 0.33, 0.25, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fara_chenar"]
 
 [node name="Taverna" type="Control"]
 layout_mode = 3
@@ -54,28 +109,45 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_left = 28
-theme_override_constants/margin_top = 18
+theme_override_constants/margin_top = 14
 theme_override_constants/margin_right = 28
-theme_override_constants/margin_bottom = 20
+theme_override_constants/margin_bottom = 14
 
 [node name="Coloana" type="VBoxContainer" parent="Margini"]
 layout_mode = 2
-theme_override_constants/separation = 10
+theme_override_constants/separation = 8
 
-[node name="Antet" type="HBoxContainer" parent="Margini/Coloana"]
+[node name="Antet" type="Control" parent="Margini/Coloana"]
+custom_minimum_size = Vector2(0, 46)
 layout_mode = 2
-theme_override_constants/separation = 12
 
 [node name="Titlu" type="Label" parent="Margini/Coloana/Antet"]
 unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
 theme_type_variation = &"TitluMeniu"
 theme_override_font_sizes/font_size = 34
 text = "TAVERNA"
+horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ButonMese" type="Button" parent="Margini/Coloana/Antet"]
+[node name="Butoane" type="HBoxContainer" parent="Margini/Coloana/Antet"]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_constants/separation = 12
+alignment = 2
+
+[node name="ButonMese" type="Button" parent="Margini/Coloana/Antet/Butoane"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(120, 38)
 layout_mode = 2
@@ -84,7 +156,7 @@ theme_type_variation = &"ButonRubrica"
 theme_override_font_sizes/font_size = 15
 text = "Mesele"
 
-[node name="ButonMeniu" type="Button" parent="Margini/Coloana/Antet"]
+[node name="ButonMeniu" type="Button" parent="Margini/Coloana/Antet/Butoane"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(110, 38)
 layout_mode = 2
@@ -95,7 +167,7 @@ text = "Meniu"
 
 [node name="Ajutor" type="Label" parent="Margini/Coloana"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 24)
+custom_minimum_size = Vector2(0, 22)
 layout_mode = 2
 theme_type_variation = &"AntetSecundar"
 theme_override_font_sizes/font_size = 16
@@ -118,23 +190,51 @@ unique_name_in_owner = true
 visible = false
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_constants/separation = 10
+theme_override_constants/separation = 6
 
 [node name="ZonaJoc" type="PanelContainer" parent="Margini/Coloana/PanouJoc"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
-theme_type_variation = &"ChenarPergament"
+theme_override_styles/panel = SubResource("StyleBoxEmpty_fara_chenar")
+
+[node name="Suprapunere" type="Control" parent="Margini/Coloana/PanouJoc/ZonaJoc"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 1
+
+[node name="ButonReguli" type="Button" parent="Margini/Coloana/PanouJoc/ZonaJoc/Suprapunere"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 1
+anchors_preset = 0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 36.0
+offset_bottom = 36.0
+tooltip_text = "Cum se joacă"
+theme_override_styles/normal = SubResource("StyleBoxFlat_inel_clar")
+theme_override_styles/hover = SubResource("StyleBoxFlat_inel_clar_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_inel_clar_apasat")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_inel_clar_apasat")
+theme_override_styles/focus = SubResource("StyleBoxFlat_inel_clar_hover")
+theme_override_fonts/font = ExtResource("5_alegreya")
+theme_override_colors/font_color = Color(0.72, 0.64, 0.52, 1)
+theme_override_colors/font_hover_color = Color(0.95, 0.9, 0.8, 1)
+theme_override_colors/font_pressed_color = Color(0.95, 0.9, 0.8, 1)
+theme_override_font_sizes/font_size = 20
+text = "i"
 
 [node name="RandRezultat" type="HBoxContainer" parent="Margini/Coloana/PanouJoc"]
 unique_name_in_owner = true
-visible = false
+custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 theme_override_constants/separation = 16
 alignment = 1
 
 [node name="Rezultat" type="Label" parent="Margini/Coloana/PanouJoc/RandRezultat"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 size_flags_vertical = 4
 theme_type_variation = &"TitluPergament"
@@ -143,8 +243,106 @@ vertical_alignment = 1
 
 [node name="ButonIncaUnul" type="Button" parent="Margini/Coloana/PanouJoc/RandRezultat"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(150, 42)
+visible = false
+custom_minimum_size = Vector2(150, 38)
 layout_mode = 2
 theme_type_variation = &"ButonRubrica"
 theme_override_font_sizes/font_size = 16
 text = "Încă unul"
+
+[node name="PanouReguli" type="Control" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Umbra" type="ColorRect" parent="PanouReguli"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.02, 0.02, 0.025, 0.72)
+
+[node name="Centru" type="CenterContainer" parent="PanouReguli"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Panou" type="PanelContainer" parent="PanouReguli/Centru"]
+custom_minimum_size = Vector2(620, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_panou_inchis")
+
+[node name="Margini" type="MarginContainer" parent="PanouReguli/Centru/Panou"]
+layout_mode = 2
+theme_override_constants/margin_left = 26
+theme_override_constants/margin_top = 22
+theme_override_constants/margin_right = 26
+theme_override_constants/margin_bottom = 22
+
+[node name="Coloana" type="VBoxContainer" parent="PanouReguli/Centru/Panou/Margini"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="Antet" type="Control" parent="PanouReguli/Centru/Panou/Margini/Coloana"]
+custom_minimum_size = Vector2(0, 34)
+layout_mode = 2
+
+[node name="ReguliTitlu" type="Label" parent="PanouReguli/Centru/Panou/Margini/Coloana/Antet"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_type_variation = &"TitluPergament"
+theme_override_colors/font_color = Color(0.89, 0.76, 0.46, 1)
+theme_override_font_sizes/font_size = 22
+text = "CUM SE JOACĂ"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ButonInchideReguli" type="Button" parent="PanouReguli/Centru/Panou/Margini/Coloana/Antet"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -16.0
+offset_bottom = 16.0
+grow_horizontal = 0
+grow_vertical = 2
+tooltip_text = "Închide"
+theme_override_styles/normal = SubResource("StyleBoxFlat_inel_clar")
+theme_override_styles/hover = SubResource("StyleBoxFlat_inel_clar_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_inel_clar_apasat")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_inel_clar_apasat")
+theme_override_styles/focus = SubResource("StyleBoxFlat_inel_clar_hover")
+theme_override_fonts/font = ExtResource("5_alegreya")
+theme_override_colors/font_color = Color(0.72, 0.64, 0.52, 1)
+theme_override_colors/font_hover_color = Color(0.95, 0.9, 0.8, 1)
+theme_override_colors/font_pressed_color = Color(0.95, 0.9, 0.8, 1)
+theme_override_font_sizes/font_size = 17
+text = "✕"
+
+[node name="Cuprins" type="MarginContainer" parent="PanouReguli/Centru/Panou/Margini/Coloana"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_bottom = 4

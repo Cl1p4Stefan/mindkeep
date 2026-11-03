@@ -39,18 +39,30 @@ extends Joc
 ## cuvinte, destul pentru luni de joc, dar nu o oglindă a limbii.
 ##
 ## ─────────────────────────────────────────────────────────────
-## O GHICIRE NU SE VERIFICĂ ÎN DICȚIONAR, ȘI DE CE
+## DOUĂ LISTE, NU UNA — ȘI ĂSTA E TOT ARGUMENTUL
 ##
-## Wordle refuză ghicirile care nu-s în lista lui. Aici orice cinci litere
-## merg — fiindcă lista mea are 308 cuvinte, iar româna are zeci de mii. Un
-## filtru ar fi respins aproape tot ce încearcă un jucător, adică l-ar fi
-## pedepsit pentru conținutul care-mi lipsește MIE. Prețul invers e că se poate
-## trage cu „aeiou" ca sondă de litere; într-un joc de antrenament fără clasament
-## nu pierde nimeni nimic.
+## Până pe 3 noiembrie 2026 orice cinci litere treceau, „aeiou" inclusiv. Nu
+## din lene: filtrul exista (`CERE_CUVANT_DIN_DICTIONAR`), doar că singura
+## listă din joc avea 308 cuvinte, iar româna are zeci de mii. Pornit pe ea,
+## jocul ar fi refuzat aproape tot ce tastează un jucător — adică l-ar fi
+## pedepsit pentru conținutul care-mi lipsește MIE.
 ##
-## Când lista va avea câteva mii de cuvinte, `CERE_CUVANT_DIN_LISTA` se pune pe
-## `true` și regula se întoarce. Comutatorul stă aici, nu în date, fiindcă e o
-## regulă de joc.
+## Ieșirea e despărțirea pe care o face și Wordle, și **n-are nimic de-a face
+## cu mărimea listei, ci cu două ÎNTREBĂRI diferite**:
+##
+##   `taverna_cuvinte.json`   — ce poate FI răspunsul. 308, scrise de mână,
+##                              alese să fie cunoscute. Aici conteaza gustul.
+##   `taverna_acceptate.json` — ce AI VOIE să scrii. ~13.000, scoase din
+##                              dicționarul hunspell românesc. Aici conteaza
+##                              doar să nu lipsească nimic.
+##
+## O listă n-o putea face pe amândouă: largă, ar fi ascuns cuvinte pe care nu
+## le-am auzit niciodată; strâmtă, ar fi refuzat ghiciri bune. Garanția care le
+## leagă e bătută de `verifica_taverna`: **toate cele 308 răspunsuri sunt în
+## lista acceptată** — altfel jocul ar refuza chiar cuvântul pe care-l ascunde.
+##
+## Lista acceptată se reface cu `tools/extrage_dictionar.py`; licența ei (MPL
+## 1.1, aleasă din tri-licență) stă lângă ea, ca OFL-ul fonturilor.
 ##
 ## ─────────────────────────────────────────────────────────────
 ## DE CE N-ARE ROȘU
@@ -70,14 +82,34 @@ extends Joc
 const LUNGIME := 5
 const RANDURI := 6
 
+## Cele trei rânduri de exemplu din reguli: cuvântul, litera arătată și ce
+## înseamnă culoarea ei.
+##
+## DATE, nu trei bucăți de cod care construiesc trei rânduri. Două urmări:
+## nota își ia litera DIN cuvânt (deci nu poate spune „litera C" despre un
+## rând care arată un G), iar `verifica_taverna` poate cere ca toate trei
+## cuvintele să fie primite ca ghiciri — un exemplu pe care jocul l-ar REFUZA
+## ar fi fost cea mai proastă primă impresie cu putință.
+const EXEMPLE_REGULI := [
+	{"cuvant": "copil", "loc": 0, "semn": Semn.BUN,
+		"nota": "Litera %s există în cuvânt și e chiar pe locul ei."},
+	{"cuvant": "guler", "loc": 2, "semn": Semn.ALTUNDEVA,
+		"nota": "Litera %s e în cuvânt, dar în altă parte."},
+	{"cuvant": "haine", "loc": 3, "semn": Semn.ABSENT,
+		"nota": "Litera %s nu e deloc în cuvânt."},
+]
+
 const CALE_CUVINTE := "res://data/taverna_cuvinte.json"
+const CALE_ACCEPTATE := "res://data/taverna_acceptate.json"
 
 ## Sacul cuvintelor deja ieșite. PERMANENT fiindcă Taverna nu e o expediție:
 ## un sac de expediție s-ar fi golit la fiecare run nou, adică ar fi repetat.
 const CHEIE_SAC := "taverna:cuvantul_ascuns"
 
-## Vezi „O GHICIRE NU SE VERIFICĂ ÎN DICȚIONAR" din antet.
-const CERE_CUVANT_DIN_LISTA := false
+## Vezi „DOUĂ LISTE, NU UNA" din antet. Rămâne un comutator și nu o certitudine
+## fiindcă e o REGULĂ DE JOC: ziua în care Cuvântul Ascuns ar vrea un mod „fără
+## opreliști" e un `false` aici, nu o listă ștearsă de pe disc.
+const CERE_CUVANT_DIN_DICTIONAR := true
 
 ## Ce poate fi o literă după o încercare. Ordinea NU e decorativă: starea de pe
 ## tastatură e maximul dintre ce se știa și ce s-a aflat (vezi `_tine_minte`),
@@ -97,22 +129,54 @@ enum Semn { ABSENT, ALTUNDEVA, BUN }
 const CULOARE_BUN := Color(0.24, 0.45, 0.22)
 const CULOARE_ALTUNDEVA := Color(0.72, 0.52, 0.12)
 const CULOARE_ABSENT := Color(0.38, 0.33, 0.28)
-## Celula neîncepută: pergament, cu chenar. Nu goală — o celulă fără chenar nu
-## se citește ca „aici urmează o literă".
-const CULOARE_CELULA := Color(0.93, 0.87, 0.74)
-const CULOARE_CHENAR := Color(0.55, 0.45, 0.32)
-## Litera, pe celulă colorată și pe celulă de pergament.
+## Celula neîncepută: APROAPE TRANSPARENTĂ, cu chenar.
+##
+## De pe 3 noiembrie 2026, când masa a rămas fără tăblia ei de pergament:
+## grila și tastatura stau de-a dreptul pe biblioteca estompată. Pe fondul ăla
+## închis, 30 de celule crem ar fi fost cel mai luminos lucru de pe ecran —
+## iar cele mai multe nu spun nimic. **Lumina se dă celor care poartă
+## informație:** rândurilor jucate și tastelor aflate.
+##
+## Regula a fost scrisă o dată pentru fondul negru, apoi ștearsă când s-a
+## întors pergamentul (acolo o celulă crem nu iese în evidență pe o pagină
+## crem), și se întoarce acum nu fiindcă m-am răzgândit, ci fiindcă **s-a
+## întors fondul despre care era adevărată**. Asta e tot rostul ei: o regulă
+## de înfățișare e adevărată despre un FOND, nu în sine.
+##
+## Transparentă, nu stinsă-cu-o-culoare: așa celula ia fondul de sub ea oricare
+## ar fi el. Chenarul rămâne, fiindcă el e ce spune „aici urmează o literă" —
+## fără el nu e o celulă goală, e o gaură.
+const CULOARE_CELULA := Color(1, 1, 1, 0.05)
+const CULOARE_CHENAR := Color(0.58, 0.5, 0.4)
+## Litera, pe celulă colorată și pe celulă goală. Amândouă deschise, fiindcă
+## sub celula goală e acum fondul întunecat al camerei.
 const CULOARE_LITERA_PE_FOND := Color(0.98, 0.95, 0.88)
-const CULOARE_LITERA := Color(0.2, 0.12, 0.06)
+const CULOARE_LITERA := Color(0.93, 0.89, 0.8)
 
-const MARIME_CELULA := 48
+const MARIME_CELULA := 42
 const MARIME_LITERA := 26
 const MARIME_TASTA := 20
+const INALTIME_TASTA := 36
 
 ## Cât stă o celulă întoarsă până se întoarce următoarea. Rândul se citește de
 ## la stânga la dreapta, deci se și dezvăluie așa — altfel cinci culori apărute
 ## deodată cer o a doua privire ca să le pui în ordine.
-const PAS_DEZVALUIRE := 0.14
+##
+## 0,30 de pe 3 noiembrie 2026, de la 0,14. Cu întoarcerea adevărată, pasul nu
+## mai e doar un ritm: dacă e mai scurt decât o jumătate de rotire, a doua
+## celulă începe să se întoarcă înainte ca prima să-și fi arătat culoarea, iar
+## rândul se citește tot ca o bufnitură. Pasul trebuie să fie cel puțin cât
+## `DURATA_INTOARCERE`, și e mai mare, ca să rămână un răgaz între ele.
+const PAS_DEZVALUIRE := 0.30
+
+## O jumătate de rotire: celula se strânge până dispare (acolo i se schimbă
+## culoarea și litera), apoi se desface la loc. O întoarcere întreagă ia dublu.
+##
+## Se face pe `scale:y`, nu cu vreo rotație 3D: o celulă turtită pe verticală și
+## desfăcută la loc E întoarcerea, văzută din față — iar un `Control` 2D nu are
+## perspectivă, deci orice altceva ar fi costat o cameră și un viewport pentru
+## un efect de o jumătate de secundă.
+const DURATA_INTOARCERE := 0.22
 
 ## Cele trei rânduri de taste. QWERTY, fiindcă aia e tastatura de sub mâini:
 ## ordinea alfabetică ar fi mai „logică" și ar face căutarea unei litere mai
@@ -129,6 +193,11 @@ const RANDURI_TASTE := [
 ## instanță ar fi recitit fișierul de pe disc la fiecare joc. Aceeași judecată
 ## ca la memoria tipurilor din `puzzle.gd`.
 static var _cuvinte: Array[String] = []
+
+## Ghicirile îngăduite. Un DICȚIONAR, nu un `Array`: la fiecare Enter se
+## întreabă „e cuvântul ăsta înăuntru?", iar `Array.has()` pe 13.000 de intrări
+## le-ar fi citit pe toate. Valorile nu înseamnă nimic — se folosesc cheile.
+static var _acceptate := {}
 
 ## Cuvântul de ghicit, cu litere mici.
 var cuvant := ""
@@ -201,25 +270,110 @@ func _alege_cuvantul(cu_samanta: int) -> String:
 	return _cuvinte[rng.randi() % _cuvinte.size()]
 
 
+## Regulile, pentru panoul Tavernei (vezi `Joc.reguli`).
+##
+## Scrise AICI, lângă constantele pe care le descriu, și compuse DIN ele:
+## `LUNGIME` și `RANDURI` nu sunt scrise de mână în text, iar cele trei culori
+## sunt chiar cele cu care se zugrăvesc celulele. Un text care repetă niște
+## numere ar rămâne în urma lor în ziua în care s-ar schimba — iar „patru
+## litere, cinci încercări" e, după antetul de mai sus, o masă nouă în catalog,
+## deci ziua aia poate veni.
+##
+## Pătratele colorate nu sunt o înfrumusețare: „chihlimbar" scris cu cerneală
+## obișnuită e un cuvânt pe care trebuie să-l traduci în timp ce joci. Un
+## pătrat chihlimbar e chiar regula.
+func reguli() -> Control:
+	var coloana := VBoxContainer.new()
+	coloana.add_theme_constant_override("separation", 14)
+
+	coloana.add_child(_rand_de_reguli(
+		"Ghicești cuvântul din %d încercări. După fiecare încercare, culoarea literelor"
+		% RANDURI
+		+ " îți arată cât de aproape ai fost de a ghici cuvântul:", 17))
+
+	for e in EXEMPLE_REGULI:
+		coloana.add_child(_exemplu_de_reguli(e))
+
+	coloana.add_child(_rand_de_reguli(
+		"Cuvintele sunt românești, de %d litere, scrise fără diacritice (A-Z):"
+		% LUNGIME
+		+ " „masca\", nu „mască\". Tastatura de jos ține minte tot ce ai aflat.", 15))
+	return coloana
+
+
+## Un rând de text din panoul cu reguli.
+func _rand_de_reguli(text: String, marime: int) -> Label:
+	var eticheta := Label.new()
+	eticheta.text = text
+	eticheta.add_theme_font_size_override("font_size", marime)
+	# Culoarea e a MESEI, nu a temei: panoul cu reguli stă pe fond închis, ca
+	# toată masa de când nu mai are tăblie, iar cerneala de pergament a temei
+	# ar fi fost neagră pe negru.
+	eticheta.add_theme_color_override("font_color", CULOARE_LITERA)
+	eticheta.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	eticheta.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	return eticheta
+
+
+## Un rând de exemplu: cinci celule ADEVĂRATE, cu una colorată, și nota de sub
+## ele. Celulele se nasc din `_celula_noua` și se îmbracă prin `_imbraca_celula`
+## — aceleași două funcții care fac grila, deci exemplul nu poate arăta altfel
+## decât jocul.
+func _exemplu_de_reguli(e: Dictionary) -> Control:
+	var cuvant := String(e["cuvant"])
+	var loc := int(e["loc"])
+
+	var grup := VBoxContainer.new()
+	grup.add_theme_constant_override("separation", 6)
+
+	var centru := CenterContainer.new()
+	var rand := HBoxContainer.new()
+	rand.add_theme_constant_override("separation", 6)
+	for i in cuvant.length():
+		var celula := _celula_noua()
+		# Numai litera arătată poartă culoare; restul rămân celule goale cu
+		# litera în ele, exact ca un rând pe care tocmai l-ai scris.
+		_imbraca_celula(celula, cuvant[i], int(e["semn"]) if i == loc else -1)
+		rand.add_child(celula)
+	centru.add_child(rand)
+	grup.add_child(centru)
+
+	grup.add_child(_rand_de_reguli(String(e["nota"]) % cuvant[loc].to_upper(), 15))
+	return grup
+
+
+## Regula se DECLARĂ, nu se descoperă din refuzuri.
+##
+## A cincea aplicare a regulii scrise la enigmele Logicii („un enunț care are
+## nevoie de o convenție o declară"): de când ghicirile se verifică, „ce am
+## voie să scriu" e o convenție, iar un jucător care află de ea dintr-un „nu e
+## un cuvânt" a aflat-o pe pielea lui.
 func rand_de_ajutor() -> String:
-	return "Cuvinte de %d litere, scrise fără diacritice (A-Z). Enter trimite rândul." % LUNGIME
+	return "Cuvinte românești de %d litere, fără diacritice (A-Z). Enter trimite rândul." % LUNGIME
 
 
 ## Citește lista. Chemată de mai multe ori, nu face nimic a doua oară — exact
 ## contractul lui `_pregateste_datele` de la discipline.
 static func _incarca_cuvintele() -> void:
-	if not _cuvinte.is_empty():
-		return
-	var text := FileAccess.get_file_as_string(CALE_CUVINTE)
+	if _cuvinte.is_empty():
+		for c in _citeste(CALE_CUVINTE):
+			_cuvinte.append(String(c))
+	if _acceptate.is_empty():
+		for c in _citeste(CALE_ACCEPTATE):
+			_acceptate[String(c)] = true
+
+
+## Cuvintele dintr-un fișier, sau o listă goală dacă nu se poate citi.
+static func _citeste(cale: String) -> Array:
+	var text := FileAccess.get_file_as_string(cale)
 	if text == "":
-		push_error("Cuvântul ascuns: nu pot citi %s" % CALE_CUVINTE)
-		return
+		push_error("Cuvântul ascuns: nu pot citi %s" % cale)
+		return []
 	var date = JSON.parse_string(text)
 	if typeof(date) != TYPE_DICTIONARY or not date.has("cuvinte"):
-		push_error("Cuvântul ascuns: %s n-are cheia cuvinte." % CALE_CUVINTE)
-		return
-	for c in date["cuvinte"]:
-		_cuvinte.append(String(c))
+		push_error("Cuvântul ascuns: %s n-are cheia cuvinte." % cale)
+		return []
+	return date["cuvinte"]
 
 
 # ─────────────────────────────────────────────────────────────
@@ -307,8 +461,12 @@ func _trimite_randul() -> void:
 	if rand_curent.length() < LUNGIME:
 		_spune("Încă %d litere." % (LUNGIME - rand_curent.length()))
 		return
-	if CERE_CUVANT_DIN_LISTA and not _cuvinte.has(rand_curent):
-		_spune("Nu e în lista mea.")
+	if CERE_CUVANT_DIN_DICTIONAR and not _acceptate.has(rand_curent):
+		# Rândul NU se șterge: ai tastat cinci litere, iar un ecran care ți le
+		# ia înapoi te pune să le scrii din nou ca să schimbi una. Rămân acolo,
+		# de unde le poți corecta cu „Șterge".
+		_spune("%s nu e un cuvânt pe care-l știu." % rand_curent.to_upper())
+		Sunet.reda(Sunet.Efect.GRESIT)
 		return
 
 	var ghicire := rand_curent
@@ -364,18 +522,39 @@ func _construieste_grila() -> void:
 	for r in RANDURI:
 		var rand_celule := []
 		for c in LUNGIME:
-			var celula := PanelContainer.new()
-			celula.custom_minimum_size = Vector2(MARIME_CELULA, MARIME_CELULA)
-			celula.add_theme_stylebox_override("panel", _stil_celula(CULOARE_CELULA, true))
-			var eticheta := Label.new()
-			eticheta.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-			eticheta.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-			eticheta.add_theme_font_size_override("font_size", MARIME_LITERA)
-			eticheta.add_theme_color_override("font_color", CULOARE_LITERA)
-			celula.add_child(eticheta)
+			var celula := _celula_noua()
 			grila.add_child(celula)
 			rand_celule.append(celula)
 		celule.append(rand_celule)
+
+
+## O celulă goală, cu chenar. Folosită de grilă ȘI de rândurile de exemplu din
+## reguli — altfel exemplele ar fi fost niște pătrate care SEAMĂNĂ cu celulele
+## jocului, și ar fi putut rămâne în urma lor la prima schimbare de stil.
+func _celula_noua() -> PanelContainer:
+	var celula := PanelContainer.new()
+	celula.custom_minimum_size = Vector2(MARIME_CELULA, MARIME_CELULA)
+	celula.add_theme_stylebox_override("panel", _stil_celula(CULOARE_CELULA, true))
+	var eticheta := Label.new()
+	eticheta.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	eticheta.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	eticheta.add_theme_font_size_override("font_size", MARIME_LITERA)
+	eticheta.add_theme_color_override("font_color", CULOARE_LITERA)
+	celula.add_child(eticheta)
+	return celula
+
+
+## Pune o literă într-o celulă și o îmbracă după semn. `semn < 0` = celulă
+## neîncepută, adică pergament cu chenar.
+func _imbraca_celula(celula: PanelContainer, litera: String, semn: int) -> void:
+	var eticheta: Label = celula.get_child(0)
+	eticheta.text = litera.to_upper()
+	if semn < 0:
+		celula.add_theme_stylebox_override("panel", _stil_celula(CULOARE_CELULA, true))
+		eticheta.add_theme_color_override("font_color", CULOARE_LITERA)
+		return
+	celula.add_theme_stylebox_override("panel", _stil_celula(_culoare_semn(semn), false))
+	eticheta.add_theme_color_override("font_color", CULOARE_LITERA_PE_FOND)
 
 
 func _construieste_tastatura() -> void:
@@ -407,14 +586,29 @@ func _construieste_tastatura() -> void:
 func _tasta(text: String, latime: int) -> Button:
 	var buton := Button.new()
 	buton.text = text
-	buton.custom_minimum_size = Vector2(latime, 42)
+	buton.custom_minimum_size = Vector2(latime, INALTIME_TASTA)
 	buton.add_theme_font_size_override("font_size", MARIME_TASTA)
 	# FĂRĂ FOCUS, și ăsta nu e un detaliu de stil: un buton care poate lua
 	# focusul ar fi apăsat de tasta Enter, deci „trimite rândul" ar fi scris
 	# ultima literă apăsată cu mouse-ul. Butoanele de aici sunt o a doua mână,
 	# nu o a doua cale de navigare.
 	buton.focus_mode = Control.FOCUS_NONE
+	# Și cele două taste de comandă („Șterge", „Enter") trec pe aici: ele nu
+	# ajung niciodată în `_zugraveste_tastatura`, fiindcă nu sunt litere.
+	_imbraca_tasta_necunoscuta(buton)
 	return buton
+
+
+## O tastă despre care nu se știe încă nimic. Se îmbracă LA FEL ca o celulă
+## goală, și nu din temă: butonul de pergament al temei era, pe fondul
+## întunecat rămas după scoaterea tăbliei, mai luminos decât orice literă pe
+## care o aflaseși. Vezi comentariul de la `CULOARE_CELULA`.
+func _imbraca_tasta_necunoscuta(buton: Button) -> void:
+	buton.add_theme_stylebox_override("normal", _stil_celula(CULOARE_CELULA, true))
+	buton.add_theme_stylebox_override("hover", _stil_celula(Color(1, 1, 1, 0.14), true))
+	buton.add_theme_stylebox_override("pressed", _stil_celula(Color(1, 1, 1, 0.2), true))
+	for nume in ["font_color", "font_hover_color", "font_pressed_color"]:
+		buton.add_theme_color_override(nume, CULOARE_LITERA)
 
 
 ## Chenarul unei celule sau al unei taste.
@@ -435,19 +629,35 @@ func _stil_celula(culoare: Color, cu_chenar: bool) -> StyleBoxFlat:
 func _dezvaluie(rand: int, ghicire: String, semne: Array[int]) -> void:
 	in_dezvaluire = true
 	for c in LUNGIME:
-		_coloreaza_celula(rand, c, ghicire[c], semne[c])
-		await get_tree().create_timer(PAS_DEZVALUIRE).timeout
+		_intoarce_celula(rand, c, ghicire[c], semne[c])
+		if c < LUNGIME - 1:
+			await get_tree().create_timer(PAS_DEZVALUIRE).timeout
+	# Ultima celulă încă se întoarce când bucla s-a terminat: se așteaptă
+	# rotirea ei întreagă, altfel tastatura s-ar colora înaintea literei care
+	# i-a spus ce să scrie.
+	await get_tree().create_timer(DURATA_INTOARCERE * 2.0).timeout
 	_zugraveste_tastatura()
 	in_dezvaluire = false
 
 
-func _coloreaza_celula(rand: int, coloana: int, litera: String, semn: int) -> void:
+## Întoarce o celulă și, la jumătatea rotirii, îi schimbă fața.
+##
+## `pivot_offset` se pune AICI, nu la naștere: o celulă nou făcută n-are încă
+## mărime (containerul i-o dă abia după un cadru de așezare), deci un pivot
+## calculat atunci ar fi fost zero și celula s-ar fi strâns spre colțul de sus.
+func _intoarce_celula(rand: int, coloana: int, litera: String, semn: int) -> void:
 	var celula: PanelContainer = celule[rand][coloana]
-	var culoare := _culoare_semn(semn)
-	celula.add_theme_stylebox_override("panel", _stil_celula(culoare, false))
-	var eticheta: Label = celula.get_child(0)
-	eticheta.text = litera.to_upper()
-	eticheta.add_theme_color_override("font_color", CULOARE_LITERA_PE_FOND)
+	celula.pivot_offset = celula.size / 2.0
+	# Tween-ul atârnă de CELULĂ, nu de scenă: dacă masa se închide la mijlocul
+	# unei rotiri, el moare odată cu ea în loc să scrie într-un nod îngropat.
+	var rotire := celula.create_tween()
+	rotire.tween_property(celula, "scale:y", 0.0, DURATA_INTOARCERE)
+	rotire.tween_callback(_coloreaza_celula.bind(rand, coloana, litera, semn))
+	rotire.tween_property(celula, "scale:y", 1.0, DURATA_INTOARCERE)
+
+
+func _coloreaza_celula(rand: int, coloana: int, litera: String, semn: int) -> void:
+	_imbraca_celula(celule[rand][coloana], litera, semn)
 
 
 func _culoare_semn(semn: int) -> Color:
@@ -479,6 +689,10 @@ func _zugraveste_randul(rand: int) -> void:
 		return
 	for c in LUNGIME:
 		var celula: PanelContainer = celule[rand][c]
+		# O celulă repictată se așază DREAPTĂ: dacă o partidă nouă începe la
+		# mijlocul unei rotiri (sau un tween a fost întrerupt), celula ar fi
+		# rămas turtită pentru tot restul jocului.
+		celula.scale = Vector2.ONE
 		celula.add_theme_stylebox_override("panel", _stil_celula(CULOARE_CELULA, true))
 		var eticheta: Label = celula.get_child(0)
 		eticheta.text = rand_curent[c].to_upper() if (rand == incercari.size() and c < rand_curent.length()) else ""
@@ -497,6 +711,4 @@ func _zugraveste_tastatura() -> void:
 			buton.add_theme_color_override("font_hover_color", CULOARE_LITERA_PE_FOND)
 			buton.add_theme_color_override("font_pressed_color", CULOARE_LITERA_PE_FOND)
 		else:
-			# Fără suprascrieri: tasta se îmbracă din temă, ca orice buton.
-			for nume in ["normal", "hover", "pressed"]:
-				buton.remove_theme_stylebox_override(nume)
+			_imbraca_tasta_necunoscuta(buton)

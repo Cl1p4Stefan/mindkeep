@@ -75,6 +75,26 @@ const CULOARE_RATAT := Color(0.55, 0.22, 0.12)
 @onready var buton_inca_unul: Button = %ButonIncaUnul
 @onready var buton_mese: Button = %ButonMese
 @onready var buton_meniu: Button = %ButonMeniu
+@onready var buton_reguli: Button = %ButonReguli
+@onready var panou_reguli: Control = %PanouReguli
+@onready var reguli_titlu: Label = %ReguliTitlu
+@onready var reguli_cuprins: MarginContainer = %Cuprins
+@onready var buton_inchide_reguli: Button = %ButonInchideReguli
+@onready var suprapunere: Control = %Suprapunere
+
+## Mesele la care regulile ți s-au arătat deja, pe cheie: `{"cuvantul_ascuns": true}`.
+##
+## `static`, ca `_nivel_atins` din Practice, și din același motiv: Taverna e o
+## SCENĂ, care se naște din nou la fiecare intrare. O variabilă de instanță ar
+## fi pornit goală, deci regulile s-ar fi arătat „o dată" la fiecare venire în
+## tavernă — adică de fiecare dată.
+##
+## PE CHEIE, nu un singur adevăr: când Sudoku va fi scris, regulile LUI trebuie
+## să se arate o dată, chiar dacă ai citit deja regulile Cuvântului Ascuns.
+## Două mese, două prime dăți. Cheia e cea din catalog (un TEXT, nu poziția în
+## listă), deci rândurile se pot muta între ele fără ca nimeni să-și uite
+## regulile citite.
+static var _reguli_vazute := {}
 
 ## Masa deschisă acum (rândul din catalog), sau gol.
 var masa_curenta := {}
@@ -86,6 +106,8 @@ func _ready() -> void:
 	buton_meniu.pressed.connect(_pe_meniu)
 	buton_mese.pressed.connect(_arata_mesele)
 	buton_inca_unul.pressed.connect(_inca_unul)
+	buton_reguli.pressed.connect(_arata_regulile)
+	buton_inchide_reguli.pressed.connect(_inchide_regulile)
 	Muzica.reda(Muzica.Piesa.CETATE)
 	_arata_mesele()
 
@@ -102,6 +124,12 @@ func _arata_mesele() -> void:
 	# nicăieri. Un buton care nu face nimic e mai rău decât niciunul: te face
 	# să te întrebi ce-ai ratat.
 	buton_mese.visible = false
+	# Regulile sunt ale unei MESE. Pe ecranul cu mese n-ai deschis niciuna,
+	# deci butonul n-ar ști ale cui reguli să arate — aceeași judecată ca la
+	# „Mesele", care tot aici se ascunde.
+	buton_reguli.visible = false
+	_inchide_regulile()
+	_goleste_cuprinsul()
 	titlu.text = "TAVERNA"
 	# Numărul nu e scris de mână: vine din catalog, deci rândul ăsta rămâne
 	# adevărat când apare a doua masă. Aceeași regulă ca la „ALEGE 3 UNELTE".
@@ -197,6 +225,88 @@ func _deschide_masa(m: Dictionary) -> void:
 	buton_mese.visible = true
 	titlu.text = String(m["nume"])
 	_porneste_jocul()
+	_poate_prima_oara()
+
+
+## PRIMA AȘEZARE la o masă îi deschide regulile. A doua, nu.
+##
+## Se cheamă din `_deschide_masa`, nu din `_porneste_jocul`: a doua pornește și
+## la „Încă unul", iar un panou de reguli peste a treia partidă la rând ar fi
+## chiar lucrul pe care „o singură dată" îl promite că nu se întâmplă.
+##
+## Steagul se scrie pe disc IMEDIAT, nu la plecarea din tavernă: altfel un joc
+## închis din colțul ferestrei ar fi lăsat „prima dată" nescrisă, iar regulile
+## s-ar fi deschis a doua oară — adică exact ce ți s-a promis că nu face.
+func _poate_prima_oara() -> void:
+	if joc == null or not buton_reguli.visible:
+		return
+	var cheie := String(masa_curenta.get("cheie", ""))
+	if cheie == "" or _reguli_vazute.has(cheie):
+		return
+	_reguli_vazute[cheie] = true
+	Arhiva.salveaza_permanent()
+	_arata_regulile()
+
+
+# ─────────────────────────────────────────────────────────────
+# PANOUL CU REGULI
+#
+# Un panou desenat de mine, nu un `AcceptDialog` — aceeași alegere, din același
+# motiv, ca la popup-ul „Află mai multe" din Practice: o fereastră de sistem ar
+# fi venit cu tema ei peste o cameră care și-a ales fiecare culoare.
+#
+# UMBRA E CE-L FACE MODAL pentru mouse (`ColorRect` oprește clickurile din
+# fabrică). Pentru TASTE nu e de-ajuns, și aici e deosebirea față de Practice:
+# masa ascultă tastatura adevărată prin `_unhandled_key_input`, deci cu panoul
+# deschis ai fi scris litere în grilă în timp ce citeai regulile despre ea.
+# De-aia jocului i se oprește ascultarea cât ține panoul.
+# ─────────────────────────────────────────────────────────────
+
+func _arata_regulile() -> void:
+	if joc == null:
+		return
+	if reguli_cuprins.get_child_count() == 0:
+		return
+	panou_reguli.visible = true
+	if joc != null:
+		joc.set_process_unhandled_key_input(false)
+	# Focusul pe buton, deci Enter sau Space închid panoul fără mouse.
+	buton_inchide_reguli.grab_focus()
+
+
+## Închide panoul. Fără gardă pe „era deschis?", ca la Practice: a-l închide de
+## două ori trebuie să coste cât o dată, altfel fiecare loc care-l cheamă ar
+## avea nevoie de propriul `if`.
+func _inchide_regulile() -> void:
+	if not panou_reguli.visible:
+		return
+	panou_reguli.visible = false
+	if joc != null:
+		joc.set_process_unhandled_key_input(true)
+		# Focusul NU se mută pe alt buton, ci se eliberează: un buton cu focus
+		# mănâncă Enter, iar Enter e tasta cu care trimiți rândul. Același
+		# motiv, scris la fel, ca în `_porneste_jocul`.
+		get_viewport().gui_release_focus()
+
+
+## Îngroapă nodul cu reguli al mesei de dinainte. Chemat la fiecare deschidere
+## de masă și la întoarcerea în sala cu mese — altfel regulile Cuvântului
+## Ascuns ar fi rămas în panou când se va așeza cineva la Sudoku.
+func _goleste_cuprinsul() -> void:
+	for copil in reguli_cuprins.get_children():
+		reguli_cuprins.remove_child(copil)
+		copil.queue_free()
+
+
+## ESCAPE închide panoul, fiindcă asta face Escape peste orice se deschide
+## deasupra a altceva. `_unhandled_input`, deci butoanele primesc întâi ce e al
+## lor.
+func _unhandled_input(event: InputEvent) -> void:
+	if not panou_reguli.visible:
+		return
+	if event.is_action_pressed("ui_cancel"):
+		_inchide_regulile()
+		get_viewport().set_input_as_handled()
 
 
 ## Instanțiază masa și pornește o partidă.
@@ -206,7 +316,7 @@ func _deschide_masa(m: Dictionary) -> void:
 ## urmă i se cheamă `porneste()`. Invers, `%Grila` ar fi fost încă `null`.
 func _porneste_jocul() -> void:
 	_inchide_jocul()
-	rand_rezultat.visible = false
+	_arata_rezultatul(false)
 
 	var cale := String(masa_curenta["scena"])
 	var scena: PackedScene = load(cale)
@@ -229,6 +339,21 @@ func _porneste_jocul() -> void:
 	zona_joc.add_child(joc)
 	joc.porneste(Joc.SAMANTA_LIBERA)
 	ajutor.text = joc.rand_de_ajutor()
+	# Butonul „i" e al MESEI, nu al Tavernei: o masă care nu-și scrie regulile
+	# (vezi `Joc.reguli`) nu primește un buton care deschide un panou gol.
+	# Regulile se construiesc O DATĂ, la deschiderea mesei, și stau în panou
+	# până pleci de la ea. Nu la fiecare apăsare pe „i": nodul nu se schimbă
+	# între două deschideri, iar construit de fiecare dată ar fi însemnat și un
+	# al doilea drum doar ca să aflu DACĂ masa are reguli.
+	_goleste_cuprinsul()
+	var cuprins := joc.reguli()
+	buton_reguli.visible = cuprins != null
+	if cuprins != null:
+		reguli_cuprins.add_child(cuprins)
+	# Suprapunerea e fratele jocului în același `PanelContainer`, iar un
+	# `PanelContainer` desenează copiii în ordinea din arbore. Jocul tocmai a
+	# intrat ULTIMUL, deci ar fi acoperit butonul — îl trimitem înapoi deasupra.
+	zona_joc.move_child(suprapunere, -1)
 	# Tastatura adevărată: `_unhandled_key_input` al jocului primește tastele
 	# doar dacă nu le mănâncă altcineva înainte — iar un BUTON cu focus mănâncă
 	# Enter (pentru el, Enter înseamnă „apasă-mă"). Deci focusul se eliberează
@@ -243,7 +368,7 @@ func _pe_joc_terminat(rez: Dictionary) -> void:
 	rezultat.text = ("Ai găsit! " if reusit else "Nu l-ai găsit. ") + String(rez.get("rezumat", ""))
 	rezultat.add_theme_color_override("font_color",
 		CULOARE_REUSIT if reusit else CULOARE_RATAT)
-	rand_rezultat.visible = true
+	_arata_rezultatul(true)
 	# Jocul RĂMÂNE pe ecran, nu e înlocuit de un ecran de rezultat: la Cuvântul
 	# Ascuns, grila terminată E ce vrei să te uiți la ea după ce s-a terminat.
 	# Un panou peste ea ar fi ascuns exact lucrul pe care l-ai câștigat.
@@ -252,6 +377,22 @@ func _pe_joc_terminat(rez: Dictionary) -> void:
 	# în `Sac`, din motivul scris în CLAUDE.md: uneltele de verificare trag mii
 	# de bilete și n-au voie să atingă save-ul adevărat.
 	Arhiva.salveaza_permanent()
+
+
+## Rândul de rezultat se GOLEȘTE, nu se ascunde.
+##
+## Ascuns, el ieșea din socoteala containerului, iar la finalul partidei
+## reintra și fura 52 px de la chenarul mesei — adică grila și tastatura, care
+## intrau fix, cădeau brusc pe sub marginea de jos. Exact ce-ai fi văzut: un
+## joc încadrat bine până în clipa în care l-ai câștigat.
+##
+## Deci locul lui e rezervat de la început (`custom_minimum_size` pe rând, în
+## scenă), iar ce apare și dispare sunt cei doi copii ai lui. Un ecran care își
+## schimbă înălțimea la jumătatea unui joc e un ecran care se poate strica doar
+## într-una din stările lui — adică cea în care nu te uiți când îl măsori.
+func _arata_rezultatul(da: bool) -> void:
+	rezultat.visible = da
+	buton_inca_unul.visible = da
 
 
 func _inca_unul() -> void:
@@ -275,3 +416,34 @@ func _pe_meniu() -> void:
 	# un cuvânt consumat.
 	Arhiva.salveaza_permanent()
 	get_tree().change_scene_to_file(SCENA_MENIU)
+
+
+# ─────────────────────────────────────────────────────────────
+# CE SE SCRIE PE DISC
+#
+# Doar regulile citite. Scorurile, seriile și Monedele nu există încă — vezi
+# „Nu plătește nimic" din antet — iar un câmp pus azi ar fi un număr inventat
+# care intră în save și cere migrare mâine.
+#
+# Forma e cea de la Practice: starea stă în SCENA care o produce, iar `Arhiva`
+# doar adună dicționarele. O LISTĂ de chei, nu dicționarul din memorie: pe disc
+# „ce mese am văzut" e o enumerare, iar valorile `true` ar fi fost un `da`
+# scris de 10 ori lângă 10 chei care există tocmai fiindcă răspunsul e da.
+# ─────────────────────────────────────────────────────────────
+
+static func spre_dictionar() -> Dictionary:
+	var chei := _reguli_vazute.keys()
+	chei.sort()   # ca două salvări ale aceleiași stări să dea același fișier
+	return {"reguli_vazute": chei}
+
+
+## Citit strâmb, ca peste tot: cheie lipsă = n-ai văzut nimic, altceva decât o
+## listă = la fel. Un save mai vechi (fără cheia asta) deschide regulile o dată,
+## ceea ce e chiar purtarea de la prima instalare — deci nu are nevoie de
+## migrare.
+static func din_dictionar(date: Dictionary) -> void:
+	_reguli_vazute.clear()
+	var lista = date.get("reguli_vazute")
+	if lista is Array:
+		for cheie in lista:
+			_reguli_vazute[String(cheie)] = true

@@ -136,6 +136,37 @@ func rand_de_ajutor() -> String:
 # CE IMPLEMENTEAZĂ MASA
 # ─────────────────────────────────────────────────────────────
 
+## REGULILE jocului, pentru panoul pe care-l deschide Taverna. OPȚIONAL.
+##
+## `null` = masa n-are ce explica: Taverna nu deschide nimic la prima așezare
+## și nu arată butonul „i". Aceeași formă ca `rand_de_ajutor()` — un joc care
+## se explică singur din ecran nu plătește nimic pentru o funcție pe care n-o
+## scrie.
+##
+## DE CE REGULILE SUNT ALE MESEI, nu ale Tavernei: dacă Taverna le-ar ține
+## într-un tabel, un joc nou s-ar scrie în două locuri, iar textul ar putea
+## rămâne în urma codului fără ca nimic să se plângă. Aici stau lângă
+## constantele pe care le descriu — `LUNGIME`, `RANDURI` și chiar culorile.
+##
+## DE CE UN NOD, și nu un text. A fost un `String` o zi, cu etichete BBCode și
+## cu pătrate de culoare scrise ca „███". Mergea, și totuși spunea mai puțin:
+## regulile unui joc de grilă se înțeleg uitându-te la TREI RÂNDURI ADEVĂRATE,
+## nu citind despre ele. Un nod poate purta chiar celulele jocului, construite
+## de aceleași funcții — deci exemplul nu poate ajunge să arate altfel decât
+## masa pe care o explică.
+##
+## E chiar judecata scrisă la cârligul de desenare din `puzzle.gd`
+## (`_plansa_pentru`): baza nu poate construi ce nu știe, deci primește un NOD,
+## nu o listă de forme. Taverna îi pune un titlu deasupra și un „✕" în colț, și
+## nu se uită niciodată înăuntru.
+##
+## Nodul nu mai e al tău după ce-l dai: Taverna îl pune în panoul ei și îl
+## îngroapă când pleci de la masă. Se cheamă O DATĂ, la deschiderea mesei, deci
+## nu-l ține într-o variabilă și nu te baza pe el după aceea.
+func reguli() -> Control:
+	return null
+
+
 ## Construiește-ți masa. OBLIGATORIU.
 ##
 ## `push_error` și nu o scenă goală: o masă fără `_porneste` e un fișier
