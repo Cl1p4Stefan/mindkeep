@@ -1,23 +1,11 @@
-[gd_scene load_steps=18 format=3]
+[gd_scene format=3 uid="uid://1wosn77r3gji"]
 
-[ext_resource type="Script" path="res://scenes/harta/harta.gd" id="1_harta"]
-[ext_resource type="Script" path="res://scenes/harta/panza.gd" id="2_panza"]
-[ext_resource type="Texture2D" path="res://assets/art/campaign_map.jpg" id="3_pergament"]
-[ext_resource type="Script" path="res://scenes/harta/iconita_resursa.gd" id="4_iconita"]
-[ext_resource type="FontFile" path="res://assets/fonturi/Cinzel.ttf" id="5_cinzel"]
-[ext_resource type="Script" path="res://scenes/harta/carte_harta.gd" id="6_carte"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panou"]
-bg_color = Color(0.13, 0.13, 0.17, 1)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0.32, 0.32, 0.4, 1)
-corner_radius_top_left = 14
-corner_radius_top_right = 14
-corner_radius_bottom_right = 14
-corner_radius_bottom_left = 14
+[ext_resource type="Script" uid="uid://c8nujcv14bmju" path="res://scenes/harta/harta.gd" id="1_harta"]
+[ext_resource type="Script" uid="uid://bhf4i0wwxnsvj" path="res://scenes/harta/panza.gd" id="2_panza"]
+[ext_resource type="Texture2D" uid="uid://bdq17cq604s14" path="res://assets/art/campaign_map.jpg" id="3_pergament"]
+[ext_resource type="Script" uid="uid://nbs43mesh6v5" path="res://scenes/harta/iconita_resursa.gd" id="4_iconita"]
+[ext_resource type="FontFile" uid="uid://cv0slycqeuxgm" path="res://assets/fonturi/Cinzel.ttf" id="5_cinzel"]
+[ext_resource type="Script" uid="uid://b68ri67ik4vss" path="res://scenes/harta/carte_harta.gd" id="6_carte"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_placuta"]
 content_margin_left = 14.0
@@ -46,6 +34,22 @@ variation_opentype = {
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_meniu"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_meniu_apasat"]
+content_margin_left = 14.0
+content_margin_top = 4.0
+content_margin_right = 14.0
+content_margin_bottom = 4.0
+bg_color = Color(0.11, 0.07, 0.04, 0.92)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.78, 0.62, 0.34, 0.85)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_meniu_survolat"]
 content_margin_left = 14.0
 content_margin_top = 4.0
@@ -62,21 +66,17 @@ corner_radius_top_right = 6
 corner_radius_bottom_right = 6
 corner_radius_bottom_left = 6
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_meniu_apasat"]
-content_margin_left = 14.0
-content_margin_top = 4.0
-content_margin_right = 14.0
-content_margin_bottom = 4.0
-bg_color = Color(0.11, 0.07, 0.04, 0.92)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panou"]
+bg_color = Color(0.13, 0.13, 0.17, 1)
 border_width_left = 1
 border_width_top = 1
 border_width_right = 1
 border_width_bottom = 1
-border_color = Color(0.78, 0.62, 0.34, 0.85)
-corner_radius_top_left = 6
-corner_radius_top_right = 6
-corner_radius_bottom_right = 6
-corner_radius_bottom_left = 6
+border_color = Color(0.32, 0.32, 0.4, 1)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
 
 [sub_resource type="FontVariation" id="FontVariation_buton"]
 base_font = ExtResource("5_cinzel")
@@ -103,6 +103,22 @@ shadow_color = Color(0.08, 0.05, 0.02, 0.5)
 shadow_size = 8
 shadow_offset = Vector2(0, 3)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pornire_apasat"]
+content_margin_left = 28.0
+content_margin_top = 12.0
+content_margin_right = 28.0
+content_margin_bottom = 8.0
+bg_color = Color(0.16, 0.1, 0.04, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.82, 0.65, 0.35, 0.9)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pornire_survolat"]
 content_margin_left = 28.0
 content_margin_top = 10.0
@@ -122,22 +138,6 @@ shadow_color = Color(0.5, 0.36, 0.12, 0.45)
 shadow_size = 12
 shadow_offset = Vector2(0, 2)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pornire_apasat"]
-content_margin_left = 28.0
-content_margin_top = 12.0
-content_margin_right = 28.0
-content_margin_bottom = 8.0
-bg_color = Color(0.16, 0.1, 0.04, 1)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0.82, 0.65, 0.35, 0.9)
-corner_radius_top_left = 8
-corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pornire_stins"]
 content_margin_left = 28.0
 content_margin_top = 10.0
@@ -154,7 +154,7 @@ corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
-[node name="Harta" type="Control"]
+[node name="Harta" type="Control" unique_id=1561255529]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -163,7 +163,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_harta")
 
-[node name="Fundal" type="ColorRect" parent="."]
+[node name="Fundal" type="ColorRect" parent="." unique_id=1545612968]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -172,7 +172,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.08, 0.06, 0.04, 1)
 
-[node name="Pergament" type="TextureRect" parent="."]
+[node name="Pergament" type="TextureRect" parent="." unique_id=983214680]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -183,7 +183,7 @@ mouse_filter = 2
 texture = ExtResource("3_pergament")
 expand_mode = 1
 
-[node name="Panza" type="Control" parent="."]
+[node name="Panza" type="Control" parent="." unique_id=35208949]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
@@ -197,7 +197,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("2_panza")
 
-[node name="Margini" type="MarginContainer" parent="."]
+[node name="Margini" type="MarginContainer" parent="." unique_id=333020720]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -210,123 +210,117 @@ theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 32
 theme_override_constants/margin_bottom = 12
 
-[node name="Coloana" type="VBoxContainer" parent="Margini"]
+[node name="Coloana" type="VBoxContainer" parent="Margini" unique_id=1471290866]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 12
 
-[node name="Antet" type="HBoxContainer" parent="Margini/Coloana"]
+[node name="Antet" type="HBoxContainer" parent="Margini/Coloana" unique_id=323525137]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 18
 
-[node name="Spatiu" type="Control" parent="Margini/Coloana/Antet"]
+[node name="Spatiu" type="Control" parent="Margini/Coloana/Antet" unique_id=1589339116]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
 
-[node name="Placuta" type="PanelContainer" parent="Margini/Coloana/Antet"]
+[node name="Placuta" type="PanelContainer" parent="Margini/Coloana/Antet" unique_id=1017728091]
 layout_mode = 2
 size_flags_vertical = 0
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_placuta")
 
-[node name="Resurse" type="HBoxContainer" parent="Margini/Coloana/Antet/Placuta"]
+[node name="Resurse" type="HBoxContainer" parent="Margini/Coloana/Antet/Placuta" unique_id=1977392426]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 14
 
-[node name="GrupPV" type="HBoxContainer" parent="Margini/Coloana/Antet/Placuta/Resurse"]
+[node name="GrupPV" type="HBoxContainer" parent="Margini/Coloana/Antet/Placuta/Resurse" unique_id=985016686]
 layout_mode = 2
 tooltip_text = "Viata regelui. La zero, expeditia e pierduta."
-mouse_filter = 1
 theme_override_constants/separation = 6
 
-[node name="IconitaPV" type="Control" parent="Margini/Coloana/Antet/Placuta/Resurse/GrupPV"]
+[node name="IconitaPV" type="Control" parent="Margini/Coloana/Antet/Placuta/Resurse/GrupPV" unique_id=106520592]
+texture_filter = 4
 custom_minimum_size = Vector2(26, 26)
 layout_mode = 2
 size_flags_vertical = 4
 mouse_filter = 2
-texture_filter = 4
 script = ExtResource("4_iconita")
 
-[node name="PV" type="Label" parent="Margini/Coloana/Antet/Placuta/Resurse/GrupPV"]
+[node name="PV" type="Label" parent="Margini/Coloana/Antet/Placuta/Resurse/GrupPV" unique_id=338817456]
 unique_name_in_owner = true
 layout_mode = 2
-mouse_filter = 2
 theme_override_colors/font_color = Color(0.96, 0.9, 0.76, 1)
 theme_override_fonts/font = SubResource("FontVariation_cifre")
 theme_override_font_sizes/font_size = 18
 text = "0 / 0"
 
-[node name="Despartitor1" type="ColorRect" parent="Margini/Coloana/Antet/Placuta/Resurse"]
+[node name="Despartitor1" type="ColorRect" parent="Margini/Coloana/Antet/Placuta/Resurse" unique_id=336988687]
 custom_minimum_size = Vector2(1, 18)
 layout_mode = 2
 size_flags_vertical = 4
 mouse_filter = 2
 color = Color(0.78, 0.62, 0.34, 0.4)
 
-[node name="GrupMonede" type="HBoxContainer" parent="Margini/Coloana/Antet/Placuta/Resurse"]
+[node name="GrupMonede" type="HBoxContainer" parent="Margini/Coloana/Antet/Placuta/Resurse" unique_id=1021413671]
 layout_mode = 2
 tooltip_text = "Monede: ce ai pe drumul asta. Se cheltuie la Magazin."
-mouse_filter = 1
 theme_override_constants/separation = 6
 
-[node name="IconitaMonede" type="Control" parent="Margini/Coloana/Antet/Placuta/Resurse/GrupMonede"]
+[node name="IconitaMonede" type="Control" parent="Margini/Coloana/Antet/Placuta/Resurse/GrupMonede" unique_id=1263172602]
+texture_filter = 4
 custom_minimum_size = Vector2(26, 26)
 layout_mode = 2
 size_flags_vertical = 4
 mouse_filter = 2
-texture_filter = 4
 script = ExtResource("4_iconita")
 fel = 1
 
-[node name="Monede" type="Label" parent="Margini/Coloana/Antet/Placuta/Resurse/GrupMonede"]
+[node name="Monede" type="Label" parent="Margini/Coloana/Antet/Placuta/Resurse/GrupMonede" unique_id=1656772231]
 unique_name_in_owner = true
 layout_mode = 2
-mouse_filter = 2
 theme_override_colors/font_color = Color(0.96, 0.9, 0.76, 1)
 theme_override_fonts/font = SubResource("FontVariation_cifre")
 theme_override_font_sizes/font_size = 18
 text = "0"
 
-[node name="Despartitor2" type="ColorRect" parent="Margini/Coloana/Antet/Placuta/Resurse"]
+[node name="Despartitor2" type="ColorRect" parent="Margini/Coloana/Antet/Placuta/Resurse" unique_id=812834759]
 custom_minimum_size = Vector2(1, 18)
 layout_mode = 2
 size_flags_vertical = 4
 mouse_filter = 2
 color = Color(0.78, 0.62, 0.34, 0.4)
 
-[node name="GrupFragmente" type="HBoxContainer" parent="Margini/Coloana/Antet/Placuta/Resurse"]
+[node name="GrupFragmente" type="HBoxContainer" parent="Margini/Coloana/Antet/Placuta/Resurse" unique_id=1737941342]
 layout_mode = 2
 tooltip_text = "Fragmente: averea care ramane, si dupa expeditie."
-mouse_filter = 1
 theme_override_constants/separation = 6
 
-[node name="IconitaFragmente" type="Control" parent="Margini/Coloana/Antet/Placuta/Resurse/GrupFragmente"]
+[node name="IconitaFragmente" type="Control" parent="Margini/Coloana/Antet/Placuta/Resurse/GrupFragmente" unique_id=1638452393]
+texture_filter = 4
 custom_minimum_size = Vector2(26, 26)
 layout_mode = 2
 size_flags_vertical = 4
 mouse_filter = 2
-texture_filter = 4
 script = ExtResource("4_iconita")
 fel = 2
 
-[node name="Fragmente" type="Label" parent="Margini/Coloana/Antet/Placuta/Resurse/GrupFragmente"]
+[node name="Fragmente" type="Label" parent="Margini/Coloana/Antet/Placuta/Resurse/GrupFragmente" unique_id=1818815904]
 unique_name_in_owner = true
 layout_mode = 2
-mouse_filter = 2
 theme_override_colors/font_color = Color(0.96, 0.9, 0.76, 1)
 theme_override_fonts/font = SubResource("FontVariation_cifre")
 theme_override_font_sizes/font_size = 18
 text = "0"
 
-[node name="Gol" type="Control" parent="Margini/Coloana"]
+[node name="Gol" type="Control" parent="Margini/Coloana" unique_id=594900246]
 layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 2
 
-[node name="HartaMeniu" type="Button" parent="Margini/Coloana"]
+[node name="HartaMeniu" type="Button" parent="Margini/Coloana" unique_id=45452455]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(110, 34)
 layout_mode = 2
@@ -334,19 +328,19 @@ size_flags_horizontal = 4
 focus_mode = 0
 mouse_default_cursor_shape = 2
 theme_override_colors/font_color = Color(0.96, 0.9, 0.76, 1)
-theme_override_colors/font_hover_color = Color(1, 0.95, 0.82, 1)
 theme_override_colors/font_pressed_color = Color(0.9, 0.8, 0.6, 1)
+theme_override_colors/font_hover_color = Color(1, 0.95, 0.82, 1)
 theme_override_colors/font_outline_color = Color(0.09, 0.06, 0.04, 0.9)
 theme_override_constants/outline_size = 6
 theme_override_fonts/font = SubResource("FontVariation_cifre")
 theme_override_font_sizes/font_size = 15
 theme_override_styles/normal = SubResource("StyleBoxEmpty_meniu")
-theme_override_styles/hover = SubResource("StyleBoxFlat_meniu_survolat")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_meniu_apasat")
+theme_override_styles/hover = SubResource("StyleBoxFlat_meniu_survolat")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_meniu")
 text = "Meniu"
 
-[node name="Carte" type="Control" parent="."]
+[node name="Carte" type="Control" parent="." unique_id=2127873345]
 unique_name_in_owner = true
 visible = false
 layout_mode = 1
@@ -360,7 +354,7 @@ mouse_default_cursor_shape = 2
 script = ExtResource("6_carte")
 fundal = ExtResource("3_pergament")
 
-[node name="PanouLoadout" type="Control" parent="."]
+[node name="PanouLoadout" type="Control" parent="." unique_id=1614522084]
 unique_name_in_owner = true
 visible = false
 layout_mode = 1
@@ -370,7 +364,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Voal" type="ColorRect" parent="PanouLoadout"]
+[node name="Voal" type="ColorRect" parent="PanouLoadout" unique_id=1375345867]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -379,7 +373,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.04, 0.04, 0.06, 0.88)
 
-[node name="Centru" type="CenterContainer" parent="PanouLoadout"]
+[node name="Centru" type="CenterContainer" parent="PanouLoadout" unique_id=642088046]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -388,23 +382,23 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="Panou" type="PanelContainer" parent="PanouLoadout/Centru"]
+[node name="Panou" type="PanelContainer" parent="PanouLoadout/Centru" unique_id=1766625250]
 custom_minimum_size = Vector2(1000, 0)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_panou")
 
-[node name="Margini" type="MarginContainer" parent="PanouLoadout/Centru/Panou"]
+[node name="Margini" type="MarginContainer" parent="PanouLoadout/Centru/Panou" unique_id=175430039]
 layout_mode = 2
 theme_override_constants/margin_left = 30
 theme_override_constants/margin_top = 26
 theme_override_constants/margin_right = 30
 theme_override_constants/margin_bottom = 26
 
-[node name="Coloana" type="VBoxContainer" parent="PanouLoadout/Centru/Panou/Margini"]
+[node name="Coloana" type="VBoxContainer" parent="PanouLoadout/Centru/Panou/Margini" unique_id=718819409]
 layout_mode = 2
 theme_override_constants/separation = 14
 
-[node name="LoadoutTitlu" type="Label" parent="PanouLoadout/Centru/Panou/Margini/Coloana"]
+[node name="LoadoutTitlu" type="Label" parent="PanouLoadout/Centru/Panou/Margini/Coloana" unique_id=797380267]
 unique_name_in_owner = true
 modulate = Color(1, 0.85, 0.45, 1)
 layout_mode = 2
@@ -412,7 +406,7 @@ theme_override_font_sizes/font_size = 30
 text = "..."
 horizontal_alignment = 1
 
-[node name="LoadoutSubtitlu" type="Label" parent="PanouLoadout/Centru/Panou/Margini/Coloana"]
+[node name="LoadoutSubtitlu" type="Label" parent="PanouLoadout/Centru/Panou/Margini/Coloana" unique_id=1797755484]
 unique_name_in_owner = true
 modulate = Color(0.78, 0.78, 0.86, 1)
 layout_mode = 2
@@ -421,58 +415,58 @@ text = "..."
 horizontal_alignment = 1
 autowrap_mode = 3
 
-[node name="LoadoutSpatiu" type="Control" parent="PanouLoadout/Centru/Panou/Margini/Coloana"]
+[node name="LoadoutSpatiu" type="Control" parent="PanouLoadout/Centru/Panou/Margini/Coloana" unique_id=2114076336]
 custom_minimum_size = Vector2(0, 18)
 layout_mode = 2
 mouse_filter = 2
 
-[node name="LoadoutLista" type="GridContainer" parent="PanouLoadout/Centru/Panou/Margini/Coloana"]
+[node name="LoadoutLista" type="GridContainer" parent="PanouLoadout/Centru/Panou/Margini/Coloana" unique_id=1207868924]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/h_separation = 16
 theme_override_constants/v_separation = 14
 columns = 4
 
-[node name="LoadoutSpatiuJos" type="Control" parent="PanouLoadout/Centru/Panou/Margini/Coloana"]
+[node name="LoadoutSpatiuJos" type="Control" parent="PanouLoadout/Centru/Panou/Margini/Coloana" unique_id=1138458789]
 custom_minimum_size = Vector2(0, 18)
 layout_mode = 2
 mouse_filter = 2
 
-[node name="LoadoutButon" type="Button" parent="PanouLoadout/Centru/Panou/Margini/Coloana"]
+[node name="LoadoutButon" type="Button" parent="PanouLoadout/Centru/Panou/Margini/Coloana" unique_id=1031497291]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(340, 0)
 layout_mode = 2
 size_flags_horizontal = 4
-disabled = true
 theme_override_colors/font_color = Color(1, 0.87, 0.52, 1)
-theme_override_colors/font_hover_color = Color(1, 0.95, 0.75, 1)
 theme_override_colors/font_pressed_color = Color(1, 0.87, 0.52, 1)
+theme_override_colors/font_hover_color = Color(1, 0.95, 0.75, 1)
 theme_override_colors/font_disabled_color = Color(0.55, 0.55, 0.62, 1)
-theme_override_font_sizes/font_size = 20
 theme_override_fonts/font = SubResource("FontVariation_buton")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_meniu")
+theme_override_font_sizes/font_size = 20
 theme_override_styles/normal = SubResource("StyleBoxFlat_pornire")
-theme_override_styles/hover = SubResource("StyleBoxFlat_pornire_survolat")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_pornire_apasat")
+theme_override_styles/hover = SubResource("StyleBoxFlat_pornire_survolat")
 theme_override_styles/disabled = SubResource("StyleBoxFlat_pornire_stins")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_meniu")
+disabled = true
 text = "Porneste expeditia"
 
-[node name="LoadoutMeniu" type="Button" parent="PanouLoadout/Centru/Panou/Margini/Coloana"]
+[node name="LoadoutMeniu" type="Button" parent="PanouLoadout/Centru/Panou/Margini/Coloana" unique_id=701214898]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(180, 40)
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_colors/font_color = Color(0.66, 0.66, 0.74, 1)
-theme_override_colors/font_hover_color = Color(1, 0.87, 0.52, 1)
 theme_override_colors/font_pressed_color = Color(1, 0.87, 0.52, 1)
+theme_override_colors/font_hover_color = Color(1, 0.87, 0.52, 1)
 theme_override_font_sizes/font_size = 15
-theme_override_styles/focus = SubResource("StyleBoxEmpty_meniu")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_meniu")
-theme_override_styles/hover = SubResource("StyleBoxFlat_meniu_survolat")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_meniu_apasat")
+theme_override_styles/hover = SubResource("StyleBoxFlat_meniu_survolat")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_meniu")
 text = "Meniu"
 
-[node name="PanouSumar" type="Control" parent="."]
+[node name="PanouSumar" type="Control" parent="." unique_id=906705829]
 unique_name_in_owner = true
 visible = false
 layout_mode = 1
@@ -482,7 +476,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Voal" type="ColorRect" parent="PanouSumar"]
+[node name="Voal" type="ColorRect" parent="PanouSumar" unique_id=1482742991]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -491,7 +485,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.04, 0.04, 0.06, 0.88)
 
-[node name="Centru" type="CenterContainer" parent="PanouSumar"]
+[node name="Centru" type="CenterContainer" parent="PanouSumar" unique_id=827369508]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -500,23 +494,23 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="Panou" type="PanelContainer" parent="PanouSumar/Centru"]
+[node name="Panou" type="PanelContainer" parent="PanouSumar/Centru" unique_id=43698945]
 custom_minimum_size = Vector2(500, 0)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_panou")
 
-[node name="Margini" type="MarginContainer" parent="PanouSumar/Centru/Panou"]
+[node name="Margini" type="MarginContainer" parent="PanouSumar/Centru/Panou" unique_id=2007014910]
 layout_mode = 2
 theme_override_constants/margin_left = 30
 theme_override_constants/margin_top = 26
 theme_override_constants/margin_right = 30
 theme_override_constants/margin_bottom = 26
 
-[node name="Coloana" type="VBoxContainer" parent="PanouSumar/Centru/Panou/Margini"]
+[node name="Coloana" type="VBoxContainer" parent="PanouSumar/Centru/Panou/Margini" unique_id=1742441201]
 layout_mode = 2
 theme_override_constants/separation = 16
 
-[node name="SumarTitlu" type="Label" parent="PanouSumar/Centru/Panou/Margini/Coloana"]
+[node name="SumarTitlu" type="Label" parent="PanouSumar/Centru/Panou/Margini/Coloana" unique_id=888671042]
 unique_name_in_owner = true
 modulate = Color(1, 0.85, 0.45, 1)
 layout_mode = 2
@@ -524,7 +518,7 @@ theme_override_font_sizes/font_size = 34
 text = "EXPEDITIE INCHEIATA"
 horizontal_alignment = 1
 
-[node name="SumarText" type="Label" parent="PanouSumar/Centru/Panou/Margini/Coloana"]
+[node name="SumarText" type="Label" parent="PanouSumar/Centru/Panou/Margini/Coloana" unique_id=1622366330]
 unique_name_in_owner = true
 modulate = Color(0.78, 0.78, 0.86, 1)
 layout_mode = 2
@@ -533,25 +527,25 @@ text = "..."
 horizontal_alignment = 1
 autowrap_mode = 3
 
-[node name="SumarRanduri" type="VBoxContainer" parent="PanouSumar/Centru/Panou/Margini/Coloana"]
+[node name="SumarRanduri" type="VBoxContainer" parent="PanouSumar/Centru/Panou/Margini/Coloana" unique_id=1480676025]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/separation = 6
 
-[node name="SumarButon" type="Button" parent="PanouSumar/Centru/Panou/Margini/Coloana"]
+[node name="SumarButon" type="Button" parent="PanouSumar/Centru/Panou/Margini/Coloana" unique_id=753651576]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 48)
 layout_mode = 2
 text = "Expeditie noua"
 
-[node name="SumarMeniu" type="Button" parent="PanouSumar/Centru/Panou/Margini/Coloana"]
+[node name="SumarMeniu" type="Button" parent="PanouSumar/Centru/Panou/Margini/Coloana" unique_id=570139683]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
 theme_override_font_sizes/font_size = 14
 text = "Meniu"
 
-[node name="PanouMesaj" type="Control" parent="."]
+[node name="PanouMesaj" type="Control" parent="." unique_id=1666466879]
 unique_name_in_owner = true
 visible = false
 layout_mode = 1
@@ -561,7 +555,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Voal" type="ColorRect" parent="PanouMesaj"]
+[node name="Voal" type="ColorRect" parent="PanouMesaj" unique_id=638822104]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -570,7 +564,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.04, 0.04, 0.06, 0.76)
 
-[node name="Centru" type="CenterContainer" parent="PanouMesaj"]
+[node name="Centru" type="CenterContainer" parent="PanouMesaj" unique_id=447382090]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -579,23 +573,23 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="Panou" type="PanelContainer" parent="PanouMesaj/Centru"]
+[node name="Panou" type="PanelContainer" parent="PanouMesaj/Centru" unique_id=2147408328]
 custom_minimum_size = Vector2(420, 0)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_panou")
 
-[node name="Margini" type="MarginContainer" parent="PanouMesaj/Centru/Panou"]
+[node name="Margini" type="MarginContainer" parent="PanouMesaj/Centru/Panou" unique_id=694871755]
 layout_mode = 2
 theme_override_constants/margin_left = 28
 theme_override_constants/margin_top = 24
 theme_override_constants/margin_right = 28
 theme_override_constants/margin_bottom = 24
 
-[node name="Coloana" type="VBoxContainer" parent="PanouMesaj/Centru/Panou/Margini"]
+[node name="Coloana" type="VBoxContainer" parent="PanouMesaj/Centru/Panou/Margini" unique_id=721506066]
 layout_mode = 2
 theme_override_constants/separation = 14
 
-[node name="MesajTitlu" type="Label" parent="PanouMesaj/Centru/Panou/Margini/Coloana"]
+[node name="MesajTitlu" type="Label" parent="PanouMesaj/Centru/Panou/Margini/Coloana" unique_id=614226470]
 unique_name_in_owner = true
 modulate = Color(1, 0.85, 0.45, 1)
 layout_mode = 2
@@ -603,7 +597,7 @@ theme_override_font_sizes/font_size = 26
 text = "..."
 horizontal_alignment = 1
 
-[node name="MesajText" type="Label" parent="PanouMesaj/Centru/Panou/Margini/Coloana"]
+[node name="MesajText" type="Label" parent="PanouMesaj/Centru/Panou/Margini/Coloana" unique_id=1278459933]
 unique_name_in_owner = true
 modulate = Color(0.78, 0.78, 0.86, 1)
 layout_mode = 2
@@ -612,13 +606,13 @@ text = "..."
 horizontal_alignment = 1
 autowrap_mode = 3
 
-[node name="MesajButon" type="Button" parent="PanouMesaj/Centru/Panou/Margini/Coloana"]
+[node name="MesajButon" type="Button" parent="PanouMesaj/Centru/Panou/Margini/Coloana" unique_id=1551677974]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 44)
 layout_mode = 2
 text = "Mai departe"
 
-[node name="PanouMagazin" type="Control" parent="."]
+[node name="PanouMagazin" type="Control" parent="." unique_id=1640509769]
 unique_name_in_owner = true
 visible = false
 layout_mode = 1
@@ -628,7 +622,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Voal" type="ColorRect" parent="PanouMagazin"]
+[node name="Voal" type="ColorRect" parent="PanouMagazin" unique_id=1042732284]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -637,7 +631,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.04, 0.04, 0.06, 0.82)
 
-[node name="Centru" type="CenterContainer" parent="PanouMagazin"]
+[node name="Centru" type="CenterContainer" parent="PanouMagazin" unique_id=864711610]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -646,30 +640,30 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="Panou" type="PanelContainer" parent="PanouMagazin/Centru"]
+[node name="Panou" type="PanelContainer" parent="PanouMagazin/Centru" unique_id=1364914813]
 custom_minimum_size = Vector2(520, 0)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_panou")
 
-[node name="Margini" type="MarginContainer" parent="PanouMagazin/Centru/Panou"]
+[node name="Margini" type="MarginContainer" parent="PanouMagazin/Centru/Panou" unique_id=1879699595]
 layout_mode = 2
 theme_override_constants/margin_left = 30
 theme_override_constants/margin_top = 26
 theme_override_constants/margin_right = 30
 theme_override_constants/margin_bottom = 26
 
-[node name="Coloana" type="VBoxContainer" parent="PanouMagazin/Centru/Panou/Margini"]
+[node name="Coloana" type="VBoxContainer" parent="PanouMagazin/Centru/Panou/Margini" unique_id=783628083]
 layout_mode = 2
 theme_override_constants/separation = 14
 
-[node name="MagazinTitlu" type="Label" parent="PanouMagazin/Centru/Panou/Margini/Coloana"]
+[node name="MagazinTitlu" type="Label" parent="PanouMagazin/Centru/Panou/Margini/Coloana" unique_id=883383188]
 modulate = Color(1, 0.85, 0.45, 1)
 layout_mode = 2
 theme_override_font_sizes/font_size = 28
 text = "MAGAZIN"
 horizontal_alignment = 1
 
-[node name="MagazinSubtitlu" type="Label" parent="PanouMagazin/Centru/Panou/Margini/Coloana"]
+[node name="MagazinSubtitlu" type="Label" parent="PanouMagazin/Centru/Panou/Margini/Coloana" unique_id=405229330]
 unique_name_in_owner = true
 modulate = Color(0.78, 0.78, 0.86, 1)
 layout_mode = 2
@@ -678,18 +672,18 @@ text = "..."
 horizontal_alignment = 1
 autowrap_mode = 3
 
-[node name="MagazinLista" type="VBoxContainer" parent="PanouMagazin/Centru/Panou/Margini/Coloana"]
+[node name="MagazinLista" type="VBoxContainer" parent="PanouMagazin/Centru/Panou/Margini/Coloana" unique_id=1242980270]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="MagazinButon" type="Button" parent="PanouMagazin/Centru/Panou/Margini/Coloana"]
+[node name="MagazinButon" type="Button" parent="PanouMagazin/Centru/Panou/Margini/Coloana" unique_id=175627813]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 44)
 layout_mode = 2
 text = "Pleaca mai departe"
 
-[node name="PanouCarte" type="Control" parent="."]
+[node name="PanouCarte" type="Control" parent="." unique_id=947255021]
 unique_name_in_owner = true
 visible = false
 layout_mode = 1
@@ -699,7 +693,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="CarteVoal" type="ColorRect" parent="PanouCarte"]
+[node name="CarteVoal" type="ColorRect" parent="PanouCarte" unique_id=488353727]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
@@ -709,7 +703,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.04, 0.03, 0.02, 0.72)
 
-[node name="Centru" type="CenterContainer" parent="PanouCarte"]
+[node name="Centru" type="CenterContainer" parent="PanouCarte" unique_id=234497777]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -718,23 +712,23 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="Panou" type="PanelContainer" parent="PanouCarte/Centru"]
+[node name="Panou" type="PanelContainer" parent="PanouCarte/Centru" unique_id=507835128]
 custom_minimum_size = Vector2(560, 0)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_placuta")
 
-[node name="Margini" type="MarginContainer" parent="PanouCarte/Centru/Panou"]
+[node name="Margini" type="MarginContainer" parent="PanouCarte/Centru/Panou" unique_id=844642280]
 layout_mode = 2
 theme_override_constants/margin_left = 22
 theme_override_constants/margin_top = 16
 theme_override_constants/margin_right = 22
 theme_override_constants/margin_bottom = 14
 
-[node name="Coloana" type="VBoxContainer" parent="PanouCarte/Centru/Panou/Margini"]
+[node name="Coloana" type="VBoxContainer" parent="PanouCarte/Centru/Panou/Margini" unique_id=1457273280]
 layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="CarteTitlu" type="Label" parent="PanouCarte/Centru/Panou/Margini/Coloana"]
+[node name="CarteTitlu" type="Label" parent="PanouCarte/Centru/Panou/Margini/Coloana" unique_id=2023507047]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.96, 0.9, 0.76, 1)
 theme_override_fonts/font = SubResource("FontVariation_cifre")
@@ -742,7 +736,7 @@ theme_override_font_sizes/font_size = 24
 text = "CRONICILE"
 horizontal_alignment = 1
 
-[node name="CarteSubtitlu" type="Label" parent="PanouCarte/Centru/Panou/Margini/Coloana"]
+[node name="CarteSubtitlu" type="Label" parent="PanouCarte/Centru/Panou/Margini/Coloana" unique_id=2131660159]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(516, 0)
 layout_mode = 2
@@ -752,12 +746,12 @@ text = "..."
 horizontal_alignment = 1
 autowrap_mode = 3
 
-[node name="CarteLista" type="VBoxContainer" parent="PanouCarte/Centru/Panou/Margini/Coloana"]
+[node name="CarteLista" type="VBoxContainer" parent="PanouCarte/Centru/Panou/Margini/Coloana" unique_id=1490565345]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/separation = 14
 
-[node name="CarteButon" type="Button" parent="PanouCarte/Centru/Panou/Margini/Coloana"]
+[node name="CarteButon" type="Button" parent="PanouCarte/Centru/Panou/Margini/Coloana" unique_id=8717991]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(140, 36)
 layout_mode = 2
@@ -767,7 +761,7 @@ theme_override_colors/font_color = Color(0.96, 0.9, 0.76, 1)
 theme_override_fonts/font = SubResource("FontVariation_cifre")
 theme_override_font_sizes/font_size = 15
 theme_override_styles/normal = SubResource("StyleBoxFlat_meniu_apasat")
-theme_override_styles/hover = SubResource("StyleBoxFlat_meniu_survolat")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_meniu_apasat")
+theme_override_styles/hover = SubResource("StyleBoxFlat_meniu_survolat")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_meniu")
 text = "Inchide cartea"
