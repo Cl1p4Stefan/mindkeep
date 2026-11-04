@@ -435,7 +435,7 @@ un run?
 | Timp           | Ceasul inamicului (vezi 31 oct.)   | Niciun ceas                                   | Fără limită de timp                        |
 | Structură      | Expediții pe hartă, Obeliscuri     | O cameră cu mese. Te așezi, joci, pleci       | Etaje succesive, dificultate crescătoare   |
 | O partidă      | O întrebare, patru butoane         | Un joc întreg, cu starea lui                  | Un run fără ceas                           |
-| Conținut       | Cele 8 discipline                  | Cuvântul Ascuns ✅ · Sudoku · Decretul Zilei  | Probleme în mai mulți pași                 |
+| Conținut       | Cele 8 discipline                  | Cuvântul Ascuns ✅ · Sudoku ✅ · Decretul Zilei ✅ | Probleme în mai mulți pași                 |
 | Contract în cod| `Puzzle` (o bază)                  | `Joc` (un contract)                           | — (va folosi mesele Tavernei)              |
 
 **De ce nu e Turnul.** Turnul e un mod de RUN: etaje, progresie, un capăt.
@@ -444,10 +444,17 @@ o mecanică. Turnul rămâne în ruta de construcție, iar când vine poate FOLO
 mesele de aici: `joc.gd` nu știe cine l-a deschis, exact ca scenele de puzzle,
 care nu știu nimic despre luptă.
 
-**Decretul Zilnic (secțiunea 6) intră aici**, ca masă. De-aia `porneste()`
-primește o sămânță: jocul liber vrea „niciodată același cuvânt de două ori"
-(sacul), iar Decretul vrea „același cuvânt toată ziua" (o sămânță din dată).
-Niciuna nu o înlocuiește pe cealaltă, deci contractul le ține pe amândouă.
+**Decretul Zilnic (secțiunea 6) a intrat aici**, ca masă, pe 4 noiembrie 2026.
+De-aia `porneste()` primea o sămânță: jocul liber vrea „niciodată același cuvânt
+de două ori" (sacul), iar Decretul vrea „același cuvânt toată ziua" (o sămânță
+din dată). Niciuna nu o înlocuiește pe cealaltă, deci contractul le ține pe
+amândouă.
+
+Decretul nu e un joc al lui: scoate pe masă una din CELELALTE mese, pe rotație
+(`zi % câte sunt`), cu o sămânță a zilei, și se închide până la miezul nopții
+când îl termini. **Ce rămâne nescris din secțiunea 6 e „scor personal și o
+recompensă unică":** recompensele atârnă de Cetate, care nu există, deci
+decretul ține minte o zi și un rezultat, nu o serie.
 
 **Economie comună, dar nu azi.** Taverna nu plătește nimic — nici Monede, nici
 Fragmente. Cetatea nu există, deci nu se știe ce cumperi cu o Monedă; un număr
@@ -508,7 +515,7 @@ asset_vizual        # opțional
 - **Cele 8 discipline** — Cultură generală, Logică, Cuvinte, Numere, Reținere, Tipare, Spațial, Reflex. Fiecare cu simbol propriu și rol tactic distinct.
 - **Rol tactic** — ce face o disciplină în luptă dincolo de daune (multi-hit, crit, ignoră armura, încărcare). Motivul pentru care alegi o disciplină chiar dacă nu e punctul tău forte.
 - **Campanie** — modul principal: expediții pe hartă, cronometru strict de 12-15s.
-- **Taverna** — al treilea mod, construit pe 3 noiembrie 2026: o cameră cu jocuri de masă, fără ceas (Cuvântul Ascuns azi; Sudoku și Decretul Zilei, în catalog, stinse).
+- **Taverna** — al treilea mod, construit pe 3 noiembrie 2026: o cameră cu jocuri de masă, fără ceas. Toate trei mesele sunt scrise: Cuvântul Ascuns (3 noiembrie), Sudoku și Decretul Zilei (4 noiembrie).
 - **Turnul Perseverenței** — mod secundar, fără limită de timp: probleme, puzzle-uri în mai mulți pași. Economie comună cu campania.
 - **Antrenament liber** — mod fără luptă, unde alegi exact ce categorie exersezi. Filtru peste baza de date existentă.
 

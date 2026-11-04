@@ -98,6 +98,11 @@ extends Node
 ## două funcții statice. Scris la „Rămas deschis" în jurnalul de progres.
 const PRACTICE := preload("res://scenes/practice/practice.gd")
 const TAVERNA := preload("res://scenes/taverna/taverna.gd")
+## Decretul Zilei ține minte o zi și un rezultat — vezi „CE SE SCRIE PE DISC"
+## din `decretul.gd`. O cheie a LUI, nu un câmp în dicționarul Tavernei: starea
+## e a mesei, iar o masă care își scrie starea în dicționarul camerei ar fi
+## început chiar lista de „era mai ușor așa" pe care `mese.gd` o refuză.
+const DECRETUL := preload("res://scenes/taverna/decretul/decretul.gd")
 
 ## Versiunea formatului de pe disc. Crește când o cheie își schimbă ÎNȚELESUL,
 ## nu când se adaugă una nouă: o cheie în plus e citită de un joc vechi ca
@@ -149,6 +154,7 @@ func incarca() -> void:
 		Sac.din_dictionar(_sub(permanent, "sac"), Sac.Durata.PERMANENT)
 		PRACTICE.din_dictionar(_sub(permanent, "practice"))
 		TAVERNA.din_dictionar(_sub(permanent, "taverna"))
+		DECRETUL.din_dictionar(_sub(permanent, "decretul"))
 
 	var expeditie = _citeste(NUME_EXPEDITIE)
 	if expeditie is Dictionary:
@@ -185,6 +191,7 @@ func salveaza_permanent() -> bool:
 		"sac": Sac.spre_dictionar(Sac.Durata.PERMANENT),
 		"practice": PRACTICE.spre_dictionar(),
 		"taverna": TAVERNA.spre_dictionar(),
+		"decretul": DECRETUL.spre_dictionar(),
 	})
 
 

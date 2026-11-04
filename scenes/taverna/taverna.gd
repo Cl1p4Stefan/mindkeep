@@ -3,8 +3,8 @@ extends Control
 ##
 ## Expediția e harta, luptele, cronometrul inamicului. Practice e cultură
 ## generală pe raftul ales. Taverna e locul în care te așezi la o masă și joci
-## un joc întreg: Cuvântul Ascuns și Sudoku azi, Decretul Zilei scris în
-## catalog, stins.
+## un joc întreg: Cuvântul Ascuns, Sudoku și Decretul Zilei, care nu e un joc al
+## lui, ci jocul de azi al celorlalte.
 ##
 ## ─────────────────────────────────────────────────────────────
 ## CE E, ȘI CE NU E

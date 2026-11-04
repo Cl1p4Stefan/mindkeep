@@ -50,11 +50,18 @@ extends RefCounted
 ## jocului care urmează, iar pentru mine (singurul jucător, deocamdată) e și
 ## lista de lucru, la vedere, în joc.
 ##
-## Cele stinse nu sunt puse ca să umple ecranul, și una din ele s-a aprins deja:
-## Sudoku era scris în pitch de la prima pagină și e masa a doua, de pe 4
-## noiembrie 2026. A rămas Decretul Zilei, tot de acolo („un puzzle rotativ la
-## 24h, gen Wordle"), și el e chiar motivul pentru care `porneste()` din
-## `joc.gd` primește o sămânță.
+## Cele stinse nu sunt puse ca să umple ecranul, și amândouă s-au aprins în
+## aceeași zi, 4 noiembrie 2026: Sudoku dimineața, Decretul Zilei după el. Deci
+## coloana nu mai are, azi, niciun rând gol — iar asta nu e o invitație să se
+## scrie unul „ca să fie": o masă intră aici când se știe CE joc e, nu când se
+## știe că ar fi frumos să existe. Și ordinea n-a fost o întâmplare: decretul nu
+## se putea aprinde înaintea lui Sudoku, fiindcă n-avea din ce alege — cu o
+## singură masă scrisă, „altul în fiecare zi" ar fi fost mereu același.
+##
+## Decretul e și masa care arată că tabelul ăsta se citește din cod, nu doar din
+## ochi: rotația lui e `zi % câte mese sunt de rând`, cu el însuși sărit. Deci o
+## masă nouă intră în decret fără să se atingă nimic, iar o masă stinsă nu intră
+## — amândouă din rândul `scena`.
 const CATALOG: Array[Dictionary] = [
 	{
 		"cheie": "cuvantul_ascuns",
@@ -72,7 +79,7 @@ const CATALOG: Array[Dictionary] = [
 		"cheie": "decretul_zilei",
 		"nume": "DECRETUL ZILEI",
 		"rol": "Un singur joc, altul în fiecare zi. Același pentru toată ziua, oricâte ori îl deschizi.",
-		"scena": "",
+		"scena": "res://scenes/taverna/decretul/decretul.tscn",
 	},
 ]
 

@@ -18,7 +18,11 @@ extends Node
 ##      Partea grea sunt literele duble, și de-aia are secțiunea ei.
 ##   4. PARTIDELE JUCATE CU SCENA ADEVĂRATĂ — proba că cele două jumătăți se
 ##      leagă: regula de mai sus, grila, tastatura și contractul `Joc`.
-##   5. ECRANELE — Taverna și meniul, MĂSURATE pe pânza adevărată. Secțiunea
+##   5. DECRETUL — masa care nu are un joc al ei, deci nici o regulă de joc de
+##      bătut: are PROMISIUNI („altul în fiecare zi", „o dată pe zi"), iar toate
+##      se strică în tăcere, la miezul nopții sau în ziua în care se aprinde a
+##      patra masă. Se joacă 1800 de zile, fiindcă o zi costă o socoteală.
+##   6. ECRANELE — Taverna și meniul, MĂSURATE pe pânza adevărată. Secțiunea
 ##      asta există din cauza ecranului de loadout, care a ieșit 692 px pe o
 ##      pânză de 648 fără ca nimeni s-o știe: de atunci, un ecran nou se
 ##      măsoară, nu se admiră.
@@ -39,6 +43,8 @@ const CUVANTUL := preload("res://scenes/taverna/cuvantul/cuvantul.gd")
 const SCENA_CUVANTUL := preload("res://scenes/taverna/cuvantul/cuvantul.tscn")
 const SUDOKU := preload("res://scenes/taverna/sudoku/sudoku.gd")
 const SCENA_SUDOKU := preload("res://scenes/taverna/sudoku/sudoku.tscn")
+const DECRETUL := preload("res://scenes/taverna/decretul/decretul.gd")
+const SCENA_DECRETUL := preload("res://scenes/taverna/decretul/decretul.tscn")
 const SCENA_TAVERNA := preload("res://scenes/taverna/taverna.tscn")
 const SCENA_MENIU := preload("res://scenes/meniu/meniu.tscn")
 const TAVERNA := preload("res://scenes/taverna/taverna.gd")
@@ -57,6 +63,18 @@ const PODEA_CUVINTE := 100
 ## Extragerea din hunspell dă ~13.000; podeaua e departe, dinadins, fiindcă ea
 ## apără împotriva unei extrageri STRICATE, nu a uneia sărace.
 const PODEA_ACCEPTATE := 5000
+
+## Câte zile se joacă în secțiunea DECRETUL. Multe și ieftine: alegerea zilei e
+## o socoteală pe catalog, nu o scenă, deci cinci ani de decrete costă câteva
+## milisecunde. Ce apără numărul e ROTAȚIA — cu zece zile, o masă care apare de
+## două ori la rând ar fi putut scăpa.
+const ZILE_DECRET := 1800
+
+## Divizorii pe care se bate necorelarea sămânței cu rotația (vezi secțiunea
+## DECRETUL). 3 e cel care contează azi — Sudoku își ia nivelul din
+## `samanta % 3` — iar ceilalți sunt acolo fiindcă următoarea masă care citește
+## sămânța cu un rest nu va fi neapărat împărțită la 3.
+const RESTURI_DECRET := [2, 3, 4, 5]
 
 ## Câte grile se generează pe fiecare nivel de Sudoku. Puține, dinadins:
 ## fiecare grilă cere ~80 de numărători de soluții la generare și una la
@@ -104,9 +122,27 @@ func _ready() -> void:
 	tot_bun = await _ecranele() and tot_bun
 	tot_bun = await _regulile() and tot_bun
 	tot_bun = await _sudoku() and tot_bun
+	tot_bun = await _decretul() and tot_bun
 	tot_bun = await _clicurile() and tot_bun
 	tot_bun = await _caracterele() and tot_bun
 	_goleste_dosarul()
+
+	# SE AȘTEAPTĂ SĂ SE TERMINE SUNETELE. Verificarea apasă taste și pătrate, iar
+	# jocul răspunde cu „corect" și „greșit" (`Sunet.reda`); Taverna pornește și
+	# piesa CETATE. Un `AudioStreamPlayer` închis în timp ce încă sună își lasă
+	# playback-ul în AudioServer, iar Godot îl numără la ieșire: „14 ObjectDB
+	# instances were leaked" și „6 resources still in use". Niciun nod nu
+	# rămâne — lista de la `--verbose` e numai `.ogg`-uri — deci nu e un verdict
+	# picat, e un rând roșu care într-o zi ar ascunde unul care înseamnă ceva.
+	#
+	# DOUĂ lucruri, fiindcă sunt două feluri de sunet, iar măsurătoarea le-a
+	# despărțit: efectele sunt scurte și se termină dacă le lași (de la 14/6 la
+	# 10/4, doar din așteptare), iar piesa de fundal se repetă la nesfârșit și
+	# nu se termină niciodată singură — pe ea trebuie s-o oprești. Cu
+	# `cu_fade = false`, fiindcă o stingere lină are nevoie de cadre pe care
+	# nimeni nu le mai trimite.
+	Muzica.opreste(false)
+	await get_tree().create_timer(1.5).timeout
 
 	print("\n══ %s ══\n" % ("TOTUL E BUN" if tot_bun else "SUNT PROBLEME, vezi mai sus"))
 	get_tree().quit(0 if tot_bun else 1)
@@ -1236,6 +1272,308 @@ func _sudoku_jucat() -> bool:
 # „asta e singura probă că o tastă apăsată ajunge la ele".
 # ─────────────────────────────────────────────────────────────
 
+## ─────────────────────────────────────────────────────────────
+## DECRETUL ZILEI
+##
+## Masa asta nu are un joc al ei, deci nu are nici o regulă de joc de bătut. Ce
+## are sunt PROMISIUNI, și toate patru se strică în tăcere:
+##
+##   „altul în fiecare zi"      — o rotație stricată dă aceeași masă două zile
+##                                la rând, și n-ai de unde s-o afli: fiecare zi
+##                                arată, singură, perfect normal.
+##   „același toată ziua"       — se strică abia la a doua deschidere.
+##   „îl joci o dată pe zi"     — se strică la miezul nopții sau niciodată.
+##   „nivelul e al zilei"       — se strică în ziua în care se aprinde a patra
+##                                masă în catalog. Vezi mai jos.
+##
+## De-aia secțiunea joacă ZILE, nu partide: 1800 de zile de decrete, care costă
+## mai puțin decât o grilă de Sudoku, fiindcă alegerea nu are nevoie de ecran.
+##
+## VERDICTUL CARE APĂRĂ O DECIZIE, nu o socoteală: `samanta % k` ia toate
+## valorile pe zilele FIECĂREI mese. El e singurul care ar fi picat dacă sămânța
+## ar fi fost ziua, și ar fi picat ACUM, nu peste o lună: pe zilele lui Sudoku
+## (zilele pare, azi), `zi % 2` e constant. Vezi „O CORELAȚIE CARE AR FI OMORÂT
+## UN NIVEL" din `decretul.gd`.
+## ─────────────────────────────────────────────────────────────
+
+func _decretul() -> bool:
+	print("  DECRETUL ZILEI")
+	var rezultat := true
+
+	# a) ZIUA. Nu se poate cere un număr anume (ziua trece), dar se poate cere
+	#    să fie ZIUA DE AZI: ceasul de sistem, împărțit la 24 de ore. Cele două
+	#    socoteli pot cădea pe laturi diferite ale miezului nopții, fiindcă una
+	#    e locală și cealaltă UTC — de-aia o zi de joc, nu egalitate.
+	var azi := DECRETUL.zi_de_azi()
+	var dupa_ceas := floori(Time.get_unix_time_from_system() / 86400.0)
+	print("         azi e ziua %d (de la 1 ianuarie 1970); ceasul spune %d"
+		% [azi, dupa_ceas])
+	rezultat = _verdict(absi(azi - dupa_ceas) <= 1,
+		"`zi_de_azi()` e chiar ziua de azi (%d, ceasul %d)" % [azi, dupa_ceas]) and rezultat
+	rezultat = _verdict(DECRETUL.zi_de_azi() == azi,
+		"și două întrebări una după alta dau aceeași zi") and rezultat
+
+	# b) MESELE DE RÂND: cele scrise, fără decretul însuși. Dacă rândul care-l
+	#    sare ar lipsi, decretul ar deschide un decret, care ar deschide un
+	#    decret — iar asta nu e o cădere, e o fereastră care nu se mai termină.
+	var de_rand := DECRETUL.mesele_de_rand()
+	var chei_de_rand := {}
+	for m in de_rand:
+		chei_de_rand[String(m["cheie"])] = true
+	print("         mese de rând: %s" % str(chei_de_rand.keys()))
+	rezultat = _verdict(not chei_de_rand.has(DECRETUL.CHEIE),
+		"decretul nu se alege pe sine") and rezultat
+	rezultat = _verdict(de_rand.size() == Mese.cate_sunt_gata() - 1,
+		"toate mesele scrise, în afară de el, intră în rotație (%d din %d)"
+		% [de_rand.size(), Mese.cate_sunt_gata()]) and rezultat
+	rezultat = _verdict(de_rand.size() >= 2,
+		"sunt cel puțin două mese de rând, altfel „altul în fiecare zi\" e vorbă goală (%d)"
+		% de_rand.size()) and rezultat
+
+	# c) ROTAȚIA, pe 1800 de zile.
+	var zile_ale_mesei := {}
+	var lipite := 0
+	var in_afara := 0
+	var ieri := ""
+	for pas in ZILE_DECRET:
+		var zi: int = azi + pas
+		var m: Dictionary = DECRETUL.masa_zilei(zi)
+		var cheie := String(m.get("cheie", ""))
+		if not chei_de_rand.has(cheie):
+			in_afara += 1
+			continue
+		if cheie == ieri:
+			lipite += 1
+		ieri = cheie
+		if not zile_ale_mesei.has(cheie):
+			zile_ale_mesei[cheie] = []
+		(zile_ale_mesei[cheie] as Array).append(zi)
+	rezultat = _verdict(in_afara == 0,
+		"în %d de zile, masa zilei e mereu una din rotație (%d scăpări)"
+		% [ZILE_DECRET, in_afara]) and rezultat
+	rezultat = _verdict(lipite == 0,
+		"nicio masă nu vine două zile la rând (%d perechi lipite)" % lipite) and rezultat
+	rezultat = _verdict(zile_ale_mesei.size() == de_rand.size(),
+		"fiecare masă de rând își primește zilele (%d din %d)"
+		% [zile_ale_mesei.size(), de_rand.size()]) and rezultat
+	# AȘEZATĂ: aceeași zi, aceeași masă, oricând o întrebi. Fără asta,
+	# „același toată ziua" ar fi ținut până la a doua deschidere.
+	var mutate := 0
+	for cheie in zile_ale_mesei:
+		for zi in zile_ale_mesei[cheie]:
+			# A doua trecere, pe zilele strânse la prima: dacă alegerea ar
+			# atârna de altceva decât de zi (un `randi`, o stare rămasă de la
+			# apelul dinainte), aici ar ieși altă masă decât atunci.
+			if String(DECRETUL.masa_zilei(int(zi))["cheie"]) != String(cheie):
+				mutate += 1
+	# Și o zi dinaintea epocii: `-1 % 2` dă -1 în GDScript, adică un index în
+	# afara listei. Din joc nu se poate ajunge acolo; de aici, da.
+	rezultat = _verdict(mutate == 0 and not DECRETUL.masa_zilei(-7).is_empty(),
+		"alegerea e așezată, și o zi negativă tot dă o masă") and rezultat
+
+	# d) SĂMÂNȚA: niciodată „alege tu", așezată, și NECORELATĂ cu rotația.
+	var zero := 0
+	var nemisca := 0
+	for pas in ZILE_DECRET:
+		var zi: int = azi + pas
+		var s: int = DECRETUL.samanta_pentru(zi)
+		if s == Joc.SAMANTA_LIBERA:
+			zero += 1
+		if s != DECRETUL.samanta_pentru(zi):
+			nemisca += 1
+	rezultat = _verdict(zero == 0,
+		"sămânța nu e niciodată 0, adică „alege tu\" (%d scăpări)" % zero) and rezultat
+	rezultat = _verdict(nemisca == 0,
+		"aceeași zi dă aceeași sămânță (%d scăpări)" % nemisca) and rezultat
+
+	for cheie in zile_ale_mesei:
+		for k in RESTURI_DECRET:
+			var vazute := {}
+			for zi in zile_ale_mesei[cheie]:
+				vazute[DECRETUL.samanta_pentru(int(zi)) % int(k)] = true
+			rezultat = _verdict(vazute.size() == int(k),
+				"%s: pe zilele ei, `samanta %% %d` ia toate %d valorile (%d)"
+				% [cheie, k, k, vazute.size()]) and rezultat
+
+	# e) PARTIDE JUCATE CU SCENELE ADEVĂRATE — una pe FIECARE masă de rând.
+	#
+	# Nu pe „ziua de mâine", cum a fost la prima scriere: mâine e o zi anume,
+	# deci verdictele ar fi bătut Cuvântul Ascuns azi și Sudoku mâine, iar
+	# secțiunea ar fi verificat altceva în fiecare zi în care o rulez. Cel mai
+	# rău, verdictul care contează cel mai mult — uneltele îngropate — ar fi
+	# rulat doar în zilele de Sudoku, fiindcă numai el are unelte. O verificare
+	# care depinde de ceas nu e o verificare, e un sondaj.
+	#
+	# Deci ziua se CAUTĂ: prima zi din rotație care dă masa asta.
+	var decret = SCENA_DECRETUL.instantiate()
+	add_child(decret)
+	var raportat: Array[Dictionary] = []
+	decret.terminat.connect(func(r): raportat.append(r))
+
+	# Pentru măsurătoarea panoului cu reguli de mai jos e nevoie de panoul
+	# ADEVĂRAT, cu lățimea și marginile lui, nu de o cutie ridicată aici.
+	var taverna := SCENA_TAVERNA.instantiate()
+	add_child(taverna)
+	taverna.set_deferred("size", PANZA)
+	await get_tree().process_frame
+	var cuprins_taverna: Control = taverna.get_node("%Cuprins")
+	var panou_reguli: Control = taverna.get_node("PanouReguli/Centru/Panou")
+
+	for m in de_rand:
+		var cheie := String(m["cheie"])
+		var nume_masa := String(m["nume"])
+		var zi_proba := azi + 1
+		while String(DECRETUL.masa_zilei(zi_proba)["cheie"]) != cheie:
+			zi_proba += 1
+		print("         %s e decretul zilei %d" % [cheie, zi_proba])
+
+		DECRETUL._zi_jucata = 0
+		DECRETUL._reusit = false
+		raportat.clear()
+		decret.porneste(zi_proba)
+		await get_tree().process_frame
+		rezultat = _verdict(decret.masa != null,
+			"%s: un decret nejucat deschide masa zilei" % cheie) and rezultat
+		rezultat = _verdict(decret.zi == zi_proba,
+			"%s: sămânța dată E ziua jucată (%d)" % [cheie, decret.zi]) and rezultat
+		if decret.masa == null:
+			continue
+		rezultat = _verdict(String(decret.masa_de_azi["cheie"]) == cheie,
+			"%s: masa de pe ecran e cea pe care o spune rotația" % cheie) and rezultat
+		# Fraza de ajutor spune CARE joc e azi — singurul loc în care se spune,
+		# fiindcă titlul din antet e „DECRETUL ZILEI".
+		rezultat = _verdict(decret.rand_de_ajutor().contains(nume_masa),
+			"%s: fraza de ajutor numește masa zilei" % cheie) and rezultat
+		# UNELTELE MESEI GĂZDUITE nu ajung nici în antet, nici pe tăblie — dar
+		# trăiesc, fiindcă masa le atinge la fiecare pornire (vezi
+		# `_ia_uneltele`). Trei feluri de a greși, toate trei bătute: să ajungă
+		# la Tavernă, să rămână pe tăblia mesei, să fie îngropate de tot.
+		rezultat = _verdict(decret.unelte() == null,
+			"%s: decretul nu dă unelte Tavernei — partida lui nu se reglează"
+			% cheie) and rezultat
+		var scule_masei: Control = decret.masa.unelte()
+		if scule_masei == null:
+			print("         (%s n-are unelte, deci nu e nimic de îngropat)" % cheie)
+		else:
+			rezultat = _verdict(is_instance_valid(scule_masei)
+				and scule_masei.get_parent() == decret and not scule_masei.visible,
+				"%s: uneltele ei sunt ținute în viață, la decret, și stinse"
+				% cheie) and rezultat
+			rezultat = _verdict(_textul_din(decret.masa).find(
+				_textul_din(scule_masei).strip_edges()) == -1,
+				"%s: și nu se văd nicăieri pe tăblie" % cheie) and rezultat
+
+		# PANOUL CU REGULI, MĂSURAT în panoul ADEVĂRAT al Tavernei.
+		for copil in cuprins_taverna.get_children():
+			cuprins_taverna.remove_child(copil)
+			copil.queue_free()
+		var cuprins_decret: Control = decret.reguli()
+		rezultat = _verdict(cuprins_decret != null,
+			"%s: decretul își scrie regulile" % cheie) and rezultat
+		if cuprins_decret != null:
+			cuprins_taverna.add_child(cuprins_decret)
+			# AICI SE MĂSOARĂ `size`, NU `get_combined_minimum_size()` — singurul
+			# loc din suită în care regula „un ecran se măsoară pe cât CERE" NU
+			# se aplică, și merită spus de ce. Panoul e numai text cu autowrap,
+			# iar minimul unei etichete care încadrează singură se socotește la
+			# lățime ZERO: fiecare cuvânt pe rândul lui. Prima scriere a cerut
+			# minimul și a primit 13.373 px — un număr care nu descrie niciun
+			# ecran care a existat vreodată. Ce contează aici e înălțimea pe care
+			# o ia textul la LĂȚIMEA LUI ADEVĂRATĂ (620 px), deci panoul se
+			# deschide și se citește cât a ieșit.
+			taverna.panou_reguli.visible = true
+			await get_tree().process_frame
+			await get_tree().process_frame
+			var inalt := panou_reguli.size.y
+			print("         panoul cu reguli al decretului, cu %s: %d × %d px"
+				% [cheie, panou_reguli.size.x, inalt])
+			# `PanouReguli` nu se derulează — e un `CenterContainer`, deci ce nu
+			# încape nu împinge nimic și nu se plânge nimeni: iese pe sus și pe
+			# jos, tăiat. Iar panoul decretului e cel mai înalt din joc prin
+			# construcție: paragraful lui PLUS panoul întreg al mesei de azi.
+			rezultat = _verdict(inalt <= PANZA.y,
+				"%s: panoul cu reguli încape în înălțime (%d px, rezervă %d)"
+				% [cheie, inalt, PANZA.y - inalt]) and rezultat
+			taverna.panou_reguli.visible = false
+			rezultat = _verdict(_textul_din(cuprins_decret).contains(nume_masa),
+				"%s: și spune ale cui sunt regulile de dedesubt" % cheie) and rezultat
+
+		# Jocul se termină (prin masă, ca în joc), iar decretul duce rezumatul
+		# întreg mai departe și ÎNCHIDE ziua.
+		decret.masa.termina(true, "Gata, din 3 încercări.")
+		await get_tree().process_frame
+		rezultat = _verdict(raportat.size() == 1
+			and String(raportat[0]["rezumat"]) == "Gata, din 3 încercări.",
+			"%s: rezumatul mesei trece neatins prin decret" % cheie) and rezultat
+		rezultat = _verdict(DECRETUL._zi_jucata == zi_proba and DECRETUL._reusit,
+			"%s: ziua s-a închis, cu tot cu felul în care a ieșit" % cheie) and rezultat
+
+		# f) A DOUA AȘEZARE ÎN ACEEAȘI ZI: pagina, nu jocul. Și NICIUN
+		#    `terminat`, altfel Taverna ar fi pus „Încă unul" sub o pagină care
+		#    spune chiar că nu mai e nimic de jucat.
+		raportat.clear()
+		decret.porneste(zi_proba)
+		await get_tree().process_frame
+		rezultat = _verdict(decret.masa == null,
+			"%s: decretul jucat azi nu mai deschide jocul" % cheie) and rezultat
+		var scris := _textul_din(decret)
+		rezultat = _verdict(scris.contains("ÎNCHEIAT"),
+			"%s: pagina spune că s-a încheiat" % cheie) and rezultat
+		rezultat = _verdict(scris.contains(nume_masa),
+			"%s: pagina spune CE masă a fost, fiindcă mâine n-ai de unde ști"
+			% cheie) and rezultat
+		rezultat = _verdict(scris.contains("L-ai scos."),
+			"%s: pagina spune cum a ieșit" % cheie) and rezultat
+		rezultat = _verdict(raportat.is_empty(),
+			"%s: și nu strigă `terminat` — n-ar fi avut ce să însemne «Încă unul»"
+			% cheie) and rezultat
+		# MĂSURATĂ pe cât CERE, ca toate ecranele. Pagina e altă stare a mesei
+		# decât jocul, deci se măsoară ca ea însăși.
+		await get_tree().process_frame
+		var cerut_pagina: Vector2 = decret.get_combined_minimum_size()
+		print("         pagina de după %s cere %d × %d px"
+			% [cheie, cerut_pagina.x, cerut_pagina.y])
+		rezultat = _verdict(cerut_pagina.y <= PANZA.y and cerut_pagina.x <= PANZA.x,
+			"%s: pagina de după încape pe pânză (%d × %d)"
+			% [cheie, cerut_pagina.x, cerut_pagina.y]) and rezultat
+
+		# g) MÂINE E ALTĂ ZI. Verdictul fără care „o dată pe zi" ar fi fost
+		#    „o dată".
+		decret.porneste(zi_proba + 1)
+		await get_tree().process_frame
+		rezultat = _verdict(decret.masa != null,
+			"%s: ziua următoare deschide iar un joc" % cheie) and rezultat
+		rezultat = _verdict(decret.masa != null
+			and String(decret.masa_de_azi["cheie"]) != cheie,
+			"%s: și e alt joc decât ieri (%s)"
+			% [cheie, decret.masa_de_azi.get("cheie", "—")]) and rezultat
+	decret.queue_free()
+	taverna.queue_free()
+	await get_tree().process_frame
+
+	# h) DISCUL. Citit strâmb, ca peste tot.
+	var zi_disc: int = azi + 500
+	DECRETUL._zi_jucata = zi_disc
+	DECRETUL._reusit = true
+	var pe_disc := DECRETUL.spre_dictionar()
+	rezultat = _verdict(int(pe_disc["zi_jucata"]) == zi_disc and bool(pe_disc["reusit"]),
+		"ziua închisă trece în dicționar") and rezultat
+	DECRETUL.din_dictionar({})
+	rezultat = _verdict(DECRETUL._zi_jucata == 0 and not DECRETUL._reusit,
+		"un save fără cheile decretului = n-ai jucat niciunul") and rezultat
+	DECRETUL.din_dictionar({"zi_jucata": "alaltaieri", "reusit": "poate"})
+	rezultat = _verdict(DECRETUL._zi_jucata == 0,
+		"o zi care nu e un număr se citește ca «niciuna»") and rezultat
+	DECRETUL.din_dictionar(pe_disc)
+	rezultat = _verdict(DECRETUL._zi_jucata == zi_disc and DECRETUL._reusit,
+		"și drumul înapoi aduce tot") and rezultat
+	# Pus la loc: secțiunile de după pornesc mese, iar un decret „jucat" le-ar
+	# fi dat pagina în loc de joc.
+	DECRETUL._zi_jucata = 0
+	DECRETUL._reusit = false
+	return rezultat
+
+
 func _clicurile() -> bool:
 	print("  CLICURILE")
 	var rezultat := true
@@ -1572,6 +1910,36 @@ func _caracterele() -> bool:
 			caractere[ch] = true
 		masa.queue_free()
 		await get_tree().process_frame
+
+	# PAGINA DECRETULUI nu intră în bucla de deasupra: ea pornește fiecare masă
+	# proaspătă, iar pagina se vede doar la un decret deja jucat. Textul ei e al
+	# decretului, deci nimeni altcineva nu-l strânge — exact felul în care „✕"-ul
+	# Tavernei a stat o zi nedesenat: verdictul exista, dar nu se uita acolo.
+	var zi_proba := DECRETUL.zi_de_azi()
+	DECRETUL._zi_jucata = zi_proba
+	DECRETUL._reusit = false   # „Nu l-ai scos.", celălalt rând al paginii
+	var decret = SCENA_DECRETUL.instantiate()
+	add_child(decret)
+	decret.porneste(zi_proba)
+	await get_tree().process_frame
+	for ch in _textul_din(decret):
+		caractere[ch] = true
+	for ch in decret.rand_de_ajutor():
+		caractere[ch] = true
+	var ale_decretului: Control = decret.reguli()
+	if ale_decretului != null:
+		for ch in _textul_din(ale_decretului):
+			caractere[ch] = true
+		ale_decretului.free()
+	DECRETUL._reusit = true    # și „L-ai scos."
+	decret.porneste(zi_proba)
+	await get_tree().process_frame
+	for ch in _textul_din(decret):
+		caractere[ch] = true
+	DECRETUL._zi_jucata = 0
+	DECRETUL._reusit = false
+	decret.queue_free()
+	await get_tree().process_frame
 
 	for nume in fonturi:
 		var font: Font = fonturi[nume]

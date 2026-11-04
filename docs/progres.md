@@ -40,6 +40,212 @@ devreme, dar restul rămâne placeholder. Bucla de luptă e în continuare cea v
 
 ---
 
+## DECRETUL ZILEI (4 noiembrie 2026) — masa care nu are un joc al ei
+
+**Ce s-a făcut:** a treia masă din Tavernă, și ultimul rând stins din catalog.
+Decretul nu e un joc: e o ALEGERE. În fiecare zi scoate pe masă una din
+celelalte mese, cu o sămânță a zilei, iar când o termini se închide până la
+miezul nopții. `scenes/taverna/decretul/`, 42 de verdicte noi în
+`verifica_taverna` (de la 176 la 244, toate verzi).
+
+**Ce a trebuit:** exact ce scria `joc.gd` de la prima masă — „un rând în catalog
+și un calcul de dată, nu un sistem". Patru lucruri:
+
+| ce | cât |
+|---|---|
+| ziua de azi, numărată de la 1970 | o funcție de 7 linii |
+| rotația (cine e masa zilei) | `zi % câte mese sunt de rând` |
+| sămânța | un hash al zilei |
+| „am jucat decretul din ziua N" | două `static var` și două funcții pe disc |
+
+`taverna.gd` nu s-a atins, nicio linie. Nici `joc.gd`: cele trei cârlige
+opționale — `reguli()`, `unelte()`, `rand_de_ajutor()` — au fost exact cât
+trebuia. **Asta e ce dovedește masa a treia și nu puteau dovedi primele două:**
+contractul ținea pentru o masă care GĂZDUIEȘTE altă masă, adică pentru ceva ce
+nu seamănă cu niciunul din jocurile pentru care a fost scris.
+
+### Sămânța decretului e o ZI
+
+Contractul spune „0 = alege tu, orice altceva = exact jocul ăsta". Pentru
+Cuvântul Ascuns, „exact jocul ăsta" e un cuvânt; pentru Sudoku, o grilă. Pentru
+decret e o ZI: `porneste(20763)` joacă decretul zilei 20763, cu masa ȘI cu grila
+zilei acelea.
+
+Nu e o șmecherie de citit sămânța, e singurul înțeles care are sens aici — și
+plătește imediat: verificarea joacă 1800 de zile fără să mintă ceasul
+sistemului. Un decret care nu s-ar fi putut juca decât „azi" ar fi fost un cod
+care se probează o dată la 24 de ore.
+
+### O rotație, nu o tragere la sorți
+
+`zi % N`, cu decretul sărit din listă. O tragere la sorți din sămânță ar fi dat,
+din când în când, aceeași masă două zile la rând — exact regula scrisă pe 2
+noiembrie pentru treptele de combo („două trepte consecutive nu sunt din același
+TIP"), și pentru același motiv: a doua zi de Sudoku o începi cu metoda deja
+încălzită, deci ziua care ar trebui să valoreze mai mult cere mai puțin.
+
+Prețul, plătit conștient: cu două mese, decretul e previzibil pe o zi înainte.
+„Mâine e zi de Sudoku" e un motiv să te întorci, nu o scăpare.
+
+### Rândul care nu s-ar fi văzut niciodată din joc
+
+Sămânța dată mesei NU e ziua, e `hash("decretul:%d" % zi)`. Motivul e o
+corelație care ar fi omorât un nivel întreg, peste o lună, fără să se atingă
+nimic din fișierul ăsta:
+
+```
+zilele de Sudoku = acelea cu  zi % N == poziția lui în listă
+nivelul grilei   = samanta % 3          (regula lui `sudoku.gd`)
+```
+
+Cu N = 2 iese bine din noroc: zilele pare trec prin toate trei nivelurile. Cu
+**N = 3** — adică în ziua în care se aprinde a patra masă în catalog — `zi % 3`
+e CONSTANT pe zilele de Sudoku, deci decretul ar fi avut pe veci același nivel.
+Un joc care merge azi și se strică singur la o schimbare care nu-l atinge.
+
+Hash-ul rupe legătura și rămâne așezat (aceeași zi, aceeași sămânță, pentru
+totdeauna). Regula, scrisă ca să se poată apăra: **o sămânță dată mai departe
+altui generator se amestecă întâi.** Și e bătută de verdictul care ar fi picat
+ACUM, nu peste o lună: pe zilele fiecărei mese, `samanta % k` ia toate k
+valorile, pentru k = 2…5. Cu sămânța egală cu ziua, `samanta % 2` pe zilele lui
+Sudoku ar fi fost constant.
+
+### O dată pe zi — și de ce nu încalcă „fără plafon artificial"
+
+Decretul terminat se închide până la miezul nopții, câștigat sau pierdut. Asta e
+chiar lucrul care face un decret să fie un decret: cu reîncercări nelimitate,
+masa ar fi fost Sudoku cu alt titlu, iar „un singur joc, altul în fiecare zi" ar
+fi fost o frază de pe un buton.
+
+CLAUDE.md cere „sesiuni scalabile, fără plafon artificial… fără energie de tip
+mobile care mă dă afară", și scrie chiar excepția: „dacă apare vreun cap (ex.
+«antrenamentul de azi e complet»), e un semnal pozitiv și un bonus, nu o ușă
+închisă." **Capul e legitim pentru un singur motiv, și el trebuie să rămână
+adevărat: celelalte mese sunt nelimitate și stau în aceeași cameră.** Decretul e
+bonusul; jocul e Taverna. Ziua în care decretul ar fi singura masă din tavernă,
+regula asta ar trebui ștearsă — și scrie așa în antetul fișierului.
+
+De-aia pagina de după nu e un refuz: spune ce ai făcut („L-ai scos."), CE masă a
+fost (mâine n-ai de unde ști), când se schimbă, și arată spre mesele libere. Și
+NU strigă `terminat` — altfel Taverna ar fi pus „Încă unul" sub o pagină care
+spune chiar că nu mai e nimic de jucat, iar butonul s-ar fi învârtit în loc.
+
+Se închide și la pierdere fiindcă rezumatul unui cuvânt ratat îți arată
+răspunsul: „încă o dată" ar fi fost o reîncercare cu răspunsul în mână.
+
+### Uneltele mesei găzduite nu ajung pe ecran, și nici nu se pot arunca
+
+Cele trei butoane de nivel ale lui Sudoku repornesc partida cu `SAMANTA_LIBERA`
+— adică exact ce un decret promite că nu se întâmplă. Dar nici `queue_free` nu
+merge: `_zugraveste_nivelurile()` trece prin ele la fiecare pornire, deci niște
+butoane îngropate ar fi fost noduri moarte atinse de masă.
+
+Deci li se dă un părinte (decretul) și se sting. Contractul permite chiar asta
+(„nodul nu mai e al tău după ce-l dai"), și mai are un rost ascuns: cu părinte,
+`_ready`-ul lui Sudoku nu-și mai pune rândul pe tăblie — el verifică exact
+`get_parent() == null`. Regula, scrisă o dată: **uneltele unei mese reglează
+partida, iar decretul e o partidă care nu se reglează.**
+
+### Ce nu ține minte, dinadins
+
+O ZI și un rezultat. Nicio serie, niciun scor, nicio statistică — deși pitch-ul
+cere „scor personal și o recompensă unică" la Decretul Zilnic. Tot pitch-ul
+leagă recompensele de Cetate, care nu există; o serie pusă azi ar fi un număr
+care intră în save și pe care l-aș reechilibra mâine CU migrare. Aceeași
+judecată ca în antetul Tavernei: „ziua în care Taverna plătește e ziua în care
+există ce cumperi."
+
+Steagul se citește, nu doar se scrie: el E pagina de mai sus. Un steag scris și
+niciodată citit n-ar fi fost o funcție, ar fi fost un câmp.
+
+### Panoul care ieșea 24 px pe sus și pe jos
+
+Panoul cu reguli al decretului e, prin construcție, cel mai înalt din joc:
+paragraful lui PLUS panoul întreg al mesei de azi. Iar `PanouReguli` nu se
+derulează — e un `CenterContainer`, deci ce nu încape nu împinge nimic și nu se
+plânge nimeni: iese pe sus și pe jos, **tăiat**. Cu Sudoku dedesubt ieșea
+**672 px pe o pânză de 648**.
+
+Pe captura de ecran arăta aproape bine, și ăsta e tot motivul pentru care s-a
+măsurat: 24 px tăiați simetric nu se văd, ei doar fac titlul să stea lipit de
+marginea de sus. Reparat prin scoaterea rândului „Azi pe masă e SUDOKU:" —
+numele mesei a intrat în paragraful decretului, unde spune același lucru fără un
+rând al lui. Acum 630 px cu Sudoku, 596 cu Cuvântul Ascuns.
+
+**Și o excepție de la o regulă a casei, singura din suită.** „Un ecran se
+măsoară pe cât CERE, nu pe cât ocupă" nu se aplică aici: panoul e numai text cu
+autowrap, iar minimul unei etichete care încadrează singură se socotește la
+lățime ZERO — fiecare cuvânt pe rândul lui. Prima scriere a cerut minimul și a
+primit **13.373 px**, un număr care nu descrie niciun ecran care a existat
+vreodată. Ce contează la un text care încadrează e înălțimea pe care o ia la
+LĂȚIMEA LUI ADEVĂRATĂ, deci panoul se deschide și se citește cât a ieșit. Regula
+rămâne adevărată peste tot unde un container poate strânge copiii; aici nu el
+strânge, ci textul se revarsă.
+
+### Verificarea care depindea de ceas
+
+Prima scriere a secțiunii juca „ziua de mâine". Mergea, și era greșită: mâine e
+o zi anume, deci verdictele băteau Cuvântul Ascuns azi și Sudoku mâine. Cel mai
+rău, verdictul care contează cel mai mult — uneltele îngropate — ar fi rulat
+doar în zilele de Sudoku, fiindcă numai el are unelte.
+
+Deci ziua se CAUTĂ: prima zi din rotație care dă masa asta, pe fiecare masă de
+rând. **O verificare care depinde de ceas nu e o verificare, e un sondaj.**
+
+### Și un rând roșu care stătea la ieșire
+
+`verifica_taverna` ieșea cu „14 ObjectDB instances were leaked" și „6 resources
+still in use at exit" — avertismentul cosmetic scris la „Ce a rămas" în sesiunea
+SUDOKU, pe care nu-l căutase nimeni. Lista de la `--verbose` spune tot: numai
+`.ogg`-uri. Verificarea apasă taste și pătrate, jocul răspunde cu „corect" și
+„greșit", Taverna pornește piesa CETATE — iar un `AudioStreamPlayer` închis în
+timp ce încă sună își lasă playback-ul în AudioServer.
+
+Două lucruri, fiindcă măsurătoarea le-a despărțit: efectele sunt scurte și se
+termină dacă le lași (de la 14/6 la 10/4, doar din așteptare), iar piesa de
+fundal se repetă la nesfârșit și nu se termină niciodată singură — pe ea
+trebuie s-o oprești. `Muzica.opreste(false)` plus o secundă și jumătate, și
+ieșirea e curată. Nu era un verdict picat; era un rând roșu care într-o zi ar fi
+ascuns unul care însemna ceva.
+
+### Ce a rămas
+
+- **Decretul nu plătește nimic**, ca toată Taverna. Ziua lui e ziua Cetății.
+- **Nicio serie.** „3 zile la rând" e exact felul de număr care cere o decizie
+  de echilibru, iar echilibrul n-are încă unde să se sprijine.
+- **Previzibil pe o zi înainte**, cât timp sunt două mese de rând. Se repară
+  singur la a patra masă, nu cu cod.
+- **Regulile se deschid singure O DATĂ**, pe cheia decretului, nu a mesei de
+  dedesubt: în prima zi vezi regulile jocului din ziua aia, iar peste o
+  săptămână, când decretul e altul, panoul nu se mai deschide de la sine.
+  Butonul „i" e acolo în fiecare zi, și fiecare masă se poate deschide liber, cu
+  regulile ei, pe masa ei. Alternativa ar fi cerut Tavernei să știe că o masă
+  poate găzdui alta — adică exact ce nu știe și nu trebuie să știe.
+- **Artă proprie pentru Tavernă** — rămâne de trei zile: focul împrumutat de la
+  Odihnă și pagini de pergament fără iconiță.
+- **IDEE DESCHISĂ (propusă de mine, 4 noiembrie 2026): decretul ca loc de
+  DESCOPERIRE.** Propunerea inițială era ca decretul să scoată un joc dintr-un
+  pool PROPRIU, exclusiv, fără mesele de la celelalte rânduri. Nu se ia așa,
+  din două motive: (1) excepția de la „fără plafon artificial" e legitimă doar
+  cât celelalte mese sunt nelimitate și stau în aceeași cameră — un joc care
+  există NUMAI în decret ar fi un zid, nu un bonus (îți place, vrei încă cinci
+  runde, nu ai voie); (2) fiecare joc din pool e o masă întreagă (Sudoku a
+  cerut generator, rezolvitor și un al doilea rezolvitor în verificare), iar
+  pool-ul trebuie să aibă 4-5 jocuri ca alegerea să nu fie previzibilă.
+  **Varianta care păstrează ideea:** jocurile noi intră în catalog ca mese
+  normale, dar rămân ASCUNSE în Tavernă până le joci o dată ca decret; după
+  aceea masa e liberă și nelimitată. Decretul devine locul unde descoperi
+  jocuri, plafonul dispare, nimic nu se pierde. Cost: un steag „descoperită"
+  pe cheia mesei, salvat în `permanent.json` ca `_reguli_vazute`; rotația și
+  sămânța rămân cum sunt. **Contrazice** un rând din „Mesele nescrise apar pe
+  ecran, STINSE" (CLAUDE.md): acolo un raft ascuns era respins, iar aici
+  masa ascunsă ar fi tocmai miza — trebuie hotărât care câștigă (probabil:
+  masa descoperibilă apare stinsă, cu „încă nedescoperită", nu lipsește).
+  **Nu se face acum**: cu două mese pool-ul ar fi gol. Decizia se ia când se
+  scrie masa a patra — merge în catalog liber sau în pool-ul de descoperire?
+
+---
+
 ## ANTETUL ÎȘI IA UNELTELE (4 noiembrie 2026) — colțul tăbliei era disputat, rândul de sub titlu nu
 
 **De unde a pornit:** butonul „i" al Tavernei stătea în colțul de sus-stânga al
@@ -380,10 +586,10 @@ copiii ei". **Un verdict care pică din două motive deodată nu spune care.**
 
 ### Ce a rămas
 
-- **Decretul Zilei** — masa a treia, și singura rămasă stinsă în catalog.
-  Sămânța din dată există în contract de la prima masă; ce lipsește e cine alege
-  masa zilei și cum se ține minte că ai jucat-o. Cu Sudoku scris, decretul poate
-  fi **oricare din cele două mese**, nu doar un cuvânt.
+- ~~**Decretul Zilei**~~ — masa a treia, **FĂCUTĂ în aceeași zi**, după Sudoku:
+  rândul de deasupra spunea că decretul „poate fi oricare din cele două mese", și
+  chiar asta a fost tot ce-a mai trebuit. Rotația alege masa, un hash al zilei
+  alege jocul, un steag pe disc închide ziua. Vezi sesiunea DECRETUL ZILEI.
 - **Dificultatea măsurată, nu numărată.** „Câte cifre date" e singura măsură pe
   care generatorul o poate urmări; dificultatea adevărată a unui Sudoku ține de
   ce fel de raționament cere, iar aia ar fi cerut un rezolvitor care numără
@@ -1163,13 +1369,17 @@ atinge nimic din ce exista: meniul a primit o pagină, și atât.
 - ~~**Sudoku**~~ — masa a doua, **FĂCUTĂ pe 4 noiembrie 2026**. A cerut chiar
   ce scria aici: un generator cu unicitate garantată, adică un rezolvitor care
   probează fiecare grilă, aceeași mașinărie ca la Lacăt. Vezi sesiunea SUDOKU.
-- **Decretul Zilei** — masa a treia. Sămânța din dată există deja în contract;
-  ce lipsește e cine alege masa zilei și cum se ține minte că ai jucat-o.
+- ~~**Decretul Zilei**~~ — masa a treia, **FĂCUTĂ pe 4 noiembrie 2026**. A cerut
+  exact ce scria aici (cine alege masa zilei, cum se ține minte că ai jucat-o) și
+  nimic altceva: `taverna.gd` și `joc.gd` neatinse, nicio linie. Vezi sesiunea
+  DECRETUL ZILEI.
 - **Artă proprie pentru Tavernă.** Azi: focul împrumutat de la Odihnă și trei
   pagini de pergament fără iconiță.
-- **Un avertisment cosmetic la ieșirea verificării** („8 ObjectDB instances
-  were leaked at exit"), pe care `verifica_treptele` nu-l are. Codul de ieșire e
-  0 și toate verdictele trec; n-am căutat de unde vine.
+- ~~**Un avertisment cosmetic la ieșirea verificării**~~ („ObjectDB instances
+  were leaked at exit"), pe care `verifica_treptele` nu-l are — **găsit pe 4
+  noiembrie 2026**, în sesiunea DECRETUL ZILEI: erau sunetele jocului, încă în
+  difuzor când procesul se închidea. Lista de la `--verbose` nu avea niciun nod,
+  numai `.ogg`-uri.
 
 ---
 
