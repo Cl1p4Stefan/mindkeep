@@ -249,8 +249,15 @@ func _porneste(cu_samanta: int) -> void:
 	greseli = 0
 	_zugraveste_nivelurile()
 	_zugraveste_tot()
-	_spune("%s — %d cifre date din %d." % [
-		String(NIVELURI[nivel]["nume"]), cate_date(), CELULE])
+	# O partidă nouă începe cu rândul de mesaje GOL. A spus, o zi, „Mediu — 32
+	# cifre date din 81.": o propoziție care nu te ajută la nimic (nivelul se
+	# vede pe butonul apăsat, iar câte cifre sunt se vede pe grilă) și care
+	# stătea chiar deasupra ei, în singurul loc în care jocul are ceva de spus.
+	# Rândul RĂMÂNE, gol: el poartă ce se bate cu ce și de ce nu se schimbă o
+	# cifră dată, iar locul lui e rezervat din scenă ca ecranul să nu-și
+	# schimbe înălțimea când apare primul mesaj (vezi „un ecran se măsoară pe
+	# cât CERE" din CLAUDE.md).
+	_spune("")
 
 
 ## Rândul cu niveluri e AL MESEI cât timp nu l-a luat nimeni, deci masa îl și

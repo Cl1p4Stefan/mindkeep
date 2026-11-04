@@ -125,11 +125,21 @@ adevărat, cu fontul etichetei: 186 px de la mijloc, loc 350. Aceeași lecție c
 la `_reducere` și ca la cele trei cazuri de mână din MARCAREA — **o măsurătoare
 care nu poate pica nu e o măsurătoare**.
 
+### Rândul de start a ieșit, rândul de mesaje a rămas
+
+„Mediu — 32 cifre date din 81." era o propoziție care nu ajută la nimic:
+nivelul se vede pe butonul apăsat, câte cifre sunt se vede pe grilă — iar
+propoziția stătea chiar deasupra ei. A ieșit; **rândul nu**. El poartă ce se
+bate cu ce și de ce nu se schimbă o cifră dată, iar locul lui rămâne rezervat
+din scenă, ca ecranul să nu-și schimbe înălțimea când apare primul mesaj
+(aceeași regulă ca la rândul de rezultat al Tavernei: se GOLEȘTE, nu se
+ascunde). Ecranul cere tot 643 px, înainte și după.
+
 **Fișiere atinse:** `scenes/taverna/joc.gd` (cârligul `unelte()`),
 `scenes/taverna/taverna.gd` + `.tscn` (butonul „i" în antet, rândul de unelte,
 `Suprapunere` ștearsă), `scenes/taverna/inchide_x.gd` (nou),
 `scenes/taverna/sudoku/sudoku.gd` + `.tscn` (pătrate de 42, rândul de niveluri
-dat Tavernei, subtitlul fără „Fără cronometru"),
+dat Tavernei, subtitlul fără „Fără cronometru", rândul de start golit),
 `tools/verificari/verifica_taverna.gd` (**176 de verdicte**, de la 172).
 
 ---
