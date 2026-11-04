@@ -77,7 +77,7 @@ const CATALOG: Array[Dictionary] = [
 	},
 	{
 		"cheie": "fiolele",
-		"nume": "FIOLELE",
+		"nume": "ALCHIMIE",
 		"rol": "Poțiuni amestecate, de turnat până fiecare fiolă are o singură culoare. Planificare cu câțiva pași înainte.",
 		"scena": "res://scenes/taverna/fiolele/fiolele.tscn",
 	},

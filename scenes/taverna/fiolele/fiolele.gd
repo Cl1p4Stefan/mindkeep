@@ -325,7 +325,7 @@ func reguli() -> Control:
 		"Fără cronometru și fără pierdere: Înapoi (sau Backspace) desface ultima turnare,"
 		+ " Reia pornește aceeași partidă de la capăt.", 15))
 	coloana.add_child(_rand_de_reguli(
-		"Treptele urcă singure, de la cel mai mic joc. De la treapta %d, unele straturi"
+		"Nivelurile numerotate urcă singure, de la cel mai mic joc. De la nivelul %d, unele straturi"
 		% TREAPTA_PRIMA_ASCUNSA + " stau sub un ? și își arată culoarea când ajung deasupra.", 15))
 	return coloana
 
@@ -809,7 +809,7 @@ func urca_pe_trepte() -> void:
 ## nu se socotesc: ce se laudă e drumul cu care ai ieșit, nu cel căutat.
 func rezumat() -> String:
 	if treapta > 0:
-		return "Gata! Treapta %d, sortată în %s. Urmează treapta %d." % [
+		return "Gata! Nivelul %d, sortat în %s. Urmează nivelul %d." % [
 			treapta, _turnari(istoric.size()), treapta + 1]
 	return "Gata! Nivel %s, sortat în %s." % [
 		String(NIVELURI[nivel]["nume"]).to_lower(), _turnari(istoric.size())]
@@ -1062,7 +1062,7 @@ func _zugraveste_nivelurile() -> void:
 		_zugraveste_alegerea(butoane_nivel[n], n == nivel)
 	# Treapta la care ai ajuns, și când joci pe un nivel: butonul spune unde
 	# te-ar duce.
-	buton_trepte.text = "Treapta %d" % (treapta if treapta > 0 else maxi(_treapta, 1))
+	buton_trepte.text = "Nivelul %d" % (treapta if treapta > 0 else maxi(_treapta, 1))
 	_zugraveste_alegerea(buton_trepte, treapta > 0)
 
 
