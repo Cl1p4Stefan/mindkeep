@@ -88,6 +88,46 @@ fiola ridicată, patru cadre din turnare, masa de după. **Rămas deschis:** nic
 sunet de turnare și niciunul de dop; fiola dusă trece peste vecinele ei (z_index 1), ca în jocurile
 de gen.
 
+## TREPTELE FIOLELOR (4 noiembrie 2026) — dificultate care urcă singură
+
+**Ce s-a făcut:** lângă Ușor / Mediu / Greu, un al doilea fel de a alege:
+butonul „Treapta N" din același rând de unelte. Treapta 1 e cel mai mic joc (2
+culori în 3 fiole); câștigi, iar „Încă unul" e treapta următoare. Fără capăt.
+
+- **Rețeta e o funcție** (`reteta_treptei`), nu un tabel: culorile urcă după
+  `TREPTE_CULORI` (2 → 9, toată paleta la treapta 36; până la 3 culori o singură
+  fiolă goală), iar de la `TREAPTA_PRIMA_ASCUNSA` = 20 vine câte un strat ascuns
+  la fiecare 6 trepte. Se închide la treapta **176** (toate straturile de sub
+  vârf ascunse, pe 9 culori); de acolo treptele merg la nesfârșit cu amestecuri
+  noi de aceeași greutate. Altă axă (o singură goală pe 9 culori) ar fi lovit
+  rezolvabilitatea, nu gândirea.
+- **Stratul ascuns** se desenează cenușiu cu „?" și nu se contopește cu nimic.
+  Vârful unei fiole nu e ascuns niciodată, deci regula turnării nu atârnă de ce
+  nu vezi. Un strat ascuns se vede când ajunge deasupra — sau când pleacă odată
+  cu un strat de aceeași culoare de deasupra lui (lichidul se toarnă întreg).
+- **Ce s-a văzut nu se mai ascunde**: identitatea unui strat ascuns e locul lui
+  de la start (de sub el nu se poate lua nimic), iar `dezvaluite` doar crește —
+  „Înapoi" și „Reia" întorc lichidul, nu și ce ai aflat.
+- **Treapta N e mereu aceeași masă** (sămânța e `hash("fiolele:treapta:N")`).
+  Decretul trimite o sămânță, deci nu joacă niciodată pe trepte și nu urcă nimic.
+- **Pe disc**: o cheie a mesei, `"fiolele": {"treapta": N}` în `permanent.json`
+  (două rânduri în `arhiva.gd`). Treapta urcă înainte de `termina`, iar Taverna
+  scrie discul la semnal.
+
+**Verificarea:** secțiunea TREPTELE în `verifica_taverna` (352 → 376): rețeta pe
+1200 de trepte (nu scade, nu iese din paletă, primul ascuns la 20, plafonul la
+176), 20 de trepte de-a lungul drumului generate și rezolvate de AL DOILEA
+rezolvitor, aceeași masă de două ori, ascunsele distincte și niciuna deasupra;
+o partidă pe treapta 60 jucată cu scena adevărată (niciun vârf ascuns după
+nicio turnare, desenul = logica, Înapoi nu re-ascunde, câștigul urcă treapta);
+ieșirea de pe trepte la un nivel, întoarcerea, sămânța; drumul prin JSON. Toate
+verzi; `verifica_salvarea` tot verde.
+
+**Ce a rămas:** nejucat de mână. De văzut dacă ritmul (un ascuns la 6 trepte,
+plafon la 176) e prea lent sau prea repede — se reglează din trei constante.
+
+---
+
 ## FIOLELE (4 noiembrie 2026) — masa a patra, water sort cu lichid
 
 **Ce s-a făcut:** a patra masă din Tavernă, după planul scris mai devreme în

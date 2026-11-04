@@ -1480,13 +1480,214 @@ func _fiolele() -> bool:
 	rezultat = _verdict(s1 == s2, "aceeași sămânță dă același amestec") and rezultat
 	rezultat = _verdict(s1 != s3, "o altă sămânță dă alt amestec") and rezultat
 
-	return await _fiolele_jucate() and rezultat
+	rezultat = await _fiolele_jucate() and rezultat
+	return await _fiolele_treptele() and rezultat
+
+
+## TREPTELE — al doilea fel de a alege dificultatea (vezi antetul mesei).
+##
+## Trei lucruri: rețeta crește și nu scade pe 1200 de trepte; masa unei trepte
+## e aceeași de fiecare dată, rezolvată de VERIFICARE, cu ascunsele numai sub
+## vârf; și partida jucată cu scena adevărată, în care ce s-a văzut nu se mai
+## ascunde, iar câștigul urcă treapta.
+const TREPTE_DE_BATUT := [1, 2, 3, 4, 5, 6, 10, 15, 19, 20, 21, 27, 36, 50, 100, 176, 177, 500, 1000, 1001]
+
+func _fiolele_treptele() -> bool:
+	print("  FIOLELE — TREPTELE")
+	var rezultat := true
+	var treapta_de_dinainte: int = FIOLE._treapta
+
+	# a) REȚETA, pe 1200 de trepte.
+	var prima: Dictionary = FIOLE.reteta_treptei(1)
+	rezultat = _verdict(int(prima["culori"]) + int(prima["goale"]) == 3,
+		"treapta 1 e cel mai mic joc: %d culori în %d fiole" % [prima["culori"],
+		int(prima["culori"]) + int(prima["goale"])]) and rezultat
+	var scade := 0
+	var peste := 0
+	var ascunse_devreme := 0
+	var prima_ascunsa := -1
+	var plafon := -1
+	var de_dinainte: Dictionary = prima
+	for n in range(1, 1201):
+		var r: Dictionary = FIOLE.reteta_treptei(n)
+		if int(r["culori"]) < int(de_dinainte["culori"]) or int(r["ascunse"]) < int(de_dinainte["ascunse"]):
+			scade += 1
+		if int(r["culori"]) > FIOLE.PALETA.size() or int(r["culori"]) < 2 \
+				or int(r["ascunse"]) > int(r["culori"]) * (FIOLE.CAPACITATE - 1):
+			peste += 1
+		if int(r["ascunse"]) > 0 and prima_ascunsa < 0:
+			prima_ascunsa = n
+		if n < FIOLE.TREAPTA_PRIMA_ASCUNSA and int(r["ascunse"]) > 0:
+			ascunse_devreme += 1
+		if plafon < 0 and int(r["culori"]) == FIOLE.PALETA.size() \
+				and int(r["ascunse"]) == FIOLE.PALETA.size() * (FIOLE.CAPACITATE - 1):
+			plafon = n
+		de_dinainte = r
+	rezultat = _verdict(scade == 0, "pe 1200 de trepte, nici culorile, nici ascunsele nu scad") and rezultat
+	rezultat = _verdict(peste == 0,
+		"nicio treaptă peste paletă și niciuna cu mai multe ascunse decât straturi de sub vârf") and rezultat
+	rezultat = _verdict(prima_ascunsa == FIOLE.TREAPTA_PRIMA_ASCUNSA and ascunse_devreme == 0,
+		"primul strat ascuns vine la treapta %d, nu mai devreme" % prima_ascunsa) and rezultat
+	rezultat = _verdict(plafon == FIOLE.TREAPTA_PLAFON,
+		"rețeta se închide la treapta %d (constanta spune %d)" % [plafon, FIOLE.TREAPTA_PLAFON]) and rezultat
+
+	# b) MASA UNEI TREPTE, pe trepte alese de-a lungul drumului.
+	var forma_rea := 0
+	var nerezolvate := 0
+	var neasezate := 0
+	var ascunse_rele := 0
+	var timp := Time.get_ticks_msec()
+	for n in TREPTE_DE_BATUT:
+		var r: Dictionary = FIOLE.reteta_treptei(n)
+		var masa: Dictionary = FIOLE.genereaza_treapta(n)
+		var stare: Array = masa["fiole"]
+		var culori := int(r["culori"])
+		var numar := {}
+		for fiola in stare:
+			for v in fiola:
+				numar[int(v)] = int(numar.get(int(v), 0)) + 1
+		var bune := stare.size() == culori + int(r["goale"]) and numar.size() == culori
+		for v in numar:
+			if int(numar[v]) != FIOLE.CAPACITATE:
+				bune = false
+		if not bune or FIOLE._are_fiola_gata(stare):
+			forma_rea += 1
+		if _f_rezolva(_siruri_din(stare)).is_empty():
+			nerezolvate += 1
+		var din_nou: Dictionary = FIOLE.genereaza_treapta(n)
+		if din_nou["fiole"] != stare or din_nou["ascunse"] != masa["ascunse"]:
+			neasezate += 1
+		var vazute := {}
+		for poz in masa["ascunse"]:
+			var loc: Vector2i = poz
+			if vazute.has(loc) or loc.x < 0 or loc.x >= stare.size() \
+					or loc.y < 0 or loc.y >= (stare[loc.x] as Array).size() - 1:
+				ascunse_rele += 1
+			vazute[loc] = true
+		if vazute.size() != int(r["ascunse"]):
+			ascunse_rele += 1
+	print("         %d trepte generate în %d ms" % [TREPTE_DE_BATUT.size(), Time.get_ticks_msec() - timp])
+	rezultat = _verdict(forma_rea == 0,
+		"pe %d trepte: fiolele și culorile cerute de rețetă, nimic gata din prima" % TREPTE_DE_BATUT.size()) and rezultat
+	rezultat = _verdict(nerezolvate == 0, "și fiecare masă e rezolvată de verificare") and rezultat
+	rezultat = _verdict(neasezate == 0, "treapta N e mereu aceeași masă, cu aceleași ascunse") and rezultat
+	rezultat = _verdict(ascunse_rele == 0,
+		"ascunsele sunt câte cere rețeta, distincte, și niciuna deasupra") and rezultat
+
+	# c) PARTIDA JUCATĂ, pe o treaptă cu multe ascunse.
+	var n_joc := 60
+	FIOLE._pe_trepte = true
+	FIOLE._treapta = n_joc
+	var joc := SCENA_FIOLE.instantiate()
+	add_child(joc)
+	var raportat := []
+	joc.terminat.connect(func(rez): raportat.append(rez))
+	joc.porneste(Joc.SAMANTA_LIBERA)
+	var cate := int(FIOLE.reteta_treptei(n_joc)["ascunse"])
+	rezultat = _verdict(joc.treapta == n_joc and joc.ascunse_start.size() == cate,
+		"pe trepte, masa e treapta %d, cu %d straturi ascunse" % [n_joc, cate]) and rezultat
+	rezultat = _verdict(joc.buton_trepte.text.contains(str(n_joc)),
+		"butonul spune treapta: %s" % joc.buton_trepte.text) and rezultat
+	rezultat = _verdict(_ascunse_desenate(joc) == cate and _desenul_spune_ce_e_ascuns(joc),
+		"iar fiolele desenate le poartă exact pe ele") and rezultat
+
+	var drum := _f_rezolva(_siruri_din(joc.fiole))
+	var varf_ascuns := 0
+	var reascunse := 0
+	var nedesenate := 0
+	var vazute_inainte := {}
+	for idx in drum.size():
+		var m: Array = drum[idx]
+		joc.apasa(m[0])
+		joc.apasa(m[1])
+		if raportat.is_empty():
+			for f in joc.fiole.size():
+				var h := (joc.fiole[f] as Array).size()
+				if h > 0 and joc.e_ascuns(f, h - 1):
+					varf_ascuns += 1
+			if not _desenul_spune_ce_e_ascuns(joc):
+				nedesenate += 1
+		# La jumătatea drumului: un „Înapoi" nu ascunde la loc ce s-a văzut.
+		if idx == drum.size() / 2:
+			vazute_inainte = joc.dezvaluite.duplicate()
+			joc.inapoi()
+			for loc in vazute_inainte:
+				if not joc.dezvaluite.has(loc):
+					reascunse += 1
+			joc.apasa(m[0])
+			joc.apasa(m[1])
+	rezultat = _verdict(varf_ascuns == 0,
+		"după fiecare din cele %d turnări, niciun vârf de fiolă nu e ascuns" % drum.size()) and rezultat
+	rezultat = _verdict(nedesenate == 0, "și desenul ține pasul cu ce e ascuns") and rezultat
+	rezultat = _verdict(reascunse == 0 and not vazute_inainte.is_empty(),
+		"Înapoi întoarce lichidul, nu și ce s-a văzut (%d straturi văzute)" % vazute_inainte.size()) and rezultat
+	rezultat = _verdict(raportat.size() == 1 and FIOLE._treapta == n_joc + 1,
+		"câștigul încheie partida și urcă treapta la %d" % FIOLE._treapta) and rezultat
+	if raportat.size() == 1:
+		rezultat = _verdict(String(raportat[0]["rezumat"]).contains(str(n_joc + 1)),
+			"iar fraza spune ce urmează: %s" % raportat[0]["rezumat"]) and rezultat
+	joc.queue_free()
+
+	# d) „ÎNCĂ UNUL" e treapta următoare; un nivel te scoate de pe trepte; o
+	# sămânță (decretul) nu urcă nimic.
+	var masa2 := SCENA_FIOLE.instantiate()
+	add_child(masa2)
+	masa2.porneste(Joc.SAMANTA_LIBERA)
+	rezultat = _verdict(masa2.treapta == n_joc + 1, "partida următoare e treapta %d" % (n_joc + 1)) and rezultat
+	masa2.schimba_nivelul(0)
+	rezultat = _verdict(masa2.treapta == 0 and masa2.nivel == 0 and masa2.ascunse_start.is_empty()
+		and not FIOLE._pe_trepte, "un nivel de pe tăblie te scoate de pe trepte, fără ascunse") and rezultat
+	masa2.urca_pe_trepte()
+	rezultat = _verdict(masa2.treapta == n_joc + 1, "și butonul treptelor te duce înapoi unde rămăseseși") and rezultat
+	masa2.porneste(42)
+	rezultat = _verdict(masa2.treapta == 0 and masa2.nivel == 42 % FIOLE.NIVELURI.size(),
+		"cu o sămânță dată (decretul), nici pe trepte nu se joacă treapta") and rezultat
+	masa2.queue_free()
+
+	# e) DISCUL.
+	FIOLE._treapta = 314
+	var pe_disc: Dictionary = FIOLE.spre_dictionar()
+	FIOLE._treapta = 1
+	FIOLE.din_dictionar(JSON.parse_string(JSON.stringify(pe_disc)))
+	rezultat = _verdict(FIOLE._treapta == 314, "treapta trece prin disc (JSON) neatinsă") and rezultat
+	FIOLE.din_dictionar({})
+	var lipsa: int = FIOLE._treapta
+	FIOLE.din_dictionar({"treapta": "multe"})
+	var stramba: int = FIOLE._treapta
+	FIOLE.din_dictionar({"treapta": -4})
+	rezultat = _verdict(lipsa == 1 and stramba == 1 and FIOLE._treapta == 1,
+		"o cheie lipsă, strâmbă sau negativă e treapta 1") and rezultat
+
+	FIOLE._pe_trepte = false
+	FIOLE._treapta = treapta_de_dinainte
+	await get_tree().process_frame
+	return rezultat
+
+
+func _ascunse_desenate(joc) -> int:
+	var cate := 0
+	for vas in joc.vase:
+		for a in vas.ascunse:
+			if a:
+				cate += 1
+	return cate
+
+
+## Desenul spune adevărul: fiecare fiolă desenată are ascunse exact straturile
+## pe care masa le crede ascunse.
+func _desenul_spune_ce_e_ascuns(joc) -> bool:
+	for f in joc.vase.size():
+		if joc.vase[f].ascunse != joc.ascunse_in(f):
+			return false
+	return true
 
 
 ## PARTIDA JUCATĂ CU SCENA ADEVĂRATĂ — fratele lui `_sudoku_jucat`.
 func _fiolele_jucate() -> bool:
 	print("  FIOLELE — PARTIDA JUCATĂ")
 	var rezultat := true
+	# Pe un nivel, nu pe trepte: secțiunea TREPTELE vine după și le pune înapoi.
+	FIOLE._pe_trepte = false
 
 	var joc := SCENA_FIOLE.instantiate()
 	add_child(joc)

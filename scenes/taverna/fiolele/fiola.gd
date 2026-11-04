@@ -33,6 +33,11 @@ extends Control
 ## linie între ele (`segmente_din` le contopește) — și asta e informație, nu o
 ## scăpare: un strat de trei galbene se toarnă ÎNTREG, deci trebuie să se vadă
 ## ca un singur lucru.
+##
+## STRATURILE ASCUNSE (treptele mesei): un strat cu `ascunse[k]` se desenează
+## cu `CULOARE_ASCUNSA` și un „?" pe el, și NU se contopește cu nimic — nici cu
+## un vecin ascuns, nici cu unul de aceeași culoare. Contopit, ar fi spus
+## exact ce ascunde.
 
 ## Cât de sus stă fiola când e ALEASĂ. Locul e rezervat și când nu e, altfel
 ## rândul de fiole și-ar fi schimbat înălțimea la fiecare clic.
@@ -78,6 +83,10 @@ const CULOARE_CHENAR := Color(0.62, 0.66, 0.66)
 ## Chenarul fiolei alese: același crem ca cifrele date din Sudoku. Nu verde și
 ## nu chihlimbar — alegerea nu e un verdict și nici o avertizare.
 const CULOARE_CHENAR_ALEASA := Color(0.98, 0.95, 0.88)
+## Un strat ascuns: un cenușiu tulbure, mai închis decât orice culoare din
+## paletă (toate au L ≥ 0,5), ca să nu se confunde cu una din ele.
+const CULOARE_ASCUNSA := Color(0.27, 0.26, 0.29)
+const MARIME_SEMN := 24
 
 ## Rotunjimea sticlei, ca benzi verticale de umbră și lumină: x e de la -1
 ## (peretele stâng) la 1 (cel drept), iar între capete culoarea curge liniar.
@@ -96,6 +105,8 @@ const BENZI_LUMINA := [
 ## Culorile straturilor, de jos în sus — ce e LOGIC în fiolă. Le citește și
 ## verificarea.
 var culori: Array[Color] = []
+## Care straturi sunt ascunse, de jos în sus. Gol = niciunul.
+var ascunse: Array[bool] = []
 var capacitate := 4
 var latime := 52.0
 var inaltime_strat := 44.0
@@ -139,11 +150,13 @@ var _forma_pentru := Vector3.ZERO
 
 
 ## Pune o umplere nouă și se redesenează.
-func aseaza(culori_noi: Array[Color], ridicata_acum: bool) -> void:
+func aseaza(culori_noi: Array[Color], ridicata_acum: bool,
+		ascunse_noi: Array[bool] = []) -> void:
 	culori = culori_noi
+	ascunse = ascunse_noi
 	ridicata = ridicata_acum
 	if not animata:
-		segmente = segmente_din(culori)
+		segmente = segmente_din(culori, ascunse)
 	# O fiolă care încă n-a ajuns pe ecran nu urcă: se naște direct sus (ca în
 	# exemplul din reguli), altfel panoul s-ar fi deschis cu o mișcare.
 	if not is_inside_tree():
@@ -186,14 +199,23 @@ func _straluceste(t: float) -> void:
 
 
 ## Culorile, strânse în straturi: trei galbene la rând sunt UN segment de 3.
-static func segmente_din(lista: Array) -> Array:
+## Un strat ascuns e un segment al lui, `[CULOARE_ASCUNSA, 1, true]`.
+static func segmente_din(lista: Array, ascunse_lista: Array = []) -> Array:
 	var rez: Array = []
-	for c in lista:
-		if not rez.is_empty() and (rez[-1][0] as Color).is_equal_approx(c):
+	for k in lista.size():
+		if k < ascunse_lista.size() and ascunse_lista[k]:
+			rez.append([CULOARE_ASCUNSA, 1.0, true])
+			continue
+		var c: Color = lista[k]
+		if not rez.is_empty() and not _e_ascuns(rez[-1]) 				and (rez[-1][0] as Color).is_equal_approx(c):
 			rez[-1][1] = float(rez[-1][1]) + 1.0
 		else:
 			rez.append([c, 1.0])
 	return rez
+
+
+static func _e_ascuns(segment: Array) -> bool:
+	return segment.size() > 2 and bool(segment[2])
 
 
 func _process(delta: float) -> void:
@@ -518,11 +540,42 @@ func _deseneaza_lichid(interior: PackedVector2Array) -> void:
 		if k > 0:
 			_banda(interior, suprafete[k - 1], 2.0, Color(0, 0, 0, 0.12))
 
+	# Semnul de întrebare pe fiecare strat ascuns, drept, în mijlocul feliei
+	# lui (suprafața e orizontală oricât s-ar înclina fiola, deci și semnul).
+	for k in segmente.size():
+		if not _e_ascuns(segmente[k]) or float(segmente[k][1]) <= 0.001:
+			continue
+		var jos_felie: float = suprafete[k - 1] if k > 0 else _nivel(interior, 0.0)
+		_deseneaza_semnul(interior, suprafete[k], jos_felie)
+
 	# Suprafața de sus: un menisc mai deschis, cu o linie de lumină pe ea.
 	var sus := suprafete[-1]
 	var culoare_sus: Color = segmente[-1][0]
 	_banda(interior, sus, 3.0, culoare_sus.lightened(0.28))
 	_banda(interior, sus, 1.0, Color(culoare_sus.lightened(0.6), 0.85))
+
+
+## Un „?" în mijlocul feliei dintre `sus` și `jos`. E o literă a fontului, nu
+## un desen: semnul există în toate trei fonturile jocului, iar regulile mesei îl
+## scriu ca text, deci `verifica_taverna` îl bate odată cu caracterele mesei.
+func _deseneaza_semnul(interior: PackedVector2Array, sus: float, jos: float) -> void:
+	var felie := PackedVector2Array([Vector2(-1e4, sus), Vector2(1e4, sus),
+		Vector2(1e4, jos), Vector2(-1e4, jos)])
+	var bucati := Geometry2D.intersect_polygons(interior, felie)
+	if bucati.is_empty():
+		return
+	var r := Rect2((bucati[0] as PackedVector2Array)[0], Vector2.ZERO)
+	for bucata in bucati:
+		for p in bucata:
+			r = r.expand(p)
+	var font := get_theme_default_font()
+	var marime := mini(MARIME_SEMN, int(r.size.y * 0.8))
+	if font == null or marime < 8:
+		return
+	var lat := font.get_string_size("?", HORIZONTAL_ALIGNMENT_LEFT, -1, marime).x
+	var linie := r.get_center().y + (font.get_ascent(marime) - font.get_descent(marime)) / 2.0
+	draw_string(font, Vector2(r.get_center().x - lat / 2.0, linie), "?",
+		HORIZONTAL_ALIGNMENT_LEFT, -1, marime, Color(CULOARE_CHENAR_ALEASA, 0.85))
 
 
 ## O fâșie orizontală de `grosime` pixeli sub linia `y`, tăiată la interior.

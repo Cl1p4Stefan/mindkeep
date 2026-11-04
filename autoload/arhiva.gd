@@ -103,6 +103,8 @@ const TAVERNA := preload("res://scenes/taverna/taverna.gd")
 ## e a mesei, iar o masă care își scrie starea în dicționarul camerei ar fi
 ## început chiar lista de „era mai ușor așa" pe care `mese.gd` o refuză.
 const DECRETUL := preload("res://scenes/taverna/decretul/decretul.gd")
+## Fiolele țin minte treapta la care ai ajuns — aceeași judecată ca la decret.
+const FIOLELE := preload("res://scenes/taverna/fiolele/fiolele.gd")
 
 ## Versiunea formatului de pe disc. Crește când o cheie își schimbă ÎNȚELESUL,
 ## nu când se adaugă una nouă: o cheie în plus e citită de un joc vechi ca
@@ -155,6 +157,7 @@ func incarca() -> void:
 		PRACTICE.din_dictionar(_sub(permanent, "practice"))
 		TAVERNA.din_dictionar(_sub(permanent, "taverna"))
 		DECRETUL.din_dictionar(_sub(permanent, "decretul"))
+		FIOLELE.din_dictionar(_sub(permanent, "fiolele"))
 
 	var expeditie = _citeste(NUME_EXPEDITIE)
 	if expeditie is Dictionary:
@@ -192,6 +195,7 @@ func salveaza_permanent() -> bool:
 		"practice": PRACTICE.spre_dictionar(),
 		"taverna": TAVERNA.spre_dictionar(),
 		"decretul": DECRETUL.spre_dictionar(),
+		"fiolele": FIOLELE.spre_dictionar(),
 	})
 
 

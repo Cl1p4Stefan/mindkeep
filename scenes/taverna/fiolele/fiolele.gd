@@ -68,8 +68,43 @@ extends Joc
 ## Te poți înfunda, și de-aia există „Înapoi" (nelimitat) și „Reia" (aceeași
 ## partidă, de la capăt). Masa poate spune „nu mai ai nicio turnare", dar nu
 ## te dă afară — „Ton sănătos". `termina(true, …)` e singurul final, ca la
-## Sudoku. N-are nimic de ținut pe disc: amestecurile sunt generate, deci nu se
-## repetă, iar `Sac` n-are ce ține minte.
+## Sudoku. Amestecurile sunt generate, deci nu se repetă, iar `Sac` n-are ce
+## ține minte; pe disc stă un singur număr, treapta (vezi mai jos).
+##
+## ─────────────────────────────────────────────────────────────
+## TREPTELE — al doilea fel de a alege dificultatea
+##
+## Lângă Ușor / Mediu / Greu, un drum fără capăt: treapta 1, 2, 3… Câștigi o
+## treaptă, urmează următoarea; „Încă unul" al Tavernei te duce chiar acolo,
+## fiindcă treapta e `static` și pe disc. Treapta 1 e cel mai mic joc cu putință
+## (2 culori în 3 fiole), iar de acolo cresc, pe rând, două lucruri:
+##
+##   1. CULORILE, după `TREPTE_CULORI`, până la toată paleta (9). Cu una și două
+##      culori se lasă o singură fiolă goală — cu două, jocul s-ar rezolva
+##      singur;
+##   2. STRATURILE ASCUNSE, de la `TREAPTA_PRIMA_ASCUNSA` încolo, câte unul la
+##      `TREPTE_PE_ASCUNS` trepte: un strat ascuns se desenează cu „?" și își
+##      arată culoarea abia când ajunge DEASUPRA într-o fiolă. Stratul de
+##      deasupra nu e ascuns niciodată, deci regula turnării nu atârnă de ce nu
+##      vezi: ce poți turna e mereu pe ecran.
+##
+## Rețeta e o FUNCȚIE de treaptă (`reteta_treptei`), nu un tabel de o mie de
+## rânduri. Se ÎNCHIDE cinstit: când toate straturile de sub vârf sunt ascunse
+## pe nouă culori, rețeta nu mai crește (`TREAPTA_PLAFON`) — treptele merg mai
+## departe la nesfârșit, cu amestecuri noi de aceeași greutate. Altă axă
+## (o singură fiolă goală pe nouă culori) ar fi lovit rezolvabilitatea, nu
+## gândirea.
+##
+## Treapta N e MEREU aceeași masă: sămânța ei e treapta, amestecată prin
+## `hash` (vezi „O sămânță dată mai departe se amestecă întâi" din CLAUDE.md).
+## Așa „treapta 37" e un loc, nu o tragere la sorți — și verificarea o poate
+## bate fără să joace treptele de dinainte.
+##
+## CE S-A VĂZUT NU SE MAI ASCUNDE. Un strat ascuns e pe locul lui de la start
+## până îl vezi (de sub el nu se poate lua nimic, iar el n-a plecat), deci
+## identitatea lui e chiar locul de start, `Vector2i(fiolă, rând)`. Ce ai
+## văzut intră în `dezvaluite`, care doar crește: „Înapoi" și „Reia" întorc
+## lichidul, nu și ce ai aflat — o informație nu se dezvață.
 
 const FIOLA := preload("res://scenes/taverna/fiolele/fiola.gd")
 
@@ -105,6 +140,17 @@ const PALETA := [
 
 ## De câte ori se amestecă până iese un amestec dovedit rezolvabil. Măsurat:
 ## aproape totdeauna iese din prima; plafonul e o plasă, nu o țintă.
+## TREPTELE (vezi antetul): `[de la treapta, culori]`, în ordine.
+const TREPTE_CULORI := [[1, 2], [3, 3], [6, 4], [10, 5], [15, 6], [21, 7], [28, 8], [36, 9]]
+## Până la câte culori se lasă o singură fiolă goală.
+const TREPTE_O_GOALA := 3
+const TREAPTA_PRIMA_ASCUNSA := 20
+const TREPTE_PE_ASCUNS := 6
+## Treapta de la care rețeta nu mai crește: toate straturile de sub vârf
+## ascunse, pe toată paleta. Socotită, nu scrisă: 20 + 6 × (9 × 3 − 1) = 176.
+const TREAPTA_PLAFON := TREAPTA_PRIMA_ASCUNSA \
+	+ TREPTE_PE_ASCUNS * (9 * (CAPACITATE - 1) - 1)
+
 const INCERCARI_GENERARE := 400
 ## Câte stări are voie să viziteze rezolvitorul pe un amestec. Vezi
 ## „GARANȚIA E REZOLVABILITATEA" din antet.
@@ -143,6 +189,10 @@ const INALTIME_JET := 30.0
 ## Nivelul ales de pe tăblie. `static` — vezi „NIVELURILE STAU PE TĂBLIE" din
 ## `sudoku.gd`; aceeași decizie, din același motiv.
 static var _nivel_ales := 1
+## Joci pe trepte, nu pe un nivel? Și treapta la care ai ajuns — cea pe care
+## n-ai câștigat-o încă. Pe disc stă numai treapta (`spre_dictionar`).
+static var _pe_trepte := false
+static var _treapta := 1
 
 ## Amestecul de la început, pentru „Reia". Nu se schimbă în timpul partidei.
 var start: Array = []
@@ -152,13 +202,21 @@ var fiole: Array = []
 ## turnări de desfăcut: „Înapoi întoarce exact starea de dinainte" e atunci
 ## adevărat prin construcție, nu printr-o socoteală inversă care poate greși.
 var istoric: Array = []
+## Nivelul partidei, sau -1 pe trepte.
 var nivel := 1
+## Treapta partidei, sau 0 când se joacă pe un nivel.
+var treapta := 0
+## Straturile ascunse la start, ca `Vector2i(fiolă, rând)` → true, și cele
+## dintre ele care s-au văzut între timp. Vezi „CE S-A VĂZUT" din antet.
+var ascunse_start := {}
+var dezvaluite := {}
 ## Fiola aleasă, sau -1.
 var aleasa := -1
 
 ## Nodurile desenate, pe index.
 var vase: Array[FIOLA] = []
 var butoane_nivel: Array[Button] = []
+var buton_trepte: Button = null
 var rand_niveluri: HBoxContainer = null
 var buton_inapoi: Button = null
 var buton_reia: Button = null
@@ -205,22 +263,38 @@ func _exit_tree() -> void:
 func _porneste(cu_samanta: int) -> void:
 	_grabeste()
 	var rng := RandomNumberGenerator.new()
-	if cu_samanta == SAMANTA_LIBERA:
+	treapta = 0
+	ascunse_start = {}
+	dezvaluite = {}
+	if cu_samanta == SAMANTA_LIBERA and _pe_trepte:
+		# Pe trepte, sămânța e TREAPTA: decretul trimite mereu o sămânță, deci
+		# nu ajunge niciodată aici, iar o partidă a zilei nu urcă trepte.
+		treapta = maxi(_treapta, 1)
+		nivel = -1
+		var masa := genereaza_treapta(treapta)
+		start = masa["fiole"]
+		for poz in masa["ascunse"]:
+			ascunse_start[poz] = true
+	elif cu_samanta == SAMANTA_LIBERA:
 		rng.randomize()
 		nivel = _nivel_ales
+		start = genereaza(nivel, rng)
 	else:
 		# Sămânța hotărăște TOT jocul, nivelul inclus — ca la Sudoku.
 		rng.seed = cu_samanta
 		nivel = cu_samanta % NIVELURI.size()
+		start = genereaza(nivel, rng)
 
-	start = genereaza(nivel, rng)
 	fiole = start.duplicate(true)
 	istoric.clear()
 	aleasa = -1
 	_construieste_fiolele()
 	_zugraveste_nivelurile()
 	_zugraveste_tot()
-	_spune("")
+	if treapta == TREAPTA_PRIMA_ASCUNSA:
+		_spune("De aici, unele straturi sunt ascunse: le afli când ajung deasupra.")
+	else:
+		_spune("")
 
 
 func rand_de_ajutor() -> String:
@@ -250,6 +324,9 @@ func reguli() -> Control:
 	coloana.add_child(_rand_de_reguli(
 		"Fără cronometru și fără pierdere: Înapoi (sau Backspace) desface ultima turnare,"
 		+ " Reia pornește aceeași partidă de la capăt.", 15))
+	coloana.add_child(_rand_de_reguli(
+		"Treptele urcă singure, de la cel mai mic joc. De la treapta %d, unele straturi"
+		% TREAPTA_PRIMA_ASCUNSA + " stau sub un ? și își arată culoarea când ajung deasupra.", 15))
 	return coloana
 
 
@@ -381,9 +458,53 @@ static func _o_singura_culoare(fiola: Array) -> bool:
 ## Un amestec dovedit rezolvabil, pe nivelul cerut.
 static func genereaza(nivel_cerut: int, rng: RandomNumberGenerator) -> Array:
 	var culori := int(NIVELURI[clampi(nivel_cerut, 0, NIVELURI.size() - 1)]["culori"])
+	return _genereaza_din(culori, GOALE, rng)
+
+
+## Ce se pune pe masă la treapta `n`: câte culori, câte fiole goale, câte
+## straturi ascunse. Vezi „TREPTELE" din antet.
+static func reteta_treptei(n: int) -> Dictionary:
+	n = maxi(n, 1)
+	var culori := 2
+	for prag in TREPTE_CULORI:
+		if n >= int(prag[0]):
+			culori = int(prag[1])
+	var ascunse := 0
+	if n >= TREAPTA_PRIMA_ASCUNSA:
+		ascunse = mini(culori * (CAPACITATE - 1),
+			1 + (n - TREAPTA_PRIMA_ASCUNSA) / TREPTE_PE_ASCUNS)
+	return {"culori": culori, "goale": 1 if culori <= TREPTE_O_GOALA else GOALE,
+		"ascunse": ascunse}
+
+
+## Masa treptei `n`: `{fiole, ascunse}`, cu `ascunse` o listă de `Vector2i`.
+## Aceeași de fiecare dată — vezi antetul.
+static func genereaza_treapta(n: int) -> Dictionary:
+	var reteta := reteta_treptei(n)
+	var rng := RandomNumberGenerator.new()
+	rng.seed = hash("fiolele:treapta:%d" % maxi(n, 1))
+	var stare := _genereaza_din(int(reteta["culori"]), int(reteta["goale"]), rng)
+	return {"fiole": stare, "ascunse": _alege_ascunse(stare, int(reteta["ascunse"]), rng)}
+
+
+## `cate` locuri ascunse, trase dintre straturile care NU sunt deasupra.
+static func _alege_ascunse(stare: Array, cate: int, rng: RandomNumberGenerator) -> Array:
+	var locuri: Array = []
+	for f in stare.size():
+		for k in (stare[f] as Array).size() - 1:
+			locuri.append(Vector2i(f, k))
+	for i in range(locuri.size() - 1, 0, -1):
+		var j := rng.randi() % (i + 1)
+		var t = locuri[i]
+		locuri[i] = locuri[j]
+		locuri[j] = t
+	return locuri.slice(0, mini(cate, locuri.size()))
+
+
+static func _genereaza_din(culori: int, goale: int, rng: RandomNumberGenerator) -> Array:
 	var ultimul: Array = []
 	for incercare in INCERCARI_GENERARE:
-		var stare := _amesteca(culori, rng)
+		var stare := _amesteca(culori, goale, rng)
 		ultimul = stare
 		# O fiolă sortată din prima e o fiolă pe care n-o joci.
 		if _are_fiola_gata(stare):
@@ -400,7 +521,7 @@ static func genereaza(nivel_cerut: int, rng: RandomNumberGenerator) -> Array:
 ## Toate straturile (fiecare culoare de `CAPACITATE` ori), amestecate cu RNG-ul
 ## PRIMIT — nu `shuffle()`, din motivul scris la `_cifre_amestecate` din
 ## Sudoku — împărțite în fiole pline, plus cele goale.
-static func _amesteca(culori: int, rng: RandomNumberGenerator) -> Array:
+static func _amesteca(culori: int, goale: int, rng: RandomNumberGenerator) -> Array:
 	var straturi: Array[int] = []
 	for c in culori:
 		for k in CAPACITATE:
@@ -413,7 +534,7 @@ static func _amesteca(culori: int, rng: RandomNumberGenerator) -> Array:
 	var stare: Array = []
 	for f in culori:
 		stare.append(straturi.slice(f * CAPACITATE, (f + 1) * CAPACITATE))
-	for g in GOALE:
+	for g in goale:
 		stare.append([])
 	return stare
 
@@ -579,20 +700,59 @@ func apasa(i: int) -> void:
 		return
 
 	istoric.append(fiole.duplicate(true))
+	# Ce era ascuns ÎNAINTE, pentru animație: stratul care rămâne deasupra în
+	# sursă își arată culoarea abia când s-a terminat de turnat.
+	var ascunse_inainte := [ascunse_in(din), ascunse_in(i)]
+	var inaltime_sursa := (fiole[din] as Array).size()
 	var cat := turna(fiole, din, i)
+	# Un strat ascuns poate pleca fără să fi fost deasupra: sub un strat de
+	# aceeași culoare, se toarnă odată cu el. Plecat, e văzut.
+	for k in range(inaltime_sursa - cat, inaltime_sursa):
+		dezvaluite[Vector2i(din, k)] = true
+	_dezvaluie_varfurile()
 	aleasa = -1
 	_spune("")
 	# Animația întâi: ea marchează cele două fiole ca animate, iar zugrăveala
 	# de după le lasă în pace straturile și dopul — dopul fiolei umplute cade
 	# abia când s-a terminat de turnat (`_incheie_turnarea`).
-	_anima_turnarea(din, i, cat, istoric[-1])
+	_anima_turnarea(din, i, cat, istoric[-1], ascunse_inainte)
 	_zugraveste_tot()
 
 	if e_gata(fiole):
 		Sunet.reda(Sunet.Efect.CORECT)
+		# Treapta urcă ÎNAINTE de `termina`: Taverna scrie discul chiar în
+		# clipa în care primește semnalul.
+		if treapta > 0 and treapta == _treapta:
+			_treapta += 1
 		termina(true, rezumat())
 	elif not are_turnari(fiole):
 		_spune("Nu mai ai nicio turnare. Înapoi sau Reia.")
+
+
+## E ascuns acum stratul de pe rândul `k` al fiolei `f`? Pe locul unui strat
+## ascuns nevăzut stă mereu chiar stratul de la start (vezi antetul), deci
+## întrebarea se pune pe LOC.
+func e_ascuns(f: int, k: int) -> bool:
+	var loc := Vector2i(f, k)
+	return ascunse_start.has(loc) and not dezvaluite.has(loc)
+
+
+## Straturile ascunse ale fiolei `f`, de jos în sus, pentru desen.
+func ascunse_in(f: int) -> Array[bool]:
+	var rez: Array[bool] = []
+	for k in (fiole[f] as Array).size():
+		rez.append(e_ascuns(f, k))
+	return rez
+
+
+## Stratul de deasupra al fiecărei fiole se vede. Chemată după orice schimbă
+## lichidul — o plasă: „Înapoi" și „Reia" ajung numai în stări în care
+## vârfurile se văzuseră deja.
+func _dezvaluie_varfurile() -> void:
+	for f in fiole.size():
+		var n := (fiole[f] as Array).size()
+		if n > 0 and ascunse_start.has(Vector2i(f, n - 1)):
+			dezvaluite[Vector2i(f, n - 1)] = true
 
 
 func _de_ce_nu(_din: int, in_: int) -> String:
@@ -611,6 +771,7 @@ func inapoi() -> void:
 	_grabeste()
 	fiole = istoric.pop_back()
 	aleasa = -1
+	_dezvaluie_varfurile()
 	_spune("")
 	_zugraveste_tot()
 
@@ -623,22 +784,33 @@ func reia() -> void:
 	fiole = start.duplicate(true)
 	istoric.clear()
 	aleasa = -1
+	_dezvaluie_varfurile()
 	_spune("")
 	_zugraveste_tot()
 
 
 ## Un alt nivel repornește partida — prin `porneste()`, ca Taverna să afle
-## (vezi `schimba_nivelul` din `sudoku.gd`).
+## (vezi `schimba_nivelul` din `sudoku.gd`). Și te scoate de pe trepte.
 func schimba_nivelul(n: int) -> void:
 	if n < 0 or n >= NIVELURI.size():
 		return
 	_nivel_ales = n
+	_pe_trepte = false
+	porneste(SAMANTA_LIBERA)
+
+
+## Pe trepte, la treapta la care ai ajuns. Tot prin `porneste()`.
+func urca_pe_trepte() -> void:
+	_pe_trepte = true
 	porneste(SAMANTA_LIBERA)
 
 
 ## Fraza de la final. Turnările sunt cele RĂMASE — cele desfăcute cu „Înapoi"
 ## nu se socotesc: ce se laudă e drumul cu care ai ieșit, nu cel căutat.
 func rezumat() -> String:
+	if treapta > 0:
+		return "Gata! Treapta %d, sortată în %s. Urmează treapta %d." % [
+			treapta, _turnari(istoric.size()), treapta + 1]
 	return "Gata! Nivel %s, sortat în %s." % [
 		String(NIVELURI[nivel]["nume"]).to_lower(), _turnari(istoric.size())]
 
@@ -695,8 +867,9 @@ func _fiola_noua(inaltime_strat: float) -> FIOLA:
 
 
 ## Pune straturile (indici în `PALETA`) într-o fiolă desenată.
-func _imbraca_fiola(fiola: FIOLA, straturi: Array, ridicata: bool) -> void:
-	fiola.aseaza(_culori_din(straturi), ridicata)
+func _imbraca_fiola(fiola: FIOLA, straturi: Array, ridicata: bool,
+		ascunse: Array[bool] = []) -> void:
+	fiola.aseaza(_culori_din(straturi), ridicata, ascunse)
 
 
 ## Cu `capace_animate`, un dop nou CADE; altfel apare pe loc. Numai sfârșitul
@@ -705,7 +878,7 @@ func _imbraca_fiola(fiola: FIOLA, straturi: Array, ridicata: bool) -> void:
 ## capacul CUFĂRULUI care se deschide, adică exact pe dos.
 func _zugraveste_tot(capace_animate := false) -> void:
 	for i in vase.size():
-		_imbraca_fiola(vase[i], fiole[i], i == aleasa)
+		_imbraca_fiola(vase[i], fiole[i], i == aleasa, ascunse_in(i))
 		# Cât curge, dopul fiolelor din turnare îl hotărăște animația.
 		if not vase[i].animata:
 			vase[i].seteaza_capac(_e_inchisa(fiole[i]), capace_animate)
@@ -723,7 +896,7 @@ func _zugraveste_tot(capace_animate := false) -> void:
 # mâna o sticlă când toarnă — și jetul cade mereu din același loc.
 # ─────────────────────────────────────────────────────────────
 
-func _anima_turnarea(din: int, in_: int, cat: int, inainte: Array) -> void:
+func _anima_turnarea(din: int, in_: int, cat: int, inainte: Array, ascunse: Array) -> void:
 	var sursa: FIOLA = vase[din]
 	var tinta: FIOLA = vase[in_]
 	var s := 1.0 if tinta.position.x > sursa.position.x else -1.0
@@ -738,8 +911,8 @@ func _anima_turnarea(din: int, in_: int, cat: int, inainte: Array) -> void:
 		"sursa": sursa, "tinta": tinta, "s": s, "cat": cat, "buza": buza,
 		"unghiuri": unghiuri,
 		"culoare": PALETA[int((inainte[din] as Array)[-1])]["culoare"],
-		"seg_sursa": FIOLA.segmente_din(_culori_din(inainte[din])),
-		"seg_tinta": FIOLA.segmente_din(_culori_din(inainte[in_])),
+		"seg_sursa": FIOLA.segmente_din(_culori_din(inainte[din]), ascunse[0]),
+		"seg_tinta": FIOLA.segmente_din(_culori_din(inainte[in_]), ascunse[1]),
 		"durata_curgere": DURATA_CURGERE + DURATA_STRAT * cat,
 	}
 	sursa.animata = true
@@ -874,16 +1047,31 @@ func _construieste_nivelurile() -> void:
 		buton.pressed.connect(schimba_nivelul.bind(n))
 		rand_niveluri.add_child(buton)
 		butoane_nivel.append(buton)
+	# Treptele, despărțite de niveluri printr-un rost: sunt alt fel de a alege,
+	# nu al patrulea nivel.
+	var rost := Control.new()
+	rost.custom_minimum_size = Vector2(6, 0)
+	rand_niveluri.add_child(rost)
+	buton_trepte = _buton("", 104, INALTIME_NIVEL)
+	buton_trepte.pressed.connect(urca_pe_trepte)
+	rand_niveluri.add_child(buton_trepte)
 
 
 func _zugraveste_nivelurile() -> void:
 	for n in butoane_nivel.size():
-		var buton := butoane_nivel[n]
-		if n == nivel:
-			buton.add_theme_stylebox_override("normal", _stil_buton(Color(1, 1, 1, 0.2)))
-			buton.add_theme_color_override("font_color", CULOARE_TEXT)
-		else:
-			_imbraca_buton_stins(buton)
+		_zugraveste_alegerea(butoane_nivel[n], n == nivel)
+	# Treapta la care ai ajuns, și când joci pe un nivel: butonul spune unde
+	# te-ar duce.
+	buton_trepte.text = "Treapta %d" % (treapta if treapta > 0 else maxi(_treapta, 1))
+	_zugraveste_alegerea(buton_trepte, treapta > 0)
+
+
+func _zugraveste_alegerea(buton: Button, ales: bool) -> void:
+	if ales:
+		buton.add_theme_stylebox_override("normal", _stil_buton(Color(1, 1, 1, 0.2)))
+		buton.add_theme_color_override("font_color", CULOARE_TEXT)
+	else:
+		_imbraca_buton_stins(buton)
 
 
 func _construieste_tastele() -> void:
@@ -926,3 +1114,21 @@ func _stil_buton(culoare: Color) -> StyleBoxFlat:
 	stil.border_color = CULOARE_CHENAR
 	stil.set_border_width_all(1)
 	return stil
+
+
+# ─────────────────────────────────────────────────────────────
+# CE SE SCRIE PE DISC
+#
+# Doar treapta. Nici „joci pe trepte?" (o alegere de azi, nu un progres), nici
+# nivelul ales — exact ce ține minte Sudoku: nimic. O cheie a MESEI în
+# `permanent.json`, din motivul scris la `DECRETUL` în `arhiva.gd`.
+# ─────────────────────────────────────────────────────────────
+
+static func spre_dictionar() -> Dictionary:
+	return {"treapta": _treapta}
+
+
+## Citit strâmb, ca peste tot: lipsă sau ceva ce nu e un număr pozitiv = treapta 1.
+static func din_dictionar(date: Dictionary) -> void:
+	var t = date.get("treapta")
+	_treapta = maxi(int(t), 1) if (t is int or t is float) else 1
