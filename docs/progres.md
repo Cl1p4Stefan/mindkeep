@@ -40,6 +40,54 @@ devreme, dar restul rămâne placeholder. Bucla de luptă e în continuare cea v
 
 ---
 
+## FIOLE DE STICLĂ (4 noiembrie 2026) — desenul realist și turnarea animată
+
+**Ce s-a făcut:** `fiola.gd` desenează acum o eprubetă: pereți drepți, fund de
+semicerc, buză, umbră pe masă, benzi de lumină și umbră care dau rotunjimea
+sticlei (o dungă albă pe stânga, un reflex slab pe dreapta), un menisc mai
+deschis pe suprafață și o umbră fină la granița dintre două culori. Fiola aleasă
+URCĂ (0,12 s), nu sare. La turnare, sursa se duce deasupra țintei, se înclină
+până ajunge lichidul la buză, curge într-un jet care cade în fiola țintă (cu
+bule în ea), apoi se întoarce — sub o secundă pentru un strat.
+
+**Lichidul se măsoară în ARIE, nu în înălțime.** Un strat e o felie din aria
+interiorului; când fiola se înclină, suprafața rămâne orizontală, iar înălțimea
+ei se caută prin înjumătățire (`_nivel`). De aici, fără cod în plus: stratul de
+jos e mai înalt (fundul rotunjit ține mai puțin), iar unghiul de curgere se
+CALCULEAZĂ (`unghi_de_curgere`) — o fiolă plină se înclină puțin, una aproape
+goală aproape se răstoarnă.
+
+**Animația nu e starea.** `fiole` se schimbă pe loc, la clic, ca înainte; tot ce
+urmează e desen (`_anima_turnarea`, trei `tween_method`). Regula, „Înapoi",
+finalul și `verifica_taverna` nu știu că există o animație — verificarea a
+trecut neatinsă. Un clic care atinge turnarea în aer (pe una din cele două
+fiole, sau unul care ar porni altă turnare) o termină pe loc (`_grabeste`);
+„Înapoi", „Reia" și o partidă nouă la fel. Înălțimea cerută de masă e aceeași
+(544 px); fiola înclinată desenează în afara dreptunghiului ei, ceea ce
+`Control` permite.
+
+**A doua trecere, în aceeași zi:** lichidul ajunge acum până la sticlă
+(`PERETE` 4 → 1 px; cu 4 rămânea o dungă de fond care se citea ca un gol între
+lichid și perete), iar jetul e o fâșie cu lățime variabilă, nu o linie: 14 px la
+buză, 9 px jos, subțiat abia spre capăt, ca jumătatea de sus să rămână groasă.
+
+**A treia trecere:** (1) pixelii strâmbi de pe curbura fundului erau scările
+lichidului și ale benzilor de lumină — poligoane fără netezire — văzute PRIN
+conturul pe jumătate transparent, plus o sclipire albă pe fund. Conturul e acum
+OPAC (2,6 px), iar interiorul intră sub miezul lui (`PERETE` 0,5); sclipirea a
+ieșit. (2) **Fiola gata primește un DOP DE PLUTĂ**: cade de 46 px cu o săritură
+(`TRANS_BOUNCE`, 0,5 s), apoi fiola strălucește o clipă (halou, inel, trei
+scântei). Cade abia la SFÂRȘITUL turnării, nu la clic, și numai atunci: „Înapoi"
+și „Reia" pun sau scot dopul pe loc, fără sărbătoare. O fiolă gata turnată
+întreagă într-una goală își pierde dopul înainte să se încline. „Gata" e al
+mesei (`_e_inchisa`), nu al fiolei — fiola doar desenează dopul. Fără sunet:
+`Sunet.Efect.CAPAC` e capacul cufărului care se DESCHIDE.
+
+**Văzut cu ochiul**, cu o scenă de captură de unică folosință (ștearsă): masa,
+fiola ridicată, patru cadre din turnare, masa de după. **Rămas deschis:** niciun
+sunet de turnare și niciunul de dop; fiola dusă trece peste vecinele ei (z_index 1), ca în jocurile
+de gen.
+
 ## FIOLELE (4 noiembrie 2026) — masa a patra, water sort cu lichid
 
 **Ce s-a făcut:** a patra masă din Tavernă, după planul scris mai devreme în

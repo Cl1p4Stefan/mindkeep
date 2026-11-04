@@ -129,6 +129,17 @@ const MARIME_TASTA := 18
 const INALTIME_TASTA := 30
 const INALTIME_NIVEL := 28
 
+## TURNAREA CARE SE VEDE, în secunde: fiola se duce deasupra țintei și se
+## înclină până ajunge lichidul la buză, curge (mai mult cu cât sunt mai multe
+## straturi), apoi se întoarce. Sub o secundă pentru un strat: destul cât să
+## vezi ce s-a mutat, nu atât cât să aștepți.
+const DURATA_APROPIERE := 0.26
+const DURATA_CURGERE := 0.12
+const DURATA_STRAT := 0.16
+const DURATA_INTOARCERE := 0.26
+## Cât de sus deasupra gurii țintei stă buza din care se toarnă, în pixeli.
+const INALTIME_JET := 30.0
+
 ## Nivelul ales de pe tăblie. `static` — vezi „NIVELURILE STAU PE TĂBLIE" din
 ## `sudoku.gd`; aceeași decizie, din același motiv.
 static var _nivel_ales := 1
@@ -152,6 +163,14 @@ var rand_niveluri: HBoxContainer = null
 var buton_inapoi: Button = null
 var buton_reia: Button = null
 
+## Turnarea animată în curs, sau `null`. ANIMAȚIA NU E STAREA: `fiole` se
+## schimbă pe loc, la clic, iar tot ce urmează e doar desen. Așa regula,
+## „Înapoi", finalul și verificarea nu știu că există o animație — și nu pot
+## greși din cauza ei.
+var _turnare: Tween = null
+## Tot ce-i trebuie animației: fiolele, partea, buza, unghiurile, straturile.
+var _anim := {}
+
 @onready var rand_fiole: HBoxContainer = %Fiole
 @onready var mesaj: Label = %Mesaj
 @onready var rand_taste: HBoxContainer = %Taste
@@ -173,6 +192,8 @@ func _ready() -> void:
 ## Vezi `_exit_tree` din `sudoku.gd`: un nod fără părinte nu moare odată cu cel
 ## care l-a făcut.
 func _exit_tree() -> void:
+	if _turnare != null:
+		_turnare.kill()
 	if rand_niveluri != null and rand_niveluri.get_parent() == null:
 		rand_niveluri.queue_free()
 
@@ -182,6 +203,7 @@ func _exit_tree() -> void:
 # ─────────────────────────────────────────────────────────────
 
 func _porneste(cu_samanta: int) -> void:
+	_grabeste()
 	var rng := RandomNumberGenerator.new()
 	if cu_samanta == SAMANTA_LIBERA:
 		rng.randomize()
@@ -341,6 +363,12 @@ static func are_turnari(stare: Array) -> bool:
 			if poate_turna(stare, din, in_):
 				return true
 	return false
+
+
+## O fiolă care primește dop: plină, și toată de o culoare. Nu e `e_gata`:
+## acolo se întreabă de TOATĂ masa, aici de o singură fiolă.
+static func _e_inchisa(fiola: Array) -> bool:
+	return fiola.size() == CAPACITATE and _o_singura_culoare(fiola)
 
 
 static func _o_singura_culoare(fiola: Array) -> bool:
@@ -524,6 +552,11 @@ func _unhandled_key_input(event: InputEvent) -> void:
 func apasa(i: int) -> void:
 	if terminat_deja or i < 0 or i >= fiole.size():
 		return
+	# O turnare încă în aer se termină pe loc dacă clicul o atinge: ori e pe
+	# una din cele două fiole, ori ar porni o turnare nouă. Alegerea unei
+	# fiole a treia o lasă să curgă mai departe.
+	if _turnare != null and (aleasa >= 0 or vase[i] == _anim["sursa"] or vase[i] == _anim["tinta"]):
+		_grabeste()
 	if aleasa < 0:
 		if (fiole[i] as Array).is_empty():
 			_spune("Fiola e goală — alege una cu lichid.")
@@ -546,9 +579,13 @@ func apasa(i: int) -> void:
 		return
 
 	istoric.append(fiole.duplicate(true))
-	turna(fiole, din, i)
+	var cat := turna(fiole, din, i)
 	aleasa = -1
 	_spune("")
+	# Animația întâi: ea marchează cele două fiole ca animate, iar zugrăveala
+	# de după le lasă în pace straturile și dopul — dopul fiolei umplute cade
+	# abia când s-a terminat de turnat (`_incheie_turnarea`).
+	_anima_turnarea(din, i, cat, istoric[-1])
 	_zugraveste_tot()
 
 	if e_gata(fiole):
@@ -571,6 +608,7 @@ func inapoi() -> void:
 	if istoric.is_empty():
 		_spune("N-ai ce desface.")
 		return
+	_grabeste()
 	fiole = istoric.pop_back()
 	aleasa = -1
 	_spune("")
@@ -581,6 +619,7 @@ func inapoi() -> void:
 func reia() -> void:
 	if terminat_deja:
 		return
+	_grabeste()
 	fiole = start.duplicate(true)
 	istoric.clear()
 	aleasa = -1
@@ -657,17 +696,172 @@ func _fiola_noua(inaltime_strat: float) -> FIOLA:
 
 ## Pune straturile (indici în `PALETA`) într-o fiolă desenată.
 func _imbraca_fiola(fiola: FIOLA, straturi: Array, ridicata: bool) -> void:
-	var culori: Array[Color] = []
-	for v in straturi:
-		culori.append(PALETA[int(v)]["culoare"])
-	fiola.aseaza(culori, ridicata)
+	fiola.aseaza(_culori_din(straturi), ridicata)
 
 
-func _zugraveste_tot() -> void:
+## Cu `capace_animate`, un dop nou CADE; altfel apare pe loc. Numai sfârșitul
+## unei turnări le animă: un dop care cade la „Înapoi" ar sărbători o fiolă pe
+## care n-ai umplut-o tu acum. Fără sunet, deocamdată: `Sunet.Efect.CAPAC` e
+## capacul CUFĂRULUI care se deschide, adică exact pe dos.
+func _zugraveste_tot(capace_animate := false) -> void:
 	for i in vase.size():
 		_imbraca_fiola(vase[i], fiole[i], i == aleasa)
+		# Cât curge, dopul fiolelor din turnare îl hotărăște animația.
+		if not vase[i].animata:
+			vase[i].seteaza_capac(_e_inchisa(fiole[i]), capace_animate)
 	if buton_inapoi != null:
 		buton_inapoi.modulate = Color(1, 1, 1, 0.4 if istoric.is_empty() else 1.0)
+
+
+# ─────────────────────────────────────────────────────────────
+# TURNAREA ANIMATĂ
+#
+# Trei timpi, fiecare un `tween_method` cu t de la 0 la 1. În toți trei, fiola
+# sursă e așezată prin BUZA ei: se spune unde trebuie să fie colțul gurii și
+# cât de înclinată e fiola, iar `_aseaza_sursa` află de acolo cât s-o mute.
+# Așa buza stă nemișcată deasupra țintei cât timp fiola se înclină — cum ține
+# mâna o sticlă când toarnă — și jetul cade mereu din același loc.
+# ─────────────────────────────────────────────────────────────
+
+func _anima_turnarea(din: int, in_: int, cat: int, inainte: Array) -> void:
+	var sursa: FIOLA = vase[din]
+	var tinta: FIOLA = vase[in_]
+	var s := 1.0 if tinta.position.x > sursa.position.x else -1.0
+	var vol := float((inainte[din] as Array).size())
+	# Unghiul de curgere pe fiecare strat întreg; între ele, linie dreaptă.
+	var unghiuri: Array[float] = []
+	for k in cat + 1:
+		unghiuri.append(sursa.unghi_de_curgere(vol - k, s))
+	var buza := tinta.position - sursa.position \
+		+ Vector2(tinta.size.x / 2.0, FIOLA.RIDICARE) + Vector2(-s * 4.0, -INALTIME_JET)
+	_anim = {
+		"sursa": sursa, "tinta": tinta, "s": s, "cat": cat, "buza": buza,
+		"unghiuri": unghiuri,
+		"culoare": PALETA[int((inainte[din] as Array)[-1])]["culoare"],
+		"seg_sursa": FIOLA.segmente_din(_culori_din(inainte[din])),
+		"seg_tinta": FIOLA.segmente_din(_culori_din(inainte[in_])),
+		"durata_curgere": DURATA_CURGERE + DURATA_STRAT * cat,
+	}
+	sursa.animata = true
+	tinta.animata = true
+	# O fiolă gata se poate turna întreagă într-una goală (regula n-o oprește),
+	# deci dopul ei sare înainte să se încline.
+	sursa.seteaza_capac(false, false)
+	sursa.segmente = (_anim["seg_sursa"] as Array).duplicate(true)
+	tinta.segmente = (_anim["seg_tinta"] as Array).duplicate(true)
+	# Sursa trece PESTE celelalte fiole: în rând, una din dreapta ei s-ar fi
+	# desenat deasupra.
+	sursa.z_index = 1
+
+	_turnare = create_tween()
+	_turnare.tween_method(_apropie, 0.0, 1.0, DURATA_APROPIERE) \
+		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	_turnare.tween_method(_curge, 0.0, 1.0, _anim["durata_curgere"])
+	_turnare.tween_method(_intoarce, 0.0, 1.0, DURATA_INTOARCERE) \
+		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	_turnare.tween_callback(_incheie_turnarea)
+
+
+## Pune fiola sursă cu buza în `punct`, înclinată cu `a`.
+func _aseaza_sursa(a: float, punct: Vector2) -> void:
+	var sursa: FIOLA = _anim["sursa"]
+	sursa.unghi = a
+	sursa.deplasare = punct - sursa.ancora_baza() - sursa.buza(_anim["s"]).rotated(a)
+	sursa.queue_redraw()
+
+
+## Unde ar fi buza dacă fiola ar sta la locul ei, dreaptă.
+func _buza_de_repaus() -> Vector2:
+	var sursa: FIOLA = _anim["sursa"]
+	return sursa.ancora_baza() + sursa.buza(_anim["s"])
+
+
+## 1. Se duce deasupra țintei și se înclină până la pragul de curgere.
+func _apropie(t: float) -> void:
+	_aseaza_sursa(float(_anim["unghiuri"][0]) * t, _buza_de_repaus().lerp(_anim["buza"], t))
+
+
+## 2. Curge: sursa scade, ținta crește, fiola se înclină tot mai tare.
+func _curge(t: float) -> void:
+	var sursa: FIOLA = _anim["sursa"]
+	var tinta: FIOLA = _anim["tinta"]
+	var cat: int = _anim["cat"]
+	var curs := t * cat
+	var unghiuri: Array[float] = _anim["unghiuri"]
+	var k := mini(int(curs), cat - 1)
+	_aseaza_sursa(lerpf(unghiuri[k], unghiuri[k + 1], curs - k), _anim["buza"])
+
+	var seg_sursa: Array = (_anim["seg_sursa"] as Array).duplicate(true)
+	seg_sursa[-1][1] = float(seg_sursa[-1][1]) - curs
+	sursa.segmente = seg_sursa
+	var seg_tinta: Array = (_anim["seg_tinta"] as Array).duplicate(true)
+	if seg_tinta.is_empty() or not (seg_tinta[-1][0] as Color).is_equal_approx(_anim["culoare"]):
+		seg_tinta.append([_anim["culoare"], 0.0])
+	seg_tinta[-1][1] = float(seg_tinta[-1][1]) + curs
+	tinta.segmente = seg_tinta
+	tinta.agitatie = 1.0
+	tinta.queue_redraw()
+
+	# Jetul ajunge jos în primele 0,08 s, nu dintr-o dată.
+	var de_la := sursa.pe_ecran(sursa.buza(_anim["s"]))
+	var jos := tinta.suprafata_y() + (tinta.position - sursa.position).y
+	var crestere := clampf(t * float(_anim["durata_curgere"]) / 0.08, 0.0, 1.0)
+	sursa.jet = {"de_la": de_la, "pana_la": lerpf(de_la.y, jos, crestere),
+		"culoare": _anim["culoare"], "s": _anim["s"]}
+	_anim["capat_jet"] = de_la
+	_anim["jos_jet"] = jos
+
+
+## 3. Se îndreaptă și se întoarce la loc. Coada jetului cade după ea.
+func _intoarce(t: float) -> void:
+	var sursa: FIOLA = _anim["sursa"]
+	var unghiuri: Array[float] = _anim["unghiuri"]
+	_aseaza_sursa(lerpf(unghiuri[-1], 0.0, t), (_anim["buza"] as Vector2).lerp(_buza_de_repaus(), t))
+	var coada := clampf(t / 0.3, 0.0, 1.0)
+	if coada < 1.0 and _anim.has("capat_jet"):
+		var capat: Vector2 = _anim["capat_jet"]
+		var jos: float = _anim["jos_jet"]
+		sursa.jet = {"de_la": Vector2(capat.x, lerpf(capat.y, jos, coada)), "pana_la": jos,
+			"culoare": _anim["culoare"], "s": _anim["s"]}
+	else:
+		sursa.jet = {}
+	var tinta: FIOLA = _anim["tinta"]
+	tinta.agitatie = 1.0 - t
+	tinta.queue_redraw()
+
+
+## Fiolele se întorc la ce e LOGIC în ele — chiar dacă animația a fost tăiată
+## la jumătate.
+func _incheie_turnarea() -> void:
+	_turnare = null
+	for cheie in ["sursa", "tinta"]:
+		var fiola = _anim.get(cheie)
+		if fiola == null or not is_instance_valid(fiola):
+			continue
+		fiola.animata = false
+		fiola.unghi = 0.0
+		fiola.deplasare = Vector2.ZERO
+		fiola.jet = {}
+		fiola.agitatie = 0.0
+		fiola.z_index = 0
+	_anim = {}
+	_zugraveste_tot(true)
+
+
+## O turnare în aer se termină pe loc. Chemată de orice schimbă masa altfel
+## decât o turnare care curge: „Înapoi", „Reia", o partidă nouă.
+func _grabeste() -> void:
+	if _turnare == null:
+		return
+	_turnare.kill()
+	_incheie_turnarea()
+
+
+func _culori_din(straturi: Array) -> Array[Color]:
+	var rez: Array[Color] = []
+	for v in straturi:
+		rez.append(PALETA[int(v)]["culoare"])
+	return rez
 
 
 func _construieste_nivelurile() -> void:
