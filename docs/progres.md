@@ -40,6 +40,75 @@ devreme, dar restul rămâne placeholder. Bucla de luptă e în continuare cea v
 
 ---
 
+## URMĂTOAREA MASĂ: FIOLELE (plan, 4 noiembrie 2026) — nescrisă, nicio linie de cod
+
+**Ce e:** a patra masă din Tavernă, un **water sort** („color sort" cu lichid).
+Câteva fiole de sticlă, fiecare cu loc pentru 4 straturi de lichid colorat,
+amestecate; de obicei N culori în N + 2 fiole, deci două pornesc goale. O mutare
+= alegi o fiolă, apoi alta, și torni. **Se toarnă tot stratul de aceeași culoare
+de deasupra, cât încape** — nu câte o unitate. Ai voie doar dacă fiola în care
+torni e goală sau are deasupra aceeași culoare, și dacă mai are loc. Câștigi
+când fiecare fiolă e plină cu o singură culoare, sau goală.
+
+**Decise cu mine, azi:**
+
+- **Water sort, nu ball sort.** Mai puține clicuri, mai multă planificare: un
+  strat întreg mutat o dată schimbă mai mult decât o bilă.
+- **LICHID, nu bile.** Se desenează ca straturi într-o fiolă (`_draw()`, nu
+  imagini și nu font), cu tema gotic-medievală: poțiunile alchimistului, pe
+  raftul tavernei. Numele mesei, propus și nehotărât: „Fiolele" / „Alchimistul".
+- **FĂRĂ semne pe straturi.** Deosebirea o duce numai culoarea. Urmarea, plătită
+  conștient: paleta trebuie să fie citibilă singură, pe fond închis, la toate
+  nivelurile — deci se ALEGE și se MĂSOARĂ (distanța dintre culori), nu se ia
+  „roșu, verde, albastru…". Roșul și verdele NU sunt interzise aici: regula cu
+  culorile de verdict ține de scena de puzzle, iar masa n-are verdict pe parcurs
+  (ca la Sudoku, unde conflictul e chihlimbar). Cine nu deosebește roșul de
+  verde e lăsat, dinadins, fără ajutor — de cântărit dacă perechea aia lipsește
+  din paletă.
+
+**Ce antrenează:** planificarea câțiva pași înainte (familia Turnului din Hanoi)
+— altceva decât literele Cuvântului Ascuns și deducția lui Sudoku.
+
+**Cum se potrivește cu ce există (propunerea, de verificat la scriere):**
+
+- **Generată, fără fișier de date**, ca Sudoku; primește sămânța, deci intră în
+  rotația Decretului fără nimic în plus. Cu trei mese în rotație, decretul
+  nu mai e previzibil pe o zi înainte (vezi DECRETUL ZILEI, „Ce a rămas").
+- **Garanția e REZOLVABILITATEA, nu unicitatea.** La Sudoku se cere un singur
+  răspuns; aici pot fi multe, iar ce se dovedește e că EXISTĂ unul. Un amestec
+  la întâmplare se poate înfunda din prima, deci: amesteci → un rezolvitor caută
+  soluția (căutare pe stări, cu fiolele SORTATE în cheia stării ca aceeași
+  poziție să nu se numere de două ori) → dacă nu găsește, alt amestec. Metoda de
+  la Lacăt: un puzzle nu se crede pe cuvânt, se rezolvă.
+- **Dificultatea se MĂSOARĂ**: numărul minim de mutări al celei mai scurte
+  soluții. Nivelurile pe tăblie, ca la Sudoku (prin `unelte()`), de pornire
+  5 / 7 / 9 culori plus un prag de mutări minime; cifrele se hotărăsc după
+  măsurători, nu înainte.
+- **Te poți înfunda, deci „Înapoi" nelimitat și „Reia".** Masa poate spune „nu
+  mai ai mutări", dar nu te dă afară — „Ton sănătos". `termina(true, …)` e
+  singurul final, ca la Sudoku; nimic de pierdut.
+- **Ecranul** se măsoară pe cât CERE, în fiecare stare: 11 fiole × ~70 px pe
+  lățime și 4 straturi de ~42 px încap pe hârtie, dar hârtia nu e o măsurătoare.
+- **Regulile** ca la celelalte mese: un nod, cu fiole adevărate construite de
+  aceleași funcții ca masa (o turnare înainte și după).
+
+**Verificarea (în `verifica_taverna`, secțiune nouă):** generatorul pe mai multe
+semințe × 3 niveluri, fiecare amestec rezolvat de un **AL DOILEA rezolvitor**,
+scris altfel decât cel din joc, cu soluția REJUCATĂ mutare cu mutare pe regula
+jocului până la grila sortată; numărul de culori și de straturi conservat;
+nicio fiolă peste capacitate; regula de turnare pe cazuri scrise de mână
+(rezolvate întâi pe hârtie — vezi „O verificare care își scrie singură
+așteptările"); o partidă jucată cap-coadă cu **clicuri adevărate împinse în
+`Viewport`** (regula de la Sudoku); „Înapoi" care întoarce exact starea de
+dinainte; ecranele măsurate; caracterele în cele trei fonturi.
+
+**Rămas de hotărât la scriere:** dacă masa intră liberă în catalog sau în pool-ul
+de descoperire al decretului (vezi IDEEA DESCHISĂ de la DECRETUL ZILEI). Părerea
+mea: liberă — cu trei mese, una ascunsă ar fi o treime din Tavernă nevăzută;
+descoperirea are sens de la a cincea-a șasea masă.
+
+---
+
 ## DECRETUL ZILEI (4 noiembrie 2026) — masa care nu are un joc al ei
 
 **Ce s-a făcut:** a treia masă din Tavernă, și ultimul rând stins din catalog.
