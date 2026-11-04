@@ -18,6 +18,8 @@ extends Node
 ##      Partea grea sunt literele duble, și de-aia are secțiunea ei.
 ##   4. PARTIDELE JUCATE CU SCENA ADEVĂRATĂ — proba că cele două jumătăți se
 ##      leagă: regula de mai sus, grila, tastatura și contractul `Joc`.
+##   4b. SUDOKU și FIOLELE — mesele generate: se REZOLVĂ din nou, cu o a doua
+##      socoteală, fiindcă nu se pot citi înainte de joc.
 ##   5. DECRETUL — masa care nu are un joc al ei, deci nici o regulă de joc de
 ##      bătut: are PROMISIUNI („altul în fiecare zi", „o dată pe zi"), iar toate
 ##      se strică în tăcere, la miezul nopții sau în ziua în care se aprinde a
@@ -43,6 +45,8 @@ const CUVANTUL := preload("res://scenes/taverna/cuvantul/cuvantul.gd")
 const SCENA_CUVANTUL := preload("res://scenes/taverna/cuvantul/cuvantul.tscn")
 const SUDOKU := preload("res://scenes/taverna/sudoku/sudoku.gd")
 const SCENA_SUDOKU := preload("res://scenes/taverna/sudoku/sudoku.tscn")
+const FIOLE := preload("res://scenes/taverna/fiolele/fiolele.gd")
+const SCENA_FIOLE := preload("res://scenes/taverna/fiolele/fiolele.tscn")
 const DECRETUL := preload("res://scenes/taverna/decretul/decretul.gd")
 const SCENA_DECRETUL := preload("res://scenes/taverna/decretul/decretul.tscn")
 const SCENA_TAVERNA := preload("res://scenes/taverna/taverna.tscn")
@@ -83,6 +87,23 @@ const RESTURI_DECRET := [2, 3, 4, 5]
 ## scoatere care rupe unicitatea s-ar vedea de la prima grilă.
 const SEMINTE_SUDOKU := 5
 
+## Câte amestecuri se fac pe fiecare nivel la Fiolele. Mai multe decât la
+## Sudoku, fiindcă un amestec costă puțin — iar ce apără numărul e garanția că
+## TOATE se rezolvă: un generator care scapă un amestec înfundat o dată la
+## douăzeci s-ar vedea abia aici.
+const SEMINTE_FIOLE := 10
+## Câte stări are voie să desfacă rezolvitorul VERIFICĂRII pe un amestec. Mai
+## mult decât al jocului, dinadins: verificarea n-are voie să spună „nu se poate"
+## doar fiindcă a obosit mai repede decât jocul.
+const BUGET_FIOLE := 150000
+## Cât de departe trebuie să fie oricare două culori din paleta unui nivel, în
+## Oklab. 0,02 e pragul la care ochiul abia deosebește două culori puse una
+## lângă alta; 0,12 e de șase ori pe atât, fiindcă aici stau în fiole DIFERITE.
+const PRAG_PALETA := 0.12
+## Și cât de luminoasă trebuie să fie fiecare, pe fondul închis al mesei
+## (L ≈ 0,2): o culoare sub 0,5 s-ar citi ca o fiolă goală.
+const PRAG_LUMINA := 0.5
+
 ## Fonturile temei, pentru secțiunea CARACTERELE.
 const CALE_CINZEL := "res://assets/fonturi/Cinzel.ttf"
 const CALE_ALEGREYA := "res://assets/fonturi/Alegreya.ttf"
@@ -122,6 +143,7 @@ func _ready() -> void:
 	tot_bun = await _ecranele() and tot_bun
 	tot_bun = await _regulile() and tot_bun
 	tot_bun = await _sudoku() and tot_bun
+	tot_bun = await _fiolele() and tot_bun
 	tot_bun = await _decretul() and tot_bun
 	tot_bun = await _clicurile() and tot_bun
 	tot_bun = await _caracterele() and tot_bun
@@ -1251,6 +1273,545 @@ func _sudoku_jucat() -> bool:
 
 
 # ─────────────────────────────────────────────────────────────
+# 7b. FIOLELE
+#
+# Masa a patra, și a doua generată. Garanția ei nu e unicitatea (ca la Sudoku),
+# e REZOLVABILITATEA: pot fi multe drumuri, dar trebuie să existe unul.
+#
+# DOUĂ SOCOTELI CARE TREBUIE SĂ CADĂ DE ACORD, ca la Sudoku. Jocul caută în
+# ADÂNCIME, pe liste de numere, cu trei tăieturi de turnări inutile. Verificarea
+# caută „CEA MAI BUNĂ STARE ÎNTÂI" (după cât de amestecată e masa), pe ȘIRURI de
+# litere, cu regula turnării scrisă din nou și fără nicio tăietură. Și soluția
+# fiecăreia se REJOACĂ pe regula celeilalte, mutare cu mutare, până la masa
+# sortată: o regulă greșită într-una din ele s-ar vedea ca o turnare refuzată.
+# ─────────────────────────────────────────────────────────────
+
+func _fiolele() -> bool:
+	print("  FIOLELE — PALETA")
+	var rezultat := true
+
+	# a) PALETA, MĂSURATĂ. Deosebirea o duce numai culoarea (nu sunt semne pe
+	#    straturi), deci „se văd diferit" e o cifră, nu o părere.
+	rezultat = _verdict(FIOLE.PALETA.size() >= int(FIOLE.NIVELURI[-1]["culori"]),
+		"paleta are culori pentru cel mai greu nivel (%d)" % FIOLE.PALETA.size()) and rezultat
+	for nivel in FIOLE.NIVELURI.size():
+		var cate := int(FIOLE.NIVELURI[nivel]["culori"])
+		var nume := String(FIOLE.NIVELURI[nivel]["nume"])
+		var cea_mai_mica := INF
+		var pereche := ""
+		var cea_mai_intunecata := INF
+		for i in cate:
+			var oka := _oklab(FIOLE.PALETA[i]["culoare"])
+			cea_mai_intunecata = minf(cea_mai_intunecata, oka.x)
+			for j in range(i + 1, cate):
+				var d := oka.distance_to(_oklab(FIOLE.PALETA[j]["culoare"]))
+				if d < cea_mai_mica:
+					cea_mai_mica = d
+					pereche = "%s–%s" % [FIOLE.PALETA[i]["nume"], FIOLE.PALETA[j]["nume"]]
+		rezultat = _verdict(cea_mai_mica >= PRAG_PALETA,
+			"%s: oricare două din cele %d culori sunt la cel puțin %.2f în Oklab (cea mai apropiată: %s, %.3f)"
+			% [nume, cate, PRAG_PALETA, pereche, cea_mai_mica]) and rezultat
+		rezultat = _verdict(cea_mai_intunecata >= PRAG_LUMINA,
+			"%s: fiecare culoare se vede pe fondul închis (L minim %.2f)"
+			% [nume, cea_mai_intunecata]) and rezultat
+
+	# b) REGULA TURNĂRII, pe cazuri de mână. Rezolvate întâi pe hârtie (vezi
+	#    „O verificare care își scrie singură așteptările" din CLAUDE.md):
+	#    [jos … sus], capacitate 4.
+	print("  FIOLELE — REGULA")
+	var cazuri := [
+		# din,          în,              câte, din după,  în după,         ce bate
+		[[0, 1, 1],     [],              2, [0],        [1, 1],          "tot stratul, într-o fiolă goală"],
+		[[0, 1, 1],     [2, 1, 1],       1, [0, 1],     [2, 1, 1, 1],    "cât încape, nu tot stratul"],
+		[[2, 1, 1, 1],  [1],             3, [2],        [1, 1, 1, 1],    "un strat de trei peste aceeași culoare"],
+		[[0, 1],        [2],             0, [0, 1],     [2],             "peste altă culoare, nu"],
+		[[0],           [0, 0, 0, 0],    0, [0],        [0, 0, 0, 0],    "într-o fiolă plină, nu"],
+		[[],            [1],             0, [],         [1],             "dintr-o fiolă goală, nu"],
+		[[1, 1, 1, 1],  [],              4, [],         [1, 1, 1, 1],    "o fiolă gata se poate muta întreagă — regula n-o oprește"],
+		[[1, 0, 1],     [1, 1],          1, [1, 0],     [1, 1, 1],       "stratul se oprește la prima culoare altfel"],
+	]
+	for c in cazuri:
+		var stare: Array = [(c[0] as Array).duplicate(), (c[1] as Array).duplicate()]
+		var turnat: int = FIOLE.turna(stare, 0, 1)
+		rezultat = _verdict(turnat == int(c[2]) and stare[0] == c[3] and stare[1] == c[4],
+			"%s: %s → %s dă %s → %s (turnate %d)"
+			% [c[5], c[0], c[1], stare[0], stare[1], turnat]) and rezultat
+		# Și regula verificării spune la fel — altfel una din ele greșește.
+		var siruri: Array = [_sir_din(c[0]), _sir_din(c[1])]
+		var a_mers := _f_turna(siruri, 0, 1)
+		rezultat = _verdict(a_mers == (int(c[2]) > 0)
+			and siruri[0] == _sir_din(c[3]) and siruri[1] == _sir_din(c[4]),
+			"și regula verificării, pe șiruri, cade de acord") and rezultat
+	rezultat = _verdict(not FIOLE.poate_turna([[0, 1], [1]], 1, 1),
+		"o fiolă nu se toarnă în ea însăși") and rezultat
+
+	# Masa gata: fiecare fiolă goală sau plină cu o culoare. Al treilea caz e cel
+	# care contează: fiole de o singură culoare, dar neumplute, NU sunt gata.
+	rezultat = _verdict(FIOLE.e_gata([[0, 0, 0, 0], [1, 1, 1, 1], []]),
+		"fiole pline de o culoare, plus una goală: gata") and rezultat
+	rezultat = _verdict(not FIOLE.e_gata([[0, 0, 0, 1], [1, 1, 1, 0], []]),
+		"fiole pline, dar amestecate: nu") and rezultat
+	rezultat = _verdict(not FIOLE.e_gata([[0, 0, 0], [0], [1, 1, 1, 1]]),
+		"o culoare despărțită în două fiole, fiecare de o singură culoare: nu") and rezultat
+
+	# c) GENERATORUL, pe semințe × niveluri.
+	print("  FIOLELE — GENERATORUL (%d semințe pe nivel)" % SEMINTE_FIOLE)
+	var lungimi_medii: Array[float] = []
+	for nivel in FIOLE.NIVELURI.size():
+		var nume := String(FIOLE.NIVELURI[nivel]["nume"])
+		var culori := int(FIOLE.NIVELURI[nivel]["culori"])
+		var forma_rea := 0
+		var neconservate := 0
+		var gata_din_prima := 0
+		var nerezolvate := 0
+		var refuzate_la_joc := 0
+		var refuzate_la_mine := 0
+		var peste_capacitate := 0
+		var lungime_mea := 0
+		var lungime_joc := 0
+		var minime: Array[int] = []
+		var timp := Time.get_ticks_msec()
+
+		for s in range(1, SEMINTE_FIOLE + 1):
+			var rng := RandomNumberGenerator.new()
+			rng.seed = 7000 + nivel * 100 + s
+			var stare: Array = FIOLE.genereaza(nivel, rng)
+
+			# Forma: culori + goale fiole, niciuna peste capacitate, culori din
+			# paletă — și FIECARE culoare de exact `CAPACITATE` ori, adică
+			# nimic pierdut și nimic dublat la amestecare.
+			if stare.size() != culori + FIOLE.GOALE:
+				forma_rea += 1
+				continue
+			var numar := {}
+			for fiola in stare:
+				if (fiola as Array).size() > FIOLE.CAPACITATE:
+					forma_rea += 1
+				for v in fiola:
+					numar[int(v)] = int(numar.get(int(v), 0)) + 1
+			var bune := numar.size() == culori
+			for v in numar:
+				if int(v) < 0 or int(v) >= culori or int(numar[v]) != FIOLE.CAPACITATE:
+					bune = false
+			if not bune:
+				neconservate += 1
+			if FIOLE.e_gata(stare) or FIOLE._are_fiola_gata(stare):
+				gata_din_prima += 1
+
+			# Rezolvat de VERIFICARE, rejucat pe regula JOCULUI.
+			var drum_meu := _f_rezolva(_siruri_din(stare))
+			if drum_meu.is_empty():
+				nerezolvate += 1
+			else:
+				lungime_mea += drum_meu.size()
+				var joc: Array = stare.duplicate(true)
+				var refuz := false
+				for m in drum_meu:
+					if FIOLE.turna(joc, m[0], m[1]) == 0:
+						refuz = true
+						break
+					for fiola in joc:
+						if (fiola as Array).size() > FIOLE.CAPACITATE:
+							peste_capacitate += 1
+				if refuz or not FIOLE.e_gata(joc):
+					refuzate_la_joc += 1
+
+			# Și invers: soluția JOCULUI, rejucată pe regula VERIFICĂRII.
+			var drum_joc: Array = FIOLE.rezolva(stare)
+			lungime_joc += drum_joc.size()
+			var siruri := _siruri_din(stare)
+			var tot_a_mers := not drum_joc.is_empty()
+			for m in drum_joc:
+				if not _f_turna(siruri, m[0], m[1]):
+					tot_a_mers = false
+					break
+			if not tot_a_mers or not _f_sortat(siruri):
+				refuzate_la_mine += 1
+
+			# Cel mai scurt drum, unde e ieftin de aflat. Nu e verdict: e
+			# măsurătoarea pe care se va hotărî, cândva, un prag de mutări
+			# minime (vezi antetul mesei).
+			var minim := _f_cel_mai_scurt(_siruri_din(stare), BUGET_FIOLE)
+			if minim >= 0:
+				minime.append(minim)
+
+		var medie := float(lungime_mea) / float(SEMINTE_FIOLE)
+		lungimi_medii.append(medie)
+		var minime_text := "—"
+		if not minime.is_empty():
+			var suma := 0
+			for x in minime:
+				suma += x
+			minime_text = "%.1f (pe %d din %d amestecuri)" % [float(suma) / minime.size(),
+				minime.size(), SEMINTE_FIOLE]
+		print("         %s: %d culori, %d fiole; drum găsit de joc %.1f turnări, de verificare %.1f, cel mai scurt %s — %d ms"
+			% [nume, culori, culori + FIOLE.GOALE, float(lungime_joc) / SEMINTE_FIOLE,
+			medie, minime_text, Time.get_ticks_msec() - timp])
+		rezultat = _verdict(forma_rea == 0,
+			"%s: %d fiole, niciuna peste %d straturi" % [nume, culori + FIOLE.GOALE, FIOLE.CAPACITATE]) and rezultat
+		rezultat = _verdict(neconservate == 0,
+			"%s: fiecare din cele %d culori e de exact %d ori" % [nume, culori, FIOLE.CAPACITATE]) and rezultat
+		rezultat = _verdict(gata_din_prima == 0,
+			"%s: nicio fiolă nu e gata din prima" % nume) and rezultat
+		rezultat = _verdict(nerezolvate == 0,
+			"%s: fiecare amestec e rezolvat de verificare (a doua socoteală)" % nume) and rezultat
+		rezultat = _verdict(refuzate_la_joc == 0 and peste_capacitate == 0,
+			"%s: și soluția ei, rejucată pe regula jocului, sortează masa" % nume) and rezultat
+		rezultat = _verdict(refuzate_la_mine == 0,
+			"%s: iar soluția jocului, rejucată pe regula verificării, la fel" % nume) and rezultat
+
+	var cresc := true
+	for i in range(1, lungimi_medii.size()):
+		if lungimi_medii[i] <= lungimi_medii[i - 1]:
+			cresc = false
+	rezultat = _verdict(cresc,
+		"drumurile se lungesc de la un nivel la altul: %s" % [lungimi_medii]) and rezultat
+
+	print("  FIOLELE — SĂMÂNȚA")
+	var a := RandomNumberGenerator.new()
+	a.seed = 4711
+	var b := RandomNumberGenerator.new()
+	b.seed = 4711
+	var c2 := RandomNumberGenerator.new()
+	c2.seed = 4712
+	var s1: Array = FIOLE.genereaza(1, a)
+	var s2: Array = FIOLE.genereaza(1, b)
+	var s3: Array = FIOLE.genereaza(1, c2)
+	rezultat = _verdict(s1 == s2, "aceeași sămânță dă același amestec") and rezultat
+	rezultat = _verdict(s1 != s3, "o altă sămânță dă alt amestec") and rezultat
+
+	return await _fiolele_jucate() and rezultat
+
+
+## PARTIDA JUCATĂ CU SCENA ADEVĂRATĂ — fratele lui `_sudoku_jucat`.
+func _fiolele_jucate() -> bool:
+	print("  FIOLELE — PARTIDA JUCATĂ")
+	var rezultat := true
+
+	var joc := SCENA_FIOLE.instantiate()
+	add_child(joc)
+	joc.porneste(42)
+	var nivel_asteptat := 42 % FIOLE.NIVELURI.size()
+	var culori := int(FIOLE.NIVELURI[nivel_asteptat]["culori"])
+	rezultat = _verdict(joc.nivel == nivel_asteptat,
+		"cu sămânța 42, nivelul e %d" % nivel_asteptat) and rezultat
+	rezultat = _verdict(joc.vase.size() == culori + FIOLE.GOALE,
+		"sunt %d fiole desenate" % (culori + FIOLE.GOALE)) and rezultat
+	rezultat = _verdict(joc.butoane_nivel.size() == FIOLE.NIVELURI.size(),
+		"cele %d niveluri sunt gata de atârnat" % FIOLE.NIVELURI.size()) and rezultat
+
+	# REGULILE: compuse din constante, și cu o turnare ADEVĂRATĂ în ele — patru
+	# fiole, aceleași straturi înainte și după, dar nu aceeași masă.
+	var cuprins: Control = joc.reguli()
+	rezultat = _verdict(cuprins != null, "Fiolele își scriu regulile") and rezultat
+	if cuprins != null:
+		rezultat = _verdict(_textul_din(cuprins).contains(str(FIOLE.CAPACITATE)),
+			"regulile spun câte straturi ține o fiolă (%d), din constantă" % FIOLE.CAPACITATE) and rezultat
+		var desenate := _fiolele_din(cuprins)
+		rezultat = _verdict(desenate.size() == 4,
+			"regulile ARATĂ fiole adevărate (%d)" % desenate.size()) and rezultat
+		if desenate.size() == 4:
+			var inainte: int = desenate[0].culori.size() + desenate[1].culori.size()
+			var dupa: int = desenate[2].culori.size() + desenate[3].culori.size()
+			rezultat = _verdict(inainte == dupa
+				and desenate[0].culori.size() != desenate[2].culori.size(),
+				"și o turnare între ele: %d straturi înainte, %d după, mutate" % [inainte, dupa]) and rezultat
+		cuprins.free()
+
+	# O TURNARE CARE NU E VOIE: masa rămâne neatinsă și ecranul spune de ce.
+	var nevoie := _o_pereche(joc.fiole, false)
+	if nevoie.is_empty():
+		print("         (n-am găsit o turnare oprită pe masa asta — sari)")
+	else:
+		var inainte_de: Array = joc.fiole.duplicate(true)
+		joc.apasa(nevoie[0])
+		joc.apasa(nevoie[1])
+		rezultat = _verdict(joc.fiole == inainte_de and joc.istoric.is_empty(),
+			"o turnare oprită de regulă nu schimbă nimic") and rezultat
+		rezultat = _verdict(joc.mesaj.text != "",
+			"și ecranul spune de ce: %s" % joc.mesaj.text) and rezultat
+		rezultat = _verdict(joc.aleasa == nevoie[1],
+			"iar fiola apăsată devine cea aleasă (ai vrut altă sursă)") and rezultat
+		joc.apasa(nevoie[1])
+		rezultat = _verdict(joc.aleasa == -1, "al doilea clic pe ea o lasă jos") and rezultat
+
+	# O TURNARE VOIE: masa se schimbă EXACT cum spune regula.
+	var voie := _o_pereche(joc.fiole, true)
+	var asteptat: Array = joc.fiole.duplicate(true)
+	FIOLE.turna(asteptat, voie[0], voie[1])
+	var de_dinainte: Array = joc.fiole.duplicate(true)
+	joc.apasa(voie[0])
+	rezultat = _verdict(joc.aleasa == voie[0] and joc.vase[voie[0]].ridicata,
+		"primul clic alege fiola, iar ea se ridică") and rezultat
+	joc.apasa(voie[1])
+	rezultat = _verdict(joc.fiole == asteptat and joc.istoric.size() == 1,
+		"al doilea clic toarnă, exact cum spune regula") and rezultat
+
+	# „ÎNAPOI" întoarce EXACT starea de dinainte — și de la tastatură.
+	var tasta := InputEventKey.new()
+	tasta.keycode = KEY_BACKSPACE
+	tasta.pressed = true
+	get_viewport().push_input(tasta)
+	await get_tree().process_frame
+	rezultat = _verdict(joc.fiole == de_dinainte and joc.istoric.is_empty(),
+		"Backspace desface turnarea, înapoi la starea de dinainte") and rezultat
+
+	# „REIA" după câteva turnări: amestecul de la început, nu altul.
+	for k in 3:
+		var p := _o_pereche(joc.fiole, true)
+		joc.apasa(p[0])
+		joc.apasa(p[1])
+	rezultat = _verdict(joc.istoric.size() == 3, "trei turnări la rând") and rezultat
+	joc.reia()
+	rezultat = _verdict(joc.fiole == joc.start and joc.istoric.is_empty() and joc.aleasa == -1,
+		"Reia întoarce amestecul de la început, cu istoricul gol") and rezultat
+
+	# PARTIDA ÎNTREAGĂ, cu drumul găsit de VERIFICARE.
+	var raportat := []
+	joc.terminat.connect(func(rez): raportat.append(rez))
+	var drum := _f_rezolva(_siruri_din(joc.fiole))
+	for m in drum:
+		joc.apasa(m[0])
+		joc.apasa(m[1])
+	rezultat = _verdict(FIOLE.e_gata(joc.fiole),
+		"drumul verificării, jucat cu clicuri pe masă, o sortează (%d turnări)" % drum.size()) and rezultat
+	rezultat = _verdict(raportat.size() == 1,
+		"masa sortată încheie partida, o singură dată") and rezultat
+	if raportat.size() == 1:
+		rezultat = _verdict(bool(raportat[0]["reusit"]),
+			"și o încheie cu «reușit» — Fiolele nu se pot pierde") and rezultat
+		rezultat = _verdict(String(raportat[0]["rezumat"]).contains("turnăr")
+			or String(raportat[0]["rezumat"]).contains("turnare"),
+			"cu o frază care spune câte turnări: %s" % raportat[0]["rezumat"]) and rezultat
+	var dupa_final: Array = joc.fiole.duplicate(true)
+	joc.inapoi()
+	joc.apasa(0)
+	rezultat = _verdict(joc.fiole == dupa_final and joc.aleasa == -1,
+		"după final, nici Înapoi, nici clicurile nu mai schimbă masa") and rezultat
+	rezultat = _verdict(FIOLE._turnari(1) == "o turnare" and FIOLE._turnari(7) == "7 turnări"
+		and FIOLE._turnari(23) == "23 de turnări" and FIOLE._turnari(112) == "112 turnări",
+		"și numără ca în română: o turnare, 7 turnări, 23 de turnări, 112 turnări") and rezultat
+	joc.queue_free()
+
+	# NIVELUL DE PE TĂBLIE repornește partida și o anunță.
+	var masa := SCENA_FIOLE.instantiate()
+	add_child(masa)
+	var porniri := []
+	masa.pornita.connect(func(): porniri.append(true))
+	masa.porneste(Joc.SAMANTA_LIBERA)
+	var altul := (int(masa.nivel) + 1) % FIOLE.NIVELURI.size()
+	masa.schimba_nivelul(altul)
+	rezultat = _verdict(masa.nivel == altul and porniri.size() == 2,
+		"un alt nivel repornește partida și o anunță") and rezultat
+	rezultat = _verdict(masa.vase.size() == int(FIOLE.NIVELURI[altul]["culori"]) + FIOLE.GOALE,
+		"cu atâtea fiole câte cere nivelul nou (%d)" % masa.vase.size()) and rezultat
+	await get_tree().process_frame
+	rezultat = _verdict(masa.get_node("%Fiole").get_child_count() == masa.vase.size(),
+		"iar fiolele partidei de dinainte au plecat de pe masă") and rezultat
+	masa.queue_free()
+	await get_tree().process_frame
+	await get_tree().process_frame
+	return rezultat
+
+
+## Fiolele desenate dintr-un arbore, în ordinea din arbore.
+func _fiolele_din(nod: Node) -> Array:
+	var gasite := []
+	if nod.get_script() == FIOLE.FIOLA:
+		gasite.append(nod)
+	for copil in nod.get_children():
+		gasite.append_array(_fiolele_din(copil))
+	return gasite
+
+
+## Prima pereche `[din, în]` cu sursa nevidă la care turnarea E voie (sau, cu
+## `voie = false`, NU e voie, cu ținta tot nevidă și neplină — ca refuzul să
+## vină din culoare, cazul care chiar se întâmplă la masă).
+func _o_pereche(stare: Array, voie: bool) -> Array:
+	for din in stare.size():
+		if (stare[din] as Array).is_empty():
+			continue
+		for in_ in stare.size():
+			if din == in_:
+				continue
+			var tinta: Array = stare[in_]
+			if voie and FIOLE.poate_turna(stare, din, in_):
+				return [din, in_]
+			if not voie and not tinta.is_empty() and tinta.size() < FIOLE.CAPACITATE \
+					and not FIOLE.poate_turna(stare, din, in_):
+				return [din, in_]
+	return []
+
+
+# ─────────────────────────────────────────────────────────────
+# REZOLVITORUL VERIFICĂRII PENTRU FIOLE — A DOUA SOCOTEALĂ
+#
+# O fiolă e un ȘIR de litere, de jos în sus („ABB" = roșu jos, două galbene
+# sus), iar regula turnării e scrisă aici din nou, cu operații pe șiruri. Nu
+# cheamă nimic din `fiolele.gd`: dacă ar chema, „cade de acord cu jocul" ar fi
+# fost o oglindă.
+# ─────────────────────────────────────────────────────────────
+
+func _sir_din(fiola: Array) -> String:
+	var s := ""
+	for v in fiola:
+		s += char(65 + int(v))
+	return s
+
+
+func _siruri_din(stare: Array) -> Array:
+	var siruri := []
+	for fiola in stare:
+		siruri.append(_sir_din(fiola))
+	return siruri
+
+
+## Toarnă pe loc; `false` dacă nu e voie (și atunci nu atinge nimic).
+func _f_turna(s: Array, din: int, in_: int) -> bool:
+	if din == in_:
+		return false
+	var x: String = s[din]
+	var y: String = s[in_]
+	if x.is_empty() or y.length() >= FIOLE.CAPACITATE:
+		return false
+	var culoare := x.right(1)
+	if not y.is_empty() and y.right(1) != culoare:
+		return false
+	var strat := 0
+	while strat < x.length() and x[x.length() - 1 - strat] == culoare:
+		strat += 1
+	var cat := mini(strat, FIOLE.CAPACITATE - y.length())
+	s[din] = x.left(x.length() - cat)
+	s[in_] = y + culoare.repeat(cat)
+	return true
+
+
+## Sortată, spus ca o afirmație despre ȘIRURI: fiecare e gol sau e o literă
+## repetată de câte ori încape.
+func _f_sortat(s: Array) -> bool:
+	for x in s:
+		var sir: String = x
+		if not sir.is_empty() and sir != sir.left(1).repeat(FIOLE.CAPACITATE):
+			return false
+	return true
+
+
+func _f_cheie(s: Array) -> String:
+	var copie := PackedStringArray(s)
+	copie.sort()
+	return ",".join(copie)
+
+
+## Cât de amestecată e masa: câte schimbări de culoare sunt în fiole, plus în
+## câte fiole în plus e risipită fiecare culoare. Zero = sortată.
+func _f_amestec(s: Array) -> int:
+	var cost := 0
+	var unde := {}
+	for x in s:
+		var sir: String = x
+		for i in sir.length():
+			if i > 0 and sir[i] != sir[i - 1]:
+				cost += 1
+			if not unde.has(sir[i]):
+				unde[sir[i]] = {}
+			unde[sir[i]][sir] = true
+	for culoare in unde:
+		cost += (unde[culoare] as Dictionary).size() - 1
+	return cost
+
+
+## UN drum, căutat „cea mai bună stare întâi": se desface mereu starea cea mai
+## puțin amestecată dintre cele văzute. Altă ordine decât adâncimea jocului, și
+## nicio tăietură — fiecare turnare voie e încercată.
+func _f_rezolva(start: Array) -> Array:
+	var cheie0 := _f_cheie(start)
+	var de_unde := {cheie0: null}
+	var galeti: Array = []
+	_f_pune(galeti, _f_amestec(start), [start, cheie0])
+	var desfacute := 0
+	while desfacute < BUGET_FIOLE:
+		var nod: Array = []
+		for galeata in galeti:
+			if not (galeata as Array).is_empty():
+				nod = (galeata as Array).pop_back()
+				break
+		if nod.is_empty():
+			return []
+		var s: Array = nod[0]
+		var cheie: String = nod[1]
+		if _f_sortat(s):
+			var drum := []
+			var k = cheie
+			while de_unde[k] != null:
+				drum.push_front(de_unde[k][1])
+				k = de_unde[k][0]
+			return drum
+		desfacute += 1
+		for din in s.size():
+			for in_ in s.size():
+				var t := s.duplicate()
+				if not _f_turna(t, din, in_):
+					continue
+				var kt := _f_cheie(t)
+				if de_unde.has(kt):
+					continue
+				de_unde[kt] = [cheie, [din, in_]]
+				_f_pune(galeti, _f_amestec(t), [t, kt])
+	return []
+
+
+func _f_pune(galeti: Array, cost: int, nod: Array) -> void:
+	while galeti.size() <= cost:
+		galeti.append([])
+	(galeti[cost] as Array).append(nod)
+
+
+## Cel mai scurt drum, în LĂȚIME, cu buget. -1 dacă bugetul nu ajunge.
+func _f_cel_mai_scurt(start: Array, buget: int) -> int:
+	var vazute := {_f_cheie(start): true}
+	var strat: Array = [start]
+	var pasi := 0
+	var desfacute := 0
+	while not strat.is_empty():
+		var urmator: Array = []
+		for s in strat:
+			if _f_sortat(s):
+				return pasi
+			desfacute += 1
+			if desfacute > buget:
+				return -1
+			for din in (s as Array).size():
+				for in_ in (s as Array).size():
+					var t: Array = (s as Array).duplicate()
+					if not _f_turna(t, din, in_):
+						continue
+					var kt := _f_cheie(t)
+					if vazute.has(kt):
+						continue
+					vazute[kt] = true
+					urmator.append(t)
+		strat = urmator
+		pasi += 1
+	return -1
+
+
+## Oklab (Björn Ottosson, 2020): L, a, b, cu distanța euclidiană aproape de cea
+## pe care o vede ochiul. `Color` ține componentele în sRGB, deci întâi se
+## liniarizează.
+func _oklab(c: Color) -> Vector3:
+	var lin := c.srgb_to_linear()
+	var l := 0.4122214708 * lin.r + 0.5363325363 * lin.g + 0.0514459929 * lin.b
+	var m := 0.2119034982 * lin.r + 0.6806995451 * lin.g + 0.1073969566 * lin.b
+	var s := 0.0883024619 * lin.r + 0.2817188376 * lin.g + 0.6299787005 * lin.b
+	l = pow(l, 1.0 / 3.0)
+	m = pow(m, 1.0 / 3.0)
+	s = pow(s, 1.0 / 3.0)
+	return Vector3(
+		0.2104542553 * l + 0.7936177850 * m - 0.0040720468 * s,
+		1.9779984951 * l - 2.4285922050 * m + 0.4505937099 * s,
+		0.0259040371 * l + 0.7827717662 * m - 0.8086757660 * s)
+
+# ─────────────────────────────────────────────────────────────
 # 9. CLICURILE, PE PÂNZA ADEVĂRATĂ
 #
 # Tot restul verificării cheamă funcțiile de-a dreptul (`alege`, `_scrie_cifra`,
@@ -1642,6 +2203,33 @@ func _clicurile() -> bool:
 	rezultat = _verdict(cuvantul.rand_curent == inainte + "a",
 		"un clic pe litera A din tastatura de pe ecran o scrie (rândul: „%s\")"
 		% cuvantul.rand_curent) and rezultat
+
+	# d) FIOLELE: un clic pe o fiolă cu lichid o alege, unul pe o fiolă goală
+	#    toarnă, iar butonul „Înapoi" de pe ecran desface.
+	taverna._arata_mesele()
+	await get_tree().process_frame
+	taverna._deschide_masa(Mese.masa("fiolele"))
+	taverna._inchide_regulile()
+	await get_tree().process_frame
+	await get_tree().process_frame
+	var fiole = taverna.joc
+	var plina := -1
+	var goala_f := -1
+	for i in fiole.fiole.size():
+		if (fiole.fiole[i] as Array).is_empty():
+			if goala_f < 0:
+				goala_f = i
+		elif plina < 0:
+			plina = i
+	await _clic_pe(fiole.vase[plina])
+	rezultat = _verdict(fiole.aleasa == plina,
+		"un CLIC pe o fiolă o alege (fiola %d, aleasă %d)" % [plina, fiole.aleasa]) and rezultat
+	await _clic_pe(fiole.vase[goala_f])
+	rezultat = _verdict(fiole.istoric.size() == 1 and not (fiole.fiole[goala_f] as Array).is_empty(),
+		"și un clic pe o fiolă goală toarnă în ea") and rezultat
+	await _clic_pe(fiole.buton_inapoi)
+	rezultat = _verdict(fiole.istoric.is_empty() and (fiole.fiole[goala_f] as Array).is_empty(),
+		"un clic pe „Înapoi\" o desface") and rezultat
 
 	taverna.queue_free()
 	await get_tree().process_frame

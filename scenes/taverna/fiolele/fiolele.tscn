@@ -1,0 +1,54 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scenes/taverna/fiolele/fiolele.gd" id="1_fiolele"]
+
+[node name="Fiolele" type="VBoxContainer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 6
+alignment = 1
+script = ExtResource("1_fiolele")
+
+[node name="RandSus" type="HBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Mesaj" type="Label" parent="RandSus"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"RubricaPergament"
+theme_override_font_sizes/font_size = 16
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Rasuflare" type="Control" parent="."]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="CentruFiole" type="CenterContainer" parent="."]
+layout_mode = 2
+
+[node name="Fiole" type="HBoxContainer" parent="CentruFiole"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 18
+
+[node name="Rasuflare2" type="Control" parent="."]
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="CentruTaste" type="CenterContainer" parent="."]
+layout_mode = 2
+
+[node name="Taste" type="HBoxContainer" parent="CentruTaste"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 12

@@ -3,7 +3,7 @@ extends Control
 ##
 ## Expediția e harta, luptele, cronometrul inamicului. Practice e cultură
 ## generală pe raftul ales. Taverna e locul în care te așezi la o masă și joci
-## un joc întreg: Cuvântul Ascuns, Sudoku și Decretul Zilei, care nu e un joc al
+## un joc întreg: Cuvântul Ascuns, Sudoku, Fiolele și Decretul Zilei, care nu e un joc al
 ## lui, ci jocul de azi al celorlalte.
 ##
 ## ─────────────────────────────────────────────────────────────
@@ -64,10 +64,13 @@ extends Control
 const SCENA_MENIU := "res://scenes/meniu/meniu.tscn"
 
 ## Lățimea unei mese pe ecran. Trei mese × 300 + două goluri de 28 = 956 px pe o
-## pânză de 1152, cu margini de 28 — adică mai încap. A patra masă NU mai
-## încape pe un rând, și atunci lista devine o grilă de două coloane, exact ce
-## s-a întâmplat la ecranul de loadout când a venit a șaptea disciplină. Scris
-## de pe acum ca ziua aia să fie o linie, nu o surpriză.
+## pânză de 1152, cu margini de 28 — încăpeau pe un rând. A patra (Fiolele, 4
+## noiembrie 2026) nu mai încape: 4 × 300 + 3 × 28 = 1284. Deci `%Mese` e de
+## atunci o GRILĂ DE DOUĂ COLOANE, exact ce s-a întâmplat la ecranul de loadout
+## când a venit a șaptea disciplină — și a fost, cum scria aici dinainte, o
+## linie în scenă, nu o surpriză. Mese mai înguste, ca să rămână pe un rând, au
+## fost cântărite și lăsate: la 250 px descrierea fiecărei mese ar fi trecut pe
+## patru rânduri, iar a cincea masă ar fi cerut oricum grila.
 const LATIME_MASA := 300
 
 ## Culoarea rândului de rezultat: verdele și portocaliul de verdict din
@@ -79,7 +82,7 @@ const CULOARE_RATAT := Color(0.55, 0.22, 0.12)
 @onready var ajutor: Label = %Ajutor
 @onready var rand_unelte: HBoxContainer = %Unelte
 @onready var panou_mese: Control = %PanouMese
-@onready var lista_mese: HBoxContainer = %Mese
+@onready var lista_mese: GridContainer = %Mese
 @onready var panou_joc: Control = %PanouJoc
 @onready var zona_joc: PanelContainer = %ZonaJoc
 @onready var rand_rezultat: Control = %RandRezultat

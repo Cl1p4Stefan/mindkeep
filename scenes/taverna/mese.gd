@@ -76,6 +76,12 @@ const CATALOG: Array[Dictionary] = [
 		"scena": "res://scenes/taverna/sudoku/sudoku.tscn",
 	},
 	{
+		"cheie": "fiolele",
+		"nume": "FIOLELE",
+		"rol": "Poțiuni amestecate, de turnat până fiecare fiolă are o singură culoare. Planificare cu câțiva pași înainte.",
+		"scena": "res://scenes/taverna/fiolele/fiolele.tscn",
+	},
+	{
 		"cheie": "decretul_zilei",
 		"nume": "DECRETUL ZILEI",
 		"rol": "Un singur joc, altul în fiecare zi. Același pentru toată ziua, oricâte ori îl deschizi.",

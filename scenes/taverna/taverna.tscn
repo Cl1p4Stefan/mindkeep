@@ -225,11 +225,12 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Mese" type="HBoxContainer" parent="Margini/Coloana/PanouMese"]
+[node name="Mese" type="GridContainer" parent="Margini/Coloana/PanouMese"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_constants/separation = 28
-alignment = 1
+theme_override_constants/h_separation = 28
+theme_override_constants/v_separation = 20
+columns = 2
 
 [node name="PanouJoc" type="VBoxContainer" parent="Margini/Coloana"]
 unique_name_in_owner = true

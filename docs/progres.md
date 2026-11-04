@@ -40,72 +40,80 @@ devreme, dar restul rămâne placeholder. Bucla de luptă e în continuare cea v
 
 ---
 
-## URMĂTOAREA MASĂ: FIOLELE (plan, 4 noiembrie 2026) — nescrisă, nicio linie de cod
+## FIOLELE (4 noiembrie 2026) — masa a patra, water sort cu lichid
 
-**Ce e:** a patra masă din Tavernă, un **water sort** („color sort" cu lichid).
-Câteva fiole de sticlă, fiecare cu loc pentru 4 straturi de lichid colorat,
-amestecate; de obicei N culori în N + 2 fiole, deci două pornesc goale. O mutare
-= alegi o fiolă, apoi alta, și torni. **Se toarnă tot stratul de aceeași culoare
-de deasupra, cât încape** — nu câte o unitate. Ai voie doar dacă fiola în care
-torni e goală sau are deasupra aceeași culoare, și dacă mai are loc. Câștigi
-când fiecare fiolă e plină cu o singură culoare, sau goală.
+**Ce s-a făcut:** a patra masă din Tavernă, după planul scris mai devreme în
+aceeași zi. `scenes/taverna/fiolele/` — `fiolele.gd` (regula, generatorul,
+rezolvitorul, masa) și `fiola.gd` (desenatorul unei fiole, `_draw()`, fără
+nicio regulă de joc în el). Un rând în `mese.gd`, între Sudoku și Decret.
+Liberă în catalog, nu ascunsă în decret: cu trei mese, una ascunsă ar fi fost
+o treime din Tavernă nevăzută — părerea scrisă în plan, urmată.
 
-**Decise cu mine, azi:**
+**Regula, întreagă:** 4 straturi pe fiolă (`CAPACITATE`), N culori în N + 2
+fiole. Alegi o fiolă, apoi alta; se toarnă TOT stratul de aceeași culoare de
+deasupra, CÂT ÎNCAPE, doar peste aceeași culoare sau într-o fiolă goală. Câștigi
+când fiecare fiolă e plină cu o culoare, sau goală. Nivelurile, pe tăblie prin
+`unelte()` ca la Sudoku: **Ușor 5 culori / Mediu 7 / Greu 9**. „Înapoi"
+nelimitat (și Backspace / Ctrl+Z), „Reia" = același amestec de la capăt; când nu
+mai e nicio turnare, masa o spune și nu te dă afară. `termina(true, …)` e
+singurul final; rezumatul numără turnările rămase („sortat în 23 de turnări").
 
-- **Water sort, nu ball sort.** Mai puține clicuri, mai multă planificare: un
-  strat întreg mutat o dată schimbă mai mult decât o bilă.
-- **LICHID, nu bile.** Se desenează ca straturi într-o fiolă (`_draw()`, nu
-  imagini și nu font), cu tema gotic-medievală: poțiunile alchimistului, pe
-  raftul tavernei. Numele mesei, propus și nehotărât: „Fiolele" / „Alchimistul".
-- **FĂRĂ semne pe straturi.** Deosebirea o duce numai culoarea. Urmarea, plătită
-  conștient: paleta trebuie să fie citibilă singură, pe fond închis, la toate
-  nivelurile — deci se ALEGE și se MĂSOARĂ (distanța dintre culori), nu se ia
-  „roșu, verde, albastru…". Roșul și verdele NU sunt interzise aici: regula cu
-  culorile de verdict ține de scena de puzzle, iar masa n-are verdict pe parcurs
-  (ca la Sudoku, unde conflictul e chihlimbar). Cine nu deosebește roșul de
-  verde e lăsat, dinadins, fără ajutor — de cântărit dacă perechea aia lipsește
-  din paletă.
+**Ce s-a hotărât pe drum:**
 
-**Ce antrenează:** planificarea câțiva pași înainte (familia Turnului din Hanoi)
-— altceva decât literele Cuvântului Ascuns și deducția lui Sudoku.
+- **Garanția e REZOLVABILITATEA**, cum scria planul: amestecă, un rezolvitor
+  caută soluția, altfel alt amestec. Rezolvitorul jocului caută în ADÂNCIME, cu
+  stivă proprie (nu recursie — un drum are zeci de turnări), cu stările
+  văzute ținute pe o cheie cu fiolele SORTATE și cu trei tăieturi de turnări
+  care nu duc nicăieri. Are un buget (40.000 de stări): un amestec nedovedit în
+  buget e aruncat la fel ca unul fără soluție, deci pe masă ajunge numai ce a
+  fost rezolvat. Fără fiole gata din prima.
+- **Dificultatea e, deocamdată, numărul de culori — nu mutările minime.** Planul
+  cerea mutările celei mai scurte soluții; în joc asta ar fi cerut o căutare în
+  lățime la fiecare amestec. În verificare, în schimb, a mers: **cel mai scurt
+  drum măsurat, pe 10 amestecuri pe nivel: 14,5 / 20,4 / 28,0 turnări**
+  (drumul găsit de joc: 19,6 / 26,1 / 40,3). Nivelurile cresc, deci un prag pe
+  mutări minime nu e cerut de nimic azi; cifrele sunt aici pentru ziua în care
+  va fi.
+- **Paleta e o măsurătoare.** Fără semne pe straturi, deosebirea o duce numai
+  culoarea, deci `verifica_taverna` cere, pe fiecare nivel, ca oricare două
+  culori să fie la cel puțin 0,12 în Oklab și fiecare să aibă L ≥ 0,5 pe fondul
+  închis. Cea mai apropiată pereche, albastru–violet (0,147), intră abia la
+  Mediu; roșu și verde sunt amândouă la Ușor (cine nu le deosebește e lăsat,
+  conștient, fără ajutor — de cântărit dacă se dovedește o piedică).
+- **Taverna are de azi o GRILĂ DE DOUĂ COLOANE** (`%Mese` e `GridContainer`):
+  4 × 300 + 3 × 28 = 1284 px pe 1152 nu încăpeau pe un rând — exact ziua pe care
+  o prezicea comentariul de la `LATIME_MASA`, și a costat o linie în scenă și una
+  în script. Ecranul cu mese: 538 px pe 648.
+- **Regulile au o turnare ADEVĂRATĂ**: starea de „după" e cea de „înainte"
+  trecută prin `turna()`, cu fiole construite de aceleași funcții ca masa (doar
+  mai scunde, ca panoul decretului să încapă: 570 px pe 648 cu Fiolele azi).
 
-**Cum se potrivește cu ce există (propunerea, de verificat la scriere):**
+**Verificarea (`verifica_taverna`, 244 → 352 de verdicte, ~24 → ~37 s):**
+secțiunea FIOLELE — paleta măsurată; regula turnării pe 8 cazuri de mână,
+rezolvate pe hârtie, bătute ȘI de o a doua regulă scrisă pe șiruri; masa gata pe
+trei cazuri (al treilea: o culoare despărțită în două fiole uniforme NU e gata);
+generatorul pe 10 semințe × 3 niveluri, cu numărul de fiole, culorile
+conservate (fiecare de exact 4 ori), **fiecare amestec rezolvat de un AL DOILEA
+rezolvitor** („cea mai bună stare întâi", pe șiruri, fără tăieturi) și soluția
+fiecăruia REJUCATĂ pe regula celuilalt până la masa sortată; sămânța; partida
+jucată cu scena adevărată (turnare oprită, turnare voie, Backspace, Reia,
+partida întreagă cu drumul verificării, nimic după final, nivelul care
+repornește); și în CLICURI, un clic pe o fiolă, unul pe o fiolă goală și unul pe
+„Înapoi", prin `Viewport`. Decretul, ecranele și caracterele au prins masa
+singure, din catalog — nicio linie scrisă pentru ele. Fiolele intră în rotația
+decretului (trei mese de rând acum), tot fără nicio linie.
 
-- **Generată, fără fișier de date**, ca Sudoku; primește sămânța, deci intră în
-  rotația Decretului fără nimic în plus. Cu trei mese în rotație, decretul
-  nu mai e previzibil pe o zi înainte (vezi DECRETUL ZILEI, „Ce a rămas").
-- **Garanția e REZOLVABILITATEA, nu unicitatea.** La Sudoku se cere un singur
-  răspuns; aici pot fi multe, iar ce se dovedește e că EXISTĂ unul. Un amestec
-  la întâmplare se poate înfunda din prima, deci: amesteci → un rezolvitor caută
-  soluția (căutare pe stări, cu fiolele SORTATE în cheia stării ca aceeași
-  poziție să nu se numere de două ori) → dacă nu găsește, alt amestec. Metoda de
-  la Lacăt: un puzzle nu se crede pe cuvânt, se rezolvă.
-- **Dificultatea se MĂSOARĂ**: numărul minim de mutări al celei mai scurte
-  soluții. Nivelurile pe tăblie, ca la Sudoku (prin `unelte()`), de pornire
-  5 / 7 / 9 culori plus un prag de mutări minime; cifrele se hotărăsc după
-  măsurători, nu înainte.
-- **Te poți înfunda, deci „Înapoi" nelimitat și „Reia".** Masa poate spune „nu
-  mai ai mutări", dar nu te dă afară — „Ton sănătos". `termina(true, …)` e
-  singurul final, ca la Sudoku; nimic de pierdut.
-- **Ecranul** se măsoară pe cât CERE, în fiecare stare: 11 fiole × ~70 px pe
-  lățime și 4 straturi de ~42 px încap pe hârtie, dar hârtia nu e o măsurătoare.
-- **Regulile** ca la celelalte mese: un nod, cu fiole adevărate construite de
-  aceleași funcții ca masa (o turnare înainte și după).
+**Neatinse:** `joc.gd`, `decretul.gd`, `puzzle.gd`, `lupta.gd`. `taverna.gd`:
+două rânduri (tipul listei și comentariul de la `LATIME_MASA`), plus antetul.
 
-**Verificarea (în `verifica_taverna`, secțiune nouă):** generatorul pe mai multe
-semințe × 3 niveluri, fiecare amestec rezolvat de un **AL DOILEA rezolvitor**,
-scris altfel decât cel din joc, cu soluția REJUCATĂ mutare cu mutare pe regula
-jocului până la grila sortată; numărul de culori și de straturi conservat;
-nicio fiolă peste capacitate; regula de turnare pe cazuri scrise de mână
-(rezolvate întâi pe hârtie — vezi „O verificare care își scrie singură
-așteptările"); o partidă jucată cap-coadă cu **clicuri adevărate împinse în
-`Viewport`** (regula de la Sudoku); „Înapoi" care întoarce exact starea de
-dinainte; ecranele măsurate; caracterele în cele trei fonturi.
+**Ce a rămas:**
 
-**Rămas de hotărât la scriere:** dacă masa intră liberă în catalog sau în pool-ul
-de descoperire al decretului (vezi IDEEA DESCHISĂ de la DECRETUL ZILEI). Părerea
-mea: liberă — cu trei mese, una ascunsă ar fi o treime din Tavernă nevăzută;
-descoperirea are sens de la a cincea-a șasea masă.
+- Nu s-a jucat de mână o partidă întreagă — verificarea a jucat-o, ochiul încă
+  nu. De văzut dacă Greu (9 culori, 11 fiole) e prea lung sau prea ușor.
+- Un prag pe mutări minime, dacă nivelurile se simt prea apropiate (vezi mai
+  sus; măsurătoarea există în verificare).
+- Nicio animație de turnare: lichidul sare dintr-o fiolă în alta. „Juice", la
+  pasul de artă.
 
 ---
 
