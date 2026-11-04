@@ -183,6 +183,32 @@ func reguli() -> Control:
 	return null
 
 
+## UNELTELE mesei, pentru rândul de sub titlu. OPȚIONAL.
+##
+## `null` = masa n-are nimic de reglat din afara tăbliei, și atunci rândul
+## rămâne cum era: numai fraza de ajutor, centrată. Aceeași formă ca `reguli()`
+## și `rand_de_ajutor()` — o masă nu plătește nimic pentru ce nu scrie.
+##
+## DE CE EXISTĂ. Sudoku își alege nivelul de pe tăblie (vezi „NIVELURILE STAU
+## PE TĂBLIE"), iar cele trei butoane stăteau în colțul ei de sus-stânga —
+## chiar sub butonul „i" al Tavernei, peste care s-au și suprapus. Colțul
+## tăbliei e un loc disputat: fiecare masă nouă îl vrea. Rândul de sub titlu nu
+## e: acolo Taverna are o frază centrată și două capete goale, iar capătul din
+## stânga e exact cât trei butoane.
+##
+## Nu e o scăpare în despărțire, e chiar forma ei: Taverna primește un NOD și
+## nu se uită în el, la fel ca la `reguli()`. Nu știe ce e un nivel, nu știe că
+## sunt trei, nu știe ce se întâmplă când apeși. Singurul lucru pe care-l
+## promite e un LOC.
+##
+## Nodul nu mai e al tău după ce-l dai: Taverna îl pune în rândul ei și îl
+## îngroapă când pleci de la masă. Se cheamă O DATĂ, la deschiderea mesei — nu
+## și la „Încă unul" al tău sau la o repornire a ta, deci butoanele pe care le
+## dai trebuie să-ți supraviețuiască partidei.
+func unelte() -> Control:
+	return null
+
+
 ## Construiește-ți masa. OBLIGATORIU.
 ##
 ## `push_error` și nu o scenă goală: o masă fără `_porneste` e un fișier

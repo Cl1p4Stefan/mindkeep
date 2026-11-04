@@ -569,7 +569,13 @@ func _ecranele() -> bool:
 	# mese, unde butonul „Mesele" e ascuns dar locul lui tot nu se eliberează.
 	var titlu: Label = taverna.get_node("%Titlu")
 	var butoane: Control = taverna.get_node("Margini/Coloana/Antet/Butoane")
-	var latime_butoane := butoane.get_combined_minimum_size().x
+	# De pe 4 noiembrie 2026 antetul are un nod plutitor și la STÂNGA: butonul
+	# „i", mutat aici de pe tăblia mesei, unde cădea peste butoanele de nivel
+	# ale lui Sudoku. Titlul e centrat, deci se lovește de cel mai LAT dintre
+	# cele două capete — azi dreapta, cu mult, dar un `max` nu presupune asta.
+	var buton_i: Control = taverna.get_node("%ButonReguli")
+	var latime_butoane: float = maxf(butoane.get_combined_minimum_size().x,
+		buton_i.get_combined_minimum_size().x)
 	# Lățimea pe care o are antetul: pânza, fără marginile laterale.
 	var latime_antet := PANZA.x - 2 * 28
 	for m in Mese.CATALOG:
@@ -611,6 +617,30 @@ func _ecranele() -> bool:
 			"%s încape în lățime (%d px, rezervă %d)"
 			% [nume_masa, cerut_joc.x, PANZA.x - cerut_joc.x]) and rezultat
 
+		# UNELTELE MESEI (vezi `Joc.unelte`). Taverna le atârnă în capătul din
+		# stânga al rândului de sub titlu, iar fraza de ajutor stă centrată pe
+		# tot rândul — două noduri suprapuse, exact ca titlul și butoanele din
+		# antet, deci se măsoară la fel. O masă fără unelte nu lasă nimic acolo.
+		var rand_unelte: Control = taverna.get_node("%Unelte")
+		var ajutor: Label = taverna.get_node("%Ajutor")
+		var scule_asteptate: bool = taverna.joc.unelte() != null 			or rand_unelte.get_child_count() > 0
+		if scule_asteptate:
+			rezultat = _verdict(rand_unelte.get_child_count() == 1,
+				"%s: uneltele mesei sunt atârnate în antet (%d noduri)"
+				% [nume_masa, rand_unelte.get_child_count()]) and rezultat
+			var latime_scule := rand_unelte.get_combined_minimum_size().x
+			# Lățimea TEXTULUI, nu minimul etichetei: ea are autowrap, deci
+			# minimul ei e zero și verdictul ar fi trecut mereu, spunând
+			# nimic. Prima scriere făcea chiar asta.
+			var font := ajutor.get_theme_font("font")
+			var marime := ajutor.get_theme_font_size("font_size")
+			var jumatate_ajutor: float = font.get_string_size(ajutor.text,
+				HORIZONTAL_ALIGNMENT_LEFT, -1, marime).x / 2.0
+			var loc := (PANZA.x - 2 * 28) / 2.0 - latime_scule
+			rezultat = _verdict(jumatate_ajutor <= loc,
+				"%s: fraza de ajutor nu ajunge peste unelte (%d px de la mijloc, loc %d)"
+				% [nume_masa, jumatate_ajutor, loc]) and rezultat
+
 		taverna._pe_joc_terminat({"reusit": true, "rezumat": "Gata, din 3 încercări."})
 		await get_tree().process_frame
 		await get_tree().process_frame
@@ -625,6 +655,11 @@ func _ecranele() -> bool:
 			% [nume_masa, cerut_joc.y, cerut_final.y]) and rezultat
 		taverna._arata_mesele()
 		await get_tree().process_frame
+		# Uneltele sunt ale MESEI, deci pleacă odată cu ea: altfel nivelurile
+		# lui Sudoku ar fi rămas în antet peste Cuvântul Ascuns, exact cum ar
+		# fi rămas regulile lui dacă nu le-ar îngropa cineva.
+		rezultat = _verdict(taverna.get_node("%Unelte").get_child_count() == 0,
+			"%s: uneltele pleacă odată cu masa" % nume_masa) and rezultat
 
 	taverna.queue_free()
 
@@ -1526,6 +1561,13 @@ func _caracterele() -> bool:
 			for ch in _textul_din(cuprins):
 				caractere[ch] = true
 			cuprins.free()
+		# Uneltele nu sunt în arborele mesei (Taverna le ia), deci `_textul_din`
+		# de mai sus nu le vede — iar „Ușor" are chiar semnele pe care un font
+		# le-ar putea rata. Se strâng separat, cât timp masa le mai ține.
+		var scule: Control = masa.unelte()
+		if scule != null and scule.get_parent() == null:
+			for ch in _textul_din(scule):
+				caractere[ch] = true
 		for ch in String(m["nume"]) + String(m["rol"]):
 			caractere[ch] = true
 		masa.queue_free()

@@ -158,10 +158,19 @@ const CULOARE_CIFRA_SCRISA := Color(0.68, 0.82, 0.93)
 ## parte a Cuvântului Ascuns și ca bara expunerii din Reținere.
 const CULOARE_CIFRA_CONFLICT := Color(0.86, 0.64, 0.16)
 
-const MARIME_CELULA := 36
-const MARIME_CIFRA := 20
+## CÂT DE MARE E UN PĂTRAT. 36 px, până pe 4 noiembrie 2026 — citibil, dar
+## mărunt: nouă rânduri de 36 ocupă mai puțin de jumătate din înălțimea
+## paginii, iar restul era aer. Ce l-a ținut mic era aerul de deasupra: rândul
+## cu niveluri, plecat de atunci în antet (vezi `unelte()`). Cifra NU e aleasă
+## cu ochiul — e cea mai mare la care ecranul încă încape în pânza de 648 px,
+## măsurată de `verifica_taverna`. Dacă scade vreodată, acolo se vede de ce.
+const MARIME_CELULA := 42
+const MARIME_CIFRA := 24
 const MARIME_TASTA := 18
-const INALTIME_TASTA := 34
+const INALTIME_TASTA := 30
+## Butoanele de nivel stau în antetul Tavernei, pe un rând de 30 px: mai
+## scunde decât tastele, fiindcă rândul ăla e al unei fraze, nu al lor.
+const INALTIME_NIVEL := 28
 const LATIME_TASTA := 34
 
 ## Ce poate fi o celulă pe ecran. Nu e starea jocului (aia sunt cele două
@@ -190,10 +199,13 @@ var celule: Array[PanelContainer] = []
 var taste := {}
 ## Butoanele celor trei niveluri.
 var butoane_nivel: Array[Button] = []
+## Rândul care le ține. NU e în scenă: îl ia Taverna, prin `unelte()`, și-l pune
+## în antetul ei. Dacă nu-l ia nimeni (masa jucată singură, cu F6), și-l pune
+## masa pe tăblie — vezi `_ready`.
+var rand_niveluri: HBoxContainer = null
 
 @onready var cutii: GridContainer = %Cutii
 @onready var mesaj: Label = %Mesaj
-@onready var rand_niveluri: HBoxContainer = %Niveluri
 @onready var rand_taste: HBoxContainer = %Taste
 
 
@@ -208,6 +220,12 @@ func _ready() -> void:
 	await get_tree().process_frame
 	if not pornit:
 		porneste()
+	# Dacă nimeni n-a luat rândul cu niveluri (masa jucată singură, cu F6),
+	# și-l pune masa pe tăblie. Același tipar, din același motiv, ca pornirea
+	# de deasupra: o masă trebuie să fie întreagă și fără Tavernă în jur.
+	if rand_niveluri != null and rand_niveluri.get_parent() == null:
+		$RandSus.add_child(rand_niveluri)
+		$RandSus.move_child(rand_niveluri, 0)
 
 
 # ─────────────────────────────────────────────────────────────
@@ -233,6 +251,15 @@ func _porneste(cu_samanta: int) -> void:
 	_zugraveste_tot()
 	_spune("%s — %d cifre date din %d." % [
 		String(NIVELURI[nivel]["nume"]), cate_date(), CELULE])
+
+
+## Rândul cu niveluri e AL MESEI cât timp nu l-a luat nimeni, deci masa îl și
+## îngroapă. Un nod fără părinte nu moare odată cu cel care l-a făcut — la
+## prima scriere rămâneau în viață la ieșire și Godot se plângea. Dacă l-a luat
+## Taverna (are părinte), ea îl îngroapă, în `_goleste_uneltele`.
+func _exit_tree() -> void:
+	if rand_niveluri != null and rand_niveluri.get_parent() == null:
+		rand_niveluri.queue_free()
 
 
 ## Regulile, pentru panoul Tavernei (vezi `Joc.reguli`).
@@ -315,7 +342,17 @@ func _rand_de_exemplu() -> Control:
 
 
 func rand_de_ajutor() -> String:
-	return "Cifrele 1-%d, o singură dată pe linie, pe coloană și în pătrat. Fără cronometru." % LATURA
+	return "Cifrele 1-%d, o singură dată pe linie, pe coloană și în pătrat." % LATURA
+
+
+## Cele trei niveluri, pentru antetul Tavernei (vezi `Joc.unelte`).
+##
+## Rândul se construiește în `_ready` și trăiește cât masa: butoanele se
+## zugrăvesc la fiecare pornire (`_zugraveste_nivelurile`), deci nu se pot naște
+## din nou la fiecare chemare a cârligului ăstuia — Taverna îl cheamă o dată,
+## dar masa repornește de câte ori apeși pe „Greu".
+func unelte() -> Control:
+	return rand_niveluri
 
 
 # ─────────────────────────────────────────────────────────────
@@ -797,11 +834,14 @@ func _lumina_pentru(i: int) -> float:
 
 
 func _construieste_nivelurile() -> void:
-	for copil in rand_niveluri.get_children():
-		copil.queue_free()
+	rand_niveluri = HBoxContainer.new()
+	rand_niveluri.add_theme_constant_override("separation", 6)
+	# Rândul se ancorează singur în antetul Tavernei, care e mai înalt decât
+	# butoanele: fără asta s-ar întinde pe toată înălțimea lui.
+	rand_niveluri.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	butoane_nivel.clear()
 	for n in NIVELURI.size():
-		var buton := _buton(String(NIVELURI[n]["nume"]), 62)
+		var buton := _buton(String(NIVELURI[n]["nume"]), 62, INALTIME_NIVEL)
 		buton.pressed.connect(schimba_nivelul.bind(n))
 		rand_niveluri.add_child(buton)
 		butoane_nivel.append(buton)
@@ -847,10 +887,10 @@ func _zugraveste_tastele() -> void:
 		buton.modulate = Color(1, 1, 1, 0.4 if int(cate.get(v, 0)) >= LATURA else 1.0)
 
 
-func _buton(text: String, latime: int) -> Button:
+func _buton(text: String, latime: int, inaltime := INALTIME_TASTA) -> Button:
 	var buton := Button.new()
 	buton.text = text
-	buton.custom_minimum_size = Vector2(latime, INALTIME_TASTA)
+	buton.custom_minimum_size = Vector2(latime, inaltime)
 	buton.add_theme_font_size_override("font_size", MARIME_TASTA)
 	# FĂRĂ FOCUS, din motivul scris la `_tasta` din `cuvantul.gd`: un buton cu
 	# focus mănâncă tastele, iar aici tastele sunt chiar cum se joacă.

@@ -77,6 +77,7 @@ const CULOARE_RATAT := Color(0.55, 0.22, 0.12)
 
 @onready var titlu: Label = %Titlu
 @onready var ajutor: Label = %Ajutor
+@onready var rand_unelte: HBoxContainer = %Unelte
 @onready var panou_mese: Control = %PanouMese
 @onready var lista_mese: HBoxContainer = %Mese
 @onready var panou_joc: Control = %PanouJoc
@@ -91,7 +92,6 @@ const CULOARE_RATAT := Color(0.55, 0.22, 0.12)
 @onready var reguli_titlu: Label = %ReguliTitlu
 @onready var reguli_cuprins: MarginContainer = %Cuprins
 @onready var buton_inchide_reguli: Button = %ButonInchideReguli
-@onready var suprapunere: Control = %Suprapunere
 
 ## Mesele la care regulile ți s-au arătat deja, pe cheie: `{"cuvantul_ascuns": true}`.
 ##
@@ -141,6 +141,7 @@ func _arata_mesele() -> void:
 	buton_reguli.visible = false
 	_inchide_regulile()
 	_goleste_cuprinsul()
+	_goleste_uneltele()
 	titlu.text = "TAVERNA"
 	# Numărul nu e scris de mână: vine din catalog, deci rândul ăsta rămâne
 	# adevărat când apare a doua masă. Aceeași regulă ca la „ALEGE 3 UNELTE".
@@ -309,6 +310,15 @@ func _goleste_cuprinsul() -> void:
 		copil.queue_free()
 
 
+## Îngroapă uneltele mesei de dinainte — vezi `_goleste_cuprinsul`, care face
+## același lucru pentru reguli și pentru același motiv: nodul e al mesei, iar
+## masa pleacă.
+func _goleste_uneltele() -> void:
+	for copil in rand_unelte.get_children():
+		rand_unelte.remove_child(copil)
+		copil.queue_free()
+
+
 ## ESCAPE închide panoul, fiindcă asta face Escape peste orice se deschide
 ## deasupra a altceva. `_unhandled_input`, deci butoanele primesc întâi ce e al
 ## lor.
@@ -364,23 +374,30 @@ func _porneste_jocul() -> void:
 	buton_reguli.visible = cuprins != null
 	if cuprins != null:
 		reguli_cuprins.add_child(cuprins)
-	# Suprapunerea e fratele jocului în același `PanelContainer`, iar un
-	# `PanelContainer` desenează copiii în ordinea din arbore. Jocul tocmai a
-	# intrat ULTIMUL, deci ar fi acoperit butonul — îl trimitem înapoi deasupra.
+	# UNELTELE mesei, în capătul din stânga al rândului de sub titlu (vezi
+	# `Joc.unelte`). Tot aici, și tot o dată: un nod, pus într-un loc. Taverna
+	# nu se uită în el — azi sunt cele trei niveluri ale lui Sudoku, mâine
+	# poate fi altceva, iar rândul ăsta rămâne adevărat.
+	_goleste_uneltele()
+	var scule := joc.unelte()
+	if scule != null:
+		rand_unelte.add_child(scule)
+	# UNDE STĂ BUTONUL „i": în ANTET, lângă titlu, nu pe tăblia mesei.
 	#
-	# Și de-aia suprapunerea trebuie să aibă `mouse_filter = IGNORE` (pus în
-	# scenă): un `PanelContainer` întinde fiecare copil peste tot, deci
-	# suprapunerea acoperă masa ÎNTREAGĂ, iar ea e deasupra. Cu `PASS` — ce
-	# avea până pe 4 noiembrie 2026 — clicurile se opreau în ea: `PASS` nu
-	# înseamnă „lasă-l să treacă la ce e dedesubt", înseamnă „primește-l și
-	# trimite-l PĂRINTELUI". Nimic din masă n-a fost apăsabil cu mouse-ul: nici
-	# pătratele de Sudoku, nici tastatura de pe ecran a Cuvântului Ascuns. S-a
-	# văzut abia la a doua masă, fiindcă la prima mouse-ul avea un înlocuitor
-	# (tastatura adevărată) și nimeni nu-l încercase. Cu `IGNORE`, căutarea
-	# coboară în continuare la copiii suprapunerii, deci butonul „i" primește
-	# ce e al lui — numai pânza goală din jurul lui nu mai oprește nimic.
-	# Bătut de `verifica_taverna`, pe amândouă mesele.
-	zona_joc.move_child(suprapunere, -1)
+	# A stat o zi pe masă, într-o pânză (`Suprapunere`) întinsă peste tot
+	# chenarul, și argumentul era că e „o unealtă a jocului". Sudoku l-a dat de
+	# gol: butoanele de nivel ale mesei sunt chiar în colțul ei de sus-stânga,
+	# deci inelul cădea peste „Ușor". Colțul de sus-stânga al TĂBLIEI e al
+	# mesei; cel al PAGINII e al Tavernei, iar butonul se mută acolo unde nicio
+	# masă viitoare nu i-l poate lua.
+	#
+	# Odată cu el a plecat și pânza, cu tot cu greșeala pe care o purtase: un
+	# nod întins peste masă cu `mouse_filter = PASS` oprea fiecare clic („PASS"
+	# nu înseamnă „lasă-l la ce e dedesubt", înseamnă „primește-l și trimite-l
+	# PĂRINTELUI"), deci nici pătratele de Sudoku, nici tastatura Cuvântului
+	# Ascuns nu erau apăsabile. `IGNORE` o reparase; mutarea o scoate din
+	# existență. Secțiunea CLICURILE din `verifica_taverna` rămâne: ea bate
+	# drumul degetului, nu nodul care-l oprea.
 	# Tastatura adevărată: `_unhandled_key_input` al jocului primește tastele
 	# doar dacă nu le mănâncă altcineva înainte — iar un BUTON cu focus mănâncă
 	# Enter (pentru el, Enter înseamnă „apasă-mă"). Deci focusul se eliberează

@@ -40,6 +40,100 @@ devreme, dar restul rămâne placeholder. Bucla de luptă e în continuare cea v
 
 ---
 
+## ANTETUL ÎȘI IA UNELTELE (4 noiembrie 2026) — colțul tăbliei era disputat, rândul de sub titlu nu
+
+**De unde a pornit:** butonul „i" al Tavernei stătea în colțul de sus-stânga al
+mesei, iar Sudoku își pusese butoanele de nivel în același colț. Se suprapuneau.
+Patru lucruri cerute, toate despre ce se vede: butonul „i" mai sus și mai mic,
+butoanele de nivel aliniate cu subtitlul, pătratele mai mari, „✕"-ul fără inel.
+
+**Prima treabă a fost o CAPTURĂ.** Patru schimbări de înfățișare nu se fac pe
+măsurători, iar o unealtă de o rulare (ștearsă după) a fotografiat masa și
+panoul cu reguli. Două dintre cele patru s-au lămurit abia din poză.
+
+### Butonul „i" nu s-a micșorat, s-a MUTAT
+
+Argumentul vechi, scris cu o zi înainte, era că e „o unealtă a jocului, deci
+stă pe tăblia lui". Suna bine și era greșit într-un fel pe care doar a doua
+masă îl putea arăta: **colțul tăbliei e un loc disputat**, pe care fiecare masă
+nouă îl vrea pentru ce are ea de reglat. Colțul PAGINII nu e al nimănui — e al
+Tavernei. Deci butonul a trecut în antet, lângă titlu, la 26 × 26 px în loc de
+32 × 32.
+
+Odată cu el a plecat și `Suprapunere`, pânza care-l ținea — nodul care, cu
+`mouse_filter = PASS`, oprise o zi întreagă fiecare clic de pe masă. Nu mai e
+reparat, nu mai există. Secțiunea CLICURILE din verificare rămâne: ea bate
+drumul degetului, nu nodul care-l oprea.
+
+### `Joc.unelte()` — al treilea membru opțional al contractului
+
+Butoanele de nivel nu se puteau alinia cu subtitlul prin nicio potrivire de
+pixeli: subtitlul e al Tavernei și stă DEASUPRA tăbliei. Ori rămâneau unde
+erau, ori Taverna le dădea un loc.
+
+Deci un cârlig, de aceeași formă cu `reguli()`: masa întoarce un `Control` sau
+`null`, Taverna îl atârnă în capătul din stânga al rândului de sub titlu și nu
+se uită niciodată în el. Nu știe ce e un nivel, nu știe că sunt trei, nu știe ce
+se întâmplă când apeși. Promite un LOC, atât. Rândul de ajutor stă centrat pe
+tot rândul, iar uneltele plutesc peste capătul lui gol — exact așezarea
+titlului și a butoanelor din antet, verificată la fel.
+
+Trei lucruri care nu erau evidente:
+
+- **Nodul se construiește o dată, în `_ready`, și trăiește cât masa.** Cârligul
+  se cheamă o singură dată, la deschiderea mesei, dar Sudoku repornește de
+  câte ori apeși pe „Greu" — deci butoanele trebuie să-i supraviețuiască
+  partidei.
+- **Dacă nu-l ia nimeni, și-l pune masa pe tăblie.** Cu F6, fără Tavernă în
+  jur, masa trebuie să fie întreagă. Același tipar ca pornirea de unică
+  folosință din `_ready`.
+- **Un nod fără părinte nu moare odată cu cel care l-a făcut.** La prima
+  scriere, verificarea ieșea cu „6 resources still in use at exit": rândul
+  rămânea orfan când masa era îngropată. Acum `_exit_tree` îl îngroapă dacă
+  nu l-a luat nimeni.
+
+### Pătratele: 36 → 42 px, și plafonul măsurat
+
+Cerute cu „aproximativ 20%". 43 px (+19%) au dat un ecran de **679 px pe o
+pânză de 648** — nu încăpea. Ce a eliberat loc n-a fost nimic de conținut:
+rândul cu niveluri plecat în antet, separările dintre pătrate (6 → 4),
+marginile Tavernei (14 → 12), antetul (46 → 42), tastele de jos (34 → 30).
+**42 px e cel mai mare pătrat care încape**, cu 5 px de rezervă, și cifra e
+scrisă în cod cu motivul: dacă scade vreodată, acolo se vede de ce.
+
+### „✕" nu era desenat deloc
+
+În captură, butonul de închidere al panoului cu reguli era un **cerc gol**.
+U+2715 nu e în Cinzel, nu e în Alegreya și nu e în fontul implicit — pe Windows
+îl împrumuta tăcut de la sistem, iar în captură nici atât. **A cincea oară**,
+după `iconita_sabie.gd`, `lacat.gd`, `glifa_sah.gd` și bulele Lacătului, și
+prima dată când regula exista deja scrisă în CLAUDE.md.
+
+De ce a trecut nevăzut: `verifica_taverna` strânge caracterele din NODURILE
+MESELOR, iar „✕"-ul e al Tavernei. Azi e desenat (`scenes/taverna/inchide_x.gd`,
+două linii netezite), fără inel în jur — pe un buton care se vede o singură dată
+și nu se caută, conturul cerea mai multă atenție decât fapta lui. Iar
+verificarea strânge acum caracterele și din `unelte()`, fiindcă rândul cu
+niveluri nu mai e în arborele mesei: „Ușor" ar fi ieșit din socoteală.
+
+### Un verdict care nu verifica nimic
+
+Măsurătoarea „fraza de ajutor nu ajunge peste unelte" a trecut din prima,
+spunând „0 px de la mijloc". Eticheta are autowrap, deci minimul ei E zero:
+verdictul ar fi trecut pentru orice frază, oricât de lungă. Măsurat pe textul
+adevărat, cu fontul etichetei: 186 px de la mijloc, loc 350. Aceeași lecție ca
+la `_reducere` și ca la cele trei cazuri de mână din MARCAREA — **o măsurătoare
+care nu poate pica nu e o măsurătoare**.
+
+**Fișiere atinse:** `scenes/taverna/joc.gd` (cârligul `unelte()`),
+`scenes/taverna/taverna.gd` + `.tscn` (butonul „i" în antet, rândul de unelte,
+`Suprapunere` ștearsă), `scenes/taverna/inchide_x.gd` (nou),
+`scenes/taverna/sudoku/sudoku.gd` + `.tscn` (pătrate de 42, rândul de niveluri
+dat Tavernei, subtitlul fără „Fără cronometru"),
+`tools/verificari/verifica_taverna.gd` (**176 de verdicte**, de la 172).
+
+---
+
 ## SUDOKU (4 noiembrie 2026) — masa a doua, și unicitatea dovedită în două socoteli
 
 **Ce s-a adăugat:** a doua masă din Tavernă. Nouă pe nouă, trei niveluri pe
