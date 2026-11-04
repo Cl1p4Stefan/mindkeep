@@ -275,6 +275,7 @@ var _textura_deschis: Texture2D = null
 @onready var subtitlu: Label = %Subtitlu
 @onready var lista_indicii: VBoxContainer = %Indicii
 @onready var eticheta_incercari: Label = %Incercari
+@onready var bule_incercari: Control = %Bule
 @onready var buton: Button = %Deschide
 @onready var mesaj: Label = %Mesaj
 
@@ -378,6 +379,14 @@ func _imbraca() -> void:
 	_stil(subtitlu, MARIME_SUBTITLU, TEXT_SLAB)
 	_stil(mesaj, MARIME_MESAJ, TEXT)
 	_stil(eticheta_incercari, MARIME_SUBTITLU, TEXT_SLAB)
+
+	# Bulele își iau culorile din paleta scenei, ca orice alt element: nodul
+	# care le desenează nu știe nimic despre Lacăt. Plinele sunt alama roților
+	# (`LITERA`), ca să fie limpede că numără ceva ce încă ai; inelele goale
+	# sunt în cerneala slabă a etichetei de lângă.
+	bule_incercari.total = INCERCARI
+	bule_incercari.culoare_plina = LITERA
+	bule_incercari.culoare_goala = TEXT_SLAB
 
 	buton.add_theme_font_size_override("font_size", MARIME_MESAJ)
 	for stare in ["font_color", "font_hover_color", "font_pressed_color"]:
@@ -783,9 +792,12 @@ func _scrie_indiciile() -> void:
 		randuri_indicii.append(rand)
 
 
+## Bulele le DESENEAZĂ `bule_incercari.gd`, nu le scrie un font. Motivul lung e
+## în antetul fișierului ăluia; pe scurt: `●` și `○` lipsesc din toate trei
+## fonturile jocului, iar pe web nu există sistem de operare de la care să le
+## împrumuți.
 func _arata_incercarile() -> void:
-	var puncte := "●".repeat(incercari_ramase) + "○".repeat(INCERCARI - incercari_ramase)
-	eticheta_incercari.text = "Încercări:  %s" % puncte
+	bule_incercari.ramase = incercari_ramase
 
 
 # ─────────────────────────────────────────────────────────────

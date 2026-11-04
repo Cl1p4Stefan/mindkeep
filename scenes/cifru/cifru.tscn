@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://dnlsoywyt6bms"]
 
 [ext_resource type="Script" uid="uid://b5i40ugvda3td" path="res://scenes/cifru/cifru.gd" id="1_cifru"]
+[ext_resource type="Script" uid="uid://15cr56ttsgll" path="res://scenes/cifru/bule_incercari.gd" id="2_bule"]
 
 [node name="Cifru" type="Control" unique_id=2135648307]
 layout_mode = 3
@@ -99,9 +100,22 @@ layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 8
 
-[node name="Incercari" type="Label" parent="Interfata/Coloana" unique_id=1368666622]
+[node name="RandIncercari" type="HBoxContainer" parent="Interfata/Coloana" unique_id=1368666623]
+layout_mode = 2
+theme_override_constants/separation = 10
+mouse_filter = 2
+
+[node name="Incercari" type="Label" parent="Interfata/Coloana/RandIncercari" unique_id=1368666622]
 unique_name_in_owner = true
 layout_mode = 2
+text = "Încercări:"
+
+[node name="Bule" type="Control" parent="Interfata/Coloana/RandIncercari" unique_id=1368666624]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+script = ExtResource("2_bule")
 
 [node name="Deschide" type="Button" parent="Interfata/Coloana" unique_id=1125303953]
 unique_name_in_owner = true

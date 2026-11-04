@@ -98,13 +98,35 @@ const PRIMA_SAMANTA := 1000
 ## `INCERCARI_MAXIME`. Măsurat azi: 1,1% la nivelul 3, zero la celelalte.
 const REZERVA_ACCEPTATA := 2.0
 
+## Fonturile în care se scrie Lacătul. Cele două ale temei, plus cel implicit al
+## Godot — vezi secțiunea FONTURILE de mai jos.
+const CALE_CINZEL := "res://assets/fonturi/Cinzel.ttf"
+const CALE_ALEGREYA := "res://assets/fonturi/Alegreya.ttf"
+
+## Fișierele din care se strâng textele scenei. Se citesc ca TEXT, nu se
+## instanțiază scena: mesajele de la final („Lacătul cedează.", „Cifrul era
+## %s.") se scriu abia în clipa lor, deci o scenă pornită n-ar arăta decât ce e
+## pe ecran la început.
+const CALE_SCENA_COD := "res://scenes/cifru/cifru.gd"
+const CALE_SCENA_TSCN := "res://scenes/cifru/cifru.tscn"
+
+## Câte semințe pe nivel pentru strânsul caracterelor din indicii.
+##
+## Puține dinadins: secțiunea asta rulează ÎNAINTEA celor zece minute de
+## verificat unicitatea, iar o lipsă de glifă nu e un lucru rar — ori e în
+## șablonul unui tip de indiciu și iese din prima sămânță, ori nu e deloc.
+const SEMINTE_FONTURI := 10
+
 
 func _ready() -> void:
 	print("VERIFICAREA CIFRURILOR (Lacătul)")
 	print("Semințe: %d pe nivel, pornind de la %d. Limita de încercări: %d."
 		% [SEMINTE, PRIMA_SAMANTA, GeneratorCifru.INCERCARI_MAXIME])
 
-	var toate_bune := true
+	# Întâi fonturile: durează o clipă și, dacă pică, pică pe ceva ce se vede pe
+	# ecran. Zece minute de unicitate înaintea lor ar fi însemnat că afli despre
+	# un pătrat gol abia după ce te-ai ridicat de la masă.
+	var toate_bune := _fonturile()
 	for nivel in range(1, GeneratorCifru.NIVELURI.size() + 1):
 		toate_bune = _verifica(nivel) and toate_bune
 
@@ -113,6 +135,130 @@ func _ready() -> void:
 	print("VERDICT: %s" % [
 		"cifrurile ies bine" if toate_bune else "CEVA E STRICAT"])
 	get_tree().quit(0 if toate_bune else 1)
+
+
+# ─────────────────────────────────────────────────────────────
+# FONTURILE AU CARACTERELE
+#
+# Secțiunea asta s-a scris pe 4 noiembrie 2026, după un semn care a ieșit pe
+# itch.io și nicăieri altundeva: rândul încercărilor se vedea ca trei pătrate
+# goale în build-ul web și ca trei bule pe desktop.
+#
+# Motivul e cel care face verdictul ăsta necesar și nu paranoic. `●` (U+25CF)
+# și `○` (U+25CB) nu există în niciunul din cele trei fonturi ale jocului, deci
+# jocul nu le-a desenat NICIODATĂ. Pe Windows le împrumuta de la sistem —
+# `FontFile.allow_system_fallback` e aprins implicit și Godot cere semnul lipsă
+# sistemului de operare, în tăcere. Build-ul web n-are de unde să-l ceară.
+#
+# Adică: pe platforma pe care dezvolt, greșeala e INVIZIBILĂ. Nici editorul,
+# nici F6, nici restul verificărilor n-aveau cum s-o vadă, fiindcă toate rulează
+# acolo unde fallback-ul o acoperă. Singurul loc unde s-ar fi văzut e ecranul
+# jucătorului, după export.
+#
+# Regula exista deja la cinci discipline (Numere, Tipare, Spațial, Reținere,
+# Reflex) și a plecat din `ThemeDB.fallback_font.has_char(0x265F)` al glifelor.
+# Lacătul a fost scris înaintea ei, de-aia a scăpat.
+#
+# CE SE STRÂNGE: textele scenei, luate din fișiere ca TEXT, plus propozițiile
+# indiciilor și literele roților, trase din generator. Din cod se iau doar
+# șirurile dintre ghilimele, de pe liniile care nu sunt comentarii — altfel
+# proza comentariilor (care e românească și plină de „—", „„" și „”") ar fi
+# umplut raportul cu caractere care nu ajung niciodată pe ecran.
+# ─────────────────────────────────────────────────────────────
+
+func _fonturile() -> bool:
+	print("")
+	print("═══ FONTURILE AU CARACTERELE ═══")
+
+	var fonturi := {}
+	for cale in [CALE_CINZEL, CALE_ALEGREYA]:
+		if not ResourceLoader.exists(cale):
+			print("  ✘ fontul %s nu există" % cale.get_file())
+			return false
+		fonturi[cale.get_file()] = load(cale)
+	fonturi["implicit (Godot)"] = ThemeDB.fallback_font
+
+	var caractere := {}
+	_strange_din(caractere, _texte_din_cod(CALE_SCENA_COD))
+	_strange_din(caractere, _texte_din_scena(CALE_SCENA_TSCN))
+
+	# Indiciile și literele roților: tot ce scrie generatorul pe ecran.
+	for nivel in range(1, GeneratorCifru.NIVELURI.size() + 1):
+		for i in range(SEMINTE_FONTURI):
+			var puzzle: Dictionary = GeneratorCifru.genereaza(
+				nivel, PRIMA_SAMANTA + i)
+			for indiciu: Dictionary in puzzle["indicii"]:
+				_strange_din(caractere, [GeneratorCifru.text(indiciu)])
+		var spec: Dictionary = GeneratorCifru.specificatie(nivel)
+		for roata in range(int(spec["cifre"])):
+			_strange_din(caractere, [GeneratorCifru.litera(roata)])
+
+	var toate_bune := true
+	for nume in fonturi:
+		var font: Font = fonturi[nume]
+		var lipsa: Array = []
+		for ch in caractere:
+			var cod: int = String(ch).unicode_at(0)
+			# Sub 32 sunt spațiul și linia nouă: fonturile nu le declară, iar
+			# desenarea lor nu trece prin glife.
+			if cod < 32:
+				continue
+			if not font.has_char(cod):
+				lipsa.append("„%s” (U+%04X)" % [ch, cod])
+		if lipsa.is_empty():
+			print("  ✔ %-18s toate cele %d caractere" % [nume, caractere.size()])
+		else:
+			print("  ✘ %-18s îi lipsesc %d: %s" % [
+				nume, lipsa.size(), _primele(lipsa, 8)])
+			toate_bune = false
+
+	return toate_bune
+
+
+## Caracterele unui șir, puse într-o mulțime (un dicționar cu chei).
+func _strange_din(unde: Dictionary, texte: Array) -> void:
+	for text in texte:
+		for ch in String(text):
+			unde[ch] = true
+
+
+## Șirurile dintre ghilimele dintr-un fișier `.gd`, fără liniile de comentariu.
+##
+## Nu e un analizor de GDScript și nici nu trebuie să fie: scopul e să prindă
+## un semn pe care l-am lipit într-un literal, iar un literal e între ghilimele.
+## Ce scapă (un `"` într-un comentariu de la capătul unei linii de cod) aduce
+## cel mult caractere în plus de verificat, nu în minus.
+func _texte_din_cod(cale: String) -> Array:
+	var continut := FileAccess.get_file_as_string(cale)
+	if continut.is_empty():
+		push_error("Nu pot citi %s" % cale)
+		return []
+
+	var ghilimele := RegEx.create_from_string('"([^"\\n]*)"')
+	var gasite: Array = []
+	for linie in continut.split("\n"):
+		if linie.strip_edges().begins_with("#"):
+			continue
+		for potrivire in ghilimele.search_all(linie):
+			gasite.append(potrivire.get_string(1))
+	return gasite
+
+
+## Textele scrise în scenă (`text = "..."`), adică ce se vede înainte ca jocul
+## să scrie ceva.
+func _texte_din_scena(cale: String) -> Array:
+	var continut := FileAccess.get_file_as_string(cale)
+	if continut.is_empty():
+		push_error("Nu pot citi %s" % cale)
+		return []
+
+	var randuri := RegEx.create_from_string('^text = "(.*)"$')
+	var gasite: Array = []
+	for linie in continut.split("\n"):
+		var potrivire := randuri.search(linie)
+		if potrivire != null:
+			gasite.append(potrivire.get_string(1))
+	return gasite
 
 
 # ─────────────────────────────────────────────────────────────

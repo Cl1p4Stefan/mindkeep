@@ -1,6 +1,6 @@
 # MINDKEEP — Jurnal de progres
 
-*Ultima actualizare: 3 noiembrie 2026*
+*Ultima actualizare: 4 noiembrie 2026*
 *Atașează acest fișier la începutul fiecărei sesiuni noi, împreună cu `CLAUDE.md` și `docs/pitch-document.md`.*
 
 ---
@@ -37,6 +37,75 @@ buget, generare) rămâne acolo unde era.
 Am sărit peste ordinea recomandată la pasul 12 (artă): imaginile pentru rege,
 cavaler și pentru TOATE cele opt glife de pe butoanele de Obelisc au intrat mai
 devreme, dar restul rămâne placeholder. Bucla de luptă e în continuare cea validată, nu arta.
+
+---
+
+## BULELE DESENATE (4 noiembrie 2026) — trei pătrate goale, vizibile doar pe web
+
+**Semnul:** în build-ul de pe itch.io, rândul „Încercări:" din Lacăt arăta trei
+pătrate goale. Pe desktop, aceleași trei bule ca întotdeauna.
+
+**Cauza, măsurată:** rândul era
+`"●".repeat(ramase) + "○".repeat(pierdute)`. Întrebate cu `Font.has_char()`,
+toate trei fonturile jocului au răspuns **nu** la amândouă semnele:
+
+| font | `•` 2022 | `●` 25CF | `○` 25CB |
+|---|---|---|---|
+| implicit (Godot) | ✅ | ❌ | ❌ |
+| Cinzel | ✅ | ❌ | ❌ |
+| Alegreya | ✅ | ❌ | ❌ |
+
+Deci **jocul nu le-a desenat niciodată**. Pe Windows le împrumuta de la sistem:
+`FontFile.allow_system_fallback` e aprins implicit, iar când fontul n-are un
+semn Godot îl cere sistemului de operare și îl găsește în Segoe UI Symbol. În
+tăcere — nu există niciun avertisment. Browserul nu-i dă lui Godot fișiere de
+font din care să caute, deci pe web rămâne caseta goală.
+
+**Ce face lucrul ăsta mai rău decât un bug obișnuit:** pe platforma pe care
+dezvolt, greșeala e INVIZIBILĂ. Nici editorul, nici F6, nici una din cele 20 de
+verificări n-aveau cum s-o vadă — toate rulează acolo unde fallback-ul o
+acoperă. Singurul loc unde se vedea era ecranul jucătorului, după export.
+
+**Ce s-a scris:** `scenes/cifru/bule_incercari.gd`, un `Control` cu `_draw()`.
+Al patrulea caz din aceeași familie, după `iconita_sabie.gd`, `lacat.gd` și
+`glifa_sah.gd`: un semn de care depinde ecranul nu se lasă pe seama unui font.
+Rândul din scenă a devenit un `HBoxContainer` (eticheta `%Incercari`, acum cu
+textul scris în `.tscn`, plus `%Bule`), iar `_arata_incercarile()` s-a scurtat
+la o linie. Nodul nu știe nimic despre Lacăt: numărul de bule și cele două
+culori i le pune `_imbraca()` din paleta scenei, ca orice alt element.
+
+Desenul dă pe deasupra ceva ce un caracter nu putea da: deosebirea dintre
+„rămasă" și „pierdută" e acum de CULOARE și de UMPLERE (alama roților vs. un
+inel în cerneala slabă), nu de formă. Locul bulei cheltuite rămâne pe rând —
+altfel bulele s-ar deplasa la fiecare greșeală, iar „câte mai am" ar trebui
+numărat în loc de privit. Iar `_get_minimum_size()` face ca numărul de
+încercări să poată crește (un modificator „Lacăt cu 5 încercări") fără să se
+atingă nimic în scenă.
+
+**Regula a căpătat un verdict.** `verifica_cifru` avea tot ce trebuia despre
+unicitatea codului și nimic despre ce se desenează. Secțiunea nouă, FONTURILE
+AU CARACTERELE, cere toate caracterele ecranului în toate trei fonturile —
+aceeași regulă pe care o au Numere, Tipare, Spațial, Reținere și Reflex, și din
+care Lacătul lipsea fiindcă fusese scris înaintea ei. Rulează PRIMA, înaintea
+celor zece minute de unicitate: altfel ai fi aflat despre un pătrat gol după ce
+te ridicai de la masă.
+
+Textele se strâng din fișiere, ca TEXT, nu dintr-o scenă pornită: mesajele de
+final („Lacătul cedează.", „Cifrul era %s.") se scriu abia în clipa lor, deci o
+scenă instanțiată n-ar arăta decât ce e pe ecran la început. Din `cifru.gd` se
+iau doar șirurile dintre ghilimele de pe liniile care nu sunt comentarii —
+altfel proza comentariilor ar fi umplut raportul cu semne care nu ajung
+niciodată pe ecran. Plus propozițiile indiciilor și literele roților, trase din
+generator pe 10 semințe pe nivel: o glifă lipsă ori e în șablonul unui tip și
+iese din prima sămânță, ori nu e deloc.
+
+**Verdictul a fost probat prin sabotaj**, nu crezut pe cuvânt: cu un `●` lipit
+înapoi într-un mesaj, toate trei fonturile au picat, cu `„●” (U+25CF)` scris în
+raport. Scos, trec. Un verdict care n-a fost văzut căzând e o speranță.
+
+**Rămas deschis:** aceeași verificare lipsește de pe celelalte ecrane care nu
+sunt discipline — harta, meniul, Taverna, sumarul de expediție. Lacătul a ieșit
+la iveală fiindcă avea un semn exotic; celelalte n-au fost întrebate niciodată.
 
 ---
 
