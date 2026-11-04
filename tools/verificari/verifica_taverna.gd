@@ -37,6 +37,8 @@ extends Node
 
 const CUVANTUL := preload("res://scenes/taverna/cuvantul/cuvantul.gd")
 const SCENA_CUVANTUL := preload("res://scenes/taverna/cuvantul/cuvantul.tscn")
+const SUDOKU := preload("res://scenes/taverna/sudoku/sudoku.gd")
+const SCENA_SUDOKU := preload("res://scenes/taverna/sudoku/sudoku.tscn")
 const SCENA_TAVERNA := preload("res://scenes/taverna/taverna.tscn")
 const SCENA_MENIU := preload("res://scenes/meniu/meniu.tscn")
 const TAVERNA := preload("res://scenes/taverna/taverna.gd")
@@ -55,6 +57,17 @@ const PODEA_CUVINTE := 100
 ## Extragerea din hunspell dă ~13.000; podeaua e departe, dinadins, fiindcă ea
 ## apără împotriva unei extrageri STRICATE, nu a uneia sărace.
 const PODEA_ACCEPTATE := 5000
+
+## Câte grile se generează pe fiecare nivel de Sudoku. Puține, dinadins:
+## fiecare grilă cere ~80 de numărători de soluții la generare și una la
+## verificare, deci numărul ăsta e chiar durata secțiunii. Ce apără el nu e
+## varietatea (grilele sunt generate, deci nu se repetă), e GENERATORUL — o
+## scoatere care rupe unicitatea s-ar vedea de la prima grilă.
+const SEMINTE_SUDOKU := 5
+
+## Fonturile temei, pentru secțiunea CARACTERELE.
+const CALE_CINZEL := "res://assets/fonturi/Cinzel.ttf"
+const CALE_ALEGREYA := "res://assets/fonturi/Alegreya.ttf"
 
 ## Pânza jocului, din `project.godot` (valorile implicite ale lui Godot 4).
 const PANZA := Vector2(1152, 648)
@@ -90,6 +103,9 @@ func _ready() -> void:
 	tot_bun = await _partidele() and tot_bun
 	tot_bun = await _ecranele() and tot_bun
 	tot_bun = await _regulile() and tot_bun
+	tot_bun = await _sudoku() and tot_bun
+	tot_bun = await _clicurile() and tot_bun
+	tot_bun = await _caracterele() and tot_bun
 	_goleste_dosarul()
 
 	print("\n══ %s ══\n" % ("TOTUL E BUN" if tot_bun else "SUNT PROBLEME, vezi mai sus"))
@@ -576,26 +592,39 @@ func _ecranele() -> bool:
 	# iar al treilea verdict cere ca cele două numere să fie EGALE: un ecran
 	# care-și schimbă înălțimea la jumătatea unui joc se poate strica într-o
 	# stare și arăta bine în cealaltă.
-	taverna._deschide_masa(Mese.masa("cuvantul_ascuns"))
-	await get_tree().process_frame
-	await get_tree().process_frame
-	var cerut_joc := margini.get_combined_minimum_size()
-	print("         masa deschisă cere %d × %d px" % [cerut_joc.x, cerut_joc.y])
-	rezultat = _verdict(cerut_joc.y <= PANZA.y,
-		"Cuvântul Ascuns încape în înălțime (%d px, rezervă %d)"
-		% [cerut_joc.y, PANZA.y - cerut_joc.y]) and rezultat
+	# PE FIECARE MASĂ CARE SE POATE JUCA, nu doar pe prima: o masă nouă e un
+	# ecran nou, iar ecranul care a cerut secțiunea asta (loadout-ul) arăta
+	# bine până în ziua în care a primit un rând în plus.
+	for m in Mese.CATALOG:
+		if String(m["scena"]) == "":
+			continue
+		var nume_masa := String(m["nume"])
+		taverna._deschide_masa(m)
+		await get_tree().process_frame
+		await get_tree().process_frame
+		var cerut_joc := margini.get_combined_minimum_size()
+		print("         %s cere %d × %d px" % [nume_masa, cerut_joc.x, cerut_joc.y])
+		rezultat = _verdict(cerut_joc.y <= PANZA.y,
+			"%s încape în înălțime (%d px, rezervă %d)"
+			% [nume_masa, cerut_joc.y, PANZA.y - cerut_joc.y]) and rezultat
+		rezultat = _verdict(cerut_joc.x <= PANZA.x,
+			"%s încape în lățime (%d px, rezervă %d)"
+			% [nume_masa, cerut_joc.x, PANZA.x - cerut_joc.x]) and rezultat
 
-	taverna._pe_joc_terminat({"reusit": true, "rezumat": "COPAC, din 3 încercări."})
-	await get_tree().process_frame
-	await get_tree().process_frame
-	var cerut_final := margini.get_combined_minimum_size()
-	print("         după ce l-ai câștigat cere %d × %d px" % [cerut_final.x, cerut_final.y])
-	rezultat = _verdict(cerut_final.y <= PANZA.y,
-		"ecranul de după câștig încape în înălțime (%d px, rezervă %d)"
-		% [cerut_final.y, PANZA.y - cerut_final.y]) and rezultat
-	rezultat = _verdict(is_equal_approx(cerut_final.y, cerut_joc.y),
-		"câștigul nu schimbă înălțimea cerută (%d px înainte, %d după)"
-		% [cerut_joc.y, cerut_final.y]) and rezultat
+		taverna._pe_joc_terminat({"reusit": true, "rezumat": "Gata, din 3 încercări."})
+		await get_tree().process_frame
+		await get_tree().process_frame
+		var cerut_final := margini.get_combined_minimum_size()
+		print("         %s, după câștig, cere %d × %d px"
+			% [nume_masa, cerut_final.x, cerut_final.y])
+		rezultat = _verdict(cerut_final.y <= PANZA.y,
+			"%s: ecranul de după câștig încape (%d px, rezervă %d)"
+			% [nume_masa, cerut_final.y, PANZA.y - cerut_final.y]) and rezultat
+		rezultat = _verdict(is_equal_approx(cerut_final.y, cerut_joc.y),
+			"%s: câștigul nu schimbă înălțimea cerută (%d px înainte, %d după)"
+			% [nume_masa, cerut_joc.y, cerut_final.y]) and rezultat
+		taverna._arata_mesele()
+		await get_tree().process_frame
 
 	taverna.queue_free()
 
@@ -786,6 +815,737 @@ func _fondurile_din(nod: Node) -> Dictionary:
 	for copil in nod.get_children():
 		gasite.merge(_fondurile_din(copil))
 	return gasite
+
+
+## Cernelurile CELULELOR dintr-un arbore, ca texte: culoarea etichetei din
+## fiecare `PanelContainer`.
+##
+## Fratele lui `_fondurile_din`, și există fiindcă la Sudoku regula se vede în
+## CERNEALĂ, nu în fond: cifra dată, cea scrisă de tine și cea care se bate cu
+## alta au același pătrat și trei culori de cifră.
+##
+## Numai din celule, nu din orice etichetă: rândurile de TEXT ale panoului sunt
+## scrise cu cremul cifrelor date, deci căutate peste tot ar fi făcut verdictul
+## „regulile arată cifra dată" adevărat și într-un panou fără nicio celulă.
+func _cernelurile_celulelor_din(nod: Node) -> Dictionary:
+	var gasite := {}
+	if nod is PanelContainer and nod.get_child_count() > 0 and nod.get_child(0) is Label:
+		var eticheta: Label = nod.get_child(0)
+		gasite[eticheta.get_theme_color("font_color").to_html(false)] = true
+	for copil in nod.get_children():
+		gasite.merge(_cernelurile_celulelor_din(copil))
+	return gasite
+
+
+# ─────────────────────────────────────────────────────────────
+# 7. SUDOKU
+#
+# Masa a doua, și prima la care conținutul nu e scris nicăieri: o grilă se
+# GENEREAZĂ. Deci nu se poate citi înainte de joc, nici corectată — apărarea e
+# că se poate REZOLVA, iar secțiunea asta o rezolvă.
+#
+# DOUĂ SOCOTELI CARE TREBUIE SĂ CADĂ DE ACORD. Jocul își apără unicitatea cu un
+# rezolvitor pe biți, care alege de fiecare dată celula cea mai strâmtă și se
+# oprește la a doua soluție. Verificarea o apără cu al ei, scris din liste de
+# candidați și dicționare — aceeași idee, altă socoteală. Dacă numai una din
+# ele ar greși, grilele ar fi ambigue, iar jucătorul ar afla-o după un sfert de
+# oră de muncă bună.
+#
+# E judecata de la INTRUSUL din Tipare, unde generatorul își apără unicitatea cu
+# determinanți și verificarea cu mii de reguli încercate.
+# ─────────────────────────────────────────────────────────────
+
+func _sudoku() -> bool:
+	print("  SUDOKU — GENERATORUL (%d semințe pe nivel)" % SEMINTE_SUDOKU)
+	var rezultat := true
+	var medii: Array[float] = []
+
+	for nivel in SUDOKU.NIVELURI.size():
+		var nume := String(SUDOKU.NIVELURI[nivel]["nume"])
+		var tinta := int(SUDOKU.NIVELURI[nivel]["cifre_date"])
+		var forma_rea := 0
+		var cu_conflict := 0
+		var neunice := 0
+		var fara_raspuns := 0
+		var nerecunoscute := 0
+		var sub_tinta := 0
+		var total_date := 0
+
+		for s in range(1, SEMINTE_SUDOKU + 1):
+			var rng := RandomNumberGenerator.new()
+			rng.seed = nivel * 1000 + s
+			var date_grila: Array = SUDOKU.genereaza(nivel, rng)
+
+			# Forma: 81 de numere, fiecare între 0 și 9.
+			if date_grila.size() != SUDOKU.CELULE:
+				forma_rea += 1
+				continue
+			for v in date_grila:
+				if int(v) < 0 or int(v) > SUDOKU.LATURA:
+					forma_rea += 1
+					break
+
+			# Cifrele date nu se bat între ele. O grilă pornită stricată n-ar
+			# avea nicio soluție, iar jucătorul ar căuta-o la nesfârșit.
+			if not _fara_conflicte(date_grila):
+				cu_conflict += 1
+
+			var cate := _cate_pline(date_grila)
+			total_date += cate
+			if cate < tinta:
+				sub_tinta += 1
+
+			# UNICITATEA, numărată cu socoteala verificării.
+			if _numara_singur(date_grila.duplicate(), 2) != 1:
+				neunice += 1
+
+			# ȘI RĂSPUNSUL, găsit din nou: trebuie să fie o grilă plină validă,
+			# iar `e_gata` al jocului trebuie să fie de acord că e gata. Două
+			# drumuri către același adevăr — al meu zice „e validă", al lui
+			# „nicio cifră nu se bate cu alta".
+			var raspuns := _rezolva_singur(date_grila.duplicate())
+			if raspuns.is_empty() or not _e_valida_plina(raspuns):
+				fara_raspuns += 1
+			else:
+				var ca_int: Array[int] = []
+				ca_int.assign(raspuns)
+				if not SUDOKU.e_gata(ca_int):
+					nerecunoscute += 1
+
+		var medie := float(total_date) / float(SEMINTE_SUDOKU)
+		medii.append(medie)
+		print("         %s: țintă %d cifre date, măsurat %.1f în medie"
+			% [nume, tinta, medie])
+		rezultat = _verdict(forma_rea == 0,
+			"%s: toate grilele au %d celule cu cifre 0-%d"
+			% [nume, SUDOKU.CELULE, SUDOKU.LATURA]) and rezultat
+		rezultat = _verdict(cu_conflict == 0,
+			"%s: cifrele date nu se bat niciodată între ele" % nume) and rezultat
+		rezultat = _verdict(neunice == 0,
+			"%s: fiecare grilă are EXACT un răspuns (numărat de verificare)" % nume) and rezultat
+		rezultat = _verdict(fara_raspuns == 0,
+			"%s: răspunsul, găsit din nou, e o grilă plină validă" % nume) and rezultat
+		rezultat = _verdict(nerecunoscute == 0,
+			"%s: și `e_gata()` al jocului îl recunoaște ca încheiat" % nume) and rezultat
+		rezultat = _verdict(sub_tinta == 0,
+			"%s: nicio grilă nu coboară sub ținta de %d cifre date" % [nume, tinta]) and rezultat
+
+	# Nivelurile trebuie să fie niveluri: mai greu = mai puține cifre date.
+	# Ținta o spune în tabel; aici se măsoară că generatorul o atinge.
+	var scade := true
+	for i in range(1, medii.size()):
+		if medii[i] >= medii[i - 1]:
+			scade = false
+	rezultat = _verdict(scade,
+		"cifrele date scad de la un nivel la altul: %s" % [medii]) and rezultat
+
+	print("  SUDOKU — SĂMÂNȚA")
+	# Aceeași sămânță, același joc: promisiunea pe care Decretul Zilei o va
+	# cere (vezi antetul lui `joc.gd`). Bătută pe generator, unde se naște.
+	var a := RandomNumberGenerator.new()
+	a.seed = 4711
+	var b := RandomNumberGenerator.new()
+	b.seed = 4711
+	var c := RandomNumberGenerator.new()
+	c.seed = 4712
+	var g1: Array = SUDOKU.genereaza(1, a)
+	var g2: Array = SUDOKU.genereaza(1, b)
+	var g3: Array = SUDOKU.genereaza(1, c)
+	rezultat = _verdict(g1 == g2, "aceeași sămânță dă aceeași grilă") and rezultat
+	rezultat = _verdict(g1 != g3, "o altă sămânță dă altă grilă") and rezultat
+
+	print("  SUDOKU — REGULA")
+	# Un răspuns întreg e gata; același răspuns cu o celulă golită, nu; și cu o
+	# cifră dublată pe linie, nici atât — deși e PLIN. Al treilea caz e cel
+	# care contează: `e_gata` nu poate fi „sunt toate celulele pline?".
+	var plina: Array = _rezolva_singur(g1.duplicate())
+	var ca_int: Array[int] = []
+	ca_int.assign(plina)
+	rezultat = _verdict(SUDOKU.e_gata(ca_int), "o grilă plină validă e gata") and rezultat
+
+	var cu_gaura: Array[int] = []
+	cu_gaura.assign(plina)
+	cu_gaura[40] = 0
+	rezultat = _verdict(not SUDOKU.e_gata(cu_gaura),
+		"una cu o singură celulă goală nu e gata") and rezultat
+
+	var dublata: Array[int] = []
+	dublata.assign(plina)
+	# Prima celulă primește cifra vecinei de pe linie: grila rămâne PLINĂ și
+	# devine greșită.
+	dublata[0] = dublata[1]
+	rezultat = _verdict(not SUDOKU.e_gata(dublata),
+		"una plină, dar cu o cifră dublată pe linie, NU e gata") and rezultat
+	rezultat = _verdict(SUDOKU.se_bate(dublata, 0) and SUDOKU.se_bate(dublata, 1),
+		"și se bat AMÂNDOUĂ celulele, nu doar cea pusă ultima") and rezultat
+	rezultat = _verdict(not SUDOKU.se_bate(cu_gaura, 40),
+		"o celulă goală nu se bate cu nimic") and rezultat
+
+	# AMBIGUITATEA, construită dinadins: patru celule în dreptunghi, cu cifrele
+	# încrucișate, se pot umple în două feluri. Golite, grila are DOUĂ
+	# răspunsuri — proba pe dos că numărătoarea nu răspunde mereu „unul".
+	var patru := _dreptunghi_incrucisat(plina)
+	if patru.is_empty():
+		print("         (n-am găsit dreptunghi încrucișat în grila asta — sari)")
+	else:
+		var ambigua: Array[int] = []
+		ambigua.assign(plina)
+		for i in patru:
+			ambigua[i] = 0
+		rezultat = _verdict(_numara_singur(ambigua.duplicate(), 2) >= 2,
+			"o grilă cu patru celule încrucișate golite are DOUĂ răspunsuri") and rezultat
+		rezultat = _verdict(SUDOKU.numara_solutii(ambigua) >= 2,
+			"și socoteala jocului spune la fel") and rezultat
+
+	return await _sudoku_jucat() and rezultat
+
+
+## PARTIDA JUCATĂ CU SCENA ADEVĂRATĂ.
+##
+## Tot ce e mai sus e regulă, bătută fără ecran. Asta e singura probă că cele
+## două jumătăți se leagă: grila desenată, celula aleasă, tastele, numărătoarea
+## greșelilor și contractul `Joc`.
+func _sudoku_jucat() -> bool:
+	print("  SUDOKU — PARTIDA JUCATĂ")
+	var rezultat := true
+
+	var joc := SCENA_SUDOKU.instantiate()
+	add_child(joc)
+	joc.porneste(42)
+
+	rezultat = _verdict(joc.celule.size() == SUDOKU.CELULE,
+		"grila are %d celule desenate" % SUDOKU.CELULE) and rezultat
+	rezultat = _verdict(joc.taste.size() == SUDOKU.LATURA,
+		"rândul de jos are cele %d cifre" % SUDOKU.LATURA) and rezultat
+	rezultat = _verdict(joc.butoane_nivel.size() == SUDOKU.NIVELURI.size(),
+		"cele %d niveluri sunt pe tăblie" % SUDOKU.NIVELURI.size()) and rezultat
+	# Cu sămânță dată, nivelul vine din sămânță, nu din butonul apăsat ultima
+	# dată: Decretul Zilei promite „același joc", iar nivelul e parte din joc.
+	rezultat = _verdict(joc.nivel == 42 % SUDOKU.NIVELURI.size(),
+		"cu sămânța 42, nivelul e %d" % (42 % SUDOKU.NIVELURI.size())) and rezultat
+	rezultat = _verdict(joc.cate_date() == _cate_pline(joc.date),
+		"`cate_date()` numără chiar cifrele din grilă (%d)" % joc.cate_date()) and rezultat
+
+	# REGULILE MESEI, compuse din constante și ARĂTATE pe celule adevărate.
+	# La Cuvântul Ascuns regula se vede în FONDUL celulei; aici în CERNEALĂ —
+	# cifra dată, cea scrisă de tine și cea care se bate cu alta au același
+	# pătrat și trei culori de cifră. Deci se caută culorile de text.
+	var cuprins: Control = joc.reguli()
+	rezultat = _verdict(cuprins != null, "Sudoku își scrie regulile") and rezultat
+	if cuprins != null:
+		var scris := _textul_din(cuprins)
+		rezultat = _verdict(scris.contains(str(SUDOKU.LATURA))
+			and scris.contains(str(SUDOKU.LATURA_CUTIE)),
+			"regulile spun latura grilei (%d) și a pătratului (%d), din constante"
+			% [SUDOKU.LATURA, SUDOKU.LATURA_CUTIE]) and rezultat
+		var cerneli := _cernelurile_celulelor_din(cuprins)
+		for pereche in [["dată", SUDOKU.CULOARE_CIFRA_DATA],
+				["scrisă de tine", SUDOKU.CULOARE_CIFRA_SCRISA],
+				["care se bate", SUDOKU.CULOARE_CIFRA_CONFLICT]]:
+			rezultat = _verdict(cerneli.has((pereche[1] as Color).to_html(false)),
+				"regulile ARATĂ cifra „%s\", n-o numesc" % pereche[0]) and rezultat
+		cuprins.free()
+
+	# O CIFRĂ DATĂ nu se schimbă, și ecranul spune de ce.
+	var o_data := -1
+	var una_goala := -1
+	for i in SUDOKU.CELULE:
+		if joc.date[i] != 0 and o_data < 0:
+			o_data = i
+		if joc.date[i] == 0 and una_goala < 0:
+			una_goala = i
+	var era: int = joc.grila[o_data]
+	joc.alege(o_data)
+	joc._scrie_cifra(era % SUDOKU.LATURA + 1)
+	rezultat = _verdict(joc.grila[o_data] == era and joc.mesaj.text != "",
+		"o cifră dată nu se schimbă, și ecranul spune de ce: %s" % joc.mesaj.text) and rezultat
+	rezultat = _verdict(joc.greseli == 0,
+		"și nu se socotește ca greșeală") and rezultat
+
+	# O CIFRĂ CARE SE BATE: se numără, se vede chihlimbar, și se poate scoate.
+	var gresita := _cifra_care_se_bate(joc.grila, una_goala)
+	joc.alege(una_goala)
+	joc._scrie_cifra(gresita)
+	var eticheta: Label = joc.celule[una_goala].get_child(0)
+	rezultat = _verdict(joc.greseli == 1,
+		"o cifră care se bate cu alta se numără ca greșeală") and rezultat
+	rezultat = _verdict(eticheta.get_theme_color("font_color") == SUDOKU.CULOARE_CIFRA_CONFLICT,
+		"și se face chihlimbar pe ecran, nu roșie") and rezultat
+	joc._scrie_cifra(0)
+	rezultat = _verdict(joc.grila[una_goala] == 0,
+		"0 golește celula") and rezultat
+	rezultat = _verdict(joc.greseli == 1,
+		"greșeala rămâne numărată după ce ai scos cifra") and rezultat
+
+	# TASTATURA ADEVĂRATĂ și săgețile. Până aici am chemat funcțiile de-a
+	# dreptul; asta e singura probă că o tastă apăsată ajunge la ele.
+	joc.alege(una_goala)
+	var tasta := InputEventKey.new()
+	tasta.keycode = KEY_5
+	tasta.pressed = true
+	get_viewport().push_input(tasta)
+	await get_tree().process_frame
+	rezultat = _verdict(joc.grila[una_goala] == 5,
+		"tasta 5 scrie 5 în celula aleasă") and rezultat
+
+	var dreapta := InputEventKey.new()
+	dreapta.keycode = KEY_RIGHT
+	dreapta.pressed = true
+	get_viewport().push_input(dreapta)
+	await get_tree().process_frame
+	rezultat = _verdict(joc.aleasa == una_goala + 1 or una_goala % SUDOKU.LATURA == SUDOKU.LATURA - 1,
+		"săgeata mută alegerea cu o celulă") and rezultat
+	# Și nu iese din grilă: pe marginea din dreapta, săgeata nu face nimic.
+	joc.alege(SUDOKU.LATURA - 1)
+	joc.muta(0, 1)
+	rezultat = _verdict(joc.aleasa == SUDOKU.LATURA - 1,
+		"pe marginea din dreapta, săgeata nu scoate alegerea din grilă") and rezultat
+
+	# GRILA COMPLETATĂ. Răspunsul vine de la rezolvitorul VERIFICĂRII, deci
+	# partida se joacă din afara jocului, cu cifre pe care el nu le-a dat.
+	var raportat := []
+	joc.terminat.connect(func(rez): raportat.append(rez))
+	var raspuns := _rezolva_singur(joc.date.duplicate())
+	for i in SUDOKU.CELULE:
+		if joc.date[i] != 0:
+			continue
+		joc.alege(i)
+		joc._scrie_cifra(int(raspuns[i]))
+	rezultat = _verdict(raportat.size() == 1,
+		"grila completată încheie partida, o singură dată") and rezultat
+	if raportat.size() == 1:
+		rezultat = _verdict(bool(raportat[0]["reusit"]),
+			"și o încheie cu «reușit» — Sudoku nu se poate pierde") and rezultat
+		rezultat = _verdict(String(raportat[0]["rezumat"]) != "",
+			"cu o frază pentru jucător: %s" % raportat[0]["rezumat"]) and rezultat
+		rezultat = _verdict(String(raportat[0]["rezumat"]).contains("greșeal")
+			or String(raportat[0]["rezumat"]).contains("greșeli"),
+			"care spune câte greșeli ai făcut") and rezultat
+	# După final, tastele nu mai scriu: altfel o cifră apăsată peste rândul de
+	# rezultat ar fi strigat semnalul a doua oară.
+	var dupa: Array = joc.grila.duplicate()
+	joc._scrie_cifra(1)
+	rezultat = _verdict(joc.grila == dupa,
+		"după final, grila nu se mai schimbă") and rezultat
+	joc.queue_free()
+
+	# NIVELUL DE PE TĂBLIE repornește partida ȘI o spune (semnalul `pornita`).
+	# Fără semnal, rândul cu rezultatul partidei de dinainte ar fi rămas scris
+	# lângă o grilă abia începută — vezi `Joc.pornita`.
+	print("  SUDOKU — NIVELUL DE PE TĂBLIE")
+	var masa := SCENA_SUDOKU.instantiate()
+	add_child(masa)
+	var porniri := []
+	masa.pornita.connect(func(): porniri.append(true))
+	masa.porneste(Joc.SAMANTA_LIBERA)
+	rezultat = _verdict(porniri.size() == 1, "pornirea strigă `pornita`") and rezultat
+	var inainte: int = masa.nivel
+	var altul := (inainte + 1) % SUDOKU.NIVELURI.size()
+	masa.schimba_nivelul(altul)
+	rezultat = _verdict(masa.nivel == altul,
+		"un alt nivel schimbă grila (%d → %d)" % [inainte, altul]) and rezultat
+	rezultat = _verdict(porniri.size() == 2,
+		"și o nouă partidă e anunțată") and rezultat
+	rezultat = _verdict(masa.greseli == 0 and masa.aleasa == -1,
+		"partida nouă pornește curată") and rezultat
+	masa.queue_free()
+	await get_tree().process_frame
+
+	# ȘI ÎN TAVERNĂ: rândul cu rezultatul se închide când masa repornește.
+	var taverna := SCENA_TAVERNA.instantiate()
+	add_child(taverna)
+	taverna.set_deferred("size", PANZA)
+	await get_tree().process_frame
+	taverna._deschide_masa(Mese.masa("sudoku"))
+	await get_tree().process_frame
+	taverna._pe_joc_terminat({"reusit": true, "rezumat": "Gata! Grila mediu."})
+	await get_tree().process_frame
+	var vazut_rezultatul: bool = taverna.rezultat.visible
+	taverna.joc.schimba_nivelul(0)
+	await get_tree().process_frame
+	rezultat = _verdict(vazut_rezultatul and not taverna.rezultat.visible,
+		"în Tavernă, un nivel nou închide rândul partidei de dinainte") and rezultat
+
+	# Și fraza de pe rând e a MESEI, întreagă: niciun prefix pus de Tavernă.
+	taverna._pe_joc_terminat({"reusit": true, "rezumat": "Gata! Grila mediu."})
+	await get_tree().process_frame
+	rezultat = _verdict(taverna.rezultat.text == "Gata! Grila mediu.",
+		"rândul de rezultat poartă fraza mesei, neîmpodobită: %s"
+		% taverna.rezultat.text) and rezultat
+
+	taverna.queue_free()
+	await get_tree().process_frame
+	await get_tree().process_frame
+	return rezultat
+
+
+# ─────────────────────────────────────────────────────────────
+# 9. CLICURILE, PE PÂNZA ADEVĂRATĂ
+#
+# Tot restul verificării cheamă funcțiile de-a dreptul (`alege`, `_scrie_cifra`,
+# `_scrie_litera`), deci nu spune nimic despre drumul pe care-l merge un deget:
+# evenimentul intră în `Viewport`, care caută singur ce `Control` e sub el și-i
+# trimite `gui_input`. Un filtru de mouse strâmb, un nod care acoperă masa, o
+# celulă care nu primește evenimente — **niciuna din cele trei nu se vede
+# chemând funcții**, și toate trei fac masa de nejucat cu mouse-ul.
+#
+# Secțiunea există fiindcă exact asta se întâmplase, de la prima masă încoace:
+# `Suprapunere`, pânza care ține butonul „i", e întinsă de `PanelContainer`
+# peste TOATĂ masa și sta pe `mouse_filter = PASS`. `PASS` nu înseamnă „lasă-l
+# să treacă la ce e dedesubt", înseamnă „primește-l și trimite-l PĂRINTELUI" —
+# deci nimic din masă nu era apăsabil: nici pătratele de Sudoku, nici tastatura
+# de pe ecran a Cuvântului Ascuns. La prima masă nu s-a văzut fiindcă mouse-ul
+# avea un înlocuitor (tastatura adevărată) și nimeni nu-l încercase.
+#
+# Aceeași judecată, scrisă la `push_input` din secțiunea Cuvântului Ascuns:
+# „asta e singura probă că o tastă apăsată ajunge la ele".
+# ─────────────────────────────────────────────────────────────
+
+func _clicurile() -> bool:
+	print("  CLICURILE")
+	var rezultat := true
+
+	var taverna := SCENA_TAVERNA.instantiate()
+	add_child(taverna)
+	taverna.set_deferred("size", PANZA)
+	await get_tree().process_frame
+	await get_tree().process_frame
+
+	# a) SUDOKU: un clic pe un pătrat îl alege, iar cifra tastată intră în el.
+	taverna._deschide_masa(Mese.masa("sudoku"))
+	taverna._inchide_regulile()
+	await get_tree().process_frame
+	await get_tree().process_frame
+	var masa = taverna.joc
+	var goala := -1
+	for i in SUDOKU.CELULE:
+		if masa.date[i] == 0:
+			goala = i
+			break
+	masa.aleasa = -1
+	await _clic_pe(masa.celule[goala])
+	rezultat = _verdict(masa.aleasa == goala,
+		"un CLIC pe un pătrat de Sudoku îl alege (celula %d, aleasă %d)"
+		% [goala, masa.aleasa]) and rezultat
+
+	# O celulă aleasă în care nu poți scrie nu e aleasă, e doar luminată.
+	var cifra := InputEventKey.new()
+	cifra.keycode = KEY_7
+	cifra.pressed = true
+	get_viewport().push_input(cifra)
+	await get_tree().process_frame
+	rezultat = _verdict(masa.grila[goala] == 7,
+		"și cifra tastată după clic intră în pătratul ales (e %d)"
+		% masa.grila[goala]) and rezultat
+
+	# Și tasta de pe ecran, nu doar cea de sub degete.
+	await _clic_pe(masa.taste[3])
+	rezultat = _verdict(masa.grila[goala] == 3,
+		"un clic pe cifra 3 din rândul de jos o scrie (e %d)"
+		% masa.grila[goala]) and rezultat
+
+	# b) BUTONUL „i" tot primește clicuri: suprapunerea nu mai oprește nimic,
+	#    dar căutarea trebuie să coboare în continuare la copiii ei.
+	rezultat = _verdict(not taverna.panou_reguli.visible,
+		"panoul cu reguli e închis înainte de clic") and rezultat
+	await _clic_pe(taverna.buton_reguli)
+	rezultat = _verdict(taverna.panou_reguli.visible,
+		"un clic pe „i\" deschide regulile") and rezultat
+	taverna._inchide_regulile()
+	await get_tree().process_frame
+
+	# c) CUVÂNTUL ASCUNS: tastatura de pe ecran. Jumătatea veche a greșelii —
+	#    masa aia se putea juca de la tastatură, deci clicurile ei moarte au
+	#    stat nevăzute o zi întreagă.
+	taverna._arata_mesele()
+	await get_tree().process_frame
+	taverna._deschide_masa(Mese.masa("cuvantul_ascuns"))
+	taverna._inchide_regulile()
+	await get_tree().process_frame
+	await get_tree().process_frame
+	var cuvantul = taverna.joc
+	var inainte: String = cuvantul.rand_curent
+	await _clic_pe(cuvantul.taste["a"])
+	rezultat = _verdict(cuvantul.rand_curent == inainte + "a",
+		"un clic pe litera A din tastatura de pe ecran o scrie (rândul: „%s\")"
+		% cuvantul.rand_curent) and rezultat
+
+	taverna.queue_free()
+	await get_tree().process_frame
+	await get_tree().process_frame
+	return rezultat
+
+
+## Un clic adevărat, în mijlocul unui `Control`: apăsat și ridicat, prin
+## `Viewport`, care caută singur ce e sub el.
+##
+## `push_input(clic, true)` — al doilea parametru e `in_local_coords`, și FĂRĂ
+## el toate verdictele secțiunii pică, inclusiv cele care n-au nimic stricat în
+## spate. Pe `false` (implicitul), Godot mai trece poziția prin transformarea
+## finală a ferestrei, deci clicul ajunge în altă parte; coordonatele luate din
+## `get_global_rect()` sunt deja ÎN viewport, așa că se dau ca atare.
+##
+## Scris aici fiindcă prima scriere a secțiunii a greșit-o, iar greșeala ARATĂ
+## exact ca bug-ul pe care secțiunea îl caută: nimic nu răspunde la clic. Cele
+## două s-au despărțit punând filtrul stricat înapoi pentru o rulare — cu
+## coordonatele bune, butonul „i" răspundea și restul mesei nu, adică chiar
+## tiparul „o pânză deasupra oprește tot, în afară de copiii ei".
+func _clic_pe(nod: Control) -> void:
+	var mijloc := nod.get_global_rect().get_center()
+	for apasata in [true, false]:
+		var clic := InputEventMouseButton.new()
+		clic.button_index = MOUSE_BUTTON_LEFT
+		clic.pressed = apasata
+		clic.position = mijloc
+		clic.global_position = mijloc
+		get_viewport().push_input(clic, true)
+	await get_tree().process_frame
+
+
+# ─────────────────────────────────────────────────────────────
+# REZOLVITORUL VERIFICĂRII — A DOUA SOCOTEALĂ
+#
+# Scris din liste de candidați și dicționare, nu din biți: aceeași idee (ia de
+# fiecare dată celula cu cele mai puține variante), altă socoteală. Dacă cele
+# două ar fi fost una, „grila are un singur răspuns" n-ar fi fost o verificare,
+# ar fi fost o oglindă.
+#
+# Ăsta e și singurul loc din verificare care REZOLVĂ o grilă — iar răspunsul
+# găsit aici e cel cu care se joacă partida de mai sus, cap-coadă.
+# ─────────────────────────────────────────────────────────────
+
+func _linia(i: int) -> int:
+	@warning_ignore("integer_division")
+	return i / SUDOKU.LATURA
+
+
+## Cifrele care mai pot intra în celula `i`.
+func _candidati(g: Array, i: int) -> Array[int]:
+	var luate := {}
+	var r := _linia(i)
+	var c := i % SUDOKU.LATURA
+	for k in SUDOKU.LATURA:
+		luate[int(g[r * SUDOKU.LATURA + k])] = true
+		luate[int(g[k * SUDOKU.LATURA + c])] = true
+	var r0 := r - r % SUDOKU.LATURA_CUTIE
+	var c0 := c - c % SUDOKU.LATURA_CUTIE
+	for dr in SUDOKU.LATURA_CUTIE:
+		for dc in SUDOKU.LATURA_CUTIE:
+			luate[int(g[(r0 + dr) * SUDOKU.LATURA + c0 + dc])] = true
+	var pot: Array[int] = []
+	for v in range(1, SUDOKU.LATURA + 1):
+		if not luate.has(v):
+			pot.append(v)
+	return pot
+
+
+## Celula cea mai strâmtă: `[index, candidați]`, sau `[-1, []]` dacă grila e
+## plină.
+func _cea_mai_stramta(g: Array) -> Array:
+	var cel := -1
+	var lista: Array[int] = []
+	for i in SUDOKU.CELULE:
+		if int(g[i]) != 0:
+			continue
+		var pot := _candidati(g, i)
+		if cel == -1 or pot.size() < lista.size():
+			cel = i
+			lista = pot
+			if pot.size() <= 1:
+				break
+	return [cel, lista]
+
+
+## Câte răspunsuri are grila, numărate până la `plafon`.
+func _numara_singur(g: Array, plafon: int) -> int:
+	var ales := _cea_mai_stramta(g)
+	var cel: int = ales[0]
+	if cel == -1:
+		return 1
+	var total := 0
+	for v in ales[1]:
+		g[cel] = v
+		total += _numara_singur(g, plafon - total)
+		g[cel] = 0
+		if total >= plafon:
+			return total
+	return total
+
+
+## Un răspuns al grilei, sau o listă goală.
+func _rezolva_singur(g: Array) -> Array:
+	var ales := _cea_mai_stramta(g)
+	var cel: int = ales[0]
+	if cel == -1:
+		return g
+	for v in ales[1]:
+		g[cel] = v
+		var gata := _rezolva_singur(g)
+		if not gata.is_empty():
+			return gata
+		g[cel] = 0
+	return []
+
+
+## E grila plină o grilă validă? Scris ca o AFIRMAȚIE DESPRE SUDOKU („fiecare
+## linie, coloană și pătrat au toate cele nouă cifre"), nu ca negarea
+## conflictelor — altfel ar fi fost `e_gata()` al jocului, scris de două ori.
+func _e_valida_plina(g: Array) -> bool:
+	for k in SUDOKU.LATURA:
+		var pe_linie := {}
+		var pe_coloana := {}
+		for j in SUDOKU.LATURA:
+			pe_linie[int(g[k * SUDOKU.LATURA + j])] = true
+			pe_coloana[int(g[j * SUDOKU.LATURA + k])] = true
+		if pe_linie.size() != SUDOKU.LATURA or pe_coloana.size() != SUDOKU.LATURA:
+			return false
+		if pe_linie.has(0) or pe_coloana.has(0):
+			return false
+	for cutie in SUDOKU.LATURA:
+		@warning_ignore("integer_division")
+		var r0 := (cutie / SUDOKU.LATURA_CUTIE) * SUDOKU.LATURA_CUTIE
+		var c0 := (cutie % SUDOKU.LATURA_CUTIE) * SUDOKU.LATURA_CUTIE
+		var in_cutie := {}
+		for dr in SUDOKU.LATURA_CUTIE:
+			for dc in SUDOKU.LATURA_CUTIE:
+				in_cutie[int(g[(r0 + dr) * SUDOKU.LATURA + c0 + dc])] = true
+		if in_cutie.size() != SUDOKU.LATURA or in_cutie.has(0):
+			return false
+	return true
+
+
+## Nu se bate nicio cifră cu alta? (Grila poate avea goluri.)
+func _fara_conflicte(g: Array) -> bool:
+	for i in SUDOKU.CELULE:
+		if int(g[i]) == 0:
+			continue
+		# Se scoate cifra și se întreabă dacă mai poate intra: dacă nu mai
+		# poate, altcineva de pe linia, coloana sau din pătratul ei o are deja.
+		var lucru := g.duplicate()
+		var v_ei := int(g[i])
+		lucru[i] = 0
+		if not _candidati(lucru, i).has(v_ei):
+			return false
+	return true
+
+
+func _cate_pline(g: Array) -> int:
+	var cate := 0
+	for v in g:
+		if int(v) != 0:
+			cate += 1
+	return cate
+
+
+## Patru celule în dreptunghi, cu cifrele încrucișate: două linii din ACEEAȘI
+## bandă, două coloane din stive diferite, și cifrele în cruce. Golite, se pot
+## umple în două feluri, deci grila are două răspunsuri.
+##
+## „Aceeași bandă" nu e un amănunt, e tot ce face tiparul să țină, și prima
+## scriere a greșit-o: cu liniile din benzi DIFERITE, cele patru celule cad în
+## patru pătrate, iar schimbarea cifrelor între ele strică pătratele — grila
+## rămâne cu un singur răspuns, și verificarea a spus-o. Așa, cele patru celule
+## cad în DOUĂ pătrate, fiecare cu amândouă cifrele, deci schimbarea nu încalcă
+## nimic: nici linie, nici coloană, nici pătrat.
+func _dreptunghi_incrucisat(g: Array) -> Array[int]:
+	var lat: int = SUDOKU.LATURA
+	var cut: int = SUDOKU.LATURA_CUTIE
+	for r1 in lat:
+		for r2 in range(r1 + 1, lat):
+			if r1 - r1 % cut != r2 - r2 % cut:
+				continue
+			for c1 in lat:
+				for c2 in range(c1 + 1, lat):
+					if c1 - c1 % cut == c2 - c2 % cut:
+						continue
+					if int(g[r1 * lat + c1]) == int(g[r2 * lat + c2]) \
+						and int(g[r1 * lat + c2]) == int(g[r2 * lat + c1]):
+						var patru: Array[int] = [
+							r1 * lat + c1, r1 * lat + c2,
+							r2 * lat + c1, r2 * lat + c2,
+						]
+						return patru
+	var gol: Array[int] = []
+	return gol
+
+
+## O cifră care se bate sigur cu ceva, pentru celula goală `i`. Dacă n-ar
+## exista niciuna (celulă cu toate cele nouă variante libere), se întoarce 0 și
+## verdictul de deasupra o spune.
+func _cifra_care_se_bate(g: Array, i: int) -> int:
+	var pot := _candidati(g, i)
+	for v in range(1, SUDOKU.LATURA + 1):
+		if not pot.has(v):
+			return v
+	return 0
+
+
+# ─────────────────────────────────────────────────────────────
+# 8. CARACTERELE MESELOR
+#
+# Regula din sesiunea BULELE DESENATE (4 noiembrie 2026): un semn pe care
+# fonturile jocului nu-l au se desenează, pe Windows, cu un semn împrumutat de
+# la sistem — tăcut — iar în browser ca un pătrat gol. Adică greșeala e
+# INVIZIBILĂ pe platforma pe care dezvolt și se vede doar pe ecranul
+# jucătorului.
+#
+# Acolo scria, la „a rămas deschis": harta, meniul, TAVERNA și sumarul n-au
+# fost întrebate niciodată. Taverna se întreabă de azi, pe toate mesele.
+# ─────────────────────────────────────────────────────────────
+
+func _caracterele() -> bool:
+	print("  CARACTERELE MESELOR")
+	var rezultat := true
+
+	var fonturi := {}
+	for cale in [CALE_CINZEL, CALE_ALEGREYA]:
+		if not ResourceLoader.exists(cale):
+			rezultat = _verdict(false, "fontul %s există" % cale.get_file()) and rezultat
+			continue
+		fonturi[cale.get_file()] = load(cale)
+	fonturi["implicit"] = ThemeDB.fallback_font
+
+	# Tot ce scrie pe ecranul fiecărei mese: celulele, tastele, rândul de
+	# ajutor și panoul cu reguli. Strâns din NODURI, nu dintr-o listă de
+	# texte scrisă de mână — una scrisă de mână ar fi rămas în urmă.
+	var caractere := {}
+	for m in Mese.CATALOG:
+		var cale := String(m["scena"])
+		if cale == "":
+			continue
+		var masa = (load(cale) as PackedScene).instantiate()
+		add_child(masa)
+		masa.porneste(99)
+		await get_tree().process_frame
+		for ch in _textul_din(masa):
+			caractere[ch] = true
+		for ch in masa.rand_de_ajutor():
+			caractere[ch] = true
+		var cuprins: Control = masa.reguli()
+		if cuprins != null:
+			for ch in _textul_din(cuprins):
+				caractere[ch] = true
+			cuprins.free()
+		for ch in String(m["nume"]) + String(m["rol"]):
+			caractere[ch] = true
+		masa.queue_free()
+		await get_tree().process_frame
+
+	for nume in fonturi:
+		var font: Font = fonturi[nume]
+		var lipsa: Array[String] = []
+		for ch in caractere:
+			var cod: int = String(ch).unicode_at(0)
+			# Sub 32 sunt spațiul și linia nouă: fonturile nu le declară, iar
+			# desenarea lor nu trece prin glife.
+			if cod < 32:
+				continue
+			if not font.has_char(cod):
+				lipsa.append("„%s” (U+%04X)" % [ch, cod])
+		rezultat = _verdict(lipsa.is_empty(),
+			"%s are toate caracterele meselor%s" % [nume, _exemple(lipsa)]) and rezultat
+
+	return rezultat
 
 
 # ─────────────────────────────────────────────────────────────

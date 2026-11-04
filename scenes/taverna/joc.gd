@@ -87,6 +87,21 @@ const SAMANTA_LIBERA := 0
 ## mesele deodată.
 signal terminat(rezultat: Dictionary)
 
+## O partidă nouă începe aici.
+##
+## Strigat de `porneste()`, deci și de pornirea pe care o face Taverna. Pare de
+## prisos pentru ea — ea tocmai a cerut pornirea — și totuși nu e: o masă se
+## poate reporni SINGURĂ. Sudoku o face, fiindcă nivelurile lui stau pe tăblie
+## (trei butoane), iar o grilă nu se poate rescala.
+##
+## Fără semnalul ăsta, un clic pe „Greu" ar fi lăsat rândul cu rezultatul
+## partidei de dinainte („Gata! Grila mediu…", în verde) scris lângă o grilă
+## abia începută. Taverna nu se poate uita în masă ca să afle; masa îi spune.
+##
+## N-are nicio cheie: „a început" nu are ce să poarte. Ce e de spus despre o
+## partidă se spune la final, în `terminat`.
+signal pornita()
+
 ## A chemat cineva `porneste()`?
 ##
 ## Există pentru un singur lucru: ca o masă să se poată juca singură cu F6.
@@ -121,6 +136,7 @@ func porneste(cu_samanta := SAMANTA_LIBERA) -> void:
 	samanta = cu_samanta
 	pornit = true
 	terminat_deja = false
+	pornita.emit()
 	_porneste(cu_samanta)
 
 

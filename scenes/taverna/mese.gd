@@ -50,9 +50,10 @@ extends RefCounted
 ## jocului care urmează, iar pentru mine (singurul jucător, deocamdată) e și
 ## lista de lucru, la vedere, în joc.
 ##
-## Cele două stinse de azi nu sunt puse ca să umple ecranul: Sudoku e scris în
-## pitch de la prima pagină, iar Decretul Zilei e tot de acolo („un puzzle
-## rotativ la 24h, gen Wordle") și e chiar motivul pentru care `porneste()` din
+## Cele stinse nu sunt puse ca să umple ecranul, și una din ele s-a aprins deja:
+## Sudoku era scris în pitch de la prima pagină și e masa a doua, de pe 4
+## noiembrie 2026. A rămas Decretul Zilei, tot de acolo („un puzzle rotativ la
+## 24h, gen Wordle"), și el e chiar motivul pentru care `porneste()` din
 ## `joc.gd` primește o sămânță.
 const CATALOG: Array[Dictionary] = [
 	{
@@ -65,7 +66,7 @@ const CATALOG: Array[Dictionary] = [
 		"cheie": "sudoku",
 		"nume": "SUDOKU",
 		"rol": "Nouă pe nouă, fără nicio repetiție. Răbdare și constrângeri urmărite deodată.",
-		"scena": "",
+		"scena": "res://scenes/taverna/sudoku/sudoku.tscn",
 	},
 	{
 		"cheie": "decretul_zilei",

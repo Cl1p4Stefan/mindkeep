@@ -201,7 +201,7 @@ theme_override_styles/panel = SubResource("StyleBoxEmpty_fara_chenar")
 [node name="Suprapunere" type="Control" parent="Margini/Coloana/PanouJoc/ZonaJoc"]
 unique_name_in_owner = true
 layout_mode = 2
-mouse_filter = 1
+mouse_filter = 2
 
 [node name="ButonReguli" type="Button" parent="Margini/Coloana/PanouJoc/ZonaJoc/Suprapunere"]
 unique_name_in_owner = true

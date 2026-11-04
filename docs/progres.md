@@ -40,6 +40,259 @@ devreme, dar restul rămâne placeholder. Bucla de luptă e în continuare cea v
 
 ---
 
+## SUDOKU (4 noiembrie 2026) — masa a doua, și unicitatea dovedită în două socoteli
+
+**Ce s-a adăugat:** a doua masă din Tavernă. Nouă pe nouă, trei niveluri pe
+tăblie, cifrele 1-9 o singură dată pe linie, pe coloană și în fiecare pătrat.
+Era rândul stins din `mese.gd` scris acum o zi; de azi are o scenă.
+
+**Fișiere noi:** `scenes/taverna/sudoku/sudoku.gd` (~620 de linii, din care
+jumătate antet și comentarii) și `sudoku.tscn`.
+
+### De ce era a doua, și de ce a costat o sesiune
+
+Cuvântul Ascuns a fost prima masă fiindcă era cea mai ieftină: o listă de
+cuvinte, o grilă, o tastatură. Sudoku e scump exact acolo unde aceea era
+ieftină — **conținutul nu se scrie, se generează**, iar o grilă generată nu e
+bună până nu i se dovedește că are UN SINGUR răspuns. Dovada cere un
+rezolvitor, adică mașinăria Lacătului: un puzzle nu se crede pe cuvânt, se
+rezolvă.
+
+Generatorul face trei lucruri, în ordinea asta:
+
+1. **O grilă plină**, prin backtracking cu cifrele luate în ordine amestecată.
+   Ordinea amestecată E generatorul: cu cifrele luate mereu de la 1 în sus,
+   backtracking-ul ar fi dat aceeași grilă de fiecare dată.
+2. **Scoate cifre**, una câte una, în ordine amestecată.
+3. **După fiecare scoatere, numără soluțiile.** Dacă ies două, cifra se pune
+   înapoi.
+
+Deci grila dată jucătorului nu „probabil" are un singur răspuns: are, fiindcă
+nu s-a scos nicio cifră care să-l dubleze.
+
+Numărătoarea se oprește la DOUĂ — „câte sunt" nu interesează pe nimeni, „mai e
+vreuna pe lângă asta" interesează — și alege de fiecare dată celula cu cele mai
+puține cifre posibile. Fără alegerea aia, numărătoarea ar fi pornit de la prima
+celulă goală și ar fi încercat nouă ramuri acolo unde una singură era cu
+putință: scoaterea celor ~55 de cifre ar fi durat minute, nu clipe. Măsurat:
+cele 15 grile ale verificării, plus tot restul ei, ies în **20 de secunde**.
+
+### Ce DOVEDEȘTE finalul, și de ce nu se compară cu nimic
+
+O grilă plină în care nicio cifră nu se bate cu alta are pe fiecare linie, pe
+fiecare coloană și în fiecare pătrat nouă cifre deosebite — adică **E** un
+răspuns. Iar răspunsul e unic, fiindcă generatorul l-a apărat. Deci `e_gata()`
+nu compară nimic cu soluția generată: comparația ar fi fost un al doilea
+adevăr, care se poate contrazice cu primul. Unicitatea nu e doar o promisiune
+făcută jucătorului, e și ce face finalul ieftin.
+
+### Nivelurile stau pe TĂBLIE, nu în catalog
+
+`joc.gd` scria, înainte să existe masa asta: „dacă o masă vrea totuși
+dificultăți (Sudoku le va vrea), aia intră ca sămânță sau ca rând în catalog,
+nu ca parametru al tuturor". Trei rânduri în catalog ar fi fost cinstit, și a
+căzut dintr-un motiv **măsurat**: a patra masă nu mai încape pe un rând (vezi
+`LATIME_MASA` din `taverna.gd`), deci trei Sudoku-uri ar fi cerut grila de două
+coloane înainte ca Decretul Zilei să existe. Și ar fi fost trei mese cu
+aceleași reguli, deci trei „prime dăți".
+
+Deci nivelul e o alegere de pe masă: trei butoane peste grilă (Ușor 40 de cifre
+date, Mediu 32, Greu 26). Ținut `static`, ca `_nivel_atins` din Practice, fiindcă
+masa se naște din nou la fiecare „Încă unul" — o variabilă de instanță ar fi
+făcut alegerea să țină o singură grilă.
+
+**Cu sămânță dată, nivelul îl hotărăște sămânța, nu butonul.** Decretul Zilei
+promite „același joc toată ziua", iar nivelul e parte din joc; altfel doi
+jucători ar fi primit „decretul de azi" în două dificultăți.
+
+**Ținta e un ȚEL, nu o promisiune.** Scoaterea se poate înfunda — la un moment
+dat orice cifră scoasă face grila ambiguă — și atunci rămân câteva cifre mai
+multe. De-aia verificarea MĂSOARĂ câte au rămas în loc să ceară un număr exact.
+Măsurat pe 5 semințe pe nivel: 40,0 · 32,0 · 26,0, adică ținta se atinge de
+fiecare dată.
+
+### LAUDA DOVEDITĂ PE JUMĂTATE: Taverna s-a atins, în două rânduri
+
+Antetul lui `taverna.gd` se lăuda, scris acum o zi: „Dovada că despărțirea
+ține: când va intra Sudoku, fișierul ăsta nu se atinge. Dacă s-ar atinge, ar
+însemna că am scris aici ceva ce era al mesei." S-a atins, în două rânduri, și
+**fiecare din ele era exact aia**:
+
+1. **`„Ai găsit! "`** — prefixul rândului de rezultat. Cu Sudoku, ieșea „Ai
+   găsit! Grila de nivel mediu, completată fără nicio greșeală." Prefixul nu era
+   al Tavernei, era **vocea Cuvântului Ascuns**, scrisă în fișierul greșit. Azi
+   rândul poartă fraza mesei întreagă, iar Cuvântul Ascuns își scrie singur „Ai
+   găsit!" și „Nu l-ai găsit." Ce rămâne al Tavernei e CULOAREA, și ea pe bună
+   dreptate: „reușit" e în contract, deci verdele și portocaliul sunt ale ei; ce
+   s-a reușit e al mesei.
+2. **`signal pornita`** — o masă se poate reporni SINGURĂ, iar Taverna n-avea
+   cum s-o afle. Fără semnal, un clic pe „Greu" ar fi lăsat „Gata! Grila de
+   nivel mediu…", în verde, scris lângă o grilă abia începută. Un semnal în
+   `joc.gd`, un `connect` și două funcții mici în `taverna.gd`.
+
+Restul a ținut: alegerea mesei, panoul cu reguli, ecranele, ce se scrie pe disc
+— nimic n-a simțit nimic. **O lăudăroșenie dovedită pe jumătate spune mai mult
+despre despărțire decât una nedovedită**, iar antetul scrie acum care jumătate
+a căzut și de ce.
+
+### Cum se joacă
+
+- **Clic pe o celulă** (sau săgețile) o alege; apoi o cifră o scrie. `0`,
+  `Șterge`, `Backspace` sau `Delete` o golește. Tastatura adevărată și
+  butoanele de pe ecran duc la ACELEAȘI funcții, nu pe căi separate.
+- **Cifrele date nu se schimbă**, dar se pot ALEGE: altfel săgețile ar fi sărit
+  peste jumătate din grilă, iar un clic pe una n-ar fi făcut nimic fără să
+  spună de ce.
+- **Celula aleasă se aprinde, și cu ea linia, coloana și pătratul.** Pe 81 de
+  celule geometria nu se mai vede dintr-o privire — dar lumina arată UNDE se
+  uită regula, nu ce spune: tot tu citești cifrele.
+- **Cifrele puse de nouă ori se sting pe rândul de jos.** Stinse, nu scoase:
+  locul lor rămâne, altfel rândul s-ar fi rearanjat sub degete la fiecare a
+  noua cifră.
+
+### Trei culori, și niciuna roșie
+
+Cuvântul Ascuns n-are roșu fiindcă n-are greșit. Sudoku ARE greșit — o cifră
+care se bate cu alta — și totuși nu e roșie, ci **chihlimbar**: în tot proiectul
+chihlimbarul înseamnă „uită-te aici, dar nu e nicio urgență" (bara expunerii din
+Reținere, litera din altă parte de la Cuvântul Ascuns). O cifră care se bate cu
+alta nu e un verdict, e o informație: ai de unde s-o scoți, și n-ai pierdut
+nimic. Roșul rămâne al lucrurilor pe care nu le mai poți lua înapoi, iar aici nu
+există niciunul.
+
+Deci: cifrele date în crem, cele scrise de tine mai reci (ca să se vadă dintr-o
+privire ce era pe ecran de la început), cele care se bat în chihlimbar. Și
+**deosebirea e în CERNEALĂ, nu în fond** — toate trei au același pătrat. La
+Cuvântul Ascuns era pe dos, fondul purta regula; de-aia verificarea a avut
+nevoie de un al doilea cârlig (`_cernelurile_celulelor_din`, fratele lui
+`_fondurile_din`).
+
+### Ce nu se poate pierde
+
+`termina(true, …)` e singurul final: n-ai ceas, n-ai încercări numărate, deci nu
+există „ratat". Plecatul de la masă nu e o înfrângere, e o plecare. Greșelile se
+numără **în clipa punerii**, nu la final — o cifră pusă greșit și scoasă a fost
+tot o greșeală, iar una numărată la final s-ar fi șters odată cu ea — și sunt
+tot ce are jocul ăsta drept scor. Nu se adună nicăieri: Taverna nu plătește
+nimic (vezi sesiunea TAVERNA).
+
+### Masa asta nu scrie NIMIC pe disc
+
+Prima masă fără fișier de date, pentru exact motivul scris la Numere și la
+Tipare: grila nu e conținut, e un interval. Urmarea, care la Cuvântul Ascuns
+costase un sac permanent: **nu există repetiție de care să te păzești**. Cele
+308 cuvinte se termină în 308 partide; grilele nu se termină niciodată, deci
+`Sac` n-are ce ține minte aici. Singurul lucru care ajunge pe disc e steagul „ți
+s-au arătat regulile", și el e al Tavernei.
+
+### Verificarea: DOUĂ socoteli care trebuie să cadă de acord
+
+`verifica_taverna` a crescut de la 98 la **166 de verdicte**, în 20 de secunde,
+cu două secțiuni noi.
+
+**7. SUDOKU.** Jocul își apără unicitatea cu un rezolvitor pe BIȚI; verificarea
+o apără cu al ei, scris din liste de candidați și dicționare — aceeași idee,
+altă socoteală. Dacă numai una din ele ar greși, grilele ar fi ambigue, iar
+jucătorul ar afla-o după un sfert de oră de muncă bună. E judecata de la
+INTRUSUL din Tipare, unde generatorul își apără unicitatea cu determinanți și
+verificarea cu mii de reguli încercate. Pe fiecare nivel, pe 5 semințe: forma
+grilei, cifrele date care nu se bat între ele, **exact un răspuns numărat de
+verificare**, răspunsul GĂSIT DIN NOU și validat ca grilă plină („fiecare linie,
+coloană și pătrat au toate cele nouă cifre" — o afirmație despre Sudoku, nu
+negarea conflictelor, altfel ar fi fost `e_gata()` scris de două ori), și faptul
+că `e_gata()` al jocului îl recunoaște. Plus sămânța (aceeași sămânță, aceeași
+grilă), regula pe cazuri de mână și **partida jucată cap-coadă cu scena
+adevărată**, completată cu răspunsul dat de rezolvitorul VERIFICĂRII — adică cu
+cifre pe care jocul nu le-a dat.
+
+**Proba pe dos, cea care a prins o greșeală a mea.** Un verdict care cere
+„grila are UN răspuns" trece și dacă numărătoarea ar răspunde mereu „unul".
+Deci se construiește dinadins o grilă AMBIGUĂ: patru celule în dreptunghi, cu
+cifrele încrucișate, golite. Prima scriere le-a luat din **benzi diferite**, și
+verdictul a picat — pe bună dreptate: cu liniile în benzi diferite cele patru
+celule cad în patru pătrate, iar schimbarea cifrelor între ele strică pătratele,
+deci grila rămâne cu un singur răspuns. Cu liniile din ACEEAȘI bandă cad în
+două pătrate, fiecare cu amândouă cifrele, și schimbarea nu încalcă nimic.
+Lecția e cea scrisă la cazurile de mână din MARCAREA: un caz scris de mână
+trebuie rezolvat de mână, pe hârtie, înainte de a fi crezut. Aici ambele
+socoteli spuneau „unul" — și aveau dreptate.
+
+**8. CARACTERELE MESELOR.** Regula din sesiunea BULELE DESENATE, de ieri: un
+semn pe care fonturile jocului nu-l au se desenează, pe Windows, cu un semn
+împrumutat de la sistem — tăcut — iar în browser ca un pătrat gol. Acolo scria,
+la „a rămas deschis": harta, meniul, **Taverna** și sumarul n-au fost întrebate
+niciodată. Taverna se întreabă de azi, pe toate mesele: tot ce scrie pe ecran se
+strânge din NODURI (celule, taste, rândul de ajutor, panoul cu reguli, numele și
+rolul din catalog), nu dintr-o listă de texte scrisă de mână care ar fi rămas în
+urmă, și se cere în Cinzel, Alegreya și fontul implicit. Toate trei le au.
+
+**Și secțiunea ECRANELE măsoară acum FIECARE masă**, nu doar prima: Sudoku cere
+462 × 591 px pe o pânză de 648, cu 57 px de rezervă, înainte și după câștig. O
+masă nouă e un ecran nou, iar ecranul care a cerut secțiunea asta (loadout-ul)
+arăta bine până în ziua în care a primit un rând în plus.
+
+### Pe deasupra: masa nu era apăsabilă cu MOUSE-UL, și nu de azi
+
+Cerut imediat după ce Sudoku a intrat: „când dau click pe un pătrat, vreau să
+fie selectat și să pot scrie cifra în el". Codul făcea exact asta — fiecare
+celulă are `gui_input` legat de `alege()` — și totuși nu mergea.
+
+**Vinovatul e mai vechi decât Sudoku.** `Suprapunere`, nodul care ține butonul
+„i" în colțul mesei, e un copil al lui `ZonaJoc`, care e un `PanelContainer` —
+iar un `PanelContainer` întinde FIECARE copil peste tot. Deci suprapunerea
+acoperă masa întreagă, și e deasupra ei (`move_child(suprapunere, -1)`, ca
+butonul să nu fie îngropat de joc). Stătea pe `mouse_filter = PASS`, ales — îmi
+dau seama acum — cu înțelesul greșit: **`PASS` nu înseamnă „lasă-l să treacă la
+ce e dedesubt", înseamnă „primește-l și trimite-l PĂRINTELUI"**. Căutarea
+`Viewport`-ului se oprea la ea și urca spre `ZonaJoc`; masa de dedesubt nu
+primea niciodată nimic.
+
+Deci nu doar pătratele de Sudoku: **și tastatura de pe ecran a Cuvântului
+Ascuns era moartă**, de o zi. N-a băgat-o nimeni de seamă fiindcă masa aia are
+un înlocuitor pentru mouse — tastatura adevărată — iar eu așa o jucasem.
+
+Reparația e o valoare: `mouse_filter = IGNORE` pe suprapunere. Cu `IGNORE`,
+căutarea coboară în continuare la COPIII ei, deci butonul „i" primește ce e al
+lui; numai pânza goală din jurul lui nu mai oprește nimic.
+
+**De ce n-a prins-o verificarea, deși avea 166 de verdicte.** Fiindcă toate
+chemau funcțiile de-a dreptul: `alege(i)`, `_scrie_cifra(v)`, `_scrie_litera(c)`.
+Un nod care acoperă masa, un filtru strâmb și o celulă care nu primește
+evenimente **arată toate trei la fel când chemi funcții**: perfect. Deci
+secțiunea nouă, **9. CLICURILE**, împinge un `InputEventMouseButton` adevărat
+în `Viewport` și-l lasă pe el să caute ce e sub el: un clic pe un pătrat de
+Sudoku îl alege, cifra tastată după aceea intră CHIAR în el, tastele de pe
+ecran ale amândurora meselor scriu, iar butonul „i" deschide regulile. Șase
+verdicte — 172 în total, 21 de secunde.
+
+**Și o capcană a verificării, scrisă ca să nu mă mai pierd în ea.**
+`push_input(clic)` are un al doilea parametru, `in_local_coords`; pe implicitul
+`false`, Godot mai trece poziția o dată prin transformarea finală a ferestrei,
+deci clicul ajunge în altă parte și **pică tot, inclusiv ce nu e stricat** —
+exact cum arată și bug-ul căutat. Cele două s-au despărțit punând filtrul rău
+înapoi pentru o singură rulare: cu coordonatele bune, butonul „i" răspundea și
+restul mesei nu, adică chiar tiparul „o pânză deasupra oprește tot, în afară de
+copiii ei". **Un verdict care pică din două motive deodată nu spune care.**
+
+### Ce a rămas
+
+- **Decretul Zilei** — masa a treia, și singura rămasă stinsă în catalog.
+  Sămânța din dată există în contract de la prima masă; ce lipsește e cine alege
+  masa zilei și cum se ține minte că ai jucat-o. Cu Sudoku scris, decretul poate
+  fi **oricare din cele două mese**, nu doar un cuvânt.
+- **Dificultatea măsurată, nu numărată.** „Câte cifre date" e singura măsură pe
+  care generatorul o poate urmări; dificultatea adevărată a unui Sudoku ține de
+  ce fel de raționament cere, iar aia ar fi cerut un rezolvitor care numără
+  tehnici — exact ce are Lacătul, și o sesiune în sine. Azi „Greu" înseamnă „mai
+  puține cifre date", ceea ce e aproape adevărat și nu întotdeauna.
+- **Însemnări pe celule.** Un Sudoku jucat serios vrea cifrele mici din colț. Nu
+  azi: ar fi un al doilea mod de scriere (apeși altfel), deci o a doua stare și
+  un rând nou în reguli.
+- **Artă proprie pentru Tavernă** — rămâne de ieri: focul împrumutat de la
+  Odihnă și pagini de pergament fără iconiță.
+
+---
+
 ## BULELE DESENATE (4 noiembrie 2026) — trei pătrate goale, vizibile doar pe web
 
 **Semnul:** în build-ul de pe itch.io, rândul „Încercări:" din Lacăt arăta trei
@@ -104,8 +357,11 @@ iese din prima sămânță, ori nu e deloc.
 raport. Scos, trec. Un verdict care n-a fost văzut căzând e o speranță.
 
 **Rămas deschis:** aceeași verificare lipsește de pe celelalte ecrane care nu
-sunt discipline — harta, meniul, Taverna, sumarul de expediție. Lacătul a ieșit
-la iveală fiindcă avea un semn exotic; celelalte n-au fost întrebate niciodată.
+sunt discipline — harta, meniul, sumarul de expediție. Lacătul a ieșit la
+iveală fiindcă avea un semn exotic; celelalte n-au fost întrebate niciodată.
+**Taverna a ieșit din lista asta a doua zi**, odată cu Sudoku: secțiunea
+CARACTERELE MESELOR din `verifica_taverna` strânge tot ce scrie pe ecranul
+fiecărei mese și-l cere în toate trei fonturile (vezi sesiunea SUDOKU).
 
 ---
 
@@ -800,9 +1056,9 @@ atinge nimic din ce exista: meniul a primit o pagină, și atât.
 
 - **Cele 308 cuvinte, citite cu ochiul.** Niciun validator nu poate spune dacă
   un cuvânt e românesc.
-- **Sudoku** — masa a doua. Cere un generator cu unicitate garantată, adică un
-  rezolvitor care probează fiecare grilă: aceeași mașinărie ca la Lacăt, și o
-  sesiune în sine.
+- ~~**Sudoku**~~ — masa a doua, **FĂCUTĂ pe 4 noiembrie 2026**. A cerut chiar
+  ce scria aici: un generator cu unicitate garantată, adică un rezolvitor care
+  probează fiecare grilă, aceeași mașinărie ca la Lacăt. Vezi sesiunea SUDOKU.
 - **Decretul Zilei** — masa a treia. Sămânța din dată există deja în contract;
   ce lipsește e cine alege masa zilei și cum se ține minte că ai jucat-o.
 - **Artă proprie pentru Tavernă.** Azi: focul împrumutat de la Odihnă și trei

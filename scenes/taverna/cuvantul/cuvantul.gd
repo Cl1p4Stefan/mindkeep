@@ -483,15 +483,20 @@ func _trimite_randul() -> void:
 		termina(true, _rezumat_reusit(incercari.size()))
 	elif incercari.size() >= RANDURI:
 		Sunet.reda(Sunet.Efect.GRESIT)
-		termina(false, "Cuvântul era %s." % cuvant.to_upper())
+		termina(false, "Nu l-ai găsit. Cuvântul era %s." % cuvant.to_upper())
 
 
-## Fraza de la final. Numărul de încercări e tot ce are jocul ăsta drept scor —
-## și nu se adună nicăieri, fiindcă azi Taverna nu ține socoteli (vezi
-## `taverna.gd`).
+## Fraza de la final, ÎNTREAGĂ — „Ai găsit!" inclus.
+##
+## Prefixul a stat o zi în `taverna.gd`, și de acolo l-a scos a doua masă: „Ai
+## găsit! Grila mediu, completată fără nicio greșeală." Era vocea jocului ăsta,
+## scrisă în fișierul Tavernei. Vezi `_pe_joc_terminat` de acolo.
+##
+## Numărul de încercări e tot ce are jocul ăsta drept scor — și nu se adună
+## nicăieri, fiindcă azi Taverna nu ține socoteli (vezi `taverna.gd`).
 func _rezumat_reusit(cate: int) -> String:
 	var din := "dintr-o încercare" if cate == 1 else "din %d încercări" % cate
-	return "%s, %s." % [cuvant.to_upper(), din]
+	return "Ai găsit! %s, %s." % [cuvant.to_upper(), din]
 
 
 ## Ce știe tastatura despre fiecare literă: cel mai bun semn aflat despre ea.

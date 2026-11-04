@@ -3,8 +3,8 @@ extends Control
 ##
 ## Expediția e harta, luptele, cronometrul inamicului. Practice e cultură
 ## generală pe raftul ales. Taverna e locul în care te așezi la o masă și joci
-## un joc întreg: Cuvântul Ascuns azi, Sudoku și Decretul Zilei scrise în
-## catalog, stinse.
+## un joc întreg: Cuvântul Ascuns și Sudoku azi, Decretul Zilei scris în
+## catalog, stins.
 ##
 ## ─────────────────────────────────────────────────────────────
 ## CE E, ȘI CE NU E
@@ -36,8 +36,19 @@ extends Control
 ## instanțiază scena din catalog, o pune în chenar, îi cheamă `porneste()` și
 ## ascultă semnalul `terminat`.
 ##
-## Dovada că despărțirea ține: când va intra Sudoku, fișierul ăsta nu se atinge.
-## Dacă s-ar atinge, ar însemna că am scris aici ceva ce era al mesei.
+## Dovada s-a cerut pe 4 noiembrie 2026, când a intrat Sudoku, și e mai bună
+## decât lauda scrisă aici înainte („fișierul ăsta nu se atinge"): s-a atins, în
+## DOUĂ rânduri, și fiecare din ele era un loc în care scrisesem aici ceva ce
+## era al mesei.
+##
+##   1. „Ai găsit! " — prefixul rândului de rezultat. Vocea Cuvântului Ascuns.
+##      Vezi `_pe_joc_terminat`.
+##   2. `pornita` — o masă se poate reporni singură, iar Taverna n-avea cum s-o
+##      afle. Un semnal în `joc.gd`, un connect aici. Vezi `Joc.pornita`.
+##
+## Restul a ținut: nici alegerea mesei, nici panoul cu reguli, nici ecranele,
+## nici ce se scrie pe disc n-au simțit nimic. O lăudăroșenie dovedită pe
+## jumătate spune mai mult despre despărțire decât una nedovedită.
 ##
 ## ─────────────────────────────────────────────────────────────
 ## DOUĂ ECRANE, CA LA PRACTICE
@@ -336,6 +347,9 @@ func _porneste_jocul() -> void:
 		return
 
 	joc.terminat.connect(_pe_joc_terminat)
+	# O masă se poate reporni singură (Sudoku, de pe tăblie): atunci rândul cu
+	# rezultatul partidei de dinainte trebuie să se închidă. Vezi `Joc.pornita`.
+	joc.pornita.connect(_pe_joc_pornit)
 	zona_joc.add_child(joc)
 	joc.porneste(Joc.SAMANTA_LIBERA)
 	ajutor.text = joc.rand_de_ajutor()
@@ -353,6 +367,19 @@ func _porneste_jocul() -> void:
 	# Suprapunerea e fratele jocului în același `PanelContainer`, iar un
 	# `PanelContainer` desenează copiii în ordinea din arbore. Jocul tocmai a
 	# intrat ULTIMUL, deci ar fi acoperit butonul — îl trimitem înapoi deasupra.
+	#
+	# Și de-aia suprapunerea trebuie să aibă `mouse_filter = IGNORE` (pus în
+	# scenă): un `PanelContainer` întinde fiecare copil peste tot, deci
+	# suprapunerea acoperă masa ÎNTREAGĂ, iar ea e deasupra. Cu `PASS` — ce
+	# avea până pe 4 noiembrie 2026 — clicurile se opreau în ea: `PASS` nu
+	# înseamnă „lasă-l să treacă la ce e dedesubt", înseamnă „primește-l și
+	# trimite-l PĂRINTELUI". Nimic din masă n-a fost apăsabil cu mouse-ul: nici
+	# pătratele de Sudoku, nici tastatura de pe ecran a Cuvântului Ascuns. S-a
+	# văzut abia la a doua masă, fiindcă la prima mouse-ul avea un înlocuitor
+	# (tastatura adevărată) și nimeni nu-l încercase. Cu `IGNORE`, căutarea
+	# coboară în continuare la copiii suprapunerii, deci butonul „i" primește
+	# ce e al lui — numai pânza goală din jurul lui nu mai oprește nimic.
+	# Bătut de `verifica_taverna`, pe amândouă mesele.
 	zona_joc.move_child(suprapunere, -1)
 	# Tastatura adevărată: `_unhandled_key_input` al jocului primește tastele
 	# doar dacă nu le mănâncă altcineva înainte — iar un BUTON cu focus mănâncă
@@ -363,9 +390,25 @@ func _porneste_jocul() -> void:
 	get_viewport().gui_release_focus()
 
 
+## O partidă nouă a început — poate la cererea mea, poate pornită de masă.
+func _pe_joc_pornit() -> void:
+	_arata_rezultatul(false)
+
+
+## Rândul de rezultat poartă FRAZA MESEI, întreagă.
+##
+## A fost, o zi, „Ai găsit! " + fraza, iar prefixul venea de aici. Sudoku l-a
+## dat de gol: „Ai găsit! Grila mediu, completată fără nicio greșeală." Prefixul
+## nu era al Tavernei, era VOCEA Cuvântului Ascuns, scrisă în fișierul greșit —
+## iar antetul de mai sus se lăuda că fișierul ăsta nu se atinge când intră a
+## doua masă. S-a atins, exact în rândul în care presupusese ceva despre ce se
+## joacă la masă.
+##
+## Ce rămâne al Tavernei e CULOAREA, și ea pe bună dreptate: „reușit" e în
+## contract, deci verdele și portocaliul sunt ale ei. Ce s-a reușit e al mesei.
 func _pe_joc_terminat(rez: Dictionary) -> void:
 	var reusit := bool(rez.get("reusit", false))
-	rezultat.text = ("Ai găsit! " if reusit else "Nu l-ai găsit. ") + String(rez.get("rezumat", ""))
+	rezultat.text = String(rez.get("rezumat", ""))
 	rezultat.add_theme_color_override("font_color",
 		CULOARE_REUSIT if reusit else CULOARE_RATAT)
 	_arata_rezultatul(true)
@@ -407,6 +450,8 @@ func _inchide_jocul() -> void:
 		return
 	if joc.terminat.is_connected(_pe_joc_terminat):
 		joc.terminat.disconnect(_pe_joc_terminat)
+	if joc.pornita.is_connected(_pe_joc_pornit):
+		joc.pornita.disconnect(_pe_joc_pornit)
 	joc.queue_free()
 	joc = null
 
