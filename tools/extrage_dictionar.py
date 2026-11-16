@@ -43,7 +43,9 @@ CE SE PASTREAZA, SI DE CE ASA
   cuvant la care se gandeste jucatorul e tastat fara ele — iar "masca" refuzat
   fiindca se scrie "masca" cu a-breve ar fi exact piedica pe care decizia
   "cuvintele n-au diacritice" o scoate din joc.
-"""Scoate din dictionarul hunspell romanesc cuvintele de 5 litere, fara diacritice."""
+* COMPLETARI (mai jos, la pasul 4): cuvintele bune pe care dictionarul nu le
+  are, scrise de mana.
+"""
 import io, re, sys, json, unicodedata
 
 cale_aff, cale_dic, cale_ies = sys.argv[1], sys.argv[2], sys.argv[3]
@@ -131,6 +133,24 @@ with io.open(cale_dic, encoding="utf-8") as f:
             gol = desparte(forma).lower()
             if len(gol) == LUNGIME and gol.isalpha() and gol.isascii():
                 gasite.add(gol)
+
+# ── 4. completarile scrise de mana ───────────────────────────
+# Cuvinte bune pe care dictionarul hunspell NU le are (a fost gasit pe 16
+# noiembrie 2026: "geaca" — dictionarul are doar varianta "geac/C", nu si
+# "geacă"). Stau AICI, nu direct in JSON, fiindca JSON-ul e o iesire: o
+# refacere a listei le-ar fi sters fara sa se planga nimeni.
+# Forma e cea fara diacritice, exact cum se tasteaza.
+COMPLETARI = [
+    "geaca",
+]
+for c in COMPLETARI:
+    if len(c) != LUNGIME or not (c.isalpha() and c.isascii() and c.islower()):
+        sys.exit("completare cu forma gresita: %r" % c)
+    if c in gasite:
+        # Declaratia se verifica singura: daca dictionarul a invatat cuvantul,
+        # randul de aici nu mai are rost si trebuie sters.
+        sys.exit("completarea %r e deja in dictionar — sterge-o din COMPLETARI" % c)
+    gasite.add(c)
 
 lista = sorted(gasite)
 io.open(cale_ies, "w", encoding="utf-8", newline="\n").write(
