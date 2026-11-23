@@ -105,6 +105,34 @@ extends Joc
 ## identitatea lui e chiar locul de start, `Vector2i(fiolă, rând)`. Ce ai
 ## văzut intră în `dezvaluite`, care doar crește: „Înapoi" și „Reia" întorc
 ## lichidul, nu și ce ai aflat — o informație nu se dezvață.
+##
+## ─────────────────────────────────────────────────────────────
+## INDICIUL — un buton care se CÂȘTIGĂ încercând
+##
+## Nu stă pe masă de la început: un indiciu la îndemână din prima turnare e o
+## tentație, iar masa antrenează tocmai planificarea pe care indiciul o face în
+## locul tău. Apare când se vede că te chinui, pe una din două căi:
+##
+##   1. ai turnat de cel puțin `INDICIU_MINIM_TURNARI` ori ȘI ai dat un semn că
+##      drumul nu merge — ai desfăcut o turnare, ai luat-o de la capăt sau ai
+##      rămas fără turnări;
+##   2. ai turnat de mai multe ori decât are drumul găsit de rezolvitor de la
+##      start (cel puțin `INDICIU_MINIM_TURNARI`), fără să fi sortat masa.
+##
+## Turnările se NUMĂRĂ TOATE, și cele desfăcute, și cele de dinainte de „Reia":
+## ce se măsoară e efortul, nu drumul rămas.
+##
+## UN INDICIU PE BLOCAJ. Folosit, butonul DISPARE, iar socoteala o ia de la
+## capăt: numărătoarea, semnul de chin și, pe calea a doua, pragul — acum
+## drumul rămas de la indiciu. Deci reapare pe aceleași două căi, numai dacă te
+## blochezi DIN NOU. Altfel un buton rămas pe masă ar fi devenit o scară de
+## indicii apăsate la rând, adică exact tentația de la care se pleacă.
+##
+## Ce spune: următoarea turnare a unui drum care merge — fiola de turnat se
+## ridică, iar cea în care torni pulsează. Dacă de aici NU mai există drum
+## (ai intrat într-o fundătură), spune câte turnări să desfaci. Rezolvitorul
+## vede și straturile ascunse, deci indiciul se folosește de ce tu nu vezi —
+## e un ajutor, nu o deducție. Câte indicii ai luat se spune în rezumat.
 
 const FIOLA := preload("res://scenes/taverna/fiolele/fiola.gd")
 
@@ -150,6 +178,10 @@ const TREPTE_PE_ASCUNS := 6
 ## ascunse, pe toată paleta. Socotită, nu scrisă: 20 + 6 × (9 × 3 − 1) = 176.
 const TREAPTA_PLAFON := TREAPTA_PRIMA_ASCUNSA \
 	+ TREPTE_PE_ASCUNS * (9 * (CAPACITATE - 1) - 1)
+
+## Câte turnări trebuie să fi încercat înainte să apară butonul de indiciu,
+## oricât de tare s-ar vedea că te chinui. Vezi „INDICIUL" din antet.
+const INDICIU_MINIM_TURNARI := 6
 
 const INCERCARI_GENERARE := 400
 ## Câte stări are voie să viziteze rezolvitorul pe un amestec. Vezi
@@ -213,6 +245,21 @@ var dezvaluite := {}
 ## Fiola aleasă, sau -1.
 var aleasa := -1
 
+## INDICIUL (vezi antetul). Turnările de la începutul partidei sau de la ultimul
+## indiciu, și cele desfăcute; dacă s-a văzut de atunci vreun semn de chin;
+## pragul pe turnări al căii a doua; dacă butonul e pe masă; câte indicii s-au
+## luat în toată partida; fiola în care spune să torni.
+var turnari_de_numarat := 0
+var semn_de_chin := false
+var prag_indiciu := INDICIU_MINIM_TURNARI
+var indiciu_aratat := false
+var indicii_luate := 0
+var tinta_indiciului := -1
+## Restul drumului din care a venit ultimul indiciu, și masa la care duce
+## turnarea arătată. Vezi `cere_indiciu`.
+var _plan: Array = []
+var _plan_stare: Array = []
+
 ## Nodurile desenate, pe index.
 var vase: Array[FIOLA] = []
 var butoane_nivel: Array[Button] = []
@@ -220,6 +267,7 @@ var buton_trepte: Button = null
 var rand_niveluri: HBoxContainer = null
 var buton_inapoi: Button = null
 var buton_reia: Button = null
+var buton_indiciu: Button = null
 
 ## Turnarea animată în curs, sau `null`. ANIMAȚIA NU E STAREA: `fiole` se
 ## schimbă pe loc, la clic, iar tot ce urmează e doar desen. Așa regula,
@@ -288,6 +336,16 @@ func _porneste(cu_samanta: int) -> void:
 	fiole = start.duplicate(true)
 	istoric.clear()
 	aleasa = -1
+	turnari_de_numarat = 0
+	semn_de_chin = false
+	indiciu_aratat = false
+	indicii_luate = 0
+	tinta_indiciului = -1
+	_plan = []
+	# Calea a doua: mai multe turnări decât drumul rezolvitorului. Startul e
+	# dovedit rezolvabil, deci drumul există; e UN drum, nu cel mai scurt, deci
+	# pragul e larg — exact cât trebuie pentru „te chinui".
+	prag_indiciu = maxi(INDICIU_MINIM_TURNARI, rezolva(start).size())
 	_construieste_fiolele()
 	_zugraveste_nivelurile()
 	_zugraveste_tot()
@@ -595,6 +653,41 @@ static func rezolva(stare: Array) -> Array:
 	return []
 
 
+## Ce spune indiciul pe masa `stare`, cu stările de dinainte în `trecut` (cea
+## mai veche întâi, ca `istoric`). Fără ecran, ca verificarea s-o poată bate:
+##   {"turnare": [din, in_]} — prima turnare a unui drum găsit de aici;
+##   {"inapoi": k}           — de aici nu se găsește drum; după k desfaceri, da;
+##   {}                      — nici în urmă nu se găsește (n-ar trebui: prima
+##                             stare a partidei e dovedită rezolvabilă).
+##
+## Căutarea în urmă e o căutare BINARĂ, nu una pas cu pas: dintr-o masă fără
+## drum nu se ajunge, turnând, într-una cu drum (altfel drumul ar fi trecut și
+## prin ea), deci pe istoric stările bune vin toate înaintea celor rele. Contează
+## fiindcă o masă fără drum e și cea mai scumpă de dovedit: rezolvitorul își
+## cheltuie tot bugetul până renunță.
+static func indiciu_pentru(stare: Array, trecut: Array) -> Dictionary:
+	if e_gata(stare):
+		return {}
+	var drum := rezolva(stare)
+	if not drum.is_empty():
+		return {"turnare": drum[0], "drum": drum}
+	# Cea mai NOUĂ stare din trecut care are drum: indicii 0..n-1, cu
+	# `trecut[0]` de regulă bun (startul).
+	var bun := -1
+	var lo := 0
+	var hi := trecut.size() - 1
+	while lo <= hi:
+		var mij := (lo + hi) / 2
+		if rezolva(trecut[mij]).is_empty():
+			hi = mij - 1
+		else:
+			bun = mij
+			lo = mij + 1
+	if bun < 0:
+		return {}
+	return {"inapoi": trecut.size() - bun}
+
+
 ## Pune înapoi `cat` straturi din `in_` în `din`. Sunt toate de aceeași
 ## culoare (au plecat ca un singur strat), deci ordinea nu contează.
 static func _desface(f: Array, din: int, in_: int, cat: int) -> void:
@@ -678,6 +771,8 @@ func apasa(i: int) -> void:
 	# fiole a treia o lasă să curgă mai departe.
 	if _turnare != null and (aleasa >= 0 or vase[i] == _anim["sursa"] or vase[i] == _anim["tinta"]):
 		_grabeste()
+	# Indiciul ține cât ține alegerea pe care a făcut-o: orice clic îl stinge.
+	tinta_indiciului = -1
 	if aleasa < 0:
 		if (fiole[i] as Array).is_empty():
 			_spune("Fiola e goală — alege una cu lichid.")
@@ -705,6 +800,7 @@ func apasa(i: int) -> void:
 	var ascunse_inainte := [ascunse_in(din), ascunse_in(i)]
 	var inaltime_sursa := (fiole[din] as Array).size()
 	var cat := turna(fiole, din, i)
+	turnari_de_numarat += 1
 	# Un strat ascuns poate pleca fără să fi fost deasupra: sub un strat de
 	# aceeași culoare, se toarnă odată cu el. Plecat, e văzut.
 	for k in range(inaltime_sursa - cat, inaltime_sursa):
@@ -726,7 +822,11 @@ func apasa(i: int) -> void:
 			_treapta += 1
 		termina(true, rezumat())
 	elif not are_turnari(fiole):
+		semn_de_chin = true
 		_spune("Nu mai ai nicio turnare. Înapoi sau Reia.")
+		_poate_apare_indiciul()
+	else:
+		_poate_apare_indiciul()
 
 
 ## E ascuns acum stratul de pe rândul `k` al fiolei `f`? Pe locul unui strat
@@ -771,8 +871,11 @@ func inapoi() -> void:
 	_grabeste()
 	fiole = istoric.pop_back()
 	aleasa = -1
+	tinta_indiciului = -1
+	semn_de_chin = true
 	_dezvaluie_varfurile()
 	_spune("")
+	_poate_apare_indiciul()
 	_zugraveste_tot()
 
 
@@ -784,8 +887,71 @@ func reia() -> void:
 	fiole = start.duplicate(true)
 	istoric.clear()
 	aleasa = -1
+	tinta_indiciului = -1
+	# „Reia" fără nicio turnare n-a încercat nimic, deci nu e un semn.
+	if turnari_de_numarat > 0:
+		semn_de_chin = true
 	_dezvaluie_varfurile()
 	_spune("")
+	_poate_apare_indiciul()
+	_zugraveste_tot()
+
+
+## Apare butonul? Vezi „INDICIUL" din antet: niciodată sub minim, apoi la un
+## semn de chin sau peste pragul pe turnări. Apărut, rămâne până e folosit.
+func _poate_apare_indiciul() -> void:
+	if indiciu_aratat or turnari_de_numarat < INDICIU_MINIM_TURNARI:
+		return
+	if semn_de_chin or turnari_de_numarat >= prag_indiciu:
+		indiciu_aratat = true
+		_zugraveste_butonul_de_indiciu()
+
+
+## Apăsarea pe „Indiciu": ridică fiola de turnat și o face să pulseze pe cea în
+## care torni — sau, dintr-o fundătură, spune câte turnări să desfaci. Nu toarnă
+## în locul tău: turnarea rămâne a ta.
+func cere_indiciu() -> void:
+	if terminat_deja or not indiciu_aratat:
+		return
+	_grabeste()
+	# UN PLAN, nu câte o căutare pe fiecare indiciu. Două căutări din două
+	# stări vecine pot găsi drumuri diferite, iar primul pas al fiecăruia poate
+	# desface pasul celuilalt: urmând indiciile, te-ai fi învârtit în cerc (bătut
+	# de verificare — 300 de indicii fără nicio masă sortată). Deci drumul găsit
+	# se ține minte și se continuă cât timp masa e EXACT cea la care duce el.
+	var raspuns: Dictionary
+	if not _plan.is_empty() and fiole == _plan_stare:
+		raspuns = {"turnare": _plan[0], "drum": _plan}
+	else:
+		raspuns = indiciu_pentru(fiole, istoric)
+	_plan = []
+	if raspuns.has("turnare"):
+		var m: Array = raspuns["turnare"]
+		_plan = (raspuns["drum"] as Array).slice(1)
+		_plan_stare = fiole.duplicate(true)
+		turna(_plan_stare, m[0], m[1])
+		aleasa = int(m[0])
+		tinta_indiciului = int(m[1])
+		indicii_luate += 1
+		_spune("Toarnă din fiola ridicată în cea care strălucește.")
+	elif raspuns.has("inapoi"):
+		aleasa = -1
+		tinta_indiciului = -1
+		indicii_luate += 1
+		var k := int(raspuns["inapoi"])
+		_spune("De aici nu mai iese. Desfă %s (Înapoi)." % (
+			"ultima turnare" if k == 1 else "ultimele %s" % _turnari(k)))
+	else:
+		_spune("Nu găsesc niciun drum. Încearcă Reia.")
+	# UN INDICIU PE BLOCAJ (vezi antetul): butonul pleacă, socoteala o ia de la
+	# capăt. Pragul căii a doua devine drumul rămas de la indiciu — ce s-a
+	# turnat până aici nu mai e de pus în socoteală. Haloul și fiola ridicată
+	# rămân: atârnă de alegere, nu de buton.
+	indiciu_aratat = false
+	turnari_de_numarat = 0
+	semn_de_chin = false
+	if raspuns.has("drum"):
+		prag_indiciu = maxi(INDICIU_MINIM_TURNARI, (raspuns["drum"] as Array).size())
 	_zugraveste_tot()
 
 
@@ -807,12 +973,20 @@ func urca_pe_trepte() -> void:
 
 ## Fraza de la final. Turnările sunt cele RĂMASE — cele desfăcute cu „Înapoi"
 ## nu se socotesc: ce se laudă e drumul cu care ai ieșit, nu cel căutat.
+##
+## Indiciile se spun, fără judecată: e un fapt despre partidă, nu o pedeapsă.
 func rezumat() -> String:
+	var cu := ""
+	if indicii_luate == 1:
+		cu = ", cu un indiciu"
+	elif indicii_luate > 1:
+		# „44 de indicii", ca la `_turnari`.
+		cu = ", cu " + _turnari(indicii_luate).replace("turnări", "indicii")
 	if treapta > 0:
-		return "Gata! Nivelul %d, sortat în %s. Urmează nivelul %d." % [
-			treapta, _turnari(istoric.size()), treapta + 1]
-	return "Gata! Nivel %s, sortat în %s." % [
-		String(NIVELURI[nivel]["nume"]).to_lower(), _turnari(istoric.size())]
+		return "Gata! Nivelul %d, sortat în %s%s. Urmează nivelul %d." % [
+			treapta, _turnari(istoric.size()), cu, treapta + 1]
+	return "Gata! Nivel %s, sortat în %s%s." % [
+		String(NIVELURI[nivel]["nume"]).to_lower(), _turnari(istoric.size()), cu]
 
 
 ## „o turnare", „7 turnări", „23 de turnări" — politețea cu româna de la
@@ -882,6 +1056,9 @@ func _zugraveste_tot(capace_animate := false) -> void:
 		# Cât curge, dopul fiolelor din turnare îl hotărăște animația.
 		if not vase[i].animata:
 			vase[i].seteaza_capac(_e_inchisa(fiole[i]), capace_animate)
+		# Haloul ține numai cât fiola de turnat e încă cea ridicată.
+		vase[i].indicata = i == tinta_indiciului and aleasa >= 0
+	_zugraveste_butonul_de_indiciu()
 	if buton_inapoi != null:
 		buton_inapoi.modulate = Color(1, 1, 1, 0.4 if istoric.is_empty() else 1.0)
 
@@ -1083,6 +1260,23 @@ func _construieste_tastele() -> void:
 	buton_reia = _buton("Reia", 96)
 	buton_reia.pressed.connect(reia)
 	rand_taste.add_child(buton_reia)
+	buton_indiciu = _buton("Indiciu", 96)
+	buton_indiciu.pressed.connect(cere_indiciu)
+	rand_taste.add_child(buton_indiciu)
+	_zugraveste_butonul_de_indiciu()
+
+
+## Butonul de indiciu își ȚINE locul de la început, doar că nevăzut și
+## neapăsabil: dacă ar intra în rând abia când apare, rândul s-ar recentra și
+## ar împinge „Înapoi" și „Reia" sub cursor — exact clipa în care te chinui.
+## (Aceeași judecată ca la creierul din chenar, în Practice.)
+func _zugraveste_butonul_de_indiciu() -> void:
+	if buton_indiciu == null:
+		return
+	buton_indiciu.modulate.a = 1.0 if indiciu_aratat else 0.0
+	buton_indiciu.disabled = not indiciu_aratat
+	buton_indiciu.mouse_filter = Control.MOUSE_FILTER_STOP if indiciu_aratat \
+		else Control.MOUSE_FILTER_IGNORE
 
 
 func _buton(text: String, latime: int, inaltime := INALTIME_TASTA) -> Button:

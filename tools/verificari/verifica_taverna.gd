@@ -734,12 +734,39 @@ func _ecranele() -> bool:
 	for pagina in carti.get_children():
 		print("           %s: %d px" % [pagina.name, (pagina as Control).get_combined_minimum_size().x])
 	rezultat = _verdict(cerut_meniu.x <= PANZA.x,
-		"cele trei pagini din meniu încap în lățime (%d px, rezervă %d)"
+		"cele patru pagini din meniu încap în lățime (%d px, rezervă %d)"
 		% [cerut_meniu.x, PANZA.x - cerut_meniu.x]) and rezultat
 	rezultat = _verdict(cerut_meniu.y <= PANZA.y,
 		"meniul încape în înălțime (%d px, rezervă %d)"
 		% [cerut_meniu.y, PANZA.y - cerut_meniu.y]) and rezultat
-	rezultat = _verdict(carti.get_child_count() == 3, "meniul are trei pagini") and rezultat
+	rezultat = _verdict(carti.get_child_count() == 4, "meniul are patru pagini (a patra e Pescuitul, 16 noiembrie 2026)") and rezultat
+
+	# AVERTISMENTUL apare doar când un fișier de save e stricat, deci se măsoară
+	# și starea aia, cu amândouă frazele — un ecran se măsoară în fiecare stare.
+	var avertisment: Label = meniu.get_node("%Avertisment")
+	avertisment.text = "\n".join(meniu._randuri_de_avertisment_pentru(true, true))
+	avertisment.visible = true
+	# COLȚUL SALVĂRII, cu cea mai lungă frază pe care o poate purta.
+	var nota: Label = meniu.get_node("%NotaSalvare")
+	nota.text = meniu.FRAZA_EXPORT_WEB % "mindkeep-salvare-2026-11-10T14-33-02.json"
+	await get_tree().process_frame
+	await get_tree().process_frame
+	var cu_avertisment := margini_meniu.get_combined_minimum_size()
+	rezultat = _verdict(cu_avertisment.y <= PANZA.y,
+		"meniul încape și cu avertismentul (%d px, rezervă %d)"
+		% [cu_avertisment.y, PANZA.y - cu_avertisment.y]) and rezultat
+	# Titlul e o etichetă cât toată coloana, deci se măsoară TEXTUL lui, nu
+	# eticheta — exact greșeala de la antetul Tavernei.
+	var titlu_meniu: Label = meniu.get_node("Margini/Coloana/Antet/Titlu")
+	var latime_titlu := titlu_meniu.get_theme_font("font").get_string_size(titlu_meniu.text,
+		HORIZONTAL_ALIGNMENT_LEFT, -1, titlu_meniu.get_theme_font_size("font_size")).x
+	var dreapta_titlu := titlu_meniu.global_position.x + (titlu_meniu.size.x + latime_titlu) / 2.0
+	var salvarea := (meniu.get_node("Salvarea") as Control).get_global_rect()
+	rezultat = _verdict(salvarea.position.x >= dreapta_titlu,
+		"colțul salvării nu ajunge peste titlu (%d px între ele, înalt %d)"
+		% [salvarea.position.x - dreapta_titlu, salvarea.size.y]) and rezultat
+	rezultat = _verdict(salvarea.end.x <= PANZA.x and salvarea.end.y < carti.global_position.y,
+		"colțul salvării stă deasupra paginilor") and rezultat
 	meniu.queue_free()
 	# `queue_free` scoate nodul la finalul cadrului. Fără cele două cadre de
 	# mai jos, `quit()` vine înainte, iar Godot se plânge la ieșire de obiecte
@@ -1481,7 +1508,202 @@ func _fiolele() -> bool:
 	rezultat = _verdict(s1 != s3, "o altă sămânță dă alt amestec") and rezultat
 
 	rezultat = await _fiolele_jucate() and rezultat
+	rezultat = await _fiolele_indiciul() and rezultat
 	return await _fiolele_treptele() and rezultat
+
+
+## INDICIUL (vezi antetul mesei): butonul nu e pe masă la început, nu apare
+## sub `INDICIU_MINIM_TURNARI` oricât te-ai chinui, apare la un semn de chin
+## sau peste prag, își ține locul în rând de la început, iar ce spune e
+## ADEVĂRAT — o turnare voie pe un drum care merge, sau, dintr-o fundătură,
+## câte desfaceri duc înapoi la o masă cu drum. „Cu drum" și „fără drum" se
+## judecă și de AL DOILEA rezolvitor, cel al verificării.
+func _fiolele_indiciul() -> bool:
+	print("  FIOLELE — INDICIUL")
+	var rezultat := true
+	FIOLE._pe_trepte = false
+	var minim: int = FIOLE.INDICIU_MINIM_TURNARI
+
+	var joc := SCENA_FIOLE.instantiate()
+	add_child(joc)
+	var ceas := Time.get_ticks_msec()
+	joc.porneste(2)  # nivelul 2 = Greu, cel mai scump de pornit
+	print("         pornirea pe Greu, cu pragul socotit: %d ms; pragul: %d turnări"
+		% [Time.get_ticks_msec() - ceas, joc.prag_indiciu])
+	await get_tree().process_frame
+	var buton: Button = joc.buton_indiciu
+	var taste: Control = joc.get_node("%Taste")
+	var latime_rand := taste.get_combined_minimum_size().x
+	rezultat = _verdict(buton != null and buton.get_parent() == taste and buton.visible
+		and buton.modulate.a == 0.0 and buton.disabled
+		and buton.mouse_filter == Control.MOUSE_FILTER_IGNORE,
+		"la început butonul nu se vede și nu se apasă, dar își ține locul în rând") and rezultat
+	rezultat = _verdict(joc.prag_indiciu >= minim,
+		"pragul pe turnări nu e sub minim (%d ≥ %d)" % [joc.prag_indiciu, minim]) and rezultat
+
+	# SUB MINIM nu apare, oricâte semne de chin: turnări desfăcute și Reia.
+	for runda in 2:
+		var p := _o_pereche(joc.fiole, true)
+		joc.apasa(p[0])
+		joc.apasa(p[1])
+		joc.inapoi()
+	joc.reia()
+	rezultat = _verdict(joc.turnari_de_numarat == 2 and joc.semn_de_chin
+		and not joc.indiciu_aratat,
+		"după 2 turnări desfăcute și un Reia, butonul tot nu apare") and rezultat
+	# Cu semnul deja dat, apare EXACT la minim.
+	while joc.turnari_de_numarat < minim - 1:
+		var p := _o_pereche(joc.fiole, true)
+		joc.apasa(p[0])
+		joc.apasa(p[1])
+	var inainte_de_minim: bool = joc.indiciu_aratat
+	joc.inapoi()
+	var p2 := _o_pereche(joc.fiole, true)
+	joc.apasa(p2[0])
+	joc.apasa(p2[1])
+	rezultat = _verdict(not inainte_de_minim and joc.indiciu_aratat,
+		"cu un semn de chin, apare exact la turnarea %d" % minim) and rezultat
+	rezultat = _verdict(buton.modulate.a == 1.0 and not buton.disabled
+		and buton.mouse_filter == Control.MOUSE_FILTER_STOP,
+		"și atunci se vede și se apasă") and rezultat
+	rezultat = _verdict(is_equal_approx(taste.get_combined_minimum_size().x, latime_rand),
+		"rândul de taste nu s-a lărgit (%d px): Înapoi și Reia n-au fugit de sub cursor"
+		% latime_rand) and rezultat
+
+	# CALEA A DOUA, fără niciun semn: nimic sub prag, totul la prag.
+	joc.turnari_de_numarat = joc.prag_indiciu - 1
+	joc.semn_de_chin = false
+	joc.indiciu_aratat = false
+	joc._poate_apare_indiciul()
+	var sub_prag: bool = joc.indiciu_aratat
+	joc.turnari_de_numarat = joc.prag_indiciu
+	joc._poate_apare_indiciul()
+	rezultat = _verdict(not sub_prag and joc.indiciu_aratat,
+		"fără semn de chin, apare abia peste drumul rezolvitorului (%d turnări)"
+		% joc.prag_indiciu) and rezultat
+
+	# CE SPUNE, pe o masă cu drum: o turnare voie, arătată pe ecran, și
+	# urmându-l de la cap la coadă se sortează masa.
+	joc.reia()
+	var raportat := []
+	joc.terminat.connect(func(rez): raportat.append(rez))
+	joc.cere_indiciu()
+	var primul_bun: bool = joc.aleasa >= 0 and joc.tinta_indiciului >= 0 \
+		and FIOLE.poate_turna(joc.fiole, joc.aleasa, joc.tinta_indiciului) \
+		and joc.vase[joc.aleasa].ridicata and joc.vase[joc.tinta_indiciului].indicata
+	rezultat = _verdict(primul_bun,
+		"indiciul ridică fiola de turnat și o face să pulseze pe cea în care torni") and rezultat
+	# UN INDICIU PE BLOCAJ: folosit, butonul pleacă și socoteala o ia de la capăt.
+	rezultat = _verdict(not joc.indiciu_aratat and buton.modulate.a == 0.0 and buton.disabled
+		and buton.mouse_filter == Control.MOUSE_FILTER_IGNORE,
+		"folosit, butonul dispare (haloul rămâne)") and rezultat
+	rezultat = _verdict(joc.turnari_de_numarat == 0 and not joc.semn_de_chin,
+		"iar numărătoarea și semnul de chin o iau de la capăt") and rezultat
+	var de_dinainte_de_buton: Array = joc.fiole.duplicate(true)
+	buton.pressed.emit()
+	rezultat = _verdict(joc.fiole == de_dinainte_de_buton and joc.indicii_luate == 1,
+		"un clic pe locul lui gol nu mai dă niciun indiciu") and rezultat
+	var tinta: int = joc.tinta_indiciului
+	joc.apasa(tinta)
+	rezultat = _verdict(not joc.vase[tinta].indicata and joc.tinta_indiciului == -1,
+		"după turnare haloul se stinge") and rezultat
+	# De aici, butonul se dă înapoi DE MÂNĂ înaintea fiecărui indiciu: ce se
+	# bate e că planul duce la capăt, nu regula apariției (bătută mai jos).
+	var pasi := 1
+	while not joc.terminat_deja and pasi < 300:
+		joc.indiciu_aratat = true
+		joc.cere_indiciu()
+		if joc.tinta_indiciului < 0:
+			break
+		joc.apasa(joc.tinta_indiciului)
+		pasi += 1
+	rezultat = _verdict(raportat.size() == 1 and bool(raportat[0]["reusit"]),
+		"urmând numai indiciile, masa se sortează (%d indicii)" % pasi) and rezultat
+	if raportat.size() == 1:
+		var asteptat_indicii := FIOLE._turnari(pasi).replace("turnări", "indicii")
+		rezultat = _verdict(String(raportat[0]["rezumat"]).contains(asteptat_indicii),
+			"iar rezumatul le spune: %s" % raportat[0]["rezumat"]) and rezultat
+	joc.queue_free()
+
+	# REAPARE numai la un blocaj NOU: după indiciu, aceeași regulă de la zero —
+	# nimic sub minim, chiar cu semn de chin; exact la minim, cu semn.
+	var din_nou := SCENA_FIOLE.instantiate()
+	add_child(din_nou)
+	din_nou.porneste(2)
+	await get_tree().process_frame
+	for k in minim:
+		var p := _o_pereche(din_nou.fiole, true)
+		din_nou.apasa(p[0])
+		din_nou.apasa(p[1])
+	din_nou.inapoi()
+	var aparut_prima: bool = din_nou.indiciu_aratat
+	din_nou.cere_indiciu()
+	din_nou.apasa(din_nou.aleasa)  # lasă jos fiola ridicată de indiciu
+	for k in minim - 1:
+		var p := _o_pereche(din_nou.fiole, true)
+		din_nou.apasa(p[0])
+		din_nou.apasa(p[1])
+	din_nou.inapoi()
+	var sub_minim_iar: bool = din_nou.indiciu_aratat
+	var p3 := _o_pereche(din_nou.fiole, true)
+	din_nou.apasa(p3[0])
+	din_nou.apasa(p3[1])
+	var p4 := _o_pereche(din_nou.fiole, true)
+	din_nou.apasa(p4[0])
+	din_nou.apasa(p4[1])
+	rezultat = _verdict(aparut_prima and not sub_minim_iar and din_nou.indiciu_aratat
+		and din_nou.buton_indiciu.modulate.a == 1.0,
+		"după un indiciu, butonul reapare abia la un blocaj nou: nu după %d turnări + Înapoi, da după %d"
+		% [minim - 1, minim]) and rezultat
+	din_nou.queue_free()
+
+	# FUNDĂTURILE: pe drumuri la întâmplare, masa ajunge undeva fără drum. Atunci
+	# indiciul spune câte desfaceri; după atâtea e drum, cu una mai puțin nu.
+	var fundaturi := 0
+	var adevarate := 0
+	var cel_mai_lent := 0
+	var rng := RandomNumberGenerator.new()
+	for samanta in 40:
+		rng.seed = 900 + samanta
+		var stare: Array = FIOLE.genereaza(samanta % FIOLE.NIVELURI.size(), rng)
+		var trecut: Array = []
+		for pas in 60:
+			if not FIOLE.are_turnari(stare) or FIOLE.e_gata(stare):
+				break
+			var posibile := []
+			for din in stare.size():
+				for in_ in stare.size():
+					if FIOLE.poate_turna(stare, din, in_):
+						posibile.append([din, in_])
+			var m: Array = posibile[rng.randi() % posibile.size()]
+			trecut.append(stare.duplicate(true))
+			FIOLE.turna(stare, m[0], m[1])
+		if FIOLE.e_gata(stare) or not FIOLE.rezolva(stare).is_empty():
+			continue
+		fundaturi += 1
+		var ceas_f := Time.get_ticks_msec()
+		var raspuns := FIOLE.indiciu_pentru(stare, trecut)
+		cel_mai_lent = maxi(cel_mai_lent, Time.get_ticks_msec() - ceas_f)
+		if not raspuns.has("inapoi"):
+			continue
+		var k := int(raspuns["inapoi"])
+		var bun: Array = trecut[trecut.size() - k]
+		var urmatorul: Array = stare if k == 1 else trecut[trecut.size() - k + 1]
+		# Al doilea rezolvitor: drum acolo unde spune jocul, niciunul un pas mai
+		# încolo.
+		if not _f_rezolva(_siruri_din(bun)).is_empty() \
+				and _f_rezolva(_siruri_din(urmatorul)).is_empty():
+			adevarate += 1
+	print("         %d fundături găsite pe 40 de drumuri la întâmplare; cel mai lent indiciu: %d ms"
+		% [fundaturi, cel_mai_lent])
+	rezultat = _verdict(fundaturi >= 5,
+		"drumurile la întâmplare dau destule fundături de bătut (%d)" % fundaturi) and rezultat
+	rezultat = _verdict(adevarate == fundaturi,
+		"în fiecare fundătură indiciul spune câte desfaceri, iar AL DOILEA rezolvitor e de acord (%d din %d)"
+		% [adevarate, fundaturi]) and rezultat
+	await get_tree().process_frame
+	await get_tree().process_frame
+	return rezultat
 
 
 ## TREPTELE — al doilea fel de a alege dificultatea (vezi antetul mesei).

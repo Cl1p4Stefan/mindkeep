@@ -83,6 +83,9 @@ const CULOARE_CHENAR := Color(0.62, 0.66, 0.66)
 ## Chenarul fiolei alese: același crem ca cifrele date din Sudoku. Nu verde și
 ## nu chihlimbar — alegerea nu e un verdict și nici o avertizare.
 const CULOARE_CHENAR_ALEASA := Color(0.98, 0.95, 0.88)
+## Haloul fiolei arătate de indiciu, și cât durează o bătaie a lui.
+const CULOARE_INDICIU := Color(1.0, 0.74, 0.28)
+const PERIOADA_INDICIU := 1.1
 ## Un strat ascuns: un cenușiu tulbure, mai închis decât orice culoare din
 ## paletă (toate au L ≥ 0,5), ca să nu se confunde cu una din ele.
 const CULOARE_ASCUNSA := Color(0.27, 0.26, 0.29)
@@ -111,6 +114,17 @@ var capacitate := 4
 var latime := 52.0
 var inaltime_strat := 44.0
 var ridicata := false
+## Fiola în care indiciul spune să torni: un halou chihlimbar care pulsează.
+## Chihlimbar, nu verde: e o informație, nu un verdict (vezi Sudoku).
+var indicata := false:
+	set(v):
+		if v == indicata:
+			return
+		indicata = v
+		_puls = 0.0
+		set_process(true)
+		queue_redraw()
+var _puls := 0.0
 
 ## Ce se DESENEAZĂ: perechi `[culoare, cantitate]`, de jos în sus, cu straturile
 ## la fel contopite. De obicei e chiar `culori`, strânse; în timpul unei
@@ -220,9 +234,15 @@ static func _e_ascuns(segment: Array) -> bool:
 
 func _process(delta: float) -> void:
 	var tinta := 1.0 if ridicata else 0.0
+	# Fiola arătată de indiciu pulsează, deci cât e arătată se redesenează
+	# mereu, chiar dacă nu urcă și nu coboară.
+	if indicata:
+		_puls += delta
+		queue_redraw()
 	if is_equal_approx(inaltare, tinta):
 		inaltare = tinta
-		set_process(false)
+		if not indicata:
+			set_process(false)
 		return
 	inaltare = move_toward(inaltare, tinta, delta / DURATA_RIDICARE)
 	queue_redraw()
@@ -433,6 +453,9 @@ func _draw() -> void:
 	if aleasa:
 		# Un halou cald în jurul fiolei alese, sub contur.
 		draw_polyline(_exterior, Color(CULOARE_CHENAR_ALEASA, 0.16 * inaltare), 7.0, true)
+	if indicata:
+		var bataie := 0.5 + 0.5 * sin(_puls * TAU / PERIOADA_INDICIU)
+		draw_polyline(_exterior, Color(CULOARE_INDICIU, 0.22 + 0.33 * bataie), 9.0, true)
 	for banda in _benzi:
 		draw_polygon(banda[0], banda[1])
 	if stralucire > 0.0:
