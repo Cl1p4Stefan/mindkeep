@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" path="res://assets/iconite/practice/nota.png" id="6_creier"]
 [ext_resource type="Texture2D" path="res://assets/art/taverna.png" id="7_taverna"]
 [ext_resource type="Script" path="res://assets/tema/fundal_estompat.gd" id="9_fundal_o_data"]
+[ext_resource type="Script" path="res://scenes/iazul/icoana_iaz.gd" id="10_icoana_iaz"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_estompat"]
 shader = ExtResource("4_estompat")
@@ -161,19 +162,19 @@ mouse_filter = 2
 [node name="Carti" type="HBoxContainer" parent="Margini/Coloana"]
 layout_mode = 2
 mouse_filter = 2
-theme_override_constants/separation = 28
+theme_override_constants/separation = 16
 alignment = 1
 
 [node name="CarteExpeditie" type="PanelContainer" parent="Margini/Coloana/Carti"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(300, 0)
+custom_minimum_size = Vector2(242, 0)
 layout_mode = 2
 
 [node name="Margini" type="MarginContainer" parent="Margini/Coloana/Carti/CarteExpeditie"]
 layout_mode = 2
-theme_override_constants/margin_left = 24
+theme_override_constants/margin_left = 15
 theme_override_constants/margin_top = 18
-theme_override_constants/margin_right = 24
+theme_override_constants/margin_right = 15
 theme_override_constants/margin_bottom = 22
 
 [node name="Coloana" type="VBoxContainer" parent="Margini/Coloana/Carti/CarteExpeditie/Margini"]
@@ -224,19 +225,19 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 46)
 layout_mode = 2
 theme_type_variation = &"ButonRubrica"
-theme_override_font_sizes/font_size = 17
+theme_override_font_sizes/font_size = 16
 text = "Pornește expediția"
 
 [node name="CartePractice" type="PanelContainer" parent="Margini/Coloana/Carti"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(300, 0)
+custom_minimum_size = Vector2(242, 0)
 layout_mode = 2
 
 [node name="Margini" type="MarginContainer" parent="Margini/Coloana/Carti/CartePractice"]
 layout_mode = 2
-theme_override_constants/margin_left = 24
+theme_override_constants/margin_left = 15
 theme_override_constants/margin_top = 18
-theme_override_constants/margin_right = 24
+theme_override_constants/margin_right = 15
 theme_override_constants/margin_bottom = 22
 
 [node name="Coloana" type="VBoxContainer" parent="Margini/Coloana/Carti/CartePractice/Margini"]
@@ -278,19 +279,19 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 46)
 layout_mode = 2
 theme_type_variation = &"ButonRubrica"
-theme_override_font_sizes/font_size = 17
+theme_override_font_sizes/font_size = 16
 text = "Începe antrenamentul"
 
 [node name="CarteTaverna" type="PanelContainer" parent="Margini/Coloana/Carti"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(300, 0)
+custom_minimum_size = Vector2(242, 0)
 layout_mode = 2
 
 [node name="Margini" type="MarginContainer" parent="Margini/Coloana/Carti/CarteTaverna"]
 layout_mode = 2
-theme_override_constants/margin_left = 24
+theme_override_constants/margin_left = 15
 theme_override_constants/margin_top = 18
-theme_override_constants/margin_right = 24
+theme_override_constants/margin_right = 15
 theme_override_constants/margin_bottom = 22
 
 [node name="Coloana" type="VBoxContainer" parent="Margini/Coloana/Carti/CarteTaverna/Margini"]
@@ -332,8 +333,60 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 46)
 layout_mode = 2
 theme_type_variation = &"ButonRubrica"
-theme_override_font_sizes/font_size = 17
+theme_override_font_sizes/font_size = 16
 text = "Intră în tavernă"
+
+[node name="CarteIaz" type="PanelContainer" parent="Margini/Coloana/Carti"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(242, 0)
+layout_mode = 2
+
+[node name="Margini" type="MarginContainer" parent="Margini/Coloana/Carti/CarteIaz"]
+layout_mode = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 18
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 22
+
+[node name="Coloana" type="VBoxContainer" parent="Margini/Coloana/Carti/CarteIaz/Margini"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Icoana" type="Control" parent="Margini/Coloana/Carti/CarteIaz/Margini/Coloana"]
+custom_minimum_size = Vector2(0, 104)
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("10_icoana_iaz")
+
+[node name="Nume" type="Label" parent="Margini/Coloana/Carti/CarteIaz/Margini/Coloana"]
+layout_mode = 2
+theme_type_variation = &"TitluPergament"
+theme_override_font_sizes/font_size = 26
+text = "PESCUIT"
+horizontal_alignment = 1
+
+[node name="IazRol" type="Label" parent="Margini/Coloana/Carti/CarteIaz/Margini/Coloana"]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+theme_type_variation = &"SubtitluPergament"
+theme_override_font_sizes/font_size = 16
+text = "Iazul de sub cetate. Fără întrebări, fără grabă."
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Spatiu" type="Control" parent="Margini/Coloana/Carti/CarteIaz/Margini/Coloana"]
+custom_minimum_size = Vector2(0, 6)
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="ButonIaz" type="Button" parent="Margini/Coloana/Carti/CarteIaz/Margini/Coloana"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 46)
+layout_mode = 2
+theme_type_variation = &"ButonRubrica"
+theme_override_font_sizes/font_size = 16
+text = "Mergi la pescuit"
 
 [node name="Avertisment" type="Label" parent="Margini/Coloana"]
 unique_name_in_owner = true
@@ -346,6 +399,69 @@ theme_override_font_sizes/font_size = 15
 horizontal_alignment = 1
 vertical_alignment = 2
 autowrap_mode = 3
+
+[node name="Salvarea" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -340.0
+offset_top = 10.0
+offset_right = -20.0
+offset_bottom = 44.0
+grow_horizontal = 0
+mouse_filter = 2
+theme_override_constants/separation = 0
+
+[node name="RandSalvare" type="HBoxContainer" parent="Salvarea"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 26
+alignment = 2
+
+[node name="ButonExporta" type="Button" parent="Salvarea/RandSalvare"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 34)
+layout_mode = 2
+theme_type_variation = &"LegaturaPergament"
+theme_override_colors/font_color = Color(0.82, 0.74, 0.58, 1)
+theme_override_colors/font_focus_color = Color(0.96, 0.88, 0.7, 1)
+theme_override_colors/font_hover_color = Color(1, 0.93, 0.78, 1)
+theme_override_colors/font_pressed_color = Color(0.9, 0.82, 0.66, 1)
+theme_override_colors/font_outline_color = Color(0.06, 0.04, 0.02, 0.9)
+theme_override_constants/outline_size = 5
+theme_override_font_sizes/font_size = 16
+text = "Exportă salvarea"
+
+[node name="ButonImporta" type="Button" parent="Salvarea/RandSalvare"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 34)
+layout_mode = 2
+theme_type_variation = &"LegaturaPergament"
+theme_override_colors/font_color = Color(0.82, 0.74, 0.58, 1)
+theme_override_colors/font_focus_color = Color(0.96, 0.88, 0.7, 1)
+theme_override_colors/font_hover_color = Color(1, 0.93, 0.78, 1)
+theme_override_colors/font_pressed_color = Color(0.9, 0.82, 0.66, 1)
+theme_override_colors/font_outline_color = Color(0.06, 0.04, 0.02, 0.9)
+theme_override_constants/outline_size = 5
+theme_override_font_sizes/font_size = 16
+text = "Importă salvarea"
+
+[node name="NotaSalvare" type="Label" parent="Salvarea"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"AntetSecundar"
+theme_override_font_sizes/font_size = 14
+horizontal_alignment = 2
+autowrap_mode = 3
+
+[node name="ConfirmaImportul" type="ConfirmationDialog" parent="."]
+unique_name_in_owner = true
+title = "Imporți salvarea?"
+size = Vector2i(460, 180)
+ok_button_text = "Importă"
+dialog_autowrap = true
+cancel_button_text = "Renunță"
 
 [node name="Voal" type="ColorRect" parent="."]
 unique_name_in_owner = true

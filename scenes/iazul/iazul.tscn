@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scenes/iazul/iazul.gd" id="1_iazul"]
+[ext_resource type="Theme" path="res://assets/tema/pergament.tres" id="2_tema"]
+
+[node name="Iazul" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = ExtResource("2_tema")
+script = ExtResource("1_iazul")

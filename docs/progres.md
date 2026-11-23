@@ -1,6 +1,6 @@
 # MINDKEEP — Jurnal de progres
 
-*Ultima actualizare: 4 noiembrie 2026*
+*Ultima actualizare: 16 noiembrie 2026*
 *Atașează acest fișier la începutul fiecărei sesiuni noi, împreună cu `CLAUDE.md` și `docs/pitch-document.md`.*
 
 ---
@@ -39,6 +39,251 @@ cavaler și pentru TOATE cele opt glife de pe butoanele de Obelisc au intrat mai
 devreme, dar restul rămâne placeholder. Bucla de luptă e în continuare cea validată, nu arta.
 
 ---
+
+## PESCUITUL (16 noiembrie 2026) — al patrulea mod, pentru relaxare
+
+**Ce s-a cerut:** un mod de relaxare, pentru când ai jucat destulă Cultură
+generală: pescuit, un mini-joc care să te țină acolo.
+
+**Trei decizii, luate cu mine înainte de cod:**
+- **Al patrulea mod în meniu**, nu o masă în Tavernă. Redeschide „TREI moduri de
+  joc” conștient: relaxarea are nevoie de un loc al ei, nu de o masă printre
+  jocuri de gândit. (Ca masă ar fi intrat și în rotația Decretului Zilei, unde
+  n-are ce căuta: pescuitul n-are câștig sau pierdere.)
+- **Specii reale românești**, dar numai nume, mase de joc și condiții de joc.
+  NICIO afirmație despre biologia lor: ar fi fost fapte scrise din memoria
+  modelului de limbaj.
+- **Mereu deschis**, fără deblocare: relaxarea nu se câștigă.
+
+**Ce s-a făcut:**
+- `scenes/iazul/` — `iazul.tscn` + `iazul.gd` (scena, desenată toată în `_draw`,
+  fără nicio imagine nouă), `pesti.gd` (catalogul: 16 specii, zone, ore, vreme,
+  frecvență, masă, forță, plus desenul peștelui din parametri), `firul.gd`
+  (lupta cu firul, clasă fără scenă), `icoana_iaz.gd` (icoana din meniu).
+- **Bucla, cu un singur buton** (clic sau Spațiu): ARUNCI (ții apăsat, bara urcă
+  și coboară; aproape / în larg / departe), AȘTEPȚI (ciupituri false, apoi pluta
+  se scufundă cu adevărat; lovitura la ciupitură sperie peștele), TRAGI (ții
+  apăsat, dar dai drumul la avertizare, înainte ca peștele să smucească;
+  firul se rupe la tensiune 1). A doua și a treia fază sunt inhibiție, adică
+  Obeliscul Reflex deghizat, fără nicio întrebare pe ecran.
+- **Ce te ține acolo, cinstit:** jurnalul cu 16 siluete negre și indiciul
+  fiecăreia („Departe, noaptea”), recordul de masă pe specie, ora care trece
+  (o zi = 6 minute, 15 de pe 17 noiembrie) și vremea care se schimbă (senin / ceață / ploaie). Fiecare
+  condiție are o specie a ei, deci o vreme nouă e o promisiune. FĂRĂ serii,
+  fără „revino mâine”, fără cutii-surpriză (ar încălca „Ton sănătos”).
+- **Pe disc:** doar jurnalul (`permanent.json`, cheia „iazul”), scris la fiecare
+  captură. Nu plătește nimic, ca Taverna.
+- **Meniul are patru pagini:** 242 px fiecare, goluri de 16, margini dinăuntru 15,
+  butoane la 16 pt. Cere 1125 px pe 1152 (măsurat). Prima scriere cerea 1166.
+- **`verifica_iazul`, 38 de verdicte, ~25 s:** catalogul (orice loc și oră are
+  pește; fiecare condiție are specia ei; fiecare specie are undeva ≥ 2% șanse),
+  FIRUL jucat de 300 × 16 × 3 jucători închipuiți (cu 0,22 s întârziere de
+  reacție: atentul prinde 100%, cine ține apăsat pierde tot de la forța 3 în sus,
+  cine citește doar tensiunea pierde la forța 4-5), scena jucată cap-coadă,
+  salvarea, meniul și jurnalul plin măsurate, fonturile.
+
+**De reținut:** prima rulare a dat 100% și jucătorului care nu citește semnul,
+fiindcă simularea reacționa în același cadru. Un jucător închipuit fără
+întârziere de reacție e un robot, iar verdictul despre „priceperea contează”
+nu spune nimic. Acum `REACTIE = 0,22 s` pentru amândoi.
+
+**Tot pe 16 noiembrie: vederea pescarului.** Scena se vede acum de la capătul
+pontonului, drept înainte: scândurile fug spre apă în partea de jos, mânerul
+undiței iese prin marginea de jos, puțin la dreapta mijlocului, iar distanța
+aruncării e doar înălțimea pe ecran. Vârful se oprește la 52% din înălțime, ca să
+nu acopere pluta aruncată departe, și se apleacă spre pește la tragere. Indiciul,
+mesajele și bara „cât mai e până la mal” au urcat sub antet. Mecanica e neatinsă,
+iar `verifica_iazul` trece tot. Am făcut-o înaintea imaginilor, ca pozele să se
+genereze după încadrare, nu invers (prompturile pentru vederea asta sunt în
+conversația din 16 noiembrie: pontonul și undița „first-person”).
+
+**Tot pe 16 noiembrie: sunetele iazului.** Toate sunt SINTETIZATE în cod, în
+`scenes/iazul/sunete_iaz.gd`, fără niciun fișier. Sunt 10 efecte: aruncarea,
+pluta care cade (mai încet cu cât e mai departe), ciupitura, mușcătura,
+clicul mulinetei, frâna, scârțâitul firului, firul rupt, stropii capturii și
+ciripitul păsărilor. Pe lângă ele sunt 3 bucle de ambianță: apa mereu,
+ploaia când plouă și greierii seara și noaptea, fiecare stingându-se în
+4 s. Lupta se poate juca și după ureche, fiindcă fiecare semn are un sunet:
+scârțâitul vine la AVERTIZARE, frâna la SMUCITURĂ, iar clicul cât timp tragi.
+Orice sunet se înlocuiește cu un fișier: `assets/audio/iazul/<cheie>.ogg`,
+dacă există, câștigă în fața sintezei, fără nicio linie de cod. Sinteza
+tuturor durează ~150 ms și se face o singură dată pe joc (`static`).
+`verifica_iazul` avea atunci 45 de verdicte, iar cele 7 noi sunt despre sunete.
+Ele verifică trei lucruri. Întâi, că fiecare sunet se aude și nu taie. Apoi,
+că buclele se leagă fără pocnet. La urmă, partida jucată: că se aude ce
+trebuie, în ordine, că scârțâitul vine la fiecare avertizare și numai atunci
+și că ambianța urmează ora și vremea.
+**De reținut:** prima scriere a verdictului de buclă cerea ca ultimul
+eșantion să fie aproape de primul și a picat la ploaie (0,13). Cusătura era
+bună, dar ploaia e zgomot, iar doi vecini oarecare sar la fel de mult. Acum
+cusătura se compară cu cel mai mare salt dintre vecini din interiorul buclei.
+
+**17 noiembrie: la iaz nu mai cântă muzica.** Iazul cheamă `Muzica.opreste()`
+(cu stingere treptată) în loc de piesa cetății; fundalul e ambianța. La
+întoarcere, meniul o repornește singur din `_ready`. Verdict nou în
+`verifica_iazul` („la iaz muzica tace”), acum 46.
+
+**17 noiembrie: imaginile pictate.** În `assets/iazul/` sunt trei fundaluri
+(zi, amurg, noapte, cu cetatea pe malul din dreapta), pontonul și undița.
+Ultimele două au venit pe fond alb și sunt decupate cu
+`tools/iazul_imagini.py`. Decuparea se face în doi pași: întâi se umple
+albul pornind de la margini, apoi se scot golurile de alb pur închise în
+imagine (între barele mulinetei, sub stâlpul din dreapta). La urmă se curăță
+albul de pe muchie. Scriptul micșorează și fundalurile la 1600 px, ca toate
+cinci să aibă ~0,9 MB pentru web.
+În joc, fundalurile se topesc unul în altul după oră; zorii folosesc
+imaginea de amurg. Pontonul și undița primesc `lumina` momentului din
+`PALETE`. Undița pictată e rotită și scalată ca mânerul și vârful ei să cadă
+pe aceleași două puncte ca înainte, deci tot se apleacă spre pește.
+Orizontul vine acum din fundal (0,547 din imagine), iar pluta de aproape și
+peștele tras la mal se raportează la muchia pontonului, nu la o fracțiune
+fixă. Orice imagine lipsă înseamnă desenul vechi, care a rămas ca rezervă.
+`verifica_iazul` are 48 de verdicte. Cele 2 noi verifică că imaginile se
+încarcă și că pluta cade între linia apei și ponton. Capturile s-au făcut
+la zi, amurg cu tragere, noapte și zori pe ploaie.
+
+**Tot pe 17 noiembrie: fără contur alb, și o zi mai lungă.**
+- **Conturul alb.** Pontonul și undița aveau în jur o dungă de cenușiu
+  deschis, de 1-3 px, care noaptea arăta ca desenată cu creta. Era netezirea
+  marginii făcută de generatorul de imagini spre fondul alb: prea închisă ca
+  s-o prindă pragul de alb, prea deschisă ca să fie lemn.
+  `curata_muchia()` din `tools/iazul_imagini.py` rezolvă asta în doi pași:
+  întâi roade muchia cu un pixel, apoi, pe o bandă de 3 px, un pixel mai
+  deschis decât interiorul de lângă el primește culoarea celui mai apropiat
+  pixel din interior. Pixelii mai închiși rămân, ca să nu se piardă fibrele
+  frânghiei. Funcția roade câte un pixel la fiecare trecere, deci nu se
+  rulează a doua oară pe aceleași PNG-uri.
+- **Ziua lungă.** Ziua durează acum 15 minute în loc de 6
+  (`ZI_SECUNDE` = 900). Fiecare parte ține câteva minute: zori ~2, zi ~5,5,
+  amurg ~3, noapte ~4,3. Trecerile de culoare durează 50-90 s, iar între ele
+  culoarea stă pe loc. Răsăritul și apusul sunt acum constante (`RASARIT`,
+  `APUS`), nu numere din formulă. Jocul începe la 330, la ~80 s înainte să
+  vină amurgul.
+- **De reținut:** două verdicte din `verifica_iazul` aveau orele scrise de mână.
+  „În 800 s trec toate momentele” a trecut doar din noroc, fiindcă ora de
+  pornire cădea bine. Ambianța ar fi probat „ziua” la ora 100, care acum
+  înseamnă zori. Acum amândouă își iau orele din `ORAR` și `ZI_SECUNDE`.
+
+**Rămas deschis:**
+- Iazul n-are încă imagini pentru pești (sunt siluete desenate) și nici
+  pentru ceață (e o suprapunere desenată peste fundalul de zi).
+- Sunetele sunt sintetizate, deci sună „curat”, de joc vechi. Dacă vreunul
+  supără la ascultare, se pune un `.ogg` cu numele cheii în
+  `assets/audio/iazul/`. Încă NU le-am ascultat cu urechea, doar le-am măsurat.
+- Cifrele luptei (forța, durata, fereastra mușcăturii) sunt prima încercare.
+  Se reglează după ce joc o seară. Tabelul din `verifica_iazul` arată durata
+  medie pe specie (8,7 s babușca, 33,5 s somnul).
+- Pescuitul nu e încă legat de Practice. Un îndemn („Mergi la pescuit?”) după
+  un raft parcurs ar fi un rând în Practice, dacă-l vreau.
+
+---
+
+## INDICIUL LA ALCHIMIE (11 noiembrie 2026) — un buton care se câștigă încercând
+
+**Ce s-a cerut:** la Alchimie (Fiolele), un buton de indiciu care apare când
+jucătorul se chinuie, dar NU înainte să fi încercat câteva turnări.
+
+**Ce s-a făcut:**
+
+- Butonul „Indiciu” stă lângă „Înapoi” și „Reia”, **nevăzut și neapăsabil de la
+  început, dar cu locul ținut**: dacă ar fi intrat în rând abia la apariție,
+  rândul s-ar fi recentrat și ar fi mutat „Înapoi” de sub cursor.
+- **Când apare** (`_poate_apare_indiciul`): niciodată sub
+  `INDICIU_MINIM_TURNARI = 6` turnări; apoi la un SEMN DE CHIN (o turnare
+  desfăcută, un Reia după ce ai turnat, sau nicio turnare rămasă), ori, fără
+  semn, când ai turnat de mai multe ori decât drumul rezolvitorului de la start
+  (pe Greu ~44). Turnările se numără TOATE, și cele desfăcute.
+- **Un indiciu pe blocaj** (cerut în aceeași zi): folosit, butonul DISPARE, iar
+  numărătoarea, semnul de chin și pragul căii a doua (acum drumul rămas de la
+  indiciu) o iau de la zero. Reapare doar dacă te blochezi din nou, pe aceleași
+  două căi. Prima scriere îl lăsa pe masă până la final, adică o scară de
+  indicii apăsate la rând.
+- **Ce spune**: ridică fiola de turnat și face să pulseze, chihlimbar, pe cea în
+  care torni (`Fiola.indicata`). Nu toarnă în locul tău. Dintr-o fundătură spune
+  câte turnări să desfaci, găsite prin căutare BINARĂ pe istoric (o masă fără
+  drum nu duce într-una cu drum, deci stările bune vin toate înaintea celor
+  rele). Cel mai lent indiciu măsurat: ~185 ms.
+- Rezumatul spune câte indicii ai luat („cu 3 indicii”), fără judecată.
+
+**Găsit de verificare la prima rulare:** urmând numai indiciile te învârteai în
+cerc (300 de indicii, nicio masă sortată). Fiecare indiciu căuta un drum nou, iar
+primul pas al unuia îl desfăcea pe al altuia. Acum masa ține minte PLANUL și îl
+continuă cât timp masa e exact cea la care duce el; caută din nou doar când te
+abați. Urmate de la cap la coadă, indiciile sortează masa.
+
+**Plătit conștient:** rezolvitorul vede și straturile ascunse, deci la treptele
+de la 20 în sus indiciul se folosește de ce tu nu vezi. E un ajutor, nu o
+deducție. Regulile din panou NU pomenesc indiciul: panoul decretului e cel mai
+înalt din joc și n-a fost măsurat cu un rând în plus.
+
+`verifica_taverna`: secțiunea FIOLELE — INDICIUL, 18 verdicte, 395 în total.
+Pe drum: verificarea nu se mai compila din cauza unei variabile `titlu`
+declarate de două ori în codul nou al meniului, încă necomis (redenumită
+`titlu_meniu`).
+
+---
+
+## SALVAREA CĂLĂTOREȘTE (10 noiembrie 2026) — Exportă / Importă, fără server
+
+**Ce a cerut-o:** Alchimia jucată pe telefon până la nivelul 40, în build-ul
+web; pe laptop, tot în build-ul web, nivelul 4. Pe web, `user://` e stocarea
+BROWSERULUI (IndexedDB), deci fiecare dispozitiv, și fiecare browser, are
+salvarea lui. Nu era o greșeală, era chiar decizia „Desktop = casa
+progresului”, doar că acum se juca pe două dispozitive.
+
+**Ce s-a făcut:**
+
+- `Arhiva` are o secțiune nouă, PACHETUL. `pachet()` adună într-un JSON tot ce
+  ar scrie pe disc (`_date_permanente()` + expediția vie, dacă există), cu
+  `"joc": "mindkeep"`, `versiune` și `exportat_la`. `exporta()` îl DESCARCĂ pe
+  web (`JavaScriptBridge.download_buffer`) și îl scrie în dosarul de descărcări
+  pe desktop. `alege_pachet()` deschide alegătorul de fișiere: pe web un
+  `<input type="file">` ascuns, pe desktop `FileDialog` nativ. `citeste_pachet()`
+  îl validează FĂRĂ să atingă nimic, iar `importa()` îl aplică.
+- `incarca()` s-a despărțit în `_aplica_permanent()` / `_aplica_expeditia()`, iar
+  `salveaza_*` în `_date_permanente()` / `_date_expeditiei()`. Pachetul folosește
+  EXACT aceleași funcții ca discul, deci o stare nouă scrisă acolo călătorește
+  singură.
+- Meniul are în colțul din dreapta-sus „Exportă salvarea” și „Importă salvarea”,
+  cu rândul de rezultat dedesubt și o întrebare înainte de import.
+
+**Deciziile:**
+
+- **Importul ÎNLOCUIEȘTE, nu amestecă.** Un amestec ar fi cerut o regulă pe
+  fiecare cheie (treapta: maximul; sacul: reuniunea; Monedele: nu se pot
+  împăca), iar fiecare cheie viitoare ar fi cerut încă una. O regulă uitată ar
+  fi însemnat o cheie pierdută tăcut la fiecare import. Cu înlocuirea, nimic nu
+  trebuie ținut minte. Prețul: alegi tu dispozitivul bun, iar întrebarea de
+  dinainte o spune.
+- **Ce se înlocuiește se pune deoparte** (`permanent.inainte_de_import.json`), cu
+  aceeași `_pune_deoparte()` ca la fișierele stricate. Dacă nu se poate pune
+  deoparte, importul se oprește înainte să schimbe ceva.
+- **Aceleași reguli de versiune ca discul.** Un pachet mai vechi trece prin
+  `_migreaza()`, unul mai nou e refuzat („actualizează jocul de aici”).
+- **Butoanele stau în COLȚ, nu în coloană.** Puse sub pagini, meniul cerea 642 px
+  din 648, iar rândul de avertisment (vizibil doar la un fișier stricat) l-ar fi
+  dus peste margine. În colț nu iau nimic din coloană.
+- **Fără server, fără cont.** Fișierul îl muți tu (email, Drive, WhatsApp).
+  Jocul rămâne offline.
+
+**Verificat:** `verifica_salvarea` are secțiunea 12, PACHETUL, cu 16 verdicte
+(70 în total, toate OK): telefonul la treapta 40, laptopul la 4, iar după import
+e 40, în memorie și după repornire. Mai bate: progresul laptopului pus deoparte,
+pachetul fără expediție care o scoate pe cea de aici, o cheie necunoscută
+ignorată, cinci refuzuri care nu schimbă nimic și faptul că pachetul are exact
+cheile din `permanent.json`. Pe drum, `_fotografia()` a primit Taverna,
+Decretul și Fiolele: secțiunea 1 nu le compara deloc, deci un câmp uitat acolo
+ar fi trecut neobservat. `verifica_taverna` măsoară acum meniul și cu
+avertismentul vizibil, plus colțul salvării față de titlu.
+
+**NEVERIFICAT, de făcut cu mâna:** drumul din browser (descărcarea pe telefon,
+alegătorul de fișiere pe laptop). Nicio verificare headless nu poate apăsa un
+`<input type="file">`.
+
+**Pașii pentru nivelul 40:** urci build-ul nou pe itch.io (aceeași pagină, deci
+aceeași origine, iar salvarea de pe telefon rămâne), deschizi jocul pe telefon,
+apeși „Exportă salvarea”, muți fișierul pe laptop și acolo apeși „Importă
+salvarea”. Până atunci, pe telefon nu șterge datele site-ului.
 
 ## FIOLE DE STICLĂ (4 noiembrie 2026) — desenul realist și turnarea animată
 

@@ -77,6 +77,13 @@ extends Node
 ## atingi.
 ##
 ## ─────────────────────────────────────────────────────────────
+## PACHETUL: DRUMUL SPRE ALT DISPOZITIV
+##
+## Exportul și importul (secțiunea PACHETUL, la final) duc toată starea într-un
+## singur fișier, pe care îl muți tu de pe telefon pe laptop. Importul
+## ÎNLOCUIEȘTE, nu amestecă; motivul e scris acolo.
+##
+## ─────────────────────────────────────────────────────────────
 ## CE SE ÎNTÂMPLĂ CU UN FIȘIER PE CARE NU-L POT CITI
 ##
 ## Nu se șterge și nu se suprascrie: se PUNE DEOPARTE, cu un nume nou
@@ -105,6 +112,8 @@ const TAVERNA := preload("res://scenes/taverna/taverna.gd")
 const DECRETUL := preload("res://scenes/taverna/decretul/decretul.gd")
 ## Fiolele țin minte treapta la care ai ajuns — aceeași judecată ca la decret.
 const FIOLELE := preload("res://scenes/taverna/fiolele/fiolele.gd")
+## Iazul ține jurnalul pescarului: ce specii ai prins și cel mai mare exemplar.
+const IAZUL := preload("res://scenes/iazul/iazul.gd")
 
 ## Versiunea formatului de pe disc. Crește când o cheie își schimbă ÎNȚELESUL,
 ## nu când se adaugă una nouă: o cheie în plus e citită de un joc vechi ca
@@ -149,28 +158,40 @@ func incarca() -> void:
 
 	var permanent = _citeste(NUME_PERMANENT)
 	if permanent is Dictionary:
-		# Fiecare bucată trece prin `din_dictionar()`-ul deținătorului ei, deci
-		# regulile de citit strâmb (cheie lipsă = implicit, cheie necunoscută =
-		# ignorată) stau tot acolo unde stă starea.
-		Tezaur.din_dictionar(_sub(permanent, "tezaur"))
-		Sac.din_dictionar(_sub(permanent, "sac"), Sac.Durata.PERMANENT)
-		PRACTICE.din_dictionar(_sub(permanent, "practice"))
-		TAVERNA.din_dictionar(_sub(permanent, "taverna"))
-		DECRETUL.din_dictionar(_sub(permanent, "decretul"))
-		FIOLELE.din_dictionar(_sub(permanent, "fiolele"))
+		_aplica_permanent(permanent)
 
 	var expeditie = _citeste(NUME_EXPEDITIE)
 	if expeditie is Dictionary:
-		Expeditie.din_dictionar(_sub(expeditie, "expeditie"))
-		Sac.din_dictionar(_sub(expeditie, "sac"), Sac.Durata.EXPEDITIE)
+		_aplica_expeditia(expeditie)
 
-		# UN FIȘIER DE EXPEDIȚIE ÎNCHEIATĂ N-AR TREBUI SĂ EXISTE: se șterge la
-		# `incheie()`. Dacă totuși e acolo (un joc închis în clipa greșită, un
-		# fișier rămas de la o versiune mai veche), nu se reia: o expediție
-		# încheiată e deja plătită în Tezaur, iar reluarea ei ar fi a doua plată.
-		if not Expeditie.activa:
-			Expeditie.goleste()
-			sterge_expeditia()
+
+## Fiecare bucată trece prin `din_dictionar()`-ul deținătorului ei, deci
+## regulile de citit strâmb (cheie lipsă = implicit, cheie necunoscută =
+## ignorată) stau tot acolo unde stă starea. Despărțită de `incarca()` fiindcă
+## o cheamă și `importa()`: un pachet adus de pe alt dispozitiv intră în joc
+## pe EXACT drumul pe care intră fișierul de pe disc, deci n-are cum să ajungă
+## în stare altfel decât el.
+func _aplica_permanent(permanent: Dictionary) -> void:
+	Tezaur.din_dictionar(_sub(permanent, "tezaur"))
+	Sac.din_dictionar(_sub(permanent, "sac"), Sac.Durata.PERMANENT)
+	PRACTICE.din_dictionar(_sub(permanent, "practice"))
+	TAVERNA.din_dictionar(_sub(permanent, "taverna"))
+	DECRETUL.din_dictionar(_sub(permanent, "decretul"))
+	FIOLELE.din_dictionar(_sub(permanent, "fiolele"))
+	IAZUL.din_dictionar(_sub(permanent, "iazul"))
+
+
+func _aplica_expeditia(expeditie: Dictionary) -> void:
+	Expeditie.din_dictionar(_sub(expeditie, "expeditie"))
+	Sac.din_dictionar(_sub(expeditie, "sac"), Sac.Durata.EXPEDITIE)
+
+	# UN FIȘIER DE EXPEDIȚIE ÎNCHEIATĂ N-AR TREBUI SĂ EXISTE: se șterge la
+	# `incheie()`. Dacă totuși e acolo (un joc închis în clipa greșită, un
+	# fișier rămas de la o versiune mai veche), nu se reia: o expediție
+	# încheiată e deja plătită în Tezaur, iar reluarea ei ar fi a doua plată.
+	if not Expeditie.activa:
+		Expeditie.goleste()
+		sterge_expeditia()
 
 
 ## O bucată din fișier, garantat Dictionary. Un save strâmb (cheia lipsește, sau
@@ -189,14 +210,29 @@ func _sub(date: Dictionary, cheie: String) -> Dictionary:
 # ─────────────────────────────────────────────────────────────
 
 func salveaza_permanent() -> bool:
-	return _scrie(NUME_PERMANENT, {
+	return _scrie(NUME_PERMANENT, _date_permanente())
+
+
+## Ce ajunge în `permanent.json`. Într-o funcție, nu în `salveaza_permanent()`,
+## fiindcă același dicționar pleacă și în pachetul de export: o bucată nouă de
+## stare scrisă aici călătorește singură și pe alt dispozitiv.
+func _date_permanente() -> Dictionary:
+	return {
 		"tezaur": Tezaur.spre_dictionar(),
 		"sac": Sac.spre_dictionar(Sac.Durata.PERMANENT),
 		"practice": PRACTICE.spre_dictionar(),
 		"taverna": TAVERNA.spre_dictionar(),
 		"decretul": DECRETUL.spre_dictionar(),
 		"fiolele": FIOLELE.spre_dictionar(),
-	})
+		"iazul": IAZUL.spre_dictionar(),
+	}
+
+
+func _date_expeditiei() -> Dictionary:
+	return {
+		"expeditie": Expeditie.spre_dictionar(),
+		"sac": Sac.spre_dictionar(Sac.Durata.EXPEDITIE),
+	}
 
 
 ## O expediție care nu e activă nu are ce salva, și asta nu e o plasă teoretică:
@@ -208,10 +244,7 @@ func salveaza_expeditia() -> bool:
 	if not Expeditie.activa:
 		return true
 
-	return _scrie(NUME_EXPEDITIE, {
-		"expeditie": Expeditie.spre_dictionar(),
-		"sac": Sac.spre_dictionar(Sac.Durata.EXPEDITIE),
-	})
+	return _scrie(NUME_EXPEDITIE, _date_expeditiei())
 
 
 ## Amândouă, pentru clipele în care s-au schimbat amândouă (sfârșit de luptă,
@@ -251,7 +284,8 @@ func cale_catre(nume: String) -> String:
 
 # ─────────────────────────────────────────────────────────────
 # DISCUL
-# Singurele patru funcții din tot jocul care deschid un fișier de scris.
+# Singurele patru funcții din tot jocul care deschid un fișier de scris în
+# `user://`. (A cincea, `exporta()`, scrie în afara lui: pachetul e al tău.)
 # ─────────────────────────────────────────────────────────────
 
 ## Scrie un dicționar, în siguranță. Vezi „SCRIEREA NU POATE LĂSA UN FIȘIER
@@ -408,3 +442,207 @@ func _acum_pentru_nume() -> String:
 ## care EXISTĂ și înseamnă altceva.
 func _migreaza(date: Dictionary, _de_la: int) -> Dictionary:
 	return date
+
+
+# ─────────────────────────────────────────────────────────────
+# PACHETUL — salvarea dusă pe alt dispozitiv
+#
+# Pe web, `user://` e stocarea BROWSERULUI (IndexedDB): telefonul și laptopul
+# au fiecare salvarea lui, și niciuna nu știe de cealaltă. Pachetul e drumul
+# dintre ele: un singur fișier JSON, descărcat pe un dispozitiv și ales pe
+# celălalt. Fără server și fără cont, fiindcă jocul se joacă offline și așa
+# rămâne: un fișier îl duci tu (email, Drive, cablu), nu jocul.
+#
+# IMPORTUL ÎNLOCUIEȘTE, NU AMESTECĂ — și ăsta e tot motivul pentru care
+# rezistă în timp. Un amestec ar cere o regulă pe fiecare cheie („treapta:
+# cea mai mare", „sacul: reuniunea", „monedele: …nu se poate"), iar fiecare
+# cheie adăugată de azi încolo ar cere încă una. Ziua în care uitam o regulă,
+# cheia aia s-ar fi pierdut tăcut la fiecare import. Cu înlocuirea, pachetul
+# poartă `_date_permanente()` întreg, deci orice stare nouă scrisă acolo
+# călătorește fără ca fișierul ăsta să fie atins. Prețul: alegi TU care
+# dispozitiv are progresul bun — iar meniul o spune înainte să confirmi.
+#
+# CE SE ÎNLOCUIEȘTE NU SE PIERDE: fișierele de dinainte se pun deoparte
+# (`permanent.inainte_de_import.json`), cu aceeași funcție care pune deoparte
+# un fișier stricat, deci nici aici nu se suprascrie nimic.
+#
+# Aceleași reguli de versiune ca discul: un pachet mai vechi se citește prin
+# `_migreaza()`, unul mai nou se refuză. Telefonul cu build-ul de mâine nu are
+# voie să-i dea laptopului cu build-ul de ieri chei pe care nu le știe.
+# ─────────────────────────────────────────────────────────────
+
+## Semnul că un JSON e un pachet de-al nostru. Fără el, un fișier ales din
+## greșeală (orice JSON cu o cheie „permanent") ar fi înlocuit tot progresul.
+const MARCA_PACHET := "mindkeep"
+const ETICHETA_INAINTE_DE_IMPORT := "inainte_de_import"
+
+## De ce n-a putut fi citit un pachet. FAPTE, nu propoziții — fraza o face
+## meniul, ca la `stricate`.
+enum EroarePachet { NICIUNA, NU_E_JSON, NU_E_SALVARE, PREA_NOU, INCOMPLET }
+
+## UN IMPORT FĂCUT ÎN SESIUNEA ASTA: `{"exportat_la": "…"}`, sau gol. Meniul îl
+## citește o dată, după ce se încarcă din nou, ca să spună ce s-a întâmplat.
+var importat := {}
+
+## Callback-ul JavaScript trebuie ȚINUT de cineva: dacă referința moare,
+## browserul cheamă o funcție care nu mai există. De-aia e câmp, nu variabilă
+## locală.
+var _js_inapoi: JavaScriptObject = null
+var _pachet_primit := Callable()
+
+## Alegătorul de fișiere al browserului. Un `<input type="file">` ascuns, apăsat
+## din cod: Godot pe web nu vede discul gazdei, deci fereastra trebuie să fie a
+## browserului. Merge fiindcă clicul pe buton e încă „gestul utilizatorului"
+## (browserele lasă câteva secunde după el), altfel `click()` ar fi ignorat.
+## Fără `accept`, dinadins: pe Android, un filtru pe tip poate stinge exact
+## fișierul descărcat, iar un fișier greșit oricum e refuzat de `citeste_pachet`.
+const JS_ALEGE := """
+window.mindkeepAlegeSalvarea = function (inapoi) {
+	var intrare = document.createElement("input");
+	intrare.type = "file";
+	intrare.style.display = "none";
+	intrare.addEventListener("cancel", function () { intrare.remove(); });
+	intrare.addEventListener("change", function () {
+		var fisier = intrare.files && intrare.files[0];
+		intrare.remove();
+		if (!fisier) { return; }
+		var cititor = new FileReader();
+		cititor.onload = function () { inapoi(String(cititor.result)); };
+		cititor.readAsText(fisier);
+	});
+	document.body.appendChild(intrare);
+	intrare.click();
+};
+"""
+
+
+## Toată starea, într-un dicționar care se poate scrie ca JSON. Din MEMORIE, nu
+## din fișiere: e exact ce s-ar scrie pe disc acum, fără o citire în plus.
+func pachet() -> Dictionary:
+	var date := {
+		"joc": MARCA_PACHET,
+		"versiune": VERSIUNE,
+		"exportat_la": Time.get_datetime_string_from_system(false, true),
+		"permanent": _date_permanente(),
+	}
+	# O expediție vie călătorește și ea: o începi pe telefon, o continui pe
+	# laptop. Una moartă n-are ce căuta în pachet, la fel ca pe disc.
+	if Expeditie.activa:
+		date["expeditie"] = _date_expeditiei()
+	return date
+
+
+## „mindkeep-salvare-2026-11-10T14-33-02.json". Data în nume, ca două exporturi
+## să nu se calce și ca cel mai nou să se recunoască din listă.
+func nume_pachet() -> String:
+	return "mindkeep-salvare-%s.json" % _acum_pentru_nume()
+
+
+## Scoate pachetul din joc. Întoarce unde a ajuns (numele fișierului pe web,
+## calea întreagă pe desktop), sau "" dacă n-a putut fi scris.
+##
+## Pe web, browserul îl DESCARCĂ (pe telefon, în Descărcări). Pe desktop se
+## scrie în dosarul de descărcări al sistemului, ca să-l găsești în același loc
+## în care l-ai fi găsit în browser.
+func exporta() -> String:
+	var text := JSON.stringify(pachet(), "\t")
+	var nume := nume_pachet()
+	if OS.has_feature("web"):
+		JavaScriptBridge.download_buffer(text.to_utf8_buffer(), nume, "application/json")
+		return nume
+
+	var dosar_tinta := OS.get_system_dir(OS.SYSTEM_DIR_DOWNLOADS)
+	if dosar_tinta == "":
+		dosar_tinta = OS.get_user_data_dir()
+	var cale := dosar_tinta.path_join(nume)
+	var fisier := FileAccess.open(cale, FileAccess.WRITE)
+	if fisier == null:
+		push_error("Arhiva: nu pot scrie pachetul %s (eroarea %d)." % [
+			cale, FileAccess.get_open_error()])
+		return ""
+	fisier.store_string(text)
+	fisier.close()
+	return cale
+
+
+## Deschide fereastra de ales un fișier și cheamă `primit(text)` cu ce s-a ales.
+## Dacă jucătorul renunță, nu se cheamă nimic: nu e nimic de spus.
+func alege_pachet(primit: Callable) -> void:
+	_pachet_primit = primit
+	if OS.has_feature("web"):
+		if _js_inapoi == null:
+			JavaScriptBridge.eval(JS_ALEGE, true)
+			_js_inapoi = JavaScriptBridge.create_callback(_pe_textul_ales)
+		JavaScriptBridge.get_interface("window").mindkeepAlegeSalvarea(_js_inapoi)
+		return
+
+	var fereastra := FileDialog.new()
+	fereastra.file_mode = FileDialog.FILE_MODE_OPEN_FILE
+	fereastra.access = FileDialog.ACCESS_FILESYSTEM
+	# Fereastra sistemului acolo unde există (Windows, macOS); altfel cea a lui
+	# Godot, care arată mai sărac dar face același lucru.
+	fereastra.use_native_dialog = true
+	fereastra.filters = PackedStringArray(["*.json ; Salvare Mindkeep"])
+	var descarcari := OS.get_system_dir(OS.SYSTEM_DIR_DOWNLOADS)
+	if descarcari != "":
+		fereastra.current_dir = descarcari
+	fereastra.file_selected.connect(func(cale: String) -> void:
+		fereastra.queue_free()
+		_pachet_primit.call(FileAccess.get_file_as_string(cale)))
+	fereastra.canceled.connect(fereastra.queue_free)
+	add_child(fereastra)
+	fereastra.popup_centered_ratio(0.6)
+
+
+func _pe_textul_ales(argumente: Array) -> void:
+	if argumente.is_empty() or not _pachet_primit.is_valid():
+		return
+	_pachet_primit.call(String(argumente[0]))
+
+
+## Citește un pachet din text, FĂRĂ să atingă nimic. Întoarce
+## `{"eroare": EroarePachet, "pachet": Dictionary}`; pachetul e gol când eroarea
+## nu e `NICIUNA`. Despărțit de `importa()` ca meniul să poată întreba
+## „sigur?" ÎNTRE citire și înlocuire, cu data pachetului în întrebare.
+func citeste_pachet(text: String) -> Dictionary:
+	var cititor := JSON.new()
+	if cititor.parse(text) != OK:
+		return {"eroare": EroarePachet.NU_E_JSON, "pachet": {}}
+	var date = cititor.data
+	if not (date is Dictionary) or String((date as Dictionary).get("joc", "")) != MARCA_PACHET:
+		return {"eroare": EroarePachet.NU_E_SALVARE, "pachet": {}}
+	var versiune = (date as Dictionary).get("versiune")
+	if not (versiune is int or versiune is float):
+		return {"eroare": EroarePachet.INCOMPLET, "pachet": {}}
+	if int(versiune) > VERSIUNE:
+		return {"eroare": EroarePachet.PREA_NOU, "pachet": {}}
+	if not ((date as Dictionary).get("permanent") is Dictionary):
+		return {"eroare": EroarePachet.INCOMPLET, "pachet": {}}
+	return {"eroare": EroarePachet.NICIUNA, "pachet": date}
+
+
+## Înlocuiește toată starea cu cea din pachet (unul trecut prin
+## `citeste_pachet`) și o scrie pe disc. Întoarce `false` dacă n-a putut pune
+## deoparte fișierele de dinainte — atunci NU înlocuiește nimic.
+func importa(date: Dictionary) -> bool:
+	# Întâi copia de siguranță. Dacă nu se poate face, importul se oprește aici:
+	# o înlocuire fără copie ar fi singurul loc din Arhivă care suprascrie.
+	for nume in [NUME_PERMANENT, NUME_EXPEDITIE]:
+		if FileAccess.file_exists(cale_catre(nume)) \
+				and _pune_deoparte(nume, ETICHETA_INAINTE_DE_IMPORT) == nume:
+			return false
+
+	var versiune := int(date.get("versiune", 0))
+	_aplica_permanent(_migreaza(date["permanent"], versiune))
+	var expeditie = date.get("expeditie")
+	if expeditie is Dictionary:
+		_aplica_expeditia(_migreaza(expeditie, versiune))
+	else:
+		# Pachet fără expediție: cea de aici (dacă era) a fost pusă deoparte,
+		# deci și din memorie pleacă. Altfel meniul ar fi scris „Continuă
+		# expediția" despre un run care nu mai e pe disc.
+		Expeditie.goleste()
+		Sac.din_dictionar({}, Sac.Durata.EXPEDITIE)
+
+	importat = {"exportat_la": String(date.get("exportat_la", ""))}
+	return salveaza_tot()

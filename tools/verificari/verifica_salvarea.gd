@@ -38,6 +38,9 @@ extends Node
 
 const PRACTICE := preload("res://scenes/practice/practice.gd")
 const TRIVIA := preload("res://scenes/trivia/trivia.gd")
+const TAVERNA := preload("res://scenes/taverna/taverna.gd")
+const DECRETUL := preload("res://scenes/taverna/decretul/decretul.gd")
+const FIOLELE := preload("res://scenes/taverna/fiolele/fiolele.gd")
 
 ## Dosarul de probă. Sub `user://`, ca să nu ceară drepturi și ca să dispară cu
 ## tot cu datele jocului dacă vreodată ștergi dosarul lui.
@@ -71,6 +74,7 @@ func _ready() -> void:
 	tot_bun = _nodul_nerezolvat() and tot_bun
 	tot_bun = _duratele_sacului() and tot_bun
 	tot_bun = _expeditia_incheiata() and tot_bun
+	tot_bun = _pachetul() and tot_bun
 
 	_goleste_dosarul()
 
@@ -682,6 +686,124 @@ func _expeditia_incheiata() -> bool:
 
 
 # ─────────────────────────────────────────────────────────────
+# 12. PACHETUL (exportă pe un dispozitiv, importă pe altul)
+# ─────────────────────────────────────────────────────────────
+
+## Drumul telefon → fișier → laptop, fără browser: `pachet()` e ce ar descărca
+## butonul, `citeste_pachet()` + `importa()` e ce face celălalt buton. Ce se
+## bate:
+##
+##   DUS-ÎNTORS. Starea bogată din secțiunea 1 trece prin TEXT (ca fișierul de
+##   pe telefon) și se întoarce întreagă — și pe disc, nu doar în memorie.
+##   ÎNLOCUIREA. „Laptopul" are treapta 4; după import are 40, iar fișierele lui
+##   sunt puse deoparte, nu șterse.
+##   CE FACE PACHETUL SĂ ȚINĂ ÎN TIMP. Poartă exact cheile din `permanent.json`
+##   (o stare nouă scrisă acolo călătorește singură), iar o cheie necunoscută,
+##   venită de la un build mai nou cu aceeași versiune, e ignorată, nu fatală.
+##   REFUZURILE. Un fișier care nu e JSON, un JSON care nu e al nostru, un pachet
+##   dintr-o versiune mai nouă, unul fără progres: niciunul nu schimbă nimic.
+func _pachetul() -> bool:
+	print("\n  12. PACHETUL (telefon → fișier → laptop)")
+	_goleste_dosarul()
+	_goleste_totul()
+
+	# „TELEFONUL": starea bogată, cu Alchimia la treapta 40.
+	_construieste_o_stare()
+	var telefon := _fotografia()
+	var text := JSON.stringify(Arhiva.pachet(), "\t")
+
+	# Pachetul poartă exact ce poartă discul.
+	Arhiva.salveaza_permanent()
+	var pe_disc: Dictionary = JSON.parse_string(_citeste_brut(Arhiva.NUME_PERMANENT))
+	pe_disc.erase("versiune")
+	pe_disc.erase("scris_la")
+	var in_pachet: Dictionary = Arhiva.pachet()["permanent"]
+	var chei_disc := pe_disc.keys()
+	chei_disc.sort()
+	var chei_pachet := in_pachet.keys()
+	chei_pachet.sort()
+	var bun := _verdict("pachetul are cheile din permanent.json",
+		chei_disc == chei_pachet, ", ".join(chei_pachet))
+
+	# „LAPTOPUL": alt progres, scris pe disc, fără expediție.
+	_goleste_dosarul()
+	_goleste_totul()
+	FIOLELE.din_dictionar({"treapta": 4})
+	Tezaur.din_dictionar({"fragmente": 3})
+	Arhiva.salveaza_tot()
+	var laptop := _fotografia()
+
+	var citit := Arhiva.citeste_pachet(text)
+	bun = _verdict("pachetul se citește",
+		int(citit["eroare"]) == Arhiva.EroarePachet.NICIUNA,
+		"eroarea %d" % int(citit["eroare"])) and bun
+	bun = _verdict("citirea nu schimbă nimic",
+		_la_fel(laptop, _fotografia(), "") == "") and bun
+
+	bun = _verdict("importul reușește", Arhiva.importa(citit["pachet"])) and bun
+	var diferenta := _la_fel(telefon, _fotografia(), "")
+	bun = _verdict("starea telefonului ajunge întreagă", diferenta == "",
+		"Alchimie, treapta %d" % int(FIOLELE.spre_dictionar().get("treapta", 0))
+		if diferenta == "" else diferenta) and bun
+	bun = _verdict("meniul află că s-a importat", not Arhiva.importat.is_empty()) and bun
+
+	_goleste_totul()
+	Arhiva.incarca()
+	diferenta = _la_fel(telefon, _fotografia(), "")
+	bun = _verdict("și e scrisă pe disc (repornire)", diferenta == "", diferenta) and bun
+
+	var deoparte := "permanent.%s.json" % Arhiva.ETICHETA_INAINTE_DE_IMPORT
+	var vechi = JSON.parse_string(_citeste_brut(deoparte))
+	var treapta_veche := -1
+	if vechi is Dictionary and vechi.get("fiolele") is Dictionary:
+		treapta_veche = int(vechi["fiolele"].get("treapta", -1))
+	bun = _verdict("progresul laptopului e pus deoparte, nu șters",
+		treapta_veche == 4, "%s: treapta %d" % [deoparte, treapta_veche]) and bun
+
+	# UN PACHET FĂRĂ EXPEDIȚIE O SCOATE PE CEA DE AICI. Altfel meniul ar fi scris
+	# „Continuă expediția" despre un run care nu mai e pe disc.
+	_goleste_dosarul()
+	_goleste_totul()
+	var fara_expeditie := Arhiva.pachet()   # nicio expediție activă
+	_construieste_o_stare()
+	Arhiva.salveaza_tot()
+	Arhiva.importa(Arhiva.citeste_pachet(JSON.stringify(fara_expeditie))["pachet"])
+	bun = _verdict("pachet fără expediție: nici aici nu mai e",
+		not Expeditie.activa and not Arhiva.exista_expeditie(),
+		"activa=%s, fișier=%s" % [Expeditie.activa, Arhiva.exista_expeditie()]) and bun
+
+	# O CHEIE DIN VIITOR, cu aceeași versiune: ignorată, ca pe disc.
+	var cu_cheie_noua: Dictionary = JSON.parse_string(text)
+	cu_cheie_noua["permanent"]["cetatea"] = {"cladiri": 3}
+	cu_cheie_noua["alta_cheie"] = true
+	citit = Arhiva.citeste_pachet(JSON.stringify(cu_cheie_noua))
+	var trece: bool = int(citit["eroare"]) == Arhiva.EroarePachet.NICIUNA \
+		and Arhiva.importa(citit["pachet"])
+	bun = _verdict("o cheie necunoscută nu oprește importul",
+		trece and int(FIOLELE.spre_dictionar().get("treapta", 0)) == 40) and bun
+
+	# REFUZURILE. Starea de dinainte trebuie să rămână neatinsă la fiecare.
+	var inainte := _fotografia()
+	var din_viitor: Dictionary = JSON.parse_string(text)
+	din_viitor["versiune"] = Arhiva.VERSIUNE + 1
+	var fara_progres: Dictionary = JSON.parse_string(text)
+	fara_progres.erase("permanent")
+	var cazuri := [
+		["nu e JSON", "salvarea mea", Arhiva.EroarePachet.NU_E_JSON],
+		["JSON străin", '{"permanent": {}}', Arhiva.EroarePachet.NU_E_SALVARE],
+		["listă, nu obiect", "[1, 2]", Arhiva.EroarePachet.NU_E_SALVARE],
+		["din versiunea următoare", JSON.stringify(din_viitor), Arhiva.EroarePachet.PREA_NOU],
+		["fără progres", JSON.stringify(fara_progres), Arhiva.EroarePachet.INCOMPLET],
+	]
+	for caz in cazuri:
+		var eroare := int(Arhiva.citeste_pachet(String(caz[1]))["eroare"])
+		bun = _verdict("refuzat: %s" % caz[0], eroare == int(caz[2]),
+			"eroarea %d, așteptam %d" % [eroare, int(caz[2])]) and bun
+	bun = _verdict("refuzurile nu schimbă nimic",
+		_la_fel(inainte, _fotografia(), "") == "") and bun
+	return bun
+
+# ─────────────────────────────────────────────────────────────
 # STAREA DE PROBĂ
 # ─────────────────────────────────────────────────────────────
 
@@ -729,6 +851,12 @@ func _construieste_o_stare() -> void:
 		},
 	})
 
+	# Și Taverna: regulile citite, decretul unei zile, treapta la Alchimie.
+	# Patruzeci, chiar cifra care a cerut pachetul (telefon 40, laptop 4).
+	TAVERNA.din_dictionar({"reguli_vazute": ["cuvantul", "fiolele"]})
+	DECRETUL.din_dictionar({"zi_jucata": 20763, "reusit": true})
+	FIOLELE.din_dictionar({"treapta": 40})
+
 
 ## Tot ce se salvează, într-un singur dicționar. Comparația din secțiunea 1 se
 ## face pe el, deci TREBUIE să cuprindă exact ce duce `Arhiva` pe disc — altfel
@@ -740,6 +868,9 @@ func _fotografia() -> Dictionary:
 		"practice": PRACTICE.spre_dictionar(),
 		"sac_permanent": Sac.spre_dictionar(Sac.Durata.PERMANENT),
 		"sac_expeditie": Sac.spre_dictionar(Sac.Durata.EXPEDITIE),
+		"taverna": TAVERNA.spre_dictionar(),
+		"decretul": DECRETUL.spre_dictionar(),
+		"fiolele": FIOLELE.spre_dictionar(),
 	}
 
 
@@ -750,7 +881,11 @@ func _goleste_totul() -> void:
 	Expeditie.goleste()
 	Sac.goleste_tot()
 	PRACTICE.din_dictionar({})
+	TAVERNA.din_dictionar({})
+	DECRETUL.din_dictionar({})
+	FIOLELE.din_dictionar({})
 	Arhiva.stricate.clear()
+	Arhiva.importat = {}
 
 
 # ─────────────────────────────────────────────────────────────

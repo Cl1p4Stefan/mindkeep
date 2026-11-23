@@ -55,6 +55,19 @@ extends Control
 ## harta nimic.
 ##
 ## ─────────────────────────────────────────────────────────────
+## EXPORTĂ / IMPORTĂ — salvarea dusă de pe un dispozitiv pe altul
+##
+## Pe web, fiecare browser are salvarea LUI: ce ai jucat pe telefon nu se vede
+## pe laptop. Cele două butoane de sub pagini duc toată starea într-un fișier
+## și înapoi (vezi PACHETUL din `arhiva.gd`). Meniul face doar ce face și cu
+## fișierele stricate: `Arhiva` ține FAPTELE (ce eroare, din ce dată), iar
+## frazele se scriu aici. Și întreabă înainte, fiindcă importul ÎNLOCUIEȘTE.
+##
+## După import scena se încarcă din nou: butonul expediției și rândul de sub el
+## se scriu în `_ready`, din starea care tocmai s-a schimbat. O reîncărcare e
+## mai sigură decât o listă de „ce trebuie redesenat", care ar rămâne în urmă.
+##
+## ─────────────────────────────────────────────────────────────
 ## ÎNFĂȚIȘAREA — aceeași bibliotecă și același pergament ca în Practice
 ##
 ## Meniul poartă tema `assets/tema/pergament.tres` pe rădăcină, ca Practice,
@@ -78,6 +91,13 @@ extends Control
 ## un placeholder conștient, ca tot ce nu e încă artă proprie, și singura
 ## imagine din joc care înseamnă deja „un loc cald în care te oprești".
 ##
+## Al patrulea (Pescuitul, 16 noiembrie 2026) a costat aceeași socoteală, cu
+## alt rezultat: patru pagini de 300 cu goluri de 28 ar fi cerut 1364 px. Deci
+## paginile au scăzut la 242, golurile la 18 și marginile dinăuntru la 18:
+## 1022 px plus 80 de margini, adică 1102 pe 1152 — iar `verifica_iazul` o
+## MĂSOARĂ, nu doar o socotește. Icoana lui e singura desenată
+## (`icoana_iaz.gd`): iazul n-avea nicio imagine de împrumutat.
+##
 ## Mișcarea e puțină, dinadins (meniul îl vezi în fiecare zi):
 ##   - o intrare de sub o secundă (voal care se ridică, pagini care apar);
 ##   - pagina cu focus se ridică puțin. Mouse-ul MUTĂ focusul (`grab_focus` la
@@ -89,10 +109,12 @@ extends Control
 const SCENA_HARTA := "res://scenes/harta/harta.tscn"
 const SCENA_PRACTICE := "res://scenes/practice/practice.tscn"
 const SCENA_TAVERNA := "res://scenes/taverna/taverna.tscn"
+const SCENA_IAZ := "res://scenes/iazul/iazul.tscn"
 
 @onready var buton_expeditie: Button = %ButonExpeditie
 @onready var buton_practice: Button = %ButonPractice
 @onready var buton_taverna: Button = %ButonTaverna
+@onready var buton_iaz: Button = %ButonIaz
 @onready var expeditie_stare: Label = %ExpeditieStare
 @onready var avertisment: Label = %Avertisment
 @onready var antet: Control = %Antet
@@ -100,8 +122,21 @@ const SCENA_TAVERNA := "res://scenes/taverna/taverna.tscn"
 @onready var carte_expeditie: Control = %CarteExpeditie
 @onready var carte_practice: Control = %CartePractice
 @onready var carte_taverna: Control = %CarteTaverna
+@onready var carte_iaz: Control = %CarteIaz
 @onready var praf: CPUParticles2D = %Praf
 @onready var voal: ColorRect = %Voal
+@onready var buton_exporta: Button = %ButonExporta
+@onready var buton_importa: Button = %ButonImporta
+@onready var nota_salvare: Label = %NotaSalvare
+@onready var confirma_importul: ConfirmationDialog = %ConfirmaImportul
+
+## Pachetul citit și încă neconfirmat. Ținut aici între „alege fișierul" și
+## „Importă", fiindcă fereastra de confirmare nu poartă date.
+var _pachet_de_importat := {}
+
+## Cea mai lungă frază din colțul salvării. Constantă ca verificarea să măsoare
+## colțul cu ea, nu cu o copie care ar putea rămâne în urmă.
+const FRAZA_EXPORT_WEB := "Salvarea a fost descărcată: %s. Pe celălalt dispozitiv, apasă Importă salvarea și alege fișierul."
 
 ## Cât se ridică pagina cu focus. Puțin: e un semn, nu o animație.
 const RIDICARE := 1.035
@@ -113,9 +148,15 @@ func _ready() -> void:
 	buton_expeditie.pressed.connect(_pe_expeditie)
 	buton_practice.pressed.connect(_pe_practice)
 	buton_taverna.pressed.connect(_pe_taverna)
+	buton_iaz.pressed.connect(_pe_iaz)
+	buton_exporta.pressed.connect(_pe_exporta)
+	buton_importa.pressed.connect(_pe_importa)
+	confirma_importul.confirmed.connect(_pe_import_confirmat)
+	_arata_importul_facut()
 	_leaga_pagina(buton_expeditie, carte_expeditie)
 	_leaga_pagina(buton_practice, carte_practice)
 	_leaga_pagina(buton_taverna, carte_taverna)
+	_leaga_pagina(buton_iaz, carte_iaz)
 	ornament.draw.connect(_deseneaza_ornament)
 	resized.connect(_aseaza_praful)
 	_aseaza_praful()
@@ -143,6 +184,10 @@ func _pe_taverna() -> void:
 	get_tree().change_scene_to_file(SCENA_TAVERNA)
 
 
+func _pe_iaz() -> void:
+	get_tree().change_scene_to_file(SCENA_IAZ)
+
+
 # ─────────────────────────────────────────────────────────────
 # MIȘCAREA
 # ─────────────────────────────────────────────────────────────
@@ -157,14 +202,14 @@ func _intrare() -> void:
 	voal.show()
 	voal.modulate.a = 1.0
 	antet.modulate.a = 0.0
-	for carte in [carte_expeditie, carte_practice, carte_taverna]:
+	for carte in [carte_expeditie, carte_practice, carte_taverna, carte_iaz]:
 		carte.modulate.a = 0.0
 
 	var t := create_tween().set_parallel(true)
 	t.tween_property(voal, "modulate:a", 0.0, 0.7).set_ease(Tween.EASE_OUT)
 	t.tween_property(antet, "modulate:a", 1.0, 0.6).set_delay(0.1)
 	var intarziere := 0.3
-	for carte in [carte_expeditie, carte_practice, carte_taverna]:
+	for carte in [carte_expeditie, carte_practice, carte_taverna, carte_iaz]:
 		t.tween_property(carte, "modulate:a", 1.0, 0.45).set_delay(intarziere)
 		intarziere += 0.12
 	# Voalul nu mai are ce face după ce s-a ridicat; ascuns, nu mai costă nimic
@@ -260,9 +305,89 @@ func _noduri(n: int) -> String:
 ## zgomot, iar în consolă e deja scris de `Arhiva`, cu tot cu numele fișierului
 ## pus deoparte.
 func _randuri_de_avertisment() -> Array[String]:
+	return _randuri_de_avertisment_pentru(
+		Arhiva.stricate.has("permanent"), Arhiva.stricate.has("expeditie"))
+
+
+## Despărțită de starea Arhivei ca `verifica_taverna` să poată măsura meniul cu
+## AMÂNDOUĂ frazele, fără să strice un fișier ca s-o vadă.
+func _randuri_de_avertisment_pentru(permanent: bool, expeditie: bool) -> Array[String]:
 	var randuri: Array[String] = []
-	if Arhiva.stricate.has("permanent"):
+	if permanent:
 		randuri.append("Progresul salvat nu s-a putut citi. A fost pus deoparte.")
-	if Arhiva.stricate.has("expeditie"):
+	if expeditie:
 		randuri.append("Expediția salvată nu s-a putut citi. A fost pusă deoparte.")
 	return randuri
+
+
+# ─────────────────────────────────────────────────────────────
+# EXPORTĂ / IMPORTĂ
+# ─────────────────────────────────────────────────────────────
+
+func _pe_exporta() -> void:
+	var unde := Arhiva.exporta()
+	if unde == "":
+		nota_salvare.text = "Salvarea nu s-a putut scrie."
+	elif OS.has_feature("web"):
+		nota_salvare.text = FRAZA_EXPORT_WEB % unde
+	else:
+		nota_salvare.text = "Salvarea a fost scrisă în %s." % unde
+
+
+func _pe_importa() -> void:
+	Arhiva.alege_pachet(_pe_pachet_ales)
+
+
+## Fișierul a fost ales: se citește, iar dacă e bun se ÎNTREABĂ. Nimic nu se
+## schimbă până la „Importă".
+func _pe_pachet_ales(text: String) -> void:
+	var citit := Arhiva.citeste_pachet(text)
+	var eroare := int(citit["eroare"])
+	if eroare == Arhiva.EroarePachet.PREA_NOU:
+		nota_salvare.text = "Salvarea e dintr-o versiune mai nouă a jocului. Actualizează jocul de aici, apoi încearcă din nou."
+		return
+	if eroare == Arhiva.EroarePachet.INCOMPLET:
+		nota_salvare.text = "Fișierul ales e o salvare incompletă. Nu s-a schimbat nimic."
+		return
+	if eroare != Arhiva.EroarePachet.NICIUNA:
+		nota_salvare.text = "Fișierul ales nu e o salvare Mindkeep. Nu s-a schimbat nimic."
+		return
+
+	_pachet_de_importat = citit["pachet"]
+	nota_salvare.text = ""
+	confirma_importul.dialog_text = (
+		"Salvarea din %s înlocuiește TOT progresul de pe acest dispozitiv: "
+		+ "Taverna, Antrenamentul, Tezaurul și expediția în curs. Dacă vrei să-l "
+		+ "păstrezi și pe cel de aici, exportă-l întâi.") % \
+		_data_scurta(String(_pachet_de_importat.get("exportat_la", "")))
+	confirma_importul.popup_centered()
+
+
+func _pe_import_confirmat() -> void:
+	if _pachet_de_importat.is_empty():
+		return
+	var reusit := Arhiva.importa(_pachet_de_importat)
+	_pachet_de_importat = {}
+	if not reusit and Arhiva.importat.is_empty():
+		# Nu s-a putut pune deoparte ce era aici, deci importul s-a oprit
+		# înainte să schimbe ceva.
+		nota_salvare.text = "Importul s-a oprit înainte să schimbe ceva: progresul de aici nu a putut fi pus deoparte."
+		return
+	if not reusit:
+		push_error("Meniu: importul a intrat în joc, dar nu s-a putut scrie pe disc.")
+	get_tree().reload_current_scene()
+
+
+## Rândul de după import, o singură dată: faptul se șterge după ce a fost spus.
+func _arata_importul_facut() -> void:
+	if Arhiva.importat.is_empty():
+		return
+	nota_salvare.text = "Salvarea din %s a fost importată." % \
+		_data_scurta(String(Arhiva.importat.get("exportat_la", "")))
+	Arhiva.importat = {}
+
+
+## „2026-11-10 14:33:02" → „2026-11-10 14:33". Secundele nu ajută pe nimeni să
+## recunoască o salvare. Un pachet fără dată (scris de mână) spune doar atât.
+func _data_scurta(data: String) -> String:
+	return data.left(16) if data != "" else "fișierul ales"
