@@ -45,7 +45,9 @@ mouse_filter = 2
 [node name="CentruTaste" type="CenterContainer" parent="."]
 layout_mode = 2
 
-[node name="Taste" type="HBoxContainer" parent="CentruTaste"]
+[node name="Taste" type="GridContainer" parent="CentruTaste"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_constants/separation = 4
+theme_override_constants/h_separation = 4
+theme_override_constants/v_separation = 4
+columns = 10

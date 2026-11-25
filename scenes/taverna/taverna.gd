@@ -73,6 +73,61 @@ const SCENA_MENIU := "res://scenes/meniu/meniu.tscn"
 ## patru rânduri, iar a cincea masă ar fi cerut oricum grila.
 const LATIME_MASA := 300
 
+# ─────────────────────────────────────────────────────────────
+# ÎN PORTRET (de pe 25 noiembrie 2026)
+#
+# Pe telefonul ținut vertical, pânza are 450 px lățime în loc de 1152 (vezi
+# „PÂNZA ÎN PORTRET" din `fereastra.gd`). Sala cu mese și mesele care o declară
+# se joacă acolo, iar Taverna își reașază ce e al ei: antetul pe DOUĂ rânduri
+# (butoanele sus, titlul dedesubt — pe un singur rând, un nume lung ar fi intrat
+# sub „Mesele"), uneltele mesei DEASUPRA frazei de ajutor în loc de lângă ea,
+# marginile mai strânse, mesele mai înguste. Tot ce e aici sunt NUMERE; scena
+# rămâne aceeași, iar în landscape `_aseaza_ecranul` pune înapoi valorile ei.
+# Cifrele sunt măsurate de `verifica_taverna` pe `Fereastra.PANZA_PORTRET`.
+# ─────────────────────────────────────────────────────────────
+
+## Marginea din stânga și din dreapta a paginii. În portret, 12 + 12 din 450
+## lasă 426 px, exact cât rândul de jos al tastaturii Cuvântului Ascuns în
+## portret (414) plus o rezervă mică.
+const MARGINE_LATERALA := 28
+const MARGINE_LATERALA_PORTRET := 12
+## Sus și jos, și golurile dintre rânduri: strânse în portret, fiindcă acolo
+## înălțimea e cea care se termină prima (Sudoku: grila, plus zece taste pe
+## două rânduri).
+const MARGINE_VERTICALA := 12
+const MARGINE_VERTICALA_PORTRET := 6
+const GOL_RANDURI := 6
+const GOL_RANDURI_PORTRET := 4
+## Două mese pe rând și în portret: una pe rând ar fi cerut patru rânduri de
+## mese, adică ~720 px numai ele, iar ecranul n-ar mai fi încăput.
+const LATIME_MASA_PORTRET := 205
+const GOL_MESE_PORTRET := 12
+## Antetul în portret: un rând de butoane, sub el un rând de titlu.
+const INALTIME_ANTET := 42
+const INALTIME_ANTET_PORTRET := 76
+const MARIME_TITLU := 34
+const MARIME_TITLU_PORTRET := 26
+## Rândul de sub titlu. În portret fraza de ajutor ia CÂTE RÂNDURI ARE la
+## lățimea paginii (vezi `_inaltime_ajutor`): cele mai multe încap pe unul, iar
+## „Azi: Cuvântul Ascuns. Cuvinte românești…" al decretului trece pe două.
+## Uneltele mesei, dacă are, stau pe un rând al lor, deasupra.
+const INALTIME_AJUTOR := 30
+const INALTIME_AJUTOR_PORTRET := 20
+const INALTIME_UNELTE_PORTRET := 30
+const MARIME_AJUTOR := 16
+const MARIME_AJUTOR_PORTRET := 14
+## Rândul de rezultat: în portret fraza mesei se încadrează pe două rânduri,
+## deci rândul își rezervă de la început înălțimea lor — vezi
+## `_arata_rezultatul`: un ecran nu-și schimbă înălțimea când câștigi.
+const INALTIME_REZULTAT := 40
+const INALTIME_REZULTAT_PORTRET := 50
+const MARIME_REZULTAT := 19
+const MARIME_REZULTAT_PORTRET := 16
+## Panoul cu reguli: cât pagina, fără margini, în portret.
+const LATIME_REGULI := 620
+const MARGINE_REGULI := 26
+const MARGINE_REGULI_PORTRET := 4
+
 ## Culoarea rândului de rezultat: verdele și portocaliul de verdict din
 ## `Puzzle`, ca „am reușit" să arate la fel în tot jocul.
 const CULOARE_REUSIT := Color(0.18, 0.42, 0.18)
@@ -122,8 +177,22 @@ func _ready() -> void:
 	buton_inca_unul.pressed.connect(_inca_unul)
 	buton_reguli.pressed.connect(_arata_regulile)
 	buton_inchide_reguli.pressed.connect(_inchide_regulile)
+	Fereastra.orientare_schimbata.connect(_pe_orientare)
 	Muzica.reda(Muzica.Piesa.CETATE)
 	_arata_mesele()
+
+
+## Taverna pleacă: pânza se întoarce la cea mare, fiindcă ecranul care vine
+## (meniul) nu știe să stea îngust. Fără rândul ăsta meniul s-ar fi deschis pe
+## 450 px — adică tăiat în trei.
+func _exit_tree() -> void:
+	if Fereastra.orientare_schimbata.is_connected(_pe_orientare):
+		Fereastra.orientare_schimbata.disconnect(_pe_orientare)
+	Fereastra.primeste_portret(false)
+
+
+func _pe_orientare(_portret: bool) -> void:
+	_aseaza_ecranul()
 
 
 # ─────────────────────────────────────────────────────────────
@@ -152,9 +221,15 @@ func _arata_mesele() -> void:
 	ajutor.text = "%s, fără cronometru. Joci cât vrei." % _jocuri(gata)
 
 	for copil in lista_mese.get_children():
+		lista_mese.remove_child(copil)
 		copil.queue_free()
 	for m in Mese.CATALOG:
 		lista_mese.add_child(_carte_masa(m))
+	# Sala cu mese știe să stea îngustă. Abia DUPĂ ce s-au construit mesele,
+	# fiindcă pânza, dacă se schimbă, cheamă `_aseaza_ecranul`, iar el le
+	# potrivește lățimea.
+	Fereastra.primeste_portret(true)
+	_aseaza_ecranul()
 
 
 ## „1 joc", „2 jocuri", „20 de jocuri" — aceeași politețe cu româna ca la
@@ -178,7 +253,7 @@ func _carte_masa(m: Dictionary) -> Control:
 
 	var carte := PanelContainer.new()
 	carte.theme_type_variation = &"ChenarPergament"
-	carte.custom_minimum_size = Vector2(LATIME_MASA, 0)
+	carte.custom_minimum_size = Vector2(_latime_masa(), 0)
 	if not gata:
 		carte.modulate = Color(1, 1, 1, 0.55)
 
@@ -227,6 +302,117 @@ func _carte_masa(m: Dictionary) -> Control:
 	coloana.add_child(buton)
 
 	return carte
+
+
+func _latime_masa() -> int:
+	return LATIME_MASA_PORTRET if Fereastra.portret else LATIME_MASA
+
+
+# ─────────────────────────────────────────────────────────────
+# AȘEZAREA, PE PÂNZA MARE SAU PE CEA ÎNGUSTĂ
+# ─────────────────────────────────────────────────────────────
+
+## Pune fiecare număr al paginii după pânza de acum. Chemată când pânza se
+## schimbă și de fiecare dată când se schimbă ce e în antet (o masă nouă, cu
+## sau fără unelte). Scrisă în AMÂNDOUĂ sensurile, nu doar „dacă portret":
+## telefonul se poate întoarce înapoi la jumătatea unei partide.
+func _aseaza_ecranul() -> void:
+	var p := Fereastra.portret
+	var margini: MarginContainer = $Margini
+	var lateral := MARGINE_LATERALA_PORTRET if p else MARGINE_LATERALA
+	margini.add_theme_constant_override("margin_left", lateral)
+	margini.add_theme_constant_override("margin_right", lateral)
+	var vertical := MARGINE_VERTICALA_PORTRET if p else MARGINE_VERTICALA
+	margini.add_theme_constant_override("margin_top", vertical)
+	margini.add_theme_constant_override("margin_bottom", vertical)
+	var gol := GOL_RANDURI_PORTRET if p else GOL_RANDURI
+	($Margini/Coloana as VBoxContainer).add_theme_constant_override("separation", gol)
+	(panou_joc as VBoxContainer).add_theme_constant_override("separation", gol)
+
+	# ANTETUL. Pe pânza mare: un singur rând, titlul centrat pe toată lățimea și
+	# butoanele plutind la capete. Pe cea îngustă: butoanele în jumătatea de
+	# sus, titlul în cea de jos — două rânduri care nu se pot călca.
+	var antet: Control = $Margini/Coloana/Antet
+	antet.custom_minimum_size.y = INALTIME_ANTET_PORTRET if p else INALTIME_ANTET
+	var mijloc := 0.5 if p else 0.0
+	_ancore(titlu, mijloc, 1.0, 0.0, 0.0)
+	titlu.add_theme_font_size_override("font_size", MARIME_TITLU_PORTRET if p else MARIME_TITLU)
+	var butoane: Control = $Margini/Coloana/Antet/Butoane
+	_ancore(butoane, 0.0, 0.5 if p else 1.0, 0.0, 0.0)
+	# „i" e centrat pe verticală în rândul lui: jumătatea rândului de sus în
+	# portret, mijlocul antetului altfel.
+	var centru_i := 0.25 if p else 0.5
+	_ancore(buton_reguli, centru_i, centru_i, -13.0, 13.0)
+	buton_mese.custom_minimum_size.x = 100 if p else 120
+	buton_meniu.custom_minimum_size.x = 90 if p else 110
+
+	# RÂNDUL DE SUB TITLU. Pe pânza mare, uneltele plutesc în capătul din
+	# stânga, iar fraza e centrată pe tot rândul. Pe cea îngustă n-ar mai fi
+	# loc de amândouă pe aceeași linie, deci uneltele urcă pe un rând al lor.
+	var rand_ajutor: Control = $Margini/Coloana/RandAjutor
+	var cu_unelte := rand_unelte.get_child_count() > 0
+	var sus_ajutor := 0.0
+	if p and cu_unelte:
+		sus_ajutor = INALTIME_UNELTE_PORTRET
+	ajutor.add_theme_font_size_override("font_size", MARIME_AJUTOR_PORTRET if p else MARIME_AJUTOR)
+	rand_ajutor.custom_minimum_size.y = (_inaltime_ajutor() + sus_ajutor) if p \
+		else INALTIME_AJUTOR
+	_ancore(ajutor, 0.0, 1.0, sus_ajutor, 0.0)
+	if p:
+		_ancore(rand_unelte, 0.0, 0.0, 0.0, INALTIME_UNELTE_PORTRET)
+		rand_unelte.alignment = BoxContainer.ALIGNMENT_CENTER
+	else:
+		_ancore(rand_unelte, 0.0, 1.0, 0.0, 0.0)
+		rand_unelte.alignment = BoxContainer.ALIGNMENT_BEGIN
+
+	# MESELE, două pe rând în amândouă formele, doar mai înguste.
+	lista_mese.add_theme_constant_override("h_separation", GOL_MESE_PORTRET if p else 28)
+	lista_mese.add_theme_constant_override("v_separation", GOL_MESE_PORTRET if p else 20)
+	for carte in lista_mese.get_children():
+		(carte as Control).custom_minimum_size.x = _latime_masa()
+
+	# REZULTATUL. În portret fraza se încadrează (autowrap) și lasă butonului
+	# loc lângă ea; pe pânza mare stă pe un rând, ca până acum.
+	rand_rezultat.custom_minimum_size.y = INALTIME_REZULTAT_PORTRET if p else INALTIME_REZULTAT
+	rezultat.add_theme_font_size_override("font_size", MARIME_REZULTAT_PORTRET if p else MARIME_REZULTAT)
+	rezultat.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART if p else TextServer.AUTOWRAP_OFF
+	rezultat.size_flags_horizontal = Control.SIZE_EXPAND_FILL if p else Control.SIZE_FILL
+	rezultat.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	buton_inca_unul.custom_minimum_size.x = 120 if p else 150
+
+	# PANOUL CU REGULI: cât pagina, în portret.
+	var panou: Control = $PanouReguli/Centru/Panou
+	panou.custom_minimum_size.x = (Fereastra.PANZA_PORTRET.x - 2 * MARGINE_LATERALA_PORTRET) if p \
+		else LATIME_REGULI
+	var margini_reguli: MarginContainer = $PanouReguli/Centru/Panou/Margini
+	var m := MARGINE_REGULI_PORTRET if p else MARGINE_REGULI
+	for latura in ["margin_left", "margin_right", "margin_top", "margin_bottom"]:
+		margini_reguli.add_theme_constant_override(latura, m)
+
+
+## Cât de înaltă e fraza de ajutor pe pânza îngustă, încadrată la lățimea
+## paginii. MĂSURATĂ, nu presupusă: un rând fix de două linii ar fi furat 20 px
+## fiecărei mese care încape pe una, iar Sudoku n-ar mai fi încăput deloc. Și
+## nu se schimbă în timpul partidei (fraza se scrie o dată, la deschiderea
+## mesei), deci înălțimea ecranului rămâne aceeași până la final.
+##
+## Lățimea e cea a pânzei ÎNGUSTE, nu a paginii de acum: pe un ecran aproape
+## pătrat pânza se lățește, iar o măsură făcută pe pagina cea mai strâmtă nu
+## poate ieși prea mică.
+func _inaltime_ajutor() -> float:
+	var latime := Fereastra.PANZA_PORTRET.x - 2 * MARGINE_LATERALA_PORTRET
+	var inalt := ajutor.get_theme_font("font").get_multiline_string_size(ajutor.text,
+		HORIZONTAL_ALIGNMENT_CENTER, latime, ajutor.get_theme_font_size("font_size")).y
+	return maxf(INALTIME_AJUTOR_PORTRET, ceilf(inalt))
+
+
+## Ancorele de sus și de jos ale unui nod, cu distanțele față de ele. Laturile
+## din stânga și din dreapta nu se ating. `set_anchor_and_offset` și nu
+## `anchor_top = …`: proprietatea mută și distanța, ca nodul să rămână pe loc,
+## adică exact pe dos față de ce vreau aici.
+func _ancore(nod: Control, sus: float, jos: float, dist_sus: float, dist_jos: float) -> void:
+	nod.set_anchor_and_offset(SIDE_TOP, sus, dist_sus)
+	nod.set_anchor_and_offset(SIDE_BOTTOM, jos, dist_jos)
 
 
 # ─────────────────────────────────────────────────────────────
@@ -338,7 +524,7 @@ func _unhandled_input(event: InputEvent) -> void:
 ## Ordinea e cea din Practice, și contează: scena intră în arbore ÎNTÂI
 ## (`add_child`, deci `_ready`-ul ei a rulat și nodurile lui există) și abia pe
 ## urmă i se cheamă `porneste()`. Invers, `%Grila` ar fi fost încă `null`.
-func _porneste_jocul() -> void:
+func _porneste_jocul(samanta := Joc.SAMANTA_LIBERA) -> void:
 	_inchide_jocul()
 	_arata_rezultatul(false)
 
@@ -364,7 +550,10 @@ func _porneste_jocul() -> void:
 	# rezultatul partidei de dinainte trebuie să se închidă. Vezi `Joc.pornita`.
 	joc.pornita.connect(_pe_joc_pornit)
 	zona_joc.add_child(joc)
-	joc.porneste(Joc.SAMANTA_LIBERA)
+	# `samanta` e mereu cea liberă în joc; o dă altfel doar verificarea, ca să
+	# deschidă Decretul Zilei pe o zi ANUME, nu pe azi (vezi „O verificare care
+	# depinde de ceas" din CLAUDE.md).
+	joc.porneste(samanta)
 	ajutor.text = joc.rand_de_ajutor()
 	# Butonul „i" e al MESEI, nu al Tavernei: o masă care nu-și scrie regulile
 	# (vezi `Joc.reguli`) nu primește un buton care deschide un panou gol.
@@ -385,6 +574,12 @@ func _porneste_jocul() -> void:
 	var scule := joc.unelte()
 	if scule != null:
 		rand_unelte.add_child(scule)
+	# PÂNZA: masa spune dacă încape pe cea îngustă (vezi `Joc.incape_in_portret`).
+	# Fiolele nu, deci pe telefonul ținut vertical se joacă pe pânza mare, ca
+	# până acum. Și se reașază antetul oricum, fiindcă uneltele de mai sus
+	# schimbă rândul de sub titlu chiar dacă pânza a rămas aceeași.
+	Fereastra.primeste_portret(joc.incape_in_portret())
+	_aseaza_ecranul()
 	# UNDE STĂ BUTONUL „i": în ANTET, lângă titlu, nu pe tăblia mesei.
 	#
 	# A stat o zi pe masă, într-o pânză (`Suprapunere`) întinsă peste tot

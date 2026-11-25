@@ -1,6 +1,6 @@
 # MINDKEEP — Jurnal de progres
 
-*Ultima actualizare: 16 noiembrie 2026*
+*Ultima actualizare: 25 noiembrie 2026*
 *Atașează acest fișier la începutul fiecărei sesiuni noi, împreună cu `CLAUDE.md` și `docs/pitch-document.md`.*
 
 ---
@@ -37,6 +37,73 @@ buget, generare) rămâne acolo unde era.
 Am sărit peste ordinea recomandată la pasul 12 (artă): imaginile pentru rege,
 cavaler și pentru TOATE cele opt glife de pe butoanele de Obelisc au intrat mai
 devreme, dar restul rămâne placeholder. Bucla de luptă e în continuare cea validată, nu arta.
+
+---
+
+## TAVERNA ÎN PORTRET (25 noiembrie 2026) — Sudoku și Cuvântul Ascuns, cu telefonul ținut vertical
+
+**Pe branch-ul `portret-taverna`, nu pe `main`**, cerut așa ca să se poată
+arunca dacă nu e bun. Încercat în browser la mărime de telefon (375 × 812), dar
+**nu încă pe un telefon adevărat**.
+
+**Ce s-a cerut:** pe telefon, în landscape, cifrele de la Sudoku și literele de
+la Cuvântul Ascuns sunt prea mici ca să le nimerești cu degetul. Ideea mea: cele
+două să se joace cu telefonul ținut vertical.
+
+**De ce nu ajungea să întorci telefonul.** Pânza e 1152 × 648, iar browserul o
+micșorează după latura care se termină prima. Telefon de ~390 × 844: în
+landscape factorul e 0,60 (un pătrat de Sudoku de 42 iese ~25 px, o tastă
+~20 × 18); ținut vertical, cu pânza de acum, e **0,34** (pătratul ~14 px). Deci
+întoarcerea, singură, strica și mai rău.
+
+**Ce s-a făcut: pânza își schimbă FORMA, nu mărimea lucrurilor.**
+- `autoload/fereastra.gd` — `PANZA_PORTRET = 450 × 760`, schimbată prin
+  `content_scale_size` când fereastra e verticală **și** ecranul de acum o
+  primește (`primeste_portret(true)`). Semnalul `orientare_schimbata` anunță
+  ecranele. Lățimea 450 e o măsurătoare (cel mai lat rând: tastatura Cuvântului
+  + marginile); înălțimea e o podea (cu `aspect = expand` pânza se lungește cât
+  telefonul). Rotirea nu se poate forța din browser (Safari o ignoră), deci
+  jocul se ia după telefon. Pe desktop nu se întâmplă nimic: fereastra nu poate
+  fi mai îngustă decât pânza.
+- `joc.gd` — al patrulea membru opțional al contractului: `incape_in_portret()`,
+  implicit `false`. Sudoku și Cuvântul spun `true`; Fiolele nu (un rând de 11
+  fiole e lat); Decretul spune ce spune masa zilei.
+- `taverna.gd` — sala cu mese primește pânza îngustă; o masă o primește dacă o
+  declară. În portret antetul are DOUĂ rânduri (butoanele sus, titlul dedesubt),
+  uneltele mesei stau pe un rând al lor DEASUPRA frazei de ajutor, iar fraza ia
+  câte rânduri are, MĂSURATE (`_inaltime_ajutor`). Mesele rămân două pe rând, de
+  205 px. La plecarea din Tavernă pânza mare revine.
+- **Sudoku** — tastele sunt acum o grilă: 10 coloane pe pânza mare (arată ca
+  înainte), 5 în portret, de 80 × 46, cu cifra la 24. Grila rămâne de 42.
+- **Cuvântul Ascuns** — celule de 48, taste de 52 înălțime, „Șterge"/„Enter" de 58.
+- Telefonul se poate întoarce **la jumătatea partidei**: nu se reîncarcă nimic,
+  doar se reașază; cifrele și literele scrise rămân.
+
+**Cât de mari ies pe telefon (375 px lățime):** pătratul de Sudoku ~35 px (de la
+~22 în landscape), tasta de cifră ~66 × 38 px (de la ~17 × 15), tasta de literă
+~32 × 43 px.
+
+**`verifica_taverna`: 395 → 444 de verdicte.** Secțiunea nouă „PE TELEFONUL ȚINUT
+VERTICAL": mecanica pânzei (cine o primește, cine o retrage, semnalul strigă de
+4 ori, nu de 3 — am scris așteptarea greșit întâi; ridicat iar, ecranul încă o
+primea), sala cu mese și fiecare masă măsurate pe 450 × 760 înainte și după
+câștig, panoul cu reguli (`size`, ca la decret), tastele de cel puțin 46 px,
+**decretul pe câte o zi CĂUTATĂ pentru fiecare masă găzduită** (nu pe azi), și
+rotirea la jumătatea partidei, la amândouă mesele. Fără fereastră nu există un
+telefon de întors, deci verificarea minte doar despre forma ferestrei
+(`Fereastra.simuleaza_verticala`); restul drumului e al jocului.
+
+**Primul calcul a ieșit 791 px pe 760 la Sudoku.** S-au strâns marginile și
+golurile în portret, antetul (82 → 76), iar rândul frazei de ajutor a încetat să
+rezerve două rânduri: azi ia cât îi trebuie. Acum 739 px, cu 21 de rezervă.
+
+**Ce a rămas:**
+- **Probat pe un telefon adevărat** (iPhone cu Safari: bara de jos fură
+  înălțime; podeaua de 760 e chiar pentru asta).
+- Meniul, Practice, expediția și Fiolele rămân pe pânza mare, ținute vertical
+  arată la fel de mici ca înainte. Nu e o regresie, dar un „întoarce telefonul"
+  acolo ar fi un pas mic.
+- Dacă branch-ul e bun: merge în `main`, apoi build-ul web cu `exporta_web.py`.
 
 ---
 

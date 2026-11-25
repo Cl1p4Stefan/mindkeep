@@ -1,4 +1,4 @@
-extends Node
+﻿extends Node
 ## VERIFICAREA TAVERNEI — catalogul meselor, lista de cuvinte și Cuvântul Ascuns.
 ##
 ## Se cheamă din afara jocului, fără fereastră:
@@ -141,6 +141,7 @@ func _ready() -> void:
 	tot_bun = _marcarea() and tot_bun
 	tot_bun = await _partidele() and tot_bun
 	tot_bun = await _ecranele() and tot_bun
+	tot_bun = await _portretul() and tot_bun
 	tot_bun = await _regulile() and tot_bun
 	tot_bun = await _sudoku() and tot_bun
 	tot_bun = await _fiolele() and tot_bun
@@ -775,6 +776,271 @@ func _ecranele() -> bool:
 	await get_tree().process_frame
 	await get_tree().process_frame
 	return rezultat
+
+
+# ─────────────────────────────────────────────────────────────
+# 5b. PE TELEFONUL ȚINUT VERTICAL
+#
+# De pe 25 noiembrie 2026 (vezi „PÂNZA ÎN PORTRET" din `fereastra.gd`). Aceleași
+# întrebări ca la ECRANELE, puse pe pânza îngustă: încape totul, în fiecare
+# stare? Plus două care nu existau acolo, fiindcă pânza mare nu se schimbă
+# niciodată: CINE o primește și cine o retrage (sala cu mese și mesele care o
+# declară da; Fiolele și meniul nu), și ce se întâmplă când telefonul se întoarce
+# LA JUMĂTATEA unei partide.
+#
+# Fără fereastră nu există un telefon de întors, deci verificarea MINTE doar
+# despre forma ferestrei (`Fereastra.simuleaza_verticala`); restul drumului —
+# cine cheamă `primeste_portret`, cine ascultă semnalul — e chiar al jocului.
+# ─────────────────────────────────────────────────────────────
+
+## Mesele care TREBUIE să se joace și cu telefonul ținut vertical. Scris aici, nu
+## citit din `incape_in_portret()`: o masă care și-ar pierde declarația ar
+## trece altfel neobservată, iar asta a fost tot rostul schimbării.
+const MESE_IN_PORTRET := ["cuvantul_ascuns", "sudoku"]
+## Cât de înaltă trebuie să fie, măcar, o tastă pe pânza îngustă. Un deget are
+## ~44 px de ecran; pe 450 de pânză întinși peste ~390 de telefon, 46 de pânză
+## ies ~40.
+const TASTA_MINIMA_PORTRET := 46
+
+
+func _portretul() -> bool:
+	print("  PE TELEFONUL ȚINUT VERTICAL")
+	var rezultat := true
+	var ingusta := Vector2(Fereastra.PANZA_PORTRET)
+	var mare := Vector2i(PANZA)
+
+	# a) MECANICA. Un ecran care nu o primește rămâne pe pânza mare oricum ar
+	#    sta telefonul; unul care o primește o ia doar cât telefonul e vertical.
+	var strigate := [0]
+	var numara := func(_p: bool) -> void: strigate[0] += 1
+	Fereastra.orientare_schimbata.connect(numara)
+	Fereastra.simuleaza_verticala(true)
+	Fereastra.primeste_portret(false)
+	rezultat = _verdict(not Fereastra.portret and get_window().content_scale_size == mare,
+		"un ecran care n-o primește rămâne pe pânza mare, cu telefonul vertical") and rezultat
+	Fereastra.primeste_portret(true)
+	rezultat = _verdict(Fereastra.portret
+		and get_window().content_scale_size == Fereastra.PANZA_PORTRET,
+		"primită, pânza devine %d × %d" % [ingusta.x, ingusta.y]) and rezultat
+	Fereastra.simuleaza_verticala(false)
+	rezultat = _verdict(not Fereastra.portret and get_window().content_scale_size == mare,
+		"telefonul culcat la loc: pânza mare, chiar dacă ecranul o primea") and rezultat
+	Fereastra.simuleaza_verticala(true)
+	rezultat = _verdict(Fereastra.portret,
+		"ridicat iar: pânza îngustă revine, fiindcă ecranul încă o primește") and rezultat
+	Fereastra.primeste_portret(false)
+	# Primită, culcat, ridicat, retrasă: patru schimbări. Cele două chemări de
+	# la început n-au schimbat nimic, deci n-au voie să strige.
+	rezultat = _verdict(strigate[0] == 4,
+		"semnalul strigă la fiecare schimbare, și numai atunci (%d din 4)" % strigate[0]) and rezultat
+	Fereastra.orientare_schimbata.disconnect(numara)
+
+	# b) TAVERNA, cu telefonul ținut vertical de la intrare.
+	var taverna := SCENA_TAVERNA.instantiate()
+	add_child(taverna)
+	taverna.set_deferred("size", ingusta)
+	await get_tree().process_frame
+	await get_tree().process_frame
+	var margini: Control = taverna.get_node("Margini")
+	rezultat = _verdict(Fereastra.portret, "sala cu mese primește pânza îngustă") and rezultat
+	var cerut := margini.get_combined_minimum_size()
+	print("         Taverna, în portret, cere %d × %d px, pe o pânză de %d × %d"
+		% [cerut.x, cerut.y, ingusta.x, ingusta.y])
+	rezultat = _verdict(cerut.x <= ingusta.x and cerut.y <= ingusta.y,
+		"sala cu mese încape (rezervă %d în lățime, %d în înălțime)"
+		% [ingusta.x - cerut.x, ingusta.y - cerut.y]) and rezultat
+
+	# ANTETUL pe două rânduri: titlul are rândul lui, deci trebuie să încapă în
+	# lățime; butoanele au rândul lor, deci „i" și „Mesele · Meniu" nu se ating.
+	var titlu: Label = taverna.get_node("%Titlu")
+	var latime_pagina := ingusta.x - 2 * TAVERNA.MARGINE_LATERALA_PORTRET
+	var font_titlu := titlu.get_theme_font("font")
+	var marime_titlu := titlu.get_theme_font_size("font_size")
+	var cel_mai_lat := 0.0
+	for m in Mese.CATALOG:
+		cel_mai_lat = maxf(cel_mai_lat, font_titlu.get_string_size(String(m["nume"]),
+			HORIZONTAL_ALIGNMENT_LEFT, -1, marime_titlu).x)
+	rezultat = _verdict(cel_mai_lat <= latime_pagina,
+		"cel mai lung nume de masă încape pe rândul titlului (%d px din %d)"
+		% [cel_mai_lat, latime_pagina]) and rezultat
+	var butoane: Control = taverna.get_node("Margini/Coloana/Antet/Butoane")
+	var buton_mese: Button = taverna.get_node("%ButonMese")
+	var buton_i: Control = taverna.get_node("%ButonReguli")
+	# Cel mai rău caz: masa deschisă, deci „Mesele" se vede.
+	var latime_butoane := butoane.get_combined_minimum_size().x
+	if not buton_mese.visible:
+		latime_butoane += buton_mese.get_combined_minimum_size().x \
+			+ butoane.get_theme_constant("separation")
+	rezultat = _verdict(buton_i.get_combined_minimum_size().x + latime_butoane < latime_pagina,
+		"„i” și butoanele din dreapta nu se ating (%d + %d px din %d)"
+		% [buton_i.get_combined_minimum_size().x, latime_butoane, latime_pagina]) and rezultat
+
+	# c) FIECARE MASĂ: primește sau nu pânza, încape, iar câștigul nu mișcă nimic.
+	#    Decretul Zilei NU se deschide pe azi: azi e o zi anume, deci verdictele
+	#    ar fi bătut o singură masă găzduită (vezi „O verificare care depinde de
+	#    ceas" din CLAUDE.md). Se deschide pe câte o zi CĂUTATĂ pentru fiecare
+	#    masă din rotație — fraza lui de ajutor și panoul lui cu reguli sunt cele
+	#    mai lungi din tavernă, și sunt altele în fiecare zi.
+	for m in Mese.CATALOG:
+		if String(m["scena"]) == "" or String(m["cheie"]) == DECRETUL.CHEIE:
+			continue
+		taverna._deschide_masa(m)
+		rezultat = await _masura_in_portret(taverna, String(m["nume"]),
+			MESE_IN_PORTRET.has(String(m["cheie"]))) and rezultat
+
+	var decret_din_catalog: Dictionary = Mese.masa(DECRETUL.CHEIE)
+	var azi: int = DECRETUL.zi_de_azi()
+	for gazduita in DECRETUL.mesele_de_rand():
+		var zi := azi + 1
+		while String(DECRETUL.masa_zilei(zi)["cheie"]) != String(gazduita["cheie"]):
+			zi += 1
+		DECRETUL._zi_jucata = 0
+		taverna._deschide_masa(decret_din_catalog)
+		taverna._porneste_jocul(zi)
+		rezultat = await _masura_in_portret(taverna,
+			"DECRETUL (%s)" % String(gazduita["nume"]),
+			MESE_IN_PORTRET.has(String(gazduita["cheie"]))) and rezultat
+	DECRETUL._zi_jucata = 0
+
+	# d) ÎNAPOI LA MESE: pânza îngustă revine, oricare a fost masa de dinainte.
+	taverna._arata_mesele()
+	await get_tree().process_frame
+	rezultat = _verdict(Fereastra.portret, "înapoi la mese, pânza e iar cea îngustă") and rezultat
+
+	# e) TELEFONUL ÎNTORS LA JUMĂTATEA PARTIDEI. Nimic din partidă nu se pierde;
+	#    doar așezarea se schimbă, în amândouă sensurile.
+	taverna._deschide_masa(Mese.masa("sudoku"))
+	taverna._inchide_regulile()
+	await get_tree().process_frame
+	var sudoku = taverna.joc
+	var goala: int = sudoku.date.find(0)
+	sudoku.alege(goala)
+	sudoku._scrie_cifra(5)
+	Fereastra.simuleaza_verticala(false)
+	await get_tree().process_frame
+	rezultat = _verdict(not Fereastra.portret and sudoku.rand_taste.columns == SUDOKU.LATURA + 1,
+		"Sudoku culcat la jumătate: pânza mare, tastele pe un rând") and rezultat
+	Fereastra.simuleaza_verticala(true)
+	await get_tree().process_frame
+	rezultat = _verdict(Fereastra.portret
+		and sudoku.rand_taste.columns == SUDOKU.COLOANE_TASTE_PORTRET
+		and sudoku.grila[goala] == 5,
+		"Sudoku ridicat la loc: tastele pe două rânduri, cifra scrisă e tot acolo") and rezultat
+
+	taverna._deschide_masa(Mese.masa("cuvantul_ascuns"))
+	taverna._inchide_regulile()
+	await get_tree().process_frame
+	var cuvantul = taverna.joc
+	for litera in "abc":
+		cuvantul._scrie_litera(litera)
+	var celula: Control = cuvantul.celule[0][0]
+	var in_portret := celula.custom_minimum_size.x
+	Fereastra.simuleaza_verticala(false)
+	await get_tree().process_frame
+	var culcat := celula.custom_minimum_size.x
+	Fereastra.simuleaza_verticala(true)
+	await get_tree().process_frame
+	rezultat = _verdict(in_portret == CUVANTUL.MARIME_CELULA_PORTRET
+		and culcat == CUVANTUL.MARIME_CELULA and cuvantul.rand_curent == "abc",
+		"Cuvântul întors la jumătate: celula %d → %d px, literele rămân („%s”)"
+		% [in_portret, culcat, cuvantul.rand_curent]) and rezultat
+
+	# f) PLECAREA. Meniul nu știe să stea îngust, deci Taverna o retrage.
+	taverna.queue_free()
+	await get_tree().process_frame
+	await get_tree().process_frame
+	rezultat = _verdict(not Fereastra.portret and get_window().content_scale_size == mare,
+		"plecarea din tavernă pune la loc pânza mare") and rezultat
+	Fereastra.verticala_simulata = -1
+	return rezultat
+
+
+## Masa deschisă acum în Taverna din `_portretul`, măsurată pe pânza îngustă:
+## primește pânza cum declară, încape, fraza și uneltele își au rândurile lor,
+## tastele sunt cât un deget, regulile încap, iar câștigul nu mișcă nimic.
+## `trebuie` = masa e una din `MESE_IN_PORTRET`.
+func _masura_in_portret(taverna: Node, nume_masa: String, trebuie: bool) -> bool:
+	var rezultat := true
+	taverna._inchide_regulile()
+	await get_tree().process_frame
+	await get_tree().process_frame
+	var ingusta := Vector2(Fereastra.PANZA_PORTRET)
+	var latime_pagina := ingusta.x - 2 * TAVERNA.MARGINE_LATERALA_PORTRET
+	var margini: Control = taverna.get_node("Margini")
+	var ajutor: Label = taverna.get_node("%Ajutor")
+	var rand_unelte: Control = taverna.get_node("%Unelte")
+
+	var declara: bool = taverna.joc.incape_in_portret()
+	if trebuie:
+		rezultat = _verdict(declara, "%s se joacă și cu telefonul vertical" % nume_masa) and rezultat
+	rezultat = _verdict(Fereastra.portret == declara,
+		"%s: pânza e cea %s, cum declară masa"
+		% [nume_masa, "îngustă" if declara else "mare"]) and rezultat
+	if not declara:
+		return rezultat
+
+	var cerut_joc := margini.get_combined_minimum_size()
+	print("         %s, în portret, cere %d × %d px" % [nume_masa, cerut_joc.x, cerut_joc.y])
+	rezultat = _verdict(cerut_joc.x <= ingusta.x,
+		"%s încape în lățime (rezervă %d)" % [nume_masa, ingusta.x - cerut_joc.x]) and rezultat
+	rezultat = _verdict(cerut_joc.y <= ingusta.y,
+		"%s încape în înălțime (rezervă %d)" % [nume_masa, ingusta.y - cerut_joc.y]) and rezultat
+	# Fraza de ajutor, încadrată la lățimea paginii, în cutia pe care i-a dat-o
+	# Taverna. Pe TEXT: minimul unei etichete cu autowrap nu spune nimic.
+	var inaltime_ajutor := ajutor.get_theme_font("font").get_multiline_string_size(
+		ajutor.text, HORIZONTAL_ALIGNMENT_CENTER, latime_pagina,
+		ajutor.get_theme_font_size("font_size")).y
+	rezultat = _verdict(inaltime_ajutor <= ajutor.size.y + 0.5,
+		"%s: fraza de ajutor încape în cutia ei (%d px din %d)"
+		% [nume_masa, inaltime_ajutor, ajutor.size.y]) and rezultat
+	if rand_unelte.get_child_count() > 0:
+		var latime_scule := rand_unelte.get_combined_minimum_size().x
+		rezultat = _verdict(latime_scule <= latime_pagina
+			and rand_unelte.get_rect().end.y <= ajutor.get_rect().position.y + 0.5,
+			"%s: uneltele stau pe rândul lor, deasupra frazei (%d px lățime)"
+			% [nume_masa, latime_scule]) and rezultat
+	# Tastele: ținte cât un deget. Uneltele (nivelurile) nu sunt taste de joc.
+	var cea_mai_joasa := INF
+	for buton in _butoanele_din(taverna.joc):
+		if buton.is_visible_in_tree() and not rand_unelte.is_ancestor_of(buton):
+			cea_mai_joasa = minf(cea_mai_joasa, buton.get_combined_minimum_size().y)
+	rezultat = _verdict(cea_mai_joasa >= TASTA_MINIMA_PORTRET,
+		"%s: cea mai scundă tastă are %d px (cel puțin %d)"
+		% [nume_masa, cea_mai_joasa, TASTA_MINIMA_PORTRET]) and rezultat
+
+	# Panoul cu reguli. `size`, nu minimul — vezi „EXCEPȚIA" de la regula
+	# ecranelor: e text cu autowrap, iar înălțimea contează la lățimea lui.
+	taverna._arata_regulile()
+	await get_tree().process_frame
+	await get_tree().process_frame
+	var panou: Control = taverna.get_node("PanouReguli/Centru/Panou")
+	if taverna.get_node("%PanouReguli").visible:
+		rezultat = _verdict(panou.size.x <= ingusta.x and panou.size.y <= ingusta.y,
+			"%s: panoul cu reguli încape (%d × %d px)"
+			% [nume_masa, panou.size.x, panou.size.y]) and rezultat
+	taverna._inchide_regulile()
+
+	# Cea mai lungă frază de rezultat pe care o scrie azi o masă.
+	taverna._pe_joc_terminat({"reusit": true,
+		"rezumat": "Grila de nivel mediu, completată fără nicio greșeală."})
+	await get_tree().process_frame
+	await get_tree().process_frame
+	var cerut_final := margini.get_combined_minimum_size()
+	rezultat = _verdict(is_equal_approx(cerut_final.y, cerut_joc.y)
+		and cerut_final.x <= ingusta.x,
+		"%s: câștigul nu schimbă înălțimea cerută (%d px înainte, %d după)"
+		% [nume_masa, cerut_joc.y, cerut_final.y]) and rezultat
+	return rezultat
+
+
+## Toate butoanele dintr-un nod, la orice adâncime.
+func _butoanele_din(nod: Node) -> Array[Button]:
+	var gasite: Array[Button] = []
+	for copil in nod.get_children():
+		if copil is Button:
+			gasite.append(copil)
+		gasite.append_array(_butoanele_din(copil))
+	return gasite
 
 
 # ─────────────────────────────────────────────────────────────

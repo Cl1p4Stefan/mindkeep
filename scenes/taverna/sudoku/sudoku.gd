@@ -172,6 +172,22 @@ const INALTIME_TASTA := 30
 ## scunde decât tastele, fiindcă rândul ăla e al unei fraze, nu al lor.
 const INALTIME_NIVEL := 28
 const LATIME_TASTA := 34
+const LATIME_STERGE := 64
+
+## PE TELEFONUL ȚINUT VERTICAL (vezi „PÂNZA ÎN PORTRET" din `fereastra.gd`).
+## Pânza are acolo 450 px lățime, deci grila de 42 încape cum e — ce se schimbă
+## sunt TASTELE: zece pe un rând ar fi avut 34 px, mai înguste decât un deget.
+## Pe două rânduri de câte cinci (1-5, apoi 6-9 și „Șterge") fiecare are 80 × 46
+## — de peste trei ori suprafața. Locul vine din înălțime, de care pânza
+## îngustă are destulă; „Rasuflarea" dintre grilă și taste se strânge, ca
+## ecranul să încapă și pe un telefon scund (măsurat de `verifica_taverna`).
+const COLOANE_TASTE_PORTRET := 5
+const LATIME_TASTA_PORTRET := 80
+const INALTIME_TASTA_PORTRET := 46
+## Cifra de pe o tastă de 80 × 46: cea de 18 părea pierdută în mijlocul ei.
+const MARIME_TASTA_PORTRET := 24
+const RASUFLARE := 20
+const RASUFLARE_PORTRET := 4
 
 ## Ce poate fi o celulă pe ecran. Nu e starea jocului (aia sunt cele două
 ## grile), e ce se DESENEAZĂ — iar rândurile de exemplu din reguli au nevoie de
@@ -197,6 +213,8 @@ var greseli := 0
 var celule: Array[PanelContainer] = []
 ## Cifra → butonul ei din rândul de jos.
 var taste := {}
+## „Șterge", ultima din grila de taste. Nu e în `taste`: acolo stau CIFRELE.
+var tasta_sterge: Button = null
 ## Butoanele celor trei niveluri.
 var butoane_nivel: Array[Button] = []
 ## Rândul care le ține. NU e în scenă: îl ia Taverna, prin `unelte()`, și-l pune
@@ -206,7 +224,9 @@ var rand_niveluri: HBoxContainer = null
 
 @onready var cutii: GridContainer = %Cutii
 @onready var mesaj: Label = %Mesaj
-@onready var rand_taste: HBoxContainer = %Taste
+## O GRILĂ, nu un rând: pe pânza mare are zece coloane (adică arată ca un rând),
+## pe cea îngustă cinci — vezi `_aseaza`.
+@onready var rand_taste: GridContainer = %Taste
 
 
 func _ready() -> void:
@@ -214,6 +234,10 @@ func _ready() -> void:
 	_construieste_nivelurile()
 	_construieste_tastele()
 	mesaj.text = ""
+	# Telefonul întors la jumătatea partidei: tastele se reașază singure. O
+	# legătură spre un nod care moare se rupe singură, deci n-are nevoie de
+	# pereche în `_exit_tree`.
+	Fereastra.orientare_schimbata.connect(_aseaza)
 	# Ca să poți juca masa singură, cu F6: dacă nimeni n-a chemat `porneste()`
 	# până la finalul cadrului, pornim noi. Același tipar, din același motiv, ca
 	# în `cuvantul.gd` și în `puzzle.gd`.
@@ -875,9 +899,35 @@ func _construieste_tastele() -> void:
 		buton.pressed.connect(_scrie_cifra.bind(v))
 		rand_taste.add_child(buton)
 		taste[v] = buton
-	var sterge := _buton("Șterge", 64)
+	var sterge := _buton("Șterge", LATIME_STERGE)
 	sterge.pressed.connect(_scrie_cifra.bind(0))
 	rand_taste.add_child(sterge)
+	tasta_sterge = sterge
+	_aseaza()
+
+
+## Masa încape pe pânza îngustă — vezi `Joc.incape_in_portret`.
+func incape_in_portret() -> bool:
+	return true
+
+
+## Pune tastele după pânza de acum. Chemată la construire și de fiecare dată când
+## pânza se schimbă: telefonul se poate întoarce la jumătatea partidei, iar
+## partida nu simte nimic — grila și cifrele rămân, doar tastele se reașază.
+func _aseaza(_portret := false) -> void:
+	var p: bool = Fereastra.portret
+	rand_taste.columns = COLOANE_TASTE_PORTRET if p else LATURA + 1
+	var inaltime := INALTIME_TASTA_PORTRET if p else INALTIME_TASTA
+	for v in taste:
+		(taste[v] as Button).custom_minimum_size = Vector2(
+			LATIME_TASTA_PORTRET if p else LATIME_TASTA, inaltime)
+	if tasta_sterge != null:
+		tasta_sterge.custom_minimum_size = Vector2(
+			LATIME_TASTA_PORTRET if p else LATIME_STERGE, inaltime)
+	for buton in rand_taste.get_children():
+		(buton as Button).add_theme_font_size_override("font_size",
+			MARIME_TASTA_PORTRET if p else MARIME_TASTA)
+	($Rasuflare as Control).custom_minimum_size.y = RASUFLARE_PORTRET if p else RASUFLARE
 
 
 ## Cifrele puse deja de nouă ori se sting: n-au ce să mai caute pe nicio

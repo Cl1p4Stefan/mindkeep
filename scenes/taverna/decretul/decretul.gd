@@ -132,6 +132,8 @@ const CULOARE_RATAT := Color(0.86, 0.5, 0.34)
 ## Lățimea unui rând de pe pagină. Un rând de 1000 px nu se citește, se caută cu
 ## ochii de la un capăt la altul.
 const LATIME_RAND := 520
+## Pe pânza îngustă (telefonul ținut vertical, vezi `fereastra.gd`): cât pagina.
+const LATIME_RAND_PORTRET := 400
 
 ## Ziua decretului jucat, ca număr de zile de la 1 ianuarie 1970. 0 = niciunul.
 ##
@@ -156,6 +158,7 @@ var unelte_ingropate: Control = null
 
 
 func _ready() -> void:
+	Fereastra.orientare_schimbata.connect(_aseaza)
 	# Ca să poți juca masa singură, cu F6: dacă nimeni n-a chemat `porneste()`
 	# până la finalul cadrului, pornim noi. Același tipar, din același motiv, ca
 	# în `cuvantul.gd` și în `sudoku.gd`.
@@ -392,8 +395,18 @@ func _rand(text: String, marime: int) -> Label:
 	eticheta.add_theme_color_override("font_color", CULOARE_TEXT)
 	eticheta.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	eticheta.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	eticheta.custom_minimum_size = Vector2(LATIME_RAND, 0)
+	eticheta.custom_minimum_size = Vector2(_latime_rand(), 0)
+	eticheta.add_to_group(GRUP_RANDURI)
 	return eticheta
+
+
+## Rândurile paginii, ca să li se poată schimba lățimea când se întoarce
+## telefonul. Un grup, nu o listă: pagina se îngroapă cu tot cu ele.
+const GRUP_RANDURI := &"decretul_randuri_de_pagina"
+
+
+func _latime_rand() -> int:
+	return LATIME_RAND_PORTRET if Fereastra.portret else LATIME_RAND
 
 
 # ─────────────────────────────────────────────────────────────
@@ -459,7 +472,22 @@ func reguli() -> Control:
 func _rand_de_reguli(text: String, marime: int) -> Label:
 	var eticheta := _rand(text, marime)
 	eticheta.custom_minimum_size = Vector2.ZERO
+	eticheta.remove_from_group(GRUP_RANDURI)
 	return eticheta
+
+
+## Decretul încape pe pânza îngustă cât încape masa de azi: o zi de Sudoku sau
+## de Cuvânt Ascuns se joacă și cu telefonul ținut vertical, o zi de Fiole nu.
+## Pagina „încheiat” e numai text, deci încape oricum.
+func incape_in_portret() -> bool:
+	return masa == null or masa.incape_in_portret()
+
+
+## Rândurile paginii, după pânza de acum. Masa găzduită se reașază singură.
+func _aseaza(_portret := false) -> void:
+	for eticheta in get_tree().get_nodes_in_group(GRUP_RANDURI):
+		if is_ancestor_of(eticheta):
+			(eticheta as Control).custom_minimum_size.x = _latime_rand()
 
 
 ## Niciuna. Vezi `_ia_uneltele`: uneltele unei mese reglează partida, iar

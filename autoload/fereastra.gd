@@ -70,3 +70,95 @@ func _ready() -> void:
 		mini(panza.x, utilizabil.x),
 		mini(panza.y, utilizabil.y),
 	)
+
+	# Telefonul întors: fereastra își schimbă forma, iar pânza o urmează, dacă
+	# ecranul de acum o primește. Vezi „PÂNZA ÎN PORTRET" mai jos.
+	fereastra.size_changed.connect(_potriveste)
+
+
+# ─────────────────────────────────────────────────────────────
+# PÂNZA ÎN PORTRET
+#
+# De pe 25 noiembrie 2026. Pe un telefon ținut vertical, pânza de 1152 × 648
+# se micșorează după LĂȚIME: 1152 de pixeli înghesuiți în ~390. Un pătrat de
+# Sudoku ajungea pe la 14 px, adică mai mic decât în landscape (~25), care era
+# deja prea mic pentru un deget. Deci întoarcerea telefonului, singură, strica.
+#
+# Ce se schimbă e FORMA PÂNZEI, nu mărimea lucrurilor din joc: o pânză îngustă
+# (`PANZA_PORTRET`) e micșorată mult mai puțin, deci același pătrat de 42 iese
+# pe la 36 px. Niciun `MARIME_CELULA` nu s-a atins pentru asta.
+#
+# NU SE POATE FORȚA ROTIREA din browser — Safari pe iPhone ignoră blocarea
+# orientării, iar Chrome pe Android o îngăduie doar pe tot ecranul. Deci jocul
+# se ia după telefon: îl întorci, iar pânza se schimbă. Asta e și varianta mai
+# bună: decizia e a mâinii, nu a jocului.
+#
+# DOAR ECRANELE CARE O PRIMESC. Lupta, harta și meniul sunt așezate pe 1152 de
+# pixeli lățime; pe 450 n-ar încăpea, deci rămân pe pânza mare oricum ar sta
+# telefonul (adică exact cum arătau înainte). Un ecran care știe să stea îngust
+# o spune cu `primeste_portret(true)` și o retrage la plecare. Azi: Taverna,
+# pentru sala cu mese și pentru mesele care o declară (`Joc.incape_in_portret`).
+#
+# PE DESKTOP NU SE ÎNTÂMPLĂ NIMIC: fereastra nu poate fi mai îngustă decât
+# pânza (vezi `min_size` de mai sus), deci nu e niciodată verticală. Doar un
+# monitor rotit ar aprinde-o — și acolo ar fi chiar ce trebuie.
+# ─────────────────────────────────────────────────────────────
+
+## Pânza îngustă. LĂȚIMEA e o măsurătoare, nu o alegere: e cât cere cel mai lat
+## lucru care trebuie să încapă (rândul de jos al tastaturii Cuvântului Ascuns,
+## 426 px) plus marginile Tavernei în portret. Cu cât e mai îngustă, cu atât
+## totul iese mai mare pe telefon; mai îngustă decât asta, tastatura s-ar tăia.
+##
+## ÎNĂLȚIMEA e o PODEA, nu o mărime: cu `aspect = expand`, pânza se lungește cât
+## e ecranul de lung, deci pe un telefon obișnuit are 760-1000 px. Podeaua
+## garantează că nici pe unul scund (sau cu bara browserului mare) nu scade sub
+## cât cer ecranele, măsurate de `verifica_taverna` pe chiar numărul ăsta.
+const PANZA_PORTRET := Vector2i(450, 760)
+
+## Strigat când pânza trece dintr-o formă în alta. Ecranele care se așază
+## altfel în portret (Taverna, mesele) îl ascultă.
+signal orientare_schimbata(portret: bool)
+
+## Pânza e acum cea îngustă.
+var portret := false
+## Ecranul de acum știe să stea îngust. Vezi `primeste_portret`.
+var _primit := false
+
+## Pentru `verifica_taverna`: -1 = forma o spune fereastra (jocul), 1 = „telefonul
+## e ținut vertical", 0 = „e ținut culcat". Fără fereastră (`--headless`) nu
+## există un telefon de întors, iar o verificare care ar pune pânza DE MÂNĂ ar
+## ocoli exact regula care trebuie bătută: cine o primește, cine o retrage. Așa,
+## verificarea minte doar despre forma ferestrei, iar restul drumului e al jocului.
+var verticala_simulata := -1
+
+
+## Spus de ecranul care tocmai s-a deschis (sau de cel care pleacă): „eu pot
+## sta îngust" / „eu nu". Pânza se schimbă doar dacă fereastra e chiar verticală.
+func primeste_portret(da: bool) -> void:
+	_primit = da
+	_potriveste()
+
+
+func _potriveste() -> void:
+	_pune(_primit and _e_verticala())
+
+
+func _e_verticala() -> bool:
+	if verticala_simulata >= 0:
+		return verticala_simulata == 1
+	var marime := get_window().size
+	return marime.y > marime.x
+
+
+## Spus de verificare: „acum telefonul stă așa". Vezi `verticala_simulata`.
+func simuleaza_verticala(da: bool) -> void:
+	verticala_simulata = 1 if da else 0
+	_potriveste()
+
+
+func _pune(da: bool) -> void:
+	if da == portret:
+		return
+	portret = da
+	get_window().content_scale_size = PANZA_PORTRET if da else _dimensiunea_panzei()
+	orientare_schimbata.emit(da)

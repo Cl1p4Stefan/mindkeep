@@ -157,6 +157,20 @@ const MARIME_CELULA := 42
 const MARIME_LITERA := 26
 const MARIME_TASTA := 20
 const INALTIME_TASTA := 36
+## Lățimea tastelor de literă și a celor două de comandă („Șterge", „Enter").
+const LATIME_LITERA := 38
+const LATIME_COMANDA := 64
+
+## PE TELEFONUL ȚINUT VERTICAL (vezi „PÂNZA ÎN PORTRET" din `fereastra.gd`).
+## Lățimea nu se poate da: rândul de sus are zece taste, iar pânza îngustă are
+## 450 px, deci o literă rămâne de 38. Ce se poate da e ÎNĂLȚIMEA, de care
+## pânza îngustă are din belșug — 52 în loc de 36, adică o țintă cât un deget
+## pe verticală. „Șterge" și „Enter" se strâng puțin (64 → 58), fiindcă rândul de
+## jos e cel mai lat (7 litere + două comenzi = 414 px, din 426 câți rămân
+## după marginile Tavernei). Grila crește și ea, din același belșug de înălțime.
+const MARIME_CELULA_PORTRET := 48
+const INALTIME_TASTA_PORTRET := 52
+const LATIME_COMANDA_PORTRET := 58
 
 ## Cât stă o celulă întoarsă până se întoarce următoarea. Rândul se citește de
 ## la stânga la dreapta, deci se și dezvăluie așa — altfel cinci culori apărute
@@ -226,6 +240,11 @@ func _ready() -> void:
 	_construieste_grila()
 	_construieste_tastatura()
 	mesaj.text = ""
+	# Telefonul întors la jumătatea partidei: grila și tastele se reașază
+	# singure, literele rămân. O legătură spre un nod care moare se rupe
+	# singură, deci n-are nevoie de pereche la ieșire.
+	Fereastra.orientare_schimbata.connect(_aseaza)
+	_aseaza()
 	# Ca să poți juca scena singură cu F6: dacă nimeni n-a chemat `porneste()`
 	# până la finalul cadrului ăsta, pornim noi. Același tipar ca în
 	# `puzzle.gd` — și tot așteptând un cadru, fiindcă Taverna instanțiază
@@ -538,7 +557,7 @@ func _construieste_grila() -> void:
 ## jocului, și ar fi putut rămâne în urma lor la prima schimbare de stil.
 func _celula_noua() -> PanelContainer:
 	var celula := PanelContainer.new()
-	celula.custom_minimum_size = Vector2(MARIME_CELULA, MARIME_CELULA)
+	celula.custom_minimum_size = Vector2.ONE * _marime_celula()
 	celula.add_theme_stylebox_override("panel", _stil_celula(CULOARE_CELULA, true))
 	var eticheta := Label.new()
 	eticheta.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -571,7 +590,7 @@ func _construieste_tastatura() -> void:
 		rand.alignment = BoxContainer.ALIGNMENT_CENTER
 		rand.add_theme_constant_override("separation", 4)
 		for litera in String(RANDURI_TASTE[i]):
-			var buton := _tasta(litera, 38)
+			var buton := _tasta(litera, LATIME_LITERA)
 			buton.pressed.connect(_scrie_litera.bind(litera))
 			rand.add_child(buton)
 			taste[litera.to_lower()] = buton
@@ -579,13 +598,40 @@ func _construieste_tastatura() -> void:
 		# tastatură adevărată — nu pe un rând al lor, care ar fi al patrulea
 		# rând de citit într-un ecran care are deja șase.
 		if i == RANDURI_TASTE.size() - 1:
-			var sterge := _tasta("Șterge", 64)
+			var sterge := _tasta("Șterge", LATIME_COMANDA)
 			sterge.pressed.connect(_sterge_litera)
 			rand.add_child(sterge)
-			var enter := _tasta("Enter", 64)
+			var enter := _tasta("Enter", LATIME_COMANDA)
 			enter.pressed.connect(_trimite_randul)
 			rand.add_child(enter)
 		tastatura.add_child(rand)
+
+
+## Masa încape pe pânza îngustă — vezi `Joc.incape_in_portret`.
+func incape_in_portret() -> bool:
+	return true
+
+
+func _marime_celula() -> int:
+	return MARIME_CELULA_PORTRET if Fereastra.portret else MARIME_CELULA
+
+
+## Pune grila și tastele după pânza de acum. Chemată la construire și când pânza
+## se schimbă. Taste de comandă = cele care nu sunt în `taste` (acolo stau
+## numai literele).
+func _aseaza(_portret := false) -> void:
+	var p: bool = Fereastra.portret
+	for rand_celule in celule:
+		for celula in rand_celule:
+			(celula as Control).custom_minimum_size = Vector2.ONE * _marime_celula()
+	var inaltime := INALTIME_TASTA_PORTRET if p else INALTIME_TASTA
+	var comanda := LATIME_COMANDA_PORTRET if p else LATIME_COMANDA
+	var litere := taste.values()
+	for rand in tastatura.get_children():
+		for buton in rand.get_children():
+			var b := buton as Button
+			var latime := LATIME_LITERA if b in litere else comanda
+			b.custom_minimum_size = Vector2(latime, inaltime)
 
 
 func _tasta(text: String, latime: int) -> Button:

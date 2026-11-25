@@ -209,6 +209,21 @@ func unelte() -> Control:
 	return null
 
 
+## Masa poate sta pe pânza ÎNGUSTĂ, a telefonului ținut vertical. OPȚIONAL.
+##
+## `false` = masa se joacă doar pe pânza mare, iar Taverna nu-i cere alta,
+## oricum ar sta telefonul — exact cum era înainte. Aceeași formă ca celelalte
+## trei: o masă nu plătește nimic pentru ce nu declară.
+##
+## `true` e o PROMISIUNE, nu o dorință: masa încape în lățimea
+## `Fereastra.PANZA_PORTRET` și se reașază singură când pânza se schimbă (prin
+## `Fereastra.orientare_schimbata`). `verifica_taverna` o măsoară pe fiecare
+## masă care o face. Fiolele n-o fac: un rând de unsprezece fiole e lat prin
+## natura lui. Vezi „PÂNZA ÎN PORTRET" din `fereastra.gd`.
+func incape_in_portret() -> bool:
+	return false
+
+
 ## Construiește-ți masa. OBLIGATORIU.
 ##
 ## `push_error` și nu o scenă goală: o masă fără `_porneste` e un fișier
