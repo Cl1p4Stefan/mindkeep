@@ -166,10 +166,11 @@ const LATIME_COMANDA := 64
 ## De pe 25 noiembrie 2026, cât la jocul pe care îl imită masa, MĂSURAT pe o
 ## captură de pe telefon: acolo un pătrat are ~16% din lățimea ecranului, o
 ## tastă ~8% lățime și tot ~16% înălțime, iar grila și tastatura iau aproape tot
-## ecranul. Pe pânza îngustă (450) asta înseamnă pătrate de 72 și taste de 36 × 68.
+## ecranul. Pe pânza îngustă (450) asta înseamnă pătrate de 72. (Tastele au
+## trecut a doua zi după tastatura telefonului — vezi „TASTATURA DE TELEFON".)
 ##
 ## Lățimea tastelor e la plafon: rândul de sus are zece, iar după marginile
-## Tavernei rămân 426 px (10 × 36 + 9 × 6 = 414). Înălțimea, în schimb, nu are
+## Tavernei rămân 426 px. Înălțimea, în schimb, nu are
 ## plafon pe un telefon obișnuit: ecranul ÎNTREG cere ~900 px de pânză, iar
 ## `Fereastra` primește de la Taverna cât cere (vezi `cere_inaltimea`), deci pe
 ## un telefon mai scund totul se micșorează la fel, fără să se taie nimic.
@@ -177,16 +178,41 @@ const MARIME_CELULA_PORTRET := 72
 const MARIME_LITERA_PORTRET := 38
 const GOL_GRILA := 6
 const GOL_GRILA_PORTRET := 7
-const LATIME_LITERA_PORTRET := 36
-const INALTIME_TASTA_PORTRET := 68
-const LATIME_COMANDA_PORTRET := 60
-const MARIME_TASTA_PORTRET := 26
-## „Șterge" și „Enter" nu încap la 26 pe 60 px.
-const MARIME_COMANDA_PORTRET := 17
 const GOL_TASTE := 4
-const GOL_TASTE_PORTRET := 6
 const GOL_RANDURI_TASTE := 4
-const GOL_RANDURI_TASTE_PORTRET := 8
+
+## TASTATURA DE TELEFON. De pe 26 noiembrie 2026, după prima probă pe telefon:
+## cu taste cât la jocul original, literele tot se nimereau greu. Măsurată pe o
+## captură a tastaturii telefonului (cea cu care scrii un mesaj), ca fracții din
+## lățimea ecranului: tasta ~8% × 12%, ~1,6% între taste pe rând și ~4% între
+## rânduri. Rândurile stau departe unul de altul, tastele de pe un rând aproape
+## lipite. Pe pânza de 450: taste de 38 × 56, 4 între ele, 18 între rânduri.
+##
+## Și se poartă ca ea, nu doar arată ca ea. Pe tastatura telefonului NU EXISTĂ
+## spații moarte: un deget care cade între Q și W apasă una din ele, nu nimic.
+## Aici la fel: butonul e cât tasta PLUS jumătate din golul de jur împrejur, iar
+## desenul se strânge înapoi la mărimea tastei prin margini NEGATIVE ale
+## stilului (`expand_margin`). Deci ce vezi e tasta, iar ce prinde degetul e
+## toată suprafața tastaturii, împărțită fără rest.
+##
+## Tastele sunt PLINE, nu un chenar pe fond, și literele GROASE: un chenar
+## subțire cu o literă subțire arăta mai mic decât era (măsurat: tastele
+## aveau deja cam lățimea celor de la original).
+const LATIME_LITERA_PORTRET := 38
+const INALTIME_TASTA_PORTRET := 56
+## „Enter" la stânga și ștergerea la dreapta, ca Shift și ⌫ pe telefon.
+const LATIME_COMANDA_PORTRET := 60
+const GOL_TASTE_PORTRET := 4
+const GOL_RANDURI_TASTE_PORTRET := 18
+const MARIME_TASTA_PORTRET := 27
+const MARIME_COMANDA_PORTRET := 17
+const ROTUNJIRE_TASTA_PORTRET := 6
+## Tasta despre care nu se știe nimic: plină, mai deschisă decât `CULOARE_ABSENT`,
+## ca o literă ieșită din joc să se vadă STINGÂNDU-SE, ca la original.
+const CULOARE_TASTA_PORTRET := Color(0.52, 0.47, 0.4)
+const CULOARE_COMANDA_PORTRET := Color(0.4, 0.36, 0.31)
+## Grosimea literelor (Alegreya e un font variabil; tema folosește 500).
+const GROSIME_TASTA_PORTRET := 700
 
 ## Cât stă o celulă întoarsă până se întoarce următoarea. Rândul se citește de
 ## la stânga la dreapta, deci se și dezvăluie așa — altfel cinci culori apărute
@@ -243,8 +269,15 @@ var in_dezvaluire := false
 
 ## Celulele, rând cu rând: `celule[rand][coloana]` → PanelContainer.
 var celule: Array = []
+const IconitaSterge := preload("res://scenes/taverna/cuvantul/iconita_sterge.gd")
+
 ## Litera → butonul ei de pe tastatură.
 var taste := {}
+## Cele două taste de comandă, de pe rândul de jos.
+var tasta_sterge: Button
+var tasta_enter: Button
+## Literele groase ale tastelor din portret. Una pentru toată masa.
+var _font_tasta: FontVariation
 
 @onready var grila: GridContainer = %Grila
 @onready var mesaj: Label = %Mesaj
@@ -617,12 +650,20 @@ func _construieste_tastatura() -> void:
 		# tastatură adevărată — nu pe un rând al lor, care ar fi al patrulea
 		# rând de citit într-un ecran care are deja șase.
 		if i == RANDURI_TASTE.size() - 1:
-			var sterge := _tasta("Șterge", LATIME_COMANDA)
-			sterge.pressed.connect(_sterge_litera)
-			rand.add_child(sterge)
-			var enter := _tasta("Enter", LATIME_COMANDA)
-			enter.pressed.connect(_trimite_randul)
-			rand.add_child(enter)
+			tasta_sterge = _tasta("Șterge", LATIME_COMANDA)
+			tasta_sterge.pressed.connect(_sterge_litera)
+			rand.add_child(tasta_sterge)
+			# În portret „Șterge" e un semn desenat, ca pe telefon. Desenat, nu
+			# „⌫": niciunul din cele trei fonturi nu-l are.
+			var semn := IconitaSterge.new()
+			semn.set_anchors_preset(Control.PRESET_FULL_RECT)
+			semn.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			semn.culoare = CULOARE_LITERA_PE_FOND
+			semn.visible = false
+			tasta_sterge.add_child(semn)
+			tasta_enter = _tasta("Enter", LATIME_COMANDA)
+			tasta_enter.pressed.connect(_trimite_randul)
+			rand.add_child(tasta_enter)
 		tastatura.add_child(rand)
 
 
@@ -647,23 +688,49 @@ func _aseaza(_portret := false) -> void:
 	grila.add_theme_constant_override("h_separation", gol_grila)
 	grila.add_theme_constant_override("v_separation", gol_grila)
 
+	# Tastele. În portret golurile sunt ÎN butoane, nu între ele (vezi
+	# „TASTATURA DE TELEFON"), deci containerele n-au nicio separare, iar
+	# fiecare buton e mai mare decât tasta desenată cu un gol întreg.
+	var gol := Vector2(GOL_TASTE_PORTRET, GOL_RANDURI_TASTE_PORTRET) if p else Vector2.ZERO
 	var inaltime := INALTIME_TASTA_PORTRET if p else INALTIME_TASTA
 	var latime_litera := LATIME_LITERA_PORTRET if p else LATIME_LITERA
 	var comanda := LATIME_COMANDA_PORTRET if p else LATIME_COMANDA
 	var litere := taste.values()
-	tastatura.add_theme_constant_override("separation",
-		GOL_RANDURI_TASTE_PORTRET if p else GOL_RANDURI_TASTE)
+	tastatura.add_theme_constant_override("separation", 0 if p else GOL_RANDURI_TASTE)
 	for rand in tastatura.get_children():
-		(rand as HBoxContainer).add_theme_constant_override("separation",
-			GOL_TASTE_PORTRET if p else GOL_TASTE)
+		(rand as HBoxContainer).add_theme_constant_override("separation", 0 if p else GOL_TASTE)
 		for buton in rand.get_children():
 			var b := buton as Button
 			var e_litera := b in litere
-			b.custom_minimum_size = Vector2(latime_litera if e_litera else comanda, inaltime)
+			b.custom_minimum_size = Vector2(latime_litera if e_litera else comanda, inaltime) + gol
 			var font := MARIME_TASTA
 			if p:
 				font = MARIME_TASTA_PORTRET if e_litera else MARIME_COMANDA_PORTRET
 			b.add_theme_font_size_override("font_size", font)
+			if p:
+				b.add_theme_font_override("font", _font_groasa())
+			else:
+				b.remove_theme_font_override("font")
+	# Rândul de jos, ca pe telefon: Enter în stânga (locul lui Shift), ștergerea
+	# în dreapta, ca semn desenat. Pe pânza mare rămâne cum era.
+	var rand_jos := tasta_enter.get_parent()
+	rand_jos.move_child(tasta_enter, 0 if p else -1)
+	rand_jos.move_child(tasta_sterge, -1 if p else rand_jos.get_child_count() - 2)
+	tasta_sterge.text = "" if p else "Șterge"
+	(tasta_sterge.get_child(0) as Control).visible = p
+	# Stilurile depind de pânză (plin sau chenar), deci se pun din nou.
+	_imbraca_tasta_necunoscuta(tasta_enter)
+	_imbraca_tasta_necunoscuta(tasta_sterge)
+	_zugraveste_tastatura()
+
+
+func _font_groasa() -> FontVariation:
+	if _font_tasta == null:
+		_font_tasta = FontVariation.new()
+		_font_tasta.base_font = load("res://assets/fonturi/Alegreya.ttf")
+		# 2003265652 = eticheta „wght" ca număr, cum o scrie și tema.
+		_font_tasta.variation_opentype = {2003265652: GROSIME_TASTA_PORTRET}
+	return _font_tasta
 
 
 func _tasta(text: String, latime: int) -> Button:
@@ -687,11 +754,50 @@ func _tasta(text: String, latime: int) -> Button:
 ## întunecat rămas după scoaterea tăbliei, mai luminos decât orice literă pe
 ## care o aflaseși. Vezi comentariul de la `CULOARE_CELULA`.
 func _imbraca_tasta_necunoscuta(buton: Button) -> void:
+	if Fereastra.portret:
+		var plin := CULOARE_TASTA_PORTRET if buton in taste.values() else CULOARE_COMANDA_PORTRET
+		_imbraca_tasta(buton, plin, CULOARE_LITERA_PE_FOND)
+		return
 	buton.add_theme_stylebox_override("normal", _stil_celula(CULOARE_CELULA, true))
 	buton.add_theme_stylebox_override("hover", _stil_celula(Color(1, 1, 1, 0.14), true))
 	buton.add_theme_stylebox_override("pressed", _stil_celula(Color(1, 1, 1, 0.2), true))
-	for nume in ["font_color", "font_hover_color", "font_pressed_color"]:
+	buton.add_theme_stylebox_override("hover_pressed", _stil_celula(Color(1, 1, 1, 0.2), true))
+	for nume in ["font_color", "font_hover_color", "font_pressed_color", "font_hover_pressed_color"]:
 		buton.add_theme_color_override(nume, CULOARE_LITERA)
+
+
+## O tastă plină, de culoarea dată. Pe pânza mare fără chenar (tastele aflate);
+## în portret, tasta de telefon, cu golurile ei în buton.
+##
+## În portret „hover" e la fel ca „normal", dinadins: pe un ecran tactil, Godot
+## face din atingere un mouse, iar mouse-ul ăla RĂMÂNE deasupra ultimei taste
+## atinse — deci ea ar fi stat luminată până la următoarea atingere, ca și cum
+## ar fi fost încă apăsată.
+func _imbraca_tasta(buton: Button, culoare: Color, litera: Color) -> void:
+	var p: bool = Fereastra.portret
+	var normal := _stil_tasta(culoare)
+	buton.add_theme_stylebox_override("normal", normal)
+	buton.add_theme_stylebox_override("hover", normal if p else _stil_tasta(culoare.lightened(0.08)))
+	var apasat := _stil_tasta(culoare.lightened(0.25) if p else culoare.darkened(0.12))
+	buton.add_theme_stylebox_override("pressed", apasat)
+	buton.add_theme_stylebox_override("hover_pressed", apasat)
+	for nume in ["font_color", "font_hover_color", "font_pressed_color", "font_hover_pressed_color"]:
+		buton.add_theme_color_override(nume, litera)
+
+
+func _stil_tasta(culoare: Color) -> StyleBoxFlat:
+	if not Fereastra.portret:
+		return _stil_celula(culoare, false)
+	var stil := StyleBoxFlat.new()
+	stil.bg_color = culoare
+	stil.set_corner_radius_all(ROTUNJIRE_TASTA_PORTRET)
+	# Margini NEGATIVE: desenul se strânge la tastă, butonul rămâne cât tasta
+	# plus golurile ei. Vezi „TASTATURA DE TELEFON".
+	stil.expand_margin_left = -GOL_TASTE_PORTRET / 2.0
+	stil.expand_margin_right = -GOL_TASTE_PORTRET / 2.0
+	stil.expand_margin_top = -GOL_RANDURI_TASTE_PORTRET / 2.0
+	stil.expand_margin_bottom = -GOL_RANDURI_TASTE_PORTRET / 2.0
+	return stil
 
 
 ## Chenarul unei celule sau al unei taste.
@@ -786,12 +892,6 @@ func _zugraveste_tastatura() -> void:
 	for litera in taste:
 		var buton: Button = taste[litera]
 		if stari_litere.has(litera):
-			var culoare := _culoare_semn(stari_litere[litera])
-			buton.add_theme_stylebox_override("normal", _stil_celula(culoare, false))
-			buton.add_theme_stylebox_override("hover", _stil_celula(culoare.lightened(0.08), false))
-			buton.add_theme_stylebox_override("pressed", _stil_celula(culoare.darkened(0.12), false))
-			buton.add_theme_color_override("font_color", CULOARE_LITERA_PE_FOND)
-			buton.add_theme_color_override("font_hover_color", CULOARE_LITERA_PE_FOND)
-			buton.add_theme_color_override("font_pressed_color", CULOARE_LITERA_PE_FOND)
+			_imbraca_tasta(buton, _culoare_semn(stari_litere[litera]), CULOARE_LITERA_PE_FOND)
 		else:
 			_imbraca_tasta_necunoscuta(buton)

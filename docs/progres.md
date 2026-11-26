@@ -121,6 +121,31 @@ verificare: 950 (raport 2,1, un Android cu jocul pe tot ecranul).
 Văzut în browser la 412 × 850: pătratul iese ~66 px, tasta ~32 × 61, cât în
 captură. `verifica_taverna`: 448 de verdicte.
 
+### Tastatura de telefon (26 noiembrie 2026)
+
+Proba pe telefon: tastele aveau deja cam lățimea celor de la original (măsurat
+pe două capturi: ~72 față de ~75 px), dar se nimereau greu. Cerut: tastatura să
+aibă structura și purtarea tastaturii telefonului (cea cu care scrii un mesaj).
+Măsurată pe captura ei: tasta ~8% × 12% din lățime, ~1,6% între taste pe rând,
+~4% între rânduri. Doar în portret; pe pânza mare tastatura a rămas cum era.
+
+- **Taste de 38 × 56, 4 px între ele, 18 între rânduri**, PLINE (nu chenar pe
+  fond), cu litere groase (Alegreya la 700, fontul e variabil) și colțuri
+  rotunjite. Tasta neaflată e mai deschisă decât `CULOARE_ABSENT`, deci o literă
+  ieșită din joc se vede stingându-se.
+- **Fără spații moarte**: butonul e cât tasta plus jumătate din golul de jur
+  împrejur, iar desenul se strânge înapoi prin `expand_margin` NEGATIV pe stil.
+  Un deget căzut între Q și W apasă una din ele. Probat în browser: un clic în
+  golul Q/W și unul între rânduri au scris litere.
+- **Rândul de jos ca pe telefon**: Enter în stânga (locul lui Shift), ștergerea
+  în dreapta, ca semn desenat (`iconita_sterge.gd` — „⌫" nu e în niciun font).
+  Pe pânza mare se mută înapoi și redevine „Șterge".
+- **„hover" = „normal" în portret**: pe ecran tactil, Godot face din atingere un
+  mouse care rămâne deasupra ultimei taste, deci ea ar fi stat luminată.
+
+Verdictul „cea mai scundă tastă” măsoară acum butonul (74), adică ținta
+degetului, nu desenul (56). `verifica_taverna`: 448, toate bune.
+
 **Ce a rămas:**
 - **Probat pe un telefon adevărat** (iPhone cu Safari: bara de jos fură
   înălțime; acolo pânza ar trebui să se micșoreze, nu să se taie).
