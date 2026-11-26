@@ -102,9 +102,14 @@ const GOL_RANDURI_PORTRET := 4
 ## mese, adică ~720 px numai ele, iar ecranul n-ar mai fi încăput.
 const LATIME_MASA_PORTRET := 205
 const GOL_MESE_PORTRET := 12
-## Antetul în portret: un rând de butoane, sub el un rând de titlu.
+## Antetul în portret: un rând de butoane, sub el un rând de titlu, iar între
+## ele un gol. Golul e de pe 26 noiembrie 2026, cerut după proba pe telefon:
+## titlul stătea lipit sub „Mesele" și „Meniu". Rândul butoanelor a rămas cât era
+## (38); ce a crescut e golul, deci titlul și tot ce e sub el coboară cu atât.
 const INALTIME_ANTET := 42
-const INALTIME_ANTET_PORTRET := 76
+const INALTIME_BUTOANE_PORTRET := 38
+const GOL_SUB_BUTOANE_PORTRET := 10
+const INALTIME_ANTET_PORTRET := INALTIME_BUTOANE_PORTRET * 2 + GOL_SUB_BUTOANE_PORTRET
 const MARIME_TITLU := 34
 const MARIME_TITLU_PORTRET := 26
 ## Rândul de sub titlu. În portret fraza de ajutor ia CÂTE RÂNDURI ARE la
@@ -334,15 +339,19 @@ func _aseaza_ecranul() -> void:
 	# sus, titlul în cea de jos — două rânduri care nu se pot călca.
 	var antet: Control = $Margini/Coloana/Antet
 	antet.custom_minimum_size.y = INALTIME_ANTET_PORTRET if p else INALTIME_ANTET
-	var mijloc := 0.5 if p else 0.0
-	_ancore(titlu, mijloc, 1.0, 0.0, 0.0)
-	titlu.add_theme_font_size_override("font_size", MARIME_TITLU_PORTRET if p else MARIME_TITLU)
 	var butoane: Control = $Margini/Coloana/Antet/Butoane
-	_ancore(butoane, 0.0, 0.5 if p else 1.0, 0.0, 0.0)
-	# „i" e centrat pe verticală în rândul lui: jumătatea rândului de sus în
-	# portret, mijlocul antetului altfel.
-	var centru_i := 0.25 if p else 0.5
-	_ancore(buton_reguli, centru_i, centru_i, -13.0, 13.0)
+	if p:
+		# Titlul jos, butoanele sus, fiecare cât rândul lui; golul rămâne între.
+		_ancore(titlu, 1.0, 1.0, -INALTIME_BUTOANE_PORTRET, 0.0)
+		_ancore(butoane, 0.0, 0.0, 0.0, INALTIME_BUTOANE_PORTRET)
+		# „i" e centrat pe verticală în rândul butoanelor.
+		var centru := INALTIME_BUTOANE_PORTRET / 2.0
+		_ancore(buton_reguli, 0.0, 0.0, centru - 13.0, centru + 13.0)
+	else:
+		_ancore(titlu, 0.0, 1.0, 0.0, 0.0)
+		_ancore(butoane, 0.0, 1.0, 0.0, 0.0)
+		_ancore(buton_reguli, 0.5, 0.5, -13.0, 13.0)
+	titlu.add_theme_font_size_override("font_size", MARIME_TITLU_PORTRET if p else MARIME_TITLU)
 	buton_mese.custom_minimum_size.x = 100 if p else 120
 	buton_meniu.custom_minimum_size.x = 90 if p else 110
 

@@ -207,10 +207,17 @@ const GOL_RANDURI_TASTE_PORTRET := 18
 const MARIME_TASTA_PORTRET := 27
 const MARIME_COMANDA_PORTRET := 17
 const ROTUNJIRE_TASTA_PORTRET := 6
-## Tasta despre care nu se știe nimic: plină, mai deschisă decât `CULOARE_ABSENT`,
-## ca o literă ieșită din joc să se vadă STINGÂNDU-SE, ca la original.
-const CULOARE_TASTA_PORTRET := Color(0.52, 0.47, 0.4)
-const CULOARE_COMANDA_PORTRET := Color(0.4, 0.36, 0.31)
+## Tasta despre care nu se știe nimic: plină, mai deschisă decât tasta unei
+## litere ieșite din joc, ca aceea să se vadă STINGÂNDU-SE, ca la original.
+##
+## Coborâtă pe 26 noiembrie 2026 (de la 0,52 / 0,47 / 0,40): pe fondul închis,
+## o tastatură întreagă atât de deschisă obosea ochii. Iar odată cu ea a coborât
+## și litera ieșită din joc, numai PE TASTATURĂ (`CULOARE_ABSENT_TASTA_PORTRET`):
+## altfel ar fi ajuns aproape de aceeași culoare cu tasta neaflată. Pe grilă,
+## `CULOARE_ABSENT` rămâne cum e.
+const CULOARE_TASTA_PORTRET := Color(0.44, 0.4, 0.34)
+const CULOARE_COMANDA_PORTRET := Color(0.34, 0.31, 0.27)
+const CULOARE_ABSENT_TASTA_PORTRET := Color(0.22, 0.2, 0.17)
 ## Grosimea literelor (Alegreya e un font variabil; tema folosește 500).
 const GROSIME_TASTA_PORTRET := 700
 ## Meta pe butonul de la capătul unui rând scurt: cât a crescut spre stânga (x)
@@ -274,6 +281,23 @@ var in_dezvaluire := false
 var celule: Array = []
 const IconitaSterge := preload("res://scenes/taverna/cuvantul/iconita_sterge.gd")
 
+## POPUP-UL DE LA FINAL. O vorbă peste mijlocul grilei, nu o frază sub ea.
+## Câștigat: o laudă după câte încercări ți-au trebuit, și pleacă singură după
+## `POPUP_LAUDA_SECUNDE` (rândul verde de pe grilă spune restul). Pierdut:
+## cuvântul, care RĂMÂNE până la un tap pe el sau până la partida următoare —
+## e singurul loc unde afli răspunsul, deci n-are voie să fugă.
+const LAUDE := ["Genial!", "Magnific!", "Impresionant!", "Splendid!", "Super!", "La limită!"]
+const POPUP_LAUDA_SECUNDE := 2.2
+const CULOARE_POPUP := Color(0.91, 0.84, 0.69)
+const CULOARE_POPUP_TEXT := Color(0.2, 0.12, 0.06)
+const MARIME_POPUP := 26
+const MARIME_POPUP_SUS := 16
+
+var popup: PanelContainer
+var popup_sus: Label
+var popup_text: Label
+var _popup_anim: Tween
+
 ## Litera → butonul ei de pe tastatură.
 var taste := {}
 ## Cele două taste de comandă, de pe rândul de jos.
@@ -291,6 +315,7 @@ func _ready() -> void:
 	grila.columns = LUNGIME
 	_construieste_grila()
 	_construieste_tastatura()
+	_construieste_popup()
 	mesaj.text = ""
 	# Telefonul întors la jumătatea partidei: grila și tastele se reașază
 	# singure, literele rămân. O legătură spre un nod care moare se rupe
@@ -321,6 +346,7 @@ func _porneste(cu_samanta: int) -> void:
 		return
 
 	cuvant = _alege_cuvantul(cu_samanta)
+	_ascunde_popup()
 	incercari.clear()
 	rand_curent = ""
 	stari_litere.clear()
@@ -549,25 +575,27 @@ func _trimite_randul() -> void:
 	_spune("")
 	await _dezvaluie(rand, ghicire, semne)
 
+	# Finalul se spune într-un POPUP peste grilă, iar rezumatul pentru Tavernă
+	# rămâne gol (contractul `Joc` îl îngăduie). De pe 26 noiembrie 2026: rândul
+	# de jos („Ai găsit! CARTE, din 3 încercări.") era o frază de citit acolo
+	# unde jocul original pune o singură vorbă, în mijlocul ecranului. Încercările
+	# se văd oricum pe grilă, iar o laudă pe trepte spune același lucru dintr-o
+	# privire.
 	if ghicire == cuvant:
 		Sunet.reda(Sunet.Efect.CORECT)
-		termina(true, _rezumat_reusit(incercari.size()))
+		_arata_popup("", lauda(incercari.size()), false)
+		termina(true)
 	elif incercari.size() >= RANDURI:
 		Sunet.reda(Sunet.Efect.GRESIT)
-		termina(false, "Nu l-ai găsit. Cuvântul era %s." % cuvant.to_upper())
+		_arata_popup("Cuvântul era", cuvant.to_upper(), true)
+		termina(false)
 
 
-## Fraza de la final, ÎNTREAGĂ — „Ai găsit!" inclus.
-##
-## Prefixul a stat o zi în `taverna.gd`, și de acolo l-a scos a doua masă: „Ai
-## găsit! Grila mediu, completată fără nicio greșeală." Era vocea jocului ăsta,
-## scrisă în fișierul Tavernei. Vezi `_pe_joc_terminat` de acolo.
-##
-## Numărul de încercări e tot ce are jocul ăsta drept scor — și nu se adună
-## nicăieri, fiindcă azi Taverna nu ține socoteli (vezi `taverna.gd`).
-func _rezumat_reusit(cate: int) -> String:
-	var din := "dintr-o încercare" if cate == 1 else "din %d încercări" % cate
-	return "Ai găsit! %s, %s." % [cuvant.to_upper(), din]
+## Lauda pentru un cuvânt găsit din atâtea încercări. Pe TREPTE, ca la jocul
+## original: cu cât mai devreme, cu atât mai mare. E tot ce are jocul ăsta drept
+## scor — și nu se adună nicăieri, fiindcă azi Taverna nu ține socoteli.
+static func lauda(cate: int) -> String:
+	return LAUDE[clampi(cate, 1, LAUDE.size()) - 1]
 
 
 ## Ce știe tastatura despre fiecare literă: cel mai bun semn aflat despre ea.
@@ -585,6 +613,85 @@ func _tine_minte(ghicire: String, semne: Array[int]) -> void:
 
 func _spune(text: String) -> void:
 	mesaj.text = text
+
+
+## Popup-ul stă în `CentruGrila`, lângă grilă: un `CenterContainer` își pune
+## TOȚI copiii la mijloc, unul peste altul, deci popup-ul iese centrat peste
+## grilă fără nicio socoteală de poziție — și rămâne centrat când telefonul se
+## întoarce și grila își schimbă mărimea.
+func _construieste_popup() -> void:
+	popup = PanelContainer.new()
+	var stil := StyleBoxFlat.new()
+	stil.bg_color = CULOARE_POPUP
+	stil.set_corner_radius_all(8)
+	stil.content_margin_left = 22
+	stil.content_margin_right = 22
+	stil.content_margin_top = 10
+	stil.content_margin_bottom = 12
+	stil.shadow_color = Color(0, 0, 0, 0.55)
+	stil.shadow_size = 10
+	popup.add_theme_stylebox_override("panel", stil)
+	var coloana := VBoxContainer.new()
+	coloana.add_theme_constant_override("separation", 0)
+	coloana.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	popup_sus = Label.new()
+	popup_sus.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	popup_sus.add_theme_font_size_override("font_size", MARIME_POPUP_SUS)
+	popup_sus.add_theme_color_override("font_color", CULOARE_POPUP_TEXT)
+	popup_text = Label.new()
+	popup_text.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	popup_text.add_theme_font_size_override("font_size", MARIME_POPUP)
+	popup_text.add_theme_color_override("font_color", CULOARE_POPUP_TEXT)
+	var cinzel := FontVariation.new()
+	cinzel.base_font = load("res://assets/fonturi/Cinzel.ttf")
+	cinzel.variation_opentype = {2003265652: 700}
+	popup_text.add_theme_font_override("font", cinzel)
+	coloana.add_child(popup_sus)
+	coloana.add_child(popup_text)
+	popup.add_child(coloana)
+	popup.gui_input.connect(_pe_popup_atins)
+	popup.visible = false
+	$CentruGrila.add_child(popup)
+
+
+func _arata_popup(sus: String, text: String, ramane: bool) -> void:
+	_ascunde_popup()
+	popup_sus.text = sus
+	popup_sus.visible = sus != ""
+	popup_text.text = text
+	# Cel care rămâne se închide la un tap; cel care pleacă singur lasă atingerea
+	# să treacă (dedesubt e doar grila, care oricum nu primește nimic).
+	popup.mouse_filter = Control.MOUSE_FILTER_STOP if ramane else Control.MOUSE_FILTER_IGNORE
+	popup.modulate.a = 0.0
+	popup.scale = Vector2.ONE * 0.85
+	popup.visible = true
+	# Pivotul în mijloc abia după un cadru: până atunci popup-ul n-are mărime.
+	await get_tree().process_frame
+	if not is_instance_valid(popup) or not popup.visible:
+		return
+	popup.pivot_offset = popup.size / 2.0
+	_popup_anim = popup.create_tween().set_parallel()
+	_popup_anim.tween_property(popup, "modulate:a", 1.0, 0.15)
+	_popup_anim.tween_property(popup, "scale", Vector2.ONE, 0.18) \
+		.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	if not ramane:
+		_popup_anim.chain().tween_interval(POPUP_LAUDA_SECUNDE)
+		_popup_anim.chain().tween_property(popup, "modulate:a", 0.0, 0.4)
+		_popup_anim.chain().tween_callback(popup.hide)
+
+
+func _ascunde_popup() -> void:
+	if _popup_anim and _popup_anim.is_valid():
+		_popup_anim.kill()
+	if popup:
+		popup.visible = false
+		popup.modulate.a = 1.0
+		popup.scale = Vector2.ONE
+
+
+func _pe_popup_atins(event: InputEvent) -> void:
+	if event is InputEventMouseButton and event.pressed:
+		_ascunde_popup()
 
 
 # ─────────────────────────────────────────────────────────────
@@ -935,6 +1042,9 @@ func _zugraveste_tastatura() -> void:
 	for litera in taste:
 		var buton: Button = taste[litera]
 		if stari_litere.has(litera):
-			_imbraca_tasta(buton, _culoare_semn(stari_litere[litera]), CULOARE_LITERA_PE_FOND)
+			var culoare := _culoare_semn(stari_litere[litera])
+			if Fereastra.portret and stari_litere[litera] == Semn.ABSENT:
+				culoare = CULOARE_ABSENT_TASTA_PORTRET
+			_imbraca_tasta(buton, culoare, CULOARE_LITERA_PE_FOND)
 		else:
 			_imbraca_tasta_necunoscuta(buton)

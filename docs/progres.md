@@ -150,6 +150,27 @@ Măsurată pe captura ei: tasta ~8% × 12% din lățime, ~1,6% între taste pe r
 Verdictul „cea mai scundă tastă” măsoară acum butonul (74), adică ținta
 degetului, nu desenul (56). `verifica_taverna`: 448, toate bune.
 
+### Popup la final, antet mai aerisit, tastatură mai închisă (26 noiembrie)
+
+- **Popup peste grilă în loc de rândul de jos.** Câștigat: o laudă pe trepte,
+  după câte încercări (`LAUDE`: Genial! · Magnific! · Impresionant! · Splendid!
+  · Super! · La limită!), care pleacă singură după 2,2 s. Pierdut: „Cuvântul era
+  ALBUM”, care RĂMÂNE până la un tap pe el sau o partidă nouă (e singurul loc
+  unde afli răspunsul). Stă în `CentruGrila`, deci e centrat peste grilă fără
+  socoteli de poziție. Masa trimite Tavernei un rezumat GOL (contractul `Joc`
+  îl îngăduie), deci jos rămâne doar „Încă unul”. Pe pânza mare la fel.
+- **Antetul în portret:** un gol de 10 px între rândul butoanelor și titlu
+  (`GOL_SUB_BUTOANE_PORTRET`), pentru toată Taverna în portret. Cuvântul cere
+  acum 909, Sudoku 749 (sub podeaua de 760).
+- **Tastatura în portret, puțin mai închisă:** tasta neaflată 0,52 → 0,44,
+  comenzile 0,40 → 0,34, iar litera ieșită din joc, numai pe tastatură, 0,22
+  (altfel ar fi ajuns aproape de culoarea tastei neaflate). Pe grilă
+  `CULOARE_ABSENT` rămâne cum era.
+
+Văzut într-o captură cu fereastră, la 412 × 850 (câștig și pierdere).
+`verifica_taverna`: 452 (patru noi: lauda, cuvântul în popup, popup-ul care
+rămâne, partida nouă care îl închide).
+
 **Ce a rămas:**
 - **Probat pe un telefon adevărat** (iPhone cu Safari: bara de jos fură
   înălțime; acolo pânza ar trebui să se micșoreze, nu să se taie).

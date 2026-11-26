@@ -458,8 +458,16 @@ func _partidele() -> bool:
 	await _scrie(joc, joc.cuvant)
 	rezultat = _verdict(raportat.size() == 1 and bool(raportat[0]["reusit"]),
 		"cuvântul tastat corect încheie partida cu «reușit»") and rezultat
-	rezultat = _verdict(String(raportat[0]["rezumat"]).contains(joc.cuvant.to_upper()),
-		"rezumatul spune cuvântul: %s" % raportat[0]["rezumat"]) and rezultat
+	# Finalul se spune într-un popup peste grilă, nu în rândul Tavernei (de pe 26
+	# noiembrie 2026): rezumatul e gol, iar popup-ul poartă lauda pe trepte.
+	rezultat = _verdict(String(raportat[0]["rezumat"]) == "",
+		"rezumatul pentru Tavernă e gol: „%s”" % raportat[0]["rezumat"]) and rezultat
+	rezultat = _verdict(joc.popup.visible and joc.popup_text.text == CUVANTUL.lauda(1),
+		"popup-ul laudă cuvântul găsit dintr-o încercare: „%s”" % joc.popup_text.text) and rezultat
+	rezultat = _verdict(CUVANTUL.lauda(1) != CUVANTUL.lauda(2)
+		and CUVANTUL.lauda(CUVANTUL.RANDURI) == CUVANTUL.LAUDE[-1]
+		and CUVANTUL.LAUDE.size() == CUVANTUL.RANDURI,
+		"câte o laudă pentru fiecare din cele %d încercări" % CUVANTUL.RANDURI) and rezultat
 	# Contractul din `joc.gd`: semnalul se strigă o singură dată.
 	joc.termina(true, "a doua oară")
 	rezultat = _verdict(raportat.size() == 1, "`termina` nu strigă de două ori") and rezultat
@@ -482,10 +490,14 @@ func _partidele() -> bool:
 	rezultat = _verdict(dupa_cinci == 0, "după cinci încercări partida merge mai departe") and rezultat
 	rezultat = _verdict(raportat.size() == 1 and not bool(raportat[0]["reusit"]),
 		"a șasea încercare greșită încheie partida cu «ratat»") and rezultat
-	rezultat = _verdict(String(raportat[0]["rezumat"]).contains(joc.cuvant.to_upper()),
-		"la final se spune care era cuvântul") and rezultat
+	rezultat = _verdict(joc.popup.visible and joc.popup_text.text == joc.cuvant.to_upper(),
+		"la final un popup spune care era cuvântul: „%s”" % joc.popup_text.text) and rezultat
+	rezultat = _verdict(joc.popup.mouse_filter == Control.MOUSE_FILTER_STOP,
+		"popup-ul cu cuvântul rămâne până la un tap (nu fuge singur)") and rezultat
 	rezultat = _verdict(joc.incercari.size() == CUVANTUL.RANDURI,
 		"s-au folosit exact %d rânduri" % CUVANTUL.RANDURI) and rezultat
+	joc.porneste(79)
+	rezultat = _verdict(not joc.popup.visible, "o partidă nouă închide popup-ul") and rezultat
 	joc.queue_free()
 
 	# e) UN RÂND NETERMINAT nu se trimite. Altfel ai pierde o încercare din
