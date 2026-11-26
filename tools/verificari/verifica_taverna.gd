@@ -801,6 +801,12 @@ const MESE_IN_PORTRET := ["cuvantul_ascuns", "sudoku"]
 ## ~44 px de ecran; pe 450 de pânză întinși peste ~390 de telefon, 46 de pânză
 ## ies ~40.
 const TASTA_MINIMA_PORTRET := 46
+## Cea mai înaltă pânză îngustă pe care o poate cere un ecran. Pânza are 450 de
+## lățime, deci 950 înseamnă un raport de 2,1 — cât are un telefon Android
+## obișnuit cu jocul pe tot ecranul. Până acolo, pânza mai înaltă nu micșorează
+## nimic (factorul îl dă lățimea); peste, un ecran ar ieși mai mic pe ORICE
+## telefon, adică exact ce încerca să repare.
+const PLAFON_PORTRET := 950
 
 
 func _portretul() -> bool:
@@ -980,11 +986,17 @@ func _masura_in_portret(taverna: Node, nume_masa: String, trebuie: bool) -> bool
 		return rezultat
 
 	var cerut_joc := margini.get_combined_minimum_size()
-	print("         %s, în portret, cere %d × %d px" % [nume_masa, cerut_joc.x, cerut_joc.y])
+	# Pânza pe care a cerut-o Taverna (vezi `Fereastra.cere_inaltimea`): pe un
+	# telefon mai scund decât ea, totul se micșorează la fel, nu se taie.
+	var data := Fereastra.inaltime_portret
+	print("         %s, în portret, cere %d × %d px; pânza dată: 450 × %d"
+		% [nume_masa, cerut_joc.x, cerut_joc.y, data])
 	rezultat = _verdict(cerut_joc.x <= ingusta.x,
 		"%s încape în lățime (rezervă %d)" % [nume_masa, ingusta.x - cerut_joc.x]) and rezultat
-	rezultat = _verdict(cerut_joc.y <= ingusta.y,
-		"%s încape în înălțime (rezervă %d)" % [nume_masa, ingusta.y - cerut_joc.y]) and rezultat
+	rezultat = _verdict(cerut_joc.y <= data,
+		"%s încape în înălțimea pânzei cerute (rezervă %d)" % [nume_masa, data - cerut_joc.y]) and rezultat
+	rezultat = _verdict(data <= PLAFON_PORTRET,
+		"%s nu cere o pânză mai înaltă de %d (cere %d)" % [nume_masa, PLAFON_PORTRET, data]) and rezultat
 	# Fraza de ajutor, încadrată la lățimea paginii, în cutia pe care i-a dat-o
 	# Taverna. Pe TEXT: minimul unei etichete cu autowrap nu spune nimic.
 	var inaltime_ajutor := ajutor.get_theme_font("font").get_multiline_string_size(
@@ -1015,7 +1027,7 @@ func _masura_in_portret(taverna: Node, nume_masa: String, trebuie: bool) -> bool
 	await get_tree().process_frame
 	var panou: Control = taverna.get_node("PanouReguli/Centru/Panou")
 	if taverna.get_node("%PanouReguli").visible:
-		rezultat = _verdict(panou.size.x <= ingusta.x and panou.size.y <= ingusta.y,
+		rezultat = _verdict(panou.size.x <= ingusta.x and panou.size.y <= data,
 			"%s: panoul cu reguli încape (%d × %d px)"
 			% [nume_masa, panou.size.x, panou.size.y]) and rezultat
 	taverna._inchide_regulile()

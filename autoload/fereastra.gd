@@ -110,10 +110,17 @@ func _ready() -> void:
 ## totul iese mai mare pe telefon; mai îngustă decât asta, tastatura s-ar tăia.
 ##
 ## ÎNĂLȚIMEA e o PODEA, nu o mărime: cu `aspect = expand`, pânza se lungește cât
-## e ecranul de lung, deci pe un telefon obișnuit are 760-1000 px. Podeaua
+## e ecranul de lung, deci pe un telefon obișnuit are 800-1000 px. Podeaua
 ## garantează că nici pe unul scund (sau cu bara browserului mare) nu scade sub
-## cât cer ecranele, măsurate de `verifica_taverna` pe chiar numărul ăsta.
+## cât cer ecranele. De pe 25 noiembrie 2026 podeaua se și RIDICĂ, cât cere
+## ecranul de acum (vezi `cere_inaltimea`): Cuvântul Ascuns, cu pătrate cât pe
+## telefon, cere ~900, iar Sudoku 739 — o podea fixă de 900 ar fi micșorat
+## Sudoku degeaba pe orice telefon scund.
 const PANZA_PORTRET := Vector2i(450, 760)
+
+## Înălțimea pânzei înguste de acum: podeaua de mai sus, ridicată de ecranul care
+## cere mai mult. Se întoarce la podea când pânza mare revine.
+var inaltime_portret := PANZA_PORTRET.y
 
 ## Strigat când pânza trece dintr-o formă în alta. Ecranele care se așază
 ## altfel în portret (Taverna, mesele) îl ascultă.
@@ -156,9 +163,28 @@ func simuleaza_verticala(da: bool) -> void:
 	_potriveste()
 
 
+## Spus de ecranul de pe pânza îngustă: „eu cer atâția pixeli în înălțime". Pânza
+## nu scade sub podea, dar urcă cât e nevoie, deci pe un telefon scund TOTUL se
+## micșorează la fel, în loc să iasă pe sub marginea de jos.
+##
+## Pe un telefon lung nu schimbă nimic: acolo pânza e oricum mai înaltă (o
+## lungește `aspect = expand`), iar factorul de micșorare îl dă LĂȚIMEA. Contează
+## doar când ecranul e mai scund decât cere ecranul jocului.
+func cere_inaltimea(ceruta: float) -> void:
+	var noua := maxi(PANZA_PORTRET.y, ceili(ceruta))
+	if noua == inaltime_portret:
+		return
+	inaltime_portret = noua
+	if portret:
+		get_window().content_scale_size = Vector2i(PANZA_PORTRET.x, inaltime_portret)
+
+
 func _pune(da: bool) -> void:
 	if da == portret:
 		return
 	portret = da
-	get_window().content_scale_size = PANZA_PORTRET if da else _dimensiunea_panzei()
+	if not da:
+		inaltime_portret = PANZA_PORTRET.y
+	get_window().content_scale_size = Vector2i(PANZA_PORTRET.x, inaltime_portret) if da \
+		else _dimensiunea_panzei()
 	orientare_schimbata.emit(da)

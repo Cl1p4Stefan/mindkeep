@@ -389,6 +389,22 @@ func _aseaza_ecranul() -> void:
 	for latura in ["margin_left", "margin_right", "margin_top", "margin_bottom"]:
 		margini_reguli.add_theme_constant_override(latura, m)
 
+	if p:
+		_cere_inaltimea()
+
+
+## Spune pânzei cât de înalt e ecranul de acum, ca pe un telefon scund să se
+## micșoreze tot în loc să se taie jos (vezi `Fereastra.cere_inaltimea`).
+##
+## Un cadru MAI TÂRZIU, nu pe loc: masa se reașază și ea când se schimbă pânza,
+## dar după Taverna (ascultă același semnal, legată mai târziu), deci pe loc aș
+## fi măsurat Cuvântul Ascuns cu pătratele de pe pânza mare.
+func _cere_inaltimea() -> void:
+	await get_tree().process_frame
+	if not is_inside_tree() or not Fereastra.portret:
+		return
+	Fereastra.cere_inaltimea(($Margini as Control).get_combined_minimum_size().y)
+
 
 ## Cât de înaltă e fraza de ajutor pe pânza îngustă, încadrată la lățimea
 ## paginii. MĂSURATĂ, nu presupusă: un rând fix de două linii ar fi furat 20 px

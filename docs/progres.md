@@ -76,6 +76,7 @@ landscape factorul e 0,60 (un pătrat de Sudoku de 42 iese ~25 px, o tastă
 - **Sudoku** — tastele sunt acum o grilă: 10 coloane pe pânza mare (arată ca
   înainte), 5 în portret, de 80 × 46, cu cifra la 24. Grila rămâne de 42.
 - **Cuvântul Ascuns** — celule de 48, taste de 52 înălțime, „Șterge"/„Enter" de 58.
+  **Mărite în aceeași zi** (vezi mai jos, „Cât pe telefon”).
 - Telefonul se poate întoarce **la jumătatea partidei**: nu se reîncarcă nimic,
   doar se reașază; cifrele și literele scrise rămân.
 
@@ -97,9 +98,32 @@ telefon de întors, deci verificarea minte doar despre forma ferestrei
 golurile în portret, antetul (82 → 76), iar rândul frazei de ajutor a încetat să
 rezerve două rânduri: azi ia cât îi trebuie. Acum 739 px, cu 21 de rezervă.
 
+**Pe telefon (Android), prima probă:** jocul rămânea în landscape. Nu era jocul:
+itch.io avea „Orientation: Landscape” la Embed options, iar pe telefon el
+deschide jocul pe tot ecranul și FIXEAZĂ orientarea aleasă. Pusă pe „Default”.
+
+### Cuvântul Ascuns, cât pe telefon
+
+Cerut după prima probă, cu o captură a jocului original pe același telefon: pe
+PC rămâne cum e, pe telefon pătratele și tastatura să fie cât acolo. Măsurat pe
+captură, ca fracții din lățimea ecranului: pătratul ~16%, tasta ~8% × ~16%,
+grila ~86% din lățime. Pe pânza de 450: **pătrate de 72 (literă 38), taste de
+36 × 68 (literă 26), „Șterge"/„Enter" de 60**, goluri de 7 și 6. Rândurile de
+exemplu din reguli rămân de 42 (cinci pătrate de 72 nu încap în panou).
+
+**Ecranul cere acum 897 px**, peste podeaua de 760. De-aia podeaua se RIDICĂ:
+Taverna măsoară ecranul (`get_combined_minimum_size`, un cadru după reașezare,
+fiindcă masa se reașază după ea) și cheamă `Fereastra.cere_inaltimea()`. Pe un
+telefon lung nu schimbă nimic (factorul îl dă lățimea); pe unul scund totul se
+micșorează la fel, în loc să se taie jos. Sudoku cere 739, deci rămâne pe 760 și
+nu se micșorează degeaba, cum ar fi făcut o podea fixă de 900. Plafonul bătut de
+verificare: 950 (raport 2,1, un Android cu jocul pe tot ecranul).
+Văzut în browser la 412 × 850: pătratul iese ~66 px, tasta ~32 × 61, cât în
+captură. `verifica_taverna`: 448 de verdicte.
+
 **Ce a rămas:**
 - **Probat pe un telefon adevărat** (iPhone cu Safari: bara de jos fură
-  înălțime; podeaua de 760 e chiar pentru asta).
+  înălțime; acolo pânza ar trebui să se micșoreze, nu să se taie).
 - Meniul, Practice, expediția și Fiolele rămân pe pânza mare, ținute vertical
   arată la fel de mici ca înainte. Nu e o regresie, dar un „întoarce telefonul"
   acolo ar fi un pas mic.

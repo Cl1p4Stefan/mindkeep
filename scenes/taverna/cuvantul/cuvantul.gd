@@ -162,15 +162,31 @@ const LATIME_LITERA := 38
 const LATIME_COMANDA := 64
 
 ## PE TELEFONUL ȚINUT VERTICAL (vezi „PÂNZA ÎN PORTRET" din `fereastra.gd`).
-## Lățimea nu se poate da: rândul de sus are zece taste, iar pânza îngustă are
-## 450 px, deci o literă rămâne de 38. Ce se poate da e ÎNĂLȚIMEA, de care
-## pânza îngustă are din belșug — 52 în loc de 36, adică o țintă cât un deget
-## pe verticală. „Șterge" și „Enter" se strâng puțin (64 → 58), fiindcă rândul de
-## jos e cel mai lat (7 litere + două comenzi = 414 px, din 426 câți rămân
-## după marginile Tavernei). Grila crește și ea, din același belșug de înălțime.
-const MARIME_CELULA_PORTRET := 48
-const INALTIME_TASTA_PORTRET := 52
-const LATIME_COMANDA_PORTRET := 58
+##
+## De pe 25 noiembrie 2026, cât la jocul pe care îl imită masa, MĂSURAT pe o
+## captură de pe telefon: acolo un pătrat are ~16% din lățimea ecranului, o
+## tastă ~8% lățime și tot ~16% înălțime, iar grila și tastatura iau aproape tot
+## ecranul. Pe pânza îngustă (450) asta înseamnă pătrate de 72 și taste de 36 × 68.
+##
+## Lățimea tastelor e la plafon: rândul de sus are zece, iar după marginile
+## Tavernei rămân 426 px (10 × 36 + 9 × 6 = 414). Înălțimea, în schimb, nu are
+## plafon pe un telefon obișnuit: ecranul ÎNTREG cere ~900 px de pânză, iar
+## `Fereastra` primește de la Taverna cât cere (vezi `cere_inaltimea`), deci pe
+## un telefon mai scund totul se micșorează la fel, fără să se taie nimic.
+const MARIME_CELULA_PORTRET := 72
+const MARIME_LITERA_PORTRET := 38
+const GOL_GRILA := 6
+const GOL_GRILA_PORTRET := 7
+const LATIME_LITERA_PORTRET := 36
+const INALTIME_TASTA_PORTRET := 68
+const LATIME_COMANDA_PORTRET := 60
+const MARIME_TASTA_PORTRET := 26
+## „Șterge" și „Enter" nu încap la 26 pe 60 px.
+const MARIME_COMANDA_PORTRET := 17
+const GOL_TASTE := 4
+const GOL_TASTE_PORTRET := 6
+const GOL_RANDURI_TASTE := 4
+const GOL_RANDURI_TASTE_PORTRET := 8
 
 ## Cât stă o celulă întoarsă până se întoarce următoarea. Rândul se citește de
 ## la stânga la dreapta, deci se și dezvăluie așa — altfel cinci culori apărute
@@ -557,7 +573,10 @@ func _construieste_grila() -> void:
 ## jocului, și ar fi putut rămâne în urma lor la prima schimbare de stil.
 func _celula_noua() -> PanelContainer:
 	var celula := PanelContainer.new()
-	celula.custom_minimum_size = Vector2.ONE * _marime_celula()
+	# Mărimea de pe pânza mare, ÎNTOTDEAUNA: grila o reașază `_aseaza`, iar
+	# rândurile de exemplu din reguli rămân așa și în portret — panoul cu reguli
+	# are acolo ~366 px de conținut, iar cinci pătrate de 72 n-ar încăpea.
+	celula.custom_minimum_size = Vector2.ONE * MARIME_CELULA
 	celula.add_theme_stylebox_override("panel", _stil_celula(CULOARE_CELULA, true))
 	var eticheta := Label.new()
 	eticheta.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -588,7 +607,7 @@ func _construieste_tastatura() -> void:
 	for i in RANDURI_TASTE.size():
 		var rand := HBoxContainer.new()
 		rand.alignment = BoxContainer.ALIGNMENT_CENTER
-		rand.add_theme_constant_override("separation", 4)
+		rand.add_theme_constant_override("separation", GOL_TASTE)
 		for litera in String(RANDURI_TASTE[i]):
 			var buton := _tasta(litera, LATIME_LITERA)
 			buton.pressed.connect(_scrie_litera.bind(litera))
@@ -612,26 +631,39 @@ func incape_in_portret() -> bool:
 	return true
 
 
-func _marime_celula() -> int:
-	return MARIME_CELULA_PORTRET if Fereastra.portret else MARIME_CELULA
-
-
 ## Pune grila și tastele după pânza de acum. Chemată la construire și când pânza
 ## se schimbă. Taste de comandă = cele care nu sunt în `taste` (acolo stau
 ## numai literele).
 func _aseaza(_portret := false) -> void:
 	var p: bool = Fereastra.portret
+	var marime := MARIME_CELULA_PORTRET if p else MARIME_CELULA
+	var litera := MARIME_LITERA_PORTRET if p else MARIME_LITERA
 	for rand_celule in celule:
 		for celula in rand_celule:
-			(celula as Control).custom_minimum_size = Vector2.ONE * _marime_celula()
+			(celula as Control).custom_minimum_size = Vector2.ONE * marime
+			((celula as Control).get_child(0) as Label).add_theme_font_size_override(
+				"font_size", litera)
+	var gol_grila := GOL_GRILA_PORTRET if p else GOL_GRILA
+	grila.add_theme_constant_override("h_separation", gol_grila)
+	grila.add_theme_constant_override("v_separation", gol_grila)
+
 	var inaltime := INALTIME_TASTA_PORTRET if p else INALTIME_TASTA
+	var latime_litera := LATIME_LITERA_PORTRET if p else LATIME_LITERA
 	var comanda := LATIME_COMANDA_PORTRET if p else LATIME_COMANDA
 	var litere := taste.values()
+	tastatura.add_theme_constant_override("separation",
+		GOL_RANDURI_TASTE_PORTRET if p else GOL_RANDURI_TASTE)
 	for rand in tastatura.get_children():
+		(rand as HBoxContainer).add_theme_constant_override("separation",
+			GOL_TASTE_PORTRET if p else GOL_TASTE)
 		for buton in rand.get_children():
 			var b := buton as Button
-			var latime := LATIME_LITERA if b in litere else comanda
-			b.custom_minimum_size = Vector2(latime, inaltime)
+			var e_litera := b in litere
+			b.custom_minimum_size = Vector2(latime_litera if e_litera else comanda, inaltime)
+			var font := MARIME_TASTA
+			if p:
+				font = MARIME_TASTA_PORTRET if e_litera else MARIME_COMANDA_PORTRET
+			b.add_theme_font_size_override("font_size", font)
 
 
 func _tasta(text: String, latime: int) -> Button:
