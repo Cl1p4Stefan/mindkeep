@@ -213,6 +213,9 @@ const CULOARE_TASTA_PORTRET := Color(0.52, 0.47, 0.4)
 const CULOARE_COMANDA_PORTRET := Color(0.4, 0.36, 0.31)
 ## Grosimea literelor (Alegreya e un font variabil; tema folosește 500).
 const GROSIME_TASTA_PORTRET := 700
+## Meta pe butonul de la capătul unui rând scurt: cât a crescut spre stânga (x)
+## și spre dreapta (y). Vezi `_intinde_capetele`.
+const DE_LA_MARGINE := &"de_la_margine"
 
 ## Cât stă o celulă întoarsă până se întoarce următoarea. Rândul se citește de
 ## la stânga la dreapta, deci se și dezvăluie așa — altfel cinci culori apărute
@@ -718,10 +721,43 @@ func _aseaza(_portret := false) -> void:
 	rand_jos.move_child(tasta_sterge, -1 if p else rand_jos.get_child_count() - 2)
 	tasta_sterge.text = "" if p else "Șterge"
 	(tasta_sterge.get_child(0) as Control).visible = p
+	_intinde_capetele(p)
 	# Stilurile depind de pânză (plin sau chenar), deci se pun din nou.
 	_imbraca_tasta_necunoscuta(tasta_enter)
 	_imbraca_tasta_necunoscuta(tasta_sterge)
 	_zugraveste_tastatura()
+
+
+## Rândurile mai scurte decât cel mai lat (A-L are nouă taste, Q-P zece) stau
+## la mijloc, deci au un loc gol la fiecare capăt. În portret, locul ăla e al
+## tastei de la capăt: butonul lui A crește spre stânga, al lui L spre dreapta,
+## iar desenul rămâne cât tasta (`DE_LA_MARGINE`, citit de `_stil_tasta`). Ca pe
+## telefon: un deget căzut lângă A apasă A, nu nimic.
+##
+## Lățimile se iau din `custom_minimum_size` și nu din `size`: aici se chemă
+## înainte ca containerele să fi apucat să așeze ceva.
+func _intinde_capetele(p: bool) -> void:
+	var randuri := tastatura.get_children()
+	var latimi: Array[float] = []
+	for rand in randuri:
+		var latime := 0.0
+		for buton in rand.get_children():
+			latime += (buton as Control).custom_minimum_size.x
+		latimi.append(latime)
+	var cel_mai_lat: float = latimi.max()
+	for i in randuri.size():
+		var rest := floorf((cel_mai_lat - latimi[i]) / 2.0) if p else 0.0
+		var butoane: Array = randuri[i].get_children()
+		for b in butoane:
+			(b as Control).set_meta(DE_LA_MARGINE, Vector2.ZERO)
+		if rest <= 0.0:
+			continue
+		var primul := butoane[0] as Control
+		var ultimul := butoane[-1] as Control
+		primul.custom_minimum_size.x += rest
+		ultimul.custom_minimum_size.x += rest
+		primul.set_meta(DE_LA_MARGINE, Vector2(rest, 0))
+		ultimul.set_meta(DE_LA_MARGINE, Vector2(0, rest))
 
 
 func _font_groasa() -> FontVariation:
@@ -775,26 +811,33 @@ func _imbraca_tasta_necunoscuta(buton: Button) -> void:
 ## ar fi fost încă apăsată.
 func _imbraca_tasta(buton: Button, culoare: Color, litera: Color) -> void:
 	var p: bool = Fereastra.portret
-	var normal := _stil_tasta(culoare)
+	var normal := _stil_tasta(culoare, buton)
 	buton.add_theme_stylebox_override("normal", normal)
-	buton.add_theme_stylebox_override("hover", normal if p else _stil_tasta(culoare.lightened(0.08)))
-	var apasat := _stil_tasta(culoare.lightened(0.25) if p else culoare.darkened(0.12))
+	buton.add_theme_stylebox_override("hover", normal if p else _stil_tasta(culoare.lightened(0.08), buton))
+	var apasat := _stil_tasta(culoare.lightened(0.25) if p else culoare.darkened(0.12), buton)
 	buton.add_theme_stylebox_override("pressed", apasat)
 	buton.add_theme_stylebox_override("hover_pressed", apasat)
 	for nume in ["font_color", "font_hover_color", "font_pressed_color", "font_hover_pressed_color"]:
 		buton.add_theme_color_override(nume, litera)
 
 
-func _stil_tasta(culoare: Color) -> StyleBoxFlat:
+func _stil_tasta(culoare: Color, buton: Control) -> StyleBoxFlat:
 	if not Fereastra.portret:
 		return _stil_celula(culoare, false)
 	var stil := StyleBoxFlat.new()
 	stil.bg_color = culoare
 	stil.set_corner_radius_all(ROTUNJIRE_TASTA_PORTRET)
 	# Margini NEGATIVE: desenul se strânge la tastă, butonul rămâne cât tasta
-	# plus golurile ei. Vezi „TASTATURA DE TELEFON".
-	stil.expand_margin_left = -GOL_TASTE_PORTRET / 2.0
-	stil.expand_margin_right = -GOL_TASTE_PORTRET / 2.0
+	# plus golurile ei. Vezi „TASTATURA DE TELEFON". La A și L, și cât au
+	# crescut spre margine (`_intinde_capetele`).
+	var capete: Vector2 = buton.get_meta(DE_LA_MARGINE, Vector2.ZERO)
+	stil.expand_margin_left = -GOL_TASTE_PORTRET / 2.0 - capete.x
+	stil.expand_margin_right = -GOL_TASTE_PORTRET / 2.0 - capete.y
+	# Litera se centrează în buton minus marginile de conținut: fără ele, un A
+	# crescut doar spre stânga și-ar fi purtat litera spre stânga tastei.
+	if capete != Vector2.ZERO:
+		stil.content_margin_left = capete.x
+		stil.content_margin_right = capete.y
 	stil.expand_margin_top = -GOL_RANDURI_TASTE_PORTRET / 2.0
 	stil.expand_margin_bottom = -GOL_RANDURI_TASTE_PORTRET / 2.0
 	return stil

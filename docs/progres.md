@@ -136,7 +136,11 @@ Măsurată pe captura ei: tasta ~8% × 12% din lățime, ~1,6% între taste pe r
 - **Fără spații moarte**: butonul e cât tasta plus jumătate din golul de jur
   împrejur, iar desenul se strânge înapoi prin `expand_margin` NEGATIV pe stil.
   Un deget căzut între Q și W apasă una din ele. Probat în browser: un clic în
-  golul Q/W și unul între rânduri au scris litere.
+  golul Q/W și unul între rânduri au scris litere. Tot așa și **capetele
+  rândului A-L** (mai scurt cu o tastă, deci centrat cu un loc gol la fiecare
+  capăt): butonul lui A crește spre stânga, al lui L spre dreapta, desenul și
+  litera rămân pe tastă (`_intinde_capetele`, marginile de conținut ale
+  stilului). Probat: clic lângă A scrie A, lângă L scrie L.
 - **Rândul de jos ca pe telefon**: Enter în stânga (locul lui Shift), ștergerea
   în dreapta, ca semn desenat (`iconita_sterge.gd` — „⌫" nu e în niciun font).
   Pe pânza mare se mută înapoi și redevine „Șterge".
